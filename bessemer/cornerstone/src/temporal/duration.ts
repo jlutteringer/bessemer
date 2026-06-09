@@ -1,22 +1,27 @@
 import Zod from 'zod'
 import { Temporal } from '@js-temporal/polyfill'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NominalType } from '@bessemer/cornerstone/types'
 import { Comparator } from '@bessemer/cornerstone/comparator'
-import { fromComparator } from '@bessemer/cornerstone/equalitor'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import * as Results from '@bessemer/cornerstone/result'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { isError } from '@bessemer/cornerstone/error/error'
-import { TimeUnit } from '@bessemer/cornerstone/temporal/chrono'
-import { isString } from '@bessemer/cornerstone/string'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import * as Errors from '@bessemer/cornerstone/error/error'
+import * as Chrono from '@bessemer/cornerstone/temporal/chrono'
+import * as Strings from '@bessemer/cornerstone/string'
+import * as Objects from '@bessemer/cornerstone/object'
 
 export type Duration = Temporal.Duration
-export const Namespace = createNamespace('duration')
+export const Namespace = ResourceKeys.createNamespace('duration')
 export type DurationLiteral = NominalType<string, typeof Namespace>
 export type DurationBuilder = {
+  // JOHN consider splitting into 'TimeDuration' and 'CalendarDuration' -----
+  years?: number
+  months?: number
+  weeks?: number
+  days?: number
+  // -----
   hours?: number
   minutes?: number
   seconds?: number
@@ -31,32 +36,33 @@ export function from(value: DurationLike | string | null): Duration | null
 export function from(value: DurationLike | string | undefined): Duration | undefined
 export function from(value: DurationLike | string | null | undefined): Duration | null | undefined
 export function from(value: DurationLike | string | null | undefined): Duration | null | undefined {
-  if (isNil(value)) {
+  if (Objects.isNil(value)) {
     return value
   }
 
   if (value instanceof Temporal.Duration) {
     return value
   }
-  if (isString(value)) {
-    return unpackResult(parseString(value))
+
+  if (Strings.isString(value)) {
+    return ErrorEvents.unpackResult(parseString(value))
   }
 
   return Temporal.Duration.from(value)
 }
 
 export const CompareBy: Comparator<Duration> = (first: Duration, second: Duration): number => Temporal.Duration.compare(first, second)
-export const EqualBy = fromComparator(CompareBy)
+export const EqualBy = Equalitors.fromComparator(CompareBy)
 
-export const parseString = (value: string): Result<Duration, ErrorEvent> => {
+export const parseString = (value: string): Results.Result<Duration, ErrorEvents.ErrorEvent> => {
   try {
-    return success(Temporal.Duration.from(value))
+    return Results.success(Temporal.Duration.from(value))
   } catch (e) {
-    if (!isError(e)) {
+    if (!Errors.isError(e)) {
       throw e
     }
 
-    return failure(invalidValue(value, { namespace: Namespace, message: e.message }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: e.message }))
   }
 }
 
@@ -65,15 +71,15 @@ export function toLiteral(value: DurationLike | null): DurationLiteral | null
 export function toLiteral(value: DurationLike | undefined): DurationLiteral | undefined
 export function toLiteral(value: DurationLike | null | undefined): DurationLiteral | null | undefined
 export function toLiteral(value: DurationLike | null | undefined): DurationLiteral | null | undefined {
-  if (isNil(value)) {
+  if (Objects.isNil(value)) {
     return value
   }
 
   return from(value).toString() as DurationLiteral
 }
 
-export const SchemaLiteral = structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
-export const SchemaInstance = structuredTransform(Zod.string(), parseString)
+export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const isDuration = (value: unknown): value is Duration => {
   return value instanceof Temporal.Duration
@@ -88,7 +94,7 @@ export const fromMilliseconds = (value: number): Duration => {
 }
 
 export const toMilliseconds = (duration: DurationLike): number => {
-  return from(duration).total(TimeUnit.Millisecond)
+  return from(duration).total(Chrono.TimeUnit.Millisecond)
 }
 
 export const fromSeconds = (value: number): Duration => {
@@ -96,7 +102,7 @@ export const fromSeconds = (value: number): Duration => {
 }
 
 export const toSeconds = (duration: DurationLike): number => {
-  return from(duration).total(TimeUnit.Second)
+  return from(duration).total(Chrono.TimeUnit.Second)
 }
 
 export const fromMinutes = (value: number): Duration => {
@@ -104,7 +110,7 @@ export const fromMinutes = (value: number): Duration => {
 }
 
 export const toMinutes = (duration: DurationLike): number => {
-  return from(duration).total(TimeUnit.Minute)
+  return from(duration).total(Chrono.TimeUnit.Minute)
 }
 
 export const fromHours = (value: number): Duration => {
@@ -112,27 +118,27 @@ export const fromHours = (value: number): Duration => {
 }
 
 export const toHours = (duration: DurationLike): number => {
-  return from(duration).total(TimeUnit.Hour)
+  return from(duration).total(Chrono.TimeUnit.Hour)
 }
 
-export const fromUnit = (value: number, timeUnit: TimeUnit): Duration => {
+export const fromUnit = (value: number, timeUnit: Chrono.TimeUnit): Duration => {
   switch (timeUnit) {
-    case TimeUnit.Nanosecond:
+    case Chrono.TimeUnit.Nanosecond:
       return from({ nanoseconds: value })
-    case TimeUnit.Microsecond:
+    case Chrono.TimeUnit.Microsecond:
       return from({ microseconds: value })
-    case TimeUnit.Millisecond:
+    case Chrono.TimeUnit.Millisecond:
       return from({ milliseconds: value })
-    case TimeUnit.Second:
+    case Chrono.TimeUnit.Second:
       return from({ seconds: value })
-    case TimeUnit.Minute:
+    case Chrono.TimeUnit.Minute:
       return from({ minutes: value })
-    case TimeUnit.Hour:
+    case Chrono.TimeUnit.Hour:
       return from({ hours: value })
   }
 }
 
-export const toUnit = (duration: DurationLike, timeUnit: TimeUnit): number => {
+export const toUnit = (duration: DurationLike, timeUnit: Chrono.TimeUnit): number => {
   return from(duration).total(timeUnit)
 }
 
@@ -140,7 +146,7 @@ export const isZero = (duration: DurationLike): boolean => {
   return EqualBy(from(duration), Zero)
 }
 
-export const round = (element: DurationLike, unit: TimeUnit): Duration => {
+export const round = (element: DurationLike, unit: Chrono.TimeUnit): Duration => {
   return from(element).round({ smallestUnit: unit })
 }
 
@@ -165,7 +171,7 @@ export function isEqual(element: DurationLike, other: DurationLike): boolean
 export function isEqual(element: DurationLike | null, other: DurationLike | null): boolean
 export function isEqual(element: DurationLike | undefined, other: DurationLike | undefined): boolean
 export function isEqual(element: DurationLike | null | undefined, other: DurationLike | null | undefined): boolean {
-  if (isNil(element) || isNil(other)) {
+  if (Objects.isNil(element) || Objects.isNil(other)) {
     return element === other
   }
 

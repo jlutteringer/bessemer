@@ -36,6 +36,8 @@ import * as TimeZoneIds from '@bessemer/cornerstone/temporal/time-zone-id'
 import * as TimeZoneOffsets from '@bessemer/cornerstone/temporal/time-zone-offset'
 import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import * as PlainDates from '@bessemer/cornerstone/temporal/plain-date'
+import * as PlainMonthDays from '@bessemer/cornerstone/temporal/plain-month-day'
+import * as PlainYearMonths from '@bessemer/cornerstone/temporal/plain-year-month'
 import * as PlainTimes from '@bessemer/cornerstone/temporal/plain-time'
 import * as PlainDateTimes from '@bessemer/cornerstone/temporal/plain-date-time'
 import * as Clocks from '@bessemer/cornerstone/temporal/clock'
@@ -232,6 +234,14 @@ export {
    * @since 2.0.0
    */
   PlainDates,
+  /**
+   * @since 2.0.0
+   */
+  PlainMonthDays,
+  /**
+   * @since 2.0.0
+   */
+  PlainYearMonths,
   /**
    * @since 2.0.0
    */

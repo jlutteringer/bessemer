@@ -1,26 +1,25 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NominalType } from '@bessemer/cornerstone/types'
 import { Comparator } from '@bessemer/cornerstone/comparator'
-import { fromComparator } from '@bessemer/cornerstone/equalitor'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as Results from '@bessemer/cornerstone/result'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { isError } from '@bessemer/cornerstone/error/error'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import * as Errors from '@bessemer/cornerstone/error/error'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import Zod from 'zod'
-import { Default as DefaultClock } from '@bessemer/cornerstone/temporal/clock'
-import { Duration, DurationLike, from as _fromDuration } from '@bessemer/cornerstone/temporal/duration'
-import { from as _fromInstant, InstantLike } from '@bessemer/cornerstone/temporal/instant'
+import * as Clocks from '@bessemer/cornerstone/temporal/clock'
+import * as Durations from '@bessemer/cornerstone/temporal/duration'
+import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import { TimeZoneId } from '@bessemer/cornerstone/temporal/time-zone-id'
 import { TimeUnit } from '@bessemer/cornerstone/temporal/chrono'
-import { isString } from '@bessemer/cornerstone/string'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as Strings from '@bessemer/cornerstone/string'
+import * as Objects from '@bessemer/cornerstone/object'
 import { PlainTimeBuilder, TimeFormatOptions } from '@bessemer/cornerstone/temporal/plain-time'
 import { DateFormatOptions, PlainDateBuilder } from '@bessemer/cornerstone/temporal/plain-date'
 
 export type ZonedDateTime = Temporal.ZonedDateTime
-export const Namespace = createNamespace('zoned-date-time')
+export const Namespace = ResourceKeys.createNamespace('zoned-date-time')
 export type ZonedDateTimeLiteral = NominalType<string, typeof Namespace>
 export type ZonedDateTimeBuilder = PlainDateBuilder &
   PlainTimeBuilder & {
@@ -34,7 +33,7 @@ export function from(value: ZonedDateTimeLike | string | null): ZonedDateTime | 
 export function from(value: ZonedDateTimeLike | string | undefined): ZonedDateTime | undefined
 export function from(value: ZonedDateTimeLike | string | null | undefined): ZonedDateTime | null | undefined
 export function from(value: ZonedDateTimeLike | string | null | undefined): ZonedDateTime | null | undefined {
-  if (isNil(value)) {
+  if (Objects.isNil(value)) {
     return value
   }
 
@@ -42,8 +41,8 @@ export function from(value: ZonedDateTimeLike | string | null | undefined): Zone
     return value
   }
 
-  if (isString(value)) {
-    return unpackResult(parseString(value))
+  if (Strings.isString(value)) {
+    return ErrorEvents.unpackResult(parseString(value))
   }
 
   return Temporal.ZonedDateTime.from(value)
@@ -51,22 +50,22 @@ export function from(value: ZonedDateTimeLike | string | null | undefined): Zone
 
 export const CompareBy: Comparator<ZonedDateTime> = (first: ZonedDateTime, second: ZonedDateTime): number =>
   Temporal.PlainDateTime.compare(first, second)
-export const EqualBy = fromComparator(CompareBy)
+export const EqualBy = Equalitors.fromComparator(CompareBy)
 
-export const parseString = (value: string): Result<ZonedDateTime, ErrorEvent> => {
+export const parseString = (value: string): Results.Result<ZonedDateTime, ErrorEvents.ErrorEvent> => {
   try {
-    return success(Temporal.ZonedDateTime.from(value))
+    return Results.success(Temporal.ZonedDateTime.from(value))
   } catch (e) {
-    if (!isError(e)) {
+    if (!Errors.isError(e)) {
       throw e
     }
 
-    return failure(invalidValue(value, { namespace: Namespace, message: e.message }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: e.message }))
   }
 }
 
-export const fromInstant = (instant: InstantLike, zone: TimeZoneId): ZonedDateTime => {
-  return _fromInstant(instant).toZonedDateTimeISO(zone)
+export const fromInstant = (instant: Instants.InstantLike, zone: TimeZoneId): ZonedDateTime => {
+  return Instants.from(instant).toZonedDateTimeISO(zone)
 }
 
 export function toLiteral(likeValue: ZonedDateTimeLike): ZonedDateTimeLiteral
@@ -74,7 +73,7 @@ export function toLiteral(likeValue: ZonedDateTimeLike | null): ZonedDateTimeLit
 export function toLiteral(likeValue: ZonedDateTimeLike | undefined): ZonedDateTimeLiteral | undefined
 export function toLiteral(likeValue: ZonedDateTimeLike | null | undefined): ZonedDateTimeLiteral | null | undefined
 export function toLiteral(likeValue: ZonedDateTimeLike | null | undefined): ZonedDateTimeLiteral | null | undefined {
-  if (isNil(likeValue)) {
+  if (Objects.isNil(likeValue)) {
     return likeValue
   }
 
@@ -82,14 +81,14 @@ export function toLiteral(likeValue: ZonedDateTimeLike | null | undefined): Zone
   return value.toString() as ZonedDateTimeLiteral
 }
 
-export const SchemaLiteral = structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
-export const SchemaInstance = structuredTransform(Zod.string(), parseString)
+export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const isPlainDateTime = (value: unknown): value is ZonedDateTime => {
   return value instanceof Temporal.PlainDateTime
 }
 
-export const now = (zone: TimeZoneId, clock = DefaultClock): ZonedDateTime => {
+export const now = (zone: TimeZoneId, clock = Clocks.Default): ZonedDateTime => {
   return fromInstant(clock.instant(), zone)
 }
 
@@ -97,15 +96,15 @@ export const merge = (element: ZonedDateTimeLike, builder: Partial<ZonedDateTime
   return from(element).with(builder)
 }
 
-export const add = (element: ZonedDateTimeLike, duration: DurationLike): ZonedDateTime => {
-  return from(element).add(_fromDuration(duration))
+export const add = (element: ZonedDateTimeLike, duration: Durations.DurationLike): ZonedDateTime => {
+  return from(element).add(Durations.from(duration))
 }
 
-export const subtract = (element: ZonedDateTimeLike, duration: DurationLike): ZonedDateTime => {
-  return from(element).subtract(_fromDuration(duration))
+export const subtract = (element: ZonedDateTimeLike, duration: Durations.DurationLike): ZonedDateTime => {
+  return from(element).subtract(Durations.from(duration))
 }
 
-export const until = (element: ZonedDateTimeLike, other: ZonedDateTimeLike): Duration => {
+export const until = (element: ZonedDateTimeLike, other: ZonedDateTimeLike): Durations.Duration => {
   return from(element).until(from(other))
 }
 
@@ -117,7 +116,7 @@ export function isEqual(element: ZonedDateTimeLike, other: ZonedDateTimeLike): b
 export function isEqual(element: ZonedDateTimeLike | null, other: ZonedDateTimeLike | null): boolean
 export function isEqual(element: ZonedDateTimeLike | undefined, other: ZonedDateTimeLike | undefined): boolean
 export function isEqual(element: ZonedDateTimeLike | null | undefined, other: ZonedDateTimeLike | null | undefined): boolean {
-  if (isNil(element) || isNil(other)) {
+  if (Objects.isNil(element) || Objects.isNil(other)) {
     return element === other
   }
 

@@ -1,24 +1,24 @@
-import { TimeZoneId, Utc } from '@bessemer/cornerstone/temporal/time-zone-id'
-import { Duration, DurationLike, from as fromDuration, isZero } from '@bessemer/cornerstone/temporal/duration'
-import { from as fromInstant, Instant, InstantLike } from '@bessemer/cornerstone/temporal/instant'
+import * as TimeZoneIds from '@bessemer/cornerstone/temporal/time-zone-id'
+import * as Durations from '@bessemer/cornerstone/temporal/duration'
+import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import { Temporal } from '@js-temporal/polyfill'
 
 export interface Clock {
-  readonly zone: TimeZoneId
+  readonly zone: TimeZoneIds.TimeZoneId
 
-  withZone: (zone: TimeZoneId) => Clock
+  withZone: (zone: TimeZoneIds.TimeZoneId) => Clock
 
-  instant: () => Instant
+  instant: () => Instants.Instant
 }
 
 class SystemClock implements Clock {
-  constructor(readonly zone: TimeZoneId) {}
+  constructor(readonly zone: TimeZoneIds.TimeZoneId) {}
 
-  instant(): Instant {
+  instant(): Instants.Instant {
     return Temporal.Now.instant()
   }
 
-  withZone(zone: TimeZoneId): Clock {
+  withZone(zone: TimeZoneIds.TimeZoneId): Clock {
     if (zone === this.zone) {
       return this
     }
@@ -28,13 +28,13 @@ class SystemClock implements Clock {
 }
 
 class FixedClock implements Clock {
-  constructor(private fixedInstant: Instant, readonly zone: TimeZoneId) {}
+  constructor(private fixedInstant: Instants.Instant, readonly zone: TimeZoneIds.TimeZoneId) {}
 
-  instant(): Instant {
+  instant(): Instants.Instant {
     return this.fixedInstant
   }
 
-  withZone(zone: TimeZoneId): Clock {
+  withZone(zone: TimeZoneIds.TimeZoneId): Clock {
     if (zone === this.zone) {
       return this
     }
@@ -44,17 +44,17 @@ class FixedClock implements Clock {
 }
 
 class OffsetClock implements Clock {
-  readonly zone: TimeZoneId
+  readonly zone: TimeZoneIds.TimeZoneId
 
-  constructor(private clock: Clock, private offset: Duration) {
+  constructor(private clock: Clock, private offset: Durations.Duration) {
     this.zone = this.clock.zone
   }
 
-  instant(): Instant {
+  instant(): Instants.Instant {
     return this.clock.instant().add(this.offset)
   }
 
-  withZone(zone: TimeZoneId): Clock {
+  withZone(zone: TimeZoneIds.TimeZoneId): Clock {
     if (zone === this.clock.zone) {
       return this
     }
@@ -63,25 +63,25 @@ class OffsetClock implements Clock {
   }
 }
 
-export const SystemUtc = new SystemClock(Utc)
+export const SystemUtc = new SystemClock(TimeZoneIds.Utc)
 export const Default = SystemUtc
 
-export const system = (zone: TimeZoneId = Utc): Clock => {
-  if (zone == Utc) {
+export const system = (zone: TimeZoneIds.TimeZoneId = TimeZoneIds.Utc): Clock => {
+  if (zone == TimeZoneIds.Utc) {
     return SystemUtc
   }
 
   return new SystemClock(zone)
 }
 
-export const fixed = (fixedInstant: InstantLike, zone: TimeZoneId = Utc): Clock => {
-  return new FixedClock(fromInstant(fixedInstant), zone)
+export const fixed = (fixedInstant: Instants.InstantLike, zone: TimeZoneIds.TimeZoneId = TimeZoneIds.Utc): Clock => {
+  return new FixedClock(Instants.from(fixedInstant), zone)
 }
 
-export const offset = (clock: Clock, offset: DurationLike): Clock => {
-  if (isZero(offset)) {
+export const offset = (clock: Clock, offset: Durations.DurationLike): Clock => {
+  if (Durations.isZero(offset)) {
     return clock
   }
 
-  return new OffsetClock(clock, fromDuration(offset))
+  return new OffsetClock(clock, Durations.from(offset))
 }

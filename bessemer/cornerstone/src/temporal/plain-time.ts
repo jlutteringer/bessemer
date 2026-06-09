@@ -1,25 +1,24 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NominalType } from '@bessemer/cornerstone/types'
 import { Comparator } from '@bessemer/cornerstone/comparator'
-import { fromComparator } from '@bessemer/cornerstone/equalitor'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as Results from '@bessemer/cornerstone/result'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { isError } from '@bessemer/cornerstone/error/error'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import * as Errors from '@bessemer/cornerstone/error/error'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import Zod from 'zod'
-import { Default as DefaultClock } from '@bessemer/cornerstone/temporal/clock'
-import { Duration, DurationLike, from as _fromDuration } from '@bessemer/cornerstone/temporal/duration'
-import { from as _fromInstant, InstantLike } from '@bessemer/cornerstone/temporal/instant'
+import * as Clocks from '@bessemer/cornerstone/temporal/clock'
+import * as Durations from '@bessemer/cornerstone/temporal/duration'
+import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import { TimeZoneId } from '@bessemer/cornerstone/temporal/time-zone-id'
 import { TimeUnit } from '@bessemer/cornerstone/temporal/chrono'
-import { isString } from '@bessemer/cornerstone/string'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as Strings from '@bessemer/cornerstone/string'
+import * as Objects from '@bessemer/cornerstone/object'
 import { Locale } from '@bessemer/cornerstone/intl/locale'
 
 export type PlainTime = Temporal.PlainTime
-export const Namespace = createNamespace('plain-time')
+export const Namespace = ResourceKeys.createNamespace('plain-time')
 export type PlainTimeLiteral = NominalType<string, typeof Namespace>
 export type PlainTimeBuilder = {
   hour: number
@@ -36,41 +35,41 @@ export function from(value: PlainTimeLike | string | null): PlainTime | null
 export function from(value: PlainTimeLike | string | undefined): PlainTime | undefined
 export function from(value: PlainTimeLike | string | null | undefined): PlainTime | null | undefined
 export function from(value: PlainTimeLike | string | null | undefined): PlainTime | null | undefined {
-  if (isNil(value)) {
+  if (Objects.isNil(value)) {
     return value
   }
 
   if (value instanceof Temporal.PlainTime) {
     return value
   }
-  if (isString(value)) {
-    return unpackResult(parseString(value))
+  if (Strings.isString(value)) {
+    return ErrorEvents.unpackResult(parseString(value))
   }
 
   return Temporal.PlainTime.from(value)
 }
 
 export const CompareBy: Comparator<PlainTime> = (first: PlainTime, second: PlainTime): number => Temporal.PlainTime.compare(first, second)
-export const EqualBy = fromComparator(CompareBy)
+export const EqualBy = Equalitors.fromComparator(CompareBy)
 
-export const parseString = (value: string): Result<PlainTime, ErrorEvent> => {
+export const parseString = (value: string): Results.Result<PlainTime, ErrorEvents.ErrorEvent> => {
   try {
-    return success(Temporal.PlainTime.from(value))
+    return Results.success(Temporal.PlainTime.from(value))
   } catch (e) {
-    if (!isError(e)) {
+    if (!Errors.isError(e)) {
       throw e
     }
 
-    return failure(invalidValue(value, { namespace: Namespace, message: e.message }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: e.message }))
   }
 }
 
-export const fromDuration = (duration: DurationLike): PlainTime => {
-  return Midnight.add(_fromDuration(duration))
+export const fromDuration = (duration: Durations.DurationLike): PlainTime => {
+  return Midnight.add(Durations.from(duration))
 }
 
-export const fromInstant = (instant: InstantLike, zone: TimeZoneId): PlainTime => {
-  return _fromInstant(instant).toZonedDateTimeISO(zone).toPlainTime()
+export const fromInstant = (instant: Instants.InstantLike, zone: TimeZoneId): PlainTime => {
+  return Instants.from(instant).toZonedDateTimeISO(zone).toPlainTime()
 }
 
 export function toLiteral(likeValue: PlainTimeLike): PlainTimeLiteral
@@ -78,7 +77,7 @@ export function toLiteral(likeValue: PlainTimeLike | null): PlainTimeLiteral | n
 export function toLiteral(likeValue: PlainTimeLike | undefined): PlainTimeLiteral | undefined
 export function toLiteral(likeValue: PlainTimeLike | null | undefined): PlainTimeLiteral | null | undefined
 export function toLiteral(likeValue: PlainTimeLike | null | undefined): PlainTimeLiteral | null | undefined {
-  if (isNil(likeValue)) {
+  if (Objects.isNil(likeValue)) {
     return likeValue
   }
 
@@ -91,14 +90,14 @@ export function toLiteral(likeValue: PlainTimeLike | null | undefined): PlainTim
   return value.toString() as PlainTimeLiteral
 }
 
-export const SchemaLiteral = structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
-export const SchemaInstance = structuredTransform(Zod.string(), parseString)
+export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const isPlainTime = (value: unknown): value is PlainTime => {
   return value instanceof Temporal.PlainTime
 }
 
-export const now = (zone: TimeZoneId, clock = DefaultClock): PlainTime => {
+export const now = (zone: TimeZoneId, clock = Clocks.Default): PlainTime => {
   return fromInstant(clock.instant(), zone)
 }
 
@@ -106,15 +105,15 @@ export const merge = (element: PlainTimeLike, builder: Partial<PlainTimeBuilder>
   return from(element).with(builder)
 }
 
-export const add = (element: PlainTimeLike, duration: DurationLike): PlainTime => {
-  return from(element).add(_fromDuration(duration))
+export const add = (element: PlainTimeLike, duration: Durations.DurationLike): PlainTime => {
+  return from(element).add(Durations.from(duration))
 }
 
-export const subtract = (element: PlainTimeLike, duration: DurationLike): PlainTime => {
-  return from(element).subtract(_fromDuration(duration))
+export const subtract = (element: PlainTimeLike, duration: Durations.DurationLike): PlainTime => {
+  return from(element).subtract(Durations.from(duration))
 }
 
-export const until = (element: PlainTimeLike, other: PlainTimeLike): Duration => {
+export const until = (element: PlainTimeLike, other: PlainTimeLike): Durations.Duration => {
   return from(element).until(from(other))
 }
 
@@ -126,7 +125,7 @@ export function isEqual(element: PlainTimeLike, other: PlainTimeLike): boolean
 export function isEqual(element: PlainTimeLike | null, other: PlainTimeLike | null): boolean
 export function isEqual(element: PlainTimeLike | undefined, other: PlainTimeLike | undefined): boolean
 export function isEqual(element: PlainTimeLike | null | undefined, other: PlainTimeLike | null | undefined): boolean {
-  if (isNil(element) || isNil(other)) {
+  if (Objects.isNil(element) || Objects.isNil(other)) {
     return element === other
   }
 
@@ -151,10 +150,9 @@ export type TimeFormatOptions = {
 export const format = (element: PlainTimeLike, locale: Locale, options?: TimeFormatOptions): string => {
   const plainTime = from(element)
 
-  // Create a Date at Unix epoch with the time components
   const date = new Date(1970, 0, 1, plainTime.hour, plainTime.minute, plainTime.second, plainTime.millisecond)
 
-  if (isNil(options) || (isNil(options.hour) && isNil(options.minute) && isNil(options.second))) {
+  if (Objects.isNil(options) || (Objects.isNil(options.hour) && Objects.isNil(options.minute) && Objects.isNil(options.second))) {
     options = { ...options, hour: 'numeric', minute: '2-digit', ...(plainTime.second > 0 || plainTime.millisecond > 0 ? { second: '2-digit' } : {}) }
   }
 

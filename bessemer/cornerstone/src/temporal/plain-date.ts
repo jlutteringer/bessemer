@@ -1,24 +1,23 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NominalType } from '@bessemer/cornerstone/types'
 import { Comparator } from '@bessemer/cornerstone/comparator'
-import { fromComparator } from '@bessemer/cornerstone/equalitor'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as Results from '@bessemer/cornerstone/result'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { isError } from '@bessemer/cornerstone/error/error'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import * as Errors from '@bessemer/cornerstone/error/error'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import Zod from 'zod'
-import { Default as DefaultClock } from '@bessemer/cornerstone/temporal/clock'
-import { Duration, DurationLike, from as _fromDuration } from '@bessemer/cornerstone/temporal/duration'
-import { from as _fromInstant, InstantLike } from '@bessemer/cornerstone/temporal/instant'
+import * as Clocks from '@bessemer/cornerstone/temporal/clock'
+import * as Durations from '@bessemer/cornerstone/temporal/duration'
+import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import { TimeZoneId } from '@bessemer/cornerstone/temporal/time-zone-id'
-import { isString } from '@bessemer/cornerstone/string'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as Strings from '@bessemer/cornerstone/string'
+import * as Objects from '@bessemer/cornerstone/object'
 import { Locale } from '@bessemer/cornerstone/intl/locale'
 
 export type PlainDate = Temporal.PlainDate
-export const Namespace = createNamespace('plain-date')
+export const Namespace = ResourceKeys.createNamespace('plain-date')
 export type PlainDateLiteral = NominalType<string, typeof Namespace>
 export type PlainDateBuilder = {
   year: number
@@ -33,7 +32,7 @@ export function from(value: PlainDateLike | string | null): PlainDate | null
 export function from(value: PlainDateLike | string | undefined): PlainDate | undefined
 export function from(value: PlainDateLike | string | null | undefined): PlainDate | null | undefined
 export function from(value: PlainDateLike | string | null | undefined): PlainDate | null | undefined {
-  if (isNil(value)) {
+  if (Objects.isNil(value)) {
     return value
   }
 
@@ -41,30 +40,30 @@ export function from(value: PlainDateLike | string | null | undefined): PlainDat
     return value
   }
 
-  if (isString(value)) {
-    return unpackResult(parseString(value))
+  if (Strings.isString(value)) {
+    return ErrorEvents.unpackResult(parseString(value))
   }
 
   return Temporal.PlainDate.from(value)
 }
 
 export const CompareBy: Comparator<PlainDate> = (first: PlainDate, second: PlainDate): number => Temporal.PlainDateTime.compare(first, second)
-export const EqualBy = fromComparator(CompareBy)
+export const EqualBy = Equalitors.fromComparator(CompareBy)
 
-export const parseString = (value: string): Result<PlainDate, ErrorEvent> => {
+export const parseString = (value: string): Results.Result<PlainDate, ErrorEvents.ErrorEvent> => {
   try {
-    return success(Temporal.PlainDate.from(value))
+    return Results.success(Temporal.PlainDate.from(value))
   } catch (e) {
-    if (!isError(e)) {
+    if (!Errors.isError(e)) {
       throw e
     }
 
-    return failure(invalidValue(value, { namespace: Namespace, message: e.message }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: e.message }))
   }
 }
 
-export const fromInstant = (instant: InstantLike, zone: TimeZoneId): PlainDate => {
-  return _fromInstant(instant).toZonedDateTimeISO(zone).toPlainDate()
+export const fromInstant = (instant: Instants.InstantLike, zone: TimeZoneId): PlainDate => {
+  return Instants.from(instant).toZonedDateTimeISO(zone).toPlainDate()
 }
 
 export function toLiteral(likeValue: PlainDateLike): PlainDateLiteral
@@ -72,7 +71,7 @@ export function toLiteral(likeValue: PlainDateLike | null): PlainDateLiteral | n
 export function toLiteral(likeValue: PlainDateLike | undefined): PlainDateLiteral | undefined
 export function toLiteral(likeValue: PlainDateLike | null | undefined): PlainDateLiteral | null | undefined
 export function toLiteral(likeValue: PlainDateLike | null | undefined): PlainDateLiteral | null | undefined {
-  if (isNil(likeValue)) {
+  if (Objects.isNil(likeValue)) {
     return likeValue
   }
 
@@ -80,14 +79,14 @@ export function toLiteral(likeValue: PlainDateLike | null | undefined): PlainDat
   return value.toString() as PlainDateLiteral
 }
 
-export const SchemaLiteral = structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
-export const SchemaInstance = structuredTransform(Zod.string(), parseString)
+export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const isPlainDateTime = (value: unknown): value is PlainDate => {
   return value instanceof Temporal.PlainDateTime
 }
 
-export const now = (zone: TimeZoneId, clock = DefaultClock): PlainDate => {
+export const now = (zone: TimeZoneId, clock = Clocks.Default): PlainDate => {
   return fromInstant(clock.instant(), zone)
 }
 
@@ -95,15 +94,15 @@ export const merge = (element: PlainDateLike, builder: Partial<PlainDateBuilder>
   return from(element).with(builder)
 }
 
-export const add = (element: PlainDateLike, duration: DurationLike): PlainDate => {
-  return from(element).add(_fromDuration(duration))
+export const add = (element: PlainDateLike, duration: Durations.DurationLike): PlainDate => {
+  return from(element).add(Durations.from(duration))
 }
 
-export const subtract = (element: PlainDateLike, duration: DurationLike): PlainDate => {
-  return from(element).subtract(_fromDuration(duration))
+export const subtract = (element: PlainDateLike, duration: Durations.DurationLike): PlainDate => {
+  return from(element).subtract(Durations.from(duration))
 }
 
-export const until = (element: PlainDateLike, other: PlainDateLike): Duration => {
+export const until = (element: PlainDateLike, other: PlainDateLike): Durations.Duration => {
   return from(element).until(from(other))
 }
 
@@ -111,7 +110,7 @@ export function isEqual(element: PlainDateLike, other: PlainDateLike): boolean
 export function isEqual(element: PlainDateLike | null, other: PlainDateLike | null): boolean
 export function isEqual(element: PlainDateLike | undefined, other: PlainDateLike | undefined): boolean
 export function isEqual(element: PlainDateLike | null | undefined, other: PlainDateLike | null | undefined): boolean {
-  if (isNil(element) || isNil(other)) {
+  if (Objects.isNil(element) || Objects.isNil(other)) {
     return element === other
   }
 
@@ -137,10 +136,9 @@ export type DateFormatOptions = {
 export const format = (element: PlainDateLike, locale: Locale, options: DateFormatOptions): string => {
   const plainDate = from(element)
 
-  // Convert PlainDateTime to Date
   const date = new Date(
     plainDate.year,
-    plainDate.month - 1, // Date months are 0-based
+    plainDate.month - 1,
     plainDate.day
   )
 
