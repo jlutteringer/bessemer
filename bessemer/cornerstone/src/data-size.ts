@@ -9,7 +9,7 @@ export const fromBytes = (value: number): DataSize => {
   return value as DataSize
 }
 
-export const Schema = Zod.number().transform(fromBytes).meta({
+export const Schema = Zod.number().int().transform(fromBytes).meta({
   type: 'number',
   format: Namespace,
 })

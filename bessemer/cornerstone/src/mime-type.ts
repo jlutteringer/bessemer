@@ -1,5 +1,4 @@
 import { NominalType } from '@bessemer/cornerstone/types'
-import Zod from 'zod'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -24,7 +23,7 @@ export const from = (value: string): MimeLiteral => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
+export const Schema = ZodUtil.structuredTransform<MimeLiteral>(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[\\w-]+\\/[\\w.+-]+$',

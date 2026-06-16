@@ -1,4 +1,3 @@
-import Zod from 'zod'
 import { NominalType } from '@bessemer/cornerstone/types'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
@@ -30,4 +29,4 @@ export const from = (value: string): DomainName => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString)
+export const Schema = ZodUtil.structuredTransform<DomainName>(ZodUtil.string(), parseString)

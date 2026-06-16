@@ -1,5 +1,4 @@
 import { NominalType } from '@bessemer/cornerstone/types'
-import Zod from 'zod'
 import { CountryCode } from '@bessemer/cornerstone/intl/country-code'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
@@ -15,7 +14,10 @@ export type CountrySubdivisionCode = NominalType<string, typeof Namespace>
 export const parseString = (value: string): Result<CountrySubdivisionCode, ErrorEvent> => {
   if (!/^[A-Z]{2}-[A-Z0-9]{1,3}$/i.test(value)) {
     return Results.failure(
-      ErrorEvents.invalidValue(value, { namespace: Namespace, message: `CountrySubdivisionCode must follow ISO 3166-2 format (e.g., US-CA, GB-ENG).` })
+      ErrorEvents.invalidValue(value, {
+        namespace: Namespace,
+        message: `CountrySubdivisionCode must follow ISO 3166-2 format (e.g., US-CA, GB-ENG).`,
+      })
     )
   }
 
@@ -26,7 +28,7 @@ export const from = (value: string): CountrySubdivisionCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString)
+export const Schema = ZodUtil.structuredTransform<CountrySubdivisionCode>(ZodUtil.string(), parseString)
 
 export const getCountry = (code: CountrySubdivisionCode): CountryCode => {
   const countryPart = code.split('-')[0]

@@ -1,5 +1,4 @@
 import { NominalType } from '@bessemer/cornerstone/types'
-import Zod from 'zod'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -22,7 +21,7 @@ export const from = (value: string): CountryCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString)
+export const Schema = ZodUtil.structuredTransform<CountryCode>(ZodUtil.string(), parseString)
 
 export const UnitedStates = 'US' as CountryCode
 export const Canada = 'CA' as CountryCode

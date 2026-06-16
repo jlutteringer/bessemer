@@ -1,4 +1,3 @@
-import Zod from 'zod'
 import { NominalType } from '@bessemer/cornerstone/types'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
@@ -12,7 +11,9 @@ export type HexCode = NominalType<string, typeof Namespace>
 
 export const parseString = (value: string): Result<HexCode, ErrorEvent> => {
   if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)) {
-    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `HexCode must be a valid hex code (# followed by 3 or 6 characters).` }))
+    return Results.failure(
+      ErrorEvents.invalidValue(value, { namespace: Namespace, message: `HexCode must be a valid hex code (# followed by 3 or 6 characters).` })
+    )
   }
 
   let normalizedValue = value.toUpperCase()
@@ -29,7 +30,7 @@ export const from = (value: string): HexCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
+export const Schema = ZodUtil.structuredTransform<HexCode>(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$',

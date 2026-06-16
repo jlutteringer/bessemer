@@ -1,5 +1,4 @@
 import { NominalType } from '@bessemer/cornerstone/types'
-import Zod from 'zod'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
@@ -25,7 +24,7 @@ export const from = (value: string): UuidV7 => {
   return ErrorEvents.unpackResult(parse(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parse).meta({
+export const Schema = ZodUtil.structuredTransform<UuidV7>(ZodUtil.string(), parse).meta({
   type: 'string',
   format: 'uuid',
   pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',

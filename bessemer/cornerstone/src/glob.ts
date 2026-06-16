@@ -1,5 +1,4 @@
 import { minimatch } from 'minimatch'
-import Zod from 'zod'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import { NominalType } from '@bessemer/cornerstone/types'
@@ -47,7 +46,7 @@ export const from = (value: string): GlobPattern => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
+export const Schema = ZodUtil.structuredTransform<GlobPattern>(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[a-zA-Z0-9\\-_.\\/\\\\*?\\[\\]{}!,|]+$',
