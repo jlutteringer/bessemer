@@ -1,5 +1,6 @@
-import { evaluate, LazyValue } from '@bessemer/cornerstone/lazy'
-import { isUndefined } from '@bessemer/cornerstone/object'
+import * as Lazy from '@bessemer/cornerstone/lazy'
+import { LazyValue } from '@bessemer/cornerstone/lazy'
+import * as Objects from '@bessemer/cornerstone/object'
 import { UnknownRecord } from 'type-fest'
 
 export type GlobalVariable<T> = {
@@ -16,7 +17,7 @@ if (typeof window !== 'undefined') {
   Global = globalThis as any
 }
 
-if (isUndefined(Global.BessemerGlobalVariables)) {
+if (Objects.isUndefined(Global.BessemerGlobalVariables)) {
   Global.BessemerGlobalVariables = {}
 }
 
@@ -25,8 +26,8 @@ export const createGlobalVariable = <T>(key: string, defaultValue: LazyValue<T>)
     getValue: () => {
       const value = Global.BessemerGlobalVariables[key] as T | undefined
 
-      if (isUndefined(value)) {
-        const def = evaluate(defaultValue)
+      if (Objects.isUndefined(value)) {
+        const def = Lazy.evaluate(defaultValue)
         Global.BessemerGlobalVariables[key] = def
         return def
       }

@@ -1,27 +1,10 @@
-/**
- * This module provides an implementation of the `Order` type class which is used to define a total ordering on some type `A`.
- * An order is defined by a relation `<=`, which obeys the following laws:
- *
- * - either `x <= y` or `y <= x` (totality)
- * - if `x <= y` and `y <= x`, then `x == y` (antisymmetry)
- * - if `x <= y` and `y <= z`, then `x <= z` (transitivity)
- *
- * The truth table for compare is defined as follows:
- *
- * | `x <= y` | `x >= y` | Ordering |                       |
- * | -------- | -------- | -------- | --------------------- |
- * | `true`   | `true`   | `0`      | corresponds to x == y |
- * | `true`   | `false`  | `< 0`    | corresponds to x < y  |
- * | `false`  | `true`   | `> 0`    | corresponds to x > y  |
- *
- * @since 2.0.0
- */
 import Zod, { ZodError, ZodType } from 'zod'
 import { ResourceKey } from '@bessemer/cornerstone/resource-key'
-import { parse as jsonParse } from '@bessemer/cornerstone/json'
+import * as Json from '@bessemer/cornerstone/json'
 import * as Results from '@bessemer/cornerstone/result'
 import { AsyncResult, Result } from '@bessemer/cornerstone/result'
-import { ErrorEvent, unpackResult } from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { $RefinementCtx } from 'zod/v4/core'
 
 export const defaults = <T extends ZodType>(data: Zod.input<T>, schema: T): Zod.output<T> => {
@@ -51,7 +34,7 @@ export const parseAsync = async <T extends ZodType>(type: T, data: unknown): Asy
 }
 
 export const parseJson = <T extends ZodType>(type: T, data: string): Result<Zod.infer<T>, SyntaxError | ZodError<Zod.infer<T>>> => {
-  const result = jsonParse(data)
+  const result = Json.parse(data)
   if (Results.isFailure(result)) {
     return result
   }
@@ -60,7 +43,7 @@ export const parseJson = <T extends ZodType>(type: T, data: string): Result<Zod.
 }
 
 export const parseJsonAsync = async <T extends ZodType>(type: T, data: string): AsyncResult<Zod.infer<T>, SyntaxError | ZodError<Zod.infer<T>>> => {
-  const result = jsonParse(data)
+  const result = Json.parse(data)
   if (Results.isFailure(result)) {
     return result
   }
@@ -82,21 +65,38 @@ export const key = (): ZodType<ResourceKey> => {
   return Zod.string()
 }
 
+export const any = <InputType>(): ZodType<InputType, InputType> => {
+  return Zod.any() as any as ZodType<InputType, InputType>
+}
+
+export const string = <InputType extends string>(): ZodType<InputType, InputType> => {
+  return Zod.string() as any as ZodType<InputType, InputType>
+}
+
 export type StructuredTransformer<InputType, OutputType> = (value: InputType) => Result<OutputType, ErrorEvent>
 
-export const structuredTransform = <InputType, OutputType, SchemaType extends ZodType<InputType, InputType> = ZodType<InputType, InputType>>(
+export const structuredTransform = <
+  InputType,
+  OutputType = InputType,
+  SchemaType extends ZodType<InputType, InputType> = ZodType<InputType, InputType>
+>(
   schema: SchemaType,
   transformer: StructuredTransformer<InputType, OutputType>
 ) => {
-  const refinedResultTransformer = refineResult(transformer)
-
-  return schema.superRefine(refinedResultTransformer).transform((it) => {
+  return structuredRefine(schema, transformer).transform((it) => {
     const result = transformer(it)
-    return unpackResult(result)
+    return ErrorEvents.unpackResult(result)
   })
 }
 
-export const refineResult = <InputType, OutputType>(
+export const structuredRefine = <InputType, SchemaType extends ZodType<InputType, InputType> = ZodType<InputType, InputType>>(
+  schema: SchemaType,
+  transformer: StructuredTransformer<InputType, any>
+) => {
+  return schema.superRefine(refineResult(transformer))
+}
+
+const refineResult = <InputType, OutputType>(
   transformer: StructuredTransformer<InputType, OutputType>
 ): ((value: InputType, context: $RefinementCtx<InputType>) => void) => {
   return (value, context) => {

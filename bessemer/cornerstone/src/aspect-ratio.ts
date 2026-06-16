@@ -1,34 +1,36 @@
 import Zod from 'zod'
-import { greatestCommonFactor } from '@bessemer/cornerstone/math'
+import * as Maths from '@bessemer/cornerstone/math'
 import { NominalType } from '@bessemer/cornerstone/types'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
-export const Namespace = createNamespace('aspect-ratio')
+export const Namespace = ResourceKeys.createNamespace('aspect-ratio')
 export type AspectRatio = NominalType<string, typeof Namespace>
 
 export const parseString = (value: string): Result<AspectRatio, ErrorEvent> => {
   if (!/^[1-9]\d*:[1-9]\d*$/.test(value)) {
-    return failure(invalidValue(value, { namespace: Namespace, message: `Aspect Ratio must be in the format 'width:height' (e.g., '16:9', '4:3').` }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `Aspect Ratio must be in the format 'width:height' (e.g., '16:9', '4:3').` }))
   }
 
-  return success(value as AspectRatio)
+  return Results.success(value as AspectRatio)
 }
 
 export const from = (value: string): AspectRatio => {
-  return unpackResult(parseString(value))
+  return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = structuredTransform(Zod.string(), parseString).meta({
+export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[1-9]\\d*:[1-9]\\d*$',
 })
 
 export const fromDimensions = (width: number, height: number): AspectRatio => {
-  const factor = greatestCommonFactor(width, height)
+  const factor = Maths.greatestCommonFactor(width, height)
   const ratioWidth = width / factor
   const ratioHeight = height / factor
   return `${ratioWidth}:${ratioHeight}` as AspectRatio

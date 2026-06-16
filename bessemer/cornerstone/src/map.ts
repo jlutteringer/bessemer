@@ -1,6 +1,6 @@
 import { Entry } from '@bessemer/cornerstone/entry'
-import { concatenate as arrayConcatenate } from '@bessemer/cornerstone/array'
-import { assert, assertPresent } from '@bessemer/cornerstone/assertion'
+import * as Arrays from '@bessemer/cornerstone/array'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 import { Objects } from '@bessemer/cornerstone/index'
 import { Dictionary } from '@bessemer/cornerstone/types'
 
@@ -77,7 +77,7 @@ export const groupBy = <CollectionType, KeyType>(
   return collect(
     iterable,
     (it) => [mapper(it), [it]],
-    (_, first, second) => arrayConcatenate(first, second)
+    (_, first, second) => Arrays.concatenate(first, second)
   )
 }
 
@@ -104,7 +104,7 @@ export const groupBy = <CollectionType, KeyType>(
 export const fuse = <KeyType, FuseType, ValueType>(target: Map<KeyType, FuseType>, valuesMap: Map<FuseType, ValueType>): Map<KeyType, ValueType> => {
   return mapValues(target, (value) => {
     const newValue = valuesMap.get(value)
-    assertPresent(newValue, () => `Maps.fuse - Encountered missing linkage: ${value}`)
+    Assertions.assertPresent(newValue, () => `Maps.fuse - Encountered missing linkage: ${value}`)
     return newValue
   })
 }
@@ -357,7 +357,7 @@ export const append = <KeyType, ValueType>(map: Map<KeyType, ValueType>, ...valu
  */
 export const appendInto = <KeyType, ValueType>(map: Map<KeyType, ValueType>, ...values: Array<Entry<KeyType, ValueType>>): void => {
   for (const [key, value] of values) {
-    assert(!map.has(key), () => `Maps.append - Encountered illegal duplicate key: ${key}`)
+    Assertions.assert(!map.has(key), () => `Maps.append - Encountered illegal duplicate key: ${key}`)
     map.set(key, value)
   }
 }
@@ -410,7 +410,7 @@ export const concatenate = <KeyType, ValueType>(map: Map<KeyType, ValueType>, ..
 export const concatenateInto = <KeyType, ValueType>(map: Map<KeyType, ValueType>, ...values: Array<Map<KeyType, ValueType>>): void => {
   for (const otherMap of values) {
     for (const [key, value] of otherMap) {
-      assert(!map.has(key), () => `Maps.concatenate - Encountered illegal duplicate key: ${key}`)
+      Assertions.assert(!map.has(key), () => `Maps.concatenate - Encountered illegal duplicate key: ${key}`)
       map.set(key, value)
     }
   }

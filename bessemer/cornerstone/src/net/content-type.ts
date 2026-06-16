@@ -2,14 +2,14 @@ import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { Dictionary, NominalType } from '@bessemer/cornerstone/types'
 import * as MimeTypes from '@bessemer/cornerstone/mime-type'
 import { MimeLiteral } from '@bessemer/cornerstone/mime-type'
 import * as Strings from '@bessemer/cornerstone/string'
 import * as Objects from '@bessemer/cornerstone/object'
 
-export const Namespace = createNamespace('content-type')
+export const Namespace = ResourceKeys.createNamespace('content-type')
 export type ContentType = { mimeType: MimeLiteral; parameters: Dictionary<string> }
 export type ContentTypeLiteral = NominalType<string, typeof Namespace>
 

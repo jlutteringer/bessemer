@@ -1,35 +1,37 @@
 import { NominalType } from '@bessemer/cornerstone/types'
 import Zod from 'zod'
-import { isNil } from '@bessemer/cornerstone/object'
-import { padStart } from '@bessemer/cornerstone/string'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as Objects from '@bessemer/cornerstone/object'
+import * as Strings from '@bessemer/cornerstone/string'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
-export const Namespace = createNamespace('uuid-v4')
+export const Namespace = ResourceKeys.createNamespace('uuid-v4')
 export type UuidV4 = NominalType<string, typeof Namespace>
 
 export const parse = (value: string): Result<UuidV4, ErrorEvent> => {
   if (!/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(value)) {
-    return failure(invalidValue(value, { namespace: Namespace, message: `[${Namespace}]: Invalid UuidV4 format: [${value}]` }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `[${Namespace}]: Invalid UuidV4 format: [${value}]` }))
   }
 
-  return success(value.toLowerCase() as UuidV4)
+  return Results.success(value.toLowerCase() as UuidV4)
 }
 
 export const from = (value: string): UuidV4 => {
-  return unpackResult(parse(value))
+  return ErrorEvents.unpackResult(parse(value))
 }
 
-export const Schema = structuredTransform(Zod.string(), parse).meta({
+export const Schema = ZodUtil.structuredTransform(Zod.string(), parse).meta({
   type: 'string',
   format: 'uuid',
   pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
 })
 
 export const generate = (): UuidV4 => {
-  if (isNil(crypto.randomUUID)) {
+  if (Objects.isNil(crypto.randomUUID)) {
     return `${randomHex(8)}-${randomHex(4)}-${randomHex(4)}-${randomHex(4)}-${randomHex(12)}` as UuidV4
   } else {
     return crypto.randomUUID() as UuidV4
@@ -39,5 +41,5 @@ export const generate = (): UuidV4 => {
 const randomHex = (characters: number) => {
   // Generates a random number between 0x0..0 and 0xF..F for the target number of characters
   const randomNum = Math.floor(Math.random() * (16 ** characters - 1))
-  return padStart(randomNum.toString(16), characters, '0')
+  return Strings.padStart(randomNum.toString(16), characters, '0')
 }

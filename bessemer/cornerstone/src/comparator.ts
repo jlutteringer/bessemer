@@ -1,8 +1,8 @@
 import { BasicType } from '@bessemer/cornerstone/types'
-import { isString } from '@bessemer/cornerstone/string'
-import { isNumber } from '@bessemer/cornerstone/math'
-import { isDate } from '@bessemer/cornerstone/temporal/date'
-import { isBoolean } from '@bessemer/cornerstone/object'
+import * as Strings from '@bessemer/cornerstone/string'
+import * as Maths from '@bessemer/cornerstone/math'
+import * as Dates from '@bessemer/cornerstone/temporal/date'
+import * as Objects from '@bessemer/cornerstone/object'
 
 export type Comparator<T> = (first: T, second: T) => number
 
@@ -40,13 +40,13 @@ export const natural = (): Comparator<BasicType | null> => {
   return aggregate([
     nullsLast(),
     (first, second) => {
-      if (isString(first) && isString(second)) {
+      if (Strings.isString(first) && Strings.isString(second)) {
         return first.localeCompare(second)
-      } else if (isNumber(first) && isNumber(second)) {
+      } else if (Maths.isNumber(first) && Maths.isNumber(second)) {
         return first! - second!
-      } else if (isDate(first) && isDate(second)) {
+      } else if (Dates.isDate(first) && Dates.isDate(second)) {
         return first.getTime() - second.getTime()
-      } else if (isBoolean(first) && isBoolean(second)) {
+      } else if (Objects.isBoolean(first) && Objects.isBoolean(second)) {
         if (first !== second) {
           return second ? 1 : 0
         } else {

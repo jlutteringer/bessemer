@@ -3,11 +3,11 @@ import * as Uris from '@bessemer/cornerstone/net/uri'
 import { Uri, UriBuilder, UriComponent, UriLiteral, UriLocation, UriParseMode } from '@bessemer/cornerstone/net/uri'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
-import { ErrorEvent, unpackResult } from '@bessemer/cornerstone/error/error-event'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as Strings from '@bessemer/cornerstone/string'
 import * as Arrays from '@bessemer/cornerstone/array'
-import { first, isEmpty } from '@bessemer/cornerstone/array'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import Zod from 'zod'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import { Equalitor } from '@bessemer/cornerstone/equalitor'
@@ -68,7 +68,7 @@ export function from(value: UrlLike | string | null | undefined): Url | null | u
     return fromUri(value)
   }
   if (Strings.isString(value)) {
-    return unpackResult(parseString(value))
+    return ErrorEvents.unpackResult(parseString(value))
   }
 
   return build(value as UrlBuilder)
@@ -87,7 +87,7 @@ export function toLiteral(likeValue: UrlLike | null | undefined): UrlLiteral | n
   return format(value) as UrlLiteral
 }
 
-export const SchemaLiteral = structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
 // JOHN need a schema for the object version...
 // export const SchemaInstance = structuredTransform(Zod.string(), parseString)
 
@@ -241,7 +241,7 @@ const fromUri = (uri: Uri): Url => {
     uri.location.query.split('&').forEach((parameterPair) => {
       let splitParameters = parameterPair.split('=')
 
-      if (!Strings.isBlank(first(splitParameters))) {
+      if (!Strings.isBlank(Arrays.first(splitParameters))) {
         let key = decode(splitParameters[0]!)
         let value = ''
         if (splitParameters.length === 2) {
@@ -292,7 +292,7 @@ const formatPathSegments = (pathSegments: Array<string>, hasHost: boolean, relat
 
 const formatQueryParameters = (parameters: Dictionary<string | Array<string>>): UriComponent | null => {
   const parameterEntries = Object.entries(parameters)
-  if (isEmpty(parameterEntries)) {
+  if (Arrays.isEmpty(parameterEntries)) {
     return null
   }
 

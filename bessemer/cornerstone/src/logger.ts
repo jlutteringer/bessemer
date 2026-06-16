@@ -1,8 +1,9 @@
 import pino from 'pino'
-import { createGlobalVariable } from '@bessemer/cornerstone/global-variable'
-import { evaluate, LazyValue } from '@bessemer/cornerstone/lazy'
+import * as GlobalVariables from '@bessemer/cornerstone/global-variable'
+import * as Lazy from '@bessemer/cornerstone/lazy'
+import { LazyValue } from '@bessemer/cornerstone/lazy'
 import { UnknownRecord } from 'type-fest'
-import { deepMerge, isNil } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 type PinoLogger = pino.Logger
 type PinoBindings = pino.Bindings
@@ -16,37 +17,37 @@ export class Logger {
 
   trace: LogFunction = (message: LazyValue<string>, options?: LogOptions): void => {
     if (this.logger.isLevelEnabled?.('trace') ?? true) {
-      this.logger.trace({ err: options?.error, context: options?.context }, evaluate(message))
+      this.logger.trace({ err: options?.error, context: options?.context }, Lazy.evaluate(message))
     }
   }
 
   debug: LogFunction = (message: LazyValue<string>, options?: LogOptions): void => {
     if (this.logger.isLevelEnabled?.('debug') ?? true) {
-      this.logger.debug({ err: options?.error, context: options?.context }, evaluate(message))
+      this.logger.debug({ err: options?.error, context: options?.context }, Lazy.evaluate(message))
     }
   }
 
   info: LogFunction = (message: LazyValue<string>, options?: LogOptions): void => {
     if (this.logger.isLevelEnabled?.('info') ?? true) {
-      this.logger.info({ err: options?.error, context: options?.context }, evaluate(message))
+      this.logger.info({ err: options?.error, context: options?.context }, Lazy.evaluate(message))
     }
   }
 
   warn: LogFunction = (message: LazyValue<string>, options?: LogOptions): void => {
     if (this.logger.isLevelEnabled?.('warn') ?? true) {
-      this.logger.warn({ err: options?.error, context: options?.context }, evaluate(message))
+      this.logger.warn({ err: options?.error, context: options?.context }, Lazy.evaluate(message))
     }
   }
 
   error: LogFunction = (message: LazyValue<string>, options?: LogOptions): void => {
     if (this.logger.isLevelEnabled?.('error') ?? true) {
-      this.logger.error({ err: options?.error, context: options?.context }, evaluate(message))
+      this.logger.error({ err: options?.error, context: options?.context }, Lazy.evaluate(message))
     }
   }
 
   fatal: LogFunction = (message: LazyValue<string>, options?: LogOptions): void => {
     if (this.logger.isLevelEnabled?.('fatal') ?? true) {
-      this.logger.fatal({ err: options?.error, context: options?.context }, evaluate(message))
+      this.logger.fatal({ err: options?.error, context: options?.context }, Lazy.evaluate(message))
     }
   }
 }
@@ -77,7 +78,7 @@ const applyDefaultOptions = (options?: LoggerOptions): LoggerOptions => {
     // ...getPrettyTransport(),
   }
 
-  return deepMerge(defaultOptions, options)
+  return Objects.deepMerge(defaultOptions, options)
 }
 
 const createProxyHandler = (getLogger: () => PinoLogger): ProxyHandler<PinoLogger> => {
@@ -90,7 +91,7 @@ const createProxyHandler = (getLogger: () => PinoLogger): ProxyHandler<PinoLogge
       cachedVersion = GlobalLoggerState.getValue().version
     }
 
-    if (isNil(cachedLogger)) {
+    if (Objects.isNil(cachedLogger)) {
       cachedLogger = getLogger()
     }
 
@@ -113,7 +114,7 @@ const createProxyHandler = (getLogger: () => PinoLogger): ProxyHandler<PinoLogge
   }
 }
 
-const GlobalLoggerState = createGlobalVariable<{
+const GlobalLoggerState = GlobalVariables.createGlobalVariable<{
   version: number
   logger: pino.Logger
 }>('GlobalLoggerState', () => ({

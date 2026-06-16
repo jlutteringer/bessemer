@@ -1,8 +1,8 @@
-import { defineExpression } from '@bessemer/cornerstone/expression/internal'
+import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { Expression } from '@bessemer/cornerstone/expression'
 import { Arrays } from '@bessemer/cornerstone'
 
-export const ConcatenateExpression = defineExpression({
+export const ConcatenateExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Array.Concatenate',
   builder: (operands: Array<Expression<Array<Expression<unknown>>>>) => {
     return { operands }
@@ -15,7 +15,7 @@ export const ConcatenateExpression = defineExpression({
 
 export const concatenate = ConcatenateExpression.builder
 
-export const FirstExpression = defineExpression({
+export const FirstExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Array.First',
   builder: (operands: Array<Expression<Array<Expression<unknown>>>>) => {
     return { operands }

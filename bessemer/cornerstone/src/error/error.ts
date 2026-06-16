@@ -1,7 +1,7 @@
-import { isPresent } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 import { Throwable } from '@bessemer/cornerstone/types'
 import { LazyValue } from '@bessemer/cornerstone/lazy'
-import { assert } from '@bessemer/cornerstone/assertion'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 
 export const isError = (value: unknown): value is Error => {
   return (
@@ -16,7 +16,7 @@ export const isError = (value: unknown): value is Error => {
 }
 
 export function assertError(value: unknown, message: LazyValue<string> = () => 'Errors.assertError failed validation'): asserts value is Error {
-  return assert(isError(value), message)
+  return Assertions.assert(isError(value), message)
 }
 
 export const getCausalChain = (error: Error): Array<Error> => {
@@ -26,7 +26,7 @@ export const getCausalChain = (error: Error): Array<Error> => {
   while (true) {
     chain.push(current)
 
-    if (!isPresent(current.cause) || !isError(current.cause)) {
+    if (!Objects.isPresent(current.cause) || !isError(current.cause)) {
       break
     }
 
@@ -53,7 +53,7 @@ export const serialize = (error: Throwable): ErrorDto => {
     return { name: " Can't serialize error", message: 'Error is not an instance of Error', stack: null, cause: null }
   }
 
-  const cause = isPresent(error.cause) ? serialize(error.cause) : null
+  const cause = Objects.isPresent(error.cause) ? serialize(error.cause) : null
 
   const serialized: ErrorDto = {
     name: error.name,

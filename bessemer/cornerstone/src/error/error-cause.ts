@@ -1,8 +1,9 @@
 import Zod, { ZodType } from 'zod'
 import { ResourceNamespace } from '@bessemer/cornerstone/resource-key'
-import { BadRequest, Forbidden, InvalidValue, Required, Unauthorized, Unhandled } from '@bessemer/cornerstone/error/error-type'
+import * as ErrorTypes from '@bessemer/cornerstone/error/error-type'
 import { Dictionary } from '@bessemer/cornerstone/types'
-import { deepMerge, RecordAttribute } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
+import { RecordAttribute } from '@bessemer/cornerstone/object'
 import * as ErrorCodes from '@bessemer/cornerstone/error/error-code'
 import { ErrorCode, ErrorCodeLike } from '@bessemer/cornerstone/error/error-code'
 
@@ -54,8 +55,8 @@ export const from = (builder: ErrorCauseBuilder): ErrorCause => {
 
 export const unhandled = (builder?: ErrorCauseAugment): ErrorCause =>
   from({
-    code: ErrorCodes.from({ type: Unhandled, namespace: builder?.namespace }),
-    ...deepMerge(
+    code: ErrorCodes.from({ type: ErrorTypes.Unhandled, namespace: builder?.namespace }),
+    ...Objects.deepMerge(
       {
         message: 'An Unhandled Error has occurred.',
         attributes: { [HttpStatusCodeAttribute]: 500 },
@@ -66,8 +67,8 @@ export const unhandled = (builder?: ErrorCauseAugment): ErrorCause =>
 
 export const required = (builder?: ErrorCauseAugment): ErrorCause =>
   from({
-    code: ErrorCodes.from({ type: Required, namespace: builder?.namespace }),
-    ...deepMerge(
+    code: ErrorCodes.from({ type: ErrorTypes.Required, namespace: builder?.namespace }),
+    ...Objects.deepMerge(
       {
         message: 'The resource is required.',
         attributes: { [HttpStatusCodeAttribute]: 404 },
@@ -78,8 +79,8 @@ export const required = (builder?: ErrorCauseAugment): ErrorCause =>
 
 export const unauthorized = (builder?: ErrorCauseAugment): ErrorCause =>
   from({
-    code: ErrorCodes.from({ type: Unauthorized, namespace: builder?.namespace }),
-    ...deepMerge(
+    code: ErrorCodes.from({ type: ErrorTypes.Unauthorized, namespace: builder?.namespace }),
+    ...Objects.deepMerge(
       {
         message: 'The requested Resource requires authentication.',
         attributes: { [HttpStatusCodeAttribute]: 401 },
@@ -90,8 +91,8 @@ export const unauthorized = (builder?: ErrorCauseAugment): ErrorCause =>
 
 export const forbidden = (builder?: ErrorCauseAugment): ErrorCause =>
   from({
-    code: ErrorCodes.from({ type: Forbidden, namespace: builder?.namespace }),
-    ...deepMerge(
+    code: ErrorCodes.from({ type: ErrorTypes.Forbidden, namespace: builder?.namespace }),
+    ...Objects.deepMerge(
       {
         message: 'The requested Resource requires additional permissions to access.',
         attributes: { [HttpStatusCodeAttribute]: 403 },
@@ -102,8 +103,8 @@ export const forbidden = (builder?: ErrorCauseAugment): ErrorCause =>
 
 export const badRequest = (builder?: ErrorCauseAugment): ErrorCause =>
   from({
-    code: ErrorCodes.from({ type: BadRequest, namespace: builder?.namespace }),
-    ...deepMerge(
+    code: ErrorCodes.from({ type: ErrorTypes.BadRequest, namespace: builder?.namespace }),
+    ...Objects.deepMerge(
       {
         message: 'The format is invalid and cannot be processed.',
         attributes: { [HttpStatusCodeAttribute]: 400 },
@@ -114,8 +115,8 @@ export const badRequest = (builder?: ErrorCauseAugment): ErrorCause =>
 
 export const invalidValue = (value: unknown, builder?: ErrorCauseAugment): ErrorCause =>
   from({
-    code: ErrorCodes.from({ type: InvalidValue, namespace: builder?.namespace }),
-    ...deepMerge(
+    code: ErrorCodes.from({ type: ErrorTypes.InvalidValue, namespace: builder?.namespace }),
+    ...Objects.deepMerge(
       {
         message: 'The format is invalid and cannot be processed.',
         attributes: { [ValueAttribute]: value },

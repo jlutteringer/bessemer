@@ -1,6 +1,7 @@
 import { JsonValue } from 'type-fest'
-import { Result, tryValue } from '@bessemer/cornerstone/result'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
 
 export const parse = (data: string): Result<JsonValue, SyntaxError> => {
-  return tryValue(() => JSON.parse(data) as JsonValue) as Result<JsonValue, SyntaxError>
+  return Results.tryValue(() => JSON.parse(data) as JsonValue) as Result<JsonValue, SyntaxError>
 }

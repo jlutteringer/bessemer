@@ -1,5 +1,5 @@
 import Zod, { ZodType } from 'zod'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 
 export type PendingValue = {
@@ -120,7 +120,7 @@ export const handle = <T, N>(
   if (value.isError) {
     return handlers.error(value.data)
   }
-  if (isNil(value.data)) {
+  if (Objects.isNil(value.data)) {
     return handlers.absent()
   }
 

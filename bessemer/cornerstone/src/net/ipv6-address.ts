@@ -1,11 +1,13 @@
 import Zod from 'zod'
 import { NominalType } from '@bessemer/cornerstone/types'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
-export const Namespace = createNamespace('ipv6-address')
+export const Namespace = ResourceKeys.createNamespace('ipv6-address')
 export type IpV6Address = NominalType<string, typeof Namespace>
 
 const regex =
@@ -13,19 +15,19 @@ const regex =
 
 export const parseString = (value: string): Result<IpV6Address, ErrorEvent> => {
   if (!regex.test(value)) {
-    return failure(
-      invalidValue(value, {
+    return Results.failure(
+      ErrorEvents.invalidValue(value, {
         namespace: Namespace,
         message: `[${Namespace}]: Invalid characters for IpV6Address in string: [${value}]`,
       })
     )
   }
 
-  return success(value as IpV6Address)
+  return Results.success(value as IpV6Address)
 }
 
 export const from = (value: string): IpV6Address => {
-  return unpackResult(parseString(value))
+  return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = structuredTransform(Zod.string(), parseString)
+export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString)

@@ -1,6 +1,6 @@
 import Zod, { ZodType } from 'zod'
 import { NominalType } from '@bessemer/cornerstone/types'
-import { isUndefined } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 // JOHN bounds are still a mess! what about finite bounds ???
 export type Bounds<T> = NominalType<[T | null, T | null], 'Bounds'>
@@ -16,7 +16,7 @@ export const NumericSchema = schema(Zod.number())
 export type FiniteBounds<T> = [T, T]
 
 export const of = <T>(bounds: BoundsInput<T>): Bounds<T> => {
-  if (isUndefined(bounds[1])) {
+  if (Objects.isUndefined(bounds[1])) {
     return [bounds[0], null] as Bounds<T>
   }
 

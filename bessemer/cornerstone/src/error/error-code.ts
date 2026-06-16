@@ -2,7 +2,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NamespacedKey, ResourceNamespace } from '@bessemer/cornerstone/resource-key'
 import { ErrorType } from '@bessemer/cornerstone/error/error-type'
 import Zod from 'zod'
-import { isObject } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 /*
   Represents a structured error event. The code can be mapped to a unique type of error while the
@@ -16,7 +16,7 @@ export type ErrorCodeBuilder = { type: ErrorType; namespace?: ResourceNamespace 
 export type ErrorCodeLike = ErrorCode | ErrorCodeBuilder
 
 export const from = (code: ErrorCodeLike): ErrorCode => {
-  if (isObject(code)) {
+  if (Objects.isObject(code)) {
     return ResourceKeys.namespaceKey(code.type, code.namespace ?? ResourceKeys.emptyNamespace())
   }
 

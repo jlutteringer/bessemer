@@ -1,9 +1,10 @@
 import { TaggedType } from '@bessemer/cornerstone/types'
 import * as Comparators from '@bessemer/cornerstone/comparator'
 import { Comparator } from '@bessemer/cornerstone/comparator'
-import { Equalitor, fromComparator } from '@bessemer/cornerstone/equalitor'
-import { equalWith, isEmpty, sortWith } from '@bessemer/cornerstone/array'
-import { properPowerSet } from '@bessemer/cornerstone/set'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
+import { Equalitor } from '@bessemer/cornerstone/equalitor'
+import * as Arrays from '@bessemer/cornerstone/array'
+import * as Sets from '@bessemer/cornerstone/set'
 
 export type TagType<DataType> = TaggedType<string, ['TagType', DataType]>
 
@@ -27,7 +28,7 @@ export const tag = <T>(type: TagType<T>, value: T): Tag<T> => {
 export const value = <T>(value: T, tags: Array<Tag>) => {
   return {
     value,
-    tags: sortWith(tags, CompareBy),
+    tags: Arrays.sortWith(tags, CompareBy),
   }
 }
 
@@ -36,12 +37,12 @@ export const CompareBy: Comparator<Tag<any>> = Comparators.aggregate([
   Comparators.compareBy((it) => JSON.stringify(it.value), Comparators.natural()),
 ])
 
-export const EqualBy: Equalitor<Tag<any>> = fromComparator(CompareBy)
+export const EqualBy: Equalitor<Tag<any>> = Equalitors.fromComparator(CompareBy)
 
 export type SerializedTags = TaggedType<string, 'SerializedTags'>
 
 export const serializeTags = <T>(tags: Array<Tag<T>>): SerializedTags => {
-  const serializedTags: SerializedTags = sortWith(tags, CompareBy)
+  const serializedTags: SerializedTags = Arrays.sortWith(tags, CompareBy)
     .map(({ type, value }) => `${type}:${JSON.stringify(value)}`)
     .join('.')
 
@@ -53,12 +54,12 @@ export const resolve = <T>(values: Array<TaggedValue<T>>, tags: Array<Tag>): Arr
 }
 
 export const resolveBy = <T>(values: Array<T>, mapper: (value: T) => Array<Tag>, tags: Array<Tag>): Array<T> => {
-  const resolvedValues = properPowerSet(tags).flatMap((tags) => {
-    return values.filter((it) => equalWith(mapper(it), tags, EqualBy))
+  const resolvedValues = Sets.properPowerSet(tags).flatMap((tags) => {
+    return values.filter((it) => Arrays.equalWith(mapper(it), tags, EqualBy))
   })
 
-  if (isEmpty(resolvedValues)) {
-    const defaultValues = values.filter((it) => isEmpty(mapper(it)))
+  if (Arrays.isEmpty(resolvedValues)) {
+    const defaultValues = values.filter((it) => Arrays.isEmpty(mapper(it)))
     return defaultValues
   }
 

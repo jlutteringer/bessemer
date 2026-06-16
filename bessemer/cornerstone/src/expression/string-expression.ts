@@ -1,7 +1,7 @@
-import { defineExpression } from '@bessemer/cornerstone/expression/internal'
+import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { Expression } from '@bessemer/cornerstone/expression'
 
-export const ConcatenateExpression = defineExpression({
+export const ConcatenateExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Concatenate',
   builder: (first: Expression<string>, second: Expression<string>) => {
     return { first, second }
@@ -13,7 +13,7 @@ export const ConcatenateExpression = defineExpression({
 
 export const concatenate = ConcatenateExpression.builder
 
-export const UppercaseExpression = defineExpression({
+export const UppercaseExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Uppercase',
   builder: (value: Expression<string>) => {
     return { value }
@@ -25,7 +25,7 @@ export const UppercaseExpression = defineExpression({
 
 export const uppercase = UppercaseExpression.builder
 
-export const SubstringExpression = defineExpression({
+export const SubstringExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Substring',
   builder: (string: Expression<string>, substring: Expression<string>) => {
     return { string, substring }

@@ -1,5 +1,5 @@
 import { TaggedType } from '@bessemer/cornerstone/types'
-import { assert } from '@bessemer/cornerstone/assertion'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 import Zod from 'zod'
 import {
   IndexSelector,
@@ -12,9 +12,9 @@ import {
   TypePathType,
   WildcardSelector,
 } from '@bessemer/cornerstone/object/type-path-type'
-import { isNil, isObject } from '@bessemer/cornerstone/object'
-import { isNumber } from '@bessemer/cornerstone/math'
-import { contains, containsAll, isEmpty, only } from '@bessemer/cornerstone/array'
+import * as Objects from '@bessemer/cornerstone/object'
+import * as Maths from '@bessemer/cornerstone/math'
+import * as Arrays from '@bessemer/cornerstone/array'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 
@@ -29,7 +29,7 @@ const TypePathRegex =
   /^(?:[a-zA-Z_$][a-zA-Z0-9_$]*|\*|\d+|\[\s*(?:\*|\d+(?:\s*,\s*\d+)*)\s*])(?:\.(?:[a-zA-Z_$][a-zA-Z0-9_$]*|\*|\d+)|\[\s*(?:\*|\d+(?:\s*,\s*\d+)*)\s*])*$|^$/
 
 export const from = <T extends string>(path: T): TypePath<ParseTypePath<T>> => {
-  assert(TypePathRegex.test(path), () => `Unable to parse TypePath from string: ${path}`)
+  Assertions.assert(TypePathRegex.test(path), () => `Unable to parse TypePath from string: ${path}`)
 
   if (path === '') {
     return [] as TypePath<ParseTypePath<T>>
@@ -110,7 +110,7 @@ export const getValue = <T extends TypePathType, N>(path: TypePath<T>, object: N
   let collectorMode = false
 
   for (const selector of path) {
-    if (isNil(current)) {
+    if (Objects.isNil(current)) {
       return undefined as TypePathGet<T, N>
     }
 
@@ -154,11 +154,11 @@ const evaluateSelector = (selector: TypePathSelector, current: unknown): [unknow
 const evaluateNameSelector = (selector: NameSelector, current: unknown): [unknown, boolean] => {
   if (Array.isArray(current)) {
     const numberSelector = Number(selector)
-    assert(isNumber(numberSelector), () => `Can't apply non-numeric selector: ${selector} to array: ${current}`)
+    Assertions.assert(Maths.isNumber(numberSelector), () => `Can't apply non-numeric selector: ${selector} to array: ${current}`)
     return evaluateIndexSelector([numberSelector], current)
   }
 
-  if (!isObject(current)) {
+  if (!Objects.isObject(current)) {
     return [undefined, false]
   }
 
@@ -170,7 +170,7 @@ const evaluateWildcardSelector = (current: unknown): [unknown, boolean] => {
     return [current, true]
   }
 
-  if (isObject(current)) {
+  if (Objects.isObject(current)) {
     throw new Error('Wildcard operations on Objects is not yet supported')
   }
 
@@ -183,7 +183,7 @@ const evaluateIndexSelector = (selector: IndexSelector, current: unknown): [unkn
   }
 
   if (selector.length === 1) {
-    return [current[only(selector)], false]
+    return [current[Arrays.only(selector)], false]
   }
 
   const indexSelector = selector as IndexSelector
@@ -207,7 +207,7 @@ export const matches = <MatchingPath extends TypePathType>(
   for (const targetPathSelector of targetPath) {
     const matchingPathSelector = matchingPath[index]
 
-    if (isNil(matchingPathSelector)) {
+    if (Objects.isNil(matchingPathSelector)) {
       return true
     } else if (isWildcardSelector(matchingPathSelector)) {
       // Matching path wildcards always match - they're wild
@@ -215,11 +215,11 @@ export const matches = <MatchingPath extends TypePathType>(
       return false
     } else if (Array.isArray(matchingPathSelector)) {
       if (Array.isArray(targetPathSelector)) {
-        if (!containsAll(matchingPathSelector, targetPathSelector)) {
+        if (!Arrays.containsAll(matchingPathSelector, targetPathSelector)) {
           return false
         }
       } else {
-        if (!contains(matchingPathSelector, Number(targetPathSelector))) {
+        if (!Arrays.contains(matchingPathSelector, Number(targetPathSelector))) {
           return false
         }
       }
@@ -229,7 +229,7 @@ export const matches = <MatchingPath extends TypePathType>(
           return false
         }
 
-        const targetPathSelectorIndex = only(targetPathSelector)
+        const targetPathSelectorIndex = Arrays.only(targetPathSelector)
         if (targetPathSelectorIndex !== Number(matchingPathSelector)) {
           return false
         }
@@ -258,7 +258,7 @@ export const intersectAny = (targetPath: TypePath, intersectingPath: TypePath): 
     const makeError = () =>
       new Error(`Path mismatch when intersecting. targetPath: ${targetPathSelector} does not match intersectingPath: ${intersectingPathSelector}`)
 
-    if (isNil(intersectingPathSelector)) {
+    if (Objects.isNil(intersectingPathSelector)) {
       return Results.success(of(result))
     } else if (isWildcardSelector(intersectingPathSelector)) {
       result.push(targetPathSelector)
@@ -266,14 +266,14 @@ export const intersectAny = (targetPath: TypePath, intersectingPath: TypePath): 
       return Results.failure(makeError())
     } else if (Array.isArray(intersectingPathSelector)) {
       if (Array.isArray(targetPathSelector)) {
-        const filteredTargetPaths = targetPathSelector.filter((it) => contains(intersectingPathSelector, it))
-        if (isEmpty(filteredTargetPaths)) {
+        const filteredTargetPaths = targetPathSelector.filter((it) => Arrays.contains(intersectingPathSelector, it))
+        if (Arrays.isEmpty(filteredTargetPaths)) {
           return Results.failure(makeError())
         }
 
         result.push(filteredTargetPaths)
       } else {
-        if (!contains(intersectingPathSelector, Number(targetPathSelector))) {
+        if (!Arrays.contains(intersectingPathSelector, Number(targetPathSelector))) {
           return Results.failure(makeError())
         }
 
@@ -285,7 +285,7 @@ export const intersectAny = (targetPath: TypePath, intersectingPath: TypePath): 
           return Results.failure(makeError())
         }
 
-        const targetPathSelectorIndex = only(targetPathSelector)
+        const targetPathSelectorIndex = Arrays.only(targetPathSelector)
         if (targetPathSelectorIndex !== Number(intersectingPathSelector)) {
           return Results.failure(makeError())
         }

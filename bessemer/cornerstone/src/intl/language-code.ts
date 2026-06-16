@@ -1,27 +1,29 @@
 import { NominalType } from '@bessemer/cornerstone/types'
 import Zod from 'zod'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
 // ISO 639 language codes
-export const Namespace = createNamespace('language-code')
+export const Namespace = ResourceKeys.createNamespace('language-code')
 export type LanguageCode = NominalType<string, typeof Namespace>
 
 export const parseString = (value: string): Result<LanguageCode, ErrorEvent> => {
   if (!/^[a-z]{2}$/i.test(value)) {
-    return failure(invalidValue(value, { namespace: Namespace, message: `CountryCode must be exactly 2 letters.` }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `CountryCode must be exactly 2 letters.` }))
   }
 
-  return success(value.toLowerCase() as LanguageCode)
+  return Results.success(value.toLowerCase() as LanguageCode)
 }
 
 export const from = (value: string): LanguageCode => {
-  return unpackResult(parseString(value))
+  return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = structuredTransform(Zod.string(), parseString)
+export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const English = 'en' as LanguageCode
 export const Spanish = 'es' as LanguageCode

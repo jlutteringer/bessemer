@@ -1,28 +1,30 @@
 import { NominalType } from '@bessemer/cornerstone/types'
 import Zod from 'zod'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
-export const Namespace = createNamespace('mime-type')
+export const Namespace = ResourceKeys.createNamespace('mime-type')
 export type MimeLiteral = NominalType<string, typeof Namespace>
 
 export const parseString = (initialValue: string): Result<MimeLiteral, ErrorEvent> => {
   const value = initialValue.trim().toLowerCase()
 
   if (!/^[\w-]+\/[\w.+-]+$/.test(value)) {
-    return failure(invalidValue(value, { namespace: Namespace, message: `Invalid MIME type format.` }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `Invalid MIME type format.` }))
   }
 
-  return success(value as MimeLiteral)
+  return Results.success(value as MimeLiteral)
 }
 
 export const from = (value: string): MimeLiteral => {
-  return unpackResult(parseString(value))
+  return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = structuredTransform(Zod.string(), parseString).meta({
+export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[\\w-]+\\/[\\w.+-]+$',

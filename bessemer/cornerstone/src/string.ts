@@ -1,6 +1,6 @@
 import { UnknownRecord } from 'type-fest'
-import { rest } from '@bessemer/cornerstone/array'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as Arrays from '@bessemer/cornerstone/array'
+import * as Objects from '@bessemer/cornerstone/object'
 import Zod from 'zod'
 
 export const isString = (value: any): value is string => {
@@ -12,7 +12,7 @@ export const isEmpty = (value: string): boolean => {
 }
 
 export const isEmptyOrNil = (value: string | null | undefined): boolean => {
-  if (isNil(value)) {
+  if (Objects.isNil(value)) {
     return true
   }
 
@@ -41,7 +41,7 @@ export const splitFirst = (str: string, splitter: string | RegExp): StringSplitR
       return { selection: null, separator: null, rest: str }
     }
 
-    return { selection: results[0]!, separator: splitter, rest: rest(results).join(splitter) }
+    return { selection: results[0]!, separator: splitter, rest: Arrays.rest(results).join(splitter) }
   } else {
     const match = splitter.exec(str)
 

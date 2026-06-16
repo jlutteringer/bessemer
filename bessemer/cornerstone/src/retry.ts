@@ -1,11 +1,12 @@
-import { Duration, fromMilliseconds, toMilliseconds, Zero } from '@bessemer/cornerstone/temporal/duration'
+import * as Durations from '@bessemer/cornerstone/temporal/duration'
+import { Duration } from '@bessemer/cornerstone/temporal/duration'
 import * as Results from '@bessemer/cornerstone/result'
 import { AsyncResult, Result } from '@bessemer/cornerstone/result'
 import { PartialDeep } from 'type-fest'
-import { deepMerge, isUndefined } from '@bessemer/cornerstone/object'
-import { sleep } from '@bessemer/cornerstone/async'
-import { random } from '@bessemer/cornerstone/math'
-import { assert } from '@bessemer/cornerstone/assertion'
+import * as Objects from '@bessemer/cornerstone/object'
+import * as Async from '@bessemer/cornerstone/async'
+import * as Maths from '@bessemer/cornerstone/math'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 
 export type RetryProps = {
   attempts: number
@@ -16,12 +17,12 @@ export type RetryOptions = PartialDeep<RetryProps>
 
 export const None: RetryProps = {
   attempts: 0,
-  delay: Zero,
+  delay: Durations.Zero,
 }
 
 export const DefaultRetryProps: RetryProps = {
   attempts: 3,
-  delay: fromMilliseconds(500),
+  delay: Durations.fromMilliseconds(500),
 }
 
 export type RetryState = {
@@ -30,8 +31,8 @@ export type RetryState = {
 }
 
 export const initialize = (initialOptions?: RetryOptions): RetryState => {
-  const props = deepMerge(DefaultRetryProps, initialOptions)
-  assert(props.attempts >= 0, () => 'usingRetry attempts must be >= 0')
+  const props = Objects.deepMerge(DefaultRetryProps, initialOptions)
+  Assertions.assert(props.attempts >= 0, () => 'usingRetry attempts must be >= 0')
 
   return {
     attempt: 0,
@@ -44,9 +45,9 @@ export const retry = async (state: RetryState): Promise<RetryState | undefined> 
     return undefined
   }
 
-  const delayMs = toMilliseconds(state.props.delay)
+  const delayMs = Durations.toMilliseconds(state.props.delay)
   const maxJitterMs = delayMs * 0.3 // We calculate max jitter as 30% of the delay
-  await sleep(fromMilliseconds(delayMs + random(0, maxJitterMs)))
+  await Async.sleep(Durations.fromMilliseconds(delayMs + Maths.random(0, maxJitterMs)))
 
   return {
     props: state.props,
@@ -68,7 +69,7 @@ export const usingRetry = async <T>(runnable: () => Promise<Result<T>>, initialO
     }
 
     retryState = await retry(retryState)
-  } while (!isUndefined(retryState))
+  } while (!Objects.isUndefined(retryState))
 
   return previousResult
 }

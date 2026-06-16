@@ -1,8 +1,8 @@
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NominalType } from '@bessemer/cornerstone/types'
 import Zod from 'zod'
 
-export const Namespace = createNamespace('error-type')
+export const Namespace = ResourceKeys.createNamespace('error-type')
 export type ErrorType = NominalType<string, typeof Namespace>
 export const Schema = Zod.string().transform((it) => it as ErrorType)
 

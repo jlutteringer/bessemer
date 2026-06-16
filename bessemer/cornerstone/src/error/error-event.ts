@@ -1,19 +1,20 @@
 import { Dictionary, Throwable } from '@bessemer/cornerstone/types'
-import { deepMerge, isNil, isObject, isPresent } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 import Zod from 'zod'
-import { evaluate, LazyValue } from '@bessemer/cornerstone/lazy'
-import { findInCausalChain as errorsFindInCausalChain, isError } from '@bessemer/cornerstone/error/error'
-import { isPromise } from '@bessemer/cornerstone/promise'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
+import * as Lazy from '@bessemer/cornerstone/lazy'
+import { LazyValue } from '@bessemer/cornerstone/lazy'
+import * as Errors from '@bessemer/cornerstone/error/error'
+import * as Promises from '@bessemer/cornerstone/promise'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorCauses from '@bessemer/cornerstone/error/error-cause'
 import { ErrorCause, ErrorCauseAugment, ErrorCauseBuilder } from '@bessemer/cornerstone/error/error-cause'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import { MergeExclusive } from 'type-fest'
-import { isEmpty } from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/array'
 
-export const Namespace = createNamespace('error-event')
+export const Namespace = ResourceKeys.createNamespace('error-event')
 
 export const Schema = Zod.object({
   _type: Namespace,
@@ -52,7 +53,7 @@ export class ErrorEventException extends Error {
 }
 
 export const from = (builder: ErrorEventBuilder): ErrorEvent => {
-  if (isPresent(builder.code)) {
+  if (Objects.isPresent(builder.code)) {
     const code = builder.code
     return {
       _type: Namespace,
@@ -62,7 +63,7 @@ export const from = (builder: ErrorEventBuilder): ErrorEvent => {
     }
   } else {
     Assertions.assertPresent(builder.causes)
-    Assertions.assert(!isEmpty(builder.causes), () => 'ErrorEvent - Unable to construct ErrorEvent with empty causes array.')
+    Assertions.assert(!Arrays.isEmpty(builder.causes), () => 'ErrorEvent - Unable to construct ErrorEvent with empty causes array.')
 
     return {
       _type: Namespace,
@@ -78,12 +79,12 @@ export const fromThrowable = (throwable: Throwable): ErrorEvent => {
     return throwable
   }
 
-  if (!isError(throwable)) {
+  if (!Errors.isError(throwable)) {
     return unhandled()
   }
 
-  const errorEventException = errorsFindInCausalChain(throwable, isErrorEventException) as ErrorEventException | undefined
-  if (isNil(errorEventException)) {
+  const errorEventException = Errors.findInCausalChain(throwable, isErrorEventException) as ErrorEventException | undefined
+  if (Objects.isNil(errorEventException)) {
     return unhandled()
   }
 
@@ -91,7 +92,7 @@ export const fromThrowable = (throwable: Throwable): ErrorEvent => {
 }
 
 export const isErrorEvent = (value: unknown): value is ErrorEvent => {
-  if (!isObject(value)) {
+  if (!Objects.isObject(value)) {
     return false
   }
 
@@ -111,13 +112,13 @@ export function withPropagation<ReturnType>(
 ): ReturnType | Promise<ReturnType> {
   try {
     let result = runnable()
-    if (isPromise(result)) {
-      return result.then((it) => it).catch((it) => propagate(it, evaluate(attributes)))
+    if (Promises.isPromise(result)) {
+      return result.then((it) => it).catch((it) => propagate(it, Lazy.evaluate(attributes)))
     } else {
       return result
     }
   } catch (throwable: Throwable) {
-    throw propagate(throwable, evaluate(attributes))
+    throw propagate(throwable, Lazy.evaluate(attributes))
   }
 }
 
@@ -138,46 +139,46 @@ export type ErrorEventAugment = ErrorCauseAugment & {
   context?: Dictionary<unknown>
 }
 
-export const unhandled = (builder?: ErrorEventAugment): ErrorEvent => from(deepMerge(ErrorCauses.unhandled(builder), builder))
+export const unhandled = (builder?: ErrorEventAugment): ErrorEvent => from(Objects.deepMerge(ErrorCauses.unhandled(builder), builder))
 
-export const required = (builder?: ErrorEventAugment): ErrorEvent => from(deepMerge(ErrorCauses.required(builder), builder))
+export const required = (builder?: ErrorEventAugment): ErrorEvent => from(Objects.deepMerge(ErrorCauses.required(builder), builder))
 
-export const unauthorized = (builder?: ErrorEventAugment): ErrorEvent => from(deepMerge(ErrorCauses.unauthorized(builder), builder))
+export const unauthorized = (builder?: ErrorEventAugment): ErrorEvent => from(Objects.deepMerge(ErrorCauses.unauthorized(builder), builder))
 
-export const forbidden = (builder?: ErrorEventAugment): ErrorEvent => from(deepMerge(ErrorCauses.forbidden(builder), builder))
+export const forbidden = (builder?: ErrorEventAugment): ErrorEvent => from(Objects.deepMerge(ErrorCauses.forbidden(builder), builder))
 
-export const badRequest = (builder?: ErrorEventAugment): ErrorEvent => from(deepMerge(ErrorCauses.badRequest(builder), builder))
+export const badRequest = (builder?: ErrorEventAugment): ErrorEvent => from(Objects.deepMerge(ErrorCauses.badRequest(builder), builder))
 
 export const invalidValue = (value: unknown, builder?: ErrorEventAugment): ErrorEvent =>
-  from(deepMerge(ErrorCauses.invalidValue(value, builder), builder))
+  from(Objects.deepMerge(ErrorCauses.invalidValue(value, builder), builder))
 
 export function assertPresent<T>(value: T, builder: LazyValue<ErrorEventAugment | undefined> = () => undefined): asserts value is NonNullable<T> {
-  if (isNil(value)) {
-    throw new ErrorEventException(required(evaluate(builder)))
+  if (Objects.isNil(value)) {
+    throw new ErrorEventException(required(Lazy.evaluate(builder)))
   }
 }
 
 export function assertAuthorized(value: boolean, builder: LazyValue<ErrorEventAugment | undefined> = () => undefined): asserts value is true {
   if (!value) {
-    throw new ErrorEventException(unauthorized(evaluate(builder)))
+    throw new ErrorEventException(unauthorized(Lazy.evaluate(builder)))
   }
 }
 
 export function assertPermitted(value: boolean, builder: LazyValue<ErrorEventAugment | undefined> = () => undefined): asserts value is true {
   if (!value) {
-    throw new ErrorEventException(forbidden(evaluate(builder)))
+    throw new ErrorEventException(forbidden(Lazy.evaluate(builder)))
   }
 }
 
 export function assertValid(value: boolean, builder: LazyValue<ErrorEventAugment | undefined> = () => undefined): asserts value is true {
   if (!value) {
-    throw new ErrorEventException(badRequest(evaluate(builder)))
+    throw new ErrorEventException(badRequest(Lazy.evaluate(builder)))
   }
 }
 
 export function assert(value: boolean, builder: LazyValue<ErrorEventBuilder>): asserts value is true {
   if (!value) {
-    throw new ErrorEventException(from(evaluate(builder)))
+    throw new ErrorEventException(from(Lazy.evaluate(builder)))
   }
 }
 

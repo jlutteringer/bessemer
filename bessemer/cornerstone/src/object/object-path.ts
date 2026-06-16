@@ -8,17 +8,12 @@ import {
   TypePathGet,
   TypePathType,
 } from '@bessemer/cornerstone/object/type-path-type'
-import {
-  from as typePathFromString,
-  getValue as typePathGetValue,
-  intersect as typePathIntersect,
-  matches as typePathMatches,
-  TypePath,
-} from '@bessemer/cornerstone/object/type-path'
-import { isEmpty, only } from '@bessemer/cornerstone/array'
-import { assert } from '@bessemer/cornerstone/assertion'
+import { TypePath } from '@bessemer/cornerstone/object/type-path'
+import * as TypePaths from '@bessemer/cornerstone/object/type-path'
+import * as Arrays from '@bessemer/cornerstone/array'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 import { produce } from 'immer'
-import { isObject } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 // JOHN this probably should be brought into the structured transform regime
 export type ObjectPath<T extends TypePathType = TypePathType> = TaggedType<ObjectPathConcreteType, ['TypePath', T]>
@@ -28,13 +23,13 @@ export const of = <T extends ObjectPathConcreteType>(value: T): ObjectPath<Infer
 }
 
 export const from = <T extends string>(path: T): ObjectPath<ParseObjectPath<T>> => {
-  const typePath = typePathFromString(path)
+  const typePath = TypePaths.from(path)
 
   typePath.forEach((it) => {
-    assert(it !== '*', () => 'ObjectPaths do not allow for wildcard selectors')
+    Assertions.assert(it !== '*', () => 'ObjectPaths do not allow for wildcard selectors')
 
     if (Array.isArray(it)) {
-      assert(it.length === 1, () => 'ObjectPaths do not allow for multiple index selectors or array slices')
+      Assertions.assert(it.length === 1, () => 'ObjectPaths do not allow for multiple index selectors or array slices')
     }
   })
 
@@ -50,7 +45,7 @@ export const Schema = Zod.union([Zod.array(Zod.string()), Zod.string()]).transfo
 })
 
 export const getValue = <T extends ObjectPathType, N>(path: ObjectPath<T>, object: N): TypePathGet<T, N> => {
-  return typePathGetValue(path, object)
+  return TypePaths.getValue(path, object)
 }
 
 export const applyValue = <T extends ObjectPathType, N>(path: ObjectPath<T>, object: N, valueToApply: TypePathGet<T, N>): N => {
@@ -58,7 +53,7 @@ export const applyValue = <T extends ObjectPathType, N>(path: ObjectPath<T>, obj
 }
 
 export const applyAnyValue = (path: ObjectPath, object: unknown, valueToApply: unknown): unknown => {
-  if (isEmpty(path)) {
+  if (Arrays.isEmpty(path)) {
     return valueToApply
   }
 
@@ -67,9 +62,9 @@ export const applyAnyValue = (path: ObjectPath, object: unknown, valueToApply: u
     const last = path[path.length - 1]!
     const parent = getValue(of(rest), draft) as any
 
-    assert(isObject(parent) || Array.isArray(parent), () => `Unable to apply value: ${valueToApply} at ObjectPath: ${path} against object: ${object}`)
+    Assertions.assert(Objects.isObject(parent) || Array.isArray(parent), () => `Unable to apply value: ${valueToApply} at ObjectPath: ${path} against object: ${object}`)
     if (Array.isArray(last)) {
-      const index = only(last)
+      const index = Arrays.only(last)
       parent[index] = valueToApply
     } else {
       parent[last] = valueToApply
@@ -81,12 +76,12 @@ export const matches = <MatchingPath extends TypePathType>(
   targetPath: ObjectPath,
   matchingPath: TypePath<MatchingPath>
 ): targetPath is ObjectPath<MatchingPath> => {
-  return typePathMatches(targetPath, matchingPath)
+  return TypePaths.matches(targetPath, matchingPath)
 }
 
 export const intersect = <TargetPath extends TypePathType, IntersectingPath extends TypePathType>(
   targetPath: ObjectPath<TargetPath>,
   intersectingPath: TypePath<IntersectingPath>
 ): ObjectPath => {
-  return typePathIntersect(targetPath, intersectingPath) as ObjectPath
+  return TypePaths.intersect(targetPath, intersectingPath) as ObjectPath
 }

@@ -8,7 +8,7 @@ import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import Zod from 'zod'
 import * as IpV6Addresses from '@bessemer/cornerstone/net/ipv6-address'
 import { ValueOf } from 'type-fest'
@@ -252,7 +252,7 @@ export function toLiteral(likeValue: UriLike | null | undefined): UriLiteral | n
   return format(value) as UriLiteral
 }
 
-export const SchemaLiteral = structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
 // JOHN need a schema for the object version...
 // export const SchemaInstance = structuredTransform(Zod.string(), parseString)
 

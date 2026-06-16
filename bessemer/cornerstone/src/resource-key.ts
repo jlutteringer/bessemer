@@ -1,6 +1,6 @@
 import { NominalType } from '@bessemer/cornerstone/types'
 import Zod from 'zod'
-import { isPresent } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 export type ResourceKey = string
 const ResourceNamespaceSeparator = '/'
@@ -30,7 +30,7 @@ export const createNamespace = <T extends NamespaceKey>(value: T): ResourceNames
 }
 
 export const createCompositeNamespace = (...names: Array<ResourceNamespace>): ResourceNamespace => {
-  return names.filter(isPresent).join(ResourceNamespaceSeparator) as ResourceNamespace
+  return names.filter(Objects.isPresent).join(ResourceNamespaceSeparator) as ResourceNamespace
 }
 
 export const ResourceNamespaceSchema = Zod.string().optional().transform(createNamespace)

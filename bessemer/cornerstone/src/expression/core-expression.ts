@@ -1,11 +1,12 @@
-import { defineExpression, isRawValue, isType } from '@bessemer/cornerstone/expression/internal'
+import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { Expression } from '@bessemer/cornerstone/expression'
 import { BasicType } from '@bessemer/cornerstone/types'
 import { Arrays, Assertions, Objects, Signatures } from '@bessemer/cornerstone'
 import { Signable } from '@bessemer/cornerstone/signature'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
+import * as Results from '@bessemer/cornerstone/result'
 
-export const ValueExpression = defineExpression({
+export const ValueExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Value',
   builder: (value: unknown) => {
     return { value }
@@ -16,20 +17,20 @@ export const ValueExpression = defineExpression({
 })
 
 export const isValue = <T>(expression: Expression<T>): boolean => {
-  return isRawValue(expression) || isType(expression, ValueExpression)
+  return ExpressionInternal.isRawValue(expression) || ExpressionInternal.isType(expression, ValueExpression)
 }
 
 export const getValue = <T>(expression: Expression<T>): Result<T> => {
-  if (isType(expression, ValueExpression)) {
-    return success(expression.value as T)
-  } else if (isRawValue(expression)) {
-    return success(expression)
+  if (ExpressionInternal.isType(expression, ValueExpression)) {
+    return Results.success(expression.value as T)
+  } else if (ExpressionInternal.isRawValue(expression)) {
+    return Results.success(expression)
   } else {
-    return failure()
+    return Results.failure()
   }
 }
 
-export const VariableExpression = defineExpression({
+export const VariableExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Variable',
   builder: (name: string) => {
     return { name }
@@ -41,7 +42,7 @@ export const VariableExpression = defineExpression({
   },
 })
 
-export const NotExpression = defineExpression({
+export const NotExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Not',
   builder: (value: Expression<boolean>) => {
     return { value }
@@ -51,7 +52,7 @@ export const NotExpression = defineExpression({
   },
 })
 
-export const AndExpression = defineExpression({
+export const AndExpression = ExpressionInternal.defineExpression({
   expressionKey: 'And',
   builder: (operands: Array<Expression<boolean>>) => {
     return { operands }
@@ -63,7 +64,7 @@ export const AndExpression = defineExpression({
   },
 })
 
-export const OrExpression = defineExpression({
+export const OrExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Or',
   builder: (operands: Array<Expression<boolean>>) => {
     return { operands }
@@ -75,7 +76,7 @@ export const OrExpression = defineExpression({
   },
 })
 
-export const EqualsExpression = defineExpression({
+export const EqualsExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Equals',
   builder: (operands: Array<Expression<Signable>>) => {
     return { operands }
@@ -92,7 +93,7 @@ export const EqualsExpression = defineExpression({
   },
 })
 
-export const ContainsExpression = defineExpression({
+export const ContainsExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Contains',
   builder: (collection: Expression<Array<Signable>>, operands: Array<Expression<Signable>>) => {
     return { collection, operands }
@@ -104,7 +105,7 @@ export const ContainsExpression = defineExpression({
   },
 })
 
-export const LessThanExpression = defineExpression({
+export const LessThanExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Basic.LessThan',
   builder: (left: Expression<BasicType>, right: Expression<BasicType>) => {
     return { left, right }
@@ -114,7 +115,7 @@ export const LessThanExpression = defineExpression({
   },
 })
 
-export const LessThanOrEqualExpression = defineExpression({
+export const LessThanOrEqualExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Basic.LessThanOrEqual',
   builder: (left: Expression<BasicType>, right: Expression<BasicType>) => {
     return { left, right }
@@ -124,7 +125,7 @@ export const LessThanOrEqualExpression = defineExpression({
   },
 })
 
-export const GreaterThanExpression = defineExpression({
+export const GreaterThanExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Basic.GreaterThan',
   builder: (left: Expression<BasicType>, right: Expression<BasicType>) => {
     return { left, right }
@@ -134,7 +135,7 @@ export const GreaterThanExpression = defineExpression({
   },
 })
 
-export const GreaterThanOrEqualExpression = defineExpression({
+export const GreaterThanOrEqualExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Basic.GreaterThanOrEqual',
   builder: (left: Expression<BasicType>, right: Expression<BasicType>) => {
     return { left, right }

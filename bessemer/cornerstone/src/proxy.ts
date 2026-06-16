@@ -1,4 +1,4 @@
-import { isFunction } from '@bessemer/cornerstone/function'
+import * as Functions from '@bessemer/cornerstone/function'
 
 export const extend = <Target extends object, E extends Record<string, unknown>>(target: Target, extensions: E): Target & E => {
   return new Proxy(target, {
@@ -8,7 +8,7 @@ export const extend = <Target extends object, E extends Record<string, unknown>>
       }
 
       const value = Reflect.get(target, prop, receiver)
-      if (isFunction(value)) {
+      if (Functions.isFunction(value)) {
         return value.bind(target)
       }
 

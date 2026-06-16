@@ -1,5 +1,6 @@
 import { AbstractLocalKeyValueStore, AbstractRemoteKeyValueStore, LocalKeyValueStore, RemoteKeyValueStore } from '@bessemer/cornerstone/store'
-import { Duration, OneDay, OneHour } from '@bessemer/cornerstone/temporal/duration'
+import { Duration } from '@bessemer/cornerstone/temporal/duration'
+import * as Durations from '@bessemer/cornerstone/temporal/duration'
 import { ResourceKey, ResourceNamespace } from '@bessemer/cornerstone/resource-key'
 import { AbstractApplicationContext } from '@bessemer/cornerstone/context'
 import { TaggedType } from '@bessemer/cornerstone/types'
@@ -7,8 +8,7 @@ import { RecordEntry } from '@bessemer/cornerstone/entry'
 import { GlobPattern } from '@bessemer/cornerstone/glob'
 import { Arrayable } from 'type-fest'
 import Zod, { ZodType } from 'zod'
-import { deepMerge, isNil } from '@bessemer/cornerstone/object'
-import { toArray } from '@bessemer/cornerstone/array'
+import * as Objects from '@bessemer/cornerstone/object'
 import { Arrays, Entries, ResourceKeys } from '@bessemer/cornerstone'
 import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import { InstantLiteral } from '@bessemer/cornerstone/temporal/instant'
@@ -24,14 +24,14 @@ export type CacheOptions = Partial<CacheProps>
 export namespace CacheProps {
   const DefaultCacheProps = {
     maxSize: 50000,
-    timeToLive: OneDay,
-    timeToStale: OneHour,
+    timeToLive: Durations.OneDay,
+    timeToStale: Durations.OneHour,
   }
 
   export const buildCacheProps = (options?: CacheOptions): CacheProps => {
     options = options ?? {}
 
-    const props = deepMerge(DefaultCacheProps, options)
+    const props = Objects.deepMerge(DefaultCacheProps, options)
 
     if (props.maxSize === null && props.timeToLive === null) {
       throw new Error('Invalid cache configuration, both maxSize and timeToLive are null')
@@ -47,7 +47,7 @@ export type CacheSector = {
 
 export namespace CacheSector {
   export const of = (globs: Arrayable<GlobPattern>) => {
-    return { globs: toArray(globs) }
+    return { globs: Arrays.toArray(globs) }
   }
 
   export const namespace = (namespace: ResourceNamespace, sector: CacheSector): CacheSector => {
@@ -150,11 +150,11 @@ export namespace CacheEntry {
   }
 
   export const isDead = <T>(entry: CacheEntry<T> | undefined): boolean => {
-    if (isNil(entry)) {
+    if (Objects.isNil(entry)) {
       return true
     }
 
-    if (isNil(entry.liveTimestamp)) {
+    if (Objects.isNil(entry.liveTimestamp)) {
       return false
     }
 
@@ -164,7 +164,7 @@ export namespace CacheEntry {
   export const isAlive = <T>(entry: CacheEntry<T> | undefined): boolean => !isDead(entry)
 
   export const isStale = <T>(entry: CacheEntry<T>): boolean => {
-    if (isNil(entry.staleTimestamp)) {
+    if (Objects.isNil(entry.staleTimestamp)) {
       return false
     }
 
@@ -184,7 +184,7 @@ export namespace CacheEntry {
   // JOHN do we want to enforce some kind of minimum liveness threshold?
   export const applyProps = <T>(originalEntry: CacheEntry<T>, props: CacheProps): CacheEntry<T> => {
     let liveTimestamp: InstantLiteral | null = originalEntry.liveTimestamp
-    if (!isNil(props.timeToLive)) {
+    if (!Objects.isNil(props.timeToLive)) {
       const limit = Instants.add(Instants.now(), props.timeToLive)
       if (Instants.isBefore(limit, liveTimestamp ?? limit)) {
         liveTimestamp = Instants.toLiteral(limit)
@@ -192,7 +192,7 @@ export namespace CacheEntry {
     }
 
     let staleTimestamp: InstantLiteral | null = originalEntry.staleTimestamp
-    if (!isNil(props.timeToStale)) {
+    if (!Objects.isNil(props.timeToStale)) {
       const limit = Instants.add(Instants.now(), props.timeToStale)
       if (Instants.isBefore(limit, staleTimestamp ?? limit)) {
         staleTimestamp = Instants.toLiteral(limit)

@@ -1,9 +1,13 @@
-import { equalBy as equalitorEqualBy, Equalitor, natural as naturalEquality } from '@bessemer/cornerstone/equalitor'
-import { sign, Signable, Signature } from '@bessemer/cornerstone/signature'
-import { Either, split } from '@bessemer/cornerstone/either'
-import { Comparator, compareBy, natural as naturalComparison } from '@bessemer/cornerstone/comparator'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
+import { Equalitor } from '@bessemer/cornerstone/equalitor'
+import * as Signatures from '@bessemer/cornerstone/signature'
+import { Signable, Signature } from '@bessemer/cornerstone/signature'
+import * as Eithers from '@bessemer/cornerstone/either'
+import { Either } from '@bessemer/cornerstone/either'
+import * as Comparators from '@bessemer/cornerstone/comparator'
+import { Comparator } from '@bessemer/cornerstone/comparator'
 import { Arrayable } from 'type-fest'
-import { isNil } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import * as Maths from '@bessemer/cornerstone/math'
 import { FiniteBounds } from '@bessemer/cornerstone/range'
@@ -116,19 +120,19 @@ export const equalWith = <T>(first: Array<T>, second: Array<T>, equalitor: Equal
 export function equalBy<T>(first: Array<T>, second: Array<T>, mapper: (element: T) => Signable): boolean
 export function equalBy<T, N>(first: Array<T>, second: Array<T>, mapper: (element: T) => N, equalitor: Equalitor<N>): boolean
 export function equalBy<T, N>(first: Array<T>, second: Array<T>, mapper: (element: T) => N, equalitor?: Equalitor<N>): boolean {
-  if (isNil(equalitor)) {
+  if (Objects.isNil(equalitor)) {
     return equalWith(
       first,
       second,
-      equalitorEqualBy((it) => sign(mapper(it) as Signable), naturalEquality())
+      Equalitors.equalBy((it) => Signatures.sign(mapper(it) as Signable), Equalitors.natural())
     )
   } else {
-    return equalWith(first, second, equalitorEqualBy(mapper, equalitor))
+    return equalWith(first, second, Equalitors.equalBy(mapper, equalitor))
   }
 }
 
 export const equal = <T extends Signable>(first: Array<T>, second: Array<T>): boolean => {
-  return equalBy(first, second, sign)
+  return equalBy(first, second, Signatures.sign)
 }
 
 export const differenceWith = <T>(first: Array<T>, second: Array<T>, equalitor: Equalitor<T>): Array<T> => {
@@ -138,19 +142,19 @@ export const differenceWith = <T>(first: Array<T>, second: Array<T>, equalitor: 
 export function differenceBy<T>(first: Array<T>, second: Array<T>, mapper: (element: T) => Signable): Array<T>
 export function differenceBy<T, N>(first: Array<T>, second: Array<T>, mapper: (element: T) => N, equalitor: Equalitor<N>): Array<T>
 export function differenceBy<T, N>(first: Array<T>, second: Array<T>, mapper: (element: T) => N, equalitor?: Equalitor<N>): Array<T> {
-  if (isNil(equalitor)) {
+  if (Objects.isNil(equalitor)) {
     return differenceWith(
       first,
       second,
-      equalitorEqualBy((it) => sign(mapper(it) as Signable), naturalEquality())
+      Equalitors.equalBy((it) => Signatures.sign(mapper(it) as Signable), Equalitors.natural())
     )
   } else {
-    return differenceWith(first, second, equalitorEqualBy(mapper, equalitor))
+    return differenceWith(first, second, Equalitors.equalBy(mapper, equalitor))
   }
 }
 
 export const difference = <T extends Signable>(first: Array<T>, second: Array<T>): Array<T> => {
-  return differenceBy(first, second, sign)
+  return differenceBy(first, second, Signatures.sign)
 }
 
 export const removeWith = <T>(array: Array<T>, element: T, equalitor: Equalitor<T>): Array<T> => {
@@ -174,18 +178,18 @@ export const containsWith = <T>(array: Array<T>, element: T, equalitor: Equalito
 export function containsBy<T>(array: Array<T>, element: T, mapper: (element: T) => Signable): boolean
 export function containsBy<T, N>(array: Array<T>, element: T, mapper: (element: T) => N, equalitor: Equalitor<N>): boolean
 export function containsBy<T, N>(array: Array<T>, element: T, mapper: (element: T) => N, equalitor?: Equalitor<N>): boolean {
-  if (isNil(equalitor)) {
+  if (Objects.isNil(equalitor)) {
     return containsWith(
       array,
       element,
-      equalitorEqualBy((it) => sign(mapper(it) as Signable), naturalEquality())
+      Equalitors.equalBy((it) => Signatures.sign(mapper(it) as Signable), Equalitors.natural())
     )
   } else {
-    return containsWith(array, element, equalitorEqualBy(mapper, equalitor))
+    return containsWith(array, element, Equalitors.equalBy(mapper, equalitor))
   }
 }
 
-export const contains = <T extends Signable>(array: Array<T>, element: T): boolean => containsBy(array, element, sign)
+export const contains = <T extends Signable>(array: Array<T>, element: T): boolean => containsBy(array, element, Signatures.sign)
 
 export const containsAllWith = <T>(first: Array<T>, second: Array<T>, equalitor: Equalitor<T>): boolean =>
   isEmpty(differenceWith(second, first, equalitor))
@@ -214,15 +218,15 @@ export const dedupeWith = <T>(array: Array<T>, equalitor: Equalitor<T>): Array<T
 export function dedupeBy<T>(array: Array<T>, mapper: (element: T) => Signable): Array<T>
 export function dedupeBy<T, N>(array: Array<T>, mapper: (element: T) => N, equalitor: Equalitor<N>): Array<T>
 export function dedupeBy<T, N>(array: Array<T>, mapper: (element: T) => N, equalitor?: Equalitor<N>): Array<T> {
-  if (isNil(equalitor)) {
-    return dedupeWith(array, equalitorEqualBy(mapper as any, naturalEquality()))
+  if (Objects.isNil(equalitor)) {
+    return dedupeWith(array, Equalitors.equalBy(mapper as any, Equalitors.natural()))
   } else {
-    return dedupeWith(array, equalitorEqualBy(mapper, equalitor))
+    return dedupeWith(array, Equalitors.equalBy(mapper, equalitor))
   }
 }
 
 export const dedupe = <T extends Signable>(array: Array<T>): Array<T> => {
-  return dedupeBy(array, sign)
+  return dedupeBy(array, Signatures.sign)
 }
 
 export const sortWith = <T>(array: Array<T>, comparator: Comparator<T>): Array<T> => {
@@ -232,17 +236,17 @@ export const sortWith = <T>(array: Array<T>, comparator: Comparator<T>): Array<T
 export function sortBy<T>(array: Array<T>, mapper: (element: T) => Signable): Array<T>
 export function sortBy<T, N>(array: Array<T>, mapper: (element: T) => N, comparator: Comparator<N>): Array<T>
 export function sortBy<T, N>(array: Array<T>, mapper: (element: T) => N, comparator?: Comparator<N>): Array<T> {
-  if (isNil(comparator)) {
+  if (Objects.isNil(comparator)) {
     return sortWith(
       array,
-      compareBy((it) => sign(mapper(it as any) as Signature), naturalComparison())
+      Comparators.compareBy((it) => Signatures.sign(mapper(it as any) as Signature), Comparators.natural())
     )
   } else {
-    return sortWith(array, compareBy(mapper, comparator))
+    return sortWith(array, Comparators.compareBy(mapper, comparator))
   }
 }
 
-export const sort = <T extends Signable>(array: Array<T>): Array<T> => sortBy(array, sign)
+export const sort = <T extends Signable>(array: Array<T>): Array<T> => sortBy(array, Signatures.sign)
 
 export const concatenate = <T>(array: Array<T>, ...values: Array<T | Array<T>>): Array<T> => {
   const result = [...array]
@@ -310,7 +314,7 @@ export const bisect = <T, LeftType, RightType>(
   array: Array<T>,
   bisector: (element: T, index: number) => Either<LeftType, RightType>
 ): [Array<LeftType>, Array<RightType>] => {
-  return split(array.map(bisector))
+  return Eithers.split(array.map(bisector))
 }
 
 export const toArray = <T>(array: Arrayable<T>): Array<T> => {

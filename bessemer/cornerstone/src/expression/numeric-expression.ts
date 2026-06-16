@@ -1,14 +1,14 @@
-import { defineExpression, isType } from '@bessemer/cornerstone/expression/internal'
+import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { Expression } from '@bessemer/cornerstone/expression'
 import { Maths, Objects } from '@bessemer/cornerstone'
 import { RoundingMode } from '@bessemer/cornerstone/math'
 import { Bounds } from '@bessemer/cornerstone/range'
 
-export const SumExpression = defineExpression({
+export const SumExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Sum',
   builder: (initialOperands: Array<Expression<number>>) => {
     const operands: Array<Expression<number>> = initialOperands.flatMap((it) => {
-      if (isType(it, SumExpression)) {
+      if (ExpressionInternal.isType(it, SumExpression)) {
         return it.operands
       } else {
         return [it]
@@ -25,11 +25,11 @@ export const SumExpression = defineExpression({
 
 export const sum = SumExpression.builder
 
-export const MultiplyExpression = defineExpression({
+export const MultiplyExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Multiply',
   builder: (initialOperands: Array<Expression<number>>) => {
     const operands: Array<Expression<number>> = initialOperands.flatMap((it) => {
-      if (isType(it, MultiplyExpression)) {
+      if (ExpressionInternal.isType(it, MultiplyExpression)) {
         return it.operands
       } else {
         return [it]
@@ -46,7 +46,7 @@ export const MultiplyExpression = defineExpression({
 
 export const multiply = MultiplyExpression.builder
 
-export const BoundExpression = defineExpression({
+export const BoundExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Bound',
   builder: (value: Expression<number>, bounds: Bounds<Expression<number>>) => {
     return { value, bounds }
@@ -69,7 +69,7 @@ export const BoundExpression = defineExpression({
 
 export const bound = BoundExpression.builder
 
-export const FloorExpression = defineExpression({
+export const FloorExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Floor',
   builder: (value: Expression<number>, minimumThreshold: Expression<number> | null) => {
     return { value, minimumThreshold }
@@ -87,7 +87,7 @@ export const FloorExpression = defineExpression({
 
 export const floor = FloorExpression.builder
 
-export const CeilingExpression = defineExpression({
+export const CeilingExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Ceiling',
   builder: (value: Expression<number>, maximumThreshold: Expression<number> | null) => {
     return { value, maximumThreshold }
@@ -105,7 +105,7 @@ export const CeilingExpression = defineExpression({
 
 export const ceiling = CeilingExpression.builder
 
-export const RoundExpression = defineExpression({
+export const RoundExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Round',
   builder: (value: Expression<number>, scale: number, roundingMode: RoundingMode) => {
     return { value, scale, roundingMode }
@@ -117,11 +117,11 @@ export const RoundExpression = defineExpression({
 
 export const round = RoundExpression.builder
 
-export const MinExpression = defineExpression({
+export const MinExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Min',
   builder: (initialOperands: Array<Expression<number>>) => {
     const operands: Array<Expression<number>> = initialOperands.flatMap((it) => {
-      if (isType(it, MinExpression)) {
+      if (ExpressionInternal.isType(it, MinExpression)) {
         return it.operands
       } else {
         return [it]
@@ -138,11 +138,11 @@ export const MinExpression = defineExpression({
 
 export const min = MinExpression.builder
 
-export const MaxExpression = defineExpression({
+export const MaxExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Numeric.Max',
   builder: (initialOperands: Array<Expression<number>>) => {
     const operands: Array<Expression<number>> = initialOperands.flatMap((it) => {
-      if (isType(it, MaxExpression)) {
+      if (ExpressionInternal.isType(it, MaxExpression)) {
         return it.operands
       } else {
         return [it]

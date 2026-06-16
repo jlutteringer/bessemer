@@ -1,8 +1,9 @@
-import { isReferencable, Reference } from '@bessemer/cornerstone/reference'
+import * as References from '@bessemer/cornerstone/reference'
+import { Reference } from '@bessemer/cornerstone/reference'
 import { BasicType } from '@bessemer/cornerstone/types'
-import { isObject } from '@bessemer/cornerstone/object'
-import { isDate } from '@bessemer/cornerstone/temporal/date'
-import { _isInstant, instantToLiteral } from '@bessemer/cornerstone/temporal/chrono'
+import * as Objects from '@bessemer/cornerstone/object'
+import * as Dates from '@bessemer/cornerstone/temporal/date'
+import * as Chrono from '@bessemer/cornerstone/temporal/chrono'
 
 // JOHN it is probably worth revisiting this in the context of using this library code more frequently... in particular
 // all of these things have similar properties ("primitives", sortable, value equality, etc.) but this method of implementation
@@ -16,20 +17,20 @@ export const sign = (value: Signable): Signature => {
     return null
   }
 
-  if (isObject(value)) {
-    if (isReferencable(value)) {
+  if (Objects.isObject(value)) {
+    if (References.isReferencable(value)) {
       return value.reference.id
     } else {
       return value.id
     }
   }
 
-  if (isDate(value)) {
+  if (Dates.isDate(value)) {
     return value.getTime()
   }
 
-  if (_isInstant(value)) {
-    return instantToLiteral(value)
+  if (Chrono._isInstant(value)) {
+    return Chrono.instantToLiteral(value)
   }
 
   if (value === true) {

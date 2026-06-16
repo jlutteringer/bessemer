@@ -15,7 +15,7 @@ import {
   ValueExpression,
   VariableExpression,
 } from '@bessemer/cornerstone/expression/core-expression'
-import { isType } from '@bessemer/cornerstone/expression/internal'
+import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { SqlFragment, SqlParameterMap } from '@bessemer/cornerstone/sql'
 import { Expression } from '@bessemer/cornerstone/expression'
 
@@ -99,7 +99,7 @@ DefaultSqlExpressionParser.register(VariableExpression, (expression, _, context)
   return variableName ?? expression.name
 })
 DefaultSqlExpressionParser.register(NotExpression, (expression, map, context) => {
-  if (isType(expression.value, ContainsExpression)) {
+  if (ExpressionInternal.isType(expression.value, ContainsExpression)) {
     return resolveContainsExpression(expression.value, map, context, true)
   } else {
     return `(NOT ${map(expression.value)})`

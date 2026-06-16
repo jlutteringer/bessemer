@@ -1,10 +1,12 @@
-import { CurrencyCode, Schema as CurrencyCodeSchema } from '@bessemer/cornerstone/intl/currency-code'
+import { CurrencyCode } from '@bessemer/cornerstone/intl/currency-code'
+import * as CurrencyCodes from '@bessemer/cornerstone/intl/currency-code'
 import Zod from 'zod'
-import { isNil } from '@bessemer/cornerstone/object'
-import { roundHalfEven } from '@bessemer/cornerstone/math'
-import { Comparator, natural } from '@bessemer/cornerstone/comparator'
-import { fromComparator } from '@bessemer/cornerstone/equalitor'
-import { assert } from '@bessemer/cornerstone/assertion'
+import * as Objects from '@bessemer/cornerstone/object'
+import * as Maths from '@bessemer/cornerstone/math'
+import { Comparator } from '@bessemer/cornerstone/comparator'
+import * as Comparators from '@bessemer/cornerstone/comparator'
+import * as Equalitors from '@bessemer/cornerstone/equalitor'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 
 export type MonetaryAmount = {
   amount: number
@@ -13,17 +15,17 @@ export type MonetaryAmount = {
 
 export const Schema = Zod.object({
   amount: Zod.number().int(),
-  currency: CurrencyCodeSchema,
+  currency: CurrencyCodes.Schema,
 })
 
 export const CompareBy: Comparator<MonetaryAmount> = (first: MonetaryAmount, second: MonetaryAmount): number => {
-  return apply(first, second, natural())
+  return apply(first, second, Comparators.natural())
 }
 
-export const EqualBy = fromComparator(CompareBy)
+export const EqualBy = Equalitors.fromComparator(CompareBy)
 
 export const of = (amount: number, currency: CurrencyCode): MonetaryAmount => {
-  assert(Number.isInteger(amount))
+  Assertions.assert(Number.isInteger(amount))
   return { amount, currency }
 }
 
@@ -45,10 +47,10 @@ export const operate = (first: MonetaryAmount, second: MonetaryAmount, operator:
 
 /** Determines whether two MonetaryAmounts are considered equivalent */
 export const equal = (first?: MonetaryAmount | null, second?: MonetaryAmount | null): boolean => {
-  if (isNil(first) && isNil(second)) {
+  if (Objects.isNil(first) && Objects.isNil(second)) {
     return true
   }
-  if (isNil(first) || isNil(second)) {
+  if (Objects.isNil(first) || Objects.isNil(second)) {
     return false
   }
 
@@ -64,11 +66,11 @@ export const subtract = (first: MonetaryAmount, second: MonetaryAmount): Monetar
 }
 
 export const multiply = (money: MonetaryAmount, value: number): MonetaryAmount => {
-  return of(roundHalfEven(money.amount * value, 0), money.currency)
+  return of(Maths.roundHalfEven(money.amount * value, 0), money.currency)
 }
 
 export const divide = (money: MonetaryAmount, value: number): MonetaryAmount => {
-  return of(roundHalfEven(money.amount / value, 0), money.currency)
+  return of(Maths.roundHalfEven(money.amount / value, 0), money.currency)
 }
 
 export function sumAll(monetaryAmounts: readonly [MonetaryAmount, ...MonetaryAmount[]]): MonetaryAmount

@@ -1,5 +1,5 @@
-import { isObject } from '@bessemer/cornerstone/object'
-import { assert } from '@bessemer/cornerstone/assertion'
+import * as Objects from '@bessemer/cornerstone/object'
+import * as Assertions from '@bessemer/cornerstone/assertion'
 import * as Promises from '@bessemer/cornerstone/promise'
 import { Promisable } from 'type-fest'
 
@@ -30,14 +30,14 @@ export const isLeft = <LeftType, RightType>(value: Either<LeftType, RightType>):
   return !isRight(value)
 }
 export const isRight = <LeftType, RightType>(value: Either<LeftType, RightType>): value is Right<RightType> => {
-  return isObject(value) && (value as any)[TypeToken] === EitherType.Right
+  return Objects.isObject(value) && (value as any)[TypeToken] === EitherType.Right
 }
 
 export function assertLeft<LeftType, RightType>(value: Either<LeftType, RightType>): asserts value is Left<LeftType> {
-  assert(isLeft(value))
+  Assertions.assert(isLeft(value))
 }
 export function assertRight<LeftType, RightType>(value: Either<LeftType, RightType>): asserts value is Right<RightType> {
-  assert(isRight(value))
+  Assertions.assert(isRight(value))
 }
 
 export function map<LeftType, RightType, MappedType>(

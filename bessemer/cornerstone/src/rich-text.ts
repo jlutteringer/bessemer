@@ -1,5 +1,5 @@
 import { TaggedType } from '@bessemer/cornerstone/types'
-import { isObject } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 // These are to match TipTap types, but without us having to depend on the TipTap library
 export type RichTextJson = {
@@ -20,5 +20,5 @@ export type RichTextString = TaggedType<string, 'RichTextString'>
 export type RichText = RichTextString | RichTextJson
 
 export const isJson = (text: RichText): text is RichTextJson => {
-  return isObject(text)
+  return Objects.isObject(text)
 }

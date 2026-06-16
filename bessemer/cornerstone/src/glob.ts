@@ -1,12 +1,14 @@
 import { minimatch } from 'minimatch'
 import Zod from 'zod'
-import { failure, Result, success } from '@bessemer/cornerstone/result'
+import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
 import { NominalType } from '@bessemer/cornerstone/types'
-import { ErrorEvent, invalidValue, unpackResult } from '@bessemer/cornerstone/error/error-event'
-import { createNamespace } from '@bessemer/cornerstone/resource-key'
-import { structuredTransform } from '@bessemer/cornerstone/zod-util'
+import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
+import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
+import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
+import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
-export const Namespace = createNamespace('glob')
+export const Namespace = ResourceKeys.createNamespace('glob')
 export type GlobPattern = NominalType<string, typeof Namespace>
 
 export const parseString = (value: string): Result<GlobPattern, ErrorEvent> => {
@@ -15,7 +17,7 @@ export const parseString = (value: string): Result<GlobPattern, ErrorEvent> => {
 
   // Basic validation - contains valid characters
   if (!validGlobPattern.test(value)) {
-    return failure(invalidValue(value, { namespace: Namespace, message: `GlobPattern contains invalid characters.` }))
+    return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `GlobPattern contains invalid characters.` }))
   }
 
   // Check for balanced brackets
@@ -24,7 +26,7 @@ export const parseString = (value: string): Result<GlobPattern, ErrorEvent> => {
     const openBrackets = (value.match(/\[/g) || []).length
     const closeBrackets = (value.match(/]/g) || []).length
     if (openBrackets !== closeBrackets) {
-      return failure(invalidValue(value, { namespace: Namespace, message: `GlobPattern has unbalanced brackets.` }))
+      return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `GlobPattern has unbalanced brackets.` }))
     }
   }
 
@@ -34,18 +36,18 @@ export const parseString = (value: string): Result<GlobPattern, ErrorEvent> => {
     const openBraces = (value.match(/\{/g) || []).length
     const closeBraces = (value.match(/}/g) || []).length
     if (openBraces !== closeBraces) {
-      return failure(invalidValue(value, { namespace: Namespace, message: `GlobPattern has unbalanced braces.` }))
+      return Results.failure(ErrorEvents.invalidValue(value, { namespace: Namespace, message: `GlobPattern has unbalanced braces.` }))
     }
   }
 
-  return success(value as GlobPattern)
+  return Results.success(value as GlobPattern)
 }
 
 export const from = (value: string): GlobPattern => {
-  return unpackResult(parseString(value))
+  return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = structuredTransform(Zod.string(), parseString).meta({
+export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[a-zA-Z0-9\\-_.\\/\\\\*?\\[\\]{}!,|]+$',

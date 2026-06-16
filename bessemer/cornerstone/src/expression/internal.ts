@@ -1,6 +1,6 @@
 import { EvaluateExpression, Expression, ExpressionContext, ExpressionDefinition, ExpressionKey, IExpression } from '@bessemer/cornerstone/expression'
 import { UnknownRecord } from 'type-fest'
-import { isObject } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 export const defineExpression = <ReturnType, ArgumentType extends Array<unknown>, PayloadType extends UnknownRecord>(options: {
   expressionKey: ExpressionKey<ReturnType, ArgumentType>
@@ -30,11 +30,11 @@ export const isType = <ReturnValue, ArgumentType extends Array<any>, ExpressionT
 }
 
 export const isExpression = <T>(expression: Expression<any>): expression is IExpression<T> => {
-  return isObject(expression) && 'expressionKey' in expression
+  return Objects.isObject(expression) && 'expressionKey' in expression
 }
 
 export const isRawValue = <T>(expression: Expression<T>): expression is T => {
-  if (!isObject(expression)) {
+  if (!Objects.isObject(expression)) {
     return true
   }
 

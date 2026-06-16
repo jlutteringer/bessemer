@@ -7,7 +7,7 @@ import {
   ReducingExpression,
 } from '@bessemer/cornerstone/expression'
 import { UnknownRecord } from 'type-fest'
-import { deepMergeWith, isNil, isObject } from '@bessemer/cornerstone/object'
+import * as Objects from '@bessemer/cornerstone/object'
 
 export enum PatchType {
   Set = 'Set',
@@ -114,12 +114,12 @@ export const resolve = <T>(value: T, patches: Array<Patch<T>>, evaluate: Evaluat
 }
 
 const applyPatch = <T>(value: T, patch: Patchable<T>, evaluate: EvaluateExpression): T => {
-  return deepMergeWith(value, patch, (value, patch) => {
-    if (isNil(patch)) {
+  return Objects.deepMergeWith(value, patch, (value, patch) => {
+    if (Objects.isNil(patch)) {
       return value
     }
 
-    if (!isObject(patch) || !('_PatchType' in patch)) {
+    if (!Objects.isObject(patch) || !('_PatchType' in patch)) {
       return undefined
     }
 
