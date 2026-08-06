@@ -6,6 +6,7 @@ import { Comparator } from '@bessemer/cornerstone/comparator'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import * as Results from '@bessemer/cornerstone/result'
+import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import * as Errors from '@bessemer/cornerstone/error/error'
 import * as Chrono from '@bessemer/cornerstone/temporal/chrono'
@@ -54,7 +55,7 @@ export function from(value: DurationLike | string | null | undefined): Duration 
 export const CompareBy: Comparator<Duration> = (first: Duration, second: Duration): number => Temporal.Duration.compare(first, second)
 export const EqualBy = Equalitors.fromComparator(CompareBy)
 
-export const parseString = (value: string): Results.Result<Duration, ErrorEvents.ErrorEvent> => {
+export const parseString = (value: string): Result<Duration, ErrorEvents.ErrorEvent> => {
   try {
     return Results.success(Temporal.Duration.from(value))
   } catch (e) {
