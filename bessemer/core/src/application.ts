@@ -44,7 +44,7 @@ export const CoreApplicationModule: BessemerModule<CoreApplicationContext, CoreO
       codex: options.codex && {
         provider: options.codex.provider,
       },
-      tiptapExtensions: Arrays.concatenate(Tiptap.DefaultExtensions, options.tiptapExtensions ?? []),
+      tiptapExtensions: Arrays.appendAll(Tiptap.DefaultExtensions, options.tiptapExtensions ?? []),
     }
 
     return application

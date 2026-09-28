@@ -1,7 +1,7 @@
 import { Referencable, Reference, ReferenceType } from '@bessemer/cornerstone/reference'
 import { TaggedType } from '@bessemer/cornerstone/types'
 import { AbstractApplicationContext } from '@bessemer/cornerstone/context'
-import { Arrays, Objects, References, Tags, Ulids } from '@bessemer/cornerstone'
+import { Arrays, Maps, Objects, References, Tags, Ulids } from '@bessemer/cornerstone'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { Tag } from '@bessemer/cornerstone/tag'
 import Zod, { ZodType } from 'zod'
@@ -71,8 +71,8 @@ export const normalizeContent = async <ApplicationContext extends AbstractApplic
   normalizers: Array<ContentNormalizer<ApplicationContext>>,
   context: ApplicationContext
 ): Promise<Array<ContentData>> => {
-  const groupedContent = Arrays.groupBy(content, (it) => it.type)
-  const normalizedGroupedContent = Object.entries(groupedContent).map(async ([type, values]) => {
+  const groupedContent = Maps.groupBy(content, (it) => it.type)
+  const normalizedGroupedContent = [...groupedContent.entries()].map(async ([type, values]) => {
     const normalizer = normalizers.find((it) => it.type === type)
     if (Objects.isNil(normalizer)) {
       return values
@@ -111,13 +111,14 @@ export const staticProvider = <ApplicationContext extends AbstractApplicationCon
 ): ContentProvider<ApplicationContext> => {
   return {
     async fetchContentByIds(references: Array<ReferenceType<ContentReference>>, context: ApplicationContext): Promise<Array<ContentData>> {
-      const matchingContent = content.filter((it) => Arrays.contains(references, it.reference))
+      const referenceIds = references.map((it) => (References.isReference(it) ? it.id : it))
+      const matchingContent = content.filter((it) => Arrays.contains(referenceIds, it.reference.id))
       return normalizeContent(matchingContent, normalizers ?? [], context)
     },
     async fetchContentByKeys(keys: Array<ContentKey>, tags: Array<Tag>, context: ApplicationContext): Promise<Array<ContentData>> {
       const matchingContent = content.filter((it) => Arrays.contains(keys, it.key))
 
-      const resolvedContent = Object.values(Arrays.groupBy(matchingContent, (it) => it.key)).map((it) => {
+      const resolvedContent = [...Maps.groupBy(matchingContent, (it) => it.key).values()].map((it) => {
         const resolvedContent = Tags.resolveBy(it, (it) => it.tags ?? [], tags)
         return Arrays.first(resolvedContent)!
       })
@@ -127,7 +128,7 @@ export const staticProvider = <ApplicationContext extends AbstractApplicationCon
     async fetchContentBySectors(sectors: Array<ContentSector>, tags: Array<Tag>, context: ApplicationContext): Promise<Array<ContentData>> {
       const matchingContent = content.filter((it) => Objects.isPresent(it.sector)).filter((it) => Arrays.contains(sectors, it.sector!))
 
-      const resolvedContent = Object.values(Arrays.groupBy(matchingContent, (it) => it.key)).map((it) => {
+      const resolvedContent = [...Maps.groupBy(matchingContent, (it) => it.key).values()].map((it) => {
         const resolvedContent = Tags.resolveBy(it, (it) => it.tags ?? [], tags)
         return Arrays.first(resolvedContent)!
       })

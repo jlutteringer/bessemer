@@ -7,6 +7,7 @@ import * as Results from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import * as Errors from '@bessemer/cornerstone/error/error'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 import * as Clocks from '@bessemer/cornerstone/temporal/clock'
 import * as Durations from '@bessemer/cornerstone/temporal/duration'
 import * as Instants from '@bessemer/cornerstone/temporal/instant'
@@ -89,10 +90,10 @@ export function toLiteral(likeValue: PlainTimeLike | null | undefined): PlainTim
   return value.toString() as PlainTimeLiteral
 }
 
-export const SchemaLiteral = ZodUtil.structuredRefine<PlainTimeLiteral>(ZodUtil.string(), (it: string) =>
+export const SchemaLiteral: ZodType<PlainTimeLiteral> = ZodUtil.structuredRefine<PlainTimeLiteral>(ZodUtil.string(), (it: string) =>
   Results.map(parseString(it), (it) => toLiteral(it))
 )
-export const SchemaInstance = ZodUtil.structuredTransform(ZodUtil.string(), parseString)
+export const SchemaInstance: ZodType<PlainTime> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)
 
 export const isPlainTime = (value: unknown): value is PlainTime => {
   return value instanceof Temporal.PlainTime

@@ -99,7 +99,7 @@ export const initialize = async <ApplicationContext extends BessemerApplicationC
   const globalTags = dependencyList.reduce((tags, module) => module?.global?.tags?.(tags) ?? tags, [] as Array<Tag>)
   const tags = await dependencyList.reduce(
     async (tags, module) => (await module?.tags?.(await tags)) ?? (await tags),
-    Promise.resolve(Arrays.concatenate(globalTags, additionalTags))
+    Promise.resolve(Arrays.appendAll(globalTags, additionalTags))
   )
   logger.info(() => `Initializing Application with tags: ${JSON.stringify(tags)}`)
 

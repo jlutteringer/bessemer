@@ -6,6 +6,7 @@ import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('aspect-ratio')
 export type AspectRatio = NominalType<string, typeof Namespace>
@@ -24,7 +25,7 @@ export const from = (value: string): AspectRatio => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<AspectRatio>(ZodUtil.string(), parseString).meta({
+export const Schema: ZodType<AspectRatio> = ZodUtil.structuredTransform(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[1-9]\\d*:[1-9]\\d*$',

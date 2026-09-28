@@ -1,5 +1,6 @@
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Sets from '@bessemer/cornerstone/set'
+import * as Maps from '@bessemer/cornerstone/map'
 
 export interface Combinable {
   combinability: Combinability
@@ -25,9 +26,9 @@ export const DefaultCombinability: Combinability = {
 
 export const combinations = <T extends Combinable>(combinables: Array<T>): Array<Array<T>> => {
   // JOHN this is wrong
-  const classMap = Arrays.groupBy(combinables, (it) => it.combinability.class ?? '')
+  const classMap = Maps.groupBy(combinables, (it) => it.combinability.class ?? '')
 
-  const classCombinations: Array<Array<Array<T>>> = Object.entries(classMap).map(([_, values]) => {
+  const classCombinations: Array<Array<Array<T>>> = [...classMap.entries()].map(([_, values]) => {
     const totalitarianCombinations = values.filter((it) => it.combinability.type === CombinabilityType.Totalitarian).map((it) => [it])
     if (!Arrays.isEmpty(totalitarianCombinations)) {
       return totalitarianCombinations

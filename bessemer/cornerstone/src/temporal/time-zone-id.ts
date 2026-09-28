@@ -1,5 +1,5 @@
 import * as Results from '@bessemer/cornerstone/result'
-import Zod from 'zod'
+import Zod, { ZodType } from 'zod'
 import { NominalType } from '@bessemer/cornerstone/types'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
@@ -26,7 +26,7 @@ export const from = (value: string): TimeZoneId => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform(Zod.string(), parseString)
+export const Schema: ZodType<TimeZoneId> = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const Utc = 'UTC' as TimeZoneId
 export const getSystemDefault = (): TimeZoneId => {

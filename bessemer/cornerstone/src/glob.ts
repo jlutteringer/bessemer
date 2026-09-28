@@ -6,6 +6,7 @@ import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('glob')
 export type GlobPattern = NominalType<string, typeof Namespace>
@@ -46,7 +47,7 @@ export const from = (value: string): GlobPattern => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<GlobPattern>(ZodUtil.string(), parseString).meta({
+export const Schema: ZodType<GlobPattern> = ZodUtil.structuredTransform(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[a-zA-Z0-9\\-_.\\/\\\\*?\\[\\]{}!,|]+$',

@@ -10,7 +10,7 @@ import {
 } from '@bessemer/cornerstone/object/type-path-type'
 import { TypePath } from '@bessemer/cornerstone/object/type-path'
 import * as TypePaths from '@bessemer/cornerstone/object/type-path'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import { produce } from 'immer'
 import * as Objects from '@bessemer/cornerstone/object'

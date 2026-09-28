@@ -3,7 +3,7 @@ import * as Comparators from '@bessemer/cornerstone/comparator'
 import { Comparator } from '@bessemer/cornerstone/comparator'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import { Equalitor } from '@bessemer/cornerstone/equalitor'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Sets from '@bessemer/cornerstone/set'
 
 export type TagType<DataType> = TaggedType<string, ['TagType', DataType]>

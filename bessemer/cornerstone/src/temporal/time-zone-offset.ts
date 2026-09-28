@@ -2,7 +2,7 @@ import { NominalType } from '@bessemer/cornerstone/types'
 import * as Durations from '@bessemer/cornerstone/temporal/duration'
 import * as PlainTimes from '@bessemer/cornerstone/temporal/plain-time'
 import * as Results from '@bessemer/cornerstone/result'
-import Zod from 'zod'
+import Zod, { ZodType } from 'zod'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
@@ -142,7 +142,10 @@ export const from = (value: string): TimeZoneOffset => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = Zod.union([ZodUtil.structuredTransform(Zod.number(), parseMinutes), ZodUtil.structuredTransform(Zod.string(), parseString)])
+export const Schema: ZodType<TimeZoneOffset> = Zod.union([
+  ZodUtil.structuredTransform(Zod.number(), parseMinutes),
+  ZodUtil.structuredTransform(Zod.string(), parseString),
+])
 
 export const toDuration = (offset: TimeZoneOffset): Durations.Duration => {
   return Durations.fromMilliseconds(offset)

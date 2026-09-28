@@ -5,6 +5,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 // ISO 639 language codes
 export const Namespace = ResourceKeys.createNamespace('language-code')
@@ -22,7 +23,7 @@ export const from = (value: string): LanguageCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<LanguageCode>(ZodUtil.string(), parseString)
+export const Schema: ZodType<LanguageCode> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)
 
 export const English = 'en' as LanguageCode
 export const Spanish = 'es' as LanguageCode

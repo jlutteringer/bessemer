@@ -6,9 +6,9 @@ import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as Strings from '@bessemer/cornerstone/string'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
-import Zod from 'zod'
+import Zod, { ZodType } from 'zod'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import { Equalitor } from '@bessemer/cornerstone/equalitor'
 import { MergeExclusive } from 'type-fest'
@@ -87,7 +87,9 @@ export function toLiteral(likeValue: UrlLike | null | undefined): UrlLiteral | n
   return format(value) as UrlLiteral
 }
 
-export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
+export const SchemaLiteral: ZodType<UrlLiteral> = ZodUtil.structuredTransform(Zod.string(), (it: string) =>
+  Results.map(parseString(it), (it) => toLiteral(it))
+)
 // JOHN need a schema for the object version...
 // export const SchemaInstance = structuredTransform(Zod.string(), parseString)
 

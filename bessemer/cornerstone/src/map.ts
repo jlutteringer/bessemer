@@ -1,5 +1,5 @@
 import { Entry } from '@bessemer/cornerstone/entry'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import { Objects } from '@bessemer/cornerstone/index'
 import { Dictionary } from '@bessemer/cornerstone/types'
@@ -77,7 +77,7 @@ export const groupBy = <CollectionType, KeyType>(
   return collect(
     iterable,
     (it) => [mapper(it), [it]],
-    (_, first, second) => Arrays.concatenate(first, second)
+    (_, first, second) => Arrays.appendAll(first, second)
   )
 }
 

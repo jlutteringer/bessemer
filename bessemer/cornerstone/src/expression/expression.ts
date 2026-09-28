@@ -1,4 +1,5 @@
 import { ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
+import { NilableBasicType } from '@bessemer/cornerstone/types'
 import {
   ArrayExpressions,
   EvaluateExpression,
@@ -12,7 +13,6 @@ import {
   StringExpressions,
 } from '@bessemer/cornerstone/expression'
 import { Signatures } from '@bessemer/cornerstone'
-import { Signable } from '@bessemer/cornerstone/signature'
 import { UnknownRecord } from 'type-fest'
 import {
   AndExpression,
@@ -64,7 +64,7 @@ export const dereference = <ReturnType, ArgumentType extends Array<unknown>>(
   return new ExpressionEvaluator(DEFAULT_EXPRESSION_DEFINITIONS).dereference(reference, ...args)
 }
 
-export const parameterizedVariable = <ValueType, ParameterType extends Array<Signable>>(
+export const parameterizedVariable = <ValueType, ParameterType extends Array<NilableBasicType>>(
   name: string
 ): ParameterizedVariable<ValueType, ParameterType> => {
   return {

@@ -11,6 +11,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('locale')
 export type Locale = NominalType<string, typeof Namespace>
@@ -39,7 +40,7 @@ export const from = (value: string): Locale => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<Locale>(ZodUtil.string(), parseString)
+export const Schema: ZodType<Locale> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)
 
 export const parse = (locale: Locale): [LanguageCode, CountryCode | null] => {
   const parts = locale.split('-')

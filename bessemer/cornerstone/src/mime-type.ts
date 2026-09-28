@@ -5,6 +5,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('mime-type')
 export type MimeLiteral = NominalType<string, typeof Namespace>
@@ -23,7 +24,7 @@ export const from = (value: string): MimeLiteral => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<MimeLiteral>(ZodUtil.string(), parseString).meta({
+export const Schema: ZodType<MimeLiteral> = ZodUtil.structuredTransform(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^[\\w-]+\\/[\\w.+-]+$',

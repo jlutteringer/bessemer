@@ -7,7 +7,7 @@ import * as Results from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import * as Errors from '@bessemer/cornerstone/error/error'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
-import Zod from 'zod'
+import Zod, { ZodType } from 'zod'
 import * as Clocks from '@bessemer/cornerstone/temporal/clock'
 import * as Durations from '@bessemer/cornerstone/temporal/duration'
 import * as Instants from '@bessemer/cornerstone/temporal/instant'
@@ -79,8 +79,10 @@ export function toLiteral(likeValue: PlainDateLike | null | undefined): PlainDat
   return value.toString() as PlainDateLiteral
 }
 
-export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
-export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString)
+export const SchemaLiteral: ZodType<PlainDateLiteral> = ZodUtil.structuredTransform(Zod.string(), (it: string) =>
+  Results.map(parseString(it), (it) => toLiteral(it))
+)
+export const SchemaInstance: ZodType<PlainDate> = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const isPlainDateTime = (value: unknown): value is PlainDate => {
   return value instanceof Temporal.PlainDateTime

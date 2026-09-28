@@ -5,6 +5,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('hex-code')
 export type HexCode = NominalType<string, typeof Namespace>
@@ -30,7 +31,7 @@ export const from = (value: string): HexCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<HexCode>(ZodUtil.string(), parseString).meta({
+export const Schema: ZodType<HexCode> = ZodUtil.structuredTransform(ZodUtil.string(), parseString).meta({
   type: 'string',
   format: Namespace,
   pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$',

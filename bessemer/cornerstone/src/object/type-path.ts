@@ -14,7 +14,7 @@ import {
 } from '@bessemer/cornerstone/object/type-path-type'
 import * as Objects from '@bessemer/cornerstone/object'
 import * as Maths from '@bessemer/cornerstone/math'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 

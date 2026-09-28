@@ -2,6 +2,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 import * as DomainNames from '@bessemer/cornerstone/net/domain-name'
 import { DomainName } from '@bessemer/cornerstone/net/domain-name'
 import * as IpV4Addresses from '@bessemer/cornerstone/net/ipv4-address'
@@ -44,4 +45,4 @@ export const from = (value: string): UriHostName => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<UriHostName>(ZodUtil.string(), parseString)
+export const Schema: ZodType<UriHostName> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)

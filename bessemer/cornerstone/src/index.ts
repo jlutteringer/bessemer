@@ -1,7 +1,7 @@
 import * as Types from '@bessemer/cornerstone/types'
 import * as Objects from '@bessemer/cornerstone/object'
 import * as Functions from '@bessemer/cornerstone/function'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Strings from '@bessemer/cornerstone/string'
 import * as Async from '@bessemer/cornerstone/async'
 import * as AsyncValues from '@bessemer/cornerstone/async-value'

@@ -7,7 +7,7 @@ import * as Results from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import * as Errors from '@bessemer/cornerstone/error/error'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
-import Zod from 'zod'
+import Zod, { ZodType } from 'zod'
 import * as Clocks from '@bessemer/cornerstone/temporal/clock'
 import * as Durations from '@bessemer/cornerstone/temporal/duration'
 import * as Chrono from '@bessemer/cornerstone/temporal/chrono'
@@ -80,12 +80,14 @@ export function toDate(value: InstantLike | null | undefined): Date | null | und
   return new Date(from(value).epochMilliseconds)
 }
 
-export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it))).meta({
+export const SchemaLiteral: ZodType<InstantLiteral> = ZodUtil.structuredTransform(Zod.string(), (it: string) =>
+  Results.map(parseString(it), (it) => toLiteral(it))
+).meta({
   type: 'string',
   format: 'date-time',
 })
 
-export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
+export const SchemaInstance: ZodType<Instant> = ZodUtil.structuredTransform(Zod.string(), parseString).meta({
   type: 'string',
   format: 'date-time',
 })

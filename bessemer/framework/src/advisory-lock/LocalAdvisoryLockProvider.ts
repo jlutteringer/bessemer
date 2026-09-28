@@ -52,11 +52,11 @@ export class LocalAdvisoryLockProvider implements AdvisoryLockProvider {
       return Results.success(locks)
     }, props.retry)
 
-    if (!result.isSuccess) {
+    if (!Results.isSuccess(result)) {
       return result
     }
 
-    const extendedLocks = this.extendLocks(result.value, props.duration)
+    const extendedLocks = this.extendLocks(result, props.duration)
     return Results.success(extendedLocks)
   }
 
@@ -67,11 +67,11 @@ export class LocalAdvisoryLockProvider implements AdvisoryLockProvider {
 
     if (!Arrays.isEmpty(resources)) {
       const result = await this.acquireLock(resources, lock.props, context)
-      if (!result.isSuccess) {
+      if (!Results.isSuccess(result)) {
         return result
       }
 
-      locksToExtend = Arrays.concatenate(locksToExtend, result.value as LocalProviderAdvisoryLock)
+      locksToExtend = Arrays.appendAll(locksToExtend, result as ProviderAdvisoryLock as LocalProviderAdvisoryLock)
     }
 
     const extendedLocks = this.extendLocks(locksToExtend, lock.props.duration)

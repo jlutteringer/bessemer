@@ -2,8 +2,7 @@ import * as NumericExpressions from '@bessemer/cornerstone/expression/numeric-ex
 import * as StringExpressions from '@bessemer/cornerstone/expression/string-expression'
 import * as ArrayExpressions from '@bessemer/cornerstone/expression/array-expression'
 import * as Expressions from '@bessemer/cornerstone/expression/expression'
-import { TaggedType } from '@bessemer/cornerstone/types'
-import { Signable } from '@bessemer/cornerstone/signature'
+import { TaggedType, NilableBasicType } from '@bessemer/cornerstone/types'
 import { UnknownRecord } from 'type-fest'
 
 export {
@@ -56,7 +55,7 @@ export interface ExpressionVariable<T> extends IExpression<T> {
   name: string
 }
 
-export interface ParameterizedVariable<ValueType, ParameterType extends Array<Signable>> {
+export interface ParameterizedVariable<ValueType, ParameterType extends Array<NilableBasicType>> {
   apply(...parameters: ParameterType): ExpressionVariable<ValueType>
 }
 

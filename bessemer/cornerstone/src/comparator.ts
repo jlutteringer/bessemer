@@ -1,4 +1,4 @@
-import { BasicType } from '@bessemer/cornerstone/types'
+import { NilableBasicType } from '@bessemer/cornerstone/types'
 import * as Strings from '@bessemer/cornerstone/string'
 import * as Maths from '@bessemer/cornerstone/math'
 import * as Dates from '@bessemer/cornerstone/temporal/date'
@@ -35,7 +35,7 @@ export const trueFirst = (): Comparator<boolean> => {
   return (first, second) => natural()(first ? 1 : 0, second ? 1 : 0)
 }
 
-export const natural = (): Comparator<BasicType | null> => {
+export const natural = (): Comparator<NilableBasicType> => {
   // Comparing by nulls first allows us to assume the elements are non-null for future comparisons
   return aggregate([
     nullsLast(),

@@ -26,6 +26,7 @@ export type DEPRECATEDDeepPartial<T> = {
 
 // JOHN maybe this needs a different definition...
 export type BasicType = string | number | boolean | Date | Instant
+export type NilableBasicType = BasicType | Nil
 
 export type ToString<T> = T extends string | number ? `${T}` : never
 

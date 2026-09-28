@@ -5,6 +5,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('country-code')
 export type CountryCode = NominalType<string, typeof Namespace>
@@ -21,7 +22,7 @@ export const from = (value: string): CountryCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<CountryCode>(ZodUtil.string(), parseString)
+export const Schema: ZodType<CountryCode> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)
 
 export const UnitedStates = 'US' as CountryCode
 export const Canada = 'CA' as CountryCode

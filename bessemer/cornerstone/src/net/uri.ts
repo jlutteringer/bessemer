@@ -2,13 +2,14 @@ import { NominalType, TaggedType } from '@bessemer/cornerstone/types'
 import * as Strings from '@bessemer/cornerstone/string'
 import { StringSplitResult } from '@bessemer/cornerstone/string'
 import * as Objects from '@bessemer/cornerstone/object'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 import * as IpV6Addresses from '@bessemer/cornerstone/net/ipv6-address'
 import { ValueOf } from 'type-fest'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
@@ -251,7 +252,7 @@ export function toLiteral(likeValue: UriLike | null | undefined): UriLiteral | n
   return format(value) as UriLiteral
 }
 
-export const SchemaLiteral = ZodUtil.structuredTransform<UriLiteral>(ZodUtil.string(), (it: string) =>
+export const SchemaLiteral: ZodType<UriLiteral> = ZodUtil.structuredTransform(ZodUtil.string(), (it: string) =>
   Results.map(parseString(it), (it) => toLiteral(it))
 )
 // JOHN need a schema for the object version...

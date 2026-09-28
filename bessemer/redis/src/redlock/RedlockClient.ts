@@ -306,11 +306,11 @@ export class RedlockClient extends EventEmitter {
       return Results.success({ attempts, start })
     }, props.retry)
 
-    if (!result.isSuccess) {
+    if (!Results.isSuccess(result)) {
       throw new ExecutionError('The operation was unable to achieve a quorum during its retry window.', attempts)
     }
 
-    return result.value
+    return result
   }
 
   private attemptOperation = async (

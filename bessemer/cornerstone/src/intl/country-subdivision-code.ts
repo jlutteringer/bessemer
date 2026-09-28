@@ -6,6 +6,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 // ISO 3166-2 country subdivision codes
 export const Namespace = ResourceKeys.createNamespace('country-subdivision-code')
@@ -28,7 +29,7 @@ export const from = (value: string): CountrySubdivisionCode => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<CountrySubdivisionCode>(ZodUtil.string(), parseString)
+export const Schema: ZodType<CountrySubdivisionCode> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)
 
 export const getCountry = (code: CountrySubdivisionCode): CountryCode => {
   const countryPart = code.split('-')[0]

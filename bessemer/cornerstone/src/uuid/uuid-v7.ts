@@ -5,6 +5,7 @@ import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 import * as Clocks from '@bessemer/cornerstone/temporal/clock'
 import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import * as Strings from '@bessemer/cornerstone/string'
@@ -24,7 +25,7 @@ export const from = (value: string): UuidV7 => {
   return ErrorEvents.unpackResult(parse(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<UuidV7>(ZodUtil.string(), parse).meta({
+export const Schema: ZodType<UuidV7> = ZodUtil.structuredTransform(ZodUtil.string(), parse).meta({
   type: 'string',
   format: 'uuid',
   pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',

@@ -1,5 +1,5 @@
 import { UnknownRecord } from 'type-fest'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Objects from '@bessemer/cornerstone/object'
 import Zod from 'zod'
 

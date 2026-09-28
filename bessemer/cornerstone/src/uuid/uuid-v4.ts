@@ -7,6 +7,7 @@ import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('uuid-v4')
 export type UuidV4 = NominalType<string, typeof Namespace>
@@ -23,7 +24,7 @@ export const from = (value: string): UuidV4 => {
   return ErrorEvents.unpackResult(parse(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<UuidV4>(ZodUtil.string(), parse).meta({
+export const Schema: ZodType<UuidV4> = ZodUtil.structuredTransform(ZodUtil.string(), parse).meta({
   type: 'string',
   format: 'uuid',
   pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',

@@ -5,6 +5,7 @@ import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
+import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('ipv4-address')
 export type IpV4Address = NominalType<string, typeof Namespace>
@@ -28,4 +29,4 @@ export const from = (value: string): IpV4Address => {
   return ErrorEvents.unpackResult(parseString(value))
 }
 
-export const Schema = ZodUtil.structuredTransform<IpV4Address>(ZodUtil.string(), parseString)
+export const Schema: ZodType<IpV4Address> = ZodUtil.structuredTransform(ZodUtil.string(), parseString)

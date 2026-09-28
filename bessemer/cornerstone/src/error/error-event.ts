@@ -12,7 +12,7 @@ import * as ErrorCauses from '@bessemer/cornerstone/error/error-cause'
 import { ErrorCause, ErrorCauseAugment, ErrorCauseBuilder } from '@bessemer/cornerstone/error/error-cause'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import { MergeExclusive } from 'type-fest'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 
 export const Namespace = ResourceKeys.createNamespace('error-event')
 

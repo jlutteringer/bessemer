@@ -56,11 +56,11 @@ export const usingLock = async <T>(
   options: AdvisoryLockOptions = {}
 ): Promise<T> => {
   const lock = await acquireLock(resourceKeys, context, options)
-  if (!lock.isSuccess) {
+  if (!Results.isSuccess(lock)) {
     return computeValue()
   }
 
-  return withLock(lock.value, context, computeValue, options)
+  return withLock(lock, context, computeValue, options)
 }
 
 export const usingIncrementalLocks = async <T>(
@@ -87,8 +87,8 @@ export const usingIncrementalLocks = async <T>(
     logger.trace(() => `usingIncrementalLocks - Unresolved incremental values: ${JSON.stringify(remainingKeys)}`)
 
     const lock = await tryAcquireLock(remainingKeys, context, options)
-    if (lock.isSuccess) {
-      const values = await withLock(lock.value, context, async () => {
+    if (Results.isSuccess(lock)) {
+      const values = await withLock(lock, context, async () => {
         return await computeValues(remainingKeys)
       })
 
@@ -98,12 +98,12 @@ export const usingIncrementalLocks = async <T>(
     return Results.failure()
   }, options.retry)
 
-  if (!result.isSuccess) {
+  if (!Results.isSuccess(result)) {
     const values = await computeValues(remainingKeys)
     return [...incrementalResults, ...values]
   }
 
-  return result.value
+  return result
 }
 
 export const usingOptimisticLock = async <T>(
@@ -120,8 +120,8 @@ export const usingOptimisticLock = async <T>(
     }
 
     const lock = await tryAcquireLock(resourceKeys, context, options)
-    if (lock.isSuccess) {
-      const value = await withLock(lock.value, context, async () => {
+    if (Results.isSuccess(lock)) {
+      const value = await withLock(lock, context, async () => {
         return await computeValue()
       })
 
@@ -131,11 +131,11 @@ export const usingOptimisticLock = async <T>(
     return Results.failure()
   }, options.retry)
 
-  if (!result.isSuccess) {
+  if (!Results.isSuccess(result)) {
     return await computeValue()
   }
 
-  return result.value
+  return result
 }
 
 const withLock = async <T>(
@@ -176,14 +176,14 @@ export const acquireLock = async (
   const providerLock = await getProvider(context).acquireLock(sortedKeys, props, context)
 
   logger.trace(() => {
-    if (providerLock.isSuccess) {
+    if (Results.isSuccess(providerLock)) {
       return `acquireLock - Successfully acquired lock for keys: ${JSON.stringify(sortedKeys)}`
     } else {
       return `acquireLock - Failed to acquire lock for keys: ${JSON.stringify(sortedKeys)}`
     }
   })
 
-  return Results.mapResult(providerLock, (it) => {
+  return Results.map(providerLock, (it) => {
     return {
       resourceKeys: sortedKeys,
       props,
@@ -195,7 +195,7 @@ export const acquireLock = async (
 export const extendLock = async (lock: AdvisoryLock, context: GlobalContextType<BessemerApplicationContext>): AsyncResult<AdvisoryLock> => {
   const providerLock = await getProvider(context).extendLock(lock, context)
 
-  return Results.mapResult(providerLock, (it) => {
+  return Results.map(providerLock, (it) => {
     return {
       resourceKeys: lock.resourceKeys,
       props: lock.props,

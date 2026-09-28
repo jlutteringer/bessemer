@@ -1,7 +1,7 @@
 import { ResourceKey } from '@bessemer/cornerstone/resource-key'
 import * as Entries from '@bessemer/cornerstone/entry'
 import { RecordEntry } from '@bessemer/cornerstone/entry'
-import * as Arrays from '@bessemer/cornerstone/array'
+import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Objects from '@bessemer/cornerstone/object'
 
 export interface LocalStore<T> {

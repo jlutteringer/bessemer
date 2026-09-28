@@ -1,4 +1,4 @@
-import Zod from 'zod'
+import Zod, { ZodType } from 'zod'
 import { Temporal } from '@js-temporal/polyfill'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import { NominalType } from '@bessemer/cornerstone/types'
@@ -79,8 +79,10 @@ export function toLiteral(value: DurationLike | null | undefined): DurationLiter
   return from(value).toString() as DurationLiteral
 }
 
-export const SchemaLiteral = ZodUtil.structuredTransform(Zod.string(), (it: string) => Results.map(parseString(it), (it) => toLiteral(it)))
-export const SchemaInstance = ZodUtil.structuredTransform(Zod.string(), parseString)
+export const SchemaLiteral: ZodType<DurationLiteral> = ZodUtil.structuredTransform(Zod.string(), (it: string) =>
+  Results.map(parseString(it), (it) => toLiteral(it))
+)
+export const SchemaInstance: ZodType<Duration> = ZodUtil.structuredTransform(Zod.string(), parseString)
 
 export const isDuration = (value: unknown): value is Duration => {
   return value instanceof Temporal.Duration

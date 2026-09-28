@@ -1,8 +1,7 @@
 import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { Expression } from '@bessemer/cornerstone/expression'
-import { BasicType } from '@bessemer/cornerstone/types'
+import { BasicType, NilableBasicType } from '@bessemer/cornerstone/types'
 import { Arrays, Assertions, Objects, Signatures } from '@bessemer/cornerstone'
-import { Signable } from '@bessemer/cornerstone/signature'
 import { Result } from '@bessemer/cornerstone/result'
 import * as Results from '@bessemer/cornerstone/result'
 
@@ -78,7 +77,7 @@ export const OrExpression = ExpressionInternal.defineExpression({
 
 export const EqualsExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Equals',
-  builder: (operands: Array<Expression<Signable>>) => {
+  builder: (operands: Array<Expression<NilableBasicType>>) => {
     return { operands }
   },
   resolver: (expression, evaluate) => {
@@ -95,7 +94,7 @@ export const EqualsExpression = ExpressionInternal.defineExpression({
 
 export const ContainsExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Contains',
-  builder: (collection: Expression<Array<Signable>>, operands: Array<Expression<Signable>>) => {
+  builder: (collection: Expression<Array<NilableBasicType>>, operands: Array<Expression<NilableBasicType>>) => {
     return { collection, operands }
   },
   resolver: (expression, evaluate) => {

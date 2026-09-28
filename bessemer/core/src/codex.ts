@@ -1,5 +1,5 @@
 import { Referencable, ReferenceType } from '@bessemer/cornerstone/reference'
-import { Arrays, Assertions, Async, Entries, Objects, References, ResourceKeys } from '@bessemer/cornerstone'
+import { Arrays, Assertions, Async, Entries, Maps, Objects, References, ResourceKeys } from '@bessemer/cornerstone'
 import { ReactNode } from 'react'
 import { CoreApplicationContext } from '@bessemer/core/application'
 import {
@@ -144,7 +144,7 @@ export const fetchContentByKeys = async <Type extends ContentType>(
     keys = keys.map((it) => ResourceKeys.getKey(it as NamespacedKey))
     Assertions.assertPresent(context.codex)
 
-    const tags = Arrays.concatenate(Contexts.getTags(context), options?.tags ?? [])
+    const tags = Arrays.appendAll(Contexts.getTags(context), options?.tags ?? [])
     const content = await context.codex.provider.fetchContentByKeys(keys, tags, context)
 
     if (Objects.isPresent(options?.type)) {
@@ -186,7 +186,7 @@ export const fetchContentBySectors = async <Type extends ContentType>(
     sectors = sectors.map((it) => ResourceKeys.getKey(it as NamespacedKey))
     Assertions.assertPresent(context.codex)
 
-    const tags = Arrays.concatenate(Contexts.getTags(context), options?.tags ?? [])
+    const tags = Arrays.appendAll(Contexts.getTags(context), options?.tags ?? [])
     const genericContent = await context.codex.provider.fetchContentBySectors(sectors, tags, context)
 
     if (Objects.isPresent(options?.type)) {
@@ -208,7 +208,7 @@ export const fetchContentBySectors = async <Type extends ContentType>(
     })
 
     // FUTURE this is wrong
-    const entries: Array<RecordEntry<Array<ContentData<Type>>>> = Object.entries(Arrays.groupBy(content, (it) => it.sector ?? ''))
+    const entries: Array<RecordEntry<Array<ContentData<Type>>>> = [...Maps.groupBy(content, (it) => it.sector ?? '').entries()]
     return entries
   })
 
