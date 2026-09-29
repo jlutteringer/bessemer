@@ -62,9 +62,13 @@ export const evaluateChoice = (
     return prerequisitesSatisfied ? Eithers.left(trait) : Eithers.right(trait)
   })
 
+  // Values with satisfied prerequisites (e.g. Fighter (2) once Fighter is selected) come before those without any,
+  // otherwise keeping the ruleset's order
+  const [valuesWithoutPrerequisites, valuesWithPrerequisites] = Arrays.partition(values, (it) => !Arrays.isEmpty(it.prerequisites))
+
   return {
     option: option.id,
-    values,
+    values: [...valuesWithPrerequisites, ...valuesWithoutPrerequisites],
     inactiveValues,
   }
 }

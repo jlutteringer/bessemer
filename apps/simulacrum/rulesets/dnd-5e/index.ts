@@ -9,24 +9,26 @@ import {
   Fighter,
   Fighter2,
   Fighter3,
+  Fighter4,
+  Fighter5,
   FighterSubclass,
   PsiWarrior,
   SecondWind,
 } from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import { Archery, BlindFighting, Defense, FightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
-import { Barbarian } from '@simulacrum/rulesets/dnd-5e/class/class-barbarian'
+import { Barbarian, Barbarian2, Barbarian3, Barbarian4, Barbarian5 } from '@simulacrum/rulesets/dnd-5e/class/class-barbarian'
 import { CharacterOptions } from '@simulacrum/common/character'
-import { Cleric } from '@simulacrum/rulesets/dnd-5e/class/class-cleric'
-import { Druid } from '@simulacrum/rulesets/dnd-5e/class/class-druid'
-import { Bard } from '@simulacrum/rulesets/dnd-5e/class/class-bard'
-import { Monk } from '@simulacrum/rulesets/dnd-5e/class/class-monk'
-import { Paladin } from '@simulacrum/rulesets/dnd-5e/class/class-paladin'
-import { Ranger } from '@simulacrum/rulesets/dnd-5e/class/class-ranger'
-import { Rogue } from '@simulacrum/rulesets/dnd-5e/class/class-rogue'
-import { Sorcerer } from '@simulacrum/rulesets/dnd-5e/class/class-sorcerer'
-import { Warlock } from '@simulacrum/rulesets/dnd-5e/class/class-warlock'
-import { Wizard } from '@simulacrum/rulesets/dnd-5e/class/class-wizard'
+import { Cleric, Cleric2, Cleric3, Cleric4, Cleric5 } from '@simulacrum/rulesets/dnd-5e/class/class-cleric'
+import { Druid, Druid2, Druid3, Druid4, Druid5 } from '@simulacrum/rulesets/dnd-5e/class/class-druid'
+import { Bard, Bard2, Bard3, Bard4, Bard5 } from '@simulacrum/rulesets/dnd-5e/class/class-bard'
+import { Monk, Monk2, Monk3, Monk4, Monk5 } from '@simulacrum/rulesets/dnd-5e/class/class-monk'
+import { Paladin, Paladin2, Paladin3, Paladin4, Paladin5 } from '@simulacrum/rulesets/dnd-5e/class/class-paladin'
+import { Ranger, Ranger2, Ranger3, Ranger4, Ranger5 } from '@simulacrum/rulesets/dnd-5e/class/class-ranger'
+import { Rogue, Rogue2, Rogue3, Rogue4, Rogue5 } from '@simulacrum/rulesets/dnd-5e/class/class-rogue'
+import { Sorcerer, Sorcerer2, Sorcerer3, Sorcerer4, Sorcerer5 } from '@simulacrum/rulesets/dnd-5e/class/class-sorcerer'
+import { Warlock, Warlock2, Warlock3, Warlock4, Warlock5 } from '@simulacrum/rulesets/dnd-5e/class/class-warlock'
+import { Wizard, Wizard2, Wizard3, Wizard4, Wizard5 } from '@simulacrum/rulesets/dnd-5e/class/class-wizard'
 import { CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { Dash, Disengage, Dodge, HealingSurge } from '@simulacrum/rulesets/dnd-5e/common'
 import { HitPointResourcePool } from '@simulacrum/rulesets/dnd-5e/resource-pool'
@@ -57,6 +59,52 @@ export const Dnd5e: Ruleset = {
     Defense,
     Fighter2,
     Fighter3,
+    Barbarian2,
+    Barbarian3,
+    Barbarian4,
+    Barbarian5,
+    Bard2,
+    Bard3,
+    Bard4,
+    Bard5,
+    Cleric2,
+    Cleric3,
+    Cleric4,
+    Cleric5,
+    Druid2,
+    Druid3,
+    Druid4,
+    Druid5,
+    Fighter4,
+    Fighter5,
+    Monk2,
+    Monk3,
+    Monk4,
+    Monk5,
+    Paladin2,
+    Paladin3,
+    Paladin4,
+    Paladin5,
+    Ranger2,
+    Ranger3,
+    Ranger4,
+    Ranger5,
+    Rogue2,
+    Rogue3,
+    Rogue4,
+    Rogue5,
+    Sorcerer2,
+    Sorcerer3,
+    Sorcerer4,
+    Sorcerer5,
+    Warlock2,
+    Warlock3,
+    Warlock4,
+    Warlock5,
+    Wizard2,
+    Wizard3,
+    Wizard4,
+    Wizard5,
     BattleMaster,
     Champion,
     EldritchKnight,
@@ -76,5 +124,7 @@ export const Dnd5e: Ruleset = {
     ],
     2: [Effects.gainCharacterOption(SelectClassLevel)],
     3: [Effects.gainCharacterOption(SelectClassLevel)],
+    4: [Effects.gainCharacterOption(SelectClassLevel)],
+    5: [Effects.gainCharacterOption(SelectClassLevel)],
   },
 }

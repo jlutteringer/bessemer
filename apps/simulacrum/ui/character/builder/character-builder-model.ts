@@ -1,19 +1,21 @@
-import { CharacterRecord } from '@simulacrum/common/character/character'
+import { CharacterRecord, CharacterSheet } from '@simulacrum/common/character/character'
 import { CharacterOption, CharacterSelection } from '@simulacrum/common/character/character-option'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { Archetypes, Effects, ProgressionTables, Traits } from '@simulacrum/common'
 import { Trait } from '@simulacrum/common/trait'
+import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Effect } from '@simulacrum/common/effect'
 import { Characteristic } from '@simulacrum/common/characteristic'
 import { ApplicationContext } from '@simulacrum/common/application'
-import { Expressions } from '@bessemer/cornerstone/expression'
+import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
 import { ObjectPaths } from '@bessemer/cornerstone'
 
 export const MaxLevel = 20
 const DefaultInitialValue = 10
 
 /**
- * A single trait choice the character gets at a given level, along with the traits that can fill it.
+ * A single trait choice the character gets at a given level, along with the traits that can fill it. Traits whose
+ * prerequisites aren't met at that level are left out.
  */
 export type TraitSlot = {
   key: string
@@ -21,8 +23,6 @@ export type TraitSlot = {
   option: CharacterOption
   selection: Trait | null
   values: Array<Trait>
-  // Traits that match the option but whose prerequisites aren't currently met
-  inactiveValues: Array<Trait>
 }
 
 /**
@@ -55,12 +55,20 @@ export const newCharacter = (context: ApplicationContext): CharacterRecord => {
 }
 
 export const setLevel = (character: CharacterRecord, level: number, context: ApplicationContext): CharacterRecord => {
-  // Resize the selections table to the new level, dropping any selections above it
-  const selections = ProgressionTables.capAtLevel(
-    ProgressionTables.merge(ProgressionTables.empty<CharacterSelection>(level), character.selections),
-    level
-  )
-  return normalizeSelections({ ...character, level, selections }, context)
+  return normalizeSelections({ ...character, level, selections: resizeSelections(character.selections, level) }, context)
+}
+
+// Resizes a selections table to `level`, dropping any selections above it
+const resizeSelections = (selections: ProgressionTable<CharacterSelection>, level: number): ProgressionTable<CharacterSelection> => {
+  return ProgressionTables.capAtLevel(ProgressionTables.merge(ProgressionTables.empty<CharacterSelection>(level), selections), level)
+}
+
+/**
+ * The character as it stood on reaching `level`: at that level, with only the selections made at lower levels.
+ */
+const buildLevelSnapshot = (character: CharacterRecord, level: number, context: ApplicationContext): CharacterSheet => {
+  const selections = resizeSelections(ProgressionTables.capAtLevel(character.selections, level - 1), level)
+  return Characters.buildCharacterDefinition({ ...character, level, selections }, context)
 }
 
 /**
@@ -93,12 +101,11 @@ export const getOptionLabel = (option: CharacterOption, context: ApplicationCont
 
 export const getTraitSlots = (character: CharacterRecord, context: ApplicationContext): Array<TraitSlot> => {
   const sheet = Characters.buildCharacterDefinition(character, context)
-  const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, context))
   const selectedTraits = ProgressionTables.getValues(sheet.traits)
   const slots: Array<TraitSlot> = []
 
   // Options come from the ruleset's progression table and, recursively, from the effects of the traits selected to fill them
-  const visit = (effects: Array<Effect>, level: number) => {
+  const visit = (effects: Array<Effect>, level: number, evaluate: EvaluateExpression) => {
     Effects.filter(effects, Effects.GainCharacterOption).forEach((effect) => {
       const option = effect.option
       const selection = CharacterOptions.getSelection(sheet.selections, option, level)
@@ -113,17 +120,18 @@ export const getTraitSlots = (character: CharacterRecord, context: ApplicationCo
         option,
         selection: trait,
         values: choice.values,
-        inactiveValues: choice.inactiveValues,
       })
 
       if (trait !== null) {
-        visit(trait.effects, level)
+        visit(trait.effects, level, evaluate)
       }
     })
   }
 
   for (let level = 1; level <= sheet.level; level++) {
-    visit(context.client.ruleset.progressionTable[level] ?? [], level)
+    // Prerequisites for a level's choices are evaluated against the character as it stood on reaching that level
+    const evaluate = Expressions.evaluator(Characters.buildExpressionContext(buildLevelSnapshot(character, level, context), context))
+    visit(context.client.ruleset.progressionTable[level] ?? [], level, evaluate)
   }
 
   return slots

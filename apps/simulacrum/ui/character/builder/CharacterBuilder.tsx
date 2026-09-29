@@ -281,14 +281,6 @@ const LevelTraits = ({
                       onClick={() => onSelect(slot, slot.selection?.id === trait.id ? null : trait)}
                     />
                   ))}
-                  {slot.inactiveValues.map((trait) => (
-                    <TraitCard
-                      key={trait.id}
-                      trait={trait}
-                      selected={false}
-                      disabled
-                    />
-                  ))}
                 </Grid>
               </Box>
             ))}
@@ -299,14 +291,13 @@ const LevelTraits = ({
   )
 }
 
-const TraitCard = ({ trait, selected, disabled, onClick }: { trait: Trait; selected: boolean; disabled?: boolean; onClick?: () => void }) => {
+const TraitCard = ({ trait, selected, onClick }: { trait: Trait; selected: boolean; onClick: () => void }) => {
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <Card sx={{ height: '100%' }}>
         {/* Selectable card pattern from the MUI docs */}
         <CardActionArea
           onClick={onClick}
-          disabled={disabled}
           data-active={selected ? '' : undefined}
           sx={{
             height: '100%',
@@ -328,7 +319,6 @@ const TraitCard = ({ trait, selected, disabled, onClick }: { trait: Trait; selec
               {selected && <CheckCircleIcon color="primary" />}
             </Stack>
             {trait.description && <Typography sx={{ color: 'text.secondary' }}>{trait.description}</Typography>}
-            {disabled && <Typography variant="caption">Prerequisites not met</Typography>}
           </CardContent>
         </CardActionArea>
       </Card>

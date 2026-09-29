@@ -7,3 +7,35 @@ export const Barbarian = Traits.defineTrait('ecd05aa9-18b3-48eb-ab53-1271e60d433
   archetypes: [Class],
   effects: [],
 })
+
+export const Barbarian2 = Traits.defineTrait('21274b64-e1b8-4db0-98ed-a0a8080cb147', {
+  name: 'Barbarian (2)',
+  description: '',
+  prerequisites: [Traits.traitPrerequisite(Barbarian)],
+  archetypes: [Class],
+  effects: [],
+})
+
+export const Barbarian3 = Traits.defineTrait('b3053f27-9c2f-431d-80b0-5b6c63b77326', {
+  name: 'Barbarian (3)',
+  description: '',
+  prerequisites: [Traits.traitPrerequisite(Barbarian2)],
+  archetypes: [Class],
+  effects: [],
+})
+
+export const Barbarian4 = Traits.defineTrait('7a6cc8b0-8f97-4b94-a55f-d1cb17e80c70', {
+  name: 'Barbarian (4)',
+  description: '',
+  prerequisites: [Traits.traitPrerequisite(Barbarian3)],
+  archetypes: [Class],
+  effects: [],
+})
+
+export const Barbarian5 = Traits.defineTrait('6ad5872e-1a07-4e75-a10d-ce146c6926ea', {
+  name: 'Barbarian (5)',
+  description: '',
+  prerequisites: [Traits.traitPrerequisite(Barbarian4)],
+  archetypes: [Class],
+  effects: [],
+})

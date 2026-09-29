@@ -76,7 +76,7 @@ export const ActionSurge = Abilities.defineAbility('a781f8be-1a9b-403d-84d7-155c
 })
 
 export const Fighter2 = Traits.defineTrait('da3e0304-f824-4231-9329-05c8889aa0cd', {
-  name: 'Fighter Level 2',
+  name: 'Fighter (2)',
   description: '',
   prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter.id])],
   archetypes: [Class],
@@ -91,7 +91,7 @@ export const FighterSubclass = Archetypes.defineArchetype('5a40dddd-84a9-4de3-ae
 export const SelectFighterSubclass = CharacterOptions.selectTraitOption('f593fd03-9e94-4e11-ba7e-8723e3fa6755', { archetypes: [FighterSubclass] })
 
 export const Fighter3 = Traits.defineTrait('a9fb4e9c-78b6-4067-b4f6-db6e831c53dc', {
-  name: 'Fighter Level 3',
+  name: 'Fighter (3)',
   description: '',
   prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter2.id])],
   archetypes: [Class],
@@ -127,4 +127,20 @@ export const PsiWarrior = Traits.defineTrait('c1f4c734-9205-4664-9cae-f2a3368c8c
   description: '',
   archetypes: [FighterSubclass],
   effects: [Effects.descriptive('Psionic Power!')],
+})
+
+export const Fighter4 = Traits.defineTrait('0cbab68a-2596-4ada-a919-c2582f34675e', {
+  name: 'Fighter (4)',
+  description: '',
+  prerequisites: [Traits.traitPrerequisite(Fighter3)],
+  archetypes: [Class],
+  effects: [],
+})
+
+export const Fighter5 = Traits.defineTrait('e6a071a3-cbaf-4245-b4e6-457375224939', {
+  name: 'Fighter (5)',
+  description: '',
+  prerequisites: [Traits.traitPrerequisite(Fighter4)],
+  archetypes: [Class],
+  effects: [],
 })
