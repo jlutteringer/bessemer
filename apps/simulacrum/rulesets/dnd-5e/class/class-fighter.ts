@@ -78,7 +78,7 @@ export const ActionSurge = Abilities.defineAbility('a781f8be-1a9b-403d-84d7-155c
 export const Fighter2 = Traits.defineTrait('da3e0304-f824-4231-9329-05c8889aa0cd', {
   name: 'Fighter Level 2',
   description: '',
-  prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter.reference])],
+  prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter.id])],
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
@@ -93,7 +93,7 @@ export const SelectFighterSubclass = CharacterOptions.selectTraitOption('f593fd0
 export const Fighter3 = Traits.defineTrait('a9fb4e9c-78b6-4067-b4f6-db6e831c53dc', {
   name: 'Fighter Level 3',
   description: '',
-  prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter2.reference])],
+  prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter2.id])],
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),

@@ -1,9 +1,9 @@
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { Effect, EffectSourceType } from '@simulacrum/common/effect'
 import { ResourceCost } from '@simulacrum/common/resource-pool'
-import { Referencable, Reference, ReferenceType } from '@bessemer/cornerstone/reference'
+import { Reference } from '@bessemer/cornerstone/reference'
 import { Expression } from '@bessemer/cornerstone/expression'
-import { Assertions, References } from '@bessemer/cornerstone'
+import { Assertions } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
 
 export enum ActionType {
@@ -15,7 +15,7 @@ export enum ActionType {
 
 export type AbilityReference = Reference<'Ability'>
 
-export type Ability = Referencable<AbilityReference> & {
+export type Ability = { id: AbilityReference } & {
   name: string
   description: string
 
@@ -58,9 +58,9 @@ export type AbilityState = {
   ability: Ability
 }
 
-export const defineAbility = (reference: ReferenceType<AbilityReference>, props: AbilityProps): Ability => {
+export const defineAbility = (reference: string, props: AbilityProps): Ability => {
   return {
-    reference: References.reference(reference, 'Ability', props.name),
+    id: reference as AbilityReference,
     name: props.name,
     description: props.description,
     prerequisites: props.prerequisites ?? [],
@@ -77,7 +77,7 @@ export const defineAbility = (reference: ReferenceType<AbilityReference>, props:
 }
 
 export const getAbility = (reference: AbilityReference, context: ApplicationContext): Ability => {
-  const ability = context.client.ruleset.abilities.find((it) => References.equals(it.reference, reference))
+  const ability = context.client.ruleset.abilities.find((it) => it.id === reference)
   Assertions.assertPresent(ability)
   return ability
 }
@@ -88,7 +88,7 @@ export const getAbilities = (abilities: Array<AbilityReference>, context: Applic
 
 export const getEffectsForAbility = (ability: Ability): Array<Effect> => {
   return ability.effects.map((effect) => {
-    const sourcedEffect: Effect = { ...effect, source: { type: EffectSourceType.Ability, ability: ability.reference } }
+    const sourcedEffect: Effect = { ...effect, source: { type: EffectSourceType.Ability, ability: ability.id } }
     return sourcedEffect
   })
 }

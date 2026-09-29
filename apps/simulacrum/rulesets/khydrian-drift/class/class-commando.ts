@@ -1,3 +1,4 @@
+import { TraitReference } from '@simulacrum/common/trait'
 import { Attributes, Effects, Traits } from '@simulacrum/common'
 import { BasicCombatTraining } from '@simulacrum/rulesets/khydrian-drift/archetype/archetype-combat'
 import { TacticPoints } from '@simulacrum/rulesets/khydrian-drift/resource-pool'
@@ -55,8 +56,8 @@ export const BaselineQuickGuy = Traits.defineTrait('asdasdaSDasdasDasdasDd', {
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.MovementSpeed, Attributes.modifier(Patches.set(6)))],
 })
 
-export const Officer = Traits.reference('cf3df79a-c906-49c5-8756-ee14bd4b26a5', 'Officer')
-export const Sentinel = Traits.reference('7aa06ac1-cd35-40e3-b1d5-bb62eeb60443', 'Sentinel')
+export const Officer = 'cf3df79a-c906-49c5-8756-ee14bd4b26a5' as TraitReference
+export const Sentinel = '7aa06ac1-cd35-40e3-b1d5-bb62eeb60443' as TraitReference
 
 export const OfficerTrait = Traits.defineTrait(Officer, {
   name: 'Officer',
@@ -75,7 +76,7 @@ export const AdvancedOperations = Traits.defineTrait('cf015d5a-f427-4eea-9798-ca
   prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Officer)],
   effects: [
     // TODO this solution doesn't work - its supposed to add 2 not set 2 - Patch solves!
-    // Effects.modifyResourcePool({ resource: TacticPoints.reference, size: 2 }),
+    // Effects.modifyResourcePool({ resource: TacticPoints.id, size: 2 }),
     // Effects.modifyLoadoutSlotQuantity(GeneralLoadoutSlot, 2),
   ],
 })

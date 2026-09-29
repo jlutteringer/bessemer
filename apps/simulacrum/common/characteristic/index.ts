@@ -2,7 +2,7 @@ import { Attribute, AttributeValue, Modifier } from '@simulacrum/common/attribut
 import { Attributes, Effects } from '@simulacrum/common'
 import { Effect } from '@simulacrum/common/effect'
 import { CharacterInitialValues } from '@simulacrum/common/character/character'
-import { Referencable, Reference, ReferenceType } from '@bessemer/cornerstone/reference'
+import { Reference } from '@bessemer/cornerstone/reference'
 import {
   EvaluateExpression,
   Expression,
@@ -11,12 +11,12 @@ import {
   NumericExpressions,
   ReducingExpression,
 } from '@bessemer/cornerstone/expression'
-import { Assertions, ObjectPaths, Objects, References } from '@bessemer/cornerstone'
+import { Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
 import { ObjectPath } from '@bessemer/cornerstone/object/object-path'
 
 export type CharacteristicReference<T> = Reference<'Characteristic'>
 
-export type CharacteristicTemplate<T> = Referencable<CharacteristicReference<T>> & {
+export type CharacteristicTemplate<T> = { id: CharacteristicReference<T> } & {
   name: string
   path: ObjectPath
   optimizer: ReducingExpression<T, T>
@@ -36,11 +36,9 @@ export type CharacteristicValue<T> = AttributeValue<T> & {
   characteristic: CharacteristicReference<T>
 }
 
-export const defineTemplate = <T>(id: ReferenceType<CharacteristicReference<T>>, name: string, path: ObjectPath): CharacteristicTemplate<T> => {
-  const reference = References.reference(id, 'Characteristic', name)
-
+export const defineTemplate = <T>(id: string, name: string, path: ObjectPath): CharacteristicTemplate<T> => {
   return {
-    reference,
+    id: id as CharacteristicReference<T>,
     name,
     path,
     // TODO another instance of us 'hardcoding' numeric attributes...
@@ -52,7 +50,7 @@ export const defineCharacteristic = <T>(props: CharacteristicProps<T>): Characte
   return {
     ...props.template,
     baseValue: 'baseValue' in props ? props.baseValue : null,
-    variable: Expressions.variable(props.template.reference.id),
+    variable: Expressions.variable(props.template.id),
   }
 }
 
@@ -73,7 +71,7 @@ export const buildAttribute = <T>(characteristic: Characteristic<T>, initialValu
 export const simpleValue = <T>(value: T, characteristic: Characteristic<T>, initialValues: CharacterInitialValues): CharacteristicValue<T> => {
   return {
     name: characteristic.name,
-    characteristic: References.getReference(characteristic),
+    characteristic: characteristic.id,
     ...Attributes.simpleAttributeValue(value, buildAttribute(characteristic, initialValues)),
   }
 }
@@ -88,14 +86,14 @@ export const evaluateCharacteristic = <T>(
 
   // TODO need to set sources or something... gotta figure that one out!
   const modifiers = Effects.filter(effects, Effects.ModifyCharacteristic)
-    .filter((it) => References.equals(it.characteristic, characteristic.reference))
+    .filter((it) => it.characteristic === characteristic.id)
     .map((it) => it.modifier) as Array<Modifier<T>>
 
   const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, evaluate)
 
   return {
     name: characteristic.name,
-    characteristic: References.getReference(characteristic),
+    characteristic: characteristic.id,
     ...attributeValue,
   }
 }

@@ -1,7 +1,7 @@
-import { Referencable, Reference, ReferenceType } from '@bessemer/cornerstone/reference'
+import { Reference } from '@bessemer/cornerstone/reference'
 import { TaggedType } from '@bessemer/cornerstone/types'
 import { AbstractApplicationContext } from '@bessemer/cornerstone/context'
-import { Arrays, Maps, Objects, References, Tags, Ulids } from '@bessemer/cornerstone'
+import { Arrays, Maps, Objects, Tags, Ulids } from '@bessemer/cornerstone'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { Tag } from '@bessemer/cornerstone/tag'
 import Zod, { ZodType } from 'zod'
@@ -26,7 +26,8 @@ export const ContentDataSchema = Zod.object({
   sector: ContentSectorSchema.nullable(),
 })
 
-export type ContentData<Type extends ContentType = ContentType, Data = ContentDataType<Type>> = Referencable<ContentReference> & {
+export type ContentData<Type extends ContentType = ContentType, Data = ContentDataType<Type>> = {
+  id: ContentReference
   key: ContentKey
   type: Type
   data: Data
@@ -50,7 +51,7 @@ export const TextContentType: ContentType<RichTextJson> = 'Text'
 export type TextContent = ContentData<typeof TextContentType>
 
 export interface ContentProvider<ContextType extends AbstractApplicationContext = AbstractApplicationContext> {
-  fetchContentByIds: (references: Array<ReferenceType<ContentReference>>, context: ContextType) => Promise<Array<ContentData>>
+  fetchContentByIds: (references: Array<ContentReference>, context: ContextType) => Promise<Array<ContentData>>
 
   fetchContentByKeys: (keys: Array<ContentKey>, tags: Array<Tag>, context: ContextType) => Promise<Array<ContentData>>
 
@@ -96,7 +97,7 @@ export const staticData = <Type extends ContentType = ContentType, Data = Conten
   options?: { tags?: Array<Tag>; sector?: ContentSector }
 ): StaticContentData<Type, Data> => {
   return {
-    reference: References.reference(Ulids.generate() as string, 'Content'),
+    id: Ulids.generate() as string as ContentReference,
     key,
     type,
     data,
@@ -110,9 +111,8 @@ export const staticProvider = <ApplicationContext extends AbstractApplicationCon
   normalizers?: Array<ContentNormalizer<ApplicationContext>>
 ): ContentProvider<ApplicationContext> => {
   return {
-    async fetchContentByIds(references: Array<ReferenceType<ContentReference>>, context: ApplicationContext): Promise<Array<ContentData>> {
-      const referenceIds = references.map((it) => (References.isReference(it) ? it.id : it))
-      const matchingContent = content.filter((it) => Arrays.contains(referenceIds, it.reference.id))
+    async fetchContentByIds(references: Array<ContentReference>, context: ApplicationContext): Promise<Array<ContentData>> {
+      const matchingContent = content.filter((it) => Arrays.contains(references, it.id))
       return normalizeContent(matchingContent, normalizers ?? [], context)
     },
     async fetchContentByKeys(keys: Array<ContentKey>, tags: Array<Tag>, context: ApplicationContext): Promise<Array<ContentData>> {

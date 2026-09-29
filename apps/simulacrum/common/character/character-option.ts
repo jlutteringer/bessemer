@@ -1,8 +1,8 @@
 import { Trait, TraitFilter, TraitFilterProps, TraitReference } from '@simulacrum/common/trait'
 import { ProgressionTables, Traits } from '@simulacrum/common'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
-import { Referencable, Reference } from '@bessemer/cornerstone/reference'
-import { Arrays, Assertions, Eithers, Objects, References } from '@bessemer/cornerstone'
+import { Reference } from '@bessemer/cornerstone/reference'
+import { Arrays, Assertions, Eithers, Objects } from '@bessemer/cornerstone'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { ApplicationContext } from '@simulacrum/common/application'
 
@@ -15,7 +15,7 @@ export type CharacterOptionReference = Reference<'CharacterOption'>
 export type CharacterOptionValueReference = TraitReference
 export type CharacterOptionValue = Trait
 
-export type CharacterOption = Referencable<CharacterOptionReference> & {
+export type CharacterOption = { id: CharacterOptionReference } & {
   type: CharacterOptionType
   traitFilter: TraitFilter
 }
@@ -36,9 +36,9 @@ export type EvaluateCharacterOptionsResult = {
   choices: ProgressionTable<CharacterChoice>
 }
 
-export const selectTraitOption = (reference: CharacterOptionReference | string, traitFilter: TraitFilterProps): CharacterOption => {
+export const selectTraitOption = (reference: string, traitFilter: TraitFilterProps): CharacterOption => {
   return {
-    reference: References.reference(reference, 'CharacterOption'),
+    id: reference as CharacterOptionReference,
     type: CharacterOptionType.SelectTrait,
     traitFilter: Traits.filter(traitFilter),
   }
@@ -54,7 +54,7 @@ export const evaluateChoice = (
 
   traits = traits.filter((trait) => {
     // Filter out traits we have already selected
-    return !Arrays.contains(selectedTraits, trait.reference)
+    return !Arrays.contains(selectedTraits, trait.id)
   })
 
   const [values, inactiveValues] = Arrays.bisect(traits, (trait) => {
@@ -63,7 +63,7 @@ export const evaluateChoice = (
   })
 
   return {
-    option: References.getReference(option),
+    option: option.id,
     values,
     inactiveValues,
   }
@@ -71,8 +71,8 @@ export const evaluateChoice = (
 
 export const buildSelection = (option: CharacterOptionReference | CharacterOption, selection: CharacterOptionValue | Trait): CharacterSelection => {
   return {
-    option: References.getReference(option),
-    selection: References.getReference(selection),
+    option: typeof option === 'string' ? option : option.id,
+    selection: selection.id,
   }
 }
 
@@ -82,7 +82,7 @@ export const getSelection = (
   level: number
 ): CharacterSelection | null => {
   const selectionArray = selections[level] ?? []
-  const matchingSelection = selectionArray.find((it) => References.equals(it.option, References.getReference(option)))
+  const matchingSelection = selectionArray.find((it) => it.option === (typeof option === 'string' ? option : option.id))
   return matchingSelection ?? null
 }
 
@@ -99,19 +99,19 @@ export const isSelected = (
   option: CharacterOptionReference | CharacterOption,
   selection: CharacterOptionValue | Trait
 ): boolean => {
-  const matchingSelections = ProgressionTables.getValues(selections).filter((it) => References.equals(it.option, References.getReference(option)))
-  return Objects.isPresent(matchingSelections.find((it) => References.equals(it.selection, References.getReference(selection))))
+  const matchingSelections = ProgressionTables.getValues(selections).filter((it) => it.option === (typeof option === 'string' ? option : option.id))
+  return Objects.isPresent(matchingSelections.find((it) => it.selection === selection.id))
 }
 
 export const isAllowedValue = (choice: CharacterChoice, optionValue: CharacterOptionValueReference) => {
   return Arrays.contains(
-    choice.values.map((it) => it.reference),
+    choice.values.map((it) => it.id),
     optionValue
   )
 }
 
 export const validateSelection = (choices: ProgressionTable<CharacterChoice>, selection: CharacterSelection): number => {
-  const entry = ProgressionTables.getEntries(choices).find(([_, choice]) => References.equals(choice.option, selection.option))
+  const entry = ProgressionTables.getEntries(choices).find(([_, choice]) => choice.option === selection.option)
   Assertions.assertPresent(entry)
 
   const [level, choice] = entry

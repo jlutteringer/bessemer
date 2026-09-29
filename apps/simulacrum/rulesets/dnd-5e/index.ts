@@ -1,3 +1,4 @@
+import { RulesetReference } from '@simulacrum/common/ruleset'
 import { Ruleset } from '@simulacrum/common/ruleset'
 import { Effects } from '@simulacrum/common'
 import {
@@ -28,12 +29,11 @@ import { Wizard } from '@simulacrum/rulesets/dnd-5e/class/class-wizard'
 import { CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { Dash, Disengage, Dodge, HealingSurge } from '@simulacrum/rulesets/dnd-5e/common'
 import { HitPointResourcePool } from '@simulacrum/rulesets/dnd-5e/resource-pool'
-import { References } from '@bessemer/cornerstone'
 
 export const SelectClassLevel = CharacterOptions.selectTraitOption('afbef236-17a0-464f-b2d0-cb01ecf7931a', { archetypes: [Class] })
 
 export const Dnd5e: Ruleset = {
-  reference: References.reference('ca894259-d62d-4398-b417-cb4f0adf4ffe', 'Ruleset', 'Dungeons and Dragons 5e'),
+  id: 'ca894259-d62d-4398-b417-cb4f0adf4ffe' as RulesetReference,
   name: 'Dungeons and Dragons 5e',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),

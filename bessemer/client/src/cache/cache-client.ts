@@ -9,18 +9,19 @@ import {
   CacheWriteRequest,
   CacheWriteRequestSchema,
 } from '@bessemer/client/cache/types'
-import { isErrorFromPath, makeApi, Zodios } from '@zodios/core'
+import { Zotch } from '@bessemer/zotch'
+import { Results } from '@bessemer/cornerstone'
+import { Result } from '@bessemer/cornerstone/result'
+import { ZotchError } from '@bessemer/zotch/zotch-error'
 import Zod from 'zod'
 
-const CacheApi = makeApi([
-  {
-    alias: 'fetchCaches',
+const CacheApi = Zotch.api({
+  fetchCaches: {
     method: 'get',
     path: '/cache',
     response: Zod.array(CacheSummarySchema),
   },
-  {
-    alias: 'fetchCacheDetail',
+  fetchCacheDetail: {
     method: 'get',
     path: '/cache/:name',
     response: CacheDetailSchema,
@@ -31,61 +32,48 @@ const CacheApi = makeApi([
       },
     ],
   },
-  {
-    alias: 'evictValues',
+  evictValues: {
     method: 'post',
     path: '/cache/evict',
     response: Zod.unknown(),
-    parameters: [
-      {
-        name: 'CacheEvictRequest',
-        description: 'TODO',
-        type: 'Body',
-        schema: CacheEvictRequestSchema,
-      },
-    ],
+    body: CacheEvictRequestSchema,
   },
-  {
-    alias: 'writeValues',
+  writeValues: {
     method: 'post',
     path: '/cache/write',
     response: Zod.unknown(),
-    parameters: [
-      {
-        name: 'CacheWriteRequest',
-        description: 'TODO',
-        type: 'Body',
-        schema: CacheWriteRequestSchema,
-      },
-    ],
+    body: CacheWriteRequestSchema,
   },
-])
+})
 
-const client = new Zodios('/api', CacheApi)
+const client = Zotch.client(CacheApi, { baseUrl: '/api' })
+
+// Zotch returns failures as values rather than throwing; this client's callers expect a thrown Error instead
+const getOrThrow = <T>(operation: string, result: Result<T, ZotchError>): T => {
+  if (Results.isSuccess(result)) {
+    return result
+  }
+
+  throw new Error(`Cache ${operation} failed: ${result.value.type}`, { cause: result.value })
+}
 
 export const fetchCaches = async (context: CacheClientContext): Promise<Array<CacheSummary>> => {
-  return await client.fetchCaches()
+  return getOrThrow('fetchCaches', await client.fetchCaches({}))
 }
 
 export const fetchCacheDetail = async (name: string, context: CacheClientContext): Promise<CacheDetail | null> => {
-  try {
-    const data = await client.fetchCacheDetail({ params: { name } })
-    return data
-  } catch (e) {
-    if (isErrorFromPath(CacheApi, 'get', '/cache/:name', e)) {
-      if (e.response.status === 404) {
-        return null
-      }
-    }
-
-    throw e
+  const result = await client.fetchCacheDetail({ params: { name } })
+  if (Results.isFailure(result) && Zotch.isStructuredError(result.value) && result.value.status === 404) {
+    return null
   }
+
+  return getOrThrow('fetchCacheDetail', result)
 }
 
 export const evictValues = async (request: CacheEvictRequest, context: CacheClientContext): Promise<void> => {
-  await client.evictValues(request)
+  getOrThrow('evictValues', await client.evictValues({ body: request }))
 }
 
 export const writeValues = async (request: CacheWriteRequest, context: CacheClientContext): Promise<void> => {
-  await client.writeValues(request)
+  getOrThrow('writeValues', await client.writeValues({ body: request }))
 }

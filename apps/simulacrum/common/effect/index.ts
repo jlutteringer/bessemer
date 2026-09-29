@@ -4,7 +4,6 @@ import { CharacterOption } from '@simulacrum/common/character/character-option'
 import { Ability, AbilityReference } from '@simulacrum/common/ability'
 import { Characteristic, CharacteristicReference } from '@simulacrum/common/characteristic'
 import { Modifier } from '@simulacrum/common/attribute'
-import { References } from '@bessemer/cornerstone'
 
 export enum EffectTypeEnum {
   Descriptive = 'Descriptive',
@@ -114,21 +113,21 @@ export const gainCharacterOption = (option: CharacterOption): GainCharacterOptio
 export const gainTrait = (trait: TraitReference | Trait): GainTraitEffect => {
   return {
     type: EffectTypeEnum.GainTrait,
-    trait: References.getReference(trait),
+    trait: typeof trait === 'string' ? trait : trait.id,
   }
 }
 
 export const gainAbility = (ability: AbilityReference | Ability): GainAbilityEffect => {
   return {
     type: EffectTypeEnum.GainAbility,
-    ability: References.getReference(ability),
+    ability: typeof ability === 'string' ? ability : ability.id,
   }
 }
 
 export const gainCharacteristic = (characteristic: CharacteristicReference<number> | Characteristic<number>): GainCharacteristicEffect => {
   return {
     type: EffectTypeEnum.GainCharacteristic,
-    characteristic: References.getReference(characteristic),
+    characteristic: typeof characteristic === 'string' ? characteristic : characteristic.id,
   }
 }
 
@@ -138,7 +137,7 @@ export const modifyCharacteristic = (
 ): ModifyCharacteristicEffect => {
   return {
     type: EffectTypeEnum.ModifyCharacteristic,
-    characteristic: References.getReference(characteristic),
+    characteristic: typeof characteristic === 'string' ? characteristic : characteristic.id,
     modifier,
   }
 }
@@ -146,14 +145,17 @@ export const modifyCharacteristic = (
 export const gainResourcePool = (resourcePool: ResourcePoolReference | ResourcePoolDefinition): GainResourcePoolEffect => {
   return {
     type: EffectTypeEnum.GainResourcePool,
-    resourcePool: References.getReference(resourcePool),
+    resourcePool: typeof resourcePool === 'string' ? resourcePool : resourcePool.id,
   }
 }
 
-export const modifyResourcePool = (resourcePool: ResourcePoolReference | ResourcePoolDefinition, modifier: Modifier<unknown>): ModifyResourcePoolEffect => {
+export const modifyResourcePool = (
+  resourcePool: ResourcePoolReference | ResourcePoolDefinition,
+  modifier: Modifier<unknown>
+): ModifyResourcePoolEffect => {
   return {
     type: EffectTypeEnum.ModifyResourcePool,
-    resourcePool: References.getReference(resourcePool),
+    resourcePool: typeof resourcePool === 'string' ? resourcePool : resourcePool.id,
     modifier,
   }
 }

@@ -8,7 +8,7 @@ import { Characteristic, CharacteristicValue } from '@simulacrum/common/characte
 import { ResourcePoolState } from '@simulacrum/common/resource-pool'
 import { EvaluateExpression, ExpressionContext, Expressions, ExpressionVariable } from '@bessemer/cornerstone/expression'
 import { Abilities, Characteristics, Effects, ProgressionTables, ResourcePools } from '@simulacrum/common'
-import { Arrays, Assertions, Eithers, Misc, ObjectPaths, Objects, References } from '@bessemer/cornerstone'
+import { Arrays, Assertions, Eithers, Misc, ObjectPaths, Objects } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { UnknownRecord } from 'type-fest'
 
@@ -67,7 +67,7 @@ const evaluateCharacterOptions = (character: CharacterRecord, context: Applicati
       const characterChoiceTable = getCharacterChoiceTable(characterState, context)
 
       const [selections, choices] = ProgressionTables.bisect(characterChoiceTable, (choice, level) => {
-        const selection = character.selections[level]!.find((it) => References.equals(it.option, choice.option))
+        const selection = character.selections[level]!.find((it) => it.option === choice.option)
 
         if (Objects.isPresent(selection) && CharacterOptions.isAllowedValue(choice, selection.selection)) {
           return Eithers.left(selection)
@@ -97,7 +97,7 @@ const getCharacterChoiceTable = (character: CharacterState, context: Application
       .map((it) => it.option)
       .filter((option) => {
         // TODO this logic will not work for options duplicated at the same level
-        return !character.selections[level]!.find((it) => References.equals(it.option, option.reference))
+        return !character.selections[level]!.find((it) => it.option === option.id)
       })
   })
 
@@ -133,7 +133,7 @@ const buildCharacterState = (character: CharacterRecord, context: ApplicationCon
     },
     (first, second) => {
       return Arrays.equalWith(Object.values(first.characteristics), Object.values(second.characteristics), (first, second) => {
-        if (!References.equals(first.characteristic, second.characteristic)) {
+        if (first.characteristic !== second.characteristic) {
           return false
         }
 

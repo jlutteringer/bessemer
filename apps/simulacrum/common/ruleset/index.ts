@@ -5,11 +5,11 @@ import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Effect } from '@simulacrum/common/effect'
 import { Ability } from '@simulacrum/common/ability'
 import { Characteristic } from '@simulacrum/common/characteristic'
-import { Referencable, Reference } from '@bessemer/cornerstone/reference'
+import { Reference } from '@bessemer/cornerstone/reference'
 
 export type RulesetReference = Reference<'Ruleset'>
 
-export type Ruleset = Referencable<RulesetReference> & {
+export type Ruleset = { id: RulesetReference } & {
   name: string
   creatureCharacteristics: Array<Characteristic<unknown>>
   playerCharacteristics: Array<Characteristic<unknown>>

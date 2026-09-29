@@ -1,7 +1,7 @@
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
 import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
-import { Referencable, Reference, ReferenceType } from '@bessemer/cornerstone/reference'
-import { Assertions, References } from '@bessemer/cornerstone'
+import { Reference } from '@bessemer/cornerstone/reference'
+import { Assertions } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
 
 export type ResourcePool = {
@@ -22,7 +22,7 @@ export type ResourcePoolProps = ResourcePool & {
   description: string
 }
 
-export type ResourcePoolDefinition = ResourcePoolProps & Referencable<ResourcePoolReference> & {}
+export type ResourcePoolDefinition = ResourcePoolProps & { id: ResourcePoolReference } & {}
 
 export type ResourcePoolState = {
   resource: ResourcePoolReference
@@ -34,15 +34,15 @@ export type ResourceCost = {
   resource: ResourcePool | ResourcePoolReference
 }
 
-export const defineResourcePool = (reference: ReferenceType<ResourcePoolReference>, props: ResourcePoolProps): ResourcePoolDefinition => {
+export const defineResourcePool = (reference: string, props: ResourcePoolProps): ResourcePoolDefinition => {
   return {
-    reference: References.reference(reference, 'ResourcePoolDefinition', props.name),
+    id: reference as ResourcePoolReference,
     ...props,
   }
 }
 
 export const getResourcePool = (resourcePool: ResourcePoolReference, context: ApplicationContext): ResourcePoolDefinition => {
-  const matchingResourcePool = context.client.ruleset.resourcePools.find((it) => References.equals(it.reference, resourcePool))
+  const matchingResourcePool = context.client.ruleset.resourcePools.find((it) => it.id === resourcePool)
   Assertions.assertPresent(matchingResourcePool, () => `Unable to find Resource Pool for Reference: ${JSON.stringify(resourcePool)}`)
   return matchingResourcePool
 }
@@ -56,7 +56,7 @@ export const buildInitialState = (
   return [
     resourcePool.path,
     {
-      resource: resourcePool.reference,
+      resource: resourcePool.id,
       value: evaluate(resourcePool.size),
     },
   ]

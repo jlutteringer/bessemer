@@ -1,5 +1,4 @@
-import { Referencable, Reference } from '@bessemer/cornerstone/reference'
-import { References } from '@bessemer/cornerstone'
+import { Reference } from '@bessemer/cornerstone/reference'
 
 export type LoadoutTypeReference = Reference<'LoadoutType'>
 
@@ -7,11 +6,11 @@ export type LoadoutProps = {
   name: string
 }
 
-export type LoadoutType = Referencable<LoadoutTypeReference> & LoadoutProps & {}
+export type LoadoutType = { id: LoadoutTypeReference } & LoadoutProps & {}
 
-export const defineLoadoutType = (reference: LoadoutTypeReference | string, props: LoadoutProps): LoadoutType => {
+export const defineLoadoutType = (reference: string, props: LoadoutProps): LoadoutType => {
   return {
-    reference: References.reference(reference, 'LoadoutType', props.name),
+    id: reference as LoadoutTypeReference,
     ...props,
   }
 }

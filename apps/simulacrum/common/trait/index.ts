@@ -1,9 +1,9 @@
 import { Effect } from '@simulacrum/common/effect'
 import { Archetype, ArchetypeReference } from '@simulacrum/common/archetype'
 import { CharacterValues } from '@simulacrum/common/character/character'
-import { Referencable, Reference, ReferenceType } from '@bessemer/cornerstone/reference'
+import { Reference } from '@bessemer/cornerstone/reference'
 import { Expression, Expressions } from '@bessemer/cornerstone/expression'
-import { Arrays, Assertions, References } from '@bessemer/cornerstone'
+import { Arrays, Assertions } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
 
 export type TraitReference = Reference<'Trait'>
@@ -17,7 +17,7 @@ export type TraitProps = {
   prerequisites?: Array<Expression<boolean>>
 }
 
-export type Trait = Referencable<TraitReference> & {
+export type Trait = { id: TraitReference } & {
   name: string
   description: string
   effects: Array<Effect>
@@ -26,21 +26,17 @@ export type Trait = Referencable<TraitReference> & {
   prerequisites: Array<Expression<boolean>>
 }
 
-export const reference = (id: string, name: string): TraitReference => {
-  return References.reference(id, 'Trait', name)
-}
-
-export const defineTrait = (reference: ReferenceType<TraitReference>, props: TraitProps): Trait => {
+export const defineTrait = (reference: string, props: TraitProps): Trait => {
   return {
-    reference: References.reference(reference, 'Trait', props.name),
+    id: reference as TraitReference,
     ...props,
-    archetypes: (props.archetypes ?? []).map(References.getReference),
+    archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
     prerequisites: props.prerequisites ?? [],
   }
 }
 
 export const getTrait = (trait: TraitReference, context: ApplicationContext): Trait => {
-  const matchingTrait = context.client.ruleset.traits.find((it) => References.equals(it.reference, trait))
+  const matchingTrait = context.client.ruleset.traits.find((it) => it.id === trait)
   Assertions.assertPresent(matchingTrait, () => `Unable to find Trait for Reference: ${JSON.stringify(trait)}`)
   return matchingTrait
 }
@@ -50,7 +46,7 @@ export const getTraits = (traits: Array<TraitReference>, context: ApplicationCon
 }
 
 export const traitPrerequisite = (trait: TraitReference | Trait): Expression<boolean> => {
-  return Expressions.contains(CharacterValues.Traits, [References.getReference(trait)])
+  return Expressions.contains(CharacterValues.Traits, [typeof trait === 'string' ? trait : trait.id])
 }
 
 export type TraitFilterProps = {
@@ -65,8 +61,8 @@ export type TraitFilter = {
 
 export const filter = (props: TraitFilterProps): TraitFilter => {
   return {
-    archetypes: (props.archetypes ?? []).map(References.getReference),
-    specificOptions: (props.specificOptions ?? []).map(References.getReference),
+    archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
+    specificOptions: (props.specificOptions ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
   }
 }
 
@@ -77,10 +73,10 @@ export const filterNone = (): TraitFilter => {
 export const applyFilter = (traits: Array<Trait>, filter: TraitFilter): Array<Trait> => {
   let filteredTraits = traits
   if (!Arrays.isEmpty(filter.archetypes)) {
-    filteredTraits = filteredTraits.filter((it) => Arrays.containsAllWith(filter.archetypes, it.archetypes, References.equalitor()))
+    filteredTraits = filteredTraits.filter((it) => Arrays.containsAll(filter.archetypes, it.archetypes))
   }
   if (!Arrays.isEmpty(filter.specificOptions)) {
-    filteredTraits = filteredTraits.filter((it) => Arrays.containsWith(filter.specificOptions, it.reference, References.equalitor()))
+    filteredTraits = filteredTraits.filter((it) => Arrays.contains(filter.specificOptions, it.id))
   }
 
   return filteredTraits

@@ -1,5 +1,4 @@
-import { Referencable, ReferenceType } from '@bessemer/cornerstone/reference'
-import { Arrays, Assertions, Async, Entries, Maps, Objects, References, ResourceKeys } from '@bessemer/cornerstone'
+import { Arrays, Assertions, Async, Entries, Maps, Objects, ResourceKeys } from '@bessemer/cornerstone'
 import { ReactNode } from 'react'
 import { CoreApplicationContext } from '@bessemer/core/application'
 import {
@@ -40,7 +39,7 @@ export const defaultRuntime = (): CodexRuntime => {
 }
 
 // export type CodexDefinitionResolver<T extends UnknownRecord> = (
-//   reference: ReferenceType<ContentReference>,
+//   reference: ContentReference,
 //   application: CoreApplicationContext
 // ) => Promise<T | undefined>
 //
@@ -55,24 +54,26 @@ export const defaultRuntime = (): CodexRuntime => {
 //   type: ContentType
 // }
 
-// export type CodexLabel = Referencable<ContentReference> & {
+// export type CodexLabel = {
+//   id: ContentReference
 //   defaultValue?: JSONContent
 // }
 
-export type CodexText = Referencable<ContentReference> & {
+export type CodexText = {
+  id: ContentReference
   defaultValue?: ReactNode
 }
 
-// export const label = (reference: ReferenceType<ContentReference>, defaultValue?: ReactNode): CodexLabel => {
+// export const label = (reference: ContentReference, defaultValue?: ReactNode): CodexLabel => {
 //   return {
-//     reference: References.reference(reference, 'Content'),
+//     id: reference,
 //     defaultValue,
 //   }
 // }
 
-export const text = (reference: ReferenceType<ContentReference>, defaultValue?: ReactNode): CodexText => {
+export const text = (reference: ContentReference, defaultValue?: ReactNode): CodexText => {
   return {
-    reference: References.reference(reference, 'Content'),
+    id: reference,
     defaultValue,
   }
 }
@@ -90,7 +91,7 @@ export const text = (reference: ReferenceType<ContentReference>, defaultValue?: 
 // }
 
 // export const renderLabel = async (content: CodexLabel, application: CoreApplicationContext): Promise<ReactNode> => {
-//   const data = await application.codex?.label.resolve(content.reference, application)
+//   const data = await application.codex?.label.resolve(content.id, application)
 //   if (Objects.isUndefined(data)) {
 //     return content.defaultValue
 //   }
@@ -98,10 +99,7 @@ export const text = (reference: ReferenceType<ContentReference>, defaultValue?: 
 //   return application.codex?.label.render(data)
 // }
 
-export const fetchTextById = async (
-  reference: ReferenceType<ContentReference>,
-  context: CoreApplicationContext
-): Promise<TextContent | undefined> => {
+export const fetchTextById = async (reference: ContentReference, context: CoreApplicationContext): Promise<TextContent | undefined> => {
   Assertions.assertPresent(context.codex)
   const content = await context.codex.provider.fetchContentByIds([reference], context)
   if (Arrays.isEmpty(content)) {

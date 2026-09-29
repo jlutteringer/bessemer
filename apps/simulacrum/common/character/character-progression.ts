@@ -4,7 +4,7 @@ import { TraitReference } from '@simulacrum/common/trait'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Effects, ProgressionTables, Traits } from '@simulacrum/common'
 import { CharacterSheet } from '@simulacrum/common/character/character'
-import { Arrays, Objects, References } from '@bessemer/cornerstone'
+import { Arrays, Objects } from '@bessemer/cornerstone'
 import { CharacterOptions } from '@simulacrum/common/character/index'
 import { ApplicationContext } from '@simulacrum/common/application'
 
@@ -63,7 +63,7 @@ const buildCharacterProgressionEntries = (
 
     if (Objects.isPresent(selection)) {
       const trait = Traits.getTrait(selection.selection, context)
-      const traitSource: EffectSource = { type: EffectSourceType.Trait, trait: References.getReference(trait) }
+      const traitSource: EffectSource = { type: EffectSourceType.Trait, trait: trait.id }
       const [traitEffects, additionalEntries] = buildCharacterProgressionEntries(trait.effects, traitSource, character, level, context)
 
       const traitEntries = !Arrays.isEmpty(traitEffects)
@@ -96,5 +96,5 @@ const buildCharacterProgressionEntries = (
 }
 
 const getKey = (option: CharacterOption | null, level: number): string => {
-  return `${option?.reference.id}-${level}`
+  return `${option?.id}-${level}`
 }

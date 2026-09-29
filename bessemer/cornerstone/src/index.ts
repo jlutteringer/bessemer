@@ -45,7 +45,6 @@ import * as Clocks from '@bessemer/cornerstone/temporal/clock'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import * as Tags from '@bessemer/cornerstone/tag'
 import * as Promises from '@bessemer/cornerstone/promise'
-import * as References from '@bessemer/cornerstone/reference'
 import * as Signatures from '@bessemer/cornerstone/signature'
 import * as Eithers from '@bessemer/cornerstone/either'
 import * as Results from '@bessemer/cornerstone/result'
@@ -262,10 +261,6 @@ export {
    * @since 2.0.0
    */
   Promises,
-  /**
-   * @since 2.0.0
-   */
-  References,
   /**
    * @since 2.0.0
    */

@@ -1,6 +1,6 @@
 import { Arrays, Eithers, Objects } from '@bessemer/cornerstone'
 import { Either } from '@bessemer/cornerstone/either'
-import { Signable } from '@bessemer/cornerstone/signature'
+import { NilableBasicType } from '@bessemer/cornerstone/types'
 
 export type ProgressionTable<T> = Record<number, Array<T>>
 
@@ -78,7 +78,7 @@ export const bisect = <T, L, R>(
   bisector: (element: T, level: number) => Either<L, R>
 ): [ProgressionTable<L>, ProgressionTable<R>] => {
   const rows = getRows(table).map<[number, Array<Either<L, R>>]>(([level, values]) => [level, values.map((it) => bisector(it, level))])
-  const lefts = rows.map<[number, Array<L>]>(([level, values]) => [level, values.filter(Eithers.isLeft).map((it) => it.value)])
+  const lefts = rows.map<[number, Array<L>]>(([level, values]) => [level, values.filter(Eithers.isLeft)])
   const rights = rows.map<[number, Array<R>]>(([level, values]) => [level, values.filter(Eithers.isRight).map((it) => it.value)])
   return [Object.fromEntries(lefts), Object.fromEntries(rights)]
 }
@@ -93,7 +93,7 @@ export const getValuesForLevel = <T>(table: ProgressionTable<T>, level: number):
     .flatMap(([_, values]) => values)
 }
 
-export const equalBy = <T>(first: ProgressionTable<T>, second: ProgressionTable<T>, mapper: (element: T) => Signable): boolean => {
+export const equalBy = <T>(first: ProgressionTable<T>, second: ProgressionTable<T>, mapper: (element: T) => NilableBasicType): boolean => {
   if (getMaxLevel(first) !== getMaxLevel(second)) {
     return false
   }
