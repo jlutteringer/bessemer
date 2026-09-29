@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/system'
 
 const userTestimonials = [
@@ -79,7 +79,8 @@ const userTestimonials = [
     ),
     name: 'Daniel Wolf',
     occupation: 'CDO',
-    testimonial: "The quality of this product exceeded my expectations. It's durable, well-designed, and built to last. Definitely worth the investment!",
+    testimonial:
+      "The quality of this product exceeded my expectations. It's durable, well-designed, and built to last. Definitely worth the investment!",
   },
 ]
 
@@ -141,8 +142,8 @@ export default function Testimonials() {
           variant="body1"
           sx={{ color: 'text.secondary' }}
         >
-          See what our customers love about our products. Discover how we excel in efficiency, durability, and satisfaction. Join us for quality, innovation,
-          and reliable support.
+          See what our customers love about our products. Discover how we excel in efficiency, durability, and satisfaction. Join us for quality,
+          innovation, and reliable support.
         </Typography>
       </Box>
       <Grid

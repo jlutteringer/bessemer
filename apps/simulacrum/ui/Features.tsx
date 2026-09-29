@@ -41,10 +41,10 @@ interface ChipProps {
   selected?: boolean
 }
 
-const Chip = styled(MuiChip)<ChipProps>(({ theme }) => ({
+const Chip = styled(MuiChip, { shouldForwardProp: (prop) => prop !== 'selected' })<ChipProps>(({ theme }) => ({
   variants: [
     {
-      props: ({ selected }) => selected,
+      props: ({ selected }) => selected === true,
       style: {
         background: 'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
         color: 'hsl(0, 0%, 100%)',
@@ -157,7 +157,8 @@ export default function Features() {
           variant="body1"
           sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
         >
-          Provide a brief overview of the key features of the product. For example, you could list the number of features, their types or benefits, and add-ons.
+          Provide a brief overview of the key features of the product. For example, you could list the number of features, their types or benefits,
+          and add-ons.
         </Typography>
       </Box>
       <Box

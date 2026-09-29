@@ -27,13 +27,17 @@ export default function CharacterSheet() {
         <Box>
           <Typography
             variant="h5"
-            fontWeight="bold"
+            sx={{
+              fontWeight: 'bold',
+            }}
           >
             Lacitus Torn
           </Typography>
           <Typography
             variant="body2"
-            color="text.secondary"
+            sx={{
+              color: 'text.secondary',
+            }}
           >
             Variant Human Cleric 1 / Wizard 14 • Level 15
           </Typography>
@@ -63,11 +67,7 @@ export default function CharacterSheet() {
         spacing={3}
       >
         {/* Left Column: Stats */}
-        <Grid
-          item
-          xs={12}
-          md={4}
-        >
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper
             elevation={2}
             sx={{ p: 2 }}
@@ -78,20 +78,23 @@ export default function CharacterSheet() {
             >
               {['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'].map((stat, index) => (
                 <Grid
-                  item
-                  xs={4}
+                  size={{ xs: 4 }}
                   key={index}
                 >
                   <StatBox>
                     <Typography
                       variant="h6"
-                      fontWeight="bold"
+                      sx={{
+                        fontWeight: 'bold',
+                      }}
                     >
                       {['+2', '+0', '+3', '+5', '-1', '-1'][index]}
                     </Typography>
                     <Typography
                       variant="body2"
-                      color="text.secondary"
+                      sx={{
+                        color: 'text.secondary',
+                      }}
                     >
                       {stat}
                     </Typography>
@@ -108,7 +111,9 @@ export default function CharacterSheet() {
           >
             <Typography
               variant="h6"
-              fontWeight="bold"
+              sx={{
+                fontWeight: 'bold',
+              }}
             >
               Saving Throws
             </Typography>
@@ -121,11 +126,7 @@ export default function CharacterSheet() {
         </Grid>
 
         {/* Center Column: Actions */}
-        <Grid
-          item
-          xs={12}
-          md={8}
-        >
+        <Grid size={{ xs: 12, md: 8 }}>
           <Paper
             elevation={3}
             sx={{ p: 2 }}
@@ -145,7 +146,11 @@ export default function CharacterSheet() {
 
             {/* Tab LoginContent */}
             {tabValue === 0 && (
-              <Box mt={2}>
+              <Box
+                sx={{
+                  mt: 2,
+                }}
+              >
                 <Typography variant="h6">Actions</Typography>
                 <Divider sx={{ my: 1 }} />
                 <Typography>Mace - +7 to hit, 1d6+2 Damage</Typography>
@@ -157,14 +162,20 @@ export default function CharacterSheet() {
       </Grid>
 
       {/* Bottom Section */}
-      <Box mt={3}>
+      <Box
+        sx={{
+          mt: 3,
+        }}
+      >
         <Paper
           elevation={2}
           sx={{ p: 2 }}
         >
           <Typography
             variant="h6"
-            fontWeight="bold"
+            sx={{
+              fontWeight: 'bold',
+            }}
           >
             Armor & Weapons
           </Typography>

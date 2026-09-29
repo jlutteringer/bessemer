@@ -15,30 +15,34 @@ export const CharacterOptionPanel = ({ characterBuilder }: { characterBuilder: C
     >
       {characterBuilder.choice.values.map((choiceValue, index) => (
         <Grid
-          item
-          xs={12}
-          sm={6}
+          size={{ xs: 12, sm: 6 }}
           key={index}
         >
           <Card>
             <CardContent>
               <Typography
                 variant="h6"
-                fontWeight="bold"
+                sx={{
+                  fontWeight: 'bold',
+                }}
               >
                 {choiceValue.name}
               </Typography>
 
               {/* Action Buttons */}
               <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                mt={2}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mt: 2,
+                }}
               >
                 <Box
-                  display="flex"
-                  gap={1}
+                  sx={{
+                    display: 'flex',
+                    gap: 1,
+                  }}
                 >
                   <Button
                     size="small"

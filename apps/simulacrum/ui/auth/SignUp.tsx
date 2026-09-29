@@ -114,7 +114,7 @@ export default function SignUp() {
   return (
     <SignUpContainer
       direction="column"
-      justifyContent="space-between"
+      sx={{ justifyContent: 'space-between' }}
     >
       <Card variant="outlined">
         <Typography

@@ -9,10 +9,11 @@ import {
   Fighter,
   Fighter2,
   Fighter3,
+  FighterSubclass,
   PsiWarrior,
   SecondWind,
 } from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
-import { Archery, BlindFighting, Defense } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
+import { Archery, BlindFighting, Defense, FightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 import { Barbarian } from '@simulacrum/rulesets/dnd-5e/class/class-barbarian'
 import { CharacterOptions } from '@simulacrum/common/character'
@@ -37,6 +38,7 @@ export const Dnd5e: Ruleset = {
   name: 'Dungeons and Dragons 5e',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),
+  archetypes: [Class, FightingStyle, FighterSubclass],
   traits: [
     Barbarian,
     Bard,

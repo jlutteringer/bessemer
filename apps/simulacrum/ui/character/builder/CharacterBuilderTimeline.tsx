@@ -1,12 +1,4 @@
-import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  TimelineOppositeContent,
-  TimelineSeparator
-} from '@mui/lab'
+import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator } from '@mui/lab'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { use } from 'react'
@@ -25,9 +17,9 @@ import {
   EffectTypeEnum,
   GainAbilityEffect,
   GainResourcePoolEffect,
-  GainTraitEffect
+  GainTraitEffect,
 } from '@simulacrum/common/effect'
-import { SvgIconOwnProps } from '@mui/material/SvgIcon/SvgIcon'
+import { SvgIconOwnProps } from '@mui/material/SvgIcon'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { BessemerNext } from '@bessemer/framework-next'
 
@@ -74,10 +66,12 @@ const CharacterBuilderTimelineEntry = ({
   return (
     <TimelineItem>
       <TimelineOppositeContent
-        sx={{ m: 'auto 0' }}
         align="right"
         variant="body2"
-        color="text.secondary"
+        sx={{
+          color: 'text.secondary',
+          m: 'auto 0',
+        }}
       >
         <EffectSourceLabel
           source={entry.source}

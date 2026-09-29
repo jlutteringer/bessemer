@@ -2,7 +2,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded'
@@ -82,8 +82,8 @@ export default function Highlights() {
             variant="body1"
             sx={{ color: 'grey.400' }}
           >
-            Explore why our product stands out: adaptability, durability, user-friendly design, and innovation. Enjoy reliable customer support and precision in
-            every detail.
+            Explore why our product stands out: adaptability, durability, user-friendly design, and innovation. Enjoy reliable customer support and
+            precision in every detail.
           </Typography>
         </Box>
         <Grid

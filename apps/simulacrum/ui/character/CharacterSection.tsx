@@ -1,32 +1,53 @@
-import React from 'react'
+'use client'
+
+import React, { useMemo, useState } from 'react'
+import Link from 'next/link'
 import {
   Box,
   Button,
   Card,
+  CardActions,
   CardContent,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
-  IconButton,
-  InputBase,
+  InputAdornment,
   MenuItem,
   Paper,
-  Select,
-  Typography
+  TextField,
+  Typography,
 } from '@mui/material'
-import SettingsIcon from '@mui/icons-material/Settings'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlined'
 import SearchIcon from '@mui/icons-material/Search'
+import { Arrays, Objects } from '@bessemer/cornerstone'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { ContentLabel } from '@bessemer/core/codex/component/ContentLabel'
+import { ProgressionTables, Traits } from '@simulacrum/common'
+import { ApplicationContext } from '@simulacrum/common/application'
+import { useClientContext } from '@simulacrum/ui/application/use-client-context'
+import { copyCharacter, deleteCharacter, StoredCharacter, useStoredCharacters } from '@simulacrum/ui/character/character-storage'
 
-const characters = [
-  { name: "john_lutteringer's Char...", level: 1, campaign: 'Irawulfe' },
-  { name: "john_lutteringer's Char...", level: 1, campaign: 'valorgrp' },
-  { name: 'Hemmy Fake Character', level: 2, campaign: 'The Color of Night' },
-  { name: 'Lacitus Torn', level: 15, campaign: 'The Color of Night' },
-  { name: "john_lutteringer's Char...", level: 1, campaign: '' },
-]
+enum SortOrder {
+  CreatedOldest = 'CreatedOldest',
+  CreatedNewest = 'CreatedNewest',
+}
 
 export const CharacterSection = () => {
+  const characters = useStoredCharacters()
+  const [search, setSearch] = useState('')
+  const [sortOrder, setSortOrder] = useState(SortOrder.CreatedOldest)
+  const [characterToDelete, setCharacterToDelete] = useState<StoredCharacter | null>(null)
+
+  const visibleCharacters = useMemo(() => {
+    const matching = (characters ?? []).filter((it) => it.character.name.toLowerCase().includes(search.trim().toLowerCase()))
+    const sorted = Arrays.sortBy(matching, (it) => it.createdAt)
+    return sortOrder === SortOrder.CreatedNewest ? Arrays.reverse(sorted) : sorted
+  }, [characters, search, sortOrder])
+
   return (
     <div>
       <StandardPageHeader
@@ -38,6 +59,8 @@ export const CharacterSection = () => {
         }
         content={
           <Button
+            component={Link}
+            href="/characters/new"
             variant="contained"
             color="primary"
             startIcon={<AddCircleOutlineIcon />}
@@ -51,141 +74,153 @@ export const CharacterSection = () => {
         }
       />
 
-      {/* Slots & Controls */}
       <Box
-        display="flex"
-        flexDirection={{ xs: 'column', sm: 'row' }}
-        alignItems="center"
-        gap={2}
-        mb={3}
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 2,
+          mb: 3,
+        }}
       >
-        <Typography>
-          Slots:{' '}
-          <Box
-            component="span"
-            sx={{ color: 'primary.main', fontWeight: 'bold' }}
-          >
-            5/6 Used
-          </Box>
-        </Typography>
-        <Box
-          display="flex"
-          alignItems="center"
-          flexGrow={1}
-          gap={2}
-          width="100%"
+        <TextField
+          size="small"
+          placeholder="Search by name"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          sx={{ flexGrow: 1, maxWidth: { sm: '60%' } }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
+        <TextField
+          select
+          size="small"
+          value={sortOrder}
+          onChange={(event) => setSortOrder(event.target.value as SortOrder)}
         >
-          {/* Search Field */}
-          <Paper
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              px: 2,
-              py: 1,
-              flexGrow: 1,
-              maxWidth: { xs: '100%', sm: '60%' },
-            }}
-            elevation={1}
-          >
-            <SearchIcon />
-            <InputBase
-              placeholder="Search by Name, Level, Class, Species, or Campaign"
-              fullWidth
-            />
-          </Paper>
-
-          {/* Sort Dropdown */}
-          <Select
-            size="small"
-            defaultValue="Created: Oldest"
-            sx={{ width: { xs: '100%', sm: 'auto' } }}
-          >
-            <MenuItem value="Created: Oldest">Created: Oldest</MenuItem>
-            <MenuItem value="Created: Newest">Created: Newest</MenuItem>
-          </Select>
-
-          {/* Settings Icon */}
-          <IconButton>
-            <SettingsIcon />
-          </IconButton>
-        </Box>
+          <MenuItem value={SortOrder.CreatedOldest}>Created: Oldest</MenuItem>
+          <MenuItem value={SortOrder.CreatedNewest}>Created: Newest</MenuItem>
+        </TextField>
       </Box>
 
-      {/* Character Cards Grid */}
-      <Grid
-        container
-        spacing={2}
-      >
-        {characters.map((char, index) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            key={index}
+      {Objects.isNil(characters) ? (
+        // Local storage is only readable once the client has hydrated
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+          <CircularProgress />
+        </Box>
+      ) : Arrays.isEmpty(characters) ? (
+        <Paper
+          variant="outlined"
+          sx={{ p: 4, textAlign: 'center' }}
+        >
+          <Typography gutterBottom>You haven&apos;t created any characters yet.</Typography>
+          <Button
+            component={Link}
+            href="/characters/new"
+            variant="contained"
           >
-            <Card>
-              <CardContent>
-                <Typography
-                  variant="h6"
-                  fontWeight="bold"
-                >
-                  {char.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  Level {char.level} | Campaign:{' '}
-                  <Box
-                    component="span"
-                    sx={{ color: 'primary.main' }}
-                  >
-                    {char.campaign}
-                  </Box>
-                </Typography>
+            Create a Character
+          </Button>
+        </Paper>
+      ) : (
+        <Grid
+          container
+          spacing={2}
+        >
+          {visibleCharacters.map((character) => (
+            <Grid
+              size={{ xs: 12, sm: 6 }}
+              key={character.id}
+            >
+              <CharacterCard
+                character={character}
+                onDelete={() => setCharacterToDelete(character)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      )}
 
-                {/* Action Buttons */}
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  mt={2}
-                >
-                  <Box
-                    display="flex"
-                    gap={1}
-                  >
-                    <Button
-                      size="small"
-                      variant="outlined"
-                    >
-                      View
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                    >
-                      Copy
-                    </Button>
-                  </Box>
-                  <Button
-                    size="small"
-                    color="error"
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Dialog
+        open={characterToDelete !== null}
+        onClose={() => setCharacterToDelete(null)}
+      >
+        <DialogTitle>Delete character?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{characterToDelete && `"${getDisplayName(characterToDelete)}" will be permanently deleted.`}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setCharacterToDelete(null)}>Cancel</Button>
+          <Button
+            color="error"
+            onClick={() => {
+              deleteCharacter(characterToDelete!.id)
+              setCharacterToDelete(null)
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
+  )
+}
+
+const getDisplayName = (character: StoredCharacter): string => {
+  return character.character.name.trim() || 'Unnamed Character'
+}
+
+const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; onDelete: () => void }) => {
+  const context = useClientContext() as unknown as ApplicationContext
+  const traitNames = ProgressionTables.getValues(character.character.selections).map((it) => Traits.getTrait(it.selection, context).name)
+
+  return (
+    <Card>
+      <CardContent>
+        <Typography
+          variant="h6"
+          noWrap
+        >
+          {getDisplayName(character)}
+        </Typography>
+        <Typography
+          variant="body2"
+          noWrap
+          sx={{ color: 'text.secondary' }}
+        >
+          Level {character.character.level}
+          {!Arrays.isEmpty(traitNames) && ` | ${traitNames.join(', ')}`}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button
+          size="small"
+          component={Link}
+          href={`/characters/${character.id}/builder`}
+        >
+          Edit
+        </Button>
+        <Button
+          size="small"
+          onClick={() => copyCharacter(character.id)}
+        >
+          Copy
+        </Button>
+        <Box sx={{ flexGrow: 1 }} />
+        <Button
+          size="small"
+          color="error"
+          onClick={onDelete}
+        >
+          Delete
+        </Button>
+      </CardActions>
+    </Card>
   )
 }

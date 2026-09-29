@@ -15,15 +15,6 @@ const nextConfig: NextConfig = {
     const random = Math.random().toString(36).substring(2, 8)
     return `${timestamp}-${random}`
   },
-
-  webpack: (config) => {
-    config.resolve.extensionAlias = {
-      '.js': ['.js', '.ts', '.tsx'],
-      '.mjs': ['.mjs', '.mts'],
-    }
-
-    return config
-  },
 }
 
 export default nextConfig

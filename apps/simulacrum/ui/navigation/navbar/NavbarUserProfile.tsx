@@ -28,7 +28,9 @@ export const NavbarUserProfile = () => {
         <Avatar sx={{ bgcolor: 'grey.600', width: 32, height: 32 }}>J</Avatar>
         <Typography
           variant="body2"
-          color="inherit"
+          sx={{
+            color: 'inherit',
+          }}
         >
           John Lutteringer
         </Typography>

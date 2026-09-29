@@ -91,8 +91,8 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Absolutely! We offer a hassle-free return policy. If you&apos;re not completely satisfied, you can return the product within [number of days] days
-              for a full refund or exchange.
+              Absolutely! We offer a hassle-free return policy. If you&apos;re not completely satisfied, you can return the product within [number of
+              days] days for a full refund or exchange.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -118,8 +118,8 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our product distinguishes itself through its adaptability, durability, and innovative features. We prioritize user satisfaction and continually
-              strive to exceed expectations in every aspect.
+              Our product distinguishes itself through its adaptability, durability, and innovative features. We prioritize user satisfaction and
+              continually strive to exceed expectations in every aspect.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -145,8 +145,8 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Yes, our product comes with a [length of warranty] warranty. It covers defects in materials and workmanship. If you encounter any issues covered
-              by the warranty, please contact our customer support for assistance.
+              Yes, our product comes with a [length of warranty] warranty. It covers defects in materials and workmanship. If you encounter any issues
+              covered by the warranty, please contact our customer support for assistance.
             </Typography>
           </AccordionDetails>
         </Accordion>

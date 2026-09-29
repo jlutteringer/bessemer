@@ -1,4 +1,4 @@
-import { Arrays, Eithers, Objects } from '@bessemer/cornerstone'
+import { Arrays, Eithers, Maps, Objects } from '@bessemer/cornerstone'
 import { Either } from '@bessemer/cornerstone/either'
 import { NilableBasicType } from '@bessemer/cornerstone/types'
 
@@ -9,7 +9,7 @@ export const empty = <T>(maxLevel: number): ProgressionTable<T> => {
 }
 
 export const fromRecord = <T>(sparseRecord: Record<number, Array<T>>, maxLevel: number): ProgressionTable<T> => {
-  const entries = Arrays.range([1, maxLevel + 1]).map((level) => {
+  const entries = Arrays.range([1, maxLevel]).map((level) => {
     const existingValue = sparseRecord[level]
 
     if (Objects.isUndefined(existingValue)) {
@@ -23,7 +23,7 @@ export const fromRecord = <T>(sparseRecord: Record<number, Array<T>>, maxLevel: 
 }
 
 export const fromMapping = <T>(values: Array<T>, mapper: (value: T) => number, maxLevel: number): ProgressionTable<T> => {
-  const result = Arrays.groupBy(values, mapper)
+  const result = Object.fromEntries(Maps.groupBy(values, mapper))
   return fromRecord(result, maxLevel)
 }
 

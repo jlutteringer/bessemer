@@ -12,20 +12,26 @@ export const Footer = () => {
   return (
     <Box
       component="footer"
-      bgcolor="grey.900"
-      color="grey.300"
-      pt={2}
-      pb={4}
+      sx={{
+        bgcolor: 'grey.900',
+        color: 'grey.300',
+        pt: 2,
+        pb: 4,
+      }}
     >
       {/* Top Notification Banner */}
       <Box
-        bgcolor="grey.800"
-        py={1}
-        textAlign="center"
+        sx={{
+          bgcolor: 'grey.800',
+          py: 1,
+          textAlign: 'center',
+        }}
       >
         <Typography
           variant="body2"
-          color="grey.300"
+          sx={{
+            color: 'grey.300',
+          }}
         >
           We have updated our{' '}
           <Link
@@ -42,13 +48,17 @@ export const Footer = () => {
       {/* Main Footer LoginContent */}
       <Container maxWidth="lg">
         <Box
-          textAlign="center"
-          mb={2}
+          sx={{
+            textAlign: 'center',
+            mb: 2,
+          }}
         >
           <Typography
             variant="h4"
-            fontWeight="bold"
             color="white"
+            sx={{
+              fontWeight: 'bold',
+            }}
           >
             D&D BEYOND
           </Typography>
@@ -58,20 +68,19 @@ export const Footer = () => {
         <Grid
           container
           spacing={3}
-          justifyContent="space-between"
+          sx={{
+            justifyContent: 'space-between',
+          }}
         >
           {/* Support Links */}
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-          >
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography
               variant="subtitle1"
-              fontWeight="bold"
-              mb={1}
               color="white"
+              sx={{
+                fontWeight: 'bold',
+                mb: 1,
+              }}
             >
               SUPPORT
             </Typography>
@@ -79,28 +88,36 @@ export const Footer = () => {
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Help Portal
               </Link>
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Support Forum
               </Link>
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Don't Sell or Share My Info
               </Link>
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Cookie Settings
               </Link>
@@ -108,17 +125,14 @@ export const Footer = () => {
           </Grid>
 
           {/* About Links */}
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-          >
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography
               variant="subtitle1"
-              fontWeight="bold"
-              mb={1}
               color="white"
+              sx={{
+                fontWeight: 'bold',
+                mb: 1,
+              }}
             >
               ABOUT
             </Typography>
@@ -126,21 +140,27 @@ export const Footer = () => {
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Contact Us
               </Link>
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Careers
               </Link>
               <Link
                 href="#"
                 color="inherit"
-                display="block"
+                sx={{
+                  display: 'block',
+                }}
               >
                 Wizards of the Coast
               </Link>
@@ -148,23 +168,22 @@ export const Footer = () => {
           </Grid>
 
           {/* Social Media Icons */}
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={3}
-          >
+          <Grid size={{ xs: 12, sm: 12, md: 3 }}>
             <Typography
               variant="subtitle1"
-              fontWeight="bold"
-              mb={1}
               color="white"
+              sx={{
+                fontWeight: 'bold',
+                mb: 1,
+              }}
             >
               FIND US ON SOCIAL MEDIA
             </Typography>
             <Box
-              display="flex"
-              gap={2}
+              sx={{
+                display: 'flex',
+                gap: 2,
+              }}
             >
               <IconButton color="inherit">
                 <DiscordIcon />
@@ -185,24 +204,23 @@ export const Footer = () => {
           </Grid>
 
           {/* App Download */}
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={3}
-          >
+          <Grid size={{ xs: 12, sm: 12, md: 3 }}>
             <Typography
               variant="subtitle1"
-              fontWeight="bold"
-              mb={1}
               color="white"
+              sx={{
+                fontWeight: 'bold',
+                mb: 1,
+              }}
             >
               DOWNLOAD THE D&D BEYOND APP
             </Typography>
             <Box
-              display="flex"
-              flexDirection="column"
-              gap={1}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 1,
+              }}
             >
               <Button
                 variant="contained"
@@ -226,21 +244,33 @@ export const Footer = () => {
         <Divider sx={{ my: 3, borderColor: 'grey.700' }} />
 
         {/* Copyright and Policies */}
-        <Box textAlign="center">
+        <Box
+          sx={{
+            textAlign: 'center',
+          }}
+        >
           <Typography
             variant="body2"
-            color="grey.500"
+            sx={{
+              color: 'grey.500',
+            }}
           >
             © 2017-2024 Wizards of the Coast LLC | All Rights Reserved
           </Typography>
           <Typography
             variant="body2"
-            color="grey.500"
-            mt={1}
+            sx={{
+              color: 'grey.500',
+              mt: 1,
+            }}
           >
             Dungeons & Dragons, D&D Beyond, and all related logos are trademarks of Wizards of the Coast.
           </Typography>
-          <Box mt={1}>
+          <Box
+            sx={{
+              mt: 1,
+            }}
+          >
             <Link
               href="#"
               color="inherit"
