@@ -25,6 +25,7 @@ import SaveIcon from '@mui/icons-material/Save'
 import { Arrays } from '@bessemer/cornerstone'
 import { CharacterRecord } from '@simulacrum/common/character/character'
 import { Trait } from '@simulacrum/common/trait'
+import { Abilities, Effects } from '@simulacrum/common'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
@@ -282,6 +283,7 @@ const LevelTraits = ({
                     />
                   ))}
                 </Grid>
+                {slot.selection && <TraitAbilities trait={slot.selection} />}
               </Box>
             ))}
           </Stack>
@@ -323,5 +325,45 @@ const TraitCard = ({ trait, selected, onClick }: { trait: Trait; selected: boole
         </CardActionArea>
       </Card>
     </Grid>
+  )
+}
+
+// Shows the abilities granted by a selected trait, laid out like a nested option (e.g. Fighting Style)
+// FUTURE only abilities are shown so far; other effect types will be added one at a time
+const TraitAbilities = ({ trait }: { trait: Trait }) => {
+  const context = useRulesContext()
+  const abilities = Effects.filter(trait.effects, Effects.GainAbility).map((it) => Abilities.getAbility(it.ability, context))
+
+  if (Arrays.isEmpty(abilities)) {
+    return null
+  }
+
+  return (
+    <Box sx={{ mt: 3 }}>
+      <Typography
+        variant="subtitle1"
+        gutterBottom
+      >
+        Abilities
+      </Typography>
+      <Grid
+        container
+        spacing={2}
+      >
+        {abilities.map((ability) => (
+          <Grid
+            key={ability.id}
+            size={{ xs: 12, sm: 6, md: 4 }}
+          >
+            <Card sx={{ height: '100%' }}>
+              <CardContent>
+                <Typography variant="h6">{ability.name}</Typography>
+                {ability.description && <Typography sx={{ color: 'text.secondary' }}>{ability.description}</Typography>}
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   )
 }

@@ -1,6 +1,7 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 import { SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
+import { SelectWeaponMastery } from '@simulacrum/rulesets/dnd-5e/archetype/weapon-mastery'
 import { CharacterOptions } from '@simulacrum/common/character'
 import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { CharacterValues } from '@simulacrum/common/character/character'
@@ -46,7 +47,7 @@ export const Fighter = Traits.defineTrait('143dad4d-9496-4a73-927c-c77c6b008282'
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(10))),
     Effects.gainCharacterOption(SelectFightingStyle),
-    Effects.descriptive('Weapon Mastery!'),
+    Effects.gainCharacterOption(SelectWeaponMastery),
     Effects.gainAbility(SecondWind),
   ],
 })

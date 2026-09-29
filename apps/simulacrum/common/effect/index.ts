@@ -80,6 +80,7 @@ export type ModifyCharacteristicEffect = Effect & {
 export const GainAbility: EffectType<GainAbilityEffect> = { type: EffectTypeEnum.GainAbility }
 export type GainAbilityEffect = Effect & {
   type: EffectTypeEnum.GainAbility
+  name: string
   ability: AbilityReference
 }
 
@@ -117,10 +118,11 @@ export const gainTrait = (trait: TraitReference | Trait): GainTraitEffect => {
   }
 }
 
-export const gainAbility = (ability: AbilityReference | Ability): GainAbilityEffect => {
+export const gainAbility = (ability: Ability): GainAbilityEffect => {
   return {
     type: EffectTypeEnum.GainAbility,
-    ability: typeof ability === 'string' ? ability : ability.id,
+    name: `Gain Ability: ${ability.name}`,
+    ability: ability.id,
   }
 }
 
