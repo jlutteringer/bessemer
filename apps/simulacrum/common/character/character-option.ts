@@ -82,20 +82,12 @@ export const buildSelection = (option: CharacterOptionReference | CharacterOptio
 
 export const getSelection = (
   selections: ProgressionTable<CharacterSelection>,
-  option: CharacterOptionReference | CharacterOption,
-  level: number
+  option: CharacterOption,
+  level: number,
+  occurrence: number = 0
 ): CharacterSelection | null => {
-  const selectionArray = selections[level] ?? []
-  const matchingSelection = selectionArray.find((it) => it.option === (typeof option === 'string' ? option : option.id))
-  return matchingSelection ?? null
-}
-
-export const hasSelection = (
-  selections: ProgressionTable<CharacterSelection>,
-  option: CharacterOptionReference | CharacterOption,
-  level: number
-): boolean => {
-  return Objects.isPresent(getSelection(selections, option, level))
+  const matchingSelections = (selections[level] ?? []).filter((it) => it.option === option.id)
+  return matchingSelections[occurrence] ?? null
 }
 
 export const isSelected = (

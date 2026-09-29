@@ -66,11 +66,26 @@ const evaluateCharacterOptions = (character: CharacterRecord, context: Applicati
       const characterState = buildCharacterState({ ...character, selections: validSelections }, context)
       const characterChoiceTable = getCharacterChoiceTable(characterState, context)
 
-      const [selections, choices] = ProgressionTables.bisect(characterChoiceTable, (choice, level) => {
-        const selection = character.selections[level]!.find((it) => it.option === choice.option)
+      // The character's selections that haven't been validated yet. Each one can only fill a single choice, since an option can be
+      // granted more than once at the same level.
+      const unmatchedSelections = ProgressionTables.mapRows(character.selections, (row, level) => {
+        const remaining = [...row]
+        ;(validSelections[level] ?? []).forEach((valid) => {
+          const index = remaining.findIndex((it) => it.option === valid.option && it.selection === valid.selection)
+          if (index !== -1) {
+            remaining.splice(index, 1)
+          }
+        })
+        return remaining
+      })
 
-        if (Objects.isPresent(selection) && CharacterOptions.isAllowedValue(choice, selection.selection)) {
-          return Eithers.left(selection)
+      const [selections, choices] = ProgressionTables.bisect(characterChoiceTable, (choice, level) => {
+        const candidates = unmatchedSelections[level] ?? []
+        const index = candidates.findIndex((it) => it.option === choice.option && CharacterOptions.isAllowedValue(choice, it.selection))
+
+        if (index !== -1) {
+          const [selection] = candidates.splice(index, 1)
+          return Eithers.left(selection!)
         }
 
         return Eithers.right(choice)
@@ -80,7 +95,12 @@ const evaluateCharacterOptions = (character: CharacterRecord, context: Applicati
       return { selections: validSelections, choices }
     },
     (first, second) => {
-      return ProgressionTables.equalBy(first.choices, second.choices, (it) => it.option)
+      // Selections have to settle too: validating a trait can unlock options that are only evaluated on the next pass (e.g. a
+      // subclass's own options), even when every choice in both passes was filled
+      return (
+        ProgressionTables.equalBy(first.choices, second.choices, (it) => it.option) &&
+        ProgressionTables.equalBy(first.selections, second.selections, (it) => `${it.option}/${it.selection}`)
+      )
     }
   )
 
@@ -93,11 +113,18 @@ const getCharacterChoiceTable = (character: CharacterState, context: Application
   const characterOptionTable = ProgressionTables.mapRows(CharacterProgression.buildEffectsTable(character, context), (effects, level) => {
     const gainCharacterOptionEffects = Effects.filter(effects, Effects.GainCharacterOption)
 
+    // An option can be granted more than once at the same level; each existing selection fills one occurrence of its option
+    const remainingSelections = [...character.selections[level]!]
     return gainCharacterOptionEffects
       .map((it) => it.option)
       .filter((option) => {
-        // TODO this logic will not work for options duplicated at the same level
-        return !character.selections[level]!.find((it) => it.option === option.id)
+        const index = remainingSelections.findIndex((it) => it.option === option.id)
+        if (index === -1) {
+          return true
+        }
+
+        remainingSelections.splice(index, 1)
+        return false
       })
   })
 

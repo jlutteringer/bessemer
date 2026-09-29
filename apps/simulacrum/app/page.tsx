@@ -6,7 +6,7 @@ import { ProgressionTables } from '@simulacrum/common'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
 import { Archery, SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
-import { Fighter, Fighter2, Fighter3 } from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
+import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import Link from '@mui/material/Link'
 import Button from '@mui/material/Button'
 import { TestClientComponent } from '@simulacrum/app/TestClientComponent'
@@ -30,10 +30,10 @@ export default function Home() {
     selectedAbilities: [],
   }
   character = Characters.buildCharacterDefinition(character, application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter), application)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level1), application)
   character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectFightingStyle, Archery), application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter2), application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter3), application)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), application)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), application)
 
   return (
     <div>

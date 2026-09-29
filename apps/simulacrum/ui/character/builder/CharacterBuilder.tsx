@@ -4,23 +4,24 @@ import * as React from 'react'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 import Alert from '@mui/material/Alert'
+import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
-import CardActionArea from '@mui/material/CardActionArea'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Chip from '@mui/material/Chip'
 import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
+import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
 import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import SaveIcon from '@mui/icons-material/Save'
 import { Arrays } from '@bessemer/cornerstone'
 import { CharacterRecord } from '@simulacrum/common/character/character'
@@ -31,14 +32,16 @@ import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
 import {
-  getInitialValue,
   getInitialValueCharacteristics,
+  getInitialValueFieldName,
   getOptionLabel,
   getTraitSlots,
+  MaxAbilityScore,
   MaxLevel,
+  MinAbilityScore,
   newCharacter,
   selectTrait,
-  setInitialValue,
+  selectTraitsForSlots,
   setLevel,
   TraitSlot,
 } from '@simulacrum/ui/character/builder/character-builder-model'
@@ -96,23 +99,33 @@ export const CharacterBuilder = ({ characterId }: { characterId: string | null }
 const CharacterEditor = ({ characterId, initialCharacter }: { characterId: string | null; initialCharacter: CharacterRecord }) => {
   const context = useRulesContext()
   const router = useRouter()
-  const [character, setCharacter] = useState(initialCharacter)
-  const [savedCharacter, setSavedCharacter] = useState<CharacterRecord | null>(characterId === null ? null : initialCharacter)
   const [showSaved, setShowSaved] = useState(false)
+  const { control, handleSubmit, reset, getValues, setValue, formState } = useForm<CharacterRecord>({
+    defaultValues: initialCharacter,
+    mode: 'onChange',
+  })
 
+  const character = useWatch({ control }) as CharacterRecord
   const traitSlots = useMemo(() => getTraitSlots(character, context), [character, context])
-  const hasUnsavedChanges = savedCharacter === null || JSON.stringify(savedCharacter) !== JSON.stringify(character)
+  // A new character has nothing saved yet, so it's always unsaved
+  const hasUnsavedChanges = characterId === null || formState.isDirty
 
-  const handleSave = () => {
-    const saved = saveCharacter(characterId, character)
-    setSavedCharacter(character)
+  // Level and trait changes go through the builder model, which can also drop selections that are no longer valid
+  const applyCharacter = (updated: CharacterRecord) => {
+    setValue('level', updated.level, { shouldDirty: true })
+    setValue('selections', updated.selections, { shouldDirty: true })
+  }
+
+  const handleSave = handleSubmit((values) => {
+    const saved = saveCharacter(characterId, values)
+    reset(values)
     setShowSaved(true)
 
     if (characterId === null) {
       // Move to the saved character's URL so further saves update it rather than creating another copy
       router.replace(`/characters/${saved.id}/builder`)
     }
-  }
+  })
 
   return (
     <Box>
@@ -157,11 +170,16 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: strin
               spacing={2}
             >
               <Grid size={{ xs: 12, sm: 8 }}>
-                <TextField
-                  label="Name"
-                  fullWidth
-                  value={character.name}
-                  onChange={(event) => setCharacter({ ...character, name: event.target.value })}
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="Name"
+                      fullWidth
+                    />
+                  )}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
@@ -170,7 +188,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: strin
                   label="Level"
                   fullWidth
                   value={character.level}
-                  onChange={(event) => setCharacter(setLevel(character, Number(event.target.value), context))}
+                  onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), context))}
                 >
                   {Arrays.range([1, MaxLevel]).map((level) => (
                     <MenuItem
@@ -198,13 +216,28 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: strin
                   key={characteristic.id}
                   size={{ xs: 6, sm: 4, md: 2 }}
                 >
-                  <TextField
-                    label={characteristic.name}
-                    type="number"
-                    fullWidth
-                    value={getInitialValue(character, characteristic)}
-                    onChange={(event) => setCharacter(setInitialValue(character, characteristic, Number(event.target.value)))}
-                    slotProps={{ htmlInput: { min: 1, max: 30 } }}
+                  <Controller
+                    name={getInitialValueFieldName(characteristic)}
+                    control={control}
+                    rules={{
+                      validate: (value) =>
+                        (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
+                        `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
+                    }}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        value={field.value ?? ''}
+                        // Keep the value numeric; an empty field stays empty so validation can flag it
+                        onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
+                        label={characteristic.name}
+                        type="number"
+                        fullWidth
+                        error={fieldState.invalid}
+                        helperText={fieldState.error?.message}
+                        slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
+                      />
+                    )}
                   />
                 </Grid>
               ))}
@@ -225,7 +258,8 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: strin
                 key={level}
                 level={level}
                 slots={traitSlots.filter((it) => it.level === level)}
-                onSelect={(slot, trait) => setCharacter(selectTrait(character, slot.level, slot.option, trait, context))}
+                onSelect={(slot, trait) => applyCharacter(selectTrait(getValues(), slot, trait, context))}
+                onSelectMany={(slots, traits) => applyCharacter(selectTraitsForSlots(getValues(), slots, traits, context))}
               />
             ))}
           </Stack>
@@ -246,12 +280,15 @@ const LevelTraits = ({
   level,
   slots,
   onSelect,
+  onSelectMany,
 }: {
   level: number
   slots: Array<TraitSlot>
   onSelect: (slot: TraitSlot, trait: Trait | null) => void
+  onSelectMany: (slots: Array<TraitSlot>, traits: Array<Trait>) => void
 }) => {
   const context = useRulesContext()
+  const slotGroups = groupSlotsByOption(slots)
 
   return (
     <Card variant="outlined">
@@ -261,31 +298,34 @@ const LevelTraits = ({
           <Typography sx={{ color: 'text.secondary' }}>No trait choices at this level.</Typography>
         ) : (
           <Stack spacing={3}>
-            {slots.map((slot) => (
-              <Box key={slot.key}>
-                <Typography
-                  variant="subtitle1"
-                  gutterBottom
-                >
-                  {getOptionLabel(slot.option, context)}
-                </Typography>
-                <Grid
-                  container
-                  spacing={2}
-                >
-                  {slot.values.map((trait) => (
-                    <TraitCard
-                      key={trait.id}
-                      trait={trait}
-                      selected={slot.selection?.id === trait.id}
-                      // Clicking the selected trait again clears the selection
-                      onClick={() => onSelect(slot, slot.selection?.id === trait.id ? null : trait)}
+            {slotGroups.map((group) => {
+              // An option granted more than once at this level (e.g. three weapon masteries) is chosen with a single multi-select
+              if (group.length > 1) {
+                return (
+                  <Box key={group[0]!.key}>
+                    <MultiTraitSelect
+                      label={getOptionLabel(group[0]!.option, context)}
+                      slots={group}
+                      onSelect={(traits) => onSelectMany(group, traits)}
                     />
-                  ))}
-                </Grid>
-                {slot.selection && <TraitAbilities trait={slot.selection} />}
-              </Box>
-            ))}
+                    <SelectedTraits traits={group.flatMap((it) => (it.selection === null ? [] : [it.selection]))} />
+                  </Box>
+                )
+              }
+
+              const slot = group[0]!
+              return (
+                <Box key={slot.key}>
+                  <TraitSelect
+                    label={getOptionLabel(slot.option, context)}
+                    slot={slot}
+                    onSelect={(trait) => onSelect(slot, trait)}
+                  />
+                  <SelectedTraits traits={slot.selection === null ? [] : [slot.selection]} />
+                </Box>
+              )
+            })}
+            <TraitAbilities traits={slots.flatMap((it) => (it.selection === null ? [] : [it.selection]))} />
           </Stack>
         )}
       </CardContent>
@@ -293,53 +333,126 @@ const LevelTraits = ({
   )
 }
 
-const TraitCard = ({ trait, selected, onClick }: { trait: Trait; selected: boolean; onClick: () => void }) => {
+// Groups slots for the same option together, in the order each option first appears
+const groupSlotsByOption = (slots: Array<TraitSlot>): Array<Array<TraitSlot>> => {
+  const groups = new Map<string, Array<TraitSlot>>()
+  slots.forEach((slot) => groups.set(slot.option.id, [...(groups.get(slot.option.id) ?? []), slot]))
+  return [...groups.values()]
+}
+
+const MultiTraitSelect = ({ label, slots, onSelect }: { label: string; slots: Array<TraitSlot>; onSelect: (traits: Array<Trait>) => void }) => {
+  const selected = slots.flatMap((it) => (it.selection === null ? [] : [it.selection]))
+  // Each slot's values exclude the other slots' selections, so combining them gives every trait available to the group
+  const options = Arrays.dedupeBy(
+    slots.flatMap((it) => it.values),
+    (it) => it.id
+  )
+  const isFull = selected.length >= slots.length
+
   return (
-    <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-      <Card sx={{ height: '100%' }}>
-        {/* Selectable card pattern from the MUI docs */}
-        <CardActionArea
-          onClick={onClick}
-          data-active={selected ? '' : undefined}
-          sx={{
-            height: '100%',
-            '&[data-active]': {
-              backgroundColor: 'action.selected',
-              '&:hover': {
-                backgroundColor: 'action.selectedHover',
-              },
-            },
-          }}
+    <Autocomplete
+      multiple
+      options={options}
+      value={selected}
+      onChange={(_, traits) => onSelect(traits)}
+      getOptionLabel={(trait) => trait.name}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      getOptionDisabled={(trait) => isFull && !selected.some((it) => it.id === trait.id)}
+      filterSelectedOptions
+      renderOption={({ key, ...props }, trait) => (
+        <li
+          key={key}
+          {...props}
         >
-          <CardContent sx={{ height: '100%' }}>
-            <Stack
-              direction="row"
-              spacing={1}
-              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
-            >
+          <ListItemText
+            primary={trait.name}
+            secondary={trait.description || undefined}
+          />
+        </li>
+      )}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={`${label} (${selected.length}/${slots.length})`}
+        />
+      )}
+    />
+  )
+}
+
+const TraitSelect = ({ label, slot, onSelect }: { label: string; slot: TraitSlot; onSelect: (trait: Trait | null) => void }) => {
+  return (
+    <TextField
+      select
+      fullWidth
+      label={label}
+      value={slot.selection?.id ?? ''}
+      onChange={(event) => onSelect(slot.values.find((it) => it.id === event.target.value) ?? null)}
+      // Show just the name when closed; the menu items also include the description
+      slotProps={{ select: { renderValue: () => slot.selection?.name ?? '' } }}
+    >
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {slot.values.map((trait) => (
+        <MenuItem
+          key={trait.id}
+          value={trait.id}
+        >
+          <ListItemText
+            primary={trait.name}
+            secondary={trait.description || undefined}
+          />
+        </MenuItem>
+      ))}
+    </TextField>
+  )
+}
+
+// A card for each selected trait, shown under its dropdown
+// FUTURE this is where a trait's full description and details will go
+const SelectedTraits = ({ traits }: { traits: Array<Trait> }) => {
+  if (Arrays.isEmpty(traits)) {
+    return null
+  }
+
+  return (
+    <Grid
+      container
+      spacing={2}
+      sx={{ mt: 2 }}
+    >
+      {traits.map((trait) => (
+        <Grid
+          key={trait.id}
+          size={{ xs: 12, sm: 6, md: 4 }}
+        >
+          <Card sx={{ height: '100%' }}>
+            <CardContent>
               <Typography variant="h6">{trait.name}</Typography>
-              {selected && <CheckCircleIcon color="primary" />}
-            </Stack>
-            {trait.description && <Typography sx={{ color: 'text.secondary' }}>{trait.description}</Typography>}
-          </CardContent>
-        </CardActionArea>
-      </Card>
+              {trait.description && <Typography sx={{ color: 'text.secondary' }}>{trait.description}</Typography>}
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
     </Grid>
   )
 }
 
-// Shows the abilities granted by a selected trait, laid out like a nested option (e.g. Fighting Style)
+// Shows the abilities granted by the level's selected traits, after the level's choices
 // FUTURE only abilities are shown so far; other effect types will be added one at a time
-const TraitAbilities = ({ trait }: { trait: Trait }) => {
+const TraitAbilities = ({ traits }: { traits: Array<Trait> }) => {
   const context = useRulesContext()
-  const abilities = Effects.filter(trait.effects, Effects.GainAbility).map((it) => Abilities.getAbility(it.ability, context))
+  const abilities = traits.flatMap((trait) =>
+    Effects.filter(trait.effects, Effects.GainAbility).map((it) => Abilities.getAbility(it.ability, context))
+  )
 
   if (Arrays.isEmpty(abilities)) {
     return null
   }
 
   return (
-    <Box sx={{ mt: 3 }}>
+    <Box>
       <Typography
         variant="subtitle1"
         gutterBottom

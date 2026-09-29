@@ -11,6 +11,8 @@ import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expressio
 import { ObjectPaths } from '@bessemer/cornerstone'
 
 export const MaxLevel = 20
+export const MinAbilityScore = 1
+export const MaxAbilityScore = 30
 const DefaultInitialValue = 10
 
 /**
@@ -32,9 +34,11 @@ export const getInitialValueCharacteristics = (context: ApplicationContext): Arr
   return context.client.ruleset.playerCharacteristics.filter((it) => it.baseValue === null) as Array<Characteristic<number>>
 }
 
-export const getInitialValue = (character: CharacterRecord, characteristic: Characteristic<number>): number => {
-  const value: unknown = ObjectPaths.getValue(characteristic.path as any, character.initialValues)
-  return typeof value === 'number' ? value : DefaultInitialValue
+/**
+ * The form field name for a characteristic's initial value, e.g. "initialValues.strength".
+ */
+export const getInitialValueFieldName = (characteristic: Characteristic<number>): `initialValues.${string}` => {
+  return `initialValues.${characteristic.path.map((it) => (Array.isArray(it) ? it[0] : it)).join('.')}`
 }
 
 export const setInitialValue = (character: CharacterRecord, characteristic: Characteristic<number>, value: number): CharacterRecord => {
@@ -72,18 +76,45 @@ const buildLevelSnapshot = (character: CharacterRecord, level: number, context: 
 }
 
 /**
- * Selects `trait` for `option` at `level`, replacing any existing selection for that option. Passing `null` clears the selection.
+ * Fills `slot` with `trait`, replacing the slot's current selection. Passing `null` clears the slot. Only this slot's selection is
+ * touched, since the same option can be granted more than once at a level (e.g. three weapon masteries).
  */
-export const selectTrait = (
+export const selectTrait = (character: CharacterRecord, slot: TraitSlot, trait: Trait | null, context: ApplicationContext): CharacterRecord => {
+  const row = [...(character.selections[slot.level] ?? [])]
+  const newSelection = trait === null ? [] : [{ option: slot.option.id, selection: trait.id }]
+  const existingIndex = slot.selection === null ? -1 : row.findIndex((it) => it.option === slot.option.id && it.selection === slot.selection!.id)
+
+  if (existingIndex === -1) {
+    row.push(...newSelection)
+  } else {
+    row.splice(existingIndex, 1, ...newSelection)
+  }
+
+  return normalizeSelections({ ...character, selections: { ...character.selections, [slot.level]: row } }, context)
+}
+
+/**
+ * Fills a group of slots for the same option at the same level (e.g. the three weapon mastery slots) with `traits`, replacing the
+ * group's current selections. Traits beyond the number of slots are ignored.
+ */
+export const selectTraitsForSlots = (
   character: CharacterRecord,
-  level: number,
-  option: CharacterOption,
-  trait: Trait | null,
+  slots: Array<TraitSlot>,
+  traits: Array<Trait>,
   context: ApplicationContext
 ): CharacterRecord => {
-  const row = (character.selections[level] ?? []).filter((it) => it.option !== option.id)
-  const updatedRow = trait === null ? row : [...row, { option: option.id, selection: trait.id }]
-  return normalizeSelections({ ...character, selections: { ...character.selections, [level]: updatedRow } }, context)
+  const { level, option } = slots[0]!
+  const row = [...(character.selections[level] ?? [])]
+
+  slots.forEach((slot) => {
+    const index = slot.selection === null ? -1 : row.findIndex((it) => it.option === option.id && it.selection === slot.selection!.id)
+    if (index !== -1) {
+      row.splice(index, 1)
+    }
+  })
+
+  row.push(...traits.slice(0, slots.length).map((trait) => ({ option: option.id, selection: trait.id })))
+  return normalizeSelections({ ...character, selections: { ...character.selections, [level]: row } }, context)
 }
 
 // Drops any selections that are no longer valid, e.g. a fighting style after the Fighter class selection is changed
@@ -105,10 +136,13 @@ export const getTraitSlots = (character: CharacterRecord, context: ApplicationCo
   const slots: Array<TraitSlot> = []
 
   // Options come from the ruleset's progression table and, recursively, from the effects of the traits selected to fill them
-  const visit = (effects: Array<Effect>, level: number, evaluate: EvaluateExpression) => {
+  const visit = (effects: Array<Effect>, level: number, evaluate: EvaluateExpression, optionOccurrences: Map<string, number>) => {
     Effects.filter(effects, Effects.GainCharacterOption).forEach((effect) => {
       const option = effect.option
-      const selection = CharacterOptions.getSelection(sheet.selections, option, level)
+      // Repeated options at the same level are each filled by their own selection
+      const occurrence = optionOccurrences.get(option.id) ?? 0
+      optionOccurrences.set(option.id, occurrence + 1)
+      const selection = CharacterOptions.getSelection(sheet.selections, option, level, occurrence)
       // Exclude this slot's own selection so it still shows up as one of the slot's values
       const otherSelectedTraits = selectedTraits.filter((it) => it !== selection?.selection)
       const choice = CharacterOptions.evaluateChoice(option, otherSelectedTraits, evaluate, context)
@@ -123,7 +157,7 @@ export const getTraitSlots = (character: CharacterRecord, context: ApplicationCo
       })
 
       if (trait !== null) {
-        visit(trait.effects, level, evaluate)
+        visit(trait.effects, level, evaluate, optionOccurrences)
       }
     })
   }
@@ -131,7 +165,7 @@ export const getTraitSlots = (character: CharacterRecord, context: ApplicationCo
   for (let level = 1; level <= sheet.level; level++) {
     // Prerequisites for a level's choices are evaluated against the character as it stood on reaching that level
     const evaluate = Expressions.evaluator(Characters.buildExpressionContext(buildLevelSnapshot(character, level, context), context))
-    visit(context.client.ruleset.progressionTable[level] ?? [], level, evaluate)
+    visit(context.client.ruleset.progressionTable[level] ?? [], level, evaluate, new Map())
   }
 
   return slots

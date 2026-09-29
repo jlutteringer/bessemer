@@ -25,3 +25,52 @@ export const Defense = Traits.defineTrait('b0729a45-8f19-4e72-adca-58350bdf945d'
   archetypes: [FightingStyle],
   effects: [Effects.descriptive('Defense!')],
 })
+
+export const Dueling = Traits.defineTrait('5fb2fd0f-ace5-4454-8425-b348650082a7', {
+  name: 'Dueling',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('Dueling!')],
+})
+
+export const GreatWeaponFighting = Traits.defineTrait('8371fc5e-025d-482a-9cd7-55510038f97d', {
+  name: 'Great Weapon Fighting',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('GreatWeaponFighting!')],
+})
+
+export const Interception = Traits.defineTrait('37dd1a94-0cf6-4fe1-8bad-fc92cbcc731c', {
+  name: 'Interception',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('Interception!')],
+})
+
+export const Protection = Traits.defineTrait('80d27328-ee61-4230-9c79-1443049f504c', {
+  name: 'Protection',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('Protection!')],
+})
+
+export const ThrownWeaponFighting = Traits.defineTrait('4d7e79a6-ebc2-41c2-ab43-b734ae454717', {
+  name: 'Thrown Weapon Fighting',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('ThrownWeaponFighting!')],
+})
+
+export const TwoWeaponFighting = Traits.defineTrait('f215cc99-6eab-4bf0-be91-3026839576c8', {
+  name: 'Two-Weapon Fighting',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('TwoWeaponFighting!')],
+})
+
+export const UnarmedFighting = Traits.defineTrait('2827ec67-59ae-4b34-956f-8d13a6af11d3', {
+  name: 'Unarmed Fighting',
+  description: '',
+  archetypes: [FightingStyle],
+  effects: [Effects.descriptive('UnarmedFighting!')],
+})

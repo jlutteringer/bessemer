@@ -1,7 +1,7 @@
 import { TestHarness } from '@simulacrum/test/test-harness'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
-import { Fighter, Fighter2, Fighter3 } from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
+import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import { Archery, SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 
 test('Test Character Choices and Selections', () => {
@@ -35,21 +35,21 @@ test('Test Character Choices and Selections', () => {
 
   expect(character.abilities.length).toBe(4)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter), context)
-  expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter)).toBe(true)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level1), context)
+  expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level1)).toBe(true)
 
   expect(character.abilities.length).toBe(5)
 
   character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectFightingStyle, Archery), context)
   expect(CharacterOptions.isSelected(character.selections, SelectFightingStyle, Archery)).toBe(true)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter2), context)
-  expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter2)).toBe(true)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), context)
+  expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level2)).toBe(true)
 
   expect(character.abilities.length).toBe(6)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter3), context)
-  expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter3)).toBe(true)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), context)
+  expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level3)).toBe(true)
 
   expect(character.characteristics.hitPoints.value).toBe(28)
   expect(character.resources.hitPoints.value).toBe(28)

@@ -2,6 +2,8 @@ import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 import { SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import { SelectWeaponMastery } from '@simulacrum/rulesets/dnd-5e/archetype/weapon-mastery'
+import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
+import { SelectArtisansTools } from '@simulacrum/rulesets/dnd-5e/archetype/artisans-tools'
 import { CharacterOptions } from '@simulacrum/common/character'
 import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { CharacterValues } from '@simulacrum/common/character/character'
@@ -40,13 +42,32 @@ export const SecondWind = Abilities.defineAbility('5783fc7f-7915-40c7-8a51-8406e
   ],
 })
 
-export const Fighter = Traits.defineTrait('143dad4d-9496-4a73-927c-c77c6b008282', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('94b41192-ef21-4fb4-8f45-a8f9cb8f135e', {
+  archetypes: [SkillProficiencies.SkillProficiency],
+  specificOptions: [
+    SkillProficiencies.Acrobatics,
+    SkillProficiencies.AnimalHandling,
+    SkillProficiencies.Athletics,
+    SkillProficiencies.History,
+    SkillProficiencies.Insight,
+    SkillProficiencies.Intimidation,
+    SkillProficiencies.Persuasion,
+    SkillProficiencies.Perception,
+    SkillProficiencies.Survival,
+  ],
+})
+
+export const Level1 = Traits.defineTrait('143dad4d-9496-4a73-927c-c77c6b008282', {
   name: 'Fighter',
   description: '',
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(10))),
+    Effects.gainCharacterOption(SelectSkillProficiency),
+    Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectFightingStyle),
+    Effects.gainCharacterOption(SelectWeaponMastery),
+    Effects.gainCharacterOption(SelectWeaponMastery),
     Effects.gainCharacterOption(SelectWeaponMastery),
     Effects.gainAbility(SecondWind),
   ],
@@ -76,25 +97,32 @@ export const ActionSurge = Abilities.defineAbility('a781f8be-1a9b-403d-84d7-155c
   ],
 })
 
-export const Fighter2 = Traits.defineTrait('da3e0304-f824-4231-9329-05c8889aa0cd', {
+// FUTURE stub: Tactical Mind isn't modelled yet
+export const TacticalMind = Abilities.defineAbility('9e06aa1c-a74f-480a-958c-be6f4c05817b', {
+  name: 'Tactical Mind',
+  description: '',
+  actions: [],
+})
+
+export const Level2 = Traits.defineTrait('da3e0304-f824-4231-9329-05c8889aa0cd', {
   name: 'Fighter (2)',
   description: '',
-  prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter.id])],
+  prerequisites: [Expressions.contains(CharacterValues.Traits, [Level1.id])],
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
     Effects.gainAbility(ActionSurge),
-    Effects.descriptive('Tactical Mind'),
+    Effects.gainAbility(TacticalMind),
   ],
 })
 
 export const FighterSubclass = Archetypes.defineArchetype('5a40dddd-84a9-4de3-ae23-575f85e265cb', { name: 'Fighter Subclass' })
 export const SelectFighterSubclass = CharacterOptions.selectTraitOption('f593fd03-9e94-4e11-ba7e-8723e3fa6755', { archetypes: [FighterSubclass] })
 
-export const Fighter3 = Traits.defineTrait('a9fb4e9c-78b6-4067-b4f6-db6e831c53dc', {
+export const Level3 = Traits.defineTrait('a9fb4e9c-78b6-4067-b4f6-db6e831c53dc', {
   name: 'Fighter (3)',
   description: '',
-  prerequisites: [Expressions.contains(CharacterValues.Traits, [Fighter2.id])],
+  prerequisites: [Expressions.contains(CharacterValues.Traits, [Level2.id])],
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
@@ -106,7 +134,12 @@ export const BattleMaster = Traits.defineTrait('c2cfc67d-e22d-4343-9806-00dc1427
   name: 'Battle Master',
   description: '',
   archetypes: [FighterSubclass],
-  effects: [Effects.descriptive('Combat Superiority!'), Effects.descriptive('Student of War!')],
+  effects: [
+    Effects.descriptive('Combat Superiority!'),
+    // Student of War
+    Effects.gainCharacterOption(SelectArtisansTools),
+    Effects.gainCharacterOption(SelectSkillProficiency),
+  ],
 })
 
 export const Champion = Traits.defineTrait('791c8fdd-6731-4962-be17-ce79f71866be', {
@@ -130,18 +163,18 @@ export const PsiWarrior = Traits.defineTrait('c1f4c734-9205-4664-9cae-f2a3368c8c
   effects: [Effects.descriptive('Psionic Power!')],
 })
 
-export const Fighter4 = Traits.defineTrait('0cbab68a-2596-4ada-a919-c2582f34675e', {
+export const Level4 = Traits.defineTrait('0cbab68a-2596-4ada-a919-c2582f34675e', {
   name: 'Fighter (4)',
   description: '',
-  prerequisites: [Traits.traitPrerequisite(Fighter3)],
+  prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
   effects: [],
 })
 
-export const Fighter5 = Traits.defineTrait('e6a071a3-cbaf-4245-b4e6-457375224939', {
+export const Level5 = Traits.defineTrait('e6a071a3-cbaf-4245-b4e6-457375224939', {
   name: 'Fighter (5)',
   description: '',
-  prerequisites: [Traits.traitPrerequisite(Fighter4)],
+  prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
   effects: [],
 })
