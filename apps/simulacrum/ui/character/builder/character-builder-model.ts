@@ -123,11 +123,23 @@ const normalizeSelections = (character: CharacterRecord, context: ApplicationCon
 }
 
 /**
- * Labels an option by the archetypes its traits are drawn from, e.g. "Class" or "Fighting Style".
+ * Labels an option by its own label if it has one, otherwise by the archetypes its traits are drawn from, e.g. "Class" or
+ * "Fighting Style".
  */
 export const getOptionLabel = (option: CharacterOption, context: ApplicationContext): string => {
+  if (option.label !== null) {
+    return option.label
+  }
+
   const archetypeNames = option.traitFilter.archetypes.map((it) => Archetypes.getArchetype(it, context).name)
   return archetypeNames.length > 0 ? archetypeNames.join(' / ') : 'Trait'
+}
+
+/**
+ * Labels a trait by the archetypes it belongs to, e.g. "Level 2 Spell" or "Class".
+ */
+export const getTraitArchetypeLabel = (trait: Trait, context: ApplicationContext): string => {
+  return trait.archetypes.map((it) => Archetypes.getArchetype(it, context).name).join(' / ')
 }
 
 export const getTraitSlots = (character: CharacterRecord, context: ApplicationContext): Array<TraitSlot> => {

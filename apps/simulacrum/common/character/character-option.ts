@@ -18,6 +18,8 @@ export type CharacterOptionValue = Trait
 export type CharacterOption = { id: CharacterOptionReference } & {
   type: CharacterOptionType
   traitFilter: TraitFilter
+  // Overrides the label derived from the filter's archetypes, for options that draw from more than one
+  label: string | null
 }
 
 export type CharacterChoice = {
@@ -36,11 +38,12 @@ export type EvaluateCharacterOptionsResult = {
   choices: ProgressionTable<CharacterChoice>
 }
 
-export const selectTraitOption = (reference: string, traitFilter: TraitFilterProps): CharacterOption => {
+export const selectTraitOption = (reference: string, traitFilter: TraitFilterProps, label: string | null = null): CharacterOption => {
   return {
     id: reference as CharacterOptionReference,
     type: CharacterOptionType.SelectTrait,
     traitFilter: Traits.filter(traitFilter),
+    label,
   }
 }
 

@@ -36,6 +36,7 @@ import {
   getInitialValueCharacteristics,
   getInitialValueFieldName,
   getOptionLabel,
+  getTraitArchetypeLabel,
   getTraitSlots,
   MaxAbilityScore,
   MaxLevel,
@@ -296,7 +297,7 @@ const LevelTraits = ({
       <CardHeader title={`Level ${level}`} />
       <CardContent>
         {Arrays.isEmpty(slots) ? (
-          <Typography sx={{ color: 'text.secondary' }}>No trait choices at this level.</Typography>
+          <Typography>No trait choices at this level.</Typography>
         ) : (
           <Stack spacing={3}>
             {slotGroups.map((group) => {
@@ -357,6 +358,14 @@ const MultiTraitSelect = ({ label, slots, onSelect }: { label: string; slots: Ar
       value={selected}
       onChange={(_, traits) => onSelect(traits)}
       getOptionLabel={(trait) => trait.name}
+      renderOption={({ key, ...props }, trait) => (
+        <li
+          key={key}
+          {...props}
+        >
+          <TraitOptionText trait={trait} />
+        </li>
+      )}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionDisabled={(trait) => isFull && !selected.some((it) => it.id === trait.id)}
       filterSelectedOptions
@@ -378,6 +387,8 @@ const TraitSelect = ({ label, slot, onSelect }: { label: string; slot: TraitSlot
       label={label}
       value={slot.selection?.id ?? ''}
       onChange={(event) => onSelect(slot.values.find((it) => it.id === event.target.value) ?? null)}
+      // The closed select shows just the trait name, without its archetypes
+      slotProps={{ select: { renderValue: () => slot.selection?.name ?? '' } }}
     >
       <MenuItem value="">
         <em>None</em>
@@ -387,10 +398,21 @@ const TraitSelect = ({ label, slot, onSelect }: { label: string; slot: TraitSlot
           key={trait.id}
           value={trait.id}
         >
-          {trait.name}
+          <TraitOptionText trait={trait} />
         </MenuItem>
       ))}
     </TextField>
+  )
+}
+
+// A dropdown entry: the trait name, with its archetypes as a caption beside it
+const TraitOptionText = ({ trait }: { trait: Trait }) => {
+  const context = useRulesContext()
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+      <Typography>{trait.name}</Typography>
+      <Typography variant="caption">{getTraitArchetypeLabel(trait, context)}</Typography>
+    </Box>
   )
 }
 

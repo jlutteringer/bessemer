@@ -192,7 +192,6 @@ const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; on
         <Typography
           variant="body2"
           noWrap
-          sx={{ color: 'text.secondary' }}
         >
           Level {character.character.level}
           {!Arrays.isEmpty(traitNames) && ` | ${traitNames.join(', ')}`}
