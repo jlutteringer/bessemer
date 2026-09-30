@@ -16,7 +16,8 @@ import { Patches } from '@bessemer/cornerstone'
 
 export const SecondWind = Abilities.defineAbility('5783fc7f-7915-40c7-8a51-8406e4b82bf2', {
   name: 'Second Wind',
-  description: '',
+  description:
+    '<p>As a <strong>Bonus Action</strong>, you draw on a reserve of stamina to regain Hit Points equal to <strong>1d10 + your Fighter level</strong>.</p><p>You can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).</p>',
   actions: [
     {
       name: 'Use Second Wind',
@@ -77,7 +78,8 @@ export const Level1 = Traits.defineTrait('143dad4d-9496-4a73-927c-c77c6b008282',
 
 export const ActionSurge = Abilities.defineAbility('a781f8be-1a9b-403d-84d7-155c997d01b3', {
   name: 'Action Surge',
-  description: '',
+  description:
+    "<p>On your turn, you can push yourself beyond your normal limits to take <strong>one additional action</strong>, as long as it isn't the Magic action.</p><p>Once you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn.</p>",
   actions: [
     {
       action: ActionType.Bonus,
@@ -102,7 +104,8 @@ export const ActionSurge = Abilities.defineAbility('a781f8be-1a9b-403d-84d7-155c
 // FUTURE stub: Tactical Mind isn't modelled yet
 export const TacticalMind = Abilities.defineAbility('9e06aa1c-a74f-480a-958c-be6f4c05817b', {
   name: 'Tactical Mind',
-  description: '',
+  description:
+    "<p>When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to roll <strong>1d10</strong> and add it to the check, potentially turning the failure into a success.</p><p>If the check still fails, the use of Second Wind isn't expended.</p>",
   actions: [],
 })
 
@@ -184,13 +187,14 @@ export const Level4 = Traits.defineTrait('0cbab68a-2596-4ada-a919-c2582f34675e',
 // FUTURE stubs: Extra Attack and Tactical Shift aren't modelled yet
 export const ExtraAttack = Abilities.defineAbility('08c15dbd-bb3a-45b6-88d1-8fe9eac31281', {
   name: 'Extra Attack',
-  description: '',
+  description: '<p>You can attack <strong>twice</strong>, instead of once, whenever you take the Attack action on your turn.</p>',
   actions: [],
 })
 
 export const TacticalShift = Abilities.defineAbility('a62c5737-10f0-4593-b712-70fd87e6ce09', {
   name: 'Tactical Shift',
-  description: '',
+  description:
+    '<p>Whenever you activate your <strong>Second Wind</strong> with a Bonus Action, you can move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>',
   actions: [],
 })
 
