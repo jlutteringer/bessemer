@@ -1,14 +1,14 @@
 import { Traits } from '@simulacrum/common'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 
-export const Level1 = Traits.defineTrait('46584a28-cb93-4ddb-adac-0e40c107dff7', {
+export const Level1 = Traits.defineTrait('paladin/level-1', {
   name: 'Paladin',
   description: '',
   archetypes: [Class],
   effects: [],
 })
 
-export const Level2 = Traits.defineTrait('cd191684-0e5c-416d-846e-0685633d7d7f', {
+export const Level2 = Traits.defineTrait('paladin/level-2', {
   name: 'Paladin (2)',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level1)],
@@ -16,7 +16,7 @@ export const Level2 = Traits.defineTrait('cd191684-0e5c-416d-846e-0685633d7d7f',
   effects: [],
 })
 
-export const Level3 = Traits.defineTrait('f3217884-907e-4c0d-b49d-f467c037ec5c', {
+export const Level3 = Traits.defineTrait('paladin/level-3', {
   name: 'Paladin (3)',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level2)],
@@ -24,7 +24,7 @@ export const Level3 = Traits.defineTrait('f3217884-907e-4c0d-b49d-f467c037ec5c',
   effects: [],
 })
 
-export const Level4 = Traits.defineTrait('4466573e-91bc-4bc6-8646-064640963109', {
+export const Level4 = Traits.defineTrait('paladin/level-4', {
   name: 'Paladin (4)',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
@@ -32,7 +32,7 @@ export const Level4 = Traits.defineTrait('4466573e-91bc-4bc6-8646-064640963109',
   effects: [],
 })
 
-export const Level5 = Traits.defineTrait('2371e077-60e9-406c-859f-231a8d212560', {
+export const Level5 = Traits.defineTrait('paladin/level-5', {
   name: 'Paladin (5)',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],

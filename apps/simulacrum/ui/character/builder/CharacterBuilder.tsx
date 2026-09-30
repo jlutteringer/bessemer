@@ -31,6 +31,7 @@ import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
 import { RichTextDescription } from '@simulacrum/ui/character/builder/RichTextDescription'
+import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
   getInitialValueCharacteristics,
   getInitialValueFieldName,
@@ -54,7 +55,7 @@ const useRulesContext = (): ApplicationContext => {
 /**
  * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
  */
-export const CharacterBuilder = ({ characterId }: { characterId: string | null }) => {
+export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) => {
   const context = useRulesContext()
   const stored = useStoredCharacter(characterId)
 
@@ -96,7 +97,7 @@ export const CharacterBuilder = ({ characterId }: { characterId: string | null }
   )
 }
 
-const CharacterEditor = ({ characterId, initialCharacter }: { characterId: string | null; initialCharacter: CharacterRecord }) => {
+const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid | null; initialCharacter: CharacterRecord }) => {
   const context = useRulesContext()
   const router = useRouter()
   const [showSaved, setShowSaved] = useState(false)

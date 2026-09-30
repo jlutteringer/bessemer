@@ -3,7 +3,7 @@ import { ActionType } from '@simulacrum/common/ability'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
 import { CharacterValues } from '@simulacrum/common/character/character'
 
-export const Dodge = Abilities.defineAbility('b53bd920-1996-47ee-9b90-eebeef1abde2', {
+export const Dodge = Abilities.defineAbility('common/dodge', {
   name: 'Dodge',
   description: '',
   actions: [
@@ -13,7 +13,7 @@ export const Dodge = Abilities.defineAbility('b53bd920-1996-47ee-9b90-eebeef1abd
   ],
 })
 
-export const Disengage = Abilities.defineAbility('ec9ee81a-807d-44ed-a3e5-9513d9ce57b3', {
+export const Disengage = Abilities.defineAbility('common/disengage', {
   name: 'Disengage',
   description: '',
   actions: [
@@ -23,7 +23,7 @@ export const Disengage = Abilities.defineAbility('ec9ee81a-807d-44ed-a3e5-9513d9
   ],
 })
 
-export const Dash = Abilities.defineAbility('e75edabf-54a8-4b20-b7eb-555c44a4d0eb', {
+export const Dash = Abilities.defineAbility('common/dash', {
   name: 'Dash',
   description: '',
   actions: [
@@ -35,7 +35,7 @@ export const Dash = Abilities.defineAbility('e75edabf-54a8-4b20-b7eb-555c44a4d0e
 
 // TODO healing surge is going to need its own resource pool or something...
 // TODO need a way to indicate only useable during a rest...
-export const HealingSurge = Abilities.defineAbility('e5df0430-9c73-49e3-bd76-675f74a6e031', {
+export const HealingSurge = Abilities.defineAbility('common/healing-surge', {
   name: 'Healing Surge',
   description: '',
   actions: [

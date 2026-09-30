@@ -8,7 +8,7 @@ import { PlayerCharacteristics } from '@simulacrum/rulesets/khydrian-drift/chara
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 
-export const Commando = Traits.defineTrait('e0b5ad7e-6e8b-4416-8a7c-41bab05993d3', {
+export const Commando = Traits.defineTrait('commando', {
   name: 'Commando',
   description: '',
   archetypes: [Class],
@@ -23,21 +23,21 @@ export const Commando = Traits.defineTrait('e0b5ad7e-6e8b-4416-8a7c-41bab05993d3
   ],
 })
 
-export const Arsenal = Traits.defineTrait('c44fa6b0-8cf1-412b-93be-972d2c7eff8d', {
+export const Arsenal = Traits.defineTrait('commando/arsenal', {
   name: 'Arsenal',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.descriptive('All equipped weapons are considered wielded.')],
 })
 
-export const SoldiersStamina = Traits.defineTrait('41c63a82-3304-44b2-8f0b-b0d2e4e88e27', {
+export const SoldiersStamina = Traits.defineTrait('commando/soldiers-stamina', {
   name: "Soldier's Stamina",
   description: '',
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.descriptive('Gain healing surges...')],
 })
 
-export const Momentum = Traits.defineTrait('7a3e377a-f2d4-41ce-b7f2-866538a517ce', {
+export const Momentum = Traits.defineTrait('commando/momentum', {
   name: 'Momentum',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Commando)],
@@ -56,8 +56,8 @@ export const BaselineQuickGuy = Traits.defineTrait('asdasdaSDasdasDasdasDd', {
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.MovementSpeed, Attributes.modifier(Patches.set(6)))],
 })
 
-export const Officer = 'cf3df79a-c906-49c5-8756-ee14bd4b26a5' as TraitReference
-export const Sentinel = '7aa06ac1-cd35-40e3-b1d5-bb62eeb60443' as TraitReference
+export const Officer = 'commando/officer' as TraitReference
+export const Sentinel = 'commando/sentinel' as TraitReference
 
 export const OfficerTrait = Traits.defineTrait(Officer, {
   name: 'Officer',
@@ -70,7 +70,7 @@ export const OfficerTrait = Traits.defineTrait(Officer, {
   ],
 })
 
-export const AdvancedOperations = Traits.defineTrait('cf015d5a-f427-4eea-9798-caf9700fcacd', {
+export const AdvancedOperations = Traits.defineTrait('commando/advanced-operations', {
   name: 'Advanced Operations',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Officer)],

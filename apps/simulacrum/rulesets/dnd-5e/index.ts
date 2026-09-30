@@ -28,10 +28,10 @@ import { CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/rule
 import { Dash, Disengage, Dodge, HealingSurge } from '@simulacrum/rulesets/dnd-5e/common'
 import { HitPointResourcePool } from '@simulacrum/rulesets/dnd-5e/resource-pool'
 
-export const SelectClassLevel = CharacterOptions.selectTraitOption('afbef236-17a0-464f-b2d0-cb01ecf7931a', { archetypes: [Class] })
+export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class-level', { archetypes: [Class] })
 
 export const Dnd5e: Ruleset = {
-  id: 'ca894259-d62d-4398-b417-cb4f0adf4ffe' as RulesetReference,
+  id: 'dnd-5e' as RulesetReference,
   name: 'Dungeons and Dragons 5e',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),
@@ -42,6 +42,7 @@ export const Dnd5e: Ruleset = {
     FightingStyle,
     WeaponMastery,
     Fighter.FighterSubclass,
+    Wizard.WizardSubclass,
     Maneuvers.Maneuver,
     Feats.Feat,
   ],
@@ -252,6 +253,10 @@ export const Dnd5e: Ruleset = {
     Wizard.Level3,
     Wizard.Level4,
     Wizard.Level5,
+    Wizard.Abjurer,
+    Wizard.Diviner,
+    Wizard.Evoker,
+    Wizard.Illusionist,
     Fighter.BattleMaster,
     Fighter.Champion,
     Fighter.EldritchKnight,
@@ -267,6 +272,19 @@ export const Dnd5e: Ruleset = {
     Fighter.TacticalMind,
     Fighter.ExtraAttack,
     Fighter.TacticalShift,
+    Wizard.Spellcasting,
+    Wizard.RitualAdept,
+    Wizard.ArcaneRecovery,
+    Wizard.Scholar,
+    Wizard.AbjurationSavant,
+    Wizard.ArcaneWard,
+    Wizard.DivinationSavant,
+    Wizard.Portent,
+    Wizard.EvocationSavant,
+    Wizard.PotentCantrip,
+    Wizard.IllusionSavant,
+    Wizard.ImprovedIllusions,
+    Wizard.MemorizeSpell,
   ],
   resourcePools: [HitPointResourcePool],
   loadoutTypes: [],

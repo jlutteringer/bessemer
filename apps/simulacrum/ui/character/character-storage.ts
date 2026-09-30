@@ -2,12 +2,13 @@
 
 import { useSyncExternalStore } from 'react'
 import { Ulids } from '@bessemer/cornerstone'
+import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import { CharacterRecord } from '@simulacrum/common/character/character'
 
 // FUTURE characters are persisted to local storage until there is a real backend
 
 export type StoredCharacter = {
-  id: string
+  id: Ulid
   createdAt: string
   updatedAt: string
   character: CharacterRecord
@@ -56,7 +57,7 @@ export const useStoredCharacters = (): Array<StoredCharacter> | null => {
 /**
  * Returns the stored character with the given id, `undefined` if it doesn't exist, or `null` while rendering on the server.
  */
-export const useStoredCharacter = (id: string | null): StoredCharacter | undefined | null => {
+export const useStoredCharacter = (id: Ulid | null): StoredCharacter | undefined | null => {
   const characters = useStoredCharacters()
   if (characters === null) {
     return null
@@ -68,7 +69,7 @@ export const useStoredCharacter = (id: string | null): StoredCharacter | undefin
 /**
  * Creates or updates a character. Pass `null` as the id to create a new character; the saved entry is returned.
  */
-export const saveCharacter = (id: string | null, character: CharacterRecord): StoredCharacter => {
+export const saveCharacter = (id: Ulid | null, character: CharacterRecord): StoredCharacter => {
   const characters = readCharacters()
   const now = new Date().toISOString()
   const existing = characters.find((it) => it.id === id)
@@ -84,13 +85,13 @@ export const saveCharacter = (id: string | null, character: CharacterRecord): St
   return updated
 }
 
-export const copyCharacter = (id: string): void => {
+export const copyCharacter = (id: Ulid): void => {
   const existing = readCharacters().find((it) => it.id === id)
   if (existing !== undefined) {
     saveCharacter(null, { ...existing.character, name: `${existing.character.name} (Copy)` })
   }
 }
 
-export const deleteCharacter = (id: string): void => {
+export const deleteCharacter = (id: Ulid): void => {
   writeCharacters(readCharacters().filter((it) => it.id !== id))
 }

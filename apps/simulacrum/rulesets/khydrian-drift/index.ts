@@ -18,11 +18,11 @@ import { Class } from '@simulacrum/rulesets/khydrian-drift/archetype'
 import { CharacterOptions } from '@simulacrum/common/character'
 import { CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/rulesets/khydrian-drift/characteristic'
 
-export const SelectClassOption = CharacterOptions.selectTraitOption('98e42317-8a5c-45a2-9700-fec314750a37', { archetypes: [Class] })
-export const SelectTraitOption = CharacterOptions.selectTraitOption('5a1a65ff-6c10-4dd0-85a8-393c196efd2b', Traits.filterNone())
+export const SelectClassOption = CharacterOptions.selectTraitOption('select-class-option', { archetypes: [Class] })
+export const SelectTraitOption = CharacterOptions.selectTraitOption('select-trait-option', Traits.filterNone())
 
 export const KhydrianDrift: Ruleset = {
-  id: 'fc4174ae-4496-42bb-9775-f77dc7f20101' as RulesetReference,
+  id: 'khydrian-drift' as RulesetReference,
   name: 'Khydrian Drift',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),
