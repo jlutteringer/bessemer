@@ -4,6 +4,8 @@ import { SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fight
 import { SelectWeaponMastery } from '@simulacrum/rulesets/dnd-5e/archetype/weapon-mastery'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import { SelectArtisansTools } from '@simulacrum/rulesets/dnd-5e/archetype/artisans-tools'
+import { SelectManeuver } from '@simulacrum/rulesets/dnd-5e/archetype/maneuver'
+import { SelectFeat } from '@simulacrum/rulesets/dnd-5e/archetype/feat'
 import { CharacterOptions } from '@simulacrum/common/character'
 import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { CharacterValues } from '@simulacrum/common/character/character'
@@ -59,7 +61,7 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('94b411
 
 export const Level1 = Traits.defineTrait('143dad4d-9496-4a73-927c-c77c6b008282', {
   name: 'Fighter',
-  description: '',
+  description: '<p>A master of martial combat, at home with <strong>any weapon</strong> and <strong>any armor</strong>.</p>',
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(10))),
@@ -135,7 +137,10 @@ export const BattleMaster = Traits.defineTrait('c2cfc67d-e22d-4343-9806-00dc1427
   description: '',
   archetypes: [FighterSubclass],
   effects: [
-    Effects.descriptive('Combat Superiority!'),
+    // Combat Superiority (FUTURE superiority dice aren't modelled yet)
+    Effects.gainCharacterOption(SelectManeuver),
+    Effects.gainCharacterOption(SelectManeuver),
+    Effects.gainCharacterOption(SelectManeuver),
     // Student of War
     Effects.gainCharacterOption(SelectArtisansTools),
     Effects.gainCharacterOption(SelectSkillProficiency),
@@ -168,7 +173,25 @@ export const Level4 = Traits.defineTrait('0cbab68a-2596-4ada-a919-c2582f34675e',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
-  effects: [],
+  effects: [
+    // Weapon Mastery increases to four weapons
+    Effects.gainCharacterOption(SelectWeaponMastery),
+    // Ability Score Improvement
+    Effects.gainCharacterOption(SelectFeat),
+  ],
+})
+
+// FUTURE stubs: Extra Attack and Tactical Shift aren't modelled yet
+export const ExtraAttack = Abilities.defineAbility('08c15dbd-bb3a-45b6-88d1-8fe9eac31281', {
+  name: 'Extra Attack',
+  description: '',
+  actions: [],
+})
+
+export const TacticalShift = Abilities.defineAbility('a62c5737-10f0-4593-b712-70fd87e6ce09', {
+  name: 'Tactical Shift',
+  description: '',
+  actions: [],
 })
 
 export const Level5 = Traits.defineTrait('e6a071a3-cbaf-4245-b4e6-457375224939', {
@@ -176,5 +199,5 @@ export const Level5 = Traits.defineTrait('e6a071a3-cbaf-4245-b4e6-457375224939',
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
-  effects: [],
+  effects: [Effects.gainAbility(ExtraAttack), Effects.gainAbility(TacticalShift)],
 })

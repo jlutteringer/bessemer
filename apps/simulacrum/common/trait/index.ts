@@ -2,6 +2,7 @@ import { Effect } from '@simulacrum/common/effect'
 import { Archetype, ArchetypeReference } from '@simulacrum/common/archetype'
 import { CharacterValues } from '@simulacrum/common/character/character'
 import { Reference } from '@bessemer/cornerstone/reference'
+import { RichText } from '@bessemer/cornerstone/rich-text'
 import { Expression, Expressions } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
@@ -10,7 +11,7 @@ export type TraitReference = Reference<'Trait'>
 
 export type TraitProps = {
   name: string
-  description: string
+  description: RichText
   effects: Array<Effect>
 
   archetypes?: Array<ArchetypeReference | Archetype>
@@ -19,7 +20,7 @@ export type TraitProps = {
 
 export type Trait = { id: TraitReference } & {
   name: string
-  description: string
+  description: RichText
   effects: Array<Effect>
 
   archetypes: Array<ArchetypeReference>

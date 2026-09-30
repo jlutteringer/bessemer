@@ -15,7 +15,6 @@ import CardHeader from '@mui/material/CardHeader'
 import Chip from '@mui/material/Chip'
 import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
-import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
 import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
@@ -31,6 +30,7 @@ import { ApplicationContext } from '@simulacrum/common/application'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
+import { RichTextDescription } from '@simulacrum/ui/character/builder/RichTextDescription'
 import {
   getInitialValueCharacteristics,
   getInitialValueFieldName,
@@ -359,17 +359,6 @@ const MultiTraitSelect = ({ label, slots, onSelect }: { label: string; slots: Ar
       isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionDisabled={(trait) => isFull && !selected.some((it) => it.id === trait.id)}
       filterSelectedOptions
-      renderOption={({ key, ...props }, trait) => (
-        <li
-          key={key}
-          {...props}
-        >
-          <ListItemText
-            primary={trait.name}
-            secondary={trait.description || undefined}
-          />
-        </li>
-      )}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -388,8 +377,6 @@ const TraitSelect = ({ label, slot, onSelect }: { label: string; slot: TraitSlot
       label={label}
       value={slot.selection?.id ?? ''}
       onChange={(event) => onSelect(slot.values.find((it) => it.id === event.target.value) ?? null)}
-      // Show just the name when closed; the menu items also include the description
-      slotProps={{ select: { renderValue: () => slot.selection?.name ?? '' } }}
     >
       <MenuItem value="">
         <em>None</em>
@@ -399,10 +386,7 @@ const TraitSelect = ({ label, slot, onSelect }: { label: string; slot: TraitSlot
           key={trait.id}
           value={trait.id}
         >
-          <ListItemText
-            primary={trait.name}
-            secondary={trait.description || undefined}
-          />
+          {trait.name}
         </MenuItem>
       ))}
     </TextField>
@@ -430,7 +414,7 @@ const SelectedTraits = ({ traits }: { traits: Array<Trait> }) => {
           <Card sx={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h6">{trait.name}</Typography>
-              {trait.description && <Typography sx={{ color: 'text.secondary' }}>{trait.description}</Typography>}
+              <RichTextDescription text={trait.description} />
             </CardContent>
           </Card>
         </Grid>
@@ -471,7 +455,7 @@ const TraitAbilities = ({ traits }: { traits: Array<Trait> }) => {
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h6">{ability.name}</Typography>
-                {ability.description && <Typography sx={{ color: 'text.secondary' }}>{ability.description}</Typography>}
+                <RichTextDescription text={ability.description} />
               </CardContent>
             </Card>
           </Grid>

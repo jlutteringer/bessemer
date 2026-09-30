@@ -2,6 +2,7 @@ import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { Effect, EffectSourceType } from '@simulacrum/common/effect'
 import { ResourceCost } from '@simulacrum/common/resource-pool'
 import { Reference } from '@bessemer/cornerstone/reference'
+import { RichText } from '@bessemer/cornerstone/rich-text'
 import { Expression } from '@bessemer/cornerstone/expression'
 import { Assertions } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
@@ -17,7 +18,7 @@ export type AbilityReference = Reference<'Ability'>
 
 export type Ability = { id: AbilityReference } & {
   name: string
-  description: string
+  description: RichText
 
   prerequisites: Array<Expression<boolean>>
   loadout: LoadoutTypeReference | null
@@ -37,7 +38,7 @@ export type AbilityAction = {
 
 export type AbilityProps = {
   name: string
-  description: string
+  description: RichText
 
   prerequisites?: Array<Expression<boolean>>
   loadout?: LoadoutTypeReference

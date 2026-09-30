@@ -14,11 +14,18 @@ const getExtensions = (context: CoreApplicationContext): Array<TiptapExtension> 
 }
 
 export const textToJson = (text: RichText, context: CoreApplicationContext): RichTextJson => {
+  return textToJsonWithExtensions(text, getExtensions(context))
+}
+
+/**
+ * Converts rich text to JSON with an explicit set of extensions, for when there's no application context to supply them.
+ */
+export const textToJsonWithExtensions = (text: RichText, extensions: Array<TiptapExtension>): RichTextJson => {
   if (RichTexts.isJson(text)) {
     return text
   }
 
-  return generateJSON(text, getExtensions(context)) as RichTextJson
+  return generateJSON(text, extensions) as RichTextJson
 }
 
 export const jsonToString = (text: RichTextJson, context: CoreApplicationContext): RichTextString => {
