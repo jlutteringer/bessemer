@@ -4,6 +4,8 @@ import * as AbilityScoreIncreases from '@simulacrum/rulesets/dnd-5e/archetype/ab
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as ArtisansTools from '@simulacrum/rulesets/dnd-5e/archetype/artisans-tools'
 import * as Tools from '@simulacrum/rulesets/dnd-5e/archetype/tool'
+import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
+import { Cleric } from '@simulacrum/rulesets/dnd-5e/archetype'
 import { WeaponMasteryLoadout } from '@simulacrum/rulesets/dnd-5e/loadout'
 
 // FUTURE these are stubs: apart from ability score increases, feats' own choices and benefits aren't modelled yet
@@ -13,7 +15,7 @@ export const Feat = Archetypes.defineArchetype('feat', { name: 'Feat' })
 // A trait matches a filter when all its archetypes are in the filter, so SelectFeat lists both to offer every feat
 export const OriginFeat = Archetypes.defineArchetype('feat/origin', { name: 'Origin Feat' })
 
-export const SelectFeat = CharacterOptions.selectTraitOption('feat/select', { archetypes: [Feat, OriginFeat] }, 'Feat')
+export const SelectFeat = CharacterOptions.selectTraitOption('feat/select', { archetypes: [[Feat, OriginFeat]] }, 'Feat')
 
 export const SelectOriginFeat = CharacterOptions.selectTraitOption('feat/select-origin', { archetypes: [OriginFeat] })
 
@@ -510,12 +512,62 @@ export const Lucky = Traits.defineTrait('feat/lucky', {
   effects: [],
 })
 
+// The spellcasting ability a Magic Initiate feat uses. A character can take the feat more than once (with a different spell list each
+// time), choosing again each time, so these can be chosen more than once.
+export const MagicInitiateIntelligence = Traits.defineTrait('feat/magic-initiate/spellcasting-ability/intelligence', {
+  name: 'Intelligence',
+  description: '<p>Intelligence is your spellcasting ability for these spells.</p>',
+  repeatable: true,
+  effects: [],
+})
+
+export const MagicInitiateWisdom = Traits.defineTrait('feat/magic-initiate/spellcasting-ability/wisdom', {
+  name: 'Wisdom',
+  description: '<p>Wisdom is your spellcasting ability for these spells.</p>',
+  repeatable: true,
+  effects: [],
+})
+
+export const MagicInitiateCharisma = Traits.defineTrait('feat/magic-initiate/spellcasting-ability/charisma', {
+  name: 'Charisma',
+  description: '<p>Charisma is your spellcasting ability for these spells.</p>',
+  repeatable: true,
+  effects: [],
+})
+
+const MagicInitiateSpellcastingAbilities = [MagicInitiateIntelligence, MagicInitiateWisdom, MagicInitiateCharisma]
+
+// Two Cleric cantrips and one level 1 Cleric spell, always prepared (FUTURE casting the spell once per Long Rest without a slot isn't
+// tracked yet). Each Magic Initiate variant has its own options, so taking more than one variant keeps their choices apart.
+export const SelectMagicInitiateClericCantrip = CharacterOptions.selectAbilityOption(
+  'feat/magic-initiate-cleric/select-cantrip',
+  { archetypes: [Cleric, Spells.Cantrip] },
+  'Cantrips'
+)
+
+export const SelectMagicInitiateClericSpell = CharacterOptions.selectAbilityOption(
+  'feat/magic-initiate-cleric/select-spell',
+  { archetypes: [Cleric, Spells.Rank1] },
+  'Level 1 Spell'
+)
+
+export const SelectMagicInitiateClericSpellcastingAbility = CharacterOptions.selectTraitOption(
+  'feat/magic-initiate-cleric/select-spellcasting-ability',
+  { specificOptions: MagicInitiateSpellcastingAbilities },
+  'Spellcasting Ability'
+)
+
 export const MagicInitiateCleric = Traits.defineTrait('feat/magic-initiate-cleric', {
   name: 'Magic Initiate (Cleric)',
   description:
     '<p><strong>Origin Feat</strong></p><p><strong>Two Cantrips:</strong> you learn two cantrips from the Cleric spell list.</p><p><strong>Level 1 Spell:</strong> you learn one level 1 Cleric spell. It is always prepared, and you can cast it once without a spell slot per Long Rest, or with any spell slots you have.</p><p><strong>Spellcasting Ability:</strong> Intelligence, Wisdom, or Charisma (chosen when you take this feat).</p><p><strong>Spell Change:</strong> whenever you gain a level, you can replace one of these spells with another of the same level from the Cleric list.</p><p><strong>Repeatable:</strong> you can take this feat more than once, choosing a different spell list each time.</p>',
   archetypes: [OriginFeat],
-  effects: [],
+  effects: [
+    Effects.gainCharacterOption(SelectMagicInitiateClericCantrip),
+    Effects.gainCharacterOption(SelectMagicInitiateClericCantrip),
+    Effects.gainCharacterOption(SelectMagicInitiateClericSpell),
+    Effects.gainCharacterOption(SelectMagicInitiateClericSpellcastingAbility),
+  ],
 })
 
 export const MagicInitiateDruid = Traits.defineTrait('feat/magic-initiate-druid', {
@@ -557,7 +609,7 @@ export const SavageAttacker = Traits.defineTrait('feat/savage-attacker', {
 // Any skill or tool; skills and tools the character already has aren't offered
 export const SelectSkilledProficiency = CharacterOptions.selectTraitOption(
   'feat/skilled/select-proficiency',
-  { archetypes: [SkillProficiencies.SkillProficiency, ...Tools.AllTools] },
+  { archetypes: [[SkillProficiencies.SkillProficiency, ...Tools.AllTools]] },
   'Skilled'
 )
 

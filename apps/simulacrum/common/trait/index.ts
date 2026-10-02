@@ -1,6 +1,6 @@
 import { Effect } from '@simulacrum/common/effect'
-import { Archetype, ArchetypeReference } from '@simulacrum/common/archetype'
 import * as Archetypes from '@simulacrum/common/archetype'
+import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/common/archetype'
 import { CharacterValues } from '@simulacrum/common/character/character'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { RichText } from '@bessemer/cornerstone/rich-text'
@@ -55,24 +55,20 @@ export const traitPrerequisite = (trait: TraitReference | Trait): Expression<boo
 }
 
 export type TraitFilterProps = {
-  archetypes?: Array<ArchetypeReference | Archetype>
+  archetypes?: ArchetypeFilterProps
   specificOptions?: Array<TraitReference | Trait>
 }
 
 export type TraitFilter = {
-  archetypes: Array<ArchetypeReference>
+  archetypes: ArchetypeFilter
   specificOptions: Array<TraitReference>
 }
 
 export const filter = (props: TraitFilterProps): TraitFilter => {
   return {
-    archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
+    archetypes: Archetypes.filter(props.archetypes ?? []),
     specificOptions: (props.specificOptions ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
   }
-}
-
-export const filterNone = (): TraitFilter => {
-  return filter({})
 }
 
 export const applyFilter = (traits: Array<Trait>, filter: TraitFilter): Array<Trait> => {

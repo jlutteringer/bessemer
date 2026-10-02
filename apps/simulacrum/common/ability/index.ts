@@ -6,7 +6,7 @@ import { RichText } from '@bessemer/cornerstone/rich-text'
 import { Expression } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions } from '@bessemer/cornerstone'
 import * as Archetypes from '@simulacrum/common/archetype'
-import { Archetype, ArchetypeReference } from '@simulacrum/common/archetype'
+import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/common/archetype'
 import { ApplicationContext } from '@simulacrum/common/application'
 
 export enum ActionType {
@@ -89,18 +89,18 @@ export const getAbilities = (abilities: Array<AbilityReference>, context: Applic
 }
 
 export type AbilityFilterProps = {
-  archetypes?: Array<ArchetypeReference | Archetype>
+  archetypes?: ArchetypeFilterProps
   specificOptions?: Array<AbilityReference | Ability>
 }
 
 export type AbilityFilter = {
-  archetypes: Array<ArchetypeReference>
+  archetypes: ArchetypeFilter
   specificOptions: Array<AbilityReference>
 }
 
 export const filter = (props: AbilityFilterProps): AbilityFilter => {
   return {
-    archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
+    archetypes: Archetypes.filter(props.archetypes ?? []),
     specificOptions: (props.specificOptions ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
   }
 }

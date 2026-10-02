@@ -161,7 +161,7 @@ export const getOptionLabel = (option: CharacterOption, context: ApplicationCont
     return option.label
   }
 
-  const archetypeNames = option.filter.archetypes.map((it) => Archetypes.getArchetype(it, context).name)
+  const archetypeNames = option.filter.archetypes.flat().map((it) => Archetypes.getArchetype(it, context).name)
   return !Arrays.isEmpty(archetypeNames) ? archetypeNames.join(' / ') : option.type === CharacterOptionType.SelectTrait ? 'Trait' : 'Ability'
 }
 

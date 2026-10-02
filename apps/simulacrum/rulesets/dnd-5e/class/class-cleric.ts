@@ -1,5 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, ResourcePools, Traits } from '@simulacrum/common'
-import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
+import { Class, Cleric } from '@simulacrum/rulesets/dnd-5e/archetype'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
 import { SelectFeat } from '@simulacrum/rulesets/dnd-5e/archetype/feat'
@@ -23,20 +23,8 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric
   ],
 })
 
-export const CantripList = [
-  Spells.Guidance,
-  Spells.Light,
-  Spells.Mending,
-  Spells.Resistance,
-  Spells.SacredFlame,
-  Spells.SpareTheDying,
-  Spells.Thaumaturgy,
-  Spells.TollTheDead,
-  Spells.WordOfRadiance,
-]
-
 // Cleric cantrips are chosen when the Cleric gains a level, rather than swapped in and out of a loadout like a Wizard's
-export const SelectCantrip = CharacterOptions.selectAbilityOption('cleric/select-cantrip', { specificOptions: CantripList }, 'Cantrips')
+export const SelectCantrip = CharacterOptions.selectAbilityOption('cleric/select-cantrip', { archetypes: [Cleric, Spells.Cantrip] }, 'Cantrips')
 
 // Uses of a Wisdom-based feature: equal to the Wisdom modifier, but at least one
 const WisdomModifierUses = NumericExpressions.max([PlayerCharacteristics.WisdomModifier.variable, 1])

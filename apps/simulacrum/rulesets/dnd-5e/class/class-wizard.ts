@@ -1,5 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
-import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
+import { Class, Wizard } from '@simulacrum/rulesets/dnd-5e/archetype'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
 import * as SkillExpertise from '@simulacrum/rulesets/dnd-5e/archetype/skill-expertise'
@@ -22,159 +22,23 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard
   ],
 })
 
-export const CantripList = [
-  Spells.AcidSplash,
-  Spells.BladeWard,
-  Spells.ChillTouch,
-  Spells.DancingLights,
-  Spells.Elementalism,
-  Spells.FireBolt,
-  Spells.Light,
-  Spells.MageHand,
-  Spells.Mending,
-  Spells.Message,
-  Spells.MindSliver,
-  Spells.MinorIllusion,
-  Spells.PoisonSpray,
-  Spells.Prestidigitation,
-  Spells.RayOfFrost,
-  Spells.ShockingGrasp,
-  Spells.Thunderclap,
-  Spells.TollTheDead,
-  Spells.TrueStrike,
-]
-
-export const SpellList = [
-  Spells.Alarm,
-  Spells.BurningHands,
-  Spells.CharmPerson,
-  Spells.ChromaticOrb,
-  Spells.ColorSpray,
-  Spells.ComprehendLanguages,
-  Spells.DetectMagic,
-  Spells.DisguiseSelf,
-  Spells.ExpeditiousRetreat,
-  Spells.FalseLife,
-  Spells.FeatherFall,
-  Spells.FindFamiliar,
-  Spells.FogCloud,
-  Spells.Grease,
-  Spells.IceKnife,
-  Spells.Identify,
-  Spells.IllusoryScript,
-  Spells.Jump,
-  Spells.Longstrider,
-  Spells.MageArmor,
-  Spells.MagicMissile,
-  Spells.ProtectionFromEvilAndGood,
-  Spells.RayOfSickness,
-  Spells.Shield,
-  Spells.SilentImage,
-  Spells.Sleep,
-  Spells.TashasHideousLaughter,
-  Spells.TensersFloatingDisk,
-  Spells.Thunderwave,
-  Spells.UnseenServant,
-  Spells.WitchBolt,
-  Spells.AlterSelf,
-  Spells.ArcaneLock,
-  Spells.ArcaneVigor,
-  Spells.Augury,
-  Spells.BlindnessDeafness,
-  Spells.Blur,
-  Spells.CloudOfDaggers,
-  Spells.ContinualFlame,
-  Spells.CrownOfMadness,
-  Spells.Darkness,
-  Spells.Darkvision,
-  Spells.DetectThoughts,
-  Spells.DragonsBreath,
-  Spells.EnhanceAbility,
-  Spells.EnlargeReduce,
-  Spells.FlamingSphere,
-  Spells.GentleRepose,
-  Spells.GustOfWind,
-  Spells.HoldPerson,
-  Spells.Invisibility,
-  Spells.Knock,
-  Spells.Levitate,
-  Spells.LocateObject,
-  Spells.MagicMouth,
-  Spells.MagicWeapon,
-  Spells.MelfsAcidArrow,
-  Spells.MindSpike,
-  Spells.MirrorImage,
-  Spells.MistyStep,
-  Spells.NystulsMagicAura,
-  Spells.PhantasmalForce,
-  Spells.RayOfEnfeeblement,
-  Spells.RopeTrick,
-  Spells.ScorchingRay,
-  Spells.SeeInvisibility,
-  Spells.Shatter,
-  Spells.SpiderClimb,
-  Spells.Suggestion,
-  Spells.Web,
-  Spells.AnimateDead,
-  Spells.BestowCurse,
-  Spells.Blink,
-  Spells.Clairvoyance,
-  Spells.Counterspell,
-  Spells.DispelMagic,
-  Spells.Fear,
-  Spells.FeignDeath,
-  Spells.Fireball,
-  Spells.Fly,
-  Spells.GaseousForm,
-  Spells.GlyphOfWarding,
-  Spells.Haste,
-  Spells.HypnoticPattern,
-  Spells.LeomundsTinyHut,
-  Spells.LightningBolt,
-  Spells.MagicCircle,
-  Spells.MajorImage,
-  Spells.Nondetection,
-  Spells.PhantomSteed,
-  Spells.ProtectionFromEnergy,
-  Spells.RemoveCurse,
-  Spells.Sending,
-  Spells.SleetStorm,
-  Spells.Slow,
-  Spells.SpeakWithDead,
-  Spells.StinkingCloud,
-  Spells.SummonFey,
-  Spells.SummonUndead,
-  Spells.Tongues,
-  Spells.VampiricTouch,
-  Spells.WaterBreathing,
-]
-
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption(
   'wizard/select-spell-up-to-rank-1',
-  {
-    archetypes: Spells.UpToRank1,
-    specificOptions: SpellList,
-  },
+  { archetypes: [Wizard, [Spells.Rank1]] },
   'Spells Known',
   PreparedSpellLoadout
 )
 
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption(
   'wizard/select-spell-up-to-rank-2',
-  {
-    archetypes: Spells.UpToRank2,
-    specificOptions: SpellList,
-  },
+  { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2]] },
   'Spells Known',
   PreparedSpellLoadout
 )
 
 export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-spell-up-to-rank-3',
-  {
-    archetypes: Spells.UpToRank3,
-    specificOptions: SpellList,
-  },
+  { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Spells Known',
   PreparedSpellLoadout
 )
@@ -215,7 +79,9 @@ export const Level1 = Traits.defineTrait('wizard/level-1', {
     Effects.gainLoadoutSlot(CantripLoadout),
     Effects.gainLoadoutSlot(CantripLoadout),
     Effects.gainLoadoutSlot(CantripLoadout),
-    ...CantripList.map((it) => Effects.gainAbility(it, CantripLoadout)),
+    ...Abilities.applyFilter(Spells.All, Abilities.filter({ archetypes: [Wizard, Spells.Cantrip] })).map((it) =>
+      Effects.gainAbility(it, CantripLoadout)
+    ),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
@@ -306,14 +172,14 @@ export const Level5 = Traits.defineTrait('wizard/level-5', {
 
 export const SelectAbjurationSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-abjuration-savant-spell',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Abjuration], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2]] },
   'Abjuration Savant',
   PreparedSpellLoadout
 )
 
 export const SelectAbjurationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-abjuration-savant-spell-up-to-rank-3',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Rank3, Spells.Abjuration], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Abjuration Savant',
   PreparedSpellLoadout
 )
@@ -353,14 +219,14 @@ export const Abjurer = Traits.defineTrait('wizard/abjurer', {
 
 export const SelectDivinationSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-divination-savant-spell',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Divination], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2]] },
   'Divination Savant',
   PreparedSpellLoadout
 )
 
 export const SelectDivinationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-divination-savant-spell-up-to-rank-3',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Rank3, Spells.Divination], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Divination Savant',
   PreparedSpellLoadout
 )
@@ -400,14 +266,14 @@ export const Diviner = Traits.defineTrait('wizard/diviner', {
 
 export const SelectEvocationSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-evocation-savant-spell',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Evocation], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2]] },
   'Evocation Savant',
   PreparedSpellLoadout
 )
 
 export const SelectEvocationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-evocation-savant-spell-up-to-rank-3',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Rank3, Spells.Evocation], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Evocation Savant',
   PreparedSpellLoadout
 )
@@ -447,14 +313,14 @@ export const Evoker = Traits.defineTrait('wizard/evoker', {
 
 export const SelectIllusionSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-illusion-savant-spell',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Illusion], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2]] },
   'Illusion Savant',
   PreparedSpellLoadout
 )
 
 export const SelectIllusionSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-illusion-savant-spell-up-to-rank-3',
-  { archetypes: [Spells.Rank1, Spells.Rank2, Spells.Rank3, Spells.Illusion], specificOptions: SpellList },
+  { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Illusion Savant',
   PreparedSpellLoadout
 )

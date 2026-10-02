@@ -23,6 +23,14 @@ export const getArchetype = (archetype: ArchetypeReference, context: Application
   return matchingArchetype
 }
 
-export const matchesFilter = (filterArchetypes: Array<ArchetypeReference>, targetArchetypes: Array<ArchetypeReference>): boolean => {
-  return !Arrays.isEmpty(targetArchetypes) && Arrays.containsAll(filterArchetypes, targetArchetypes)
+export type ArchetypeFilter = Array<Array<ArchetypeReference>>
+
+export type ArchetypeFilterProps = Array<Archetype | Array<Archetype>>
+
+export const filter = (props: ArchetypeFilterProps): ArchetypeFilter => {
+  return props.map((group) => (Array.isArray(group) ? group.map((it) => it.id) : [group.id]))
+}
+
+export const matchesFilter = (filter: ArchetypeFilter, targetArchetypes: Array<ArchetypeReference>): boolean => {
+  return filter.every((group) => Arrays.some(group, (it) => Arrays.contains(targetArchetypes, it)))
 }
