@@ -10,7 +10,7 @@ import { ResourceKey } from '@bessemer/cornerstone/resource-key'
 import { RecordEntry } from '@bessemer/cornerstone/entry'
 import { Arrayable, PartialDeep } from 'type-fest'
 
-const logger = Loggers.child('AdvisoryLock')
+const logger = Loggers.logger('AdvisoryLock')
 
 export type AdvisoryLockProps = {
   duration: Duration

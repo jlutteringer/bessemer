@@ -7,7 +7,7 @@ import { RecordEntry } from '@bessemer/cornerstone/entry'
 import { GlobalContextType } from '@bessemer/framework'
 import { Redis } from '@bessemer/redis'
 
-const logger = Loggers.child('RedisCacheProvider')
+const logger = Loggers.logger('RedisCacheProvider')
 
 export namespace RedisCacheProvider {
   export const Type: CacheProviderType = 'RedisCacheProvider'

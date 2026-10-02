@@ -14,7 +14,7 @@ import { createGlobalVariable } from '@bessemer/cornerstone/global-variable'
 import { Tag } from '@bessemer/cornerstone/tag'
 import { DEPRECATEDDeepPartial } from '@bessemer/cornerstone/types'
 
-const logger = Loggers.child('Bessemer')
+const logger = Loggers.logger('Bessemer')
 
 export type BessemerInstance<ApplicationContext extends BessemerApplicationContext, ApplicationOptions extends BessemerOptions> = {
   context: ApplicationContext

@@ -12,7 +12,7 @@ import { BessemerApplicationContext } from '@bessemer/framework'
 import { ResourceKey } from '@bessemer/cornerstone/resource-key'
 import { RecordEntry } from '@bessemer/cornerstone/entry'
 
-const logger = Loggers.child('MemoryCacheProvider')
+const logger = Loggers.logger('MemoryCacheProvider')
 
 export namespace MemoryCacheProvider {
   export const Type: CacheProviderType = 'MemoryCacheProvider'

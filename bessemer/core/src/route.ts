@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { ContentKey } from '@bessemer/cornerstone/content'
 import { Throwable } from '@bessemer/cornerstone/types'
 
-const logger = Loggers.child('RouteErrorHandler')
+const logger = Loggers.logger('RouteErrorHandler')
 
 export const CoreRouteErrorHandler: RouteErrorHandler<CoreApplicationContext> = async (
   error: Throwable,

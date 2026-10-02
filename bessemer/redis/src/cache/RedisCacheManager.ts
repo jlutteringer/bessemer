@@ -22,7 +22,7 @@ export type RedisCacheMutation = {} & (
     }
 )
 
-const logger = Loggers.child('RedisCacheManager')
+const logger = Loggers.logger('RedisCacheManager')
 
 export class RedisCacheManager implements CacheManager<RedisApplicationContext> {
   private readonly localCacheManager: LocalCacheManager

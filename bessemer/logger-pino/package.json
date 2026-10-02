@@ -1,7 +1,7 @@
 {
-  "name": "@bessemer/cornerstone",
+  "name": "@bessemer/logger-pino",
   "type": "module",
-  "version": "0.5.117",
+  "version": "0.0.0",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "sideEffects": false,
@@ -19,24 +19,13 @@
     "build": "tsup && tsc --project tsconfig.build.json --emitDeclarationOnly",
     "test": "jest",
     "prettier-fix": "prettier --write .",
-    "clean": "rm -rf dist && rm -rf .turbo",
-    "docgen": "docgen"
+    "clean": "rm -rf dist && rm -rf .turbo"
   },
   "dependencies": {
-    "@js-temporal/polyfill": "0.5.1",
-    "@types/lodash-es": "4.17.12",
-    "immer": "11.1.4",
-    "lodash-es": "4.17.21",
-    "minimatch": "10.0.1",
-    "type-fest": "4.32.0",
-    "ulid": "2.3.0",
-    "zod": "4.4.3"
+    "@bessemer/cornerstone": "workspace:*",
+    "pino": "10.4.0"
   },
   "devDependencies": {
-    "expect-type": "1.2.2"
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://lutteringer.github.io/bessemer"
+    "pino-pretty": "13.0.0"
+  }
 }

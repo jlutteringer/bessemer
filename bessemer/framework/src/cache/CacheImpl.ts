@@ -4,7 +4,7 @@ import { Arrays, Async, Entries, Loggers, ResourceKeys } from '@bessemer/corners
 import { NamespacedKey, ResourceKey, ResourceNamespace } from '@bessemer/cornerstone/resource-key'
 import { RecordEntry } from '@bessemer/cornerstone/entry'
 
-const logger = Loggers.child('CacheImpl')
+const logger = Loggers.logger('CacheImpl')
 
 export class CacheImpl<T> extends AbstractAsyncCache<T> {
   constructor(
