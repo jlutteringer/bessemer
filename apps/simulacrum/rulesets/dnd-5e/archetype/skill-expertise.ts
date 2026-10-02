@@ -129,10 +129,10 @@ export const Religion = Traits.defineTrait('skill-expertise/religion', {
   effects: [],
 })
 
-export const SleightofHand = Traits.defineTrait('skill-expertise/sleightof-hand', {
+export const SleightOfHand = Traits.defineTrait('skill-expertise/sleight-of-hand', {
   name: 'Sleight of Hand (Expertise)',
   description: expertiseDescription('Sleight of Hand'),
-  prerequisites: [Traits.traitPrerequisite(SkillProficiencies.SleightofHand)],
+  prerequisites: [Traits.traitPrerequisite(SkillProficiencies.SleightOfHand)],
   archetypes: [SkillExpertise],
   effects: [],
 })

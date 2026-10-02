@@ -22,10 +22,15 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SaveIcon from '@mui/icons-material/Save'
-import { Arrays } from '@bessemer/cornerstone'
-import { CharacterRecord } from '@simulacrum/common/character/character'
-import { Trait } from '@simulacrum/common/trait'
-import { Abilities, Effects } from '@simulacrum/common'
+import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
+import { CharacterRecord, CharacterSheet } from '@simulacrum/common/character/character'
+import { Characters } from '@simulacrum/common/character'
+import { Trait, TraitReference } from '@simulacrum/common/trait'
+import { ProgressionTable } from '@simulacrum/common/progression-table'
+import { Abilities, Effects, Loadout } from '@simulacrum/common'
+import { Ability } from '@simulacrum/common/ability'
+import { CharacterOptionValue } from '@simulacrum/common/character/character-option'
+import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
@@ -33,19 +38,28 @@ import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/char
 import { RichTextDescription } from '@simulacrum/ui/character/builder/RichTextDescription'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
+  getActionLabel,
+  getActionTypeLabel,
+  hasDescribedActions,
+  getCharacteristicValue,
+  getDerivedCharacteristics,
+  getGrantedTraits,
   getInitialValueCharacteristics,
   getInitialValueFieldName,
+  getLoadoutAbilities,
   getOptionLabel,
-  getTraitArchetypeLabel,
-  getTraitSlots,
+  getCharacterOptionChoices,
+  getValueCaption,
   MaxAbilityScore,
   MaxLevel,
   MinAbilityScore,
   newCharacter,
-  selectTrait,
-  selectTraitsForSlots,
+  selectLoadoutAbilities,
+  selectValue,
+  selectValuesForChoices,
   setLevel,
-  TraitSlot,
+  CharacterOptionChoice,
+  isTrait,
 } from '@simulacrum/ui/character/builder/character-builder-model'
 
 // The rules engine only reads `client.ruleset`, which is available from the hydrated client context
@@ -108,7 +122,8 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
   })
 
   const character = useWatch({ control }) as CharacterRecord
-  const traitSlots = useMemo(() => getTraitSlots(character, context), [character, context])
+  const sheet = useMemo(() => Characters.buildCharacterDefinition(character, context), [character, context])
+  const optionChoices = useMemo(() => getCharacterOptionChoices(sheet), [sheet])
   // A new character has nothing saved yet, so it's always unsaved
   const hasUnsavedChanges = characterId === null || formState.isDirty
 
@@ -116,6 +131,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
   const applyCharacter = (updated: CharacterRecord) => {
     setValue('level', updated.level, { shouldDirty: true })
     setValue('selections', updated.selections, { shouldDirty: true })
+    setValue('selectedAbilities', updated.selectedAbilities, { shouldDirty: true })
   }
 
   const handleSave = handleSubmit((values) => {
@@ -207,7 +223,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
         </Card>
 
         <Card>
-          <CardHeader title="Ability Scores" />
+          <CardHeader title="Characteristics" />
           <CardContent>
             <Grid
               container
@@ -226,20 +242,40 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                         (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
                         `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
                     }}
-                    render={({ field, fieldState }) => (
-                      <TextField
-                        {...field}
-                        value={field.value ?? ''}
-                        // Keep the value numeric; an empty field stays empty so validation can flag it
-                        onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
-                        label={characteristic.name}
-                        type="number"
-                        fullWidth
-                        error={fieldState.invalid}
-                        helperText={fieldState.error?.message}
-                        slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
-                      />
-                    )}
+                    render={({ field, fieldState }) => {
+                      // Show the score after increases from traits (e.g. a Background), when they change it
+                      const total = getCharacteristicValue(sheet, characteristic)
+                      const increase = typeof field.value === 'number' ? total - field.value : 0
+
+                      return (
+                        <TextField
+                          {...field}
+                          value={field.value ?? ''}
+                          // Keep the value numeric; an empty field stays empty so validation can flag it
+                          onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
+                          label={characteristic.name}
+                          type="number"
+                          fullWidth
+                          error={fieldState.invalid}
+                          helperText={fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)}
+                          slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
+                        />
+                      )
+                    }}
+                  />
+                </Grid>
+              ))}
+              {/* Characteristics worked out from other values, shown read-only with their current value */}
+              {getDerivedCharacteristics(context).map((characteristic) => (
+                <Grid
+                  key={characteristic.id}
+                  size={{ xs: 6, sm: 4, md: 2 }}
+                >
+                  <TextField
+                    label={characteristic.name}
+                    value={getCharacteristicValue(sheet, characteristic)}
+                    fullWidth
+                    slotProps={{ input: { readOnly: true } }}
                   />
                 </Grid>
               ))}
@@ -259,13 +295,19 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
               <LevelTraits
                 key={level}
                 level={level}
-                slots={traitSlots.filter((it) => it.level === level)}
-                onSelect={(slot, trait) => applyCharacter(selectTrait(getValues(), slot, trait, context))}
-                onSelectMany={(slots, traits) => applyCharacter(selectTraitsForSlots(getValues(), slots, traits, context))}
+                heldTraits={sheet.traits}
+                choices={optionChoices.filter((it) => it.level === level)}
+                onSelect={(choice, value) => applyCharacter(selectValue(getValues(), choice, value, context))}
+                onSelectMany={(choices, values) => applyCharacter(selectValuesForChoices(getValues(), choices, values, context))}
               />
             ))}
           </Stack>
         </Box>
+
+        <AbilitiesSection
+          sheet={sheet}
+          onSelect={(loadoutType, abilities) => applyCharacter(selectLoadoutAbilities(getValues(), loadoutType, abilities, context))}
+        />
       </Stack>
 
       <Snackbar
@@ -280,54 +322,64 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
 
 const LevelTraits = ({
   level,
-  slots,
+  heldTraits,
+  choices,
   onSelect,
   onSelectMany,
 }: {
   level: number
-  slots: Array<TraitSlot>
-  onSelect: (slot: TraitSlot, trait: Trait | null) => void
-  onSelectMany: (slots: Array<TraitSlot>, traits: Array<Trait>) => void
+  // Every trait the character has, by level
+  heldTraits: ProgressionTable<TraitReference>
+  choices: Array<CharacterOptionChoice>
+  onSelect: (choice: CharacterOptionChoice, value: CharacterOptionValue | null) => void
+  onSelectMany: (choices: Array<CharacterOptionChoice>, values: Array<CharacterOptionValue>) => void
 }) => {
   const context = useRulesContext()
-  const slotGroups = groupSlotsByOption(slots)
+  const choiceGroups = groupChoicesByOption(choices)
 
   return (
     <Card variant="outlined">
       <CardHeader title={`Level ${level}`} />
       <CardContent>
-        {Arrays.isEmpty(slots) ? (
+        {Arrays.isEmpty(choices) ? (
           <Typography>No trait choices at this level.</Typography>
         ) : (
           <Stack spacing={3}>
-            {slotGroups.map((group) => {
+            {choiceGroups.map((group) => {
               // An option granted more than once at this level (e.g. three weapon masteries) is chosen with a single multi-select
               if (group.length > 1) {
                 return (
                   <Box key={group[0]!.key}>
-                    <MultiTraitSelect
+                    <MultiValueSelect
                       label={getOptionLabel(group[0]!.option, context)}
-                      slots={group}
-                      onSelect={(traits) => onSelectMany(group, traits)}
+                      choices={group}
+                      onSelect={(values) => onSelectMany(group, values)}
                     />
-                    <SelectedTraits traits={group.flatMap((it) => (it.selection === null ? [] : [it.selection]))} />
+                    <SelectedValues
+                      values={Arrays.fromNilable(group.map((it) => it.selection))}
+                      level={level}
+                      heldTraits={heldTraits}
+                    />
                   </Box>
                 )
               }
 
-              const slot = group[0]!
+              const choice = group[0]!
               return (
-                <Box key={slot.key}>
-                  <TraitSelect
-                    label={getOptionLabel(slot.option, context)}
-                    slot={slot}
-                    onSelect={(trait) => onSelect(slot, trait)}
+                <Box key={choice.key}>
+                  <ValueSelect
+                    label={getOptionLabel(choice.option, context)}
+                    choice={choice}
+                    onSelect={(value) => onSelect(choice, value)}
                   />
-                  <SelectedTraits traits={slot.selection === null ? [] : [slot.selection]} />
+                  <SelectedValues
+                    values={Arrays.fromNilable([choice.selection])}
+                    level={level}
+                    heldTraits={heldTraits}
+                  />
                 </Box>
               )
             })}
-            <TraitAbilities traits={slots.flatMap((it) => (it.selection === null ? [] : [it.selection]))} />
           </Stack>
         )}
       </CardContent>
@@ -335,155 +387,322 @@ const LevelTraits = ({
   )
 }
 
-// Groups slots for the same option together, in the order each option first appears
-const groupSlotsByOption = (slots: Array<TraitSlot>): Array<Array<TraitSlot>> => {
-  const groups = new Map<string, Array<TraitSlot>>()
-  slots.forEach((slot) => groups.set(slot.option.id, [...(groups.get(slot.option.id) ?? []), slot]))
-  return [...groups.values()]
+// Groups choices for the same option together, in the order each option first appears
+// (Arrays.groupBy only groups adjacent elements, and choices for the same option aren't always adjacent)
+const groupChoicesByOption = (choices: Array<CharacterOptionChoice>): Array<Array<CharacterOptionChoice>> => {
+  return [...Maps.groupBy(choices, (it) => it.option.id).values()]
 }
 
-const MultiTraitSelect = ({ label, slots, onSelect }: { label: string; slots: Array<TraitSlot>; onSelect: (traits: Array<Trait>) => void }) => {
-  const selected = slots.flatMap((it) => (it.selection === null ? [] : [it.selection]))
-  // Each slot's values exclude the other slots' selections, so combining them gives every trait available to the group
+const MultiValueSelect = ({
+  label,
+  choices,
+  onSelect,
+}: {
+  label: string
+  choices: Array<CharacterOptionChoice>
+  onSelect: (values: Array<CharacterOptionValue>) => void
+}) => {
+  const selected = Arrays.fromNilable(choices.map((it) => it.selection))
+  // Each choice's values exclude the other choices' selections, so combining them gives every value available to the group
   const options = Arrays.dedupeBy(
-    slots.flatMap((it) => it.values),
+    choices.flatMap((it) => it.values),
     (it) => it.id
   )
-  const isFull = selected.length >= slots.length
+  const isFull = selected.length >= choices.length
 
   return (
     <Autocomplete
       multiple
       options={options}
       value={selected}
-      onChange={(_, traits) => onSelect(traits)}
-      getOptionLabel={(trait) => trait.name}
-      renderOption={({ key, ...props }, trait) => (
+      onChange={(_, values) => onSelect(values)}
+      getOptionLabel={(value) => value.name}
+      renderOption={({ key, ...props }, value) => (
         <li
           key={key}
           {...props}
         >
-          <TraitOptionText trait={trait} />
+          <ValueOptionText value={value} />
         </li>
       )}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      getOptionDisabled={(trait) => isFull && !selected.some((it) => it.id === trait.id)}
+      getOptionDisabled={(value) => isFull && !selected.some((it) => it.id === value.id)}
       filterSelectedOptions
       renderInput={(params) => (
         <TextField
           {...params}
-          label={`${label} (${selected.length}/${slots.length})`}
+          label={`${label} (${selected.length}/${choices.length})`}
+          sx={selected.length < choices.length ? UnselectedChoiceSx : undefined}
         />
       )}
     />
   )
 }
 
-const TraitSelect = ({ label, slot, onSelect }: { label: string; slot: TraitSlot; onSelect: (trait: Trait | null) => void }) => {
+// Highlights a choice that still needs a selection
+const UnselectedChoiceSx = {
+  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'primary.main', borderWidth: 2 },
+}
+
+const ValueSelect = ({
+  label,
+  choice,
+  onSelect,
+}: {
+  label: string
+  choice: CharacterOptionChoice
+  onSelect: (value: CharacterOptionValue | null) => void
+}) => {
   return (
     <TextField
       select
       fullWidth
       label={label}
-      value={slot.selection?.id ?? ''}
-      onChange={(event) => onSelect(slot.values.find((it) => it.id === event.target.value) ?? null)}
-      // The closed select shows just the trait name, without its archetypes
-      slotProps={{ select: { renderValue: () => slot.selection?.name ?? '' } }}
+      sx={Objects.isNil(choice.selection) ? UnselectedChoiceSx : undefined}
+      value={choice.selection?.id ?? ''}
+      onChange={(event) => onSelect(choice.values.find((it) => it.id === event.target.value) ?? null)}
+      // The closed select shows just the value's name, without its archetypes
+      slotProps={{ select: { renderValue: () => choice.selection?.name ?? '' } }}
     >
       <MenuItem value="">
         <em>None</em>
       </MenuItem>
-      {slot.values.map((trait) => (
+      {choice.values.map((value) => (
         <MenuItem
-          key={trait.id}
-          value={trait.id}
+          key={value.id}
+          value={value.id}
         >
-          <TraitOptionText trait={trait} />
+          <ValueOptionText value={value} />
         </MenuItem>
       ))}
     </TextField>
   )
 }
 
-// A dropdown entry: the trait name, with its archetypes as a caption beside it
-const TraitOptionText = ({ trait }: { trait: Trait }) => {
+// A dropdown entry: the value's name, with its archetypes (for a trait) as a caption beside it
+const ValueOptionText = ({ value }: { value: CharacterOptionValue }) => {
   const context = useRulesContext()
   return (
     <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-      <Typography>{trait.name}</Typography>
-      <Typography variant="caption">{getTraitArchetypeLabel(trait, context)}</Typography>
+      <Typography>{value.name}</Typography>
+      <Typography variant="caption">{getValueCaption(value, context)}</Typography>
     </Box>
   )
 }
 
-// A card for each selected trait, shown under its dropdown
-// FUTURE this is where a trait's full description and details will go
-const SelectedTraits = ({ traits }: { traits: Array<Trait> }) => {
-  if (Arrays.isEmpty(traits)) {
+// Cards for the values selected for a choice: traits, along with the traits they grant, and abilities
+const SelectedValues = ({
+  values,
+  level,
+  heldTraits,
+}: {
+  values: Array<CharacterOptionValue>
+  level: number
+  heldTraits: ProgressionTable<TraitReference>
+}) => {
+  const abilities = values.filter((it): it is Ability => !isTrait(it))
+
+  return (
+    <>
+      <SelectedTraits
+        traits={values.filter(isTrait)}
+        level={level}
+        heldTraits={heldTraits}
+      />
+      {!Arrays.isEmpty(abilities) && (
+        <Box sx={{ mt: 2 }}>
+          <AbilityCards abilities={abilities} />
+        </Box>
+      )}
+    </>
+  )
+}
+
+// A card for each selected trait, shown under its dropdown, followed by the traits each one grants outright (e.g. a Background's
+// skill proficiencies). A granted trait that applied at a later level (e.g. a subclass feature that improves) says so.
+const SelectedTraits = ({ traits, level, heldTraits }: { traits: Array<Trait>; level: number; heldTraits: ProgressionTable<TraitReference> }) => {
+  const context = useRulesContext()
+
+  // One grid for all the selected traits (e.g. both skill proficiencies), each followed by what it grants. CardGrid gives each child its
+  // own cell, so the cards are built as a flat list rather than grouped in fragments.
+  const cards = traits.flatMap((trait) => {
+    const grantedTraits = getGrantedTraits(trait, heldTraits, context)
+    // The abilities the trait grants, along with those of the traits it grants at this level (a trait granted at a later level, e.g. a
+    // subclass feature that improves, doesn't count here)
+    const abilities = getTraitAbilities([trait, ...grantedTraits.flatMap((it) => (it.level === level ? [it.trait] : []))], context)
+
+    return [
+      <TraitCard
+        key={trait.id}
+        trait={trait}
+      />,
+      ...grantedTraits.map((it) => (
+        <TraitCard
+          key={`${trait.id}/${it.trait.id}`}
+          trait={it.trait}
+          caption={it.level === level ? null : `From level ${it.level}`}
+        />
+      )),
+      ...abilities.map((it) => (
+        <AbilityCard
+          key={`${trait.id}/${it.id}`}
+          ability={it}
+        />
+      )),
+    ]
+  })
+
+  if (Arrays.isEmpty(cards)) {
     return null
   }
 
+  return <CardGrid marginTop={2}>{cards}</CardGrid>
+}
+
+// The abilities the given traits grant outright. Abilities that take a loadout slot (e.g. a Wizard's cantrips) are shown in the Abilities
+// section instead.
+const getTraitAbilities = (traits: Array<Trait>, context: ApplicationContext): Array<Ability> => {
+  return traits.flatMap((trait) =>
+    Effects.filter(trait.effects, Effects.GainAbility)
+      .filter((it) => Objects.isNil(it.loadout))
+      .map((it) => Abilities.getAbility(it.ability, context))
+  )
+}
+
+// Lays out cards three to a row on wide screens
+const CardGrid = ({ children, marginTop = 0 }: { children: React.ReactNode; marginTop?: number }) => {
   return (
     <Grid
       container
       spacing={2}
-      sx={{ mt: 2 }}
+      sx={{ mt: marginTop }}
     >
-      {traits.map((trait) => (
-        <Grid
-          key={trait.id}
-          size={{ xs: 12, sm: 6, md: 4 }}
-        >
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Typography variant="h6">{trait.name}</Typography>
-              <RichTextDescription text={trait.description} />
-            </CardContent>
-          </Card>
-        </Grid>
+      {React.Children.map(children, (child) => (
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>{child}</Grid>
       ))}
     </Grid>
   )
 }
 
-// Shows the abilities granted by the level's selected traits, after the level's choices
-// FUTURE only abilities are shown so far; other effect types will be added one at a time
-const TraitAbilities = ({ traits }: { traits: Array<Trait> }) => {
-  const context = useRulesContext()
-  const abilities = traits.flatMap((trait) =>
-    Effects.filter(trait.effects, Effects.GainAbility).map((it) => Abilities.getAbility(it.ability, context))
+// FUTURE this is where a trait's full description and details will go
+const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string | null }) => {
+  return (
+    <Card sx={{ height: '100%' }}>
+      <CardContent>
+        <Typography variant="h6">{trait.name}</Typography>
+        {Objects.isPresent(caption) && <Typography variant="caption">{caption}</Typography>}
+        <RichTextDescription text={trait.description} />
+      </CardContent>
+    </Card>
   )
+}
 
-  if (Arrays.isEmpty(abilities)) {
+const AbilityCard = ({ ability }: { ability: Ability }) => {
+  return (
+    <Card sx={{ height: '100%' }}>
+      <CardContent>
+        <Typography variant="h6">{ability.name}</Typography>
+        {!hasDescribedActions(ability) && Objects.isPresent(getActionLabel(ability)) && (
+          <Typography variant="caption">{getActionLabel(ability)}</Typography>
+        )}
+        <RichTextDescription text={ability.description} />
+        {hasDescribedActions(ability) && <AbilityActions ability={ability} />}
+      </CardContent>
+    </Card>
+  )
+}
+
+const AbilityCards = ({ abilities }: { abilities: Array<Ability> }) => {
+  return (
+    <CardGrid>
+      {abilities.map((it) => (
+        <AbilityCard
+          key={it.id}
+          ability={it}
+        />
+      ))}
+    </CardGrid>
+  )
+}
+
+// Each of an ability's actions, with what it takes to use it and its own description
+const AbilityActions = ({ ability }: { ability: Ability }) => {
+  return (
+    <Stack
+      spacing={1}
+      sx={{ mt: 1 }}
+    >
+      {ability.actions.map((action, index) => (
+        <Box key={index}>
+          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+            <Typography variant="subtitle2">{action.name ?? ability.name}</Typography>
+            <Typography variant="caption">{getActionTypeLabel(action.action)}</Typography>
+          </Box>
+          {Objects.isPresent(action.description) && <RichTextDescription text={action.description} />}
+        </Box>
+      ))}
+    </Stack>
+  )
+}
+
+// The character's abilities: those that don't take a slot and so are always available, followed by a picker for each type of loadout
+// slot (e.g. a Wizard's cantrips), filled from the abilities it has for that type
+const AbilitiesSection = ({
+  sheet,
+  onSelect,
+}: {
+  sheet: CharacterSheet
+  onSelect: (loadoutType: LoadoutTypeReference, abilities: Array<Ability>) => void
+}) => {
+  const context = useRulesContext()
+  const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutType(it, context))
+  const alwaysAvailable = sheet.abilities.filter((it) => Objects.isNil(it.loadout)).map((it) => it.ability)
+
+  if (Arrays.isEmpty(loadoutTypes) && Arrays.isEmpty(alwaysAvailable)) {
     return null
   }
 
   return (
-    <Box>
-      <Typography
-        variant="subtitle1"
-        gutterBottom
-      >
-        Abilities
-      </Typography>
-      <Grid
-        container
-        spacing={2}
-      >
-        {abilities.map((ability) => (
-          <Grid
-            key={ability.id}
-            size={{ xs: 12, sm: 6, md: 4 }}
-          >
-            <Card sx={{ height: '100%' }}>
-              <CardContent>
-                <Typography variant="h6">{ability.name}</Typography>
-                <RichTextDescription text={ability.description} />
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+    <Card>
+      <CardHeader title="Abilities" />
+      <CardContent>
+        <Stack spacing={3}>
+          {!Arrays.isEmpty(alwaysAvailable) && <AbilityCards abilities={alwaysAvailable} />}
+          {loadoutTypes.map((loadoutType) => {
+            const slotCount = sheet.loadout.filter((it) => it.type === loadoutType.id).length
+            const options = getLoadoutAbilities(sheet, loadoutType.id)
+            const selected = sheet.loadout.flatMap((it) =>
+              it.type === loadoutType.id && Objects.isPresent(it.ability) ? [Abilities.getAbility(it.ability, context)] : []
+            )
+
+            return (
+              <Box key={loadoutType.id}>
+                <Autocomplete
+                  multiple
+                  options={options}
+                  value={selected}
+                  onChange={(_, abilities) => onSelect(loadoutType.id, abilities)}
+                  getOptionLabel={(ability) => ability.name}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  getOptionDisabled={(ability) => selected.length >= slotCount && !selected.some((it) => it.id === ability.id)}
+                  filterSelectedOptions
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={`${loadoutType.name} (${selected.length}/${slotCount})`}
+                    />
+                  )}
+                />
+                {!Arrays.isEmpty(selected) && (
+                  <Box sx={{ mt: 2 }}>
+                    <AbilityCards abilities={selected} />
+                  </Box>
+                )}
+              </Box>
+            )
+          })}
+        </Stack>
+      </CardContent>
+    </Card>
   )
 }

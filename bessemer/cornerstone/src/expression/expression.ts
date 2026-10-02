@@ -114,6 +114,7 @@ export const greaterThanOrEqual = GreaterThanOrEqualExpression.builder
 const DEFAULT_EXPRESSION_DEFINITIONS: Array<ExpressionDefinition<unknown, Array<any>, Expression<any>>> = [
   ValueExpression,
   VariableExpression,
+  NotExpression,
   AndExpression,
   OrExpression,
   ContainsExpression,

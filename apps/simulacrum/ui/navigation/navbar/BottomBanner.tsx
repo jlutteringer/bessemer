@@ -1,15 +1,10 @@
 'use client'
 
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Box, Container, Fade, Popper, Stack, Typography } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import { NavbarTileSquareImage } from '@simulacrum/ui/navigation/navbar/NavbarTiles'
+import { NavigationSections } from '@simulacrum/ui/navigation/navbar/navigation-sections'
 import { usePathname } from 'next/navigation'
-
-type BottomBannerContent = {
-  label: string
-  content: ReactNode
-}
 
 // TODO there's probably some kind of abstract component that can be pulled out of this
 export const BottomBanner = () => {
@@ -33,36 +28,12 @@ export const BottomBanner = () => {
     closeMenu()
   }, [pathname])
 
-  const content: Array<BottomBannerContent> = [
-    {
-      label: 'Collections',
-      content: <Box>Placeholder Content</Box>,
-    },
-    {
-      label: 'Tools',
-      content: <ToolsDropdown />,
-    },
-    {
-      label: 'Game Rules',
-      content: <Box>Placeholder Content</Box>,
-    },
-    {
-      label: 'Sources',
-      content: <Box>Placeholder Content</Box>,
-    },
-    {
-      label: 'Subscribe',
-      content: <Box>Placeholder Content</Box>,
-    },
-    {
-      label: 'Shop',
-      content: <Box>Placeholder Content</Box>,
-    },
-  ]
+  const content = NavigationSections
 
   return (
     <Box
-      sx={{ bgcolor: 'grey.900', color: 'grey.300' }}
+      // Narrow screens use the mobile menu instead
+      sx={{ bgcolor: 'grey.900', color: 'grey.300', display: { xs: 'none', md: 'block' } }}
       ref={container}
     >
       <Container maxWidth="lg">
@@ -122,35 +93,5 @@ export const BottomBanner = () => {
         </Stack>
       </Container>
     </Box>
-  )
-}
-
-const ToolsDropdown = () => {
-  return (
-    <Stack
-      direction="row"
-      spacing={1}
-    >
-      <NavbarTileSquareImage
-        label="Character Builder"
-        href="/characters/builder"
-        image="/assets/character-builder.webp"
-      />
-      <NavbarTileSquareImage
-        label="Character Builder"
-        href="/characters/builder"
-        image="/assets/character-builder.webp"
-      />
-      <NavbarTileSquareImage
-        label="Character Builder"
-        href="/characters/builder"
-        image="/assets/character-builder.webp"
-      />
-      <NavbarTileSquareImage
-        label="Character Builder"
-        href="/characters/builder"
-        image="/assets/character-builder.webp"
-      />
-    </Stack>
   )
 }

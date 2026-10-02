@@ -4,6 +4,8 @@ import { CharacterOption } from '@simulacrum/common/character/character-option'
 import { Ability, AbilityReference } from '@simulacrum/common/ability'
 import { Characteristic, CharacteristicReference } from '@simulacrum/common/characteristic'
 import { Modifier } from '@simulacrum/common/attribute'
+import { RichText } from '@bessemer/cornerstone/rich-text'
+import { LoadoutType, LoadoutTypeReference } from '@simulacrum/common/loadout'
 
 export enum EffectTypeEnum {
   Descriptive = 'Descriptive',
@@ -12,9 +14,9 @@ export enum EffectTypeEnum {
   GainCharacteristic = 'GainCharacteristic',
   ModifyCharacteristic = 'ModifyCharacteristic',
   GainAbility = 'GainAbility',
-  ModifyAbility = 'ModifyAbility',
   GainResourcePool = 'GainResourcePool',
   ModifyResourcePool = 'ModifyResourcePool',
+  GainLoadoutSlot = 'GainLoadoutSlot',
 }
 
 export interface Effect {
@@ -49,7 +51,7 @@ export const sourceEffects = (effects: Array<Effect>, source: EffectSource): Arr
 export const Descriptive: EffectType<DescriptiveEffect> = { type: EffectTypeEnum.Descriptive }
 export type DescriptiveEffect = Effect & {
   type: EffectTypeEnum.Descriptive
-  description: string
+  description: RichText
 }
 
 export const GainCharacterOption: EffectType<GainCharacterOptionEffect> = { type: EffectTypeEnum.GainCharacterOption }
@@ -82,6 +84,7 @@ export type GainAbilityEffect = Effect & {
   type: EffectTypeEnum.GainAbility
   name: string
   ability: AbilityReference
+  loadout: LoadoutTypeReference | null
 }
 
 export const GainResourcePool: EffectType<GainResourcePoolEffect> = { type: EffectTypeEnum.GainResourcePool }
@@ -97,7 +100,13 @@ export type ModifyResourcePoolEffect = Effect & {
   modifier: Modifier<unknown>
 }
 
-export const descriptive = (description: string): DescriptiveEffect => {
+export const GainLoadoutSlot: EffectType<GainLoadoutSlotEffect> = { type: EffectTypeEnum.GainLoadoutSlot }
+export type GainLoadoutSlotEffect = Effect & {
+  type: EffectTypeEnum.GainLoadoutSlot
+  loadoutType: LoadoutTypeReference
+}
+
+export const descriptive = (description: RichText): DescriptiveEffect => {
   return {
     type: EffectTypeEnum.Descriptive,
     description,
@@ -111,53 +120,55 @@ export const gainCharacterOption = (option: CharacterOption): GainCharacterOptio
   }
 }
 
-export const gainTrait = (trait: TraitReference | Trait): GainTraitEffect => {
+export const gainTrait = (trait: Trait): GainTraitEffect => {
   return {
     type: EffectTypeEnum.GainTrait,
-    trait: typeof trait === 'string' ? trait : trait.id,
+    trait: trait.id,
   }
 }
 
-export const gainAbility = (ability: Ability): GainAbilityEffect => {
+export const gainAbility = (ability: Ability, loadout: LoadoutType | null = null): GainAbilityEffect => {
   return {
     type: EffectTypeEnum.GainAbility,
     name: `Gain Ability: ${ability.name}`,
     ability: ability.id,
+    loadout: loadout?.id ?? null,
   }
 }
 
-export const gainCharacteristic = (characteristic: CharacteristicReference<number> | Characteristic<number>): GainCharacteristicEffect => {
+export const gainCharacteristic = (characteristic: Characteristic<number>): GainCharacteristicEffect => {
   return {
     type: EffectTypeEnum.GainCharacteristic,
-    characteristic: typeof characteristic === 'string' ? characteristic : characteristic.id,
+    characteristic: characteristic.id,
   }
 }
 
-export const modifyCharacteristic = (
-  characteristic: CharacteristicReference<number> | Characteristic<number>,
-  modifier: Modifier<unknown>
-): ModifyCharacteristicEffect => {
+export const modifyCharacteristic = (characteristic: Characteristic<number>, modifier: Modifier<unknown>): ModifyCharacteristicEffect => {
   return {
     type: EffectTypeEnum.ModifyCharacteristic,
-    characteristic: typeof characteristic === 'string' ? characteristic : characteristic.id,
+    characteristic: characteristic.id,
     modifier,
   }
 }
 
-export const gainResourcePool = (resourcePool: ResourcePoolReference | ResourcePoolDefinition): GainResourcePoolEffect => {
+export const gainResourcePool = (resourcePool: ResourcePoolDefinition): GainResourcePoolEffect => {
   return {
     type: EffectTypeEnum.GainResourcePool,
-    resourcePool: typeof resourcePool === 'string' ? resourcePool : resourcePool.id,
+    resourcePool: resourcePool.id,
   }
 }
 
-export const modifyResourcePool = (
-  resourcePool: ResourcePoolReference | ResourcePoolDefinition,
-  modifier: Modifier<unknown>
-): ModifyResourcePoolEffect => {
+export const modifyResourcePool = (resourcePool: ResourcePoolDefinition, modifier: Modifier<unknown>): ModifyResourcePoolEffect => {
   return {
     type: EffectTypeEnum.ModifyResourcePool,
-    resourcePool: typeof resourcePool === 'string' ? resourcePool : resourcePool.id,
+    resourcePool: resourcePool.id,
     modifier,
+  }
+}
+
+export const gainLoadoutSlot = (loadoutType: LoadoutType): GainLoadoutSlotEffect => {
+  return {
+    type: EffectTypeEnum.GainLoadoutSlot,
+    loadoutType: loadoutType.id,
   }
 }

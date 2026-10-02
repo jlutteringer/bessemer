@@ -26,7 +26,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Arrays, Objects } from '@bessemer/cornerstone'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { ContentLabel } from '@bessemer/core/codex/component/ContentLabel'
-import { ProgressionTables, Traits } from '@simulacrum/common'
+import { ProgressionTables } from '@simulacrum/common'
+import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { copyCharacter, deleteCharacter, StoredCharacter, useStoredCharacters } from '@simulacrum/ui/character/character-storage'
@@ -148,7 +149,7 @@ export const CharacterSection = () => {
       )}
 
       <Dialog
-        open={characterToDelete !== null}
+        open={Objects.isPresent(characterToDelete)}
         onClose={() => setCharacterToDelete(null)}
       >
         <DialogTitle>Delete character?</DialogTitle>
@@ -178,7 +179,11 @@ const getDisplayName = (character: StoredCharacter): string => {
 
 const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; onDelete: () => void }) => {
   const context = useClientContext() as unknown as ApplicationContext
-  const traitNames = ProgressionTables.getValues(character.character.selections).map((it) => Traits.getTrait(it.selection, context).name)
+  // The names of the traits and abilities selected for the character's choices
+  const traitNames = useMemo(() => {
+    const sheet = Characters.buildCharacterDefinition(character.character, context)
+    return ProgressionTables.getValues(sheet.choices).flatMap((it) => CharacterOptions.getSelectedValue(it)?.name ?? [])
+  }, [character, context])
 
   return (
     <Card>

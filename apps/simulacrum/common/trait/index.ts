@@ -1,5 +1,6 @@
 import { Effect } from '@simulacrum/common/effect'
 import { Archetype, ArchetypeReference } from '@simulacrum/common/archetype'
+import * as Archetypes from '@simulacrum/common/archetype'
 import { CharacterValues } from '@simulacrum/common/character/character'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { RichText } from '@bessemer/cornerstone/rich-text'
@@ -16,6 +17,7 @@ export type TraitProps = {
 
   archetypes?: Array<ArchetypeReference | Archetype>
   prerequisites?: Array<Expression<boolean>>
+  repeatable?: boolean
 }
 
 export type Trait = { id: TraitReference } & {
@@ -25,6 +27,7 @@ export type Trait = { id: TraitReference } & {
 
   archetypes: Array<ArchetypeReference>
   prerequisites: Array<Expression<boolean>>
+  repeatable: boolean
 }
 
 export const defineTrait = (reference: string, props: TraitProps): Trait => {
@@ -33,6 +36,7 @@ export const defineTrait = (reference: string, props: TraitProps): Trait => {
     ...props,
     archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
     prerequisites: props.prerequisites ?? [],
+    repeatable: props.repeatable ?? false,
   }
 }
 
@@ -74,7 +78,7 @@ export const filterNone = (): TraitFilter => {
 export const applyFilter = (traits: Array<Trait>, filter: TraitFilter): Array<Trait> => {
   let filteredTraits = traits
   if (!Arrays.isEmpty(filter.archetypes)) {
-    filteredTraits = filteredTraits.filter((it) => Arrays.containsAll(filter.archetypes, it.archetypes))
+    filteredTraits = filteredTraits.filter((it) => Archetypes.matchesFilter(filter.archetypes, it.archetypes))
   }
   if (!Arrays.isEmpty(filter.specificOptions)) {
     filteredTraits = filteredTraits.filter((it) => Arrays.contains(filter.specificOptions, it.id))

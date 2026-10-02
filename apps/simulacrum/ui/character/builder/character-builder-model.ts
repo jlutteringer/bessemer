@@ -1,14 +1,14 @@
 import { CharacterRecord, CharacterSheet } from '@simulacrum/common/character/character'
-import { CharacterOption, CharacterSelection } from '@simulacrum/common/character/character-option'
+import { CharacterOption, CharacterOptionType, CharacterOptionValue, CharacterSelection } from '@simulacrum/common/character/character-option'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
-import { Archetypes, Effects, ProgressionTables, Traits } from '@simulacrum/common'
-import { Trait } from '@simulacrum/common/trait'
+import { Abilities, Archetypes, Effects, ProgressionTables, Traits } from '@simulacrum/common'
+import { Trait, TraitReference } from '@simulacrum/common/trait'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
-import { Effect } from '@simulacrum/common/effect'
-import { Characteristic } from '@simulacrum/common/characteristic'
+import { Characteristic, CharacteristicValue } from '@simulacrum/common/characteristic'
 import { ApplicationContext } from '@simulacrum/common/application'
-import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
-import { ObjectPaths } from '@bessemer/cornerstone'
+import { Ability, ActionType } from '@simulacrum/common/ability'
+import { LoadoutTypeReference } from '@simulacrum/common/loadout'
+import { Arrays, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
 export const MaxLevel = 20
 export const MinAbilityScore = 1
@@ -16,22 +16,30 @@ export const MaxAbilityScore = 30
 const DefaultInitialValue = 10
 
 /**
- * A single trait choice the character gets at a given level, along with the traits that can fill it. Traits whose
- * prerequisites aren't met at that level are left out.
+ * A single choice the character gets at a given level, along with the values (traits or abilities) that can fill it. Values whose
+ * prerequisites aren't met at that point are left out.
  */
-export type TraitSlot = {
+export type CharacterOptionChoice = {
   key: string
   level: number
   option: CharacterOption
-  selection: Trait | null
-  values: Array<Trait>
+  selection: CharacterOptionValue | null
+  values: Array<CharacterOptionValue>
 }
 
 /**
  * The characteristics a player sets directly (e.g. ability scores), as opposed to ones derived from other values.
  */
 export const getInitialValueCharacteristics = (context: ApplicationContext): Array<Characteristic<number>> => {
-  return context.client.ruleset.playerCharacteristics.filter((it) => it.baseValue === null) as Array<Characteristic<number>>
+  return context.client.ruleset.playerCharacteristics.filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
+}
+
+/**
+ * The characteristics worked out from other values (e.g. ability modifiers, Proficiency Bonus, or Hit Points), as opposed to ones the
+ * player sets directly.
+ */
+export const getDerivedCharacteristics = (context: ApplicationContext): Array<Characteristic<number>> => {
+  return context.client.ruleset.playerCharacteristics.filter((it) => Objects.isPresent(it.baseValue)) as Array<Characteristic<number>>
 }
 
 /**
@@ -68,21 +76,20 @@ const resizeSelections = (selections: ProgressionTable<CharacterSelection>, leve
 }
 
 /**
- * The character as it stood on reaching `level`: at that level, with only the selections made at lower levels.
+ * Fills `choice` with `value`, replacing the choice's current selection. Passing `null` clears the choice. Only this choice's selection
+ * is touched, since the same option can be granted more than once at a level (e.g. three weapon masteries).
  */
-const buildLevelSnapshot = (character: CharacterRecord, level: number, context: ApplicationContext): CharacterSheet => {
-  const selections = resizeSelections(ProgressionTables.capAtLevel(character.selections, level - 1), level)
-  return Characters.buildCharacterDefinition({ ...character, level, selections }, context)
-}
-
-/**
- * Fills `slot` with `trait`, replacing the slot's current selection. Passing `null` clears the slot. Only this slot's selection is
- * touched, since the same option can be granted more than once at a level (e.g. three weapon masteries).
- */
-export const selectTrait = (character: CharacterRecord, slot: TraitSlot, trait: Trait | null, context: ApplicationContext): CharacterRecord => {
-  const row = [...(character.selections[slot.level] ?? [])]
-  const newSelection = trait === null ? [] : [{ option: slot.option.id, selection: trait.id }]
-  const existingIndex = slot.selection === null ? -1 : row.findIndex((it) => it.option === slot.option.id && it.selection === slot.selection!.id)
+export const selectValue = (
+  character: CharacterRecord,
+  choice: CharacterOptionChoice,
+  value: CharacterOptionValue | null,
+  context: ApplicationContext
+): CharacterRecord => {
+  const row = [...(character.selections[choice.level] ?? [])]
+  const newSelection = Objects.isNil(value) ? [] : [{ option: choice.option.id, selection: value.id }]
+  const existingIndex = Objects.isNil(choice.selection)
+    ? -1
+    : row.findIndex((it) => it.option === choice.option.id && it.selection === choice.selection!.id)
 
   if (existingIndex === -1) {
     row.push(...newSelection)
@@ -90,36 +97,59 @@ export const selectTrait = (character: CharacterRecord, slot: TraitSlot, trait: 
     row.splice(existingIndex, 1, ...newSelection)
   }
 
-  return normalizeSelections({ ...character, selections: { ...character.selections, [slot.level]: row } }, context)
+  return normalizeSelections({ ...character, selections: { ...character.selections, [choice.level]: row } }, context)
 }
 
 /**
- * Fills a group of slots for the same option at the same level (e.g. the three weapon mastery slots) with `traits`, replacing the
- * group's current selections. Traits beyond the number of slots are ignored.
+ * Fills a group of choices for the same option at the same level (e.g. the three weapon mastery choices) with `values`, replacing the
+ * group's current selections. Values beyond the number of choices are ignored.
  */
-export const selectTraitsForSlots = (
+export const selectValuesForChoices = (
   character: CharacterRecord,
-  slots: Array<TraitSlot>,
-  traits: Array<Trait>,
+  choices: Array<CharacterOptionChoice>,
+  values: Array<CharacterOptionValue>,
   context: ApplicationContext
 ): CharacterRecord => {
-  const { level, option } = slots[0]!
+  const { level, option } = choices[0]!
   const row = [...(character.selections[level] ?? [])]
 
-  slots.forEach((slot) => {
-    const index = slot.selection === null ? -1 : row.findIndex((it) => it.option === option.id && it.selection === slot.selection!.id)
+  choices.forEach((choice) => {
+    const index = Objects.isNil(choice.selection) ? -1 : row.findIndex((it) => it.option === option.id && it.selection === choice.selection!.id)
     if (index !== -1) {
       row.splice(index, 1)
     }
   })
 
-  row.push(...traits.slice(0, slots.length).map((trait) => ({ option: option.id, selection: trait.id })))
+  row.push(...values.slice(0, choices.length).map((value) => ({ option: option.id, selection: value.id })))
   return normalizeSelections({ ...character, selections: { ...character.selections, [level]: row } }, context)
 }
 
-// Drops any selections that are no longer valid, e.g. a fighting style after the Fighter class selection is changed
+// Drops any selections that are no longer valid, e.g. a fighting style after the Fighter class selection is changed, along with any
+// loadout abilities that no longer fit, e.g. cantrips after the Wizard class selection is removed
 const normalizeSelections = (character: CharacterRecord, context: ApplicationContext): CharacterRecord => {
-  return { ...character, selections: Characters.buildCharacterDefinition(character, context).selections }
+  const sheet = Characters.buildCharacterDefinition(character, context)
+  return { ...character, selections: sheet.selections, selectedAbilities: sheet.selectedAbilities }
+}
+
+/**
+ * The abilities the character could put in its slots of `loadoutType`, e.g. the cantrips a Wizard knows.
+ */
+export const getLoadoutAbilities = (sheet: CharacterSheet, loadoutType: LoadoutTypeReference): Array<Ability> => {
+  return sheet.abilities.filter((it) => it.loadout === loadoutType).map((it) => it.ability)
+}
+
+/**
+ * Puts `abilities` in the character's slots of `loadoutType`, replacing what's there. Abilities beyond the number of slots are left out.
+ */
+export const selectLoadoutAbilities = (
+  character: CharacterRecord,
+  loadoutType: LoadoutTypeReference,
+  abilities: Array<Ability>,
+  context: ApplicationContext
+): CharacterRecord => {
+  const loadoutAbilities = getLoadoutAbilities(Characters.buildCharacterDefinition(character, context), loadoutType).map((it) => it.id)
+  const otherAbilities = Arrays.difference(character.selectedAbilities, loadoutAbilities)
+  return normalizeSelections({ ...character, selectedAbilities: [...otherAbilities, ...abilities.map((it) => it.id)] }, context)
 }
 
 /**
@@ -127,58 +157,88 @@ const normalizeSelections = (character: CharacterRecord, context: ApplicationCon
  * "Fighting Style".
  */
 export const getOptionLabel = (option: CharacterOption, context: ApplicationContext): string => {
-  if (option.label !== null) {
+  if (Objects.isPresent(option.label)) {
     return option.label
   }
 
-  const archetypeNames = option.traitFilter.archetypes.map((it) => Archetypes.getArchetype(it, context).name)
-  return archetypeNames.length > 0 ? archetypeNames.join(' / ') : 'Trait'
+  const archetypeNames = option.filter.archetypes.map((it) => Archetypes.getArchetype(it, context).name)
+  return !Arrays.isEmpty(archetypeNames) ? archetypeNames.join(' / ') : option.type === CharacterOptionType.SelectTrait ? 'Trait' : 'Ability'
+}
+
+// Whether an option's value is a trait, as opposed to an ability (which has actions)
+export const isTrait = (value: CharacterOptionValue): value is Trait => {
+  return !('actions' in value)
 }
 
 /**
- * Labels a trait by the archetypes it belongs to, e.g. "Level 2 Spell" or "Class".
+ * Labels an option's value (a trait or an ability) by the archetypes it belongs to, e.g. "Rank 2 / Evocation" or "Class".
  */
-export const getTraitArchetypeLabel = (trait: Trait, context: ApplicationContext): string => {
-  return trait.archetypes.map((it) => Archetypes.getArchetype(it, context).name).join(' / ')
+export const getValueCaption = (value: CharacterOptionValue, context: ApplicationContext): string => {
+  return value.archetypes.map((it) => Archetypes.getArchetype(it, context).name).join(' / ')
 }
 
-export const getTraitSlots = (character: CharacterRecord, context: ApplicationContext): Array<TraitSlot> => {
-  const sheet = Characters.buildCharacterDefinition(character, context)
-  const selectedTraits = ProgressionTables.getValues(sheet.traits)
-  const slots: Array<TraitSlot> = []
+export const getCharacterOptionChoices = (sheet: CharacterSheet): Array<CharacterOptionChoice> => {
+  return ProgressionTables.getEntries(sheet.choices).map(([level, choice], index) => ({
+    key: `${level}-${choice.option.id}-${index}`,
+    level,
+    option: choice.option,
+    selection: CharacterOptions.getSelectedValue(choice),
+    values: choice.values,
+  }))
+}
 
-  // Options come from the ruleset's progression table and, recursively, from the effects of the traits selected to fill them
-  const visit = (effects: Array<Effect>, level: number, evaluate: EvaluateExpression, optionOccurrences: Map<string, number>) => {
-    Effects.filter(effects, Effects.GainCharacterOption).forEach((effect) => {
-      const option = effect.option
-      // Repeated options at the same level are each filled by their own selection
-      const occurrence = optionOccurrences.get(option.id) ?? 0
-      optionOccurrences.set(option.id, occurrence + 1)
-      const selection = CharacterOptions.getSelection(sheet.selections, option, level, occurrence)
-      // Exclude this slot's own selection so it still shows up as one of the slot's values
-      const otherSelectedTraits = selectedTraits.filter((it) => it !== selection?.selection)
-      const choice = CharacterOptions.evaluateChoice(option, otherSelectedTraits, evaluate, context)
-      const trait = selection === null ? null : Traits.getTrait(selection.selection, context)
+/**
+ * A characteristic's value once the character's effects are applied, e.g. an ability score after a Background's increase.
+ */
+export const getCharacteristicValue = (sheet: CharacterSheet, characteristic: Characteristic<number>): number => {
+  // FUTURE excessive casting - see Characters.buildExpressionContext
+  const value = ObjectPaths.getValue(characteristic.path as any, sheet.characteristics) as any as CharacteristicValue<number>
+  return value.value
+}
 
-      slots.push({
-        key: `${level}-${option.id}-${slots.length}`,
-        level,
-        option,
-        selection: trait,
-        values: choice.values,
-      })
+/**
+ * The traits `trait` grants outright that the character has, e.g. a Background's skill proficiencies, along with any those grant in
+ * turn, and the level each one applied at. A granted trait with prerequisites may apply at a later level than the trait granting it.
+ */
+export const getGrantedTraits = (
+  trait: Trait,
+  heldTraits: ProgressionTable<TraitReference>,
+  context: ApplicationContext
+): Array<{ trait: Trait; level: number }> => {
+  return Effects.filter(trait.effects, Effects.GainTrait).flatMap((it) => {
+    const entry = ProgressionTables.getEntries(heldTraits).find(([_, heldTrait]) => heldTrait === it.trait)
+    if (Objects.isNil(entry)) {
+      return []
+    }
 
-      if (trait !== null) {
-        visit(trait.effects, level, evaluate, optionOccurrences)
-      }
-    })
-  }
+    const grantedTrait = Traits.getTrait(it.trait, context)
+    return [{ trait: grantedTrait, level: entry[0] }, ...getGrantedTraits(grantedTrait, heldTraits, context)]
+  })
+}
 
-  for (let level = 1; level <= sheet.level; level++) {
-    // Prerequisites for a level's choices are evaluated against the character as it stood on reaching that level
-    const evaluate = Expressions.evaluator(Characters.buildExpressionContext(buildLevelSnapshot(character, level, context), context))
-    visit(context.client.ruleset.progressionTable[level] ?? [], level, evaluate, new Map())
-  }
+const ActionTypeLabels: Record<ActionType, string> = {
+  [ActionType.Standard]: 'Action',
+  [ActionType.Bonus]: 'Bonus Action',
+  [ActionType.Reaction]: 'Reaction',
+  [ActionType.Free]: 'Free',
+}
 
-  return slots
+export const getActionTypeLabel = (actionType: ActionType): string => {
+  return ActionTypeLabels[actionType]
+}
+
+/**
+ * Labels what it takes to use an ability, e.g. "Bonus Action", or "Free or Reaction" when its actions differ. Null if it has no actions.
+ */
+export const getActionLabel = (ability: Ability): string | null => {
+  const actionTypes = Arrays.dedupe(ability.actions.map((it) => it.action))
+  return Arrays.isEmpty(actionTypes) ? null : actionTypes.map(getActionTypeLabel).join(' or ')
+}
+
+/**
+ * Whether an ability's actions are worth listing one by one: when any of them has a description of its own (e.g. the options of a
+ * transformation). Otherwise the ability's description covers them, and its action label is enough.
+ */
+export const hasDescribedActions = (ability: Ability): boolean => {
+  return ability.actions.some((it) => Objects.isPresent(it.description))
 }

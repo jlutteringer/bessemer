@@ -127,6 +127,14 @@ export namespace PlayerCharacteristics {
     baseValue: NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([Charisma.variable, -10]), 0.5]), 0, RoundingMode.Down),
   })
 
+  export const ProficiencyBonus: Characteristic<number> = Characteristics.defineCharacteristic({
+    template: Characteristics.defineTemplate('characteristic/proficiency-bonus', 'Proficiency Bonus', ObjectPaths.from('proficiencyBonus')),
+    baseValue: NumericExpressions.sum([
+      2,
+      NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([CharacterValues.Level, -1]), 0.25]), 0, RoundingMode.Down),
+    ]),
+  })
+
   export const HitPoints: Characteristic<number> = Characteristics.defineCharacteristic({
     template: CharacteristicTemplates.HitPoints,
     baseValue: NumericExpressions.multiply([CharacterValues.Level, ConstitutionModifier.variable]),

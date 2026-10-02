@@ -31,7 +31,7 @@ export type ResourcePoolState = {
 
 export type ResourceCost = {
   cost: Expression<number>
-  resource: ResourcePool | ResourcePoolReference
+  resource: ResourcePool
 }
 
 export const defineResourcePool = (reference: string, props: ResourcePoolProps): ResourcePoolDefinition => {

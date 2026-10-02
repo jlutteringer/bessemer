@@ -1,5 +1,5 @@
-import { Archetypes, Traits } from '@simulacrum/common'
-import { CharacterOptions } from '@simulacrum/common/character'
+import { Abilities, Effects } from '@simulacrum/common'
+import { WeaponMasteryLoadout } from '@simulacrum/rulesets/dnd-5e/loadout'
 
 // Descriptions of each weapon mastery property, shared by every weapon that has it
 const MasteryDescriptions = {
@@ -16,272 +16,238 @@ const MasteryDescriptions = {
   Vex: '<p>If you hit a creature with this weapon and deal damage, you have <strong>Advantage</strong> on your next attack roll against that creature before the end of your next turn.</p>',
 }
 
-export const WeaponMastery = Archetypes.defineArchetype('weapon-mastery', { name: 'Weapon Mastery' })
-
-export const SelectWeaponMastery = CharacterOptions.selectTraitOption('weapon-mastery/select', { archetypes: [WeaponMastery] })
-
-export const Club = Traits.defineTrait('weapon-mastery/club', {
+// Each weapon's mastery property, as an ability that takes a Weapon Mastery loadout slot: a character with Weapon Mastery chooses which
+// kinds of weapons to use the property of, and can change them after a Long Rest
+export const Club = Abilities.defineAbility('weapon-mastery/club', {
   name: 'Club (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Dagger = Traits.defineTrait('weapon-mastery/dagger', {
+export const Dagger = Abilities.defineAbility('weapon-mastery/dagger', {
   name: 'Dagger (Nick)',
   description: MasteryDescriptions.Nick,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Greatclub = Traits.defineTrait('weapon-mastery/greatclub', {
+export const Greatclub = Abilities.defineAbility('weapon-mastery/greatclub', {
   name: 'Greatclub (Push)',
   description: MasteryDescriptions.Push,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Handaxe = Traits.defineTrait('weapon-mastery/handaxe', {
+export const Handaxe = Abilities.defineAbility('weapon-mastery/handaxe', {
   name: 'Handaxe (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Javelin = Traits.defineTrait('weapon-mastery/javelin', {
+export const Javelin = Abilities.defineAbility('weapon-mastery/javelin', {
   name: 'Javelin (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const LightHammer = Traits.defineTrait('weapon-mastery/light-hammer', {
+export const LightHammer = Abilities.defineAbility('weapon-mastery/light-hammer', {
   name: 'Light Hammer (Nick)',
   description: MasteryDescriptions.Nick,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Mace = Traits.defineTrait('weapon-mastery/mace', {
+export const Mace = Abilities.defineAbility('weapon-mastery/mace', {
   name: 'Mace (Sap)',
   description: MasteryDescriptions.Sap,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Quarterstaff = Traits.defineTrait('weapon-mastery/quarterstaff', {
+export const Quarterstaff = Abilities.defineAbility('weapon-mastery/quarterstaff', {
   name: 'Quarterstaff (Topple)',
   description: MasteryDescriptions.Topple,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Sickle = Traits.defineTrait('weapon-mastery/sickle', {
+export const Sickle = Abilities.defineAbility('weapon-mastery/sickle', {
   name: 'Sickle (Nick)',
   description: MasteryDescriptions.Nick,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Spear = Traits.defineTrait('weapon-mastery/spear', {
+export const Spear = Abilities.defineAbility('weapon-mastery/spear', {
   name: 'Spear (Sap)',
   description: MasteryDescriptions.Sap,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Dart = Traits.defineTrait('weapon-mastery/dart', {
+export const Dart = Abilities.defineAbility('weapon-mastery/dart', {
   name: 'Dart (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const LightCrossbow = Traits.defineTrait('weapon-mastery/light-crossbow', {
+export const LightCrossbow = Abilities.defineAbility('weapon-mastery/light-crossbow', {
   name: 'Light Crossbow (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Shortbow = Traits.defineTrait('weapon-mastery/shortbow', {
+export const Shortbow = Abilities.defineAbility('weapon-mastery/shortbow', {
   name: 'Shortbow (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Sling = Traits.defineTrait('weapon-mastery/sling', {
+export const Sling = Abilities.defineAbility('weapon-mastery/sling', {
   name: 'Sling (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Battleaxe = Traits.defineTrait('weapon-mastery/battleaxe', {
+export const Battleaxe = Abilities.defineAbility('weapon-mastery/battleaxe', {
   name: 'Battleaxe (Topple)',
   description: MasteryDescriptions.Topple,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Flail = Traits.defineTrait('weapon-mastery/flail', {
+export const Flail = Abilities.defineAbility('weapon-mastery/flail', {
   name: 'Flail (Sap)',
   description: MasteryDescriptions.Sap,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Glaive = Traits.defineTrait('weapon-mastery/glaive', {
+export const Glaive = Abilities.defineAbility('weapon-mastery/glaive', {
   name: 'Glaive (Graze)',
   description: MasteryDescriptions.Graze,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Greataxe = Traits.defineTrait('weapon-mastery/greataxe', {
+export const Greataxe = Abilities.defineAbility('weapon-mastery/greataxe', {
   name: 'Greataxe (Cleave)',
   description: MasteryDescriptions.Cleave,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Greatsword = Traits.defineTrait('weapon-mastery/greatsword', {
+export const Greatsword = Abilities.defineAbility('weapon-mastery/greatsword', {
   name: 'Greatsword (Graze)',
   description: MasteryDescriptions.Graze,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Halberd = Traits.defineTrait('weapon-mastery/halberd', {
+export const Halberd = Abilities.defineAbility('weapon-mastery/halberd', {
   name: 'Halberd (Cleave)',
   description: MasteryDescriptions.Cleave,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Lance = Traits.defineTrait('weapon-mastery/lance', {
+export const Lance = Abilities.defineAbility('weapon-mastery/lance', {
   name: 'Lance (Topple)',
   description: MasteryDescriptions.Topple,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Longsword = Traits.defineTrait('weapon-mastery/longsword', {
+export const Longsword = Abilities.defineAbility('weapon-mastery/longsword', {
   name: 'Longsword (Sap)',
   description: MasteryDescriptions.Sap,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Maul = Traits.defineTrait('weapon-mastery/maul', {
+export const Maul = Abilities.defineAbility('weapon-mastery/maul', {
   name: 'Maul (Topple)',
   description: MasteryDescriptions.Topple,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Morningstar = Traits.defineTrait('weapon-mastery/morningstar', {
+export const Morningstar = Abilities.defineAbility('weapon-mastery/morningstar', {
   name: 'Morningstar (Sap)',
   description: MasteryDescriptions.Sap,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Pike = Traits.defineTrait('weapon-mastery/pike', {
+export const Pike = Abilities.defineAbility('weapon-mastery/pike', {
   name: 'Pike (Push)',
   description: MasteryDescriptions.Push,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Rapier = Traits.defineTrait('weapon-mastery/rapier', {
+export const Rapier = Abilities.defineAbility('weapon-mastery/rapier', {
   name: 'Rapier (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Scimitar = Traits.defineTrait('weapon-mastery/scimitar', {
+export const Scimitar = Abilities.defineAbility('weapon-mastery/scimitar', {
   name: 'Scimitar (Nick)',
   description: MasteryDescriptions.Nick,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Shortsword = Traits.defineTrait('weapon-mastery/shortsword', {
+export const Shortsword = Abilities.defineAbility('weapon-mastery/shortsword', {
   name: 'Shortsword (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Trident = Traits.defineTrait('weapon-mastery/trident', {
+export const Trident = Abilities.defineAbility('weapon-mastery/trident', {
   name: 'Trident (Topple)',
   description: MasteryDescriptions.Topple,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Warhammer = Traits.defineTrait('weapon-mastery/warhammer', {
+export const Warhammer = Abilities.defineAbility('weapon-mastery/warhammer', {
   name: 'Warhammer (Push)',
   description: MasteryDescriptions.Push,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const WarPick = Traits.defineTrait('weapon-mastery/war-pick', {
+export const WarPick = Abilities.defineAbility('weapon-mastery/war-pick', {
   name: 'War Pick (Sap)',
   description: MasteryDescriptions.Sap,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Whip = Traits.defineTrait('weapon-mastery/whip', {
+export const Whip = Abilities.defineAbility('weapon-mastery/whip', {
   name: 'Whip (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Blowgun = Traits.defineTrait('weapon-mastery/blowgun', {
+export const Blowgun = Abilities.defineAbility('weapon-mastery/blowgun', {
   name: 'Blowgun (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const HandCrossbow = Traits.defineTrait('weapon-mastery/hand-crossbow', {
+export const HandCrossbow = Abilities.defineAbility('weapon-mastery/hand-crossbow', {
   name: 'Hand Crossbow (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const HeavyCrossbow = Traits.defineTrait('weapon-mastery/heavy-crossbow', {
+export const HeavyCrossbow = Abilities.defineAbility('weapon-mastery/heavy-crossbow', {
   name: 'Heavy Crossbow (Push)',
   description: MasteryDescriptions.Push,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Longbow = Traits.defineTrait('weapon-mastery/longbow', {
+export const Longbow = Abilities.defineAbility('weapon-mastery/longbow', {
   name: 'Longbow (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Musket = Traits.defineTrait('weapon-mastery/musket', {
+export const Musket = Abilities.defineAbility('weapon-mastery/musket', {
   name: 'Musket (Slow)',
   description: MasteryDescriptions.Slow,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
 
-export const Pistol = Traits.defineTrait('weapon-mastery/pistol', {
+export const Pistol = Abilities.defineAbility('weapon-mastery/pistol', {
   name: 'Pistol (Vex)',
   description: MasteryDescriptions.Vex,
-  archetypes: [WeaponMastery],
-  effects: [],
 })
+
+export const WeaponMasteries = [
+  Club,
+  Dagger,
+  Greatclub,
+  Handaxe,
+  Javelin,
+  LightHammer,
+  Mace,
+  Quarterstaff,
+  Sickle,
+  Spear,
+  Dart,
+  LightCrossbow,
+  Shortbow,
+  Sling,
+  Battleaxe,
+  Flail,
+  Glaive,
+  Greataxe,
+  Greatsword,
+  Halberd,
+  Lance,
+  Longsword,
+  Maul,
+  Morningstar,
+  Pike,
+  Rapier,
+  Scimitar,
+  Shortsword,
+  Trident,
+  Warhammer,
+  WarPick,
+  Whip,
+  Blowgun,
+  HandCrossbow,
+  HeavyCrossbow,
+  Longbow,
+  Musket,
+  Pistol,
+]
+
+// Access to every weapon's mastery property, for the Weapon Mastery loadout; every character has this, through the ruleset
+export const gainWeaponMasteries = () => WeaponMasteries.map((it) => Effects.gainAbility(it, WeaponMasteryLoadout))

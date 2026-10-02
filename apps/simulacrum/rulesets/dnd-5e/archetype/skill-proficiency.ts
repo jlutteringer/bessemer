@@ -116,7 +116,7 @@ export const Religion = Traits.defineTrait('skill-proficiency/religion', {
   effects: [],
 })
 
-export const SleightofHand = Traits.defineTrait('skill-proficiency/sleightof-hand', {
+export const SleightOfHand = Traits.defineTrait('skill-proficiency/sleight-of-hand', {
   name: 'Sleight of Hand',
   description:
     '<p><strong>Ability:</strong> Dexterity</p><p>Pick a pocket, plant something on someone, conceal an object on your person, or perform other feats of manual trickery.</p>',

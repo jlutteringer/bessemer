@@ -16,7 +16,7 @@ const toJson = (text: RichText): RichTextJson => {
 export const RichTextDescription = ({ text }: { text: RichText }) => {
   const json = useMemo(() => toJson(text), [text])
 
-  if (Strings.isString(text) && text.trim().length === 0) {
+  if (Strings.isString(text) && Strings.isBlank(text)) {
     return null
   }
 

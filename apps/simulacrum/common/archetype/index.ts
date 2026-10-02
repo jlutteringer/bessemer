@@ -1,5 +1,5 @@
 import { Reference } from '@bessemer/cornerstone/reference'
-import { Assertions } from '@bessemer/cornerstone'
+import { Arrays, Assertions } from '@bessemer/cornerstone'
 import { ApplicationContext } from '@simulacrum/common/application'
 
 export type ArchetypeReference = Reference<'Archetype'>
@@ -21,4 +21,8 @@ export const getArchetype = (archetype: ArchetypeReference, context: Application
   const matchingArchetype = context.client.ruleset.archetypes.find((it) => it.id === archetype)
   Assertions.assertPresent(matchingArchetype, () => `Unable to find Archetype for Reference: ${JSON.stringify(archetype)}`)
   return matchingArchetype
+}
+
+export const matchesFilter = (filterArchetypes: Array<ArchetypeReference>, targetArchetypes: Array<ArchetypeReference>): boolean => {
+  return !Arrays.isEmpty(targetArchetypes) && Arrays.containsAll(filterArchetypes, targetArchetypes)
 }

@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation'
 import { Box, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { Urls } from '@bessemer/cornerstone'
+import { SxProps } from '@mui/system'
+import { Theme } from '@mui/material/styles'
 
 type NavbarSearchForm = {
   query: string
 }
 
-export const NavbarSearch = () => {
+export const NavbarSearch = ({ sx }: { sx?: SxProps<Theme> }) => {
   const { register, handleSubmit } = useForm<NavbarSearchForm>()
   const router = useRouter()
 
@@ -27,16 +29,19 @@ export const NavbarSearch = () => {
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        bgcolor: 'rgba(255, 255, 255, 0.15)',
-        borderRadius: 1,
-        ml: 3,
-        flexGrow: 1,
-        maxWidth: '400px',
-        px: 2,
-      }}
+      sx={[
+        {
+          display: 'flex',
+          alignItems: 'center',
+          bgcolor: 'rgba(255, 255, 255, 0.15)',
+          borderRadius: 1,
+          ml: 3,
+          flexGrow: 1,
+          maxWidth: '400px',
+          px: 2,
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     >
       <SearchIcon />
       <InputBase

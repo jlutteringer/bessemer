@@ -1,4 +1,4 @@
-import { Arrays, Eithers, Maps, Objects } from '@bessemer/cornerstone'
+import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
 import { Either } from '@bessemer/cornerstone/either'
 import { NilableBasicType } from '@bessemer/cornerstone/types'
 
@@ -40,7 +40,8 @@ export const getValues = <T>(table: ProgressionTable<T>): Array<T> => {
 }
 
 export const getMaxLevel = <T>(table: ProgressionTable<T>): number => {
-  return Math.max(...getRows(table).map(([level, _]) => level)) ?? 0
+  const levels = getRows(table).map(([level, _]) => level)
+  return Arrays.isEmpty(levels) ? 0 : Math.max(...levels)
 }
 
 export const getSize = <T>(table: ProgressionTable<T>): number => {
@@ -77,9 +78,9 @@ export const bisect = <T, L, R>(
   table: ProgressionTable<T>,
   bisector: (element: T, level: number) => Either<L, R>
 ): [ProgressionTable<L>, ProgressionTable<R>] => {
-  const rows = getRows(table).map<[number, Array<Either<L, R>>]>(([level, values]) => [level, values.map((it) => bisector(it, level))])
-  const lefts = rows.map<[number, Array<L>]>(([level, values]) => [level, values.filter(Eithers.isLeft)])
-  const rights = rows.map<[number, Array<R>]>(([level, values]) => [level, values.filter(Eithers.isRight).map((it) => it.value)])
+  const rows = getRows(table).map(([level, values]) => [level, Arrays.separate(values.map((it) => bisector(it, level)))] as const)
+  const lefts = rows.map(([level, [values, _]]) => [level, values])
+  const rights = rows.map(([level, [_, values]]) => [level, values])
   return [Object.fromEntries(lefts), Object.fromEntries(rights)]
 }
 

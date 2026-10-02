@@ -1,111 +1,41 @@
-import { CharacterOption, CharacterSelection } from '@simulacrum/common/character/character-option'
-import { Effect, EffectSource, EffectSourceType } from '@simulacrum/common/effect'
-import { TraitReference } from '@simulacrum/common/trait'
+import { Objects } from '@bessemer/cornerstone'
+import { Effect, EffectSourceType } from '@simulacrum/common/effect'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
-import { Effects, ProgressionTables, Traits } from '@simulacrum/common'
-import { CharacterSheet } from '@simulacrum/common/character/character'
-import { Arrays, Objects } from '@bessemer/cornerstone'
-import { CharacterOptions } from '@simulacrum/common/character/index'
+import { TraitReference } from '@simulacrum/common/trait'
+import { CharacterChoice, CharacterOptionType } from '@simulacrum/common/character/character-option'
+import { AbilityReference } from '@simulacrum/common/ability'
+import { Abilities, Effects, Loadout, ProgressionTables, Traits } from '@simulacrum/common'
 import { ApplicationContext } from '@simulacrum/common/application'
 
-export type CharacterEffectSource = { type: EffectSourceType.Ruleset } | { type: EffectSourceType.Trait; trait: TraitReference }
-
-export type CharacterProgressionEntry = {
-  key: string
-  source: CharacterEffectSource
-  option: CharacterOption | null
-  selection: CharacterSelection | null
-  effects: Array<Effect>
-
-  // TODO
-  // modifiers: Array<ModifierValue<unknown>>
-}
-
-export const buildEffectsTable = (character: CharacterSheet, context: ApplicationContext): ProgressionTable<Effect> => {
-  return ProgressionTables.flatMap(buildProgressionTable(character, context), (it) => it.effects)
-}
-
-export const buildProgressionTable = (character: CharacterSheet, context: ApplicationContext): ProgressionTable<CharacterProgressionEntry> => {
-  const rulesetEffects = ProgressionTables.capAtLevel(context.client.ruleset.progressionTable, character.level)
-  const source: CharacterEffectSource = { type: EffectSourceType.Ruleset }
-  const characterProgressionTable = ProgressionTables.mapRows(rulesetEffects, (effects, level) => {
-    const [levelUpEffects, additionalEntries] = buildCharacterProgressionEntries(effects, source, character, level, new Map(), context)
-    const levelUpEntries = !Arrays.isEmpty(levelUpEffects)
-      ? [
-          {
-            key: getKey(null, level),
-            source,
-            option: null,
-            selection: null,
-            effects: levelUpEffects,
-          },
-        ]
-      : []
-
-    return [...levelUpEntries, ...additionalEntries]
-  })
-
-  return characterProgressionTable
-}
-
-const buildCharacterProgressionEntries = (
-  initialEffects: Array<Effect>,
-  source: CharacterEffectSource,
-  character: CharacterSheet,
+/**
+ * The effects the character has at each level up to `level`: the ruleset's, those of each trait it has at that level, and a GainAbility
+ * effect for each ability selected for its choices. `traits` already includes every trait the character was granted outright, so their
+ * effects aren't expanded again here.
+ */
+export const buildEffectsTable = (
   level: number,
-  // How many times each option has been granted so far at this level, so repeated options are matched to their own selections
-  optionOccurrences: Map<string, number>,
+  traits: ProgressionTable<TraitReference>,
+  choices: ProgressionTable<CharacterChoice>,
   context: ApplicationContext
-): [Array<Effect>, Array<CharacterProgressionEntry>] => {
-  const effects = Effects.sourceEffects(initialEffects, source)
-  const optionEffects = Effects.filter(effects, Effects.GainCharacterOption)
+): ProgressionTable<Effect> => {
+  const rulesetEffects = ProgressionTables.capAtLevel(context.client.ruleset.progressionTable, level)
 
-  const additionalEntries = optionEffects.flatMap((optionEffect) => {
-    const occurrence = optionOccurrences.get(optionEffect.option.id) ?? 0
-    optionOccurrences.set(optionEffect.option.id, occurrence + 1)
-    const selection = CharacterOptions.getSelection(character.selections, optionEffect.option, level, occurrence)
+  return ProgressionTables.mapRows(rulesetEffects, (effects, rowLevel) => {
+    const levelTraits = (traits[rowLevel] ?? []).map((it) => Traits.getTrait(it, context))
+    const selectedAbilities = (choices[rowLevel] ?? []).flatMap((choice) => {
+      if (choice.option.type !== CharacterOptionType.SelectAbility || Objects.isNil(choice.selection)) {
+        return []
+      }
 
-    if (Objects.isPresent(selection)) {
-      const trait = Traits.getTrait(selection.selection, context)
-      const traitSource: EffectSource = { type: EffectSourceType.Trait, trait: trait.id }
-      const [traitEffects, additionalEntries] = buildCharacterProgressionEntries(
-        trait.effects,
-        traitSource,
-        character,
-        level,
-        optionOccurrences,
-        context
-      )
+      const ability = Abilities.getAbility(choice.selection.selection as AbilityReference, context)
+      const loadout = Objects.isNil(choice.option.loadout) ? null : Loadout.getLoadoutType(choice.option.loadout, context)
+      return [Effects.gainAbility(ability, loadout)]
+    })
 
-      const traitEntries = !Arrays.isEmpty(traitEffects)
-        ? [
-            {
-              key: getKey(optionEffect.option, level, occurrence),
-              source,
-              option: optionEffect.option,
-              selection: selection,
-              effects: traitEffects,
-            },
-          ]
-        : []
-
-      return [...traitEntries, ...additionalEntries]
-    } else {
-      return [
-        {
-          key: getKey(optionEffect.option, level, occurrence),
-          source,
-          option: optionEffect.option,
-          selection: null,
-          effects: [],
-        },
-      ]
-    }
+    return [
+      ...Effects.sourceEffects(effects, { type: EffectSourceType.Ruleset }),
+      ...levelTraits.flatMap((trait) => Effects.sourceEffects(trait.effects, { type: EffectSourceType.Trait, trait: trait.id })),
+      ...selectedAbilities,
+    ]
   })
-
-  return [effects, additionalEntries]
-}
-
-const getKey = (option: CharacterOption | null, level: number, occurrence: number = 0): string => {
-  return `${option?.id}-${level}-${occurrence}`
 }

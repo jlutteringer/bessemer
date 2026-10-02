@@ -1,10 +1,10 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 import { SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
-import { SelectWeaponMastery } from '@simulacrum/rulesets/dnd-5e/archetype/weapon-mastery'
+import { WeaponMasteryLoadout } from '@simulacrum/rulesets/dnd-5e/loadout'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import { SelectArtisansTools } from '@simulacrum/rulesets/dnd-5e/archetype/artisans-tools'
-import { SelectManeuver } from '@simulacrum/rulesets/dnd-5e/archetype/maneuver'
+import { SelectManeuver, SuperiorityDice } from '@simulacrum/rulesets/dnd-5e/archetype/maneuver'
 import { SelectFeat } from '@simulacrum/rulesets/dnd-5e/archetype/feat'
 import { CharacterOptions } from '@simulacrum/common/character'
 import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
@@ -17,11 +17,10 @@ import { Patches } from '@bessemer/cornerstone'
 export const SecondWind = Abilities.defineAbility('fighter/second-wind', {
   name: 'Second Wind',
   description:
-    '<p>As a <strong>Bonus Action</strong>, you draw on a reserve of stamina to regain Hit Points equal to <strong>1d10 + your Fighter level</strong>.</p><p>You can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).</p>',
+    '<p>You draw on a reserve of stamina to regain Hit Points equal to <strong>1d10 + your Fighter level</strong>.</p><p>You can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).</p>',
   actions: [
     {
       name: 'Use Second Wind',
-      description: '',
       action: ActionType.Bonus,
       costs: [
         {
@@ -60,6 +59,17 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('fighte
   ],
 })
 
+export const WeaponMastery = Traits.defineTrait('fighter/weapon-mastery', {
+  name: 'Weapon Mastery',
+  description:
+    '<p>Your training with weapons lets you use the mastery properties of <strong>three kinds</strong> of Simple or Martial weapons of your choice. Whenever you finish a Long Rest, you can practice weapon drills and change one of those choices.</p><p>You can use the mastery properties of more kinds of weapons as you gain Fighter levels: four at level 4, five at level 10, and six at level 16.</p>',
+  effects: [
+    Effects.gainLoadoutSlot(WeaponMasteryLoadout),
+    Effects.gainLoadoutSlot(WeaponMasteryLoadout),
+    Effects.gainLoadoutSlot(WeaponMasteryLoadout),
+  ],
+})
+
 export const Level1 = Traits.defineTrait('fighter/level-1', {
   name: 'Fighter',
   description: '<p>A master of martial combat, at home with <strong>any weapon</strong> and <strong>any armor</strong>.</p>',
@@ -69,9 +79,7 @@ export const Level1 = Traits.defineTrait('fighter/level-1', {
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectFightingStyle),
-    Effects.gainCharacterOption(SelectWeaponMastery),
-    Effects.gainCharacterOption(SelectWeaponMastery),
-    Effects.gainCharacterOption(SelectWeaponMastery),
+    Effects.gainTrait(WeaponMastery),
     Effects.gainAbility(SecondWind),
   ],
 })
@@ -82,7 +90,7 @@ export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
     "<p>On your turn, you can push yourself beyond your normal limits to take <strong>one additional action</strong>, as long as it isn't the Magic action.</p><p>Once you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn.</p>",
   actions: [
     {
-      action: ActionType.Bonus,
+      action: ActionType.Free,
       costs: [
         {
           cost: 1,
@@ -106,7 +114,6 @@ export const TacticalMind = Abilities.defineAbility('fighter/tactical-mind', {
   name: 'Tactical Mind',
   description:
     "<p>When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to roll <strong>1d10</strong> and add it to the check, potentially turning the failure into a success.</p><p>If the check still fails, the use of Second Wind isn't expended.</p>",
-  actions: [],
 })
 
 export const Level2 = Traits.defineTrait('fighter/level-2', {
@@ -135,15 +142,24 @@ export const Level3 = Traits.defineTrait('fighter/level-3', {
   ],
 })
 
+export const CombatSuperiority = Traits.defineTrait('fighter/combat-superiority', {
+  name: 'Combat Superiority',
+  description:
+    '<p>You learn <strong>three maneuvers</strong> of your choice, fueled by special dice called Superiority Dice. You can use only one maneuver per attack. Each time you gain a Fighter level, you can replace one maneuver you know with a different one.</p><p><strong>Superiority Dice:</strong> you have <strong>four</strong> Superiority Dice, which are d8s. A die is expended when you use it, and you regain all of them when you finish a Short or Long Rest.</p><p><strong>Saving Throws:</strong> if a maneuver requires a saving throw, the DC equals 8 + your Strength or Dexterity modifier (your choice) + your Proficiency Bonus.</p>',
+  effects: [
+    Effects.gainResourcePool(SuperiorityDice),
+    Effects.gainCharacterOption(SelectManeuver),
+    Effects.gainCharacterOption(SelectManeuver),
+    Effects.gainCharacterOption(SelectManeuver),
+  ],
+})
+
 export const BattleMaster = Traits.defineTrait('fighter/battle-master', {
   name: 'Battle Master',
   description: '',
   archetypes: [FighterSubclass],
   effects: [
-    // Combat Superiority (FUTURE superiority dice aren't modelled yet)
-    Effects.gainCharacterOption(SelectManeuver),
-    Effects.gainCharacterOption(SelectManeuver),
-    Effects.gainCharacterOption(SelectManeuver),
+    Effects.gainTrait(CombatSuperiority),
     // Student of War
     Effects.gainCharacterOption(SelectArtisansTools),
     Effects.gainCharacterOption(SelectSkillProficiency),
@@ -176,26 +192,19 @@ export const Level4 = Traits.defineTrait('fighter/level-4', {
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
-  effects: [
-    // Weapon Mastery increases to four weapons
-    Effects.gainCharacterOption(SelectWeaponMastery),
-    // Ability Score Improvement
-    Effects.gainCharacterOption(SelectFeat),
-  ],
+  effects: [Effects.gainLoadoutSlot(WeaponMasteryLoadout), Effects.gainCharacterOption(SelectFeat)],
 })
 
 // FUTURE stubs: Extra Attack and Tactical Shift aren't modelled yet
 export const ExtraAttack = Abilities.defineAbility('fighter/extra-attack', {
   name: 'Extra Attack',
   description: '<p>You can attack <strong>twice</strong>, instead of once, whenever you take the Attack action on your turn.</p>',
-  actions: [],
 })
 
 export const TacticalShift = Abilities.defineAbility('fighter/tactical-shift', {
   name: 'Tactical Shift',
   description:
     '<p>Whenever you activate your <strong>Second Wind</strong> with a Bonus Action, you can move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>',
-  actions: [],
 })
 
 export const Level5 = Traits.defineTrait('fighter/level-5', {

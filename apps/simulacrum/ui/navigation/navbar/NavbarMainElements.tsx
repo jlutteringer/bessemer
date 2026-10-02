@@ -17,35 +17,41 @@ import { Theme } from '@mui/material/styles'
 import { NavbarUserProfile } from '@simulacrum/ui/navigation/navbar/NavbarUserProfile'
 import Link from 'next/link'
 
+// The social media icons only fit on wide screens, and the site icons on medium ones; on narrower screens they're in the mobile menu
+const SocialMediaDisplay = { xs: 'none', lg: 'flex' }
+const SiteDisplay = { xs: 'none', md: 'flex' }
+
 export const NavbarMainElements = ({ sx }: { sx?: SxProps<Theme> }) => {
   return (
     <Stack
       direction="row"
       spacing={1}
-      divider={
-        <Divider
-          orientation="vertical"
-          sx={{
-            bgcolor: 'grey.700',
-            height: 35,
-            alignSelf: 'center',
-          }}
-        />
-      }
       sx={sx}
     >
-      <SocialMediaIcons />
-      <SiteIcons />
+      <SocialMediaIcons sx={{ display: SocialMediaDisplay }} />
+      <NavbarDivider sx={{ display: SocialMediaDisplay }} />
+      <SiteIcons sx={{ display: SiteDisplay }} />
+      <NavbarDivider sx={{ display: SiteDisplay }} />
       <NavbarUserProfile />
     </Stack>
   )
 }
 
-export const SocialMediaIcons = () => {
+const NavbarDivider = ({ sx }: { sx?: SxProps<Theme> }) => {
+  return (
+    <Divider
+      orientation="vertical"
+      sx={[{ bgcolor: 'grey.700', height: 35, alignSelf: 'center' }, ...(Array.isArray(sx) ? sx : [sx])]}
+    />
+  )
+}
+
+export const SocialMediaIcons = ({ sx }: { sx?: SxProps<Theme> }) => {
   return (
     <Stack
       direction="row"
       spacing={1}
+      sx={sx}
     >
       <IconButton
         color="inherit"
@@ -91,11 +97,12 @@ export const SocialMediaIcons = () => {
   )
 }
 
-export const SiteIcons = () => {
+export const SiteIcons = ({ sx }: { sx?: SxProps<Theme> }) => {
   return (
     <Stack
       direction="row"
       spacing={1}
+      sx={sx}
     >
       <IconButton color="inherit">
         <RefreshIcon />

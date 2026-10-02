@@ -1,5 +1,7 @@
 import { Trait, TraitFilter, TraitFilterProps, TraitReference } from '@simulacrum/common/trait'
-import { ProgressionTables, Traits } from '@simulacrum/common'
+import { Abilities, ProgressionTables, Traits } from '@simulacrum/common'
+import { Ability, AbilityFilter, AbilityFilterProps, AbilityReference } from '@simulacrum/common/ability'
+import { LoadoutType, LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { Arrays, Assertions, Eithers, Objects } from '@bessemer/cornerstone'
@@ -8,22 +10,35 @@ import { ApplicationContext } from '@simulacrum/common/application'
 
 export enum CharacterOptionType {
   SelectTrait = 'SelectTrait',
+  SelectAbility = 'SelectAbility',
 }
 
 export type CharacterOptionReference = Reference<'CharacterOption'>
 
-export type CharacterOptionValueReference = TraitReference
-export type CharacterOptionValue = Trait
+export type CharacterOptionValueReference = TraitReference | AbilityReference
+export type CharacterOptionValue = Trait | Ability
 
-export type CharacterOption = { id: CharacterOptionReference } & {
-  type: CharacterOptionType
-  traitFilter: TraitFilter
-  // Overrides the label derived from the filter's archetypes, for options that draw from more than one
+type CharacterOptionProps = {
+  id: CharacterOptionReference
   label: string | null
 }
 
+export type SelectTraitOption = CharacterOptionProps & {
+  type: CharacterOptionType.SelectTrait
+  filter: TraitFilter
+}
+
+export type SelectAbilityOption = CharacterOptionProps & {
+  type: CharacterOptionType.SelectAbility
+  filter: AbilityFilter
+  loadout: LoadoutTypeReference | null
+}
+
+export type CharacterOption = SelectTraitOption | SelectAbilityOption
+
 export type CharacterChoice = {
-  option: CharacterOptionReference
+  option: CharacterOption
+  selection: CharacterSelection | null
   values: Array<CharacterOptionValue>
   inactiveValues: Array<CharacterOptionValue>
 }
@@ -33,70 +48,81 @@ export type CharacterSelection = {
   selection: CharacterOptionValueReference
 }
 
-export type EvaluateCharacterOptionsResult = {
-  selections: ProgressionTable<CharacterSelection>
-  choices: ProgressionTable<CharacterChoice>
-}
-
-export const selectTraitOption = (reference: string, traitFilter: TraitFilterProps, label: string | null = null): CharacterOption => {
+export const selectTraitOption = (reference: string, filter: TraitFilterProps, label: string | null = null): SelectTraitOption => {
   return {
     id: reference as CharacterOptionReference,
     type: CharacterOptionType.SelectTrait,
-    traitFilter: Traits.filter(traitFilter),
+    filter: Traits.filter(filter),
     label,
+  }
+}
+
+export const selectAbilityOption = (
+  reference: string,
+  filter: AbilityFilterProps,
+  label: string | null = null,
+  loadout: LoadoutType | null = null
+): SelectAbilityOption => {
+  return {
+    id: reference as CharacterOptionReference,
+    type: CharacterOptionType.SelectAbility,
+    filter: Abilities.filter(filter),
+    loadout: loadout?.id ?? null,
+    label,
+  }
+}
+
+const getOptionValues = (option: CharacterOption, context: ApplicationContext): Array<CharacterOptionValue> => {
+  switch (option.type) {
+    case CharacterOptionType.SelectTrait:
+      return Traits.applyFilter(context.client.ruleset.traits, option.filter)
+    case CharacterOptionType.SelectAbility:
+      return Abilities.applyFilter(context.client.ruleset.abilities, option.filter)
   }
 }
 
 export const evaluateChoice = (
   option: CharacterOption,
-  selectedTraits: Array<TraitReference>,
+  held: { traits: Array<TraitReference>; abilities: Array<AbilityReference> },
   evaluate: EvaluateExpression,
   context: ApplicationContext
 ): CharacterChoice => {
-  let traits = Traits.applyFilter(context.client.ruleset.traits, option.traitFilter)
-
-  traits = traits.filter((trait) => {
-    // Filter out traits we have already selected
-    return !Arrays.contains(selectedTraits, trait.id)
+  const available = getOptionValues(option, context).filter((value) => {
+    return option.type === CharacterOptionType.SelectTrait
+      ? (value as Trait).repeatable || !Arrays.contains(held.traits, value.id)
+      : !Arrays.contains(held.abilities, value.id)
   })
 
-  const [values, inactiveValues] = Arrays.bisect(traits, (trait) => {
-    const prerequisitesSatisfied = trait.prerequisites.every(evaluate)
-    return prerequisitesSatisfied ? Eithers.left(trait) : Eithers.right(trait)
+  const [values, inactiveValues] = Arrays.bisect(available, (value) => {
+    const prerequisitesSatisfied = value.prerequisites.every(evaluate)
+    return prerequisitesSatisfied ? Eithers.left(value) : Eithers.right(value)
   })
 
-  // Values with satisfied prerequisites (e.g. Fighter (2) once Fighter is selected) come before those without any,
-  // otherwise keeping the ruleset's order
   const [valuesWithoutPrerequisites, valuesWithPrerequisites] = Arrays.partition(values, (it) => !Arrays.isEmpty(it.prerequisites))
 
   return {
-    option: option.id,
+    option,
+    selection: null,
     values: [...valuesWithPrerequisites, ...valuesWithoutPrerequisites],
     inactiveValues,
   }
 }
 
-export const buildSelection = (option: CharacterOptionReference | CharacterOption, selection: CharacterOptionValue | Trait): CharacterSelection => {
+export const getSelectedValue = (choice: CharacterChoice): CharacterOptionValue | null => {
+  return Objects.isNil(choice.selection) ? null : choice.values.find((it) => it.id === choice.selection!.selection) ?? null
+}
+
+export const buildSelection = (option: CharacterOptionReference | CharacterOption, selection: CharacterOptionValue): CharacterSelection => {
   return {
     option: typeof option === 'string' ? option : option.id,
     selection: selection.id,
   }
 }
 
-export const getSelection = (
-  selections: ProgressionTable<CharacterSelection>,
-  option: CharacterOption,
-  level: number,
-  occurrence: number = 0
-): CharacterSelection | null => {
-  const matchingSelections = (selections[level] ?? []).filter((it) => it.option === option.id)
-  return matchingSelections[occurrence] ?? null
-}
-
 export const isSelected = (
   selections: ProgressionTable<CharacterSelection>,
   option: CharacterOptionReference | CharacterOption,
-  selection: CharacterOptionValue | Trait
+  selection: CharacterOptionValue
 ): boolean => {
   const matchingSelections = ProgressionTables.getValues(selections).filter((it) => it.option === (typeof option === 'string' ? option : option.id))
   return Objects.isPresent(matchingSelections.find((it) => it.selection === selection.id))
@@ -110,7 +136,7 @@ export const isAllowedValue = (choice: CharacterChoice, optionValue: CharacterOp
 }
 
 export const validateSelection = (choices: ProgressionTable<CharacterChoice>, selection: CharacterSelection): number => {
-  const entry = ProgressionTables.getEntries(choices).find(([_, choice]) => choice.option === selection.option)
+  const entry = ProgressionTables.getEntries(choices).find(([_, choice]) => choice.option.id === selection.option && Objects.isNil(choice.selection))
   Assertions.assertPresent(entry)
 
   const [level, choice] = entry

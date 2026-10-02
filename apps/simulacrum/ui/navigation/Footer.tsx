@@ -60,7 +60,7 @@ export const Footer = () => {
               fontWeight: 'bold',
             }}
           >
-            D&D BEYOND
+            Simulacrum
           </Typography>
         </Box>
 
@@ -162,7 +162,7 @@ export const Footer = () => {
                   display: 'block',
                 }}
               >
-                Wizards of the Coast
+                Simulacrum
               </Link>
             </Typography>
           </Grid>
@@ -213,7 +213,7 @@ export const Footer = () => {
                 mb: 1,
               }}
             >
-              DOWNLOAD THE D&D BEYOND APP
+              DOWNLOAD THE SIMULACRUM APP
             </Typography>
             <Box
               sx={{
@@ -255,7 +255,7 @@ export const Footer = () => {
               color: 'grey.500',
             }}
           >
-            © 2017-2024 Wizards of the Coast LLC | All Rights Reserved
+            © 2026 Simulacrum | All Rights Reserved
           </Typography>
           <Typography
             variant="body2"
@@ -264,7 +264,7 @@ export const Footer = () => {
               mt: 1,
             }}
           >
-            Dungeons & Dragons, D&D Beyond, and all related logos are trademarks of Wizards of the Coast.
+            Simulacrum and all related logos are trademarks of Simulacrum.
           </Typography>
           <Box
             sx={{

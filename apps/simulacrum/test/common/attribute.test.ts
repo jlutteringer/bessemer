@@ -12,7 +12,7 @@ test('Test Numeric Attibutes and Combinations', () => {
     expect(attributeValue.value).toEqual(25)
     expect(attributeValue.initialValue).toEqual(10)
     expect(attributeValue.activeModifiers.length).toEqual(3)
-    expect(attributeValue.activeModifiers[2].value).toEqual(25)
+    expect(attributeValue.activeModifiers[2]!.value).toEqual(25)
     expect(attributeValue.inactiveModifiers.length).toEqual(0)
   }
 
@@ -24,8 +24,8 @@ test('Test Numeric Attibutes and Combinations', () => {
     expect(attributeValue.value).toEqual(100)
     expect(attributeValue.initialValue).toEqual(10)
     expect(attributeValue.activeModifiers.length).toEqual(3)
-    expect(attributeValue.activeModifiers[2].value).toEqual(100)
-    expect(attributeValue.activeModifiers[2].modifier).toEqual(Attributes.modifier(Patches.multiply(5)))
+    expect(attributeValue.activeModifiers[2]!.value).toEqual(100)
+    expect(attributeValue.activeModifiers[2]!.modifier).toEqual(Attributes.modifier(Patches.multiply(5)))
     expect(attributeValue.inactiveModifiers.length).toEqual(0)
   }
 
@@ -41,8 +41,8 @@ test('Test Numeric Attibutes and Combinations', () => {
     expect(attributeValue.value).toEqual(15)
     expect(attributeValue.initialValue).toEqual(10)
     expect(attributeValue.activeModifiers.length).toEqual(1)
-    expect(attributeValue.activeModifiers[0].value).toEqual(15)
-    expect(attributeValue.activeModifiers[0].modifier).toEqual(Attributes.modifier(Patches.sum(5), { condition: Expressions.or([true]) }))
+    expect(attributeValue.activeModifiers[0]!.value).toEqual(15)
+    expect(attributeValue.activeModifiers[0]!.modifier).toEqual(Attributes.modifier(Patches.sum(5), { condition: Expressions.or([true]) }))
     expect(attributeValue.inactiveModifiers.length).toEqual(2)
   }
 })

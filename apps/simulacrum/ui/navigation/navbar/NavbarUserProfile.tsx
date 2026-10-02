@@ -30,6 +30,8 @@ export const NavbarUserProfile = () => {
           variant="body2"
           sx={{
             color: 'inherit',
+            // Narrow screens show just the avatar
+            display: { xs: 'none', md: 'block' },
           }}
         >
           John Lutteringer
