@@ -5,7 +5,7 @@ import { Assertions, Patches } from '@bessemer/cornerstone'
 import { Patch } from '@bessemer/cornerstone/patch'
 import * as Attributes from '@simulacrum/common/attribute'
 import { Modifier } from '@simulacrum/common/attribute'
-import { ApplicationContext } from '@simulacrum/common/application'
+import { Ruleset } from '@simulacrum/common/ruleset'
 
 export type ResourcePool = {
   size: Expression<number>
@@ -48,8 +48,8 @@ export const defineResourcePool = (reference: string, props: ResourcePoolProps):
   }
 }
 
-export const getResourcePool = (resourcePool: ResourcePoolReference, context: ApplicationContext): ResourcePoolDefinition => {
-  const { resourcePools, abilities } = context.client.ruleset
+export const getResourcePool = (resourcePool: ResourcePoolReference, ruleset: Ruleset): ResourcePoolDefinition => {
+  const { resourcePools, abilities } = ruleset
   const matchingResourcePool =
     resourcePools.find((it) => it.id === resourcePool) ?? abilities.find((it) => it.resource?.id === resourcePool)?.resource
   Assertions.assertPresent(matchingResourcePool, () => `Unable to find Resource Pool for Reference: ${JSON.stringify(resourcePool)}`)
@@ -69,8 +69,8 @@ export const buildInitialState = (
   reference: ResourcePoolReference,
   modifiers: Array<Modifier<unknown>>,
   evaluate: EvaluateExpression,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): ResourcePoolState => {
-  const resourcePool = applyModifiers(getResourcePool(reference, context), modifiers, evaluate)
+  const resourcePool = applyModifiers(getResourcePool(reference, ruleset), modifiers, evaluate)
   return { resource: resourcePool, value: evaluate(resourcePool.size) }
 }

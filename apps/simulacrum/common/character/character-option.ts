@@ -6,7 +6,7 @@ import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { Arrays, Assertions, Eithers, Objects } from '@bessemer/cornerstone'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
-import { ApplicationContext } from '@simulacrum/common/application'
+import { Ruleset } from '@simulacrum/common/ruleset'
 
 export enum CharacterOptionType {
   SelectTrait = 'SelectTrait',
@@ -72,12 +72,12 @@ export const selectAbilityOption = (
   }
 }
 
-const getOptionValues = (option: CharacterOption, context: ApplicationContext): Array<CharacterOptionValue> => {
+const getOptionValues = (option: CharacterOption, ruleset: Ruleset): Array<CharacterOptionValue> => {
   switch (option.type) {
     case CharacterOptionType.SelectTrait:
-      return Traits.applyFilter(context.client.ruleset.traits, option.filter)
+      return Traits.applyFilter(ruleset.traits, option.filter)
     case CharacterOptionType.SelectAbility:
-      return Abilities.applyFilter(context.client.ruleset.abilities, option.filter)
+      return Abilities.applyFilter(ruleset.abilities, option.filter)
   }
 }
 
@@ -85,9 +85,9 @@ export const evaluateChoice = (
   option: CharacterOption,
   held: { traits: Array<TraitReference>; abilities: Array<AbilityReference> },
   evaluate: EvaluateExpression,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): CharacterChoice => {
-  const available = getOptionValues(option, context).filter((value) => {
+  const available = getOptionValues(option, ruleset).filter((value) => {
     return option.type === CharacterOptionType.SelectTrait
       ? (value as Trait).repeatable || !Arrays.contains(held.traits, value.id)
       : !Arrays.contains(held.abilities, value.id)

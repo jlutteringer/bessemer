@@ -29,6 +29,7 @@ import { ContentLabel } from '@bessemer/core/codex/component/ContentLabel'
 import { ProgressionTables } from '@simulacrum/common'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { ApplicationContext } from '@simulacrum/common/application'
+import * as Rulesets from '@simulacrum/common/ruleset'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { copyCharacter, deleteCharacter, StoredCharacter, useStoredCharacters } from '@simulacrum/ui/character/character-storage'
 
@@ -178,12 +179,13 @@ const getDisplayName = (character: StoredCharacter): string => {
 }
 
 const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; onDelete: () => void }) => {
-  const context = useClientContext() as unknown as ApplicationContext
+  const { rulesets } = (useClientContext() as unknown as ApplicationContext).client
+  const ruleset = Rulesets.getRuleset(character.character.ruleset, rulesets)
   // The names of the traits and abilities selected for the character's choices
   const traitNames = useMemo(() => {
-    const sheet = Characters.buildCharacterDefinition(character.character, context)
+    const sheet = Characters.buildCharacterDefinition(character.character, ruleset)
     return ProgressionTables.getValues(sheet.choices).flatMap((it) => CharacterOptions.getSelectedValue(it)?.name ?? [])
-  }, [character, context])
+  }, [character, ruleset])
 
   return (
     <Card>
@@ -198,7 +200,7 @@ const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; on
           variant="body2"
           noWrap
         >
-          Level {character.character.level}
+          {ruleset.name} · Level {character.character.level}
           {!Arrays.isEmpty(traitNames) && ` | ${traitNames.join(', ')}`}
         </Typography>
       </CardContent>

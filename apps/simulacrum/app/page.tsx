@@ -4,7 +4,7 @@ import { ApplicationContext } from '@simulacrum/common/application'
 import { CharacterRecord } from '@simulacrum/common/character/character'
 import { ProgressionTables } from '@simulacrum/common'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
-import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
+import { Dnd5e, SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
 import { Archery, SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import Link from '@mui/material/Link'
@@ -16,6 +16,7 @@ import { BessemerNext } from '@bessemer/framework-next'
 export default function Home() {
   const application = use(BessemerNext.getApplication<ApplicationContext>())
   let character: CharacterRecord = {
+    ruleset: Dnd5e.id,
     name: 'Bob the Fighter',
     level: 3,
     initialValues: {
@@ -29,11 +30,11 @@ export default function Home() {
     selections: ProgressionTables.empty(3),
     selectedAbilities: [],
   }
-  character = Characters.buildCharacterDefinition(character, application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level1), application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectFightingStyle, Archery), application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), application)
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), application)
+  character = Characters.buildCharacterDefinition(character, Dnd5e)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level1), Dnd5e)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectFightingStyle, Archery), Dnd5e)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), Dnd5e)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), Dnd5e)
 
   return (
     <div>

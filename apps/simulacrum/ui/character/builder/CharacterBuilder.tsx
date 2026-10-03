@@ -10,6 +10,7 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
+import CardActionArea from '@mui/material/CardActionArea'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Chip from '@mui/material/Chip'
@@ -22,7 +23,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SaveIcon from '@mui/icons-material/Save'
-import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
+import { Arrays, Assertions, Maps, Objects } from '@bessemer/cornerstone'
 import { CharacterRecord, CharacterSheet } from '@simulacrum/common/character/character'
 import { Characters } from '@simulacrum/common/character'
 import { Trait, TraitReference } from '@simulacrum/common/trait'
@@ -32,6 +33,8 @@ import { Ability } from '@simulacrum/common/ability'
 import { CharacterOptionValue } from '@simulacrum/common/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { ApplicationContext } from '@simulacrum/common/application'
+import * as Rulesets from '@simulacrum/common/ruleset'
+import { Ruleset } from '@simulacrum/common/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
@@ -62,9 +65,16 @@ import {
   isTrait,
 } from '@simulacrum/ui/character/builder/character-builder-model'
 
-// The rules engine only reads `client.ruleset`, which is available from the hydrated client context
-const useRulesContext = (): ApplicationContext => {
-  return useClientContext() as unknown as ApplicationContext
+const useRulesets = (): Array<Ruleset> => {
+  return (useClientContext() as unknown as ApplicationContext).client.rulesets
+}
+
+const RulesetContext = createContext<Ruleset | null>(null)
+
+const useRuleset = (): Ruleset => {
+  const ruleset = useContext(RulesetContext)
+  Assertions.assertPresent(ruleset)
+  return ruleset
 }
 
 // The character being edited, for cards deep in the page that show character-specific values (e.g. how many uses an ability has)
@@ -74,8 +84,9 @@ const CharacterSheetContext = createContext<CharacterSheet | null>(null)
  * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
  */
 export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) => {
-  const context = useRulesContext()
+  const rulesets = useRulesets()
   const stored = useStoredCharacter(characterId)
+  const [newCharacterRuleset, setNewCharacterRuleset] = useState<Ruleset | null>(null)
 
   // Local storage is only readable once the client has hydrated
   if (stored === null) {
@@ -106,17 +117,64 @@ export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) 
     )
   }
 
+  const ruleset = Objects.isPresent(stored) ? Rulesets.getRuleset(stored.character.ruleset, rulesets) : newCharacterRuleset
+  if (Objects.isNil(ruleset)) {
+    return (
+      <RulesetSelection
+        rulesets={rulesets}
+        onSelect={setNewCharacterRuleset}
+      />
+    )
+  }
+
   return (
-    <CharacterEditor
-      key={characterId ?? 'new'}
-      characterId={characterId}
-      initialCharacter={stored?.character ?? newCharacter(context)}
-    />
+    <RulesetContext.Provider value={ruleset}>
+      <CharacterEditor
+        key={characterId ?? ruleset.id}
+        characterId={characterId}
+        initialCharacter={stored?.character ?? newCharacter(ruleset)}
+      />
+    </RulesetContext.Provider>
+  )
+}
+
+const RulesetSelection = ({ rulesets, onSelect }: { rulesets: Array<Ruleset>; onSelect: (ruleset: Ruleset) => void }) => {
+  return (
+    <Box>
+      <StandardPageHeader title="New Character" />
+      <Card>
+        <CardHeader
+          title="Choose a Ruleset"
+          subheader="The rules your character is built with. This can't be changed later."
+        />
+        <CardContent>
+          <Grid
+            container
+            spacing={2}
+          >
+            {rulesets.map((ruleset) => (
+              <Grid
+                key={ruleset.id}
+                size={{ xs: 12, sm: 6 }}
+              >
+                <Card variant="outlined">
+                  <CardActionArea onClick={() => onSelect(ruleset)}>
+                    <CardContent>
+                      <Typography variant="h6">{ruleset.name}</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </CardContent>
+      </Card>
+    </Box>
   )
 }
 
 const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid | null; initialCharacter: CharacterRecord }) => {
-  const context = useRulesContext()
+  const ruleset = useRuleset()
   const router = useRouter()
   const [showSaved, setShowSaved] = useState(false)
   const { control, handleSubmit, reset, getValues, setValue, formState } = useForm<CharacterRecord>({
@@ -125,7 +183,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
   })
 
   const character = useWatch({ control }) as CharacterRecord
-  const sheet = useMemo(() => Characters.buildCharacterDefinition(character, context), [character, context])
+  const sheet = useMemo(() => Characters.buildCharacterDefinition(character, ruleset), [character, ruleset])
   const optionChoices = useMemo(() => getCharacterOptionChoices(sheet), [sheet])
   // A new character has nothing saved yet, so it's always unsaved
   const hasUnsavedChanges = characterId === null || formState.isDirty
@@ -210,7 +268,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                     label="Level"
                     fullWidth
                     value={character.level}
-                    onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), context))}
+                    onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), ruleset))}
                   >
                     {Arrays.range([1, MaxLevel]).map((level) => (
                       <MenuItem
@@ -226,7 +284,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
             </CardContent>
           </Card>
 
-          {getCharacteristicSections(context).map((section) => (
+          {getCharacteristicSections(ruleset).map((section) => (
             <Card key={section.group?.id ?? 'ungrouped'}>
               <CardHeader title={section.group?.name ?? 'Characteristics'} />
               <CardContent>
@@ -300,8 +358,8 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                   level={level}
                   heldTraits={sheet.traits}
                   choices={optionChoices.filter((it) => it.level === level)}
-                  onSelect={(choice, value) => applyCharacter(selectValue(getValues(), choice, value, context))}
-                  onSelectMany={(choices, values) => applyCharacter(selectValuesForChoices(getValues(), choices, values, context))}
+                  onSelect={(choice, value) => applyCharacter(selectValue(getValues(), choice, value, ruleset))}
+                  onSelectMany={(choices, values) => applyCharacter(selectValuesForChoices(getValues(), choices, values, ruleset))}
                 />
               ))}
             </Stack>
@@ -309,7 +367,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
 
           <AbilitiesSection
             sheet={sheet}
-            onSelect={(loadoutType, abilities) => applyCharacter(selectLoadoutAbilities(getValues(), loadoutType, abilities, context))}
+            onSelect={(loadoutType, abilities) => applyCharacter(selectLoadoutAbilities(getValues(), loadoutType, abilities, ruleset))}
           />
         </Stack>
 
@@ -338,7 +396,7 @@ const LevelTraits = ({
   onSelect: (choice: CharacterOptionChoice, value: CharacterOptionValue | null) => void
   onSelectMany: (choices: Array<CharacterOptionChoice>, values: Array<CharacterOptionValue>) => void
 }) => {
-  const context = useRulesContext()
+  const ruleset = useRuleset()
   const choiceGroups = groupChoicesByOption(choices)
 
   return (
@@ -355,7 +413,7 @@ const LevelTraits = ({
                 return (
                   <Box key={group[0]!.key}>
                     <MultiValueSelect
-                      label={getOptionLabel(group[0]!.option, context)}
+                      label={getOptionLabel(group[0]!.option, ruleset)}
                       choices={group}
                       onSelect={(values) => onSelectMany(group, values)}
                     />
@@ -372,7 +430,7 @@ const LevelTraits = ({
               return (
                 <Box key={choice.key}>
                   <ValueSelect
-                    label={getOptionLabel(choice.option, context)}
+                    label={getOptionLabel(choice.option, ruleset)}
                     choice={choice}
                     onSelect={(value) => onSelect(choice, value)}
                   />
@@ -485,11 +543,11 @@ const ValueSelect = ({
 
 // A dropdown entry: the value's name, with its archetypes (for a trait) as a caption beside it
 const ValueOptionText = ({ value }: { value: CharacterOptionValue }) => {
-  const context = useRulesContext()
+  const ruleset = useRuleset()
   return (
     <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
       <Typography>{value.name}</Typography>
-      <Typography variant="caption">{getValueCaption(value, context)}</Typography>
+      <Typography variant="caption">{getValueCaption(value, ruleset)}</Typography>
     </Box>
   )
 }
@@ -525,15 +583,15 @@ const SelectedValues = ({
 // A card for each selected trait, shown under its dropdown, followed by the traits each one grants outright (e.g. a Background's
 // skill proficiencies). A granted trait that applied at a later level (e.g. a subclass feature that improves) says so.
 const SelectedTraits = ({ traits, level, heldTraits }: { traits: Array<Trait>; level: number; heldTraits: ProgressionTable<TraitReference> }) => {
-  const context = useRulesContext()
+  const ruleset = useRuleset()
 
   // One grid for all the selected traits (e.g. both skill proficiencies), each followed by what it grants. CardGrid gives each child its
   // own cell, so the cards are built as a flat list rather than grouped in fragments.
   const cards = traits.flatMap((trait) => {
-    const grantedTraits = getGrantedTraits(trait, heldTraits, context)
+    const grantedTraits = getGrantedTraits(trait, heldTraits, ruleset)
     // The abilities the trait grants, along with those of the traits it grants at this level (a trait granted at a later level, e.g. a
     // subclass feature that improves, doesn't count here)
-    const abilities = getTraitAbilities([trait, ...grantedTraits.flatMap((it) => (it.level === level ? [it.trait] : []))], context)
+    const abilities = getTraitAbilities([trait, ...grantedTraits.flatMap((it) => (it.level === level ? [it.trait] : []))], ruleset)
 
     return [
       <TraitCard
@@ -565,11 +623,11 @@ const SelectedTraits = ({ traits, level, heldTraits }: { traits: Array<Trait>; l
 
 // The abilities the given traits grant outright. Abilities that take a loadout slot (e.g. a Wizard's cantrips) are shown in the Abilities
 // section instead.
-const getTraitAbilities = (traits: Array<Trait>, context: ApplicationContext): Array<Ability> => {
+const getTraitAbilities = (traits: Array<Trait>, ruleset: Ruleset): Array<Ability> => {
   return traits.flatMap((trait) =>
     Effects.filter(trait.effects, Effects.GainAbility)
       .filter((it) => Objects.isNil(it.loadout))
-      .map((it) => Abilities.getAbility(it.ability, context))
+      .map((it) => Abilities.getAbility(it.ability, ruleset))
   )
 }
 
@@ -602,10 +660,10 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
 }
 
 const AbilityCard = ({ ability: rulesetAbility }: { ability: Ability }) => {
-  const context = useRulesContext()
+  const ruleset = useRuleset()
   const sheet = useContext(CharacterSheetContext)
   const ability = sheet?.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
-  const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, context)
+  const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, ruleset)
 
   return (
     <Card sx={{ height: '100%' }}>
@@ -677,8 +735,8 @@ const AbilitiesSection = ({
   sheet: CharacterSheet
   onSelect: (loadoutType: LoadoutTypeReference, abilities: Array<Ability>) => void
 }) => {
-  const context = useRulesContext()
-  const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutType(it, context))
+  const ruleset = useRuleset()
+  const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutType(it, ruleset))
   const alwaysAvailable = sheet.abilities.filter((it) => Objects.isNil(it.loadout)).map((it) => it.ability)
 
   if (Arrays.isEmpty(loadoutTypes) && Arrays.isEmpty(alwaysAvailable)) {
@@ -695,7 +753,7 @@ const AbilitiesSection = ({
             const slotCount = sheet.loadout.filter((it) => it.type === loadoutType.id).length
             const options = getLoadoutAbilities(sheet, loadoutType.id)
             const selected = sheet.loadout.flatMap((it) =>
-              it.type === loadoutType.id && Objects.isPresent(it.ability) ? [Abilities.getAbility(it.ability, context)] : []
+              it.type === loadoutType.id && Objects.isPresent(it.ability) ? [Abilities.getAbility(it.ability, ruleset)] : []
             )
 
             return (

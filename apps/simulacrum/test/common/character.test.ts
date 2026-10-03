@@ -1,14 +1,14 @@
 import { TestHarness } from '@simulacrum/test/test-harness'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
-import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
+import { Dnd5e, SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
 import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import { Archery, SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import { HitPointResourcePool } from '@simulacrum/rulesets/dnd-5e/resource-pool'
 
 // Abilities that take a loadout slot (e.g. weapon masteries) are left out of the counts, since a Fighter has access to all of them
 test('Test Character Choices and Selections', () => {
-  const context = TestHarness.buildTestContext()
-  let character = Characters.buildCharacterDefinition(TestHarness.CommonerLevel3, context)
+  const ruleset = Dnd5e
+  let character = Characters.buildCharacterDefinition(TestHarness.CommonerLevel3, ruleset)
 
   // We should have class, background, and species choices at level one, with 12 options for the 12 classes
   expect(character.choices[1]!.length).toBe(3)
@@ -37,21 +37,21 @@ test('Test Character Choices and Selections', () => {
 
   expect(character.abilities.filter((it) => it.loadout === null).length).toBe(4)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level1), context)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level1), ruleset)
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level1)).toBe(true)
 
   expect(character.abilities.filter((it) => it.loadout === null).length).toBe(5)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectFightingStyle, Archery), context)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectFightingStyle, Archery), ruleset)
   expect(CharacterOptions.isSelected(character.selections, SelectFightingStyle, Archery)).toBe(true)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), context)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), ruleset)
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level2)).toBe(true)
 
   // Fighter (2) grants Action Surge
   expect(character.abilities.filter((it) => it.loadout === null).length).toBe(6)
 
-  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), context)
+  character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), ruleset)
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level3)).toBe(true)
 
   expect(character.characteristics.hitPoints!.value).toBe(28)

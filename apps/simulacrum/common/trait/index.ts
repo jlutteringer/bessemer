@@ -6,7 +6,7 @@ import { Reference } from '@bessemer/cornerstone/reference'
 import { RichText } from '@bessemer/cornerstone/rich-text'
 import { Expression, Expressions } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions } from '@bessemer/cornerstone'
-import { ApplicationContext } from '@simulacrum/common/application'
+import { Ruleset } from '@simulacrum/common/ruleset'
 
 export type TraitReference = Reference<'Trait'>
 
@@ -40,14 +40,14 @@ export const defineTrait = (reference: string, props: TraitProps): Trait => {
   }
 }
 
-export const getTrait = (trait: TraitReference, context: ApplicationContext): Trait => {
-  const matchingTrait = context.client.ruleset.traits.find((it) => it.id === trait)
+export const getTrait = (trait: TraitReference, ruleset: Ruleset): Trait => {
+  const matchingTrait = ruleset.traits.find((it) => it.id === trait)
   Assertions.assertPresent(matchingTrait, () => `Unable to find Trait for Reference: ${JSON.stringify(trait)}`)
   return matchingTrait
 }
 
-export const getTraits = (traits: Array<TraitReference>, context: ApplicationContext): Array<Trait> => {
-  return traits.map((trait) => getTrait(trait, context))
+export const getTraits = (traits: Array<TraitReference>, ruleset: Ruleset): Array<Trait> => {
+  return traits.map((trait) => getTrait(trait, ruleset))
 }
 
 export const traitPrerequisite = (trait: TraitReference | Trait): Expression<boolean> => {

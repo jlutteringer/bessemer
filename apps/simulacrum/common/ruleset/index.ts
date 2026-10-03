@@ -7,6 +7,7 @@ import { Effect } from '@simulacrum/common/effect'
 import { Ability } from '@simulacrum/common/ability'
 import { Characteristic, CharacteristicGroup } from '@simulacrum/common/characteristic'
 import { Reference } from '@bessemer/cornerstone/reference'
+import { Assertions } from '@bessemer/cornerstone'
 
 export type RulesetReference = Reference<'Ruleset'>
 
@@ -21,4 +22,10 @@ export type Ruleset = { id: RulesetReference } & {
   resourcePools: Array<ResourcePoolDefinition>
   loadoutTypes: Array<LoadoutType>
   progressionTable: ProgressionTable<Effect>
+}
+
+export const getRuleset = (reference: RulesetReference, rulesets: Array<Ruleset>): Ruleset => {
+  const ruleset = rulesets.find((it) => it.id === reference)
+  Assertions.assertPresent(ruleset, () => `Unable to find Ruleset for Reference: ${reference}`)
+  return ruleset
 }

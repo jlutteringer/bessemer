@@ -5,7 +5,7 @@ import { Abilities, Archetypes, Effects, ProgressionTables, ResourcePools, Trait
 import { Trait, TraitReference } from '@simulacrum/common/trait'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Characteristic, CharacteristicGroup, CharacteristicValue } from '@simulacrum/common/characteristic'
-import { ApplicationContext } from '@simulacrum/common/application'
+import { Ruleset } from '@simulacrum/common/ruleset'
 import { Ability, ActionType } from '@simulacrum/common/ability'
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { CooldownRate } from '@simulacrum/common/resource-pool'
@@ -33,8 +33,8 @@ export type CharacterOptionChoice = {
 /**
  * The characteristics a player sets directly (e.g. ability scores), as opposed to ones derived from other values.
  */
-export const getInitialValueCharacteristics = (context: ApplicationContext): Array<Characteristic<number>> => {
-  return context.client.ruleset.playerCharacteristics.filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
+export const getInitialValueCharacteristics = (ruleset: Ruleset): Array<Characteristic<number>> => {
+  return ruleset.playerCharacteristics.filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
 }
 
 export type CharacteristicSection = {
@@ -45,8 +45,8 @@ export type CharacteristicSection = {
 /**
  * The character's characteristics, grouped in the order the ruleset lists its groups, followed by any that aren't in a group.
  */
-export const getCharacteristicSections = (context: ApplicationContext): Array<CharacteristicSection> => {
-  const { playerCharacteristics, characteristicGroups } = context.client.ruleset
+export const getCharacteristicSections = (ruleset: Ruleset): Array<CharacteristicSection> => {
+  const { playerCharacteristics, characteristicGroups } = ruleset
   const characteristics = playerCharacteristics as Array<Characteristic<number>>
 
   const sections = [
@@ -69,8 +69,9 @@ export const setInitialValue = (character: CharacterRecord, characteristic: Char
   return { ...character, initialValues }
 }
 
-export const newCharacter = (context: ApplicationContext): CharacterRecord => {
+export const newCharacter = (ruleset: Ruleset): CharacterRecord => {
   const character: CharacterRecord = {
+    ruleset: ruleset.id,
     name: '',
     level: 1,
     initialValues: {},
@@ -78,11 +79,11 @@ export const newCharacter = (context: ApplicationContext): CharacterRecord => {
     selectedAbilities: [],
   }
 
-  return getInitialValueCharacteristics(context).reduce((it, characteristic) => setInitialValue(it, characteristic, DefaultInitialValue), character)
+  return getInitialValueCharacteristics(ruleset).reduce((it, characteristic) => setInitialValue(it, characteristic, DefaultInitialValue), character)
 }
 
-export const setLevel = (character: CharacterRecord, level: number, context: ApplicationContext): CharacterRecord => {
-  return normalizeSelections({ ...character, level, selections: resizeSelections(character.selections, level) }, context)
+export const setLevel = (character: CharacterRecord, level: number, ruleset: Ruleset): CharacterRecord => {
+  return normalizeSelections({ ...character, level, selections: resizeSelections(character.selections, level) }, ruleset)
 }
 
 // Resizes a selections table to `level`, dropping any selections above it
@@ -98,7 +99,7 @@ export const selectValue = (
   character: CharacterRecord,
   choice: CharacterOptionChoice,
   value: CharacterOptionValue | null,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): CharacterRecord => {
   const row = [...(character.selections[choice.level] ?? [])]
   const newSelection = Objects.isNil(value) ? [] : [{ option: choice.option.id, selection: value.id }]
@@ -112,7 +113,7 @@ export const selectValue = (
     row.splice(existingIndex, 1, ...newSelection)
   }
 
-  return normalizeSelections({ ...character, selections: { ...character.selections, [choice.level]: row } }, context)
+  return normalizeSelections({ ...character, selections: { ...character.selections, [choice.level]: row } }, ruleset)
 }
 
 /**
@@ -123,7 +124,7 @@ export const selectValuesForChoices = (
   character: CharacterRecord,
   choices: Array<CharacterOptionChoice>,
   values: Array<CharacterOptionValue>,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): CharacterRecord => {
   const { level, option } = choices[0]!
   const row = [...(character.selections[level] ?? [])]
@@ -136,13 +137,13 @@ export const selectValuesForChoices = (
   })
 
   row.push(...values.slice(0, choices.length).map((value) => ({ option: option.id, selection: value.id })))
-  return normalizeSelections({ ...character, selections: { ...character.selections, [level]: row } }, context)
+  return normalizeSelections({ ...character, selections: { ...character.selections, [level]: row } }, ruleset)
 }
 
 // Drops any selections that are no longer valid, e.g. a fighting style after the Fighter class selection is changed, along with any
 // loadout abilities that no longer fit, e.g. cantrips after the Wizard class selection is removed
-const normalizeSelections = (character: CharacterRecord, context: ApplicationContext): CharacterRecord => {
-  const sheet = Characters.buildCharacterDefinition(character, context)
+const normalizeSelections = (character: CharacterRecord, ruleset: Ruleset): CharacterRecord => {
+  const sheet = Characters.buildCharacterDefinition(character, ruleset)
   return { ...character, selections: sheet.selections, selectedAbilities: sheet.selectedAbilities }
 }
 
@@ -160,23 +161,23 @@ export const selectLoadoutAbilities = (
   character: CharacterRecord,
   loadoutType: LoadoutTypeReference,
   abilities: Array<Ability>,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): CharacterRecord => {
-  const loadoutAbilities = getLoadoutAbilities(Characters.buildCharacterDefinition(character, context), loadoutType).map((it) => it.id)
+  const loadoutAbilities = getLoadoutAbilities(Characters.buildCharacterDefinition(character, ruleset), loadoutType).map((it) => it.id)
   const otherAbilities = Arrays.difference(character.selectedAbilities, loadoutAbilities)
-  return normalizeSelections({ ...character, selectedAbilities: [...otherAbilities, ...abilities.map((it) => it.id)] }, context)
+  return normalizeSelections({ ...character, selectedAbilities: [...otherAbilities, ...abilities.map((it) => it.id)] }, ruleset)
 }
 
 /**
  * Labels an option by its own label if it has one, otherwise by the archetypes its traits are drawn from, e.g. "Class" or
  * "Fighting Style".
  */
-export const getOptionLabel = (option: CharacterOption, context: ApplicationContext): string => {
+export const getOptionLabel = (option: CharacterOption, ruleset: Ruleset): string => {
   if (Objects.isPresent(option.label)) {
     return option.label
   }
 
-  const archetypeNames = option.filter.archetypes.flat().map((it) => Archetypes.getArchetype(it, context).name)
+  const archetypeNames = option.filter.archetypes.flat().map((it) => Archetypes.getArchetype(it, ruleset).name)
   return !Arrays.isEmpty(archetypeNames) ? archetypeNames.join(' / ') : option.type === CharacterOptionType.SelectTrait ? 'Trait' : 'Ability'
 }
 
@@ -188,8 +189,8 @@ export const isTrait = (value: CharacterOptionValue): value is Trait => {
 /**
  * Labels an option's value (a trait or an ability) by the archetypes it belongs to, e.g. "Rank 2 / Evocation" or "Class".
  */
-export const getValueCaption = (value: CharacterOptionValue, context: ApplicationContext): string => {
-  return value.archetypes.map((it) => Archetypes.getArchetype(it, context).name).join(' / ')
+export const getValueCaption = (value: CharacterOptionValue, ruleset: Ruleset): string => {
+  return value.archetypes.map((it) => Archetypes.getArchetype(it, ruleset).name).join(' / ')
 }
 
 export const getCharacterOptionChoices = (sheet: CharacterSheet): Array<CharacterOptionChoice> => {
@@ -218,7 +219,7 @@ export const getCharacteristicValue = (sheet: CharacterSheet, characteristic: Ch
 export const getGrantedTraits = (
   trait: Trait,
   heldTraits: ProgressionTable<TraitReference>,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): Array<{ trait: Trait; level: number }> => {
   return Effects.filter(trait.effects, Effects.GainTrait).flatMap((it) => {
     const entry = ProgressionTables.getEntries(heldTraits).find(([_, heldTrait]) => heldTrait === it.trait)
@@ -226,8 +227,8 @@ export const getGrantedTraits = (
       return []
     }
 
-    const grantedTrait = Traits.getTrait(it.trait, context)
-    return [{ trait: grantedTrait, level: entry[0] }, ...getGrantedTraits(grantedTrait, heldTraits, context)]
+    const grantedTrait = Traits.getTrait(it.trait, ruleset)
+    return [{ trait: grantedTrait, level: entry[0] }, ...getGrantedTraits(grantedTrait, heldTraits, ruleset)]
   })
 }
 
@@ -278,8 +279,8 @@ const getRecoveryLabels = (refresh: Array<CooldownRate>, evaluate: EvaluateExpre
  * own resource is labelled "Uses" and a shared pool (e.g. Rage or Superiority Dice) with its name. Sizes are the character's, so they
  * include modifiers (e.g. a Barbarian's extra Rage at level 3) and expressions (e.g. uses equal to the Wisdom modifier).
  */
-export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, context: ApplicationContext): Array<string> => {
-  const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, context))
+export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, ruleset: Ruleset): Array<string> => {
+  const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, ruleset))
   const costs = Arrays.dedupeBy(
     ability.actions.flatMap((it) => it.costs).map((it) => ({ cost: it.cost, reference: it.resource ?? ability.resource?.id })),
     (it) => it.reference
@@ -287,7 +288,7 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
 
   return costs.map(({ cost, reference }) => {
     Assertions.assertPresent(reference, () => `Ability [${ability.id}] has a cost without a resource, but no resource of its own`)
-    const resource = sheet.resources[reference]?.resource ?? ResourcePools.getResourcePool(reference, context)
+    const resource = sheet.resources[reference]?.resource ?? ResourcePools.getResourcePool(reference, ruleset)
     const costValue = evaluate(cost)
     const label = resource.id === ability.resource?.id ? 'Uses' : resource.name
 

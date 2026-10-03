@@ -1,5 +1,6 @@
 import { Ruleset } from '@simulacrum/common/ruleset'
 import { Dnd5e } from '@simulacrum/rulesets/dnd-5e'
+import { KhydrianDrift } from '@simulacrum/rulesets/khydrian-drift'
 import { Objects, Tags, Urls } from '@bessemer/cornerstone'
 import { serverOnlyTest } from '@simulacrum/common/server-only-test'
 import { BessemerModule, ClientContextType } from '@bessemer/framework'
@@ -10,7 +11,6 @@ import { DEPRECATEDDeepPartial } from '@bessemer/cornerstone/types'
 
 export type ApplicationOptions = FoundryOptions &
   RedisOptions & {
-    ruleset: string
     public: {
       test: string
     }
@@ -23,7 +23,7 @@ export type ApplicationContext = FoundryApplicationContext &
       runtime: {
         test: () => string
       }
-      ruleset: Ruleset
+      rulesets: Array<Ruleset>
     }
   }
 
@@ -48,7 +48,10 @@ export const ApplicationModule: BessemerModule<ApplicationContext, ApplicationOp
   },
   configure: async (options) => {
     // FUTURE concerning cast here...
-    const application: DEPRECATEDDeepPartial<ApplicationContext> = { serverOnlyTest, client: { ruleset: Dnd5e as DEPRECATEDDeepPartial<Ruleset> } }
+    const application: DEPRECATEDDeepPartial<ApplicationContext> = {
+      serverOnlyTest,
+      client: { rulesets: [Dnd5e, KhydrianDrift] as Array<DEPRECATEDDeepPartial<Ruleset>> },
+    }
     return application
   },
   dependencies: [FoundryApplicationModule, RedisApplicationModule],

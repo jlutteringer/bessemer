@@ -4,7 +4,7 @@ import { Abilities, Attributes, ResourcePools } from '@simulacrum/common'
 import { ActionType } from '@simulacrum/common/ability'
 import { ResourcePool } from '@simulacrum/common/resource-pool'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
-import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
+import { Dnd5e, SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
 import * as Barbarian from '@simulacrum/rulesets/dnd-5e/class/class-barbarian'
 import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import { SuperiorityDice } from '@simulacrum/rulesets/dnd-5e/archetype/maneuver'
@@ -29,7 +29,7 @@ test('modifiers patch a resource pool in order', () => {
 })
 
 test('Barbarian levels add Rage uses', () => {
-  const context = TestHarness.buildTestContext()
+  const ruleset = Dnd5e
   const levels = [Barbarian.Level1, Barbarian.Level2, Barbarian.Level3]
   const barbarian = (level: number) =>
     Characters.buildCharacterDefinition(
@@ -40,7 +40,7 @@ test('Barbarian levels add Rage uses', () => {
           levels.slice(0, level).map((it, index) => [index + 1, [CharacterOptions.buildSelection(SelectClassLevel, it)]])
         ),
       },
-      context
+      ruleset
     )
 
   expect(barbarian(2).resources[Barbarian.Rage.resource.id]!.value).toBe(2)
@@ -48,7 +48,7 @@ test('Barbarian levels add Rage uses', () => {
 })
 
 test('Fighter levels add Second Wind uses', () => {
-  const context = TestHarness.buildTestContext()
+  const ruleset = Dnd5e
   const levels = [Fighter.Level1, Fighter.Level2, Fighter.Level3, Fighter.Level4]
   const fighter = (level: number) =>
     Characters.buildCharacterDefinition(
@@ -59,7 +59,7 @@ test('Fighter levels add Second Wind uses', () => {
           levels.slice(0, level).map((it, index) => [index + 1, [CharacterOptions.buildSelection(SelectClassLevel, it)]])
         ),
       },
-      context
+      ruleset
     )
 
   expect(fighter(3).resources[Fighter.SecondWind.resource.id]!.value).toBe(2)

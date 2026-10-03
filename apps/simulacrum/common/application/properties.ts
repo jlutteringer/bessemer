@@ -17,7 +17,6 @@ export const ApplicationProperties: PropertyRecord<ApplicationOptions> = Propert
   route: {
     errorHandler: CoreRouteErrorHandler,
   },
-  ruleset: 'dnd',
   codex: {
     provider: contentProvider,
   },

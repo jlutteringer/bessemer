@@ -11,7 +11,7 @@ import { Modifier } from '@simulacrum/common/attribute'
 import { Arrays, Assertions, Objects, Patches } from '@bessemer/cornerstone'
 import * as Archetypes from '@simulacrum/common/archetype'
 import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/common/archetype'
-import { ApplicationContext } from '@simulacrum/common/application'
+import { Ruleset } from '@simulacrum/common/ruleset'
 
 export enum ActionType {
   Free = 'Free',
@@ -92,14 +92,14 @@ export const defineAbility = <P extends AbilityProps>(reference: string, props: 
   } as DefinedAbility<P>
 }
 
-export const getAbility = (reference: AbilityReference, context: ApplicationContext): Ability => {
-  const ability = context.client.ruleset.abilities.find((it) => it.id === reference)
+export const getAbility = (reference: AbilityReference, ruleset: Ruleset): Ability => {
+  const ability = ruleset.abilities.find((it) => it.id === reference)
   Assertions.assertPresent(ability)
   return ability
 }
 
-export const getAbilities = (abilities: Array<AbilityReference>, context: ApplicationContext): Array<Ability> => {
-  return abilities.map((it) => getAbility(it, context))
+export const getAbilities = (abilities: Array<AbilityReference>, ruleset: Ruleset): Array<Ability> => {
+  return abilities.map((it) => getAbility(it, ruleset))
 }
 
 export type AbilityFilterProps = {
@@ -145,7 +145,7 @@ export const buildInitialState = (
   loadout: LoadoutTypeReference | null,
   modifiers: Array<Modifier<unknown>>,
   evaluate: EvaluateExpression,
-  context: ApplicationContext
+  ruleset: Ruleset
 ): AbilityState => {
-  return { ability: applyModifiers(getAbility(ability, context), modifiers, evaluate), loadout }
+  return { ability: applyModifiers(getAbility(ability, ruleset), modifiers, evaluate), loadout }
 }

@@ -1,7 +1,7 @@
 import { Reference } from '@bessemer/cornerstone/reference'
 import { Assertions } from '@bessemer/cornerstone'
 import { AbilityReference } from '@simulacrum/common/ability'
-import { ApplicationContext } from '@simulacrum/common/application'
+import { Ruleset } from '@simulacrum/common/ruleset'
 
 export type LoadoutTypeReference = Reference<'LoadoutType'>
 
@@ -23,8 +23,8 @@ export const defineLoadoutType = (reference: string, props: LoadoutProps): Loado
   }
 }
 
-export const getLoadoutType = (reference: LoadoutTypeReference, context: ApplicationContext): LoadoutType => {
-  const loadoutType = context.client.ruleset.loadoutTypes.find((it) => it.id === reference)
+export const getLoadoutType = (reference: LoadoutTypeReference, ruleset: Ruleset): LoadoutType => {
+  const loadoutType = ruleset.loadoutTypes.find((it) => it.id === reference)
   Assertions.assertPresent(loadoutType, () => `Unable to find Loadout Type for Reference: ${JSON.stringify(reference)}`)
   return loadoutType
 }

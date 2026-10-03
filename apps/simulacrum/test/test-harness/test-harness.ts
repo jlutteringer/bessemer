@@ -21,7 +21,7 @@ export const buildTestContext = (): ApplicationContext => {
     serverOnlyTest: () => 'asdasd',
     client: {
       correlationId: '123',
-      ruleset: Dnd5e,
+      rulesets: [Dnd5e],
       tags: [],
       environment: 'test',
       runtime: { test: () => 'hello', codex: { renderers: [] } },
@@ -30,6 +30,7 @@ export const buildTestContext = (): ApplicationContext => {
 }
 
 export const CommonerLevel1: CharacterRecord = {
+  ruleset: Dnd5e.id,
   name: 'Bob the Commoner',
   level: 1,
   initialValues: {
@@ -45,6 +46,7 @@ export const CommonerLevel1: CharacterRecord = {
 }
 
 export const CommonerLevel3: CharacterRecord = {
+  ruleset: Dnd5e.id,
   name: 'Bob the Commoner',
   level: 3,
   initialValues: {
@@ -60,6 +62,7 @@ export const CommonerLevel3: CharacterRecord = {
 }
 
 export const FighterLevel2: CharacterRecord = {
+  ruleset: Dnd5e.id,
   name: 'Bob the Fighter',
   level: 2,
   initialValues: {
