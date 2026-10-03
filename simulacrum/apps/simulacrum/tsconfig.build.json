@@ -1,0 +1,27 @@
+{
+  "extends": "../../../tsconfig.next.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@simulacrum/app/*": ["./app/*"],
+      "@simulacrum/ui/*": ["./ui/*"],
+      "@simulacrum/engine": ["./engine"],
+      "@simulacrum/engine/*": ["./engine/*"],
+      "@simulacrum/application": ["./application"],
+      "@simulacrum/application/*": ["./application/*"],
+      "@simulacrum/test/*": ["./test/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "jest.config.js"
+  ]
+}

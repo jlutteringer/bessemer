@@ -1,0 +1,27 @@
+{
+  "name": "@simulacrum/ruleset-dnd5e",
+  "type": "module",
+  "version": "0.0.0",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup && tsc --project tsconfig.build.json --emitDeclarationOnly",
+    "prettier-fix": "prettier --write .",
+    "clean": "rm -rf dist && rm -rf .turbo"
+  },
+  "dependencies": {
+    "@bessemer/cornerstone": "workspace:*",
+    "@simulacrum/ruleset": "workspace:*"
+  }
+}

@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "bessemer/*",
-    "apps/*"
+    "simulacrum/apps/*",
+    "simulacrum/packages/*"
   ],
   "scripts": {
     "dev": "turbo watch build",

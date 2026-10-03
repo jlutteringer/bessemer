@@ -1,0 +1,22 @@
+{
+  "name": "simulacrum",
+  "version": "0.1.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prettier-fix": "prettier --write .",
+    "test": "jest",
+    "clean": "rm -rf .next && rm -rf .turbo"
+  },
+  "dependencies": {
+    "@bessemer/foundry": "workspace:*",
+    "@bessemer/redis": "workspace:*",
+    "@simulacrum/common": "workspace:*",
+    "@simulacrum/ruleset": "workspace:*",
+    "@simulacrum/ruleset-dnd5e": "workspace:*",
+    "@simulacrum/ruleset-khydrian-drift": "workspace:*"
+  }
+}

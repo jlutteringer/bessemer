@@ -30,8 +30,21 @@
       "@bessemer/contentful/*": ["./bessemer/contentful/src/*"],
       "@bessemer/client": ["./bessemer/client/src"],
       "@bessemer/client/*": ["./bessemer/client/src/*"],
-      "@simulacrum": ["./apps/simulacrum"],
-      "@simulacrum/*": ["./apps/simulacrum/*"]
+      "@simulacrum/app/*": ["./simulacrum/apps/simulacrum/app/*"],
+      "@simulacrum/ui/*": ["./simulacrum/apps/simulacrum/ui/*"],
+      "@simulacrum/engine": ["./simulacrum/apps/simulacrum/engine"],
+      "@simulacrum/engine/*": ["./simulacrum/apps/simulacrum/engine/*"],
+      "@simulacrum/application": ["./simulacrum/apps/simulacrum/application"],
+      "@simulacrum/application/*": ["./simulacrum/apps/simulacrum/application/*"],
+      "@simulacrum/test/*": ["./simulacrum/apps/simulacrum/test/*"],
+      "@simulacrum/common": ["./simulacrum/packages/common/src"],
+      "@simulacrum/common/*": ["./simulacrum/packages/common/src/*"],
+      "@simulacrum/ruleset": ["./simulacrum/packages/ruleset/src"],
+      "@simulacrum/ruleset/*": ["./simulacrum/packages/ruleset/src/*"],
+      "@simulacrum/ruleset-dnd5e": ["./simulacrum/packages/ruleset-dnd5e/src"],
+      "@simulacrum/ruleset-dnd5e/*": ["./simulacrum/packages/ruleset-dnd5e/src/*"],
+      "@simulacrum/ruleset-khydrian-drift": ["./simulacrum/packages/ruleset-khydrian-drift/src"],
+      "@simulacrum/ruleset-khydrian-drift/*": ["./simulacrum/packages/ruleset-khydrian-drift/src/*"]
     }
   },
   "exclude": ["node_modules"],

@@ -1,0 +1,53 @@
+{
+  "extends": "../../../tsconfig.next.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@bessemer/cornerstone": ["../../../bessemer/cornerstone/src"],
+      "@bessemer/cornerstone/*": ["../../../bessemer/cornerstone/src/*"],
+      "@bessemer/react": [ "../../../bessemer/react/src"],
+      "@bessemer/react/*": ["../../../bessemer/react/src/*"],
+      "@bessemer/mui": [ "../../../bessemer/mui/src"],
+      "@bessemer/mui/*": ["../../../bessemer/mui/src/*"],
+      "@bessemer/framework": ["../../../bessemer/framework/src"],
+      "@bessemer/framework/*": ["../../../bessemer/framework/src/*"],
+      "@bessemer/framework-next": ["../../../bessemer/framework-next/src"],
+      "@bessemer/framework-next/*": ["../../../bessemer/framework-next/src/*"],
+      "@bessemer/core": [ "../../../bessemer/core/src"],
+      "@bessemer/core/*": ["../../../bessemer/core/src/*"],
+      "@bessemer/foundry": ["../../../bessemer/foundry/src"],
+      "@bessemer/foundry/*": ["../../../bessemer/foundry/src/*"],
+      "@bessemer/redis": ["../../../bessemer/redis/src"],
+      "@bessemer/redis/*": ["../../../bessemer/redis/src/*"],
+      "@bessemer/contentful": ["../../../bessemer/contentful/src"],
+      "@bessemer/contentful/*": ["../../../bessemer/contentful/src/*"],
+      "@bessemer/client": ["../../../bessemer/client/src"],
+      "@bessemer/client/*": ["../../../bessemer/client/src/*"],
+      "@simulacrum/app/*": ["./app/*"],
+      "@simulacrum/ui/*": ["./ui/*"],
+      "@simulacrum/engine": ["./engine"],
+      "@simulacrum/engine/*": ["./engine/*"],
+      "@simulacrum/application": ["./application"],
+      "@simulacrum/application/*": ["./application/*"],
+      "@simulacrum/test/*": ["./test/*"],
+      "@simulacrum/common": ["../../packages/common/src"],
+      "@simulacrum/common/*": ["../../packages/common/src/*"],
+      "@simulacrum/ruleset": ["../../packages/ruleset/src"],
+      "@simulacrum/ruleset/*": ["../../packages/ruleset/src/*"],
+      "@simulacrum/ruleset-dnd5e": ["../../packages/ruleset-dnd5e/src"],
+      "@simulacrum/ruleset-dnd5e/*": ["../../packages/ruleset-dnd5e/src/*"],
+      "@simulacrum/ruleset-khydrian-drift": ["../../packages/ruleset-khydrian-drift/src"],
+      "@simulacrum/ruleset-khydrian-drift/*": ["../../packages/ruleset-khydrian-drift/src/*"]
+    },
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

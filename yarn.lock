@@ -2315,6 +2315,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@simulacrum/api@workspace:simulacrum/apps/api":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/api@workspace:simulacrum/apps/api"
+  languageName: unknown
+  linkType: soft
+
+"@simulacrum/common@workspace:*, @simulacrum/common@workspace:simulacrum/packages/common":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/common@workspace:simulacrum/packages/common"
+  languageName: unknown
+  linkType: soft
+
+"@simulacrum/ruleset-dnd5e@workspace:*, @simulacrum/ruleset-dnd5e@workspace:simulacrum/packages/ruleset-dnd5e":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/ruleset-dnd5e@workspace:simulacrum/packages/ruleset-dnd5e"
+  dependencies:
+    "@bessemer/cornerstone": "workspace:*"
+    "@simulacrum/ruleset": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@simulacrum/ruleset-khydrian-drift@workspace:*, @simulacrum/ruleset-khydrian-drift@workspace:simulacrum/packages/ruleset-khydrian-drift":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/ruleset-khydrian-drift@workspace:simulacrum/packages/ruleset-khydrian-drift"
+  dependencies:
+    "@bessemer/cornerstone": "workspace:*"
+    "@simulacrum/ruleset": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@simulacrum/ruleset@workspace:*, @simulacrum/ruleset@workspace:simulacrum/packages/ruleset":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/ruleset@workspace:simulacrum/packages/ruleset"
+  dependencies:
+    "@bessemer/cornerstone": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
@@ -7928,12 +7966,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simulacrum@workspace:apps/simulacrum":
+"simulacrum@workspace:simulacrum/apps/simulacrum":
   version: 0.0.0-use.local
-  resolution: "simulacrum@workspace:apps/simulacrum"
+  resolution: "simulacrum@workspace:simulacrum/apps/simulacrum"
   dependencies:
     "@bessemer/foundry": "workspace:*"
     "@bessemer/redis": "workspace:*"
+    "@simulacrum/common": "workspace:*"
+    "@simulacrum/ruleset": "workspace:*"
+    "@simulacrum/ruleset-dnd5e": "workspace:*"
+    "@simulacrum/ruleset-khydrian-drift": "workspace:*"
   languageName: unknown
   linkType: soft
 
