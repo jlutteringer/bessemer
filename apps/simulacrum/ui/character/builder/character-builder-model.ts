@@ -275,12 +275,15 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
 
   return costs.map(({ cost, reference }) => {
     Assertions.assertPresent(reference, () => `Ability [${ability.id}] has a cost without a resource, but no resource of its own`)
-    const resource = ResourcePools.getResourcePool(reference, context)
-    const size = sheet.resources[reference]?.value ?? evaluate(resource.size)
+    const resource = sheet.resources[reference]?.resource ?? ResourcePools.getResourcePool(reference, context)
     const costValue = evaluate(cost)
     const label = resource.id === ability.resource?.id ? 'Uses' : resource.name
 
-    return [`${label}: ${size}`, ...(costValue === 1 ? [] : [`costs ${costValue}`]), ...getRecoveryLabels(resource.refresh, evaluate)].join(' · ')
+    return [
+      `${label}: ${evaluate(resource.size)}`,
+      ...(costValue === 1 ? [] : [`costs ${costValue}`]),
+      ...getRecoveryLabels(resource.refresh, evaluate),
+    ].join(' · ')
   })
 }
 

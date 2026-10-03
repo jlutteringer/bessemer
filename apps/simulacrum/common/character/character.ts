@@ -356,7 +356,7 @@ const evaluateResourcePools = (
     return ResourcePools.buildInitialState(resourcePool, modifiers, evaluate, context)
   })
 
-  return Object.fromEntries(states.map((it) => [it.resource, it]))
+  return Object.fromEntries(states.map((it) => [it.resource.id, it]))
 }
 
 export const buildExpressionContext = (character: CharacterState, context: ApplicationContext): ExpressionContext => {

@@ -27,7 +27,7 @@ export type ResourcePoolProps = ResourcePool & {
 export type ResourcePoolDefinition = ResourcePoolProps & { id: ResourcePoolReference }
 
 export type ResourcePoolState = {
-  resource: ResourcePoolReference
+  resource: ResourcePoolDefinition
   value: number
 }
 
@@ -71,9 +71,6 @@ export const buildInitialState = (
   evaluate: EvaluateExpression,
   context: ApplicationContext
 ): ResourcePoolState => {
-  const resourcePool = getResourcePool(reference, context)
-  return {
-    resource: resourcePool.id,
-    value: evaluate(applyModifiers(resourcePool, modifiers, evaluate).size),
-  }
+  const resourcePool = applyModifiers(getResourcePool(reference, context), modifiers, evaluate)
+  return { resource: resourcePool, value: evaluate(resourcePool.size) }
 }

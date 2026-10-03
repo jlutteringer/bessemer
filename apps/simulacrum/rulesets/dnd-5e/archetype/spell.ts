@@ -1,6 +1,6 @@
 import { Abilities, Archetypes, Effects } from '@simulacrum/common'
 import { ActionType } from '@simulacrum/common/ability'
-import { Cleric, Wizard } from '@simulacrum/rulesets/dnd-5e/archetype'
+import { Bard, Cleric, Wizard } from '@simulacrum/rulesets/dnd-5e/archetype'
 
 export const Cantrip = Archetypes.defineArchetype('spell/cantrip', { name: 'Cantrip' })
 export const Rank1 = Archetypes.defineArchetype('spell/rank-1', { name: 'Rank 1' })
@@ -45,7 +45,7 @@ export const CharmPerson = Abilities.defineAbility('spell/charm-person', {
       "<p><strong>Enchantment</strong> · 30 feet · V, S · 1 hour</p><p>A Humanoid you can see makes a Wisdom save (with Advantage if you or your allies are fighting it). On a failure it's Charmed by you and treats you as Friendly until the spell ends or it's harmed by you or your allies. It knows it was charmed once the spell ends.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 1.</p>"
     ),
   ],
-  archetypes: [Rank1, Enchantment, Wizard],
+  archetypes: [Rank1, Enchantment, Wizard, Bard],
   actions: [{ name: 'Cast Charm Person', action: ActionType.Standard }],
 })
 
@@ -67,7 +67,7 @@ export const ColorSpray = Abilities.defineAbility('spell/color-spray', {
       '<p><strong>Illusion</strong> · Self · V, S, M (a pinch of colorful sand) · Instantaneous</p><p>A burst of flashing colors fills a 15-foot Cone. Each creature in it must pass a Constitution save or be Blinded until the end of your next turn.</p>'
     ),
   ],
-  archetypes: [Rank1, Illusion, Wizard],
+  archetypes: [Rank1, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Color Spray', action: ActionType.Standard }],
 })
 
@@ -78,7 +78,7 @@ export const ComprehendLanguages = Abilities.defineAbility('spell/comprehend-lan
       '<p><strong>Divination</strong> · Action or Ritual · Self · V, S, M (a pinch of soot and salt) · 1 hour</p><p>You understand the literal meaning of any spoken or signed language, and can read any written language you touch (about a page per minute). Codes and secret messages stay hidden.</p>'
     ),
   ],
-  archetypes: [Rank1, Divination, Wizard],
+  archetypes: [Rank1, Divination, Wizard, Bard],
   actions: [{ name: 'Cast Comprehend Languages', action: ActionType.Standard }],
 })
 
@@ -89,7 +89,7 @@ export const DetectMagic = Abilities.defineAbility('spell/detect-magic', {
       '<p><strong>Divination</strong> · Action or Ritual · Self · V, S · Concentration, up to 10 minutes</p><p>You sense magic within 30 feet. As a Magic action you can see an aura around magical creatures or objects in view and learn the school of any spell involved. Thick stone, dirt, wood, metal, or a sheet of lead blocks it.</p>'
     ),
   ],
-  archetypes: [Rank1, Divination, Cleric, Wizard],
+  archetypes: [Rank1, Divination, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Detect Magic', action: ActionType.Standard }],
 })
 
@@ -100,7 +100,7 @@ export const DisguiseSelf = Abilities.defineAbility('spell/disguise-self', {
       "<p><strong>Illusion</strong> · Self · V, S · 1 hour</p><p>You change how you and your gear look, including up to a foot of height and your build, as long as you keep the same basic body shape. The illusion doesn't survive touch, and a creature that Studies you can see through it with an Intelligence (Investigation) check against your spell save DC.</p>"
     ),
   ],
-  archetypes: [Rank1, Illusion, Wizard],
+  archetypes: [Rank1, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Disguise Self', action: ActionType.Standard }],
 })
 
@@ -133,7 +133,7 @@ export const FeatherFall = Abilities.defineAbility('spell/feather-fall', {
       '<p><strong>Transmutation</strong> · Reaction, which you take when you or a creature you can see within 60 feet of you falls · 60 feet · V, M (a small feather or piece of down) · 1 minute</p><p>Up to five falling creatures in range descend at only 60 feet per round and take no falling damage if they land while the spell lasts.</p>'
     ),
   ],
-  archetypes: [Rank1, Transmutation, Wizard],
+  archetypes: [Rank1, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Feather Fall', action: ActionType.Reaction }],
 })
 
@@ -188,7 +188,7 @@ export const Identify = Abilities.defineAbility('spell/identify', {
       '<p><strong>Divination</strong> · 1 minute or Ritual · Touch · V, S, M (a pearl worth 100+ GP) · Instantaneous</p><p>Touch an object while casting to learn its magical properties, how to use it, whether it needs Attunement, its charges, and any spells affecting or creating it. Touching a creature instead reveals the spells currently affecting it.</p>'
     ),
   ],
-  archetypes: [Rank1, Divination, Wizard],
+  archetypes: [Rank1, Divination, Wizard, Bard],
   actions: [{ name: 'Cast Identify', action: ActionType.Standard }],
 })
 
@@ -199,7 +199,7 @@ export const IllusoryScript = Abilities.defineAbility('spell/illusory-script', {
       '<p><strong>Illusion</strong> · 1 minute or Ritual · Touch · S, M (ink worth 10+ GP, which the spell consumes) · 10 days</p><p>You write a message that only you and creatures you choose can read. To everyone else it looks like unreadable magical script, or you can make it look like a different message in a language you know. Truesight reveals the real text, and dispelling the spell erases both.</p>'
     ),
   ],
-  archetypes: [Rank1, Illusion, Wizard],
+  archetypes: [Rank1, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Illusory Script', action: ActionType.Standard }],
 })
 
@@ -221,7 +221,7 @@ export const Longstrider = Abilities.defineAbility('spell/longstrider', {
       '<p><strong>Transmutation</strong> · Touch · V, S, M (a pinch of dirt) · 1 hour</p><p>A creature you touch gains +10 feet of Speed.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 1.</p>'
     ),
   ],
-  archetypes: [Rank1, Transmutation, Wizard],
+  archetypes: [Rank1, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Longstrider', action: ActionType.Standard }],
 })
 
@@ -287,7 +287,7 @@ export const SilentImage = Abilities.defineAbility('spell/silent-image', {
       '<p><strong>Illusion</strong> · 60 feet · V, S, M (a bit of fleece) · Concentration, up to 10 minutes</p><p>You create a soundless visual illusion up to a 15-foot Cube, which you can move and animate as a Magic action. Things pass through it, and a creature that Studies it can see through it with an Intelligence (Investigation) check against your spell save DC.</p>'
     ),
   ],
-  archetypes: [Rank1, Illusion, Wizard],
+  archetypes: [Rank1, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Silent Image', action: ActionType.Standard }],
 })
 
@@ -298,7 +298,7 @@ export const Sleep = Abilities.defineAbility('spell/sleep', {
       "<p><strong>Enchantment</strong> · 60 feet · V, S, M (a pinch of sand or rose petals) · Concentration, up to 1 minute</p><p>Creatures you choose in a 5-foot-radius Sphere must pass a Wisdom save or be Incapacitated until the end of their next turn. Those that then fail a second save fall Unconscious for the duration, until they take damage or someone nearby uses an action to wake them. Creatures that don't sleep or are immune to Exhaustion are unaffected.</p>"
     ),
   ],
-  archetypes: [Rank1, Enchantment, Wizard],
+  archetypes: [Rank1, Enchantment, Wizard, Bard],
   actions: [{ name: 'Cast Sleep', action: ActionType.Standard }],
 })
 
@@ -309,7 +309,7 @@ export const TashasHideousLaughter = Abilities.defineAbility('spell/tashas-hideo
       '<p><strong>Enchantment</strong> · 30 feet · V, S, M (a tart and a feather) · Concentration, up to 1 minute</p><p>A creature you can see must pass a Wisdom save or collapse with laughter, becoming Prone and Incapacitated, unable to stand up. It repeats the save at the end of each of its turns and whenever it takes damage (with Advantage), ending the spell on a success.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 1.</p>'
     ),
   ],
-  archetypes: [Rank1, Enchantment, Wizard],
+  archetypes: [Rank1, Enchantment, Wizard, Bard],
   actions: [{ name: "Cast Tasha's Hideous Laughter", action: ActionType.Standard }],
 })
 
@@ -331,7 +331,7 @@ export const Thunderwave = Abilities.defineAbility('spell/thunderwave', {
       "<p><strong>Evocation</strong> · Self · V, S · Instantaneous</p><p>A thunderous wave fills a 15-foot Cube from you. Creatures there make a Constitution save: on a failure they take 2d8 Thunder damage and are pushed 10 feet away, and on a success they take half and aren't pushed. Loose objects are pushed too, and the boom can be heard 300 feet away.</p><p><strong>Higher Levels:</strong> +1d8 damage per slot level above 1.</p>"
     ),
   ],
-  archetypes: [Rank1, Evocation, Wizard],
+  archetypes: [Rank1, Evocation, Wizard, Bard],
   actions: [{ name: 'Cast Thunderwave', action: ActionType.Standard }],
 })
 
@@ -342,7 +342,7 @@ export const UnseenServant = Abilities.defineAbility('spell/unseen-servant', {
       "<p><strong>Conjuration</strong> · Action or Ritual · 60 feet · V, S, M (a bit of string and of wood) · 1 hour</p><p>An Invisible, mindless force (AC 10, 1 HP, Strength 2) does simple chores for you, like fetching, cleaning, or serving. As a Bonus Action, you can order it to move up to 15 feet and interact with an object. It can't attack, and the spell ends if it drops to 0 HP or goes more than 60 feet from you.</p>"
     ),
   ],
-  archetypes: [Rank1, Conjuration, Wizard],
+  archetypes: [Rank1, Conjuration, Wizard, Bard],
   actions: [{ name: 'Cast Unseen Servant', action: ActionType.Standard }],
 })
 
@@ -408,7 +408,7 @@ export const BlindnessDeafness = Abilities.defineAbility('spell/blindness-deafne
       '<p><strong>Transmutation</strong> · 120 feet · V · 1 minute</p><p>A creature you can see must pass a Constitution save or be Blinded or Deafened (your choice). It repeats the save at the end of each of its turns, ending the effect on a success.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 2.</p>'
     ),
   ],
-  archetypes: [Rank2, Transmutation, Cleric, Wizard],
+  archetypes: [Rank2, Transmutation, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Blindness/Deafness', action: ActionType.Standard }],
 })
 
@@ -430,7 +430,7 @@ export const CloudOfDaggers = Abilities.defineAbility('spell/cloud-of-daggers', 
       '<p><strong>Conjuration</strong> · 60 feet · V, S, M (a sliver of glass) · Concentration, up to 1 minute</p><p>Whirling blades fill a 5-foot Cube, dealing 4d4 Slashing damage to creatures in it, entering it, ending a turn there, or caught when it moves (once per turn). On later turns, you can teleport it up to 30 feet as a Magic action.</p><p><strong>Higher Levels:</strong> +2d4 damage per slot level above 2.</p>'
     ),
   ],
-  archetypes: [Rank2, Conjuration, Wizard],
+  archetypes: [Rank2, Conjuration, Wizard, Bard],
   actions: [{ name: 'Cast Cloud of Daggers', action: ActionType.Standard }],
 })
 
@@ -452,7 +452,7 @@ export const CrownOfMadness = Abilities.defineAbility('spell/crown-of-madness', 
       '<p><strong>Enchantment</strong> · 120 feet · V, S · Concentration, up to 1 minute</p><p>A Humanoid you can see must pass a Wisdom save or be Charmed. Each turn, before moving, it must use its action to make a melee attack against a creature you mentally pick (other than itself), if one is in reach. It repeats the save at the end of each of its turns, and you must use a Magic action each turn to keep control.</p>'
     ),
   ],
-  archetypes: [Rank2, Enchantment, Wizard],
+  archetypes: [Rank2, Enchantment, Wizard, Bard],
   actions: [{ name: 'Cast Crown of Madness', action: ActionType.Standard }],
 })
 
@@ -485,7 +485,7 @@ export const DetectThoughts = Abilities.defineAbility('spell/detect-thoughts', {
       "<p><strong>Divination</strong> · Self · V, S, M (1 Copper Piece) · Concentration, up to 1 minute</p><p><strong>Sense Thoughts:</strong> detect thinking creatures within 30 feet (blocked by thick materials or lead). <strong>Read Thoughts:</strong> learn a creature's surface thoughts. On your next turn, you can probe deeper (Wisdom save) to learn its reasoning, emotions, and preoccupations. The target knows it's being probed and can try to push you out with an Intelligence (Arcana) check.</p>"
     ),
   ],
-  archetypes: [Rank2, Divination, Wizard],
+  archetypes: [Rank2, Divination, Wizard, Bard],
   actions: [{ name: 'Cast Detect Thoughts', action: ActionType.Standard }],
 })
 
@@ -507,7 +507,7 @@ export const EnhanceAbility = Abilities.defineAbility('spell/enhance-ability', {
       '<p><strong>Transmutation</strong> · Touch · V, S, M (fur or a feather) · Concentration, up to 1 hour</p><p>A creature you touch has Advantage on ability checks with one ability of your choice (Strength, Dexterity, Intelligence, Wisdom, or Charisma).</p><p><strong>Higher Levels:</strong> one extra target per slot level above 2, each with its own ability.</p>'
     ),
   ],
-  archetypes: [Rank2, Transmutation, Cleric, Wizard],
+  archetypes: [Rank2, Transmutation, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Enhance Ability', action: ActionType.Standard }],
 })
 
@@ -518,7 +518,7 @@ export const EnlargeReduce = Abilities.defineAbility('spell/enlarge-reduce', {
       '<p><strong>Transmutation</strong> · 30 feet · V, S, M (a pinch of powdered iron) · Concentration, up to 1 minute</p><p>A creature or unattended object you can see grows or shrinks by one size category, along with its gear (an unwilling creature can make a Constitution save). <strong>Enlarge</strong> gives Advantage on Strength checks and saves and +1d4 weapon and Unarmed Strike damage. <strong>Reduce</strong> gives Disadvantage on them and −1d4 damage (minimum 1).</p>'
     ),
   ],
-  archetypes: [Rank2, Transmutation, Wizard],
+  archetypes: [Rank2, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Enlarge/Reduce', action: ActionType.Standard }],
 })
 
@@ -562,7 +562,7 @@ export const HoldPerson = Abilities.defineAbility('spell/hold-person', {
       '<p><strong>Enchantment</strong> · 60 feet · V, S, M (a straight piece of iron) · Concentration, up to 1 minute</p><p>A Humanoid you can see must pass a Wisdom save or be Paralyzed. It repeats the save at the end of each of its turns, ending the effect on a success.</p><p><strong>Higher Levels:</strong> one extra Humanoid per slot level above 2.</p>'
     ),
   ],
-  archetypes: [Rank2, Enchantment, Cleric, Wizard],
+  archetypes: [Rank2, Enchantment, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Hold Person', action: ActionType.Standard }],
 })
 
@@ -573,7 +573,7 @@ export const Invisibility = Abilities.defineAbility('spell/invisibility', {
       '<p><strong>Illusion</strong> · Touch · V, S, M (an eyelash in gum arabic) · Concentration, up to 1 hour</p><p>A creature you touch is Invisible until it attacks, deals damage, or casts a spell.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 2.</p>'
     ),
   ],
-  archetypes: [Rank2, Illusion, Wizard],
+  archetypes: [Rank2, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Invisibility', action: ActionType.Standard }],
 })
 
@@ -584,7 +584,7 @@ export const Knock = Abilities.defineAbility('spell/knock', {
       "<p><strong>Transmutation</strong> · 60 feet · V · Instantaneous</p><p>An object you can see that's locked, stuck, or barred comes open (one lock at a time). Arcane Lock on it is suppressed for 10 minutes. The spell makes a loud knock heard up to 300 feet away.</p>"
     ),
   ],
-  archetypes: [Rank2, Transmutation, Wizard],
+  archetypes: [Rank2, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Knock', action: ActionType.Standard }],
 })
 
@@ -606,7 +606,7 @@ export const LocateObject = Abilities.defineAbility('spell/locate-object', {
       "<p><strong>Divination</strong> · Self · V, S, M (a forked twig) · Concentration, up to 10 minutes</p><p>You sense the direction of a familiar object within 1,000 feet, or the nearest object of a named kind, and whether it's moving. You need to have seen a specific object up close before, and lead blocks the spell.</p>"
     ),
   ],
-  archetypes: [Rank2, Divination, Cleric, Wizard],
+  archetypes: [Rank2, Divination, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Locate Object', action: ActionType.Standard }],
 })
 
@@ -617,7 +617,7 @@ export const MagicMouth = Abilities.defineAbility('spell/magic-mouth', {
       '<p><strong>Illusion</strong> · 1 minute or Ritual · 30 feet · V, S, M (jade dust worth 10+ GP, which the spell consumes) · Until dispelled</p><p>You store a message of 25 words or fewer in an unattended object. A magical mouth speaks it in your voice when a trigger you set, based on sight or sound within 30 feet, occurs. It can speak once or every time the trigger happens.</p>'
     ),
   ],
-  archetypes: [Rank2, Illusion, Wizard],
+  archetypes: [Rank2, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Magic Mouth', action: ActionType.Standard }],
 })
 
@@ -661,7 +661,7 @@ export const MirrorImage = Abilities.defineAbility('spell/mirror-image', {
       "<p><strong>Illusion</strong> · Self · V, S · 1 minute</p><p>Three illusory copies of you appear. When an attack hits you, roll a d6 for each remaining copy. If any roll 3 or higher, a copy takes the hit and vanishes instead. Attackers that are Blinded or have Blindsight or Truesight aren't fooled.</p>"
     ),
   ],
-  archetypes: [Rank2, Illusion, Wizard],
+  archetypes: [Rank2, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Mirror Image', action: ActionType.Standard }],
 })
 
@@ -694,7 +694,7 @@ export const PhantasmalForce = Abilities.defineAbility('spell/phantasmal-force',
       '<p><strong>Illusion</strong> · 60 feet · V, S, M (a bit of fleece) · Concentration, up to 1 minute</p><p>A creature you can see must pass an Intelligence save or perceive a lifelike illusion, up to a 10-foot Cube, that only it can sense. It explains away any inconsistencies. A dangerous phantasm can deal 2d8 Psychic damage to it each turn. The target can Study the illusion and see through it with an Intelligence (Investigation) check.</p>'
     ),
   ],
-  archetypes: [Rank2, Illusion, Wizard],
+  archetypes: [Rank2, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Phantasmal Force', action: ActionType.Standard }],
 })
 
@@ -738,7 +738,7 @@ export const SeeInvisibility = Abilities.defineAbility('spell/see-invisibility',
       '<p><strong>Divination</strong> · Self · V, S, M (a pinch of talc) · 1 hour</p><p>You can see Invisible creatures and objects, and see into the Ethereal Plane.</p>'
     ),
   ],
-  archetypes: [Rank2, Divination, Wizard],
+  archetypes: [Rank2, Divination, Wizard, Bard],
   actions: [{ name: 'Cast See Invisibility', action: ActionType.Standard }],
 })
 
@@ -749,7 +749,7 @@ export const Shatter = Abilities.defineAbility('spell/shatter', {
       '<p><strong>Evocation</strong> · 60 feet · V, S, M (a chip of mica) · Instantaneous</p><p>A thunderous crack hits a 10-foot-radius Sphere. Creatures there make a Constitution save (Constructs with Disadvantage), taking 3d8 Thunder damage on a failure or half on a success. Unattended objects are damaged too.</p><p><strong>Higher Levels:</strong> +1d8 damage per slot level above 2.</p>'
     ),
   ],
-  archetypes: [Rank2, Evocation, Wizard],
+  archetypes: [Rank2, Evocation, Wizard, Bard],
   actions: [{ name: 'Cast Shatter', action: ActionType.Standard }],
 })
 
@@ -771,7 +771,7 @@ export const Suggestion = Abilities.defineAbility('spell/suggestion', {
       "<p><strong>Enchantment</strong> · 30 feet · V, M (a drop of honey) · Concentration, up to 8 hours</p><p>A creature that can hear and understand you must pass a Wisdom save or be Charmed and follow a reasonable-sounding suggestion of 25 words or fewer that isn't obviously harmful. It ends early if the task is done or you or your allies hurt it.</p>"
     ),
   ],
-  archetypes: [Rank2, Enchantment, Wizard],
+  archetypes: [Rank2, Enchantment, Wizard, Bard],
   actions: [{ name: 'Cast Suggestion', action: ActionType.Standard }],
 })
 
@@ -804,7 +804,7 @@ export const BestowCurse = Abilities.defineAbility('spell/bestow-curse', {
       '<p><strong>Necromancy</strong> · Touch · V, S · Concentration, up to 1 minute</p><p>A creature you touch must pass a Wisdom save or be cursed with one effect: Disadvantage on checks and saves with one ability, Disadvantage on attacks against you, a Wisdom save each turn or it must Dodge, or +1d8 Necrotic damage whenever you hit it.</p><p><strong>Higher Levels:</strong> longer durations at level 4+, with no Concentration needed at level 5+, and permanent until dispelled at level 9.</p>'
     ),
   ],
-  archetypes: [Rank3, Necromancy, Cleric, Wizard],
+  archetypes: [Rank3, Necromancy, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Bestow Curse', action: ActionType.Standard }],
 })
 
@@ -826,7 +826,7 @@ export const Clairvoyance = Abilities.defineAbility('spell/clairvoyance', {
       '<p><strong>Divination</strong> · 10 minutes · 1 mile · V, S, M (a focus worth 100+ GP, either a jeweled horn for hearing or a glass eye for seeing) · Concentration, up to 10 minutes</p><p>Create an Invisible, intangible sensor in a familiar or obvious nearby location and see or hear through it as if you were there, switching senses as a Bonus Action. Creatures that can see the Invisible notice a small glowing orb.</p>'
     ),
   ],
-  archetypes: [Rank3, Divination, Cleric, Wizard],
+  archetypes: [Rank3, Divination, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Clairvoyance', action: ActionType.Standard }],
 })
 
@@ -848,7 +848,7 @@ export const DispelMagic = Abilities.defineAbility('spell/dispel-magic', {
       '<p><strong>Abjuration</strong> · 120 feet · V, S · Instantaneous</p><p>End every spell of level 3 or lower on a creature, object, or magical effect. For each higher-level spell, make a spellcasting ability check against DC 10 + its level to end it.</p><p><strong>Higher Levels:</strong> automatically ends spells up to the level of the slot used.</p>'
     ),
   ],
-  archetypes: [Rank3, Abjuration, Cleric, Wizard],
+  archetypes: [Rank3, Abjuration, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Dispel Magic', action: ActionType.Standard }],
 })
 
@@ -859,7 +859,7 @@ export const Fear = Abilities.defineAbility('spell/fear', {
       "<p><strong>Illusion</strong> · Self · V, S, M (a white feather) · Concentration, up to 1 minute</p><p>Creatures in a 30-foot Cone must pass a Wisdom save or drop what they're holding and become Frightened, using the Dash action to flee from you each turn. They can repeat the save only when they end a turn out of your sight.</p>"
     ),
   ],
-  archetypes: [Rank3, Illusion, Wizard],
+  archetypes: [Rank3, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Fear', action: ActionType.Standard }],
 })
 
@@ -870,7 +870,7 @@ export const FeignDeath = Abilities.defineAbility('spell/feign-death', {
       "<p><strong>Necromancy</strong> · Action or Ritual · Touch · V, S, M (a pinch of graveyard dirt) · 1 hour</p><p>A willing creature you touch appears dead, even to magic. It's Blinded and Incapacitated with Speed 0, but it resists all damage except Psychic and can't be Poisoned.</p>"
     ),
   ],
-  archetypes: [Rank3, Necromancy, Cleric, Wizard],
+  archetypes: [Rank3, Necromancy, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Feign Death', action: ActionType.Standard }],
 })
 
@@ -914,7 +914,7 @@ export const GlyphOfWarding = Abilities.defineAbility('spell/glyph-of-warding', 
       '<p><strong>Abjuration</strong> · 1 hour · Touch · V, S, M (powdered diamond worth 200+ GP, which the spell consumes) · Until dispelled or triggered</p><p>Inscribe a hidden glyph (found with Wisdom (Perception) against your spell save DC) on a surface or inside a closed object, with a trigger you define. It either explodes for 5d8 damage of a chosen element in a 20-foot radius (Dexterity save for half), or releases a spell of level 3 or lower stored in it on whoever triggered it. It breaks if moved more than 10 feet.</p><p><strong>Higher Levels:</strong> +1d8 explosion damage, or a higher-level stored spell, per slot level above 3.</p>'
     ),
   ],
-  archetypes: [Rank3, Abjuration, Cleric, Wizard],
+  archetypes: [Rank3, Abjuration, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Glyph of Warding', action: ActionType.Standard }],
 })
 
@@ -936,7 +936,7 @@ export const HypnoticPattern = Abilities.defineAbility('spell/hypnotic-pattern',
       '<p><strong>Illusion</strong> · 120 feet · S, M (a pinch of confetti) · Concentration, up to 1 minute</p><p>A swirl of colors in a 30-foot Cube forces creatures that see it to pass a Wisdom save or be Charmed, which leaves them Incapacitated with Speed 0. The effect ends for a creature if it takes damage or someone uses an action to shake it awake.</p>'
     ),
   ],
-  archetypes: [Rank3, Illusion, Wizard],
+  archetypes: [Rank3, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Hypnotic Pattern', action: ActionType.Standard }],
 })
 
@@ -947,7 +947,7 @@ export const LeomundsTinyHut = Abilities.defineAbility('spell/leomunds-tiny-hut'
       "<p><strong>Evocation</strong> · 1 minute or Ritual · Self · V, S, M (a crystal bead) · 8 hours</p><p>A stationary 10-foot dome forms around you. Those inside when it's cast can come and go, but nothing else can enter, and spells of level 3 or lower can't reach through it. Inside it's dry and comfortable, lit as you like, and opaque from outside. It ends if you leave.</p>"
     ),
   ],
-  archetypes: [Rank3, Evocation, Wizard],
+  archetypes: [Rank3, Evocation, Wizard, Bard],
   actions: [{ name: "Cast Leomund's Tiny Hut", action: ActionType.Standard }],
 })
 
@@ -980,7 +980,7 @@ export const MajorImage = Abilities.defineAbility('spell/major-image', {
       "<p><strong>Illusion</strong> · 120 feet · V, S, M (a bit of fleece) · Concentration, up to 10 minutes</p><p>Create a convincing illusion up to a 20-foot Cube with sound, smell, and temperature. You can move it and make it speak as a Magic action, but it can't cause harm. Touch reveals it, and a creature that Studies it can see through it with an Intelligence (Investigation) check.</p><p><strong>Higher Levels:</strong> with a level 4+ slot, it lasts until dispelled without Concentration.</p>"
     ),
   ],
-  archetypes: [Rank3, Illusion, Wizard],
+  archetypes: [Rank3, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Major Image', action: ActionType.Standard }],
 })
 
@@ -991,7 +991,7 @@ export const Nondetection = Abilities.defineAbility('spell/nondetection', {
       "<p><strong>Abjuration</strong> · Touch · V, S, M (a pinch of diamond dust worth 25+ GP, which the spell consumes) · 8 hours</p><p>A willing creature, or a place or object up to 10 feet across, that you touch can't be targeted by Divination spells or seen through scrying sensors.</p>"
     ),
   ],
-  archetypes: [Rank3, Abjuration, Wizard],
+  archetypes: [Rank3, Abjuration, Wizard, Bard],
   actions: [{ name: 'Cast Nondetection', action: ActionType.Standard }],
 })
 
@@ -1035,7 +1035,7 @@ export const Sending = Abilities.defineAbility('spell/sending', {
       "<p><strong>Divination</strong> · Unlimited · V, S, M (a copper wire) · Instantaneous</p><p>Send a message of 25 words or fewer to a creature you've met or had described to you, at any distance, and it can reply straight away. Messages to other planes have a 5 percent chance to fail, and a recipient can block you for 8 hours.</p>"
     ),
   ],
-  archetypes: [Rank3, Divination, Cleric, Wizard],
+  archetypes: [Rank3, Divination, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Sending', action: ActionType.Standard }],
 })
 
@@ -1057,7 +1057,7 @@ export const Slow = Abilities.defineAbility('spell/slow', {
       '<p><strong>Transmutation</strong> · 120 feet · V, S, M (a drop of molasses) · Concentration, up to 1 minute</p><p>Up to six creatures in a 40-foot Cube must pass a Wisdom save or be slowed: half Speed, −2 to AC and Dexterity saves, no Reactions, only an action or a Bonus Action each turn (and only one attack), and a 25 percent chance for somatic spells to fail. They repeat the save each turn.</p>'
     ),
   ],
-  archetypes: [Rank3, Transmutation, Wizard],
+  archetypes: [Rank3, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Slow', action: ActionType.Standard }],
 })
 
@@ -1068,7 +1068,7 @@ export const SpeakWithDead = Abilities.defineAbility('spell/speak-with-dead', {
       '<p><strong>Necromancy</strong> · 10 feet · V, S, M (burning incense) · 10 minutes</p><p>A corpse with a mouth answers up to five questions using only what it knew in life. Answers tend to be brief or cryptic, and a hostile corpse may lie. It fails on former Undead or a corpse questioned in the past 10 days.</p>'
     ),
   ],
-  archetypes: [Rank3, Necromancy, Cleric, Wizard],
+  archetypes: [Rank3, Necromancy, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Speak with Dead', action: ActionType.Standard }],
 })
 
@@ -1079,7 +1079,7 @@ export const StinkingCloud = Abilities.defineAbility('spell/stinking-cloud', {
       '<p><strong>Conjuration</strong> · 90 feet · V, S, M (a rotten egg) · Concentration, up to 1 minute</p><p>A 20-foot-radius Sphere of foul gas is Heavily Obscured. Creatures starting their turn in it must pass a Constitution save or be Poisoned that turn, losing their action and Bonus Action. Strong wind disperses it.</p>'
     ),
   ],
-  archetypes: [Rank3, Conjuration, Wizard],
+  archetypes: [Rank3, Conjuration, Wizard, Bard],
   actions: [{ name: 'Cast Stinking Cloud', action: ActionType.Standard }],
 })
 
@@ -1112,7 +1112,7 @@ export const Tongues = Abilities.defineAbility('spell/tongues', {
       '<p><strong>Divination</strong> · Touch · V, M (a miniature ziggurat) · 1 hour</p><p>A creature you touch understands every spoken and signed language, and anyone who knows a language understands what it says.</p>'
     ),
   ],
-  archetypes: [Rank3, Divination, Cleric, Wizard],
+  archetypes: [Rank3, Divination, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Tongues', action: ActionType.Standard }],
 })
 
@@ -1158,7 +1158,7 @@ export const CureWounds = Abilities.defineAbility('spell/cure-wounds', {
       '<p><strong>Abjuration</strong> · Touch · V, S · Instantaneous</p><p>A creature you touch regains Hit Points equal to 2d8 plus your spellcasting ability modifier.</p><p><strong>Higher Levels:</strong> +2d8 healing per slot level above 1.</p>'
     ),
   ],
-  archetypes: [Rank1, Abjuration, Cleric],
+  archetypes: [Rank1, Abjuration, Cleric, Bard],
   actions: [{ name: 'Cast Cure Wounds', action: ActionType.Standard }],
 })
 
@@ -1169,7 +1169,7 @@ export const FaerieFire = Abilities.defineAbility('spell/faerie-fire', {
       "<p><strong>Evocation</strong> · 60 feet · V · Concentration, up to 1 minute</p><p>Objects in a 20-foot Cube are outlined in blue, green, or violet light, as is each creature there that fails a Dexterity save. Outlined targets shed Dim Light in a 10-foot radius, can't benefit from the Invisible condition, and attack rolls against them have Advantage.</p>"
     ),
   ],
-  archetypes: [Rank1, Evocation],
+  archetypes: [Rank1, Evocation, Bard],
   actions: [{ name: 'Cast Faerie Fire', action: ActionType.Standard }],
 })
 
@@ -1202,7 +1202,7 @@ export const Aid = Abilities.defineAbility('spell/aid', {
       '<p><strong>Abjuration</strong> · 30 feet · V, S, M (a strip of white cloth) · 8 hours</p><p>Up to three creatures you choose each increase their Hit Point maximum and current Hit Points by 5 for the duration.</p><p><strong>Higher Levels:</strong> +5 Hit Points per slot level above 2.</p>'
     ),
   ],
-  archetypes: [Rank2, Abjuration, Cleric],
+  archetypes: [Rank2, Abjuration, Cleric, Bard],
   actions: [{ name: 'Cast Aid', action: ActionType.Standard }],
 })
 
@@ -1213,7 +1213,7 @@ export const LesserRestoration = Abilities.defineAbility('spell/lesser-restorati
       '<p><strong>Abjuration</strong> · Touch · V, S · Instantaneous</p><p>A creature you touch is no longer Blinded, Deafened, Paralyzed, or Poisoned; you choose one of these conditions to end.</p>'
     ),
   ],
-  archetypes: [Rank2, Abjuration, Cleric],
+  archetypes: [Rank2, Abjuration, Cleric, Bard],
   actions: [{ name: 'Cast Lesser Restoration', action: ActionType.Bonus }],
 })
 
@@ -1268,7 +1268,7 @@ export const MassHealingWord = Abilities.defineAbility('spell/mass-healing-word'
       '<p><strong>Abjuration</strong> · 60 feet · V · Instantaneous</p><p>Up to six creatures of your choice that you can see regain Hit Points equal to 2d4 plus your spellcasting ability modifier.</p><p><strong>Higher Levels:</strong> +1d4 healing per slot level above 3.</p>'
     ),
   ],
-  archetypes: [Rank3, Abjuration, Cleric],
+  archetypes: [Rank3, Abjuration, Cleric, Bard],
   actions: [{ name: 'Cast Mass Healing Word', action: ActionType.Bonus }],
 })
 
@@ -1303,7 +1303,7 @@ export const Bane = Abilities.defineAbility('spell/bane', {
       '<p><strong>Enchantment</strong> · 30 feet · V, S, M (a drop of blood) · Concentration, up to 1 minute</p><p>Up to three creatures of your choice that you can see make Charisma saves. Each one that fails subtracts 1d4 from its attack rolls and saving throws until the spell ends.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 1.</p>'
     ),
   ],
-  archetypes: [Rank1, Enchantment, Cleric],
+  archetypes: [Rank1, Enchantment, Cleric, Bard],
   actions: [{ name: 'Cast Bane', action: ActionType.Standard }],
 })
 
@@ -1314,7 +1314,7 @@ export const Command = Abilities.defineAbility('spell/command', {
       '<p><strong>Enchantment</strong> · 60 feet · V · Instantaneous</p><p>Speak a one-word command to a creature you can see: Approach, Drop, Flee, Grovel, or Halt. Unless it succeeds on a Wisdom save, it follows the command on its next turn.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 1.</p>'
     ),
   ],
-  archetypes: [Rank1, Enchantment, Cleric],
+  archetypes: [Rank1, Enchantment, Cleric, Bard],
   actions: [{ name: 'Cast Command', action: ActionType.Standard }],
 })
 
@@ -1358,7 +1358,7 @@ export const HealingWord = Abilities.defineAbility('spell/healing-word', {
       '<p><strong>Abjuration</strong> · 60 feet · V · Instantaneous</p><p>A creature of your choice that you can see regains Hit Points equal to 2d4 plus your spellcasting ability modifier.</p><p><strong>Higher Levels:</strong> +2d4 healing per slot level above 1.</p>'
     ),
   ],
-  archetypes: [Rank1, Abjuration, Cleric],
+  archetypes: [Rank1, Abjuration, Cleric, Bard],
   actions: [{ name: 'Cast Healing Word', action: ActionType.Bonus }],
 })
 
@@ -1415,7 +1415,7 @@ export const BladeWard = Abilities.defineAbility('spell/blade-ward', {
       '<p><strong>Abjuration</strong> · Self · V, S · Concentration, up to 1 minute</p><p>Whenever a creature makes an attack roll against you before the spell ends, the attacker subtracts 1d4 from the roll.</p>'
     ),
   ],
-  archetypes: [Cantrip, Abjuration, Wizard],
+  archetypes: [Cantrip, Abjuration, Wizard, Bard],
   actions: [{ name: 'Cast Blade Ward', action: ActionType.Standard }],
 })
 
@@ -1437,7 +1437,7 @@ export const DancingLights = Abilities.defineAbility('spell/dancing-lights', {
       "<p><strong>Illusion</strong> · 120 feet · V, S, M (a bit of phosphorus) · Concentration, up to 1 minute</p><p>Create up to four torch-size lights, each shedding Dim Light in a 10-foot radius, or combine them into one glowing Medium form. As a Bonus Action, you can move them up to 60 feet, keeping each within 20 feet of another; a light winks out if it ends up beyond the spell's range.</p>"
     ),
   ],
-  archetypes: [Cantrip, Illusion, Wizard],
+  archetypes: [Cantrip, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Dancing Lights', action: ActionType.Standard }],
 })
 
@@ -1470,7 +1470,7 @@ export const Light = Abilities.defineAbility('spell/light', {
       '<p><strong>Evocation</strong> · Touch · V, M (a firefly or phosphorescent moss) · 1 hour</p><p>An object no larger than 10 feet sheds Bright Light in a 20-foot radius and Dim Light for another 20 feet, in a color you choose. Covering it blocks the light. If a hostile creature holds or wears the object, it can make a Dexterity save to avoid the spell.</p>'
     ),
   ],
-  archetypes: [Cantrip, Evocation, Cleric, Wizard],
+  archetypes: [Cantrip, Evocation, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Light', action: ActionType.Standard }],
 })
 
@@ -1481,7 +1481,7 @@ export const MageHand = Abilities.defineAbility('spell/mage-hand', {
       "<p><strong>Conjuration</strong> · 30 feet · V, S · 1 minute</p><p>A spectral, floating hand appears. As a Magic action, you can use it to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour out a vial, and move it up to 30 feet. It can't attack, activate magic items, or carry more than 10 pounds.</p>"
     ),
   ],
-  archetypes: [Cantrip, Conjuration, Wizard],
+  archetypes: [Cantrip, Conjuration, Wizard, Bard],
   actions: [{ name: 'Cast Mage Hand', action: ActionType.Standard }],
 })
 
@@ -1492,7 +1492,7 @@ export const Mending = Abilities.defineAbility('spell/mending', {
       "<p><strong>Transmutation</strong> · 1 minute · Touch · V, S, M (two lodestones) · Instantaneous</p><p>Repair a single break or tear in an object, such as a broken chain link or a torn cloak, as long as it's no larger than 1 foot in any dimension. It can repair a magic item, but can't restore its magic.</p>"
     ),
   ],
-  archetypes: [Cantrip, Transmutation, Cleric, Wizard],
+  archetypes: [Cantrip, Transmutation, Cleric, Wizard, Bard],
   actions: [{ name: 'Cast Mending', action: ActionType.Standard }],
 })
 
@@ -1503,7 +1503,7 @@ export const Message = Abilities.defineAbility('spell/message', {
       "<p><strong>Transmutation</strong> · 120 feet · S, M (a copper wire) · 1 round</p><p>Point toward a creature within range and whisper a message. Only the target hears it, and it can reply in a whisper that only you hear. The spell can pass through most solid objects if you're familiar with the target and know it's beyond the barrier.</p>"
     ),
   ],
-  archetypes: [Cantrip, Transmutation, Wizard],
+  archetypes: [Cantrip, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Message', action: ActionType.Standard }],
 })
 
@@ -1525,7 +1525,7 @@ export const MinorIllusion = Abilities.defineAbility('spell/minor-illusion', {
       '<p><strong>Illusion</strong> · 30 feet · S, M (a bit of fleece) · 1 minute</p><p>Create a sound or an image of an object no larger than a 5-foot Cube. Physical interaction reveals an image to be an illusion, and a creature that takes the Study action can see through it with an Intelligence (Investigation) check against your spell save DC.</p>'
     ),
   ],
-  archetypes: [Cantrip, Illusion, Wizard],
+  archetypes: [Cantrip, Illusion, Wizard, Bard],
   actions: [{ name: 'Cast Minor Illusion', action: ActionType.Standard }],
 })
 
@@ -1547,7 +1547,7 @@ export const Prestidigitation = Abilities.defineAbility('spell/prestidigitation'
       '<p><strong>Transmutation</strong> · 10 feet · V, S · Up to 1 hour</p><p>Create a minor magical trick: a harmless sensory effect, lighting or snuffing a small flame, cleaning or soiling a small object, chilling, warming, or flavoring food, a small mark or symbol, or a nonmagical trinket that lasts until your next turn. Up to three of its lasting effects can be active at once.</p>'
     ),
   ],
-  archetypes: [Cantrip, Transmutation, Wizard],
+  archetypes: [Cantrip, Transmutation, Wizard, Bard],
   actions: [{ name: 'Cast Prestidigitation', action: ActionType.Standard }],
 })
 
@@ -1580,7 +1580,7 @@ export const Thunderclap = Abilities.defineAbility('spell/thunderclap', {
       '<p><strong>Evocation</strong> · Self · S · Instantaneous</p><p>Each creature in a 5-foot Emanation originating from you makes a Constitution save, taking 1d6 Thunder damage on a failure. The sound can be heard up to 100 feet away.</p><p><strong>Cantrip Upgrade:</strong> the damage increases by 1d6 at levels 5, 11, and 17.</p>'
     ),
   ],
-  archetypes: [Cantrip, Evocation, Wizard],
+  archetypes: [Cantrip, Evocation, Wizard, Bard],
   actions: [{ name: 'Cast Thunderclap', action: ActionType.Standard }],
 })
 
@@ -1602,7 +1602,7 @@ export const TrueStrike = Abilities.defineAbility('spell/true-strike', {
       "<p><strong>Divination</strong> · Self · S, M (a weapon you have proficiency with) · Instantaneous</p><p>Make one attack with the weapon used in the spell's casting, using your spellcasting ability for the attack and damage rolls instead of Strength or Dexterity. The damage can be Radiant or the weapon's normal damage type.</p><p><strong>Cantrip Upgrade:</strong> the attack deals an extra 1d6 Radiant damage at level 5, rising to 2d6 at level 11 and 3d6 at level 17.</p>"
     ),
   ],
-  archetypes: [Cantrip, Divination, Wizard],
+  archetypes: [Cantrip, Divination, Wizard, Bard],
   actions: [{ name: 'Cast True Strike', action: ActionType.Standard }],
 })
 
@@ -1681,7 +1681,7 @@ export const SpeakWithAnimals = Abilities.defineAbility('spell/speak-with-animal
       "<p><strong>Divination</strong> · Action or Ritual · Self · V, S · 10 minutes</p><p>You can understand and talk with Beasts, and use any of the Influence action's skill options on them. Most have little to say beyond survival and companionship, but they can tell you about nearby places and monsters, including anything they've perceived in the past day.</p>"
     ),
   ],
-  archetypes: [Rank1, Divination],
+  archetypes: [Rank1, Divination, Bard],
   actions: [{ name: 'Cast Speak with Animals', action: ActionType.Standard }],
 })
 
@@ -1694,6 +1694,173 @@ export const BeastSense = Abilities.defineAbility('spell/beast-sense', {
   ],
   archetypes: [Rank2, Divination],
   actions: [{ name: 'Cast Beast Sense', action: ActionType.Standard }],
+})
+
+// Bard spells
+
+export const Friends = Abilities.defineAbility('spell/friends', {
+  name: 'Friends',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Enchantment</strong> · 10 feet · S, M (some makeup) · Concentration, up to 1 minute</p><p>A creature you can see must pass a Wisdom save or be Charmed by you. It succeeds automatically if it isn't a Humanoid, you're fighting it, or you've used this on it in the past day. The spell ends if it takes damage or you attack, deal damage, or force a save, and it then knows it was charmed.</p>"
+    ),
+  ],
+  archetypes: [Cantrip, Enchantment, Bard, Wizard],
+  actions: [{ name: 'Cast Friends', action: ActionType.Standard }],
+})
+
+export const StarryWisp = Abilities.defineAbility('spell/starry-wisp', {
+  name: 'Starry Wisp',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Evocation</strong> · 60 feet · V, S · Instantaneous</p><p>Make a ranged spell attack with a mote of light, dealing 1d8 Radiant damage on a hit. Until the end of your next turn, the target sheds Dim Light in a 10-foot radius and can't benefit from being Invisible.</p><p><strong>Cantrip Upgrade:</strong> the damage increases by 1d8 at levels 5, 11, and 17.</p>"
+    ),
+  ],
+  archetypes: [Cantrip, Evocation, Bard],
+  actions: [{ name: 'Cast Starry Wisp', action: ActionType.Standard }],
+})
+
+export const ViciousMockery = Abilities.defineAbility('spell/vicious-mockery', {
+  name: 'Vicious Mockery',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Enchantment</strong> · 60 feet · V · Instantaneous</p><p>A creature you can see or hear must pass a Wisdom save or take 1d6 Psychic damage and have Disadvantage on its next attack roll before the end of its next turn.</p><p><strong>Cantrip Upgrade:</strong> the damage increases by 1d6 at levels 5, 11, and 17.</p>'
+    ),
+  ],
+  archetypes: [Cantrip, Enchantment, Bard],
+  actions: [{ name: 'Cast Vicious Mockery', action: ActionType.Standard }],
+})
+
+export const AnimalFriendship = Abilities.defineAbility('spell/animal-friendship', {
+  name: 'Animal Friendship',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Enchantment</strong> · 30 feet · V, S, M (a morsel of food) · 24 hours</p><p>A Beast you can see must pass a Wisdom save or be Charmed by you for the duration. It ends if you or your allies damage it.</p><p><strong>Higher Levels:</strong> one extra Beast per slot level above 1.</p>'
+    ),
+  ],
+  archetypes: [Rank1, Enchantment, Bard],
+  actions: [{ name: 'Cast Animal Friendship', action: ActionType.Standard }],
+})
+
+export const DissonantWhispers = Abilities.defineAbility('spell/dissonant-whispers', {
+  name: 'Dissonant Whispers',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Enchantment</strong> · 60 feet · V · Instantaneous</p><p>A creature you can see makes a Wisdom save. On a failure it takes 3d6 Psychic damage and must use its Reaction to move as far from you as it safely can. On a success it takes half damage.</p><p><strong>Higher Levels:</strong> +1d6 damage per slot level above 1.</p>'
+    ),
+  ],
+  archetypes: [Rank1, Enchantment, Bard],
+  actions: [{ name: 'Cast Dissonant Whispers', action: ActionType.Standard }],
+})
+
+export const Heroism = Abilities.defineAbility('spell/heroism', {
+  name: 'Heroism',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Enchantment</strong> · Touch · V, S · Concentration, up to 1 minute</p><p>A willing creature you touch can't be Frightened and gains Temporary Hit Points equal to your spellcasting ability modifier at the start of each of its turns.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 1.</p>"
+    ),
+  ],
+  archetypes: [Rank1, Enchantment, Bard],
+  actions: [{ name: 'Cast Heroism', action: ActionType.Standard }],
+})
+
+export const AnimalMessenger = Abilities.defineAbility('spell/animal-messenger', {
+  name: 'Animal Messenger',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Enchantment</strong> · 30 feet · V, S, M (a morsel of food) · 24 hours</p><p>A Tiny Beast you can see (of Challenge Rating 0) must pass a Charisma save or carry a message of up to 25 words to a place you've been and a recipient you describe, travelling about 25 miles a day (50 if it flies). It delivers the message in your voice, or returns if it runs out of time.</p><p><strong>Higher Levels:</strong> +48 hours of duration per slot level above 2.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Enchantment, Bard],
+  actions: [{ name: 'Cast Animal Messenger', action: ActionType.Standard }],
+})
+
+export const CalmEmotions = Abilities.defineAbility('spell/calm-emotions', {
+  name: 'Calm Emotions',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Enchantment</strong> · 60 feet · V, S · Concentration, up to 1 minute</p><p>Humanoids in a 20-foot-radius Sphere must pass a Charisma save or be affected, as you choose for each: they become immune to being Charmed or Frightened (suppressing those conditions if they already have them), or they become Indifferent toward creatures of your choice they're hostile to, until they or their allies take damage.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Enchantment, Bard, Cleric],
+  actions: [{ name: 'Cast Calm Emotions', action: ActionType.Standard }],
+})
+
+export const Enthrall = Abilities.defineAbility('spell/enthrall', {
+  name: 'Enthrall',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Enchantment</strong> · 60 feet · V, S · Concentration, up to 1 minute</p><p>Creatures you choose that can see you make a Wisdom save, which those you're fighting pass automatically. Those that fail take a −10 penalty to Wisdom (Perception) checks and Passive Perception.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Enchantment, Bard],
+  actions: [{ name: 'Cast Enthrall', action: ActionType.Standard }],
+})
+
+export const HeatMetal = Abilities.defineAbility('spell/heat-metal', {
+  name: 'Heat Metal',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Transmutation</strong> · 60 feet · V, S, M (a piece of iron and a flame) · Concentration, up to 1 minute</p><p>A manufactured metal object you can see glows red-hot, dealing 2d8 Fire damage to anyone touching it, and you can repeat the damage as a Bonus Action on later turns. A creature holding or wearing it must pass a Constitution save or drop it if it can. If it doesn't, it has Disadvantage on attacks and ability checks until the start of your next turn.</p><p><strong>Higher Levels:</strong> +1d8 damage per slot level above 2.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Transmutation, Bard],
+  actions: [{ name: 'Cast Heat Metal', action: ActionType.Standard }],
+})
+
+export const LocateAnimalsOrPlants = Abilities.defineAbility('spell/locate-animals-or-plants', {
+  name: 'Locate Animals or Plants',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Divination</strong> · Self · V, S, M (fur from a bloodhound) · Instantaneous</p><p>Name a kind of Beast, Plant creature, or nonmagical plant to learn the direction and distance to the nearest one within 5 miles.</p>'
+    ),
+  ],
+  archetypes: [Rank2, Divination, Bard],
+  actions: [{ name: 'Cast Locate Animals or Plants', action: ActionType.Standard }],
+})
+
+export const Silence = Abilities.defineAbility('spell/silence', {
+  name: 'Silence',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Illusion</strong> · 120 feet · V, S · Concentration, up to 10 minutes</p><p>No sound can be made in or pass through a 20-foot-radius Sphere. Everything inside is immune to Thunder damage, creatures inside are Deafened, and spells with Verbal components can't be cast there.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Illusion, Bard, Cleric],
+  actions: [{ name: 'Cast Silence', action: ActionType.Standard }],
+})
+
+export const ZoneOfTruth = Abilities.defineAbility('spell/zone-of-truth', {
+  name: 'Zone of Truth',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Enchantment</strong> · 60 feet · V, S · 10 minutes</p><p>Creatures entering or starting their turn in a 15-foot-radius Sphere make a Charisma save. Those that fail can't knowingly lie there, though they can stay silent or be evasive. You know who passed and who failed, and those affected know about the spell.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Enchantment, Bard, Cleric],
+  actions: [{ name: 'Cast Zone of Truth', action: ActionType.Standard }],
+})
+
+export const PlantGrowth = Abilities.defineAbility('spell/plant-growth', {
+  name: 'Plant Growth',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Transmutation</strong> · 150 feet · V, S · Instantaneous</p><p><strong>Overgrowth</strong> (an action): plants in a 100-foot-radius Sphere become so thick that moving through costs 4 feet for every foot, except in areas you exclude. <strong>Enrichment</strong> (8 hours): plants within half a mile yield double food for a year.</p>'
+    ),
+  ],
+  archetypes: [Rank3, Transmutation, Bard],
+  actions: [{ name: 'Cast Plant Growth', action: ActionType.Standard }],
+})
+
+export const SpeakWithPlants = Abilities.defineAbility('spell/speak-with-plants', {
+  name: 'Speak with Plants',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Transmutation</strong> · Self · V, S · 10 minutes</p><p>Plants within 30 feet can talk with you and follow simple commands. They can tell you about the past day in the area, and you can clear plant-based Difficult Terrain or create it where plants grow. You can also speak with Plant creatures there.</p>'
+    ),
+  ],
+  archetypes: [Rank3, Transmutation, Bard],
+  actions: [{ name: 'Cast Speak with Plants', action: ActionType.Standard }],
 })
 
 export const All = [
@@ -1849,4 +2016,19 @@ export const All = [
   WordOfRadiance,
   SpeakWithAnimals,
   BeastSense,
+  Friends,
+  StarryWisp,
+  ViciousMockery,
+  AnimalFriendship,
+  DissonantWhispers,
+  Heroism,
+  AnimalMessenger,
+  CalmEmotions,
+  Enthrall,
+  HeatMetal,
+  LocateAnimalsOrPlants,
+  Silence,
+  ZoneOfTruth,
+  PlantGrowth,
+  SpeakWithPlants,
 ]
