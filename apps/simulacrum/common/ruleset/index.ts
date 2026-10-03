@@ -10,8 +10,9 @@ import { Reference } from '@bessemer/cornerstone/reference'
 import { Assertions } from '@bessemer/cornerstone'
 
 export type RulesetReference = Reference<'Ruleset'>
+export type RulesetExtensionReference = Reference<'RulesetExtension'>
 
-export type Ruleset = { id: RulesetReference } & {
+export type AbstractRuleset = {
   name: string
   creatureCharacteristics: Array<Characteristic<unknown>>
   playerCharacteristics: Array<Characteristic<unknown>>
@@ -21,8 +22,15 @@ export type Ruleset = { id: RulesetReference } & {
   abilities: Array<Ability>
   resourcePools: Array<ResourcePoolDefinition>
   loadoutTypes: Array<LoadoutType>
-  progressionTable: ProgressionTable<Effect>
 }
+
+export type Ruleset = { id: RulesetReference } & AbstractRuleset & {
+    progressionTable: ProgressionTable<Effect>
+  }
+
+export type RulesetExtension = { id: RulesetExtensionReference } & AbstractRuleset & {
+    ruleset: RulesetReference
+  }
 
 export const getRuleset = (reference: RulesetReference, rulesets: Array<Ruleset>): Ruleset => {
   const ruleset = rulesets.find((it) => it.id === reference)

@@ -15,3 +15,5 @@ Find a filter model that can express both, e.g. per-dimension constraints.
 Traits can now be marked `repeatable` (Ability Score Improvement, Skilled, and the feat ability score increases). What's left:
 
 - Ability score increases don't enforce the maximum of 20.
+
+## Fix the context / Bessemer context situation
