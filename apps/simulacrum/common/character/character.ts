@@ -61,14 +61,15 @@ export const buildCharacterDefinition = (character: CharacterRecord, context: Ap
 type CharacterProgress = {
   choices: ProgressionTable<CharacterChoice>
   traits: ProgressionTable<TraitReference>
-  grantedTraits: Array<TraitReference>
+  grantedTraits: ProgressionTable<TraitReference>
 }
 
 /**
  * Walks the options granted to the character in order: level by level, and within a level a trait's options right after the option
  * that selected it, then those of traits granted outright. Each option is evaluated against the character as it stood just before
  * it, so its prerequisites and already-held traits account for everything selected at lower levels and earlier at the same level, but
- * nothing after it. A selection that isn't allowed at that point is dropped.
+ * no later selections. Its prerequisites also count traits granted outright at its level or earlier, wherever they're granted (e.g. a
+ * Background's skill proficiency for a class's Expertise). A selection that isn't allowed at that point is dropped.
  *
  * A trait granted outright applies once its prerequisites are met, which may be at a later level (e.g. a subclass feature that improves
  * at a higher class level). Until then it waits, and is checked again whenever the character gains a trait and at each new level.
@@ -78,7 +79,7 @@ type CharacterProgress = {
  * accepts, so the walk starts from the traits the character's selections would grant and is repeated until they agree.
  */
 const evaluateCharacterOptions = (character: CharacterRecord, context: ApplicationContext): CharacterProgress => {
-  type Walk = { reservedTraits: Array<TraitReference>; progress: CharacterProgress }
+  type Walk = { reservedTraits: ProgressionTable<TraitReference>; progress: CharacterProgress }
 
   const { progress } = Misc.doUntilConsistent<Walk>(
     (previous) => {
@@ -97,26 +98,39 @@ const evaluateCharacterOptions = (character: CharacterRecord, context: Applicati
   return progress
 }
 
-const isSameTraits = (first: Array<TraitReference>, second: Array<TraitReference>): boolean => {
-  return Arrays.containsAll(first, second) && Arrays.containsAll(second, first)
+const isSameTraits = (first: ProgressionTable<TraitReference>, second: ProgressionTable<TraitReference>): boolean => {
+  const firstEntries = ProgressionTables.getEntries(first).map(([level, trait]) => `${level}/${trait}`)
+  const secondEntries = ProgressionTables.getEntries(second).map(([level, trait]) => `${level}/${trait}`)
+  return Arrays.containsAll(firstEntries, secondEntries) && Arrays.containsAll(secondEntries, firstEntries)
 }
 
-const guessGrantedTraits = (character: CharacterRecord, context: ApplicationContext): Array<TraitReference> => {
+const guessGrantedTraits = (character: CharacterRecord, context: ApplicationContext): ProgressionTable<TraitReference> => {
   const getGranted = (effects: Array<Effect>): Array<TraitReference> => {
     return Effects.filter(effects, Effects.GainTrait).flatMap((it) => [it.trait, ...getGranted(Traits.getTrait(it.trait, context).effects)])
   }
 
-  const rulesetEffects = ProgressionTables.getValues(ProgressionTables.capAtLevel(context.client.ruleset.progressionTable, character.level))
+  const rulesetEffects = ProgressionTables.getEntries(ProgressionTables.capAtLevel(context.client.ruleset.progressionTable, character.level))
+  const selectedTraits = ProgressionTables.getEntries(character.selections).flatMap(([level, selection]) =>
+    context.client.ruleset.traits.filter((trait) => trait.id === selection.selection).map<[number, Trait]>((trait) => [level, trait])
+  )
 
-  const selections = ProgressionTables.getValues(character.selections)
-  const selectedTraits = context.client.ruleset.traits.filter((trait) => selections.some((it) => it.selection === trait.id))
-  return [...getGranted(rulesetEffects), ...selectedTraits.flatMap((it) => getGranted(it.effects))]
+  const granted = [
+    ...rulesetEffects.flatMap(([level, effect]) => getGranted([effect]).map<[number, TraitReference]>((trait) => [level, trait])),
+    ...selectedTraits.flatMap(([level, trait]) => getGranted(trait.effects).map<[number, TraitReference]>((it) => [level, it])),
+  ]
+  const table = ProgressionTables.empty<TraitReference>(character.level)
+  granted.forEach(([level, trait]) => table[level]!.push(trait))
+  return table
 }
 
-const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Array<TraitReference>, context: ApplicationContext): CharacterProgress => {
+const walkCharacterOptions = (
+  character: CharacterRecord,
+  reservedTraits: ProgressionTable<TraitReference>,
+  context: ApplicationContext
+): CharacterProgress => {
   const choices = ProgressionTables.empty<CharacterChoice>(character.level)
   const traits = ProgressionTables.empty<TraitReference>(character.level)
-  const grantedTraits: Array<TraitReference> = []
+  const grantedTraits = ProgressionTables.empty<TraitReference>(character.level)
 
   const waitingTraits: Array<Trait> = []
 
@@ -125,13 +139,16 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Array<
     const choicesSoFar = ProgressionTables.map(choices, (it) => it)
     const buildCharacterSoFar = () =>
       buildCharacterState({ ...character, level, selections: getSelections(choicesSoFar) }, traitsSoFar, choicesSoFar, context)
-    return Expressions.evaluator(buildLazyExpressionContext(level, ProgressionTables.getValues(traitsSoFar), buildCharacterSoFar, context))
+    const reservedSoFar = ProgressionTables.getValues(ProgressionTables.capAtLevel(reservedTraits, level))
+    return Expressions.evaluator(
+      buildLazyExpressionContext(level, [...ProgressionTables.getValues(traitsSoFar), ...reservedSoFar], buildCharacterSoFar, context)
+    )
   }
 
   const visit = (effects: Array<Effect>, level: number, unmatchedSelections: Array<CharacterSelection>) => {
     Effects.filter(effects, Effects.GainCharacterOption).forEach(({ option }) => {
       const held = {
-        traits: [...ProgressionTables.getValues(traits), ...reservedTraits],
+        traits: [...ProgressionTables.getValues(traits), ...ProgressionTables.getValues(reservedTraits)],
         abilities: getGrantedAbilities(CharacterProgression.buildEffectsTable(level, traits, choices, context)),
       }
       const choice = CharacterOptions.evaluateChoice(option, held, getEvaluatorSoFar(level), context)
@@ -169,7 +186,7 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Array<
 
     const [trait, index] = match
     waitingTraits.splice(index, 1)
-    grantedTraits.push(trait.id)
+    grantedTraits[level]!.push(trait.id)
     gain(trait, level, unmatchedSelections)
   }
 

@@ -1,7 +1,10 @@
-import { Archetypes, Effects, Traits } from '@simulacrum/common'
+import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
+import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
+import { Patches } from '@bessemer/cornerstone'
 import { CharacterOptions } from '@simulacrum/common/character'
 import * as AbilityScoreIncreases from '@simulacrum/rulesets/dnd-5e/archetype/ability-score-increase'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
+import * as SkillExpertise from '@simulacrum/rulesets/dnd-5e/archetype/skill-expertise'
 import * as ArtisansTools from '@simulacrum/rulesets/dnd-5e/archetype/artisans-tools'
 import * as Tools from '@simulacrum/rulesets/dnd-5e/archetype/tool'
 import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
@@ -27,8 +30,24 @@ export const AbilityScoreImprovement = Traits.defineTrait('feat/ability-score-im
   // Picking the same ability score for both +1s gives the +2
   repeatable: true,
   effects: [
-    AbilityScoreIncreases.forFeat('feat/ability-score-improvement', AbilityScoreIncreases.AllAbilityScores, 'ability-score-1'),
-    AbilityScoreIncreases.forFeat('feat/ability-score-improvement', AbilityScoreIncreases.AllAbilityScores, 'ability-score-2'),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/ability-score-improvement/ability-score-1',
+        {
+          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+        },
+        'Ability Score +1'
+      )
+    ),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/ability-score-improvement/ability-score-2',
+        {
+          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -37,7 +56,7 @@ export const Actor = Traits.defineTrait('feat/actor', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Charisma 13+</p><p><strong>Ability Score Increase:</strong> Charisma +1 (maximum 20)</p><p><strong>Impersonation:</strong> while disguised as someone, real or invented, you have Advantage on Charisma (Deception or Performance) checks to pass as them.</p><p><strong>Mimicry:</strong> you can imitate voices and other sounds. Listeners need a Wisdom (Insight) check against DC 8 + your Charisma modifier + Proficiency Bonus to tell they're fake.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/actor', [AbilityScoreIncreases.Charisma])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const Athlete = Traits.defineTrait('feat/athlete', {
@@ -45,7 +64,17 @@ export const Athlete = Traits.defineTrait('feat/athlete', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Strength or Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Climb Speed:</strong> you gain a Climb Speed equal to your Speed.</p><p><strong>Hop Up:</strong> standing up from Prone costs only 5 feet of movement.</p><p><strong>Jumping:</strong> a running Long or High Jump needs only a 5-foot run-up.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/athlete', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/athlete/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Charger = Traits.defineTrait('feat/charger', {
@@ -53,7 +82,17 @@ export const Charger = Traits.defineTrait('feat/charger', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Strength or Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Improved Dash:</strong> your Speed is 10 feet higher when you Dash.</p><p><strong>Charge Attack:</strong> once per turn, if you move at least 10 feet straight toward a target right before hitting it with a melee attack as part of the Attack action, either add 1d8 to the damage or push it up to 10 feet (if it's no more than one size larger than you).</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/charger', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/charger/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Chef = Traits.defineTrait('feat/chef', {
@@ -62,7 +101,15 @@ export const Chef = Traits.defineTrait('feat/chef', {
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Constitution or Wisdom +1 (maximum 20)</p><p><strong>Cook's Utensils:</strong> you gain proficiency with them.</p><p><strong>Replenishing Meal:</strong> during a Short Rest, cook for up to 4 + your Proficiency Bonus creatures. Anyone who eats and spends Hit Dice regains an extra 1d8 Hit Points.</p><p><strong>Bolstering Treats:</strong> with an hour's work or after a Long Rest, make treats equal to your Proficiency Bonus that last 8 hours. Eating one as a Bonus Action grants Temporary Hit Points equal to your Proficiency Bonus.</p>",
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/chef', [AbilityScoreIncreases.Constitution, AbilityScoreIncreases.Wisdom]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/chef/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Wisdom.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
     Effects.gainTrait(ArtisansTools.CooksUtensils),
   ],
 })
@@ -72,7 +119,7 @@ export const CrossbowExpert = Traits.defineTrait('feat/crossbow-expert', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Dexterity +1 (maximum 20)</p><p><strong>Ignore Loading:</strong> you ignore the Loading property of crossbows and can reload one without a free hand.</p><p><strong>Firing in Melee:</strong> enemies within 5 feet don't give you Disadvantage on crossbow attacks.</p><p><strong>Dual Wielding:</strong> the extra Light-property attack with a Light crossbow adds your ability modifier to its damage.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/crossbow-expert', [AbilityScoreIncreases.Dexterity])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const Crusher = Traits.defineTrait('feat/crusher', {
@@ -80,7 +127,17 @@ export const Crusher = Traits.defineTrait('feat/crusher', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Constitution +1 (maximum 20)</p><p><strong>Push:</strong> once per turn, when you hit a creature no more than one size larger than you with Bludgeoning damage, you can shove it 5 feet.</p><p><strong>Enhanced Critical:</strong> after you score a Bludgeoning Critical Hit on a creature, attacks against it have Advantage until the start of your next turn.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/crusher', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Constitution])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/crusher/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Constitution.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const DefensiveDuelist = Traits.defineTrait('feat/defensive-duelist', {
@@ -88,7 +145,7 @@ export const DefensiveDuelist = Traits.defineTrait('feat/defensive-duelist', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Dexterity +1 (maximum 20)</p><p><strong>Parry:</strong> while holding a Finesse weapon, when a melee attack hits you, you can use your Reaction to add your Proficiency Bonus to your AC against melee attacks until the start of your next turn, which may turn the hit into a miss.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/defensive-duelist', [AbilityScoreIncreases.Dexterity])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const DualWielder = Traits.defineTrait('feat/dual-wielder', {
@@ -96,7 +153,17 @@ export const DualWielder = Traits.defineTrait('feat/dual-wielder', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Strength or Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Enhanced Dual Wielding:</strong> after attacking with a Light weapon as part of the Attack action, you can make a Bonus Action attack with a different melee weapon that isn't Two-Handed, without adding a positive ability modifier to its damage.</p><p><strong>Quick Draw:</strong> you can draw or stow two non-Two-Handed weapons at once.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/dual-wielder', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/dual-wielder/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Durable = Traits.defineTrait('feat/durable', {
@@ -104,7 +171,7 @@ export const Durable = Traits.defineTrait('feat/durable', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Constitution +1 (maximum 20)</p><p><strong>Defy Death:</strong> you have Advantage on Death Saving Throws.</p><p><strong>Speedy Recovery:</strong> as a Bonus Action, you can spend and roll a Hit Point Die to regain that many Hit Points.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/durable', [AbilityScoreIncreases.Constitution])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ElementalAdeptAcid = Traits.defineTrait('feat/elemental-adept/acid', {
@@ -157,11 +224,19 @@ export const ElementalAdept = Traits.defineTrait('feat/elemental-adept', {
   repeatable: true,
   effects: [
     Effects.gainCharacterOption(SelectElementalAdeptDamageType),
-    AbilityScoreIncreases.forFeat('feat/elemental-adept', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/elemental-adept/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -171,11 +246,19 @@ export const FeyTouched = Traits.defineTrait('feat/fey-touched', {
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Fey Magic:</strong> you always have Misty Step and one level 1 Divination or Enchantment spell of your choice prepared. You can cast each once per Long Rest without a spell slot, or with your own slots, using the ability this feat increased.</p>',
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/fey-touched', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/fey-touched/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -184,7 +267,17 @@ export const Grappler = Traits.defineTrait('feat/grappler', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Strength or Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Punch and Grab:</strong> once per turn, when an Unarmed Strike hits as part of the Attack action, you can both deal damage and grapple.</p><p><strong>Attack Advantage:</strong> you have Advantage on attacks against creatures you're grappling.</p><p><strong>Fast Wrestler:</strong> moving a grappled creature your size or smaller costs no extra movement.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/grappler', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/grappler/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const GreatWeaponMaster = Traits.defineTrait('feat/great-weapon-master', {
@@ -192,7 +285,7 @@ export const GreatWeaponMaster = Traits.defineTrait('feat/great-weapon-master', 
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Strength 13+</p><p><strong>Ability Score Increase:</strong> Strength +1 (maximum 20)</p><p><strong>Heavy Weapon Mastery:</strong> when you hit with a Heavy weapon as part of the Attack action, you can deal extra damage equal to your Proficiency Bonus.</p><p><strong>Hew:</strong> right after you score a Critical Hit or drop a creature to 0 Hit Points with a melee weapon, you can attack again with it as a Bonus Action.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/great-weapon-master', [AbilityScoreIncreases.Strength])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const HeavilyArmored = Traits.defineTrait('feat/heavily-armored', {
@@ -200,7 +293,17 @@ export const HeavilyArmored = Traits.defineTrait('feat/heavily-armored', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Medium Armor Training</p><p><strong>Ability Score Increase:</strong> Constitution or Strength +1 (maximum 20)</p><p><strong>Armor Training:</strong> you gain training with Heavy armor.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/heavily-armored', [AbilityScoreIncreases.Constitution, AbilityScoreIncreases.Strength])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/heavily-armored/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const HeavyArmorMaster = Traits.defineTrait('feat/heavy-armor-master', {
@@ -208,7 +311,17 @@ export const HeavyArmorMaster = Traits.defineTrait('feat/heavy-armor-master', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Heavy Armor Training</p><p><strong>Ability Score Increase:</strong> Constitution or Strength +1 (maximum 20)</p><p><strong>Damage Reduction:</strong> while you wear Heavy armor, Bludgeoning, Piercing, and Slashing damage from attacks that hit you is reduced by your Proficiency Bonus.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/heavy-armor-master', [AbilityScoreIncreases.Constitution, AbilityScoreIncreases.Strength])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/heavy-armor-master/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const InspiringLeader = Traits.defineTrait('feat/inspiring-leader', {
@@ -216,7 +329,17 @@ export const InspiringLeader = Traits.defineTrait('feat/inspiring-leader', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Wisdom or Charisma 13+</p><p><strong>Ability Score Increase:</strong> Wisdom or Charisma +1 (maximum 20)</p><p><strong>Bolstering Performance:</strong> after a Short or Long Rest, you can rouse up to six allies (yourself included) within 30 feet with a speech, song, or dance. Each gains Temporary Hit Points equal to your character level + the modifier of the ability this feat increased.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/inspiring-leader', [AbilityScoreIncreases.Wisdom, AbilityScoreIncreases.Charisma])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/inspiring-leader/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Wisdom.featPlusOne, AbilityScoreIncreases.Charisma.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const KeenMind = Traits.defineTrait('feat/keen-mind', {
@@ -224,7 +347,7 @@ export const KeenMind = Traits.defineTrait('feat/keen-mind', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Intelligence 13+</p><p><strong>Ability Score Increase:</strong> Intelligence +1 (maximum 20)</p><p><strong>Lore Knowledge:</strong> pick Arcana, History, Investigation, Nature, or Religion. You gain proficiency in it, or Expertise if you're already proficient.</p><p><strong>Quick Study:</strong> you can take the Study action as a Bonus Action.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/keen-mind', [AbilityScoreIncreases.Intelligence])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const LightlyArmored = Traits.defineTrait('feat/lightly-armored', {
@@ -232,7 +355,17 @@ export const LightlyArmored = Traits.defineTrait('feat/lightly-armored', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Armor Training:</strong> you gain training with Light armor and Shields.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/lightly-armored', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/lightly-armored/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const MageSlayer = Traits.defineTrait('feat/mage-slayer', {
@@ -240,7 +373,17 @@ export const MageSlayer = Traits.defineTrait('feat/mage-slayer', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Concentration Breaker:</strong> creatures you damage have Disadvantage on their saves to maintain Concentration.</p><p><strong>Guarded Mind:</strong> once per Short or Long Rest, you can turn a failed Intelligence, Wisdom, or Charisma save into a success.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/mage-slayer', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/mage-slayer/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const MartialWeaponTraining = Traits.defineTrait('feat/martial-weapon-training', {
@@ -248,7 +391,17 @@ export const MartialWeaponTraining = Traits.defineTrait('feat/martial-weapon-tra
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Weapon Proficiency:</strong> you gain proficiency with Martial weapons.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/martial-weapon-training', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/martial-weapon-training/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const MediumArmorMaster = Traits.defineTrait('feat/medium-armor-master', {
@@ -256,7 +409,17 @@ export const MediumArmorMaster = Traits.defineTrait('feat/medium-armor-master', 
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Medium Armor Training</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Dexterous Wearer:</strong> in Medium armor, you can add up to 3 (instead of 2) from Dexterity to your AC if your Dexterity is 16 or higher.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/medium-armor-master', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/medium-armor-master/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const ModeratelyArmored = Traits.defineTrait('feat/moderately-armored', {
@@ -264,7 +427,17 @@ export const ModeratelyArmored = Traits.defineTrait('feat/moderately-armored', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Light Armor Training</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Armor Training:</strong> you gain training with Medium armor.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/moderately-armored', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/moderately-armored/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const MountedCombatant = Traits.defineTrait('feat/mounted-combatant', {
@@ -273,11 +446,19 @@ export const MountedCombatant = Traits.defineTrait('feat/mounted-combatant', {
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength, Dexterity, or Wisdom +1 (maximum 20)</p><p><strong>Mounted Strike:</strong> while mounted, you have Advantage on attacks against unmounted creatures within 5 feet of your mount that are smaller than it.</p><p><strong>Leap Aside:</strong> while you ride it and neither of you is Incapacitated, your mount takes no damage on a successful Dexterity save for half damage, and only half on a failure.</p><p><strong>Veer:</strong> while mounted, you can redirect an attack that hits your mount to hit you instead.</p>',
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/mounted-combatant', [
-      AbilityScoreIncreases.Strength,
-      AbilityScoreIncreases.Dexterity,
-      AbilityScoreIncreases.Wisdom,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/mounted-combatant/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Strength.featPlusOne,
+            AbilityScoreIncreases.Dexterity.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -286,7 +467,17 @@ export const Observant = Traits.defineTrait('feat/observant', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Intelligence or Wisdom 13+</p><p><strong>Ability Score Increase:</strong> Intelligence or Wisdom +1 (maximum 20)</p><p><strong>Keen Observer:</strong> pick Insight, Investigation, or Perception. You gain proficiency in it, or Expertise if you're already proficient.</p><p><strong>Quick Search:</strong> you can take the Search action as a Bonus Action.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/observant', [AbilityScoreIncreases.Intelligence, AbilityScoreIncreases.Wisdom])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/observant/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Intelligence.featPlusOne, AbilityScoreIncreases.Wisdom.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Piercer = Traits.defineTrait('feat/piercer', {
@@ -294,7 +485,17 @@ export const Piercer = Traits.defineTrait('feat/piercer', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Puncture:</strong> once per turn, when you deal Piercing damage with an attack, you can reroll one damage die and must use the new result.</p><p><strong>Enhanced Critical:</strong> Piercing Critical Hits roll one extra damage die.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/piercer', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/piercer/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Poisoner = Traits.defineTrait('feat/poisoner', {
@@ -303,7 +504,15 @@ export const Poisoner = Traits.defineTrait('feat/poisoner', {
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Dexterity or Intelligence +1 (maximum 20)</p><p><strong>Potent Poison:</strong> your Poison damage ignores Resistance to Poison.</p><p><strong>Brew Poison:</strong> you gain proficiency with the Poisoner's Kit. An hour's work and 50 GP of materials makes doses equal to your Proficiency Bonus, which you can coat a weapon or ammunition with as a Bonus Action (lasting 1 minute or until it deals damage). A creature it damages must pass a Constitution save (DC 8 + the increased ability's modifier + Proficiency Bonus) or take 2d8 Poison damage and be Poisoned until the end of your next turn.</p>",
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/poisoner', [AbilityScoreIncreases.Dexterity, AbilityScoreIncreases.Intelligence]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/poisoner/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Intelligence.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
     Effects.gainTrait(Tools.PoisonersKit),
   ],
 })
@@ -313,7 +522,17 @@ export const PolearmMaster = Traits.defineTrait('feat/polearm-master', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Strength or Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Dexterity or Strength +1 (maximum 20)</p><p><strong>Pole Strike:</strong> after you take the Attack action with a Quarterstaff, Spear, or Heavy Reach weapon, you can attack with its butt end as a Bonus Action, dealing 1d4 Bludgeoning damage.</p><p><strong>Reactive Strike:</strong> while holding one of those weapons, you can use your Reaction to attack a creature that enters your reach.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/polearm-master', [AbilityScoreIncreases.Dexterity, AbilityScoreIncreases.Strength])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/polearm-master/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Resilient = Traits.defineTrait('feat/resilient', {
@@ -321,7 +540,17 @@ export const Resilient = Traits.defineTrait('feat/resilient', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> one ability you lack saving throw proficiency in +1 (maximum 20)</p><p><strong>Saving Throw Proficiency:</strong> you gain saving throw proficiency with that ability.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/resilient', AbilityScoreIncreases.AllAbilityScores)],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/resilient/ability-score',
+        {
+          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const RitualCaster = Traits.defineTrait('feat/ritual-caster', {
@@ -330,11 +559,19 @@ export const RitualCaster = Traits.defineTrait('feat/ritual-caster', {
     '<p><strong>Prerequisite:</strong> Level 4+, Intelligence, Wisdom, or Charisma 13+</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Ritual Spells:</strong> you always have a number of level 1 Ritual spells prepared equal to your Proficiency Bonus, gaining another whenever it increases. You can cast them with your spell slots, using the ability this feat increased.</p><p><strong>Quick Ritual:</strong> once per Long Rest, you can cast a prepared Ritual spell at its normal casting time without using a spell slot.</p>',
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/ritual-caster', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/ritual-caster/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -343,7 +580,17 @@ export const Sentinel = Traits.defineTrait('feat/sentinel', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Strength or Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Guardian:</strong> when a creature within 5 feet of you Disengages or attacks someone other than you, you can make an Opportunity Attack against it.</p><p><strong>Halt:</strong> a creature you hit with an Opportunity Attack has its Speed reduced to 0 for the rest of the turn.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/sentinel', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/sentinel/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const ShadowTouched = Traits.defineTrait('feat/shadow-touched', {
@@ -352,11 +599,19 @@ export const ShadowTouched = Traits.defineTrait('feat/shadow-touched', {
     '<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Shadow Magic:</strong> you always have Invisibility and one level 1 Illusion or Necromancy spell of your choice prepared. You can cast each once per Long Rest without a spell slot, or with your own slots, using the ability this feat increased.</p>',
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/shadow-touched', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/shadow-touched/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -365,7 +620,7 @@ export const Sharpshooter = Traits.defineTrait('feat/sharpshooter', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Dexterity +1 (maximum 20)</p><p><strong>Bypass Cover:</strong> your ranged weapon attacks ignore Half and Three-Quarters Cover.</p><p><strong>Firing in Melee:</strong> enemies within 5 feet don't give you Disadvantage on ranged weapon attacks.</p><p><strong>Long Shots:</strong> attacking at long range doesn't give you Disadvantage.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/sharpshooter', [AbilityScoreIncreases.Dexterity])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ShieldMaster = Traits.defineTrait('feat/shield-master', {
@@ -373,7 +628,15 @@ export const ShieldMaster = Traits.defineTrait('feat/shield-master', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Shield Training</p><p><strong>Ability Score Increase:</strong> Strength +1 (maximum 20)</p><p><strong>Shield Bash:</strong> once per turn, when you hit a creature within 5 feet with a melee weapon as part of the Attack action, you can bash it with your Shield. It must pass a Strength save (DC 8 + your Strength modifier + Proficiency Bonus) or be pushed 5 feet or knocked Prone (your choice).</p><p><strong>Interpose Shield:</strong> while holding a Shield, when you succeed on a Dexterity save for half damage, you can use your Reaction to take none.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/shield-master', [AbilityScoreIncreases.Strength])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Strength, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const SelectSkillExpertProficiency = CharacterOptions.selectTraitOption('feat/skill-expert/select-proficiency', {
+  archetypes: [SkillProficiencies.SkillProficiency],
+})
+
+export const SelectSkillExpertExpertise = CharacterOptions.selectTraitOption('feat/skill-expert/select-expertise', {
+  archetypes: [SkillExpertise.SkillExpertise],
 })
 
 export const SkillExpert = Traits.defineTrait('feat/skill-expert', {
@@ -381,7 +644,19 @@ export const SkillExpert = Traits.defineTrait('feat/skill-expert', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> one ability score of your choice +1 (maximum 20)</p><p><strong>Skill Proficiency:</strong> you gain proficiency in one skill of your choice.</p><p><strong>Expertise:</strong> you gain Expertise in one skill you're proficient in but don't already have Expertise in.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/skill-expert', AbilityScoreIncreases.AllAbilityScores)],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/skill-expert/ability-score',
+        {
+          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+        },
+        'Ability Score +1'
+      )
+    ),
+    Effects.gainCharacterOption(SelectSkillExpertProficiency),
+    Effects.gainCharacterOption(SelectSkillExpertExpertise),
+  ],
 })
 
 export const Skulker = Traits.defineTrait('feat/skulker', {
@@ -389,7 +664,7 @@ export const Skulker = Traits.defineTrait('feat/skulker', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+, Dexterity 13+</p><p><strong>Ability Score Increase:</strong> Dexterity +1 (maximum 20)</p><p><strong>Blindsight:</strong> you have Blindsight out to 10 feet.</p><p><strong>Fog of War:</strong> in combat, you have Advantage on Dexterity (Stealth) checks made to Hide.</p><p><strong>Sniper:</strong> missing an attack while hidden doesn't give away your position.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/skulker', [AbilityScoreIncreases.Dexterity])],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const Slasher = Traits.defineTrait('feat/slasher', {
@@ -397,7 +672,17 @@ export const Slasher = Traits.defineTrait('feat/slasher', {
   description:
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Hamstring:</strong> once per turn, when you deal Slashing damage with an attack, you can reduce the target's Speed by 10 feet until the start of your next turn.</p><p><strong>Enhanced Critical:</strong> a creature you hit with a Slashing Critical Hit has Disadvantage on its attacks until the start of your next turn.</p>",
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/slasher', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/slasher/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const Speedy = Traits.defineTrait('feat/speedy', {
@@ -405,7 +690,17 @@ export const Speedy = Traits.defineTrait('feat/speedy', {
   description:
     '<p><strong>Prerequisite:</strong> Level 4+, Dexterity or Constitution 13+</p><p><strong>Ability Score Increase:</strong> Dexterity or Constitution +1 (maximum 20)</p><p><strong>Speed Increase:</strong> your Speed increases by 10 feet.</p><p><strong>Dash over Difficult Terrain:</strong> after you Dash, Difficult Terrain costs no extra movement for the rest of the turn.</p><p><strong>Agile Movement:</strong> Opportunity Attacks against you have Disadvantage.</p>',
   archetypes: [Feat],
-  effects: [AbilityScoreIncreases.forFeat('feat/speedy', [AbilityScoreIncreases.Dexterity, AbilityScoreIncreases.Constitution])],
+  effects: [
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/speedy/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Constitution.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
+  ],
 })
 
 export const SpellSniper = Traits.defineTrait('feat/spell-sniper', {
@@ -414,11 +709,19 @@ export const SpellSniper = Traits.defineTrait('feat/spell-sniper', {
     "<p><strong>Prerequisite:</strong> Level 4+, Spellcasting or Pact Magic Feature</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Bypass Cover:</strong> your spell attacks ignore Half and Three-Quarters Cover.</p><p><strong>Casting in Melee:</strong> enemies within 5 feet don't give you Disadvantage on spell attacks.</p><p><strong>Increased Range:</strong> spells that need an attack roll and have a range of 10 feet or more gain 60 feet of range.</p>",
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/spell-sniper', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/spell-sniper/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -428,11 +731,19 @@ export const Telekinetic = Traits.defineTrait('feat/telekinetic', {
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Minor Telekinesis:</strong> you learn Mage Hand. You can cast it without Verbal or Somatic components, make the hand Invisible, and extend its range by 30 feet.</p><p><strong>Telekinetic Shove:</strong> as a Bonus Action, you can force a creature you can see within 30 feet to pass a Strength save (DC 8 + the increased ability's modifier + Proficiency Bonus) or be moved 5 feet toward or away from you.</p>",
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/telekinetic', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/telekinetic/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -442,11 +753,19 @@ export const Telepathic = Traits.defineTrait('feat/telepathic', {
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Telepathic Utterance:</strong> you can speak telepathically to a creature you can see within 60 feet, in a language you know. It understands only if it knows the language, and it can't reply the same way.</p><p><strong>Detect Thoughts:</strong> you always have it prepared, and you can cast it once per Long Rest without a spell slot or components, or with your own slots.</p>",
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/telepathic', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/telepathic/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -456,11 +775,19 @@ export const WarCaster = Traits.defineTrait('feat/war-caster', {
     '<p><strong>Prerequisite:</strong> Level 4+, Spellcasting or Pact Magic Feature</p><p><strong>Ability Score Increase:</strong> Intelligence, Wisdom, or Charisma +1 (maximum 20)</p><p><strong>Concentration:</strong> you have Advantage on Constitution saves to maintain Concentration.</p><p><strong>Reactive Spell:</strong> when a creature leaving your reach provokes an Opportunity Attack, you can instead cast a one-action spell that targets only that creature.</p><p><strong>Somatic Components:</strong> you can perform Somatic components with weapons or a Shield in your hands.</p>',
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/war-caster', [
-      AbilityScoreIncreases.Intelligence,
-      AbilityScoreIncreases.Wisdom,
-      AbilityScoreIncreases.Charisma,
-    ]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/war-caster/ability-score',
+        {
+          specificOptions: [
+            AbilityScoreIncreases.Intelligence.featPlusOne,
+            AbilityScoreIncreases.Wisdom.featPlusOne,
+            AbilityScoreIncreases.Charisma.featPlusOne,
+          ],
+        },
+        'Ability Score +1'
+      )
+    ),
   ],
 })
 
@@ -470,7 +797,15 @@ export const WeaponMaster = Traits.defineTrait('feat/weapon-master', {
     "<p><strong>Prerequisite:</strong> Level 4+</p><p><strong>Ability Score Increase:</strong> Strength or Dexterity +1 (maximum 20)</p><p><strong>Mastery Property:</strong> you can use the mastery property of one kind of Simple or Martial weapon you're proficient with, and can change the kind after a Long Rest.</p>",
   archetypes: [Feat],
   effects: [
-    AbilityScoreIncreases.forFeat('feat/weapon-master', [AbilityScoreIncreases.Strength, AbilityScoreIncreases.Dexterity]),
+    Effects.gainCharacterOption(
+      CharacterOptions.selectTraitOption(
+        'feat/weapon-master/ability-score',
+        {
+          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+        },
+        'Ability Score +1'
+      )
+    ),
     // One more kind of weapon for Weapon Mastery
     Effects.gainLoadoutSlot(WeaponMasteryLoadout),
   ],

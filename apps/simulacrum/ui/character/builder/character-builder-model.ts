@@ -4,7 +4,7 @@ import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { Abilities, Archetypes, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/common'
 import { Trait, TraitReference } from '@simulacrum/common/trait'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
-import { Characteristic, CharacteristicValue } from '@simulacrum/common/characteristic'
+import { Characteristic, CharacteristicGroup, CharacteristicValue } from '@simulacrum/common/characteristic'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { Ability, ActionType } from '@simulacrum/common/ability'
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
@@ -37,12 +37,24 @@ export const getInitialValueCharacteristics = (context: ApplicationContext): Arr
   return context.client.ruleset.playerCharacteristics.filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
 }
 
+export type CharacteristicSection = {
+  group: CharacteristicGroup | null
+  characteristics: Array<Characteristic<number>>
+}
+
 /**
- * The characteristics worked out from other values (e.g. ability modifiers, Proficiency Bonus, or Hit Points), as opposed to ones the
- * player sets directly.
+ * The character's characteristics, grouped in the order the ruleset lists its groups, followed by any that aren't in a group.
  */
-export const getDerivedCharacteristics = (context: ApplicationContext): Array<Characteristic<number>> => {
-  return context.client.ruleset.playerCharacteristics.filter((it) => Objects.isPresent(it.baseValue)) as Array<Characteristic<number>>
+export const getCharacteristicSections = (context: ApplicationContext): Array<CharacteristicSection> => {
+  const { playerCharacteristics, characteristicGroups } = context.client.ruleset
+  const characteristics = playerCharacteristics as Array<Characteristic<number>>
+
+  const sections = [
+    ...characteristicGroups.map((group) => ({ group, characteristics: characteristics.filter((it) => it.group === group.id) })),
+    { group: null, characteristics: characteristics.filter((it) => !characteristicGroups.some((group) => group.id === it.group)) },
+  ]
+
+  return sections.filter((it) => !Arrays.isEmpty(it.characteristics))
 }
 
 /**

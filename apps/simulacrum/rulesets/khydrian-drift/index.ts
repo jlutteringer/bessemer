@@ -26,6 +26,7 @@ export const KhydrianDrift: Ruleset = {
   name: 'Khydrian Drift',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),
+  characteristicGroups: [],
   archetypes: [Class],
   traits: [Commando, BasicCombatTraining, Arsenal, SoldiersStamina, Momentum, OfficerTrait, AdvancedOperations, SentinelTrait, BaselineQuickGuy],
   abilities: [],

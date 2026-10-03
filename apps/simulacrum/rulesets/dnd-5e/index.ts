@@ -28,7 +28,7 @@ import * as Rogue from '@simulacrum/rulesets/dnd-5e/class/class-rogue'
 import * as Sorcerer from '@simulacrum/rulesets/dnd-5e/class/class-sorcerer'
 import * as Warlock from '@simulacrum/rulesets/dnd-5e/class/class-warlock'
 import * as Wizard from '@simulacrum/rulesets/dnd-5e/class/class-wizard'
-import { CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
+import { CharacteristicGroups, CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { Dash, Disengage, Dodge, HealingSurge } from '@simulacrum/rulesets/dnd-5e/common'
 import { HitPointResourcePool } from '@simulacrum/rulesets/dnd-5e/resource-pool'
 import { CantripLoadout, PreparedSpellLoadout, WeaponMasteryLoadout } from '@simulacrum/rulesets/dnd-5e/loadout'
@@ -40,6 +40,7 @@ export const Dnd5e: Ruleset = {
   name: 'Dungeons and Dragons 5e',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),
+  characteristicGroups: Object.values(CharacteristicGroups),
   archetypes: [
     ClassArchetypes.Class,
     Backgrounds.Background,
@@ -57,6 +58,7 @@ export const Dnd5e: Ruleset = {
     Cleric.ClericSubclass,
     Barbarian.BarbarianSubclass,
     Bard.BardSubclass,
+    Rogue.RogueSubclass,
     Maneuvers.Maneuver,
     Feats.Feat,
     Feats.OriginFeat,
@@ -346,6 +348,20 @@ export const Dnd5e: Ruleset = {
     Rogue.Level3,
     Rogue.Level4,
     Rogue.Level5,
+    Rogue.SneakAttack,
+    Rogue.ThievesCant,
+    Rogue.WeaponMastery,
+    Rogue.CunningStrike,
+    Rogue.ArcaneTrickster,
+    Rogue.ArcaneTricksterSpellsLevel4,
+    Rogue.MageHandLegerdemain,
+    Rogue.Assassin,
+    Rogue.Assassinate,
+    Rogue.AssassinsTools,
+    Rogue.Soulknife,
+    Rogue.PsionicPowerLevel5,
+    Rogue.Thief,
+    Rogue.SecondStoryWork,
     Sorcerer.Level2,
     Sorcerer.Level3,
     Sorcerer.Level4,
@@ -427,6 +443,13 @@ export const Dnd5e: Ruleset = {
     Bard.Spellcasting,
     Bard.MantleOfInspiration,
     Bard.CuttingWords,
+    Rogue.CunningAction,
+    Rogue.SteadyAim,
+    Rogue.UncannyDodge,
+    Rogue.ArcaneTricksterSpellcasting,
+    Rogue.PsionicPower,
+    Rogue.PsychicBlades,
+    Rogue.FastHands,
     Cleric.Spellcasting,
     Cleric.DivineSpark,
     Cleric.TurnUndead,

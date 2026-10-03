@@ -3,7 +3,6 @@ import { CharacterOptions } from '@simulacrum/common/character'
 import { CharacterOption } from '@simulacrum/common/character/character-option'
 import { Characteristic } from '@simulacrum/common/characteristic'
 import { Trait } from '@simulacrum/common/trait'
-import { Effect } from '@simulacrum/common/effect'
 import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
@@ -73,13 +72,13 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
 
   const selectPlusTwo = CharacterOptions.selectTraitOption(
     `${prefix}/select-plus-two`,
-    { archetypes: [AbilityScoreIncrease], specificOptions: abilityScores.map((it) => it.plusTwo) },
+    { specificOptions: abilityScores.map((it) => it.plusTwo) },
     'Ability Score +2'
   )
 
   const selectPlusOne = CharacterOptions.selectTraitOption(
     `${prefix}/select-plus-one`,
-    { archetypes: [AbilityScoreIncrease], specificOptions: abilityScores.map((it) => it.plusOne) },
+    { specificOptions: abilityScores.map((it) => it.plusOne) },
     'Ability Score +1'
   )
 
@@ -98,30 +97,7 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
     effects: abilityScores.flatMap((it) => it.plusOne.effects),
   })
 
-  const option = CharacterOptions.selectTraitOption(
-    `${prefix}/select`,
-    { archetypes: [AbilityScoreIncrease], specificOptions: [plusTwoPlusOne, plusOneToAll] },
-    'Ability Scores'
-  )
+  const option = CharacterOptions.selectTraitOption(`${prefix}/select`, { specificOptions: [plusTwoPlusOne, plusOneToAll] }, 'Ability Scores')
 
   return { option, traits: [plusTwoPlusOne, plusOneToAll] }
-}
-
-/**
- * A feat's +1 ability score increase: applied directly when the feat names a single ability score, otherwise chosen from those it
- * names. Separate options for the same feat (e.g. Ability Score Improvement's two +1s) need their own `suffix`, so each gets its own
- * dropdown and the same ability score can be picked twice.
- */
-export const forFeat = (reference: string, abilityScores: Array<AbilityScore>, suffix: string = 'ability-score'): Effect => {
-  if (abilityScores.length === 1) {
-    return abilityScores[0]!.featPlusOne.effects[0]!
-  }
-
-  return Effects.gainCharacterOption(
-    CharacterOptions.selectTraitOption(
-      `${reference}/${suffix}`,
-      { archetypes: [AbilityScoreIncrease], specificOptions: abilityScores.map((it) => it.featPlusOne) },
-      'Ability Score +1'
-    )
-  )
 }

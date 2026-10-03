@@ -43,9 +43,8 @@ import {
   getActionTypeLabel,
   hasDescribedActions,
   getCharacteristicValue,
-  getDerivedCharacteristics,
+  getCharacteristicSections,
   getGrantedTraits,
-  getInitialValueCharacteristics,
   getInitialValueFieldName,
   getLoadoutAbilities,
   getOptionLabel,
@@ -227,68 +226,65 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader title="Characteristics" />
-            <CardContent>
-              <Grid
-                container
-                spacing={2}
-              >
-                {getInitialValueCharacteristics(context).map((characteristic) => (
-                  <Grid
-                    key={characteristic.id}
-                    size={{ xs: 6, sm: 4, md: 2 }}
-                  >
-                    <Controller
-                      name={getInitialValueFieldName(characteristic)}
-                      control={control}
-                      rules={{
-                        validate: (value) =>
-                          (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
-                          `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
-                      }}
-                      render={({ field, fieldState }) => {
-                        // Show the score after increases from traits (e.g. a Background), when they change it
-                        const total = getCharacteristicValue(sheet, characteristic)
-                        const increase = typeof field.value === 'number' ? total - field.value : 0
+          {getCharacteristicSections(context).map((section) => (
+            <Card key={section.group?.id ?? 'ungrouped'}>
+              <CardHeader title={section.group?.name ?? 'Characteristics'} />
+              <CardContent>
+                <Grid
+                  container
+                  spacing={2}
+                >
+                  {section.characteristics.map((characteristic) => (
+                    <Grid
+                      key={characteristic.id}
+                      size={{ xs: 6, sm: 4, md: 2 }}
+                    >
+                      {Objects.isNil(characteristic.baseValue) ? (
+                        <Controller
+                          name={getInitialValueFieldName(characteristic)}
+                          control={control}
+                          rules={{
+                            validate: (value) =>
+                              (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
+                              `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
+                          }}
+                          render={({ field, fieldState }) => {
+                            // Show the score after increases from traits (e.g. a Background), when they change it
+                            const total = getCharacteristicValue(sheet, characteristic)
+                            const increase = typeof field.value === 'number' ? total - field.value : 0
 
-                        return (
-                          <TextField
-                            {...field}
-                            value={field.value ?? ''}
-                            // Keep the value numeric; an empty field stays empty so validation can flag it
-                            onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
-                            label={characteristic.name}
-                            type="number"
-                            fullWidth
-                            error={fieldState.invalid}
-                            helperText={
-                              fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)
-                            }
-                            slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
-                          />
-                        )
-                      }}
-                    />
-                  </Grid>
-                ))}
-                {/* Characteristics worked out from other values, shown read-only with their current value */}
-                {getDerivedCharacteristics(context).map((characteristic) => (
-                  <Grid
-                    key={characteristic.id}
-                    size={{ xs: 6, sm: 4, md: 2 }}
-                  >
-                    <TextField
-                      label={characteristic.name}
-                      value={getCharacteristicValue(sheet, characteristic)}
-                      fullWidth
-                      slotProps={{ input: { readOnly: true } }}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </Card>
+                            return (
+                              <TextField
+                                {...field}
+                                value={field.value ?? ''}
+                                // Keep the value numeric; an empty field stays empty so validation can flag it
+                                onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
+                                label={characteristic.name}
+                                type="number"
+                                fullWidth
+                                error={fieldState.invalid}
+                                helperText={
+                                  fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)
+                                }
+                                slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
+                              />
+                            )
+                          }}
+                        />
+                      ) : (
+                        <TextField
+                          label={characteristic.name}
+                          value={getCharacteristicValue(sheet, characteristic)}
+                          fullWidth
+                          slotProps={{ input: { readOnly: true } }}
+                        />
+                      )}
+                    </Grid>
+                  ))}
+                </Grid>
+              </CardContent>
+            </Card>
+          ))}
 
           <Box>
             <Typography
