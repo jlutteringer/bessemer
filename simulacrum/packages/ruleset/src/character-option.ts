@@ -1,5 +1,5 @@
 import { Trait, TraitFilter, TraitFilterProps, TraitReference } from '@simulacrum/ruleset/trait'
-import { Abilities, ProgressionTables, Traits } from '@simulacrum/ruleset'
+import { Abilities, Traits } from '@simulacrum/ruleset'
 import { Ability, AbilityFilter, AbilityFilterProps, AbilityReference } from '@simulacrum/ruleset/ability'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 import { Reference } from '@bessemer/cornerstone/reference'

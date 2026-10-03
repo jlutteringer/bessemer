@@ -59,15 +59,3 @@ export const filter = (props: TraitFilterProps): TraitFilter => {
     specificOptions: (props.specificOptions ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
   }
 }
-
-export const applyFilter = (traits: Array<Trait>, filter: TraitFilter): Array<Trait> => {
-  let filteredTraits = traits
-  if (!Arrays.isEmpty(filter.archetypes)) {
-    filteredTraits = filteredTraits.filter((it) => Archetypes.matchesFilter(filter.archetypes, it.archetypes))
-  }
-  if (!Arrays.isEmpty(filter.specificOptions)) {
-    filteredTraits = filteredTraits.filter((it) => Arrays.contains(filter.specificOptions, it.id))
-  }
-
-  return filteredTraits
-}

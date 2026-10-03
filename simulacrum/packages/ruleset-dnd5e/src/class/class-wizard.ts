@@ -7,7 +7,7 @@ import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/archetype/skill-exper
 import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
-import { Patches } from '@bessemer/cornerstone'
+import { Arrays, Patches } from '@bessemer/cornerstone'
 import { CantripLoadout, PreparedSpellLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
 
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard/select-skill-proficiency', {
@@ -98,7 +98,7 @@ export const Level1 = Traits.defineTrait('wizard/level-1', {
     Effects.gainLoadoutSlot(CantripLoadout),
     Effects.gainLoadoutSlot(CantripLoadout),
     Effects.gainLoadoutSlot(CantripLoadout),
-    ...Abilities.applyFilter(Spells.All, Abilities.filter({ archetypes: [Wizard, Spells.Cantrip] })).map((it) =>
+    ...Spells.All.filter((it) => Arrays.containsAll(it.archetypes, [Wizard.id, Spells.Cantrip.id])).map((it) =>
       Effects.gainAbility(it, CantripLoadout)
     ),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),

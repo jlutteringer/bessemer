@@ -98,15 +98,3 @@ export const filter = (props: AbilityFilterProps): AbilityFilter => {
     specificOptions: (props.specificOptions ?? []).map((it) => it.id),
   }
 }
-
-export const applyFilter = (abilities: Array<Ability>, filter: AbilityFilter): Array<Ability> => {
-  let filteredAbilities = abilities
-  if (!Arrays.isEmpty(filter.archetypes)) {
-    filteredAbilities = filteredAbilities.filter((it) => Archetypes.matchesFilter(filter.archetypes, it.archetypes))
-  }
-  if (!Arrays.isEmpty(filter.specificOptions)) {
-    filteredAbilities = filteredAbilities.filter((it) => Arrays.contains(filter.specificOptions, it.id))
-  }
-
-  return filteredAbilities
-}
