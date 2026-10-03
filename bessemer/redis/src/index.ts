@@ -1,3 +1,3 @@
-import * as Redis from './redis'
+import * as Redis from '@bessemer/redis/redis'
 
 export { Redis }

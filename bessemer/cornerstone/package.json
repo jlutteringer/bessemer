@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "build": "tsup && tsc --project tsconfig.build.json --emitDeclarationOnly",
+    "build": "rm -rf dist && tsc --project tsconfig.build.json",
     "test": "jest",
     "prettier-fix": "prettier --write .",
     "clean": "rm -rf dist && rm -rf .turbo",

@@ -2,8 +2,8 @@ import express, { RouterOptions } from 'express'
 import { z, ZodObject } from 'zod'
 import { ZodiosEndpointDefinitions } from '@bessemer/zodios'
 import { Narrow } from '@bessemer/zodios/utils.types'
-import { WithZodiosContext, ZodiosApp, ZodiosAppOptions, ZodiosRequestHandler, ZodiosRouter, ZodiosRouterOptions } from './zodios.types'
-import { injectParametersValidators } from './zodios-validator'
+import { WithZodiosContext, ZodiosApp, ZodiosAppOptions, ZodiosRequestHandler, ZodiosRouter, ZodiosRouterOptions } from '@bessemer/zodios-express/zodios.types'
+import { injectParametersValidators } from '@bessemer/zodios-express/zodios-validator'
 
 export const zodiosApp = <Api extends ZodiosEndpointDefinitions = any, Context extends ZodObject<any> = ZodObject<any>>(
   api?: Narrow<Api>,

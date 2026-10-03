@@ -1,7 +1,7 @@
 import express from 'express'
 import { ZodiosEndpointDefinition, ZodiosEndpointDefinitions } from '@bessemer/zodios'
 import Zod, { ZodObject, ZodType } from 'zod'
-import { ZodiosRouterValidationErrorHandler } from './zodios.types'
+import { ZodiosRouterValidationErrorHandler } from '@bessemer/zodios-express/zodios.types'
 import { HttpMethods, Urls, ZodUtil } from '@bessemer/cornerstone'
 import { ZodTypeKind } from '@bessemer/cornerstone/zod-util'
 import { HttpMethod } from '@bessemer/cornerstone/net/http-method'

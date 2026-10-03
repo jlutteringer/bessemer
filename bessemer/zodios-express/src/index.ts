@@ -1,6 +1,6 @@
-export { zodiosApp, zodiosRouter, zodiosContext } from './zodios'
-export type { ZodiosContext } from './zodios'
-export { prefixApi } from './zodios.utils'
+export { zodiosApp, zodiosRouter, zodiosContext } from '@bessemer/zodios-express/zodios'
+export type { ZodiosContext } from '@bessemer/zodios-express/zodios'
+export { prefixApi } from '@bessemer/zodios-express/zodios.utils'
 
 export type {
   ZodiosApp,
@@ -14,4 +14,4 @@ export type {
   ZodiosUse,
   ZodiosSuccessCodes,
   WithZodiosContext,
-} from './zodios.types'
+} from '@bessemer/zodios-express/zodios.types'
