@@ -1,6 +1,9 @@
 {
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.18.1+sha512.b2e1e7524f654f2749d32b4ebcb4622473cb5bcbc485df2007e12a154e50162a4d795526768bc5f5b8f81717bfd79deb2472813d86fb5ae2eb551fa9c872b08f",
   "private": true,
+  "engines": {
+    "node": ">=24"
+  },
   "workspaces": [
     "bessemer/*",
     "!bessemer/zodios-express",
@@ -8,7 +11,7 @@
     "simulacrum/packages/*"
   ],
   "scripts": {
-    "dev": "turbo watch build",
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "test": "turbo run test",
     "docgen": "yarn workspaces foreach --all --exclude bessemer run docgen && node scripts/docs.mjs",
@@ -21,7 +24,7 @@
     "@effect/docgen": "0.5.2",
     "@effect/markdown-toc": "0.1.0",
     "@types/jest": "29.5.14",
-    "@types/node": "22.10.5",
+    "@types/node": "24.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "babel-jest": "29.7.0",
@@ -31,6 +34,6 @@
     "tsup": "8.5.0",
     "tsx": "4.21.0",
     "turbo": "2.5.5",
-    "typescript": "5.9.2"
+    "typescript": "7.0.2"
   }
 }

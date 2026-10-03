@@ -1,7 +1,6 @@
 {
   "extends": "../../../tsconfig.next.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@bessemer/cornerstone": ["../../../bessemer/cornerstone/src"],
       "@bessemer/cornerstone/*": ["../../../bessemer/cornerstone/src/*"],

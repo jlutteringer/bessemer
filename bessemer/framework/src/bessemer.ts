@@ -42,7 +42,10 @@ export const configure = <ApplicationContext extends BessemerApplicationContext,
 ): void => {
   Assertions.assert(RscRuntimes.isServer)
 
-  if (Objects.isPresent(GlobalConfigurationState.getValue())) {
+  // Keep the global context but take the latest configuration, so modules re-evaluated by a hot reload apply to the next request
+  const existingState = GlobalConfigurationState.getValue()
+  if (Objects.isPresent(existingState)) {
+    GlobalConfigurationState.setValue({ ...existingState, configuration })
     return
   }
 

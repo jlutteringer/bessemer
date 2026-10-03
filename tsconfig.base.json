@@ -19,5 +19,6 @@
     "declarationMap": true,
 
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node", "jest"],
   }
 }
