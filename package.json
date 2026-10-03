@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": [
     "bessemer/*",
+    "!bessemer/zodios-express",
     "simulacrum/apps/*",
     "simulacrum/packages/*"
   ],
