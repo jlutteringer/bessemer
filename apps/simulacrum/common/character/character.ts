@@ -3,7 +3,7 @@ import { Effect } from '@simulacrum/common/effect'
 import { CharacterChoice, CharacterOptionType, CharacterSelection } from '@simulacrum/common/character/character-option'
 import { CharacterOptions, CharacterProgression } from '@simulacrum/common/character/index'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
-import { Ability, AbilityReference, AbilityState } from '@simulacrum/common/ability'
+import { AbilityReference, AbilityState } from '@simulacrum/common/ability'
 import { LoadoutSlot } from '@simulacrum/common/loadout'
 import { Characteristic, CharacteristicValue } from '@simulacrum/common/characteristic'
 import { ResourcePoolReference, ResourcePoolState } from '@simulacrum/common/resource-pool'
@@ -215,17 +215,9 @@ const getSelections = (choices: ProgressionTable<CharacterChoice>): ProgressionT
   return ProgressionTables.flatMap(choices, (it) => Arrays.fromNilable([it.selection]))
 }
 
+// The effects of the character's progression. An ability's effects describe what it does and aren't applied to the character.
 const getAllEffects = (character: CharacterSheet, context: ApplicationContext): Array<Effect> => {
-  const progressionEffects = ProgressionTables.getValues(
-    CharacterProgression.buildEffectsTable(character.level, character.traits, character.choices, context)
-  )
-  const abilityEffects = getActiveAbilities(character).flatMap((ability) => Abilities.getEffectsForAbility(ability))
-  return [...progressionEffects, ...abilityEffects]
-}
-
-const getActiveAbilities = (character: CharacterSheet): Array<Ability> => {
-  const slottedAbilities = Arrays.fromNilable(character.loadout.map((it) => it.ability))
-  return character.abilities.filter((it) => Objects.isNil(it.loadout) || Arrays.contains(slottedAbilities, it.ability.id)).map((it) => it.ability)
+  return ProgressionTables.getValues(CharacterProgression.buildEffectsTable(character.level, character.traits, character.choices, context))
 }
 
 const evaluateLoadout = (character: CharacterState, context: ApplicationContext): Array<LoadoutSlot> => {

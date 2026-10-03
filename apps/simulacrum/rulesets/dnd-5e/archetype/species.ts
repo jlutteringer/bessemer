@@ -28,19 +28,25 @@ export const SelectSmallOrMedium = CharacterOptions.selectTraitOption('species/s
 
 export const Darkvision = Abilities.defineAbility('species/darkvision', {
   name: 'Darkvision',
-  description:
-    '<p>You can see in Dim Light within <strong>60 feet</strong> of you as if it were Bright Light, and in Darkness as if it were Dim Light. You discern colors in that Darkness only as shades of gray.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>You can see in Dim Light within <strong>60 feet</strong> of you as if it were Bright Light, and in Darkness as if it were Dim Light. You discern colors in that Darkness only as shades of gray.</p>'
+    ),
+  ],
 })
 
 export const CelestialResistance = Abilities.defineAbility('species/aasimar/celestial-resistance', {
   name: 'Celestial Resistance',
-  description: '<p>You have Resistance to <strong>Necrotic</strong> and <strong>Radiant</strong> damage.</p>',
+  effects: [Effects.descriptive('<p>You have Resistance to <strong>Necrotic</strong> and <strong>Radiant</strong> damage.</p>')],
 })
 
 export const HealingHands = Abilities.defineAbility('species/aasimar/healing-hands', {
   name: 'Healing Hands',
-  description:
-    "<p>As a <strong>Magic action</strong>, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled.</p><p>Once you use this trait, you can't use it again until you finish a Long Rest.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>As a <strong>Magic action</strong>, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled.</p><p>Once you use this trait, you can't use it again until you finish a Long Rest.</p>"
+    ),
+  ],
   resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
   costs: [{ cost: 1 }],
   actions: [
@@ -53,8 +59,11 @@ export const HealingHands = Abilities.defineAbility('species/aasimar/healing-han
 
 export const CelestialRevelation = Abilities.defineAbility('species/aasimar/celestial-revelation', {
   name: 'Celestial Revelation',
-  description:
-    "<p>You transform for 1 minute or until you end it (no action required). Until the transformation ends, once on each of your turns you can deal extra damage to one target when you deal damage to it with an attack or a spell. The extra damage equals your Proficiency Bonus, and is Necrotic for Necrotic Shroud or Radiant otherwise.</p><p>Once you transform, you can't do so again until you finish a Long Rest.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>You transform for 1 minute or until you end it (no action required). Until the transformation ends, once on each of your turns you can deal extra damage to one target when you deal damage to it with an attack or a spell. The extra damage equals your Proficiency Bonus, and is Necrotic for Necrotic Shroud or Radiant otherwise.</p><p>Once you transform, you can't do so again until you finish a Long Rest.</p>"
+    ),
+  ],
   // Available from character level 3
   prerequisites: [Expressions.greaterThanOrEqual(CharacterValues.Level, 3)],
   resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },

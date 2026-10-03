@@ -31,8 +31,14 @@ const WisdomModifierUses = NumericExpressions.max([PlayerCharacteristics.WisdomM
 
 export const Spellcasting = Abilities.defineAbility('cleric/spellcasting', {
   name: 'Spellcasting',
-  description:
-    '<p>You cast Cleric spells using <strong>Wisdom</strong>, with a Holy Symbol as your focus. You know three cantrips, gaining a fourth at level 4, and can swap one for another Cleric cantrip when you gain a level.</p><p>After a Long Rest, you prepare a list of Cleric spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. You can change the list after each Long Rest. You regain all spell slots on a Long Rest.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>You cast Cleric spells using <strong>Wisdom</strong>, with a Holy Symbol as your focus. You know three cantrips, gaining a fourth at level 4, and can swap one for another Cleric cantrip when you gain a level.</p>'
+    ),
+    Effects.descriptive(
+      '<p>After a Long Rest, you prepare a list of Cleric spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. You can change the list after each Long Rest. You regain all spell slots on a Long Rest.</p>'
+    ),
+  ],
 })
 
 export const Protector = Traits.defineTrait('cleric/protector', {
@@ -86,15 +92,21 @@ export const ChannelDivinityPool = ResourcePools.defineResourcePool('cleric/chan
 
 export const DivineSpark = Abilities.defineAbility('cleric/divine-spark', {
   name: 'Divine Spark',
-  description:
-    '<p>As a <strong>Magic action</strong>, you point your Holy Symbol at another creature you can see within 30 feet and roll <strong>1d8 + your Wisdom modifier</strong>. Either the creature regains that many Hit Points, or it makes a Constitution save, taking that much Necrotic or Radiant damage (your choice) on a failure or half as much on a success.</p><p>The roll increases to 2d8 at Cleric level 7, 3d8 at level 13, and 4d8 at level 18.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>As a <strong>Magic action</strong>, you point your Holy Symbol at another creature you can see within 30 feet and roll <strong>1d8 + your Wisdom modifier</strong>. Either the creature regains that many Hit Points, or it makes a Constitution save, taking that much Necrotic or Radiant damage (your choice) on a failure or half as much on a success.</p><p>The roll increases to 2d8 at Cleric level 7, 3d8 at level 13, and 4d8 at level 18.</p>'
+    ),
+  ],
   actions: [{ name: 'Use Divine Spark', action: ActionType.Standard, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
 export const TurnUndead = Abilities.defineAbility('cleric/turn-undead', {
   name: 'Turn Undead',
-  description:
-    '<p>As a <strong>Magic action</strong>, you present your Holy Symbol and censure the undead. Each Undead of your choice within 30 feet of you makes a Wisdom save. On a failure, it has the Frightened and Incapacitated conditions for 1 minute, and tries to move as far from you as it can on its turns.</p><p>The effect ends early on a creature if it takes damage, if you have the Incapacitated condition, or if you die.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>As a <strong>Magic action</strong>, you present your Holy Symbol and censure the undead. Each Undead of your choice within 30 feet of you makes a Wisdom save. On a failure, it has the Frightened and Incapacitated conditions for 1 minute, and tries to move as far from you as it can on its turns.</p><p>The effect ends early on a creature if it takes damage, if you have the Incapacitated condition, or if you die.</p>'
+    ),
+  ],
   actions: [{ name: 'Use Turn Undead', action: ActionType.Standard, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
@@ -187,8 +199,11 @@ export const DiscipleOfLife = Traits.defineTrait('cleric/disciple-of-life', {
 
 export const PreserveLife = Abilities.defineAbility('cleric/preserve-life', {
   name: 'Preserve Life',
-  description:
-    '<p>As a <strong>Magic action</strong>, you expend a use of your <strong>Channel Divinity</strong> and present your Holy Symbol to evoke healing energy that can restore Hit Points equal to <strong>five times your Cleric level</strong>. Divide those Hit Points among any Bloodied creatures within 30 feet of you, which can include you.</p><p>This feature can restore a creature to no more than half its Hit Point maximum.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>As a <strong>Magic action</strong>, you expend a use of your <strong>Channel Divinity</strong> and present your Holy Symbol to evoke healing energy that can restore Hit Points equal to <strong>five times your Cleric level</strong>. Divide those Hit Points among any Bloodied creatures within 30 feet of you, which can include you.</p><p>This feature can restore a creature to no more than half its Hit Point maximum.</p>'
+    ),
+  ],
   actions: [{ name: 'Use Preserve Life', action: ActionType.Standard, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
@@ -222,15 +237,21 @@ export const LightDomainSpells = Traits.defineTrait('cleric/light-domain-spells'
 
 export const RadianceOfTheDawn = Abilities.defineAbility('cleric/radiance-of-the-dawn', {
   name: 'Radiance of the Dawn',
-  description:
-    '<p>As a <strong>Magic action</strong>, you expend a use of your <strong>Channel Divinity</strong> and present your Holy Symbol, dispelling any magical Darkness within 30 feet of you. Each creature of your choice within that radius makes a Constitution save, taking Radiant damage equal to <strong>2d10 + your Cleric level</strong> on a failure or half as much on a success.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>As a <strong>Magic action</strong>, you expend a use of your <strong>Channel Divinity</strong> and present your Holy Symbol, dispelling any magical Darkness within 30 feet of you. Each creature of your choice within that radius makes a Constitution save, taking Radiant damage equal to <strong>2d10 + your Cleric level</strong> on a failure or half as much on a success.</p>'
+    ),
+  ],
   actions: [{ name: 'Use Radiance of the Dawn', action: ActionType.Standard, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
 export const WardingFlare = Abilities.defineAbility('cleric/warding-flare', {
   name: 'Warding Flare',
-  description:
-    '<p>When a creature you can see within 30 feet of you makes an attack roll, you can take a <strong>Reaction</strong> to impose Disadvantage on it, causing light to flare before it hits or misses.</p><p>You can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Long Rest.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>When a creature you can see within 30 feet of you makes an attack roll, you can take a <strong>Reaction</strong> to impose Disadvantage on it, causing light to flare before it hits or misses.</p><p>You can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Long Rest.</p>'
+    ),
+  ],
   resource: { size: WisdomModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
   costs: [{ cost: 1 }],
   actions: [
@@ -271,15 +292,24 @@ export const TrickeryDomainSpells = Traits.defineTrait('cleric/trickery-domain-s
 
 export const BlessingOfTheTrickster = Abilities.defineAbility('cleric/blessing-of-the-trickster', {
   name: 'Blessing of the Trickster',
-  description:
-    '<p>As a <strong>Magic action</strong>, you can choose yourself or a willing creature within 30 feet of you to have <strong>Advantage on Dexterity (Stealth) checks</strong>. The blessing lasts until you finish a Long Rest or you use this feature again.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>As a <strong>Magic action</strong>, you can choose yourself or a willing creature within 30 feet of you to have <strong>Advantage on Dexterity (Stealth) checks</strong>. The blessing lasts until you finish a Long Rest or you use this feature again.</p>'
+    ),
+  ],
   actions: [{ name: 'Use Blessing of the Trickster', action: ActionType.Standard }],
 })
 
 export const InvokeDuplicity = Abilities.defineAbility('cleric/invoke-duplicity', {
   name: 'Invoke Duplicity',
-  description:
-    "<p>You expend a use of your <strong>Channel Divinity</strong> to create a perfect visual illusion of yourself in an unoccupied space you can see within 30 feet of you. It's intangible and lasts for 1 minute, until you dismiss it (no action required), or until you have the Incapacitated condition. As a Bonus Action, you can move it up to 30 feet to a space within 120 feet of you.</p><p><strong>Cast Spells:</strong> you can cast spells as though you were in the illusion's space, using your own senses. <strong>Distract:</strong> when both you and your illusion are within 5 feet of a creature that can see the illusion, you have Advantage on attack rolls against that creature.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>You expend a use of your <strong>Channel Divinity</strong> to create a perfect visual illusion of yourself in an unoccupied space you can see within 30 feet of you. It's intangible and lasts for 1 minute, until you dismiss it (no action required), or until you have the Incapacitated condition. As a Bonus Action, you can move it up to 30 feet to a space within 120 feet of you.</p>"
+    ),
+    Effects.descriptive(
+      "<p><strong>Cast Spells:</strong> you can cast spells as though you were in the illusion's space, using your own senses. <strong>Distract:</strong> when both you and your illusion are within 5 feet of a creature that can see the illusion, you have Advantage on attack rolls against that creature.</p>"
+    ),
+  ],
   actions: [{ name: 'Use Invoke Duplicity', action: ActionType.Bonus, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
@@ -313,8 +343,11 @@ export const WarDomainSpells = Traits.defineTrait('cleric/war-domain-spells', {
 
 export const GuidedStrike = Abilities.defineAbility('cleric/guided-strike', {
   name: 'Guided Strike',
-  description:
-    "<p>When you or a creature within 30 feet of you misses with an attack roll, you can expend a use of your <strong>Channel Divinity</strong> and give that roll a <strong>+10 bonus</strong>, potentially causing it to hit.</p><p>Using this feature on another creature's attack roll takes your <strong>Reaction</strong>.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>When you or a creature within 30 feet of you misses with an attack roll, you can expend a use of your <strong>Channel Divinity</strong> and give that roll a <strong>+10 bonus</strong>, potentially causing it to hit.</p><p>Using this feature on another creature's attack roll takes your <strong>Reaction</strong>.</p>"
+    ),
+  ],
   actions: [
     { name: 'Guide Your Own Strike', action: ActionType.Free, costs: [{ cost: 1, resource: ChannelDivinityPool }] },
     { name: "Guide an Ally's Strike", action: ActionType.Reaction, costs: [{ cost: 1, resource: ChannelDivinityPool }] },
@@ -323,8 +356,11 @@ export const GuidedStrike = Abilities.defineAbility('cleric/guided-strike', {
 
 export const WarPriest = Abilities.defineAbility('cleric/war-priest', {
   name: 'War Priest',
-  description:
-    '<p>You can make one attack with a weapon or an Unarmed Strike.</p><p>You can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Short or Long Rest.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>You can make one attack with a weapon or an Unarmed Strike.</p><p>You can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Short or Long Rest.</p>'
+    ),
+  ],
   resource: {
     size: WisdomModifierUses,
     refresh: [

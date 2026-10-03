@@ -626,7 +626,12 @@ const AbilityCard = ({ ability }: { ability: Ability }) => {
             {it}
           </Typography>
         ))}
-        <RichTextDescription text={ability.description} />
+        {Effects.filter(ability.effects, Effects.Descriptive).map((it, index) => (
+          <RichTextDescription
+            key={index}
+            text={it.description}
+          />
+        ))}
         {hasDescribedActions(ability) && <AbilityActions ability={ability} />}
       </CardContent>
     </Card>

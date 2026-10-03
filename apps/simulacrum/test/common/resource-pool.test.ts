@@ -7,6 +7,7 @@ import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
 import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
 import * as Barbarian from '@simulacrum/rulesets/dnd-5e/class/class-barbarian'
 import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
+import { SuperiorityDice } from '@simulacrum/rulesets/dnd-5e/archetype/maneuver'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
@@ -42,8 +43,8 @@ test('Barbarian levels add Rage uses', () => {
       context
     )
 
-  expect(barbarian(2).resources[Barbarian.RagePool.id]!.value).toBe(2)
-  expect(barbarian(3).resources[Barbarian.RagePool.id]!.value).toBe(3)
+  expect(barbarian(2).resources[Barbarian.Rage.resource.id]!.value).toBe(2)
+  expect(barbarian(3).resources[Barbarian.Rage.resource.id]!.value).toBe(3)
 })
 
 test('Fighter levels add Second Wind uses', () => {
@@ -73,17 +74,17 @@ test('actions inherit the ability costs, paid from its own resource unless they 
     costs: [{ cost: 1 }],
     actions: [
       { name: 'Inherits', action: ActionType.Bonus },
-      { name: 'Overrides', action: ActionType.Standard, costs: [{ cost: 2 }, { cost: 1, resource: Barbarian.RagePool }] },
+      { name: 'Overrides', action: ActionType.Standard, costs: [{ cost: 2 }, { cost: 1, resource: SuperiorityDice }] },
     ],
   })
 
   expect(ability.actions[0]!.costs).toEqual([{ cost: 1, resource: ability.resource.id }])
   expect(ability.actions[1]!.costs).toEqual([
     { cost: 2, resource: ability.resource.id },
-    { cost: 1, resource: Barbarian.RagePool.id },
+    { cost: 1, resource: SuperiorityDice.id },
   ])
 })
 
 test('a cost without a resource needs the ability to have one', () => {
-  expect(() => Abilities.defineAbility('test/no-resource', { name: 'No Resource', description: '', costs: [{ cost: 1 }] })).toThrow()
+  expect(() => Abilities.defineAbility('test/no-resource', { name: 'No Resource', costs: [{ cost: 1 }] })).toThrow()
 })

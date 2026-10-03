@@ -79,6 +79,9 @@ export type ModifyCharacteristicEffect = Effect & {
   modifier: Modifier<unknown>
 }
 
+// The effects an ability can have
+export type AbilityEffect = DescriptiveEffect | ModifyCharacteristicEffect
+
 export const GainAbility: EffectType<GainAbilityEffect> = { type: EffectTypeEnum.GainAbility }
 export type GainAbilityEffect = Effect & {
   type: EffectTypeEnum.GainAbility

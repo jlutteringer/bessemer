@@ -1,5 +1,5 @@
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
-import { Effect, EffectSourceType } from '@simulacrum/common/effect'
+import { AbilityEffect } from '@simulacrum/common/effect'
 import * as ResourcePools from '@simulacrum/common/resource-pool'
 import { ResourceCost, ResourceCostProps, ResourcePool, ResourcePoolDefinition } from '@simulacrum/common/resource-pool'
 import { Reference } from '@bessemer/cornerstone/reference'
@@ -21,11 +21,10 @@ export type AbilityReference = Reference<'Ability'>
 
 export type Ability = { id: AbilityReference } & {
   name: string
-  description: RichText
 
   archetypes: Array<ArchetypeReference>
   prerequisites: Array<Expression<boolean>>
-  effects: Array<Effect>
+  effects: Array<AbilityEffect>
   actions: Array<AbilityAction>
   resource: ResourcePoolDefinition | null
 }
@@ -40,11 +39,10 @@ export type AbilityAction = {
 
 export type AbilityProps = {
   name: string
-  description: RichText
 
   archetypes?: Array<Archetype>
   prerequisites?: Array<Expression<boolean>>
-  effects?: Array<Effect>
+  effects?: Array<AbilityEffect>
   actions?: Array<{
     name?: string
     description?: RichText
@@ -80,7 +78,6 @@ export const defineAbility = <P extends AbilityProps>(reference: string, props: 
   return {
     id: reference as AbilityReference,
     name: props.name,
-    description: props.description,
     archetypes: (props.archetypes ?? []).map((it) => it.id),
     prerequisites: props.prerequisites ?? [],
     effects: props.effects ?? [],
@@ -131,13 +128,6 @@ export const applyFilter = (abilities: Array<Ability>, filter: AbilityFilter): A
   }
 
   return filteredAbilities
-}
-
-export const getEffectsForAbility = (ability: Ability): Array<Effect> => {
-  return ability.effects.map((effect) => {
-    const sourcedEffect: Effect = { ...effect, source: { type: EffectSourceType.Ability, ability: ability.id } }
-    return sourcedEffect
-  })
 }
 
 export const buildInitialState = (ability: AbilityReference, loadout: LoadoutTypeReference | null, context: ApplicationContext): AbilityState => {

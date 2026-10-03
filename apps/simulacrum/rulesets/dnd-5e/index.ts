@@ -421,7 +421,7 @@ export const Dnd5e: Ruleset = {
     Cleric.GuidedStrike,
     Cleric.WarPriest,
   ],
-  resourcePools: [HitPointResourcePool, Barbarian.RagePool, Cleric.ChannelDivinityPool, Maneuvers.SuperiorityDice],
+  resourcePools: [HitPointResourcePool, Cleric.ChannelDivinityPool, Maneuvers.SuperiorityDice],
   loadoutTypes: [CantripLoadout, PreparedSpellLoadout, WeaponMasteryLoadout],
   progressionTable: {
     1: [

@@ -45,19 +45,35 @@ export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption(
 
 export const Spellcasting = Abilities.defineAbility('wizard/spellcasting', {
   name: 'Spellcasting',
-  description:
-    '<p>You cast Wizard spells using <strong>Intelligence</strong>, with an Arcane Focus or your spellbook as your focus. You know three cantrips, gaining a fourth at level 4, and can swap one after a Long Rest.</p><p>Your <strong>spellbook</strong> starts with six level 1 Wizard spells, and you add two more each time you gain a Wizard level, of a level you have slots for. You can also copy spells you find into it (2 hours and 50 GP per spell level).</p><p>After a Long Rest, you prepare a list of spells from the book to cast with your spell slots: 4 at level 1, rising to 9 by level 5. You regain all spell slots on a Long Rest.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>You cast Wizard spells using <strong>Intelligence</strong>, with an Arcane Focus or your spellbook as your focus. You know three cantrips, gaining a fourth at level 4, and can swap one after a Long Rest.</p>'
+    ),
+    Effects.descriptive(
+      '<p>Your <strong>spellbook</strong> starts with six level 1 Wizard spells, and you add two more each time you gain a Wizard level, of a level you have slots for. You can also copy spells you find into it (2 hours and 50 GP per spell level).</p>'
+    ),
+    Effects.descriptive(
+      '<p>After a Long Rest, you prepare a list of spells from the book to cast with your spell slots: 4 at level 1, rising to 9 by level 5. You regain all spell slots on a Long Rest.</p>'
+    ),
+  ],
 })
 
 export const RitualAdept = Abilities.defineAbility('wizard/ritual-adept', {
   name: 'Ritual Adept',
-  description: '<p>You can cast any Ritual spell in your spellbook as a ritual without preparing it, as long as you read it from the book.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>You can cast any Ritual spell in your spellbook as a ritual without preparing it, as long as you read it from the book.</p>'
+    ),
+  ],
 })
 
 export const ArcaneRecovery = Abilities.defineAbility('wizard/arcane-recovery', {
   name: 'Arcane Recovery',
-  description:
-    '<p>Once per Long Rest, when you finish a Short Rest, you can recover expended spell slots with a combined level of up to half your Wizard level (rounded up). None of them can be level 6 or higher.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>Once per Long Rest, when you finish a Short Rest, you can recover expended spell slots with a combined level of up to half your Wizard level (rounded up). None of them can be level 6 or higher.</p>'
+    ),
+  ],
 })
 
 export const Level1 = Traits.defineTrait('wizard/level-1', {
@@ -151,8 +167,11 @@ export const Level4 = Traits.defineTrait('wizard/level-4', {
 
 export const MemorizeSpell = Abilities.defineAbility('wizard/memorize-spell', {
   name: 'Memorize Spell',
-  description:
-    '<p>When you finish a Short Rest, you can swap one of your prepared level 1+ Wizard spells for another level 1+ spell in your spellbook.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>When you finish a Short Rest, you can swap one of your prepared level 1+ Wizard spells for another level 1+ spell in your spellbook.</p>'
+    ),
+  ],
 })
 
 export const Level5 = Traits.defineTrait('wizard/level-5', {
@@ -205,8 +224,11 @@ export const AbjurationSavant = Traits.defineTrait('wizard/abjuration-savant', {
 
 export const ArcaneWard = Abilities.defineAbility('wizard/arcane-ward', {
   name: 'Arcane Ward',
-  description:
-    '<p>When you cast an Abjuration spell with a spell slot, you can create a protective ward on yourself that lasts until you finish a Long Rest (once per Long Rest). It has maximum Hit Points equal to twice your Wizard level + your Intelligence modifier and absorbs damage you take, with any excess passing through to you.</p><p>The ward regains Hit Points equal to twice the slot level whenever you cast an Abjuration spell with a slot, or when you spend a slot as a Bonus Action.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>When you cast an Abjuration spell with a spell slot, you can create a protective ward on yourself that lasts until you finish a Long Rest (once per Long Rest). It has maximum Hit Points equal to twice your Wizard level + your Intelligence modifier and absorbs damage you take, with any excess passing through to you.</p><p>The ward regains Hit Points equal to twice the slot level whenever you cast an Abjuration spell with a slot, or when you spend a slot as a Bonus Action.</p>'
+    ),
+  ],
 })
 
 export const Abjurer = Traits.defineTrait('wizard/abjurer', {
@@ -252,8 +274,11 @@ export const DivinationSavant = Traits.defineTrait('wizard/divination-savant', {
 
 export const Portent = Abilities.defineAbility('wizard/portent', {
   name: 'Portent',
-  description:
-    '<p>After each Long Rest, roll two d20s and record the results. Before a D20 Test is rolled by you or a creature you can see, you can replace it with one of these results (once per turn). Each result can be used once, and unused ones are lost on your next Long Rest.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>After each Long Rest, roll two d20s and record the results. Before a D20 Test is rolled by you or a creature you can see, you can replace it with one of these results (once per turn). Each result can be used once, and unused ones are lost on your next Long Rest.</p>'
+    ),
+  ],
 })
 
 export const Diviner = Traits.defineTrait('wizard/diviner', {
@@ -299,8 +324,11 @@ export const EvocationSavant = Traits.defineTrait('wizard/evocation-savant', {
 
 export const PotentCantrip = Abilities.defineAbility('wizard/potent-cantrip', {
   name: 'Potent Cantrip',
-  description:
-    "<p>When a creature avoids your cantrip, because your attack roll misses or it succeeds on its save, it still takes half the cantrip's damage but none of its other effects.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>When a creature avoids your cantrip, because your attack roll misses or it succeeds on its save, it still takes half the cantrip's damage but none of its other effects.</p>"
+    ),
+  ],
 })
 
 export const Evoker = Traits.defineTrait('wizard/evoker', {
@@ -346,8 +374,12 @@ export const IllusionSavant = Traits.defineTrait('wizard/illusion-savant', {
 
 export const ImprovedIllusions = Abilities.defineAbility('wizard/improved-illusions', {
   name: 'Improved Illusions',
-  description:
-    '<p>Your Illusion spells need no Verbal components, and those with a range of 10 feet or more gain 60 feet of range.</p><p>You also learn <strong>Minor Illusion</strong> (or another Wizard cantrip if you already know it) without it counting against your cantrips. You can cast it as a Bonus Action and create both a sound and an image with one casting.</p>',
+  effects: [
+    Effects.descriptive('<p>Your Illusion spells need no Verbal components, and those with a range of 10 feet or more gain 60 feet of range.</p>'),
+    Effects.descriptive(
+      '<p>You also learn <strong>Minor Illusion</strong> (or another Wizard cantrip if you already know it) without it counting against your cantrips. You can cast it as a Bonus Action and create both a sound and an image with one casting.</p>'
+    ),
+  ],
 })
 
 export const Illusionist = Traits.defineTrait('wizard/illusionist', {

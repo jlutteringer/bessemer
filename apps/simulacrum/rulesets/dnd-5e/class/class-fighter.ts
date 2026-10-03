@@ -17,8 +17,11 @@ import { Patches } from '@bessemer/cornerstone'
 
 export const SecondWind = Abilities.defineAbility('fighter/second-wind', {
   name: 'Second Wind',
-  description:
-    '<p>You draw on a reserve of stamina to regain Hit Points equal to <strong>1d10 + your Fighter level</strong>.</p><p>You can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>You draw on a reserve of stamina to regain Hit Points equal to <strong>1d10 + your Fighter level</strong>.</p><p>You can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).</p>'
+    ),
+  ],
   resource: {
     size: 2,
     refresh: [
@@ -83,8 +86,11 @@ export const Level1 = Traits.defineTrait('fighter/level-1', {
 
 export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
   name: 'Action Surge',
-  description:
-    "<p>On your turn, you can push yourself beyond your normal limits to take <strong>one additional action</strong>, as long as it isn't the Magic action.</p><p>Once you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>On your turn, you can push yourself beyond your normal limits to take <strong>one additional action</strong>, as long as it isn't the Magic action.</p><p>Once you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn.</p>"
+    ),
+  ],
   resource: {
     size: 1,
     refresh: [
@@ -105,8 +111,11 @@ export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
 // FUTURE stub: Tactical Mind isn't modelled yet
 export const TacticalMind = Abilities.defineAbility('fighter/tactical-mind', {
   name: 'Tactical Mind',
-  description:
-    "<p>When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to roll <strong>1d10</strong> and add it to the check, potentially turning the failure into a success.</p><p>If the check still fails, the use of Second Wind isn't expended.</p>",
+  effects: [
+    Effects.descriptive(
+      "<p>When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to roll <strong>1d10</strong> and add it to the check, potentially turning the failure into a success.</p><p>If the check still fails, the use of Second Wind isn't expended.</p>"
+    ),
+  ],
 })
 
 export const Level2 = Traits.defineTrait('fighter/level-2', {
@@ -195,13 +204,16 @@ export const Level4 = Traits.defineTrait('fighter/level-4', {
 // FUTURE stubs: Extra Attack and Tactical Shift aren't modelled yet
 export const ExtraAttack = Abilities.defineAbility('fighter/extra-attack', {
   name: 'Extra Attack',
-  description: '<p>You can attack <strong>twice</strong>, instead of once, whenever you take the Attack action on your turn.</p>',
+  effects: [Effects.descriptive('<p>You can attack <strong>twice</strong>, instead of once, whenever you take the Attack action on your turn.</p>')],
 })
 
 export const TacticalShift = Abilities.defineAbility('fighter/tactical-shift', {
   name: 'Tactical Shift',
-  description:
-    '<p>Whenever you activate your <strong>Second Wind</strong> with a Bonus Action, you can move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>',
+  effects: [
+    Effects.descriptive(
+      '<p>Whenever you activate your <strong>Second Wind</strong> with a Bonus Action, you can move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>'
+    ),
+  ],
 })
 
 export const Level5 = Traits.defineTrait('fighter/level-5', {
