@@ -1,11 +1,12 @@
-import { Traits } from '@simulacrum/common'
+import { Effects, Traits } from '@simulacrum/common'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 
 export const Level1 = Traits.defineTrait('druid/level-1', {
   name: 'Druid',
   description: '',
   archetypes: [Class],
-  effects: [],
+  effects: [Effects.gainTrait(SavingThrowProficiencies.Intelligence), Effects.gainTrait(SavingThrowProficiencies.Wisdom)],
 })
 
 export const Level2 = Traits.defineTrait('druid/level-2', {

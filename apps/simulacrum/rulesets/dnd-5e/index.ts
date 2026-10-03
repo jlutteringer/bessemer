@@ -4,6 +4,7 @@ import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import * as FightingStyles from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import { FightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import * as WeaponMasteries from '@simulacrum/rulesets/dnd-5e/archetype/weapon-mastery'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import { SkillProficiency } from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
@@ -47,6 +48,7 @@ export const Dnd5e: Ruleset = {
     AbilityScoreIncreases.AbilityScoreIncrease,
     Species.Species,
     SkillProficiency,
+    SavingThrowProficiencies.SavingThrowProficiency,
     SkillExpertise.SkillExpertise,
     ArtisansTools.ArtisansTools,
     Tools.Tool,
@@ -123,6 +125,12 @@ export const Dnd5e: Ruleset = {
     Species.Human,
     Species.Orc,
     Species.Tiefling,
+    SavingThrowProficiencies.Strength,
+    SavingThrowProficiencies.Dexterity,
+    SavingThrowProficiencies.Constitution,
+    SavingThrowProficiencies.Intelligence,
+    SavingThrowProficiencies.Wisdom,
+    SavingThrowProficiencies.Charisma,
     SkillProficiencies.Acrobatics,
     SkillProficiencies.AnimalHandling,
     SkillProficiencies.Arcana,

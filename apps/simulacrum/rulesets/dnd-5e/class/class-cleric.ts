@@ -1,4 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, ResourcePools, Traits } from '@simulacrum/common'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import { Class, Cleric } from '@simulacrum/rulesets/dnd-5e/archetype'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
@@ -67,6 +68,8 @@ export const Level1 = Traits.defineTrait('cleric/level-1', {
     '<p>A priest who channels <strong>divine magic</strong>, wielding the power of the gods to heal, protect, and smite, and casting spells with <strong>Wisdom</strong>.</p><p><strong>Saving Throws:</strong> Wisdom and Charisma. <strong>Armor:</strong> Light and Medium armor, and Shields. <strong>Weapons:</strong> Simple weapons.</p>',
   archetypes: [Class],
   effects: [
+    Effects.gainTrait(SavingThrowProficiencies.Wisdom),
+    Effects.gainTrait(SavingThrowProficiencies.Charisma),
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),

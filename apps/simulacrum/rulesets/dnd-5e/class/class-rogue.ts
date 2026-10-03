@@ -1,4 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import { Class, Wizard } from '@simulacrum/rulesets/dnd-5e/archetype'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as SkillExpertise from '@simulacrum/rulesets/dnd-5e/archetype/skill-expertise'
@@ -56,6 +57,8 @@ export const Level1 = Traits.defineTrait('rogue/level-1', {
     "<p>A cunning expert in <strong>stealth, skill, and precision</strong>, striking where foes are weakest.</p><p><strong>Saving Throws:</strong> Dexterity and Intelligence. <strong>Armor:</strong> Light armor. <strong>Weapons:</strong> Simple weapons, and Martial weapons with the Finesse or Light property. <strong>Tools:</strong> Thieves' Tools.</p>",
   archetypes: [Class],
   effects: [
+    Effects.gainTrait(SavingThrowProficiencies.Dexterity),
+    Effects.gainTrait(SavingThrowProficiencies.Intelligence),
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),

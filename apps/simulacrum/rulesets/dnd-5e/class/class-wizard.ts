@@ -1,4 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import { Class, Wizard } from '@simulacrum/rulesets/dnd-5e/archetype'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/rulesets/dnd-5e/archetype/spell'
@@ -82,6 +83,8 @@ export const Level1 = Traits.defineTrait('wizard/level-1', {
     '<p>A scholar of arcane magic who records spells in a <strong>spellbook</strong> and casts them with <strong>Intelligence</strong>.</p>',
   archetypes: [Class],
   effects: [
+    Effects.gainTrait(SavingThrowProficiencies.Intelligence),
+    Effects.gainTrait(SavingThrowProficiencies.Wisdom),
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),

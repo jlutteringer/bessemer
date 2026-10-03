@@ -52,6 +52,7 @@ export namespace CreatureCharacteristics {
 
 export namespace CharacteristicGroups {
   export const Abilities = Characteristics.defineGroup('characteristic-group/abilities', { name: 'Abilities' })
+  export const SavingThrows = Characteristics.defineGroup('characteristic-group/saving-throws', { name: 'Saving Throws' })
   export const Combat = Characteristics.defineGroup('characteristic-group/combat', { name: 'Combat' })
   export const Skills = Characteristics.defineGroup('characteristic-group/skills', { name: 'Skills' })
 }
@@ -284,5 +285,41 @@ export namespace PlayerCharacteristics {
     group: CharacteristicGroups.Skills,
     template: Characteristics.defineTemplate('characteristic/skill/survival', 'Survival', ObjectPaths.from('survival')),
     baseValue: WisdomModifier.variable,
+  })
+
+  export const StrengthSave: Characteristic<number> = Characteristics.defineCharacteristic({
+    group: CharacteristicGroups.SavingThrows,
+    template: Characteristics.defineTemplate('characteristic/saving-throw/strength', 'Strength Save', ObjectPaths.from('strengthSave')),
+    baseValue: StrengthModifier.variable,
+  })
+
+  export const DexteritySave: Characteristic<number> = Characteristics.defineCharacteristic({
+    group: CharacteristicGroups.SavingThrows,
+    template: Characteristics.defineTemplate('characteristic/saving-throw/dexterity', 'Dexterity Save', ObjectPaths.from('dexteritySave')),
+    baseValue: DexterityModifier.variable,
+  })
+
+  export const ConstitutionSave: Characteristic<number> = Characteristics.defineCharacteristic({
+    group: CharacteristicGroups.SavingThrows,
+    template: Characteristics.defineTemplate('characteristic/saving-throw/constitution', 'Constitution Save', ObjectPaths.from('constitutionSave')),
+    baseValue: ConstitutionModifier.variable,
+  })
+
+  export const IntelligenceSave: Characteristic<number> = Characteristics.defineCharacteristic({
+    group: CharacteristicGroups.SavingThrows,
+    template: Characteristics.defineTemplate('characteristic/saving-throw/intelligence', 'Intelligence Save', ObjectPaths.from('intelligenceSave')),
+    baseValue: IntelligenceModifier.variable,
+  })
+
+  export const WisdomSave: Characteristic<number> = Characteristics.defineCharacteristic({
+    group: CharacteristicGroups.SavingThrows,
+    template: Characteristics.defineTemplate('characteristic/saving-throw/wisdom', 'Wisdom Save', ObjectPaths.from('wisdomSave')),
+    baseValue: WisdomModifier.variable,
+  })
+
+  export const CharismaSave: Characteristic<number> = Characteristics.defineCharacteristic({
+    group: CharacteristicGroups.SavingThrows,
+    template: Characteristics.defineTemplate('characteristic/saving-throw/charisma', 'Charisma Save', ObjectPaths.from('charismaSave')),
+    baseValue: CharismaModifier.variable,
   })
 }

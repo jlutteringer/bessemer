@@ -1,4 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import { Bard, Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 import * as SkillProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/skill-proficiency'
 import * as SkillExpertise from '@simulacrum/rulesets/dnd-5e/archetype/skill-expertise'
@@ -78,6 +79,8 @@ export const Level1 = Traits.defineTrait('bard/level-1', {
     '<p>A performer whose words, music, and dance carry <strong>magic</strong>, inspiring allies and casting spells with <strong>Charisma</strong>.</p><p><strong>Saving Throws:</strong> Dexterity and Charisma. <strong>Armor:</strong> Light armor. <strong>Weapons:</strong> Simple weapons. <strong>Tools:</strong> three Musical Instruments of your choice.</p>',
   archetypes: [Class],
   effects: [
+    Effects.gainTrait(SavingThrowProficiencies.Dexterity),
+    Effects.gainTrait(SavingThrowProficiencies.Charisma),
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),

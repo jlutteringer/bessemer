@@ -1,4 +1,5 @@
 import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/common'
+import * as SavingThrowProficiencies from '@simulacrum/rulesets/dnd-5e/archetype/saving-throw-proficiency'
 import { Class } from '@simulacrum/rulesets/dnd-5e/archetype'
 import { SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
 import { WeaponMasteryLoadout } from '@simulacrum/rulesets/dnd-5e/loadout'
@@ -75,6 +76,8 @@ export const Level1 = Traits.defineTrait('fighter/level-1', {
   description: '<p>A master of martial combat, at home with <strong>any weapon</strong> and <strong>any armor</strong>.</p>',
   archetypes: [Class],
   effects: [
+    Effects.gainTrait(SavingThrowProficiencies.Strength),
+    Effects.gainTrait(SavingThrowProficiencies.Constitution),
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(10))),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),
