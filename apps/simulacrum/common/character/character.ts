@@ -323,7 +323,9 @@ const evaluateCharacteristics = (
 }
 
 const evaluateCharacterAbilities = (character: CharacterState, evaluate: EvaluateExpression, context: ApplicationContext): Array<AbilityState> => {
-  const gainAbilityEffects = Effects.filter(getAllEffects(character, context), Effects.GainAbility)
+  const effects = getAllEffects(character, context)
+  const gainAbilityEffects = Effects.filter(effects, Effects.GainAbility)
+  const modifyAbilityEffects = Effects.filter(effects, Effects.ModifyAbility)
   const abilities = Arrays.dedupe(gainAbilityEffects.map((it) => it.ability)).filter((it) =>
     Abilities.getAbility(it, context).prerequisites.every(evaluate)
   )
@@ -331,7 +333,8 @@ const evaluateCharacterAbilities = (character: CharacterState, evaluate: Evaluat
   return abilities.map((ability) => {
     const grants = gainAbilityEffects.filter((it) => it.ability === ability)
     const loadout = grants.some((it) => Objects.isNil(it.loadout)) ? null : grants[0]!.loadout
-    return Abilities.buildInitialState(ability, loadout, context)
+    const modifiers = modifyAbilityEffects.filter((it) => it.ability === ability).map((it) => it.modifier)
+    return Abilities.buildInitialState(ability, loadout, modifiers, evaluate, context)
   })
 }
 

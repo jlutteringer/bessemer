@@ -4,8 +4,11 @@ import * as ResourcePools from '@simulacrum/common/resource-pool'
 import { ResourceCost, ResourceCostProps, ResourcePool, ResourcePoolDefinition } from '@simulacrum/common/resource-pool'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { RichText } from '@bessemer/cornerstone/rich-text'
-import { Expression } from '@bessemer/cornerstone/expression'
-import { Arrays, Assertions, Objects } from '@bessemer/cornerstone'
+import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
+import { Patch } from '@bessemer/cornerstone/patch'
+import * as Attributes from '@simulacrum/common/attribute'
+import { Modifier } from '@simulacrum/common/attribute'
+import { Arrays, Assertions, Objects, Patches } from '@bessemer/cornerstone'
 import * as Archetypes from '@simulacrum/common/archetype'
 import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/common/archetype'
 import { ApplicationContext } from '@simulacrum/common/application'
@@ -67,10 +70,8 @@ export const defineAbility = <P extends AbilityProps>(reference: string, props: 
     ? null
     : ResourcePools.defineResourcePool(reference, { name: props.name, description: '', ...props.resource })
 
-  const resolveCost = ({ cost, resource: costResource }: ResourceCostProps): ResourceCost => {
-    const paidFrom = costResource ?? resource
-    Assertions.assertPresent(paidFrom, () => `Ability [${reference}] has a cost without a resource, but no resource of its own`)
-    return { cost, resource: paidFrom.id }
+  const resolveCost = ({ cost, resource }: ResourceCostProps): ResourceCost => {
+    return Objects.isNil(resource) ? { cost } : { cost, resource: resource.id }
   }
 
   const costs = (props.costs ?? []).map(resolveCost)
@@ -130,6 +131,21 @@ export const applyFilter = (abilities: Array<Ability>, filter: AbilityFilter): A
   return filteredAbilities
 }
 
-export const buildInitialState = (ability: AbilityReference, loadout: LoadoutTypeReference | null, context: ApplicationContext): AbilityState => {
-  return { ability: getAbility(ability, context), loadout }
+export const applyModifiers = (ability: Ability, modifiers: Array<Modifier<unknown>>, evaluate: EvaluateExpression): Ability => {
+  const { activeModifiers } = Attributes.evaluateModifiers(modifiers, evaluate)
+  return Patches.resolve(
+    ability,
+    activeModifiers.map((it) => it.value as Patch<Ability>),
+    evaluate
+  )
+}
+
+export const buildInitialState = (
+  ability: AbilityReference,
+  loadout: LoadoutTypeReference | null,
+  modifiers: Array<Modifier<unknown>>,
+  evaluate: EvaluateExpression,
+  context: ApplicationContext
+): AbilityState => {
+  return { ability: applyModifiers(getAbility(ability, context), modifiers, evaluate), loadout }
 }

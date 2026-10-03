@@ -48,8 +48,8 @@ test('Test Character Choices and Selections', () => {
   character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level2), context)
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level2)).toBe(true)
 
-  // Fighter (2) grants Action Surge and Tactical Mind
-  expect(character.abilities.filter((it) => it.loadout === null).length).toBe(7)
+  // Fighter (2) grants Action Surge
+  expect(character.abilities.filter((it) => it.loadout === null).length).toBe(6)
 
   character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), context)
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level3)).toBe(true)

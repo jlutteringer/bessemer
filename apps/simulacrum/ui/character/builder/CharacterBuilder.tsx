@@ -605,9 +605,10 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
   )
 }
 
-const AbilityCard = ({ ability }: { ability: Ability }) => {
+const AbilityCard = ({ ability: rulesetAbility }: { ability: Ability }) => {
   const context = useRulesContext()
   const sheet = useContext(CharacterSheetContext)
+  const ability = sheet?.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
   const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, context)
 
   return (

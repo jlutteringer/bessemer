@@ -14,6 +14,7 @@ export enum EffectTypeEnum {
   GainCharacteristic = 'GainCharacteristic',
   ModifyCharacteristic = 'ModifyCharacteristic',
   GainAbility = 'GainAbility',
+  ModifyAbility = 'ModifyAbility',
   GainResourcePool = 'GainResourcePool',
   ModifyResourcePool = 'ModifyResourcePool',
   GainLoadoutSlot = 'GainLoadoutSlot',
@@ -103,6 +104,13 @@ export type ModifyResourcePoolEffect = Effect & {
   modifier: Modifier<unknown>
 }
 
+export const ModifyAbility: EffectType<ModifyAbilityEffect> = { type: EffectTypeEnum.ModifyAbility }
+export type ModifyAbilityEffect = Effect & {
+  type: EffectTypeEnum.ModifyAbility
+  ability: AbilityReference
+  modifier: Modifier<unknown>
+}
+
 export const GainLoadoutSlot: EffectType<GainLoadoutSlotEffect> = { type: EffectTypeEnum.GainLoadoutSlot }
 export type GainLoadoutSlotEffect = Effect & {
   type: EffectTypeEnum.GainLoadoutSlot
@@ -158,6 +166,14 @@ export const gainResourcePool = (resourcePool: ResourcePoolDefinition): GainReso
   return {
     type: EffectTypeEnum.GainResourcePool,
     resourcePool: resourcePool.id,
+  }
+}
+
+export const modifyAbility = (ability: Ability, modifier: Modifier<unknown>): ModifyAbilityEffect => {
+  return {
+    type: EffectTypeEnum.ModifyAbility,
+    ability: ability.id,
+    modifier,
   }
 }
 

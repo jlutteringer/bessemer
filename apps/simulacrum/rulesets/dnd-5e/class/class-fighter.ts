@@ -9,7 +9,7 @@ import { SelectFeat } from '@simulacrum/rulesets/dnd-5e/archetype/feat'
 import { CharacterOptions } from '@simulacrum/common/character'
 import { PlayerCharacteristics } from '@simulacrum/rulesets/dnd-5e/characteristic'
 import { CharacterValues } from '@simulacrum/common/character/character'
-import { ActionType } from '@simulacrum/common/ability'
+import { Ability, ActionType } from '@simulacrum/common/ability'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { ResourcePool } from '@simulacrum/common/resource-pool'
@@ -108,12 +108,26 @@ export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
   ],
 })
 
-// FUTURE stub: Tactical Mind isn't modelled yet
-export const TacticalMind = Abilities.defineAbility('fighter/tactical-mind', {
+export const TacticalMind = Traits.defineTrait('fighter/tactical-mind', {
   name: 'Tactical Mind',
+  description:
+    "<p>When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to roll <strong>1d10</strong> and add it to the check, potentially turning the failure into a success.</p><p>If the check still fails, the use of Second Wind isn't expended.</p>",
   effects: [
-    Effects.descriptive(
-      "<p>When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to roll <strong>1d10</strong> and add it to the check, potentially turning the failure into a success.</p><p>If the check still fails, the use of Second Wind isn't expended.</p>"
+    Effects.modifyAbility(
+      SecondWind,
+      Attributes.modifier(
+        Patches.patch<Ability>({
+          actions: Patches.concatenate([
+            {
+              name: 'Tactical Mind',
+              description:
+                "<p>When you fail an ability check, roll <strong>1d10</strong> and add it to the check. If it still fails, the use isn't expended.</p>",
+              action: ActionType.Free,
+              costs: [{ cost: 1 }],
+            },
+          ]),
+        })
+      )
     ),
   ],
 })
@@ -126,7 +140,7 @@ export const Level2 = Traits.defineTrait('fighter/level-2', {
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
     Effects.gainAbility(ActionSurge),
-    Effects.gainAbility(TacticalMind),
+    Effects.gainTrait(TacticalMind),
   ],
 })
 
@@ -201,17 +215,27 @@ export const Level4 = Traits.defineTrait('fighter/level-4', {
   ],
 })
 
-// FUTURE stubs: Extra Attack and Tactical Shift aren't modelled yet
 export const ExtraAttack = Abilities.defineAbility('fighter/extra-attack', {
   name: 'Extra Attack',
   effects: [Effects.descriptive('<p>You can attack <strong>twice</strong>, instead of once, whenever you take the Attack action on your turn.</p>')],
 })
 
-export const TacticalShift = Abilities.defineAbility('fighter/tactical-shift', {
+export const TacticalShift = Traits.defineTrait('fighter/tactical-shift', {
   name: 'Tactical Shift',
+  description:
+    '<p>Whenever you activate your <strong>Second Wind</strong> with a Bonus Action, you can move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>',
   effects: [
-    Effects.descriptive(
-      '<p>Whenever you activate your <strong>Second Wind</strong> with a Bonus Action, you can move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>'
+    Effects.modifyAbility(
+      SecondWind,
+      Attributes.modifier(
+        Patches.patch<Ability>({
+          effects: Patches.concatenate([
+            Effects.descriptive(
+              '<p><strong>Tactical Shift:</strong> when you use Second Wind, you can also move up to <strong>half your Speed</strong> without provoking Opportunity Attacks.</p>'
+            ),
+          ]),
+        })
+      )
     ),
   ],
 })
@@ -221,5 +245,5 @@ export const Level5 = Traits.defineTrait('fighter/level-5', {
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
-  effects: [Effects.gainAbility(ExtraAttack), Effects.gainAbility(TacticalShift)],
+  effects: [Effects.gainAbility(ExtraAttack), Effects.gainTrait(TacticalShift)],
 })

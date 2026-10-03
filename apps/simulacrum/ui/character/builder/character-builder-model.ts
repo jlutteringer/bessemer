@@ -11,7 +11,7 @@ import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { CooldownRate } from '@simulacrum/common/resource-pool'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
 import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
-import { Arrays, ObjectPaths, Objects } from '@bessemer/cornerstone'
+import { Arrays, Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
 export const MaxLevel = 20
 export const MinAbilityScore = 1
@@ -269,11 +269,12 @@ const getRecoveryLabels = (refresh: Array<CooldownRate>, evaluate: EvaluateExpre
 export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, context: ApplicationContext): Array<string> => {
   const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, context))
   const costs = Arrays.dedupeBy(
-    ability.actions.flatMap((it) => it.costs),
-    (it) => it.resource
+    ability.actions.flatMap((it) => it.costs).map((it) => ({ cost: it.cost, reference: it.resource ?? ability.resource?.id })),
+    (it) => it.reference
   )
 
-  return costs.map(({ cost, resource: reference }) => {
+  return costs.map(({ cost, reference }) => {
+    Assertions.assertPresent(reference, () => `Ability [${ability.id}] has a cost without a resource, but no resource of its own`)
     const resource = ResourcePools.getResourcePool(reference, context)
     const size = sheet.resources[reference]?.value ?? evaluate(resource.size)
     const costValue = evaluate(cost)

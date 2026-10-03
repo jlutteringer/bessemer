@@ -361,6 +361,8 @@ export const Dnd5e: Ruleset = {
     Fighter.Champion,
     Fighter.EldritchKnight,
     Fighter.PsiWarrior,
+    Fighter.TacticalMind,
+    Fighter.TacticalShift,
   ],
   abilities: [
     Maneuvers.Ambush,
@@ -395,9 +397,7 @@ export const Dnd5e: Ruleset = {
     HealingSurge,
     Fighter.SecondWind,
     Fighter.ActionSurge,
-    Fighter.TacticalMind,
     Fighter.ExtraAttack,
-    Fighter.TacticalShift,
     Wizard.Spellcasting,
     Wizard.RitualAdept,
     Wizard.ArcaneRecovery,

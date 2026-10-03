@@ -66,7 +66,7 @@ test('Fighter levels add Second Wind uses', () => {
   expect(fighter(4).resources[Fighter.SecondWind.resource.id]!.value).toBe(3)
 })
 
-test('actions inherit the ability costs, paid from its own resource unless they name another', () => {
+test('actions inherit the ability costs unless they set their own', () => {
   const ability = Abilities.defineAbility('test/ability', {
     name: 'Test Ability',
     description: '',
@@ -78,13 +78,6 @@ test('actions inherit the ability costs, paid from its own resource unless they 
     ],
   })
 
-  expect(ability.actions[0]!.costs).toEqual([{ cost: 1, resource: ability.resource.id }])
-  expect(ability.actions[1]!.costs).toEqual([
-    { cost: 2, resource: ability.resource.id },
-    { cost: 1, resource: SuperiorityDice.id },
-  ])
-})
-
-test('a cost without a resource needs the ability to have one', () => {
-  expect(() => Abilities.defineAbility('test/no-resource', { name: 'No Resource', costs: [{ cost: 1 }] })).toThrow()
+  expect(ability.actions[0]!.costs).toEqual([{ cost: 1 }])
+  expect(ability.actions[1]!.costs).toEqual([{ cost: 2 }, { cost: 1, resource: SuperiorityDice.id }])
 })

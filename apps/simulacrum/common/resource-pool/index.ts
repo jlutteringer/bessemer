@@ -33,7 +33,7 @@ export type ResourcePoolState = {
 
 export type ResourceCost = {
   cost: Expression<number>
-  resource: ResourcePoolReference
+  resource?: ResourcePoolReference
 }
 
 export type ResourceCostProps = {
