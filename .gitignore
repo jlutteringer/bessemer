@@ -51,3 +51,9 @@ docs/*
 !docs/index.md
 !docs/_config.yml
 bessemer/*/docs
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log

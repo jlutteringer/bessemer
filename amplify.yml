@@ -1,0 +1,21 @@
+version: 1
+applications:
+  - appRoot: simulacrum/apps/simulacrum
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm install "$(cat ../../../.nvmrc)"
+            - nvm use "$(cat ../../../.nvmrc)"
+            - corepack enable
+            - (cd ../../.. && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn install --immutable)
+        build:
+          commands:
+            - (cd ../../.. && yarn turbo run build --filter=simulacrum)
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - .next/cache/**/*

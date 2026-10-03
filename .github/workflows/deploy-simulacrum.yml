@@ -1,0 +1,80 @@
+name: Deploy Simulacrum
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-simulacrum
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://simulacrum.cloud
+    defaults:
+      run:
+        working-directory: simulacrum/infrastructure/prod
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::512725667825:role/simulacrum-github-deploy
+          aws-region: us-east-1
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.8
+          terraform_wrapper: false
+
+      - name: Terraform plan
+        run: |
+          terraform init -input=false
+          terraform plan -input=false -out=tfplan
+          {
+            echo '### Terraform plan'
+            echo '```'
+            terraform show -no-color tfplan
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Terraform apply
+        run: terraform apply -input=false tfplan
+
+      - name: Start Amplify release
+        id: start
+        run: |
+          APP_ID=$(terraform output -raw amplify_app_id)
+          JOB_ID=$(aws amplify start-job \
+            --app-id "$APP_ID" \
+            --branch-name main \
+            --job-type RELEASE \
+            --commit-id "$GITHUB_SHA" \
+            --query jobSummary.jobId \
+            --output text)
+          echo "app_id=$APP_ID" >> "$GITHUB_OUTPUT"
+          echo "job_id=$JOB_ID" >> "$GITHUB_OUTPUT"
+          echo "Started job $JOB_ID: https://us-east-1.console.aws.amazon.com/amplify/apps/$APP_ID/branches/main/deployments/$JOB_ID"
+
+      - name: Wait for deployment
+        env:
+          APP_ID: ${{ steps.start.outputs.app_id }}
+          JOB_ID: ${{ steps.start.outputs.job_id }}
+        run: |
+          while true; do
+            STATUS=$(aws amplify get-job --app-id "$APP_ID" --branch-name main --job-id "$JOB_ID" --query job.summary.status --output text)
+            echo "Status: $STATUS"
+            case "$STATUS" in
+              SUCCEED) exit 0 ;;
+              FAILED|CANCELLED) exit 1 ;;
+            esac
+            sleep 20
+          done
