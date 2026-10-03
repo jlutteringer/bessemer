@@ -3,6 +3,7 @@ import { CharacterOptions, Characters } from '@simulacrum/common/character'
 import { SelectClassLevel } from '@simulacrum/rulesets/dnd-5e'
 import * as Fighter from '@simulacrum/rulesets/dnd-5e/class/class-fighter'
 import { Archery, SelectFightingStyle } from '@simulacrum/rulesets/dnd-5e/archetype/fighting-style'
+import { HitPointResourcePool } from '@simulacrum/rulesets/dnd-5e/resource-pool'
 
 // Abilities that take a loadout slot (e.g. weapon masteries) are left out of the counts, since a Fighter has access to all of them
 test('Test Character Choices and Selections', () => {
@@ -54,5 +55,5 @@ test('Test Character Choices and Selections', () => {
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level3)).toBe(true)
 
   expect(character.characteristics.hitPoints!.value).toBe(28)
-  expect(character.resources.hitPoints!.value).toBe(28)
+  expect(character.resources[HitPointResourcePool.id]!.value).toBe(28)
 })

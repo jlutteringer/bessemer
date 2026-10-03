@@ -1,10 +1,11 @@
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
 import { Effect, EffectSourceType } from '@simulacrum/common/effect'
-import { ResourceCost } from '@simulacrum/common/resource-pool'
+import * as ResourcePools from '@simulacrum/common/resource-pool'
+import { ResourceCost, ResourceCostProps, ResourcePool, ResourcePoolDefinition } from '@simulacrum/common/resource-pool'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { RichText } from '@bessemer/cornerstone/rich-text'
 import { Expression } from '@bessemer/cornerstone/expression'
-import { Arrays, Assertions } from '@bessemer/cornerstone'
+import { Arrays, Assertions, Objects } from '@bessemer/cornerstone'
 import * as Archetypes from '@simulacrum/common/archetype'
 import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/common/archetype'
 import { ApplicationContext } from '@simulacrum/common/application'
@@ -26,7 +27,7 @@ export type Ability = { id: AbilityReference } & {
   prerequisites: Array<Expression<boolean>>
   effects: Array<Effect>
   actions: Array<AbilityAction>
-  costs: Array<ResourceCost>
+  resource: ResourcePoolDefinition | null
 }
 
 export type AbilityAction = {
@@ -49,10 +50,11 @@ export type AbilityProps = {
     description?: RichText
     action: ActionType
 
-    costs?: Array<ResourceCost>
+    costs?: Array<ResourceCostProps>
   }>
 
-  costs?: Array<ResourceCost>
+  resource?: ResourcePool
+  costs?: Array<ResourceCostProps>
 }
 
 export type AbilityState = {
@@ -60,7 +62,21 @@ export type AbilityState = {
   loadout: LoadoutTypeReference | null
 }
 
-export const defineAbility = (reference: string, props: AbilityProps): Ability => {
+type DefinedAbility<P extends AbilityProps> = Ability & (P extends { resource: ResourcePool } ? { resource: ResourcePoolDefinition } : {})
+
+export const defineAbility = <P extends AbilityProps>(reference: string, props: P): DefinedAbility<P> => {
+  const resource = Objects.isNil(props.resource)
+    ? null
+    : ResourcePools.defineResourcePool(reference, { name: props.name, description: '', ...props.resource })
+
+  const resolveCost = ({ cost, resource: costResource }: ResourceCostProps): ResourceCost => {
+    const paidFrom = costResource ?? resource
+    Assertions.assertPresent(paidFrom, () => `Ability [${reference}] has a cost without a resource, but no resource of its own`)
+    return { cost, resource: paidFrom.id }
+  }
+
+  const costs = (props.costs ?? []).map(resolveCost)
+
   return {
     id: reference as AbilityReference,
     name: props.name,
@@ -72,10 +88,10 @@ export const defineAbility = (reference: string, props: AbilityProps): Ability =
       name: it.name ?? null,
       description: it.description ?? null,
       action: it.action,
-      costs: it.costs ?? [],
+      costs: Objects.isNil(it.costs) ? costs : it.costs.map(resolveCost),
     })),
-    costs: props.costs ?? [],
-  }
+    resource,
+  } as DefinedAbility<P>
 }
 
 export const getAbility = (reference: AbilityReference, context: ApplicationContext): Ability => {
@@ -90,7 +106,7 @@ export const getAbilities = (abilities: Array<AbilityReference>, context: Applic
 
 export type AbilityFilterProps = {
   archetypes?: ArchetypeFilterProps
-  specificOptions?: Array<AbilityReference | Ability>
+  specificOptions?: Array<Ability>
 }
 
 export type AbilityFilter = {
@@ -101,7 +117,7 @@ export type AbilityFilter = {
 export const filter = (props: AbilityFilterProps): AbilityFilter => {
   return {
     archetypes: Archetypes.filter(props.archetypes ?? []),
-    specificOptions: (props.specificOptions ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
+    specificOptions: (props.specificOptions ?? []).map((it) => it.id),
   }
 }
 
@@ -124,7 +140,6 @@ export const getEffectsForAbility = (ability: Ability): Array<Effect> => {
   })
 }
 
-// TODO
 export const buildInitialState = (ability: AbilityReference, loadout: LoadoutTypeReference | null, context: ApplicationContext): AbilityState => {
   return { ability: getAbility(ability, context), loadout }
 }

@@ -1,13 +1,16 @@
 import { CharacterRecord, CharacterSheet } from '@simulacrum/common/character/character'
 import { CharacterOption, CharacterOptionType, CharacterOptionValue, CharacterSelection } from '@simulacrum/common/character/character-option'
 import { CharacterOptions, Characters } from '@simulacrum/common/character'
-import { Abilities, Archetypes, Effects, ProgressionTables, Traits } from '@simulacrum/common'
+import { Abilities, Archetypes, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/common'
 import { Trait, TraitReference } from '@simulacrum/common/trait'
 import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Characteristic, CharacteristicValue } from '@simulacrum/common/characteristic'
 import { ApplicationContext } from '@simulacrum/common/application'
 import { Ability, ActionType } from '@simulacrum/common/ability'
 import { LoadoutTypeReference } from '@simulacrum/common/loadout'
+import { CooldownRate } from '@simulacrum/common/resource-pool'
+import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
+import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
 import { Arrays, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
 export const MaxLevel = 20
@@ -233,6 +236,51 @@ export const getActionTypeLabel = (actionType: ActionType): string => {
 export const getActionLabel = (ability: Ability): string | null => {
   const actionTypes = Arrays.dedupe(ability.actions.map((it) => it.action))
   return Arrays.isEmpty(actionTypes) ? null : actionTypes.map(getActionTypeLabel).join(' or ')
+}
+
+// From shortest to longest
+const RecoveryPeriods: Record<GameTimeUnit, string> = {
+  [GameTimeUnit.Turn]: 'Turn',
+  [GameTimeUnit.Round]: 'Round',
+  [GameTimeUnit.Encounter]: 'Encounter',
+  [GameTimeUnit.ShortRest]: 'Short Rest',
+  [GameTimeUnit.LongRest]: 'Long Rest',
+  [GameTimeUnit.Day]: 'Day',
+}
+
+const isRelativeAmount = (amount: CooldownRate['amount']): amount is RelativeAmount => {
+  return Object.values(RelativeAmount).includes(amount as RelativeAmount)
+}
+
+// Describes how a resource recovers, one label per period, shortest first, e.g. ["1 / Short Rest", "All / Long Rest"]
+const getRecoveryLabels = (refresh: Array<CooldownRate>, evaluate: EvaluateExpression): Array<string> => {
+  const periodOrder = Object.keys(RecoveryPeriods)
+  return Arrays.sortBy(refresh, (it) => periodOrder.indexOf(it.period)).map((it) => {
+    const amount = isRelativeAmount(it.amount) ? it.amount : String(evaluate(it.amount))
+    return `${amount} / ${RecoveryPeriods[it.period]}`
+  })
+}
+
+/**
+ * Describes the resources an ability's actions spend, one line each, e.g. "Rage: 3 · 1 / Short Rest · All / Long Rest". The ability's
+ * own resource is labelled "Uses" and a shared pool (e.g. Rage or Superiority Dice) with its name. Sizes are the character's, so they
+ * include modifiers (e.g. a Barbarian's extra Rage at level 3) and expressions (e.g. uses equal to the Wisdom modifier).
+ */
+export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, context: ApplicationContext): Array<string> => {
+  const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, context))
+  const costs = Arrays.dedupeBy(
+    ability.actions.flatMap((it) => it.costs),
+    (it) => it.resource
+  )
+
+  return costs.map(({ cost, resource: reference }) => {
+    const resource = ResourcePools.getResourcePool(reference, context)
+    const size = sheet.resources[reference]?.value ?? evaluate(resource.size)
+    const costValue = evaluate(cost)
+    const label = resource.id === ability.resource?.id ? 'Uses' : resource.name
+
+    return [`${label}: ${size}`, ...(costValue === 1 ? [] : [`costs ${costValue}`]), ...getRecoveryLabels(resource.refresh, evaluate)].join(' · ')
+  })
 }
 
 /**

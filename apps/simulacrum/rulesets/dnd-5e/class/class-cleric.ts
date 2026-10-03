@@ -75,7 +75,6 @@ export const Level1 = Traits.defineTrait('cleric/level-1', {
 // Shared by every Channel Divinity effect, including those from a Cleric's domain
 export const ChannelDivinityPool = ResourcePools.defineResourcePool('cleric/channel-divinity', {
   name: 'Channel Divinity',
-  path: 'channelDivinity',
   description: '',
   // FUTURE a third use at Cleric level 6 and a fourth at level 18
   size: 2,
@@ -232,11 +231,12 @@ export const WardingFlare = Abilities.defineAbility('cleric/warding-flare', {
   name: 'Warding Flare',
   description:
     '<p>When a creature you can see within 30 feet of you makes an attack roll, you can take a <strong>Reaction</strong> to impose Disadvantage on it, causing light to flare before it hits or misses.</p><p>You can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Long Rest.</p>',
+  resource: { size: WisdomModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
   actions: [
     {
       name: 'Use Warding Flare',
       action: ActionType.Reaction,
-      costs: [{ cost: 1, resource: { size: WisdomModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] } }],
     },
   ],
 })
@@ -325,22 +325,18 @@ export const WarPriest = Abilities.defineAbility('cleric/war-priest', {
   name: 'War Priest',
   description:
     '<p>You can make one attack with a weapon or an Unarmed Strike.</p><p>You can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Short or Long Rest.</p>',
+  resource: {
+    size: WisdomModifierUses,
+    refresh: [
+      { period: GameTimeUnit.ShortRest, amount: RelativeAmount.All },
+      { period: GameTimeUnit.LongRest, amount: RelativeAmount.All },
+    ],
+  },
+  costs: [{ cost: 1 }],
   actions: [
     {
       name: 'Use War Priest',
       action: ActionType.Bonus,
-      costs: [
-        {
-          cost: 1,
-          resource: {
-            size: WisdomModifierUses,
-            refresh: [
-              { period: GameTimeUnit.ShortRest, amount: RelativeAmount.All },
-              { period: GameTimeUnit.LongRest, amount: RelativeAmount.All },
-            ],
-          },
-        },
-      ],
     },
   ],
 })

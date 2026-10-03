@@ -12,34 +12,31 @@ import { CharacterValues } from '@simulacrum/common/character/character'
 import { ActionType } from '@simulacrum/common/ability'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/common/types'
 import { Expressions } from '@bessemer/cornerstone/expression'
+import { ResourcePool } from '@simulacrum/common/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 
 export const SecondWind = Abilities.defineAbility('fighter/second-wind', {
   name: 'Second Wind',
   description:
     '<p>You draw on a reserve of stamina to regain Hit Points equal to <strong>1d10 + your Fighter level</strong>.</p><p>You can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).</p>',
+  resource: {
+    size: 2,
+    refresh: [
+      {
+        period: GameTimeUnit.LongRest,
+        amount: RelativeAmount.All,
+      },
+      {
+        period: GameTimeUnit.ShortRest,
+        amount: 1,
+      },
+    ],
+  },
+  costs: [{ cost: 1 }],
   actions: [
     {
       name: 'Use Second Wind',
       action: ActionType.Bonus,
-      costs: [
-        {
-          cost: 1,
-          resource: {
-            size: 2,
-            refresh: [
-              {
-                period: GameTimeUnit.LongRest,
-                amount: RelativeAmount.All,
-              },
-              {
-                period: GameTimeUnit.ShortRest,
-                amount: 1,
-              },
-            ],
-          },
-        },
-      ],
     },
   ],
 })
@@ -88,23 +85,19 @@ export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
   name: 'Action Surge',
   description:
     "<p>On your turn, you can push yourself beyond your normal limits to take <strong>one additional action</strong>, as long as it isn't the Magic action.</p><p>Once you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn.</p>",
+  resource: {
+    size: 1,
+    refresh: [
+      {
+        period: GameTimeUnit.ShortRest,
+        amount: RelativeAmount.All,
+      },
+    ],
+  },
+  costs: [{ cost: 1 }],
   actions: [
     {
       action: ActionType.Free,
-      costs: [
-        {
-          cost: 1,
-          resource: {
-            size: 1,
-            refresh: [
-              {
-                period: GameTimeUnit.ShortRest,
-                amount: RelativeAmount.All,
-              },
-            ],
-          },
-        },
-      ],
     },
   ],
 })
@@ -192,7 +185,11 @@ export const Level4 = Traits.defineTrait('fighter/level-4', {
   description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
-  effects: [Effects.gainLoadoutSlot(WeaponMasteryLoadout), Effects.gainCharacterOption(SelectFeat)],
+  effects: [
+    Effects.gainLoadoutSlot(WeaponMasteryLoadout),
+    Effects.gainCharacterOption(SelectFeat),
+    Effects.modifyResourcePool(SecondWind.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+  ],
 })
 
 // FUTURE stubs: Extra Attack and Tactical Shift aren't modelled yet

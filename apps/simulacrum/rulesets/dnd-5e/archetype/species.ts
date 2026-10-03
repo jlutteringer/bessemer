@@ -41,16 +41,15 @@ export const HealingHands = Abilities.defineAbility('species/aasimar/healing-han
   name: 'Healing Hands',
   description:
     "<p>As a <strong>Magic action</strong>, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled.</p><p>Once you use this trait, you can't use it again until you finish a Long Rest.</p>",
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
   actions: [
     {
       name: 'Use Healing Hands',
       action: ActionType.Standard,
-      costs: [{ cost: 1, resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] } }],
     },
   ],
 })
-
-const CelestialRevelationUses = { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] }
 
 export const CelestialRevelation = Abilities.defineAbility('species/aasimar/celestial-revelation', {
   name: 'Celestial Revelation',
@@ -58,26 +57,25 @@ export const CelestialRevelation = Abilities.defineAbility('species/aasimar/cele
     "<p>You transform for 1 minute or until you end it (no action required). Until the transformation ends, once on each of your turns you can deal extra damage to one target when you deal damage to it with an attack or a spell. The extra damage equals your Proficiency Bonus, and is Necrotic for Necrotic Shroud or Radiant otherwise.</p><p>Once you transform, you can't do so again until you finish a Long Rest.</p>",
   // Available from character level 3
   prerequisites: [Expressions.greaterThanOrEqual(CharacterValues.Level, 3)],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
   actions: [
     {
       name: 'Heavenly Wings',
       description: 'Two spectral wings sprout from your back temporarily. Until the transformation ends, you have a Fly Speed equal to your Speed.',
       action: ActionType.Bonus,
-      costs: [{ cost: 1, resource: CelestialRevelationUses }],
     },
     {
       name: 'Inner Radiance',
       description:
         'Searing light temporarily radiates from your eyes and mouth. For the duration, you shed Bright Light in a 10-foot radius and Dim Light for an additional 10 feet, and at the end of each of your turns, each creature within 10 feet of you takes Radiant damage equal to your Proficiency Bonus.',
       action: ActionType.Bonus,
-      costs: [{ cost: 1, resource: CelestialRevelationUses }],
     },
     {
       name: 'Necrotic Shroud',
       description:
         'Your eyes briefly become pools of darkness, and flightless wings sprout from your back temporarily. Creatures other than your allies within 10 feet of you must succeed on a Charisma saving throw (DC 8 plus your Charisma modifier and Proficiency Bonus) or have the Frightened condition until the end of your next turn.',
       action: ActionType.Bonus,
-      costs: [{ cost: 1, resource: CelestialRevelationUses }],
     },
   ],
 })

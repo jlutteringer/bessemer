@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm, useWatch } from 'react-hook-form'
@@ -38,6 +38,7 @@ import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/char
 import { RichTextDescription } from '@simulacrum/ui/character/builder/RichTextDescription'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
+  getAbilityResourceLabels,
   getActionLabel,
   getActionTypeLabel,
   hasDescribedActions,
@@ -66,6 +67,9 @@ import {
 const useRulesContext = (): ApplicationContext => {
   return useClientContext() as unknown as ApplicationContext
 }
+
+// The character being edited, for cards deep in the page that show character-specific values (e.g. how many uses an ability has)
+const CharacterSheetContext = createContext<CharacterSheet | null>(null)
 
 /**
  * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
@@ -146,177 +150,181 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
   })
 
   return (
-    <Box>
-      <StandardPageHeader
-        title={character.name.trim() || 'New Character'}
-        content={
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{ alignItems: 'center' }}
-          >
-            {hasUnsavedChanges && (
-              <Chip
-                label="Unsaved changes"
-                size="small"
-              />
-            )}
-            <Button
-              component={Link}
-              href="/characters"
-              startIcon={<ArrowBackIcon />}
+    <CharacterSheetContext.Provider value={sheet}>
+      <Box>
+        <StandardPageHeader
+          title={character.name.trim() || 'New Character'}
+          content={
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ alignItems: 'center' }}
             >
-              Characters
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<SaveIcon />}
-              onClick={handleSave}
-            >
-              Save
-            </Button>
-          </Stack>
-        }
-      />
-
-      <Stack spacing={3}>
-        <Card>
-          <CardHeader title="Details" />
-          <CardContent>
-            <Grid
-              container
-              spacing={2}
-            >
-              <Grid size={{ xs: 12, sm: 8 }}>
-                <Controller
-                  name="name"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      label="Name"
-                      fullWidth
-                    />
-                  )}
+              {hasUnsavedChanges && (
+                <Chip
+                  label="Unsaved changes"
+                  size="small"
                 />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField
-                  select
-                  label="Level"
-                  fullWidth
-                  value={character.level}
-                  onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), context))}
-                >
-                  {Arrays.range([1, MaxLevel]).map((level) => (
-                    <MenuItem
-                      key={level}
-                      value={level}
-                    >
-                      {level}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader title="Characteristics" />
-          <CardContent>
-            <Grid
-              container
-              spacing={2}
-            >
-              {getInitialValueCharacteristics(context).map((characteristic) => (
-                <Grid
-                  key={characteristic.id}
-                  size={{ xs: 6, sm: 4, md: 2 }}
-                >
-                  <Controller
-                    name={getInitialValueFieldName(characteristic)}
-                    control={control}
-                    rules={{
-                      validate: (value) =>
-                        (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
-                        `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
-                    }}
-                    render={({ field, fieldState }) => {
-                      // Show the score after increases from traits (e.g. a Background), when they change it
-                      const total = getCharacteristicValue(sheet, characteristic)
-                      const increase = typeof field.value === 'number' ? total - field.value : 0
-
-                      return (
-                        <TextField
-                          {...field}
-                          value={field.value ?? ''}
-                          // Keep the value numeric; an empty field stays empty so validation can flag it
-                          onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
-                          label={characteristic.name}
-                          type="number"
-                          fullWidth
-                          error={fieldState.invalid}
-                          helperText={fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)}
-                          slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
-                        />
-                      )
-                    }}
-                  />
-                </Grid>
-              ))}
-              {/* Characteristics worked out from other values, shown read-only with their current value */}
-              {getDerivedCharacteristics(context).map((characteristic) => (
-                <Grid
-                  key={characteristic.id}
-                  size={{ xs: 6, sm: 4, md: 2 }}
-                >
-                  <TextField
-                    label={characteristic.name}
-                    value={getCharacteristicValue(sheet, characteristic)}
-                    fullWidth
-                    slotProps={{ input: { readOnly: true } }}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </CardContent>
-        </Card>
-
-        <Box>
-          <Typography
-            variant="h5"
-            gutterBottom
-          >
-            Traits
-          </Typography>
-          <Stack spacing={3}>
-            {Arrays.range([1, character.level]).map((level) => (
-              <LevelTraits
-                key={level}
-                level={level}
-                heldTraits={sheet.traits}
-                choices={optionChoices.filter((it) => it.level === level)}
-                onSelect={(choice, value) => applyCharacter(selectValue(getValues(), choice, value, context))}
-                onSelectMany={(choices, values) => applyCharacter(selectValuesForChoices(getValues(), choices, values, context))}
-              />
-            ))}
-          </Stack>
-        </Box>
-
-        <AbilitiesSection
-          sheet={sheet}
-          onSelect={(loadoutType, abilities) => applyCharacter(selectLoadoutAbilities(getValues(), loadoutType, abilities, context))}
+              )}
+              <Button
+                component={Link}
+                href="/characters"
+                startIcon={<ArrowBackIcon />}
+              >
+                Characters
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<SaveIcon />}
+                onClick={handleSave}
+              >
+                Save
+              </Button>
+            </Stack>
+          }
         />
-      </Stack>
 
-      <Snackbar
-        open={showSaved}
-        autoHideDuration={3000}
-        onClose={() => setShowSaved(false)}
-        message="Character saved"
-      />
-    </Box>
+        <Stack spacing={3}>
+          <Card>
+            <CardHeader title="Details" />
+            <CardContent>
+              <Grid
+                container
+                spacing={2}
+              >
+                <Grid size={{ xs: 12, sm: 8 }}>
+                  <Controller
+                    name="name"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        label="Name"
+                        fullWidth
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 4 }}>
+                  <TextField
+                    select
+                    label="Level"
+                    fullWidth
+                    value={character.level}
+                    onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), context))}
+                  >
+                    {Arrays.range([1, MaxLevel]).map((level) => (
+                      <MenuItem
+                        key={level}
+                        value={level}
+                      >
+                        {level}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader title="Characteristics" />
+            <CardContent>
+              <Grid
+                container
+                spacing={2}
+              >
+                {getInitialValueCharacteristics(context).map((characteristic) => (
+                  <Grid
+                    key={characteristic.id}
+                    size={{ xs: 6, sm: 4, md: 2 }}
+                  >
+                    <Controller
+                      name={getInitialValueFieldName(characteristic)}
+                      control={control}
+                      rules={{
+                        validate: (value) =>
+                          (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
+                          `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
+                      }}
+                      render={({ field, fieldState }) => {
+                        // Show the score after increases from traits (e.g. a Background), when they change it
+                        const total = getCharacteristicValue(sheet, characteristic)
+                        const increase = typeof field.value === 'number' ? total - field.value : 0
+
+                        return (
+                          <TextField
+                            {...field}
+                            value={field.value ?? ''}
+                            // Keep the value numeric; an empty field stays empty so validation can flag it
+                            onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
+                            label={characteristic.name}
+                            type="number"
+                            fullWidth
+                            error={fieldState.invalid}
+                            helperText={
+                              fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)
+                            }
+                            slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
+                          />
+                        )
+                      }}
+                    />
+                  </Grid>
+                ))}
+                {/* Characteristics worked out from other values, shown read-only with their current value */}
+                {getDerivedCharacteristics(context).map((characteristic) => (
+                  <Grid
+                    key={characteristic.id}
+                    size={{ xs: 6, sm: 4, md: 2 }}
+                  >
+                    <TextField
+                      label={characteristic.name}
+                      value={getCharacteristicValue(sheet, characteristic)}
+                      fullWidth
+                      slotProps={{ input: { readOnly: true } }}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </CardContent>
+          </Card>
+
+          <Box>
+            <Typography
+              variant="h5"
+              gutterBottom
+            >
+              Traits
+            </Typography>
+            <Stack spacing={3}>
+              {Arrays.range([1, character.level]).map((level) => (
+                <LevelTraits
+                  key={level}
+                  level={level}
+                  heldTraits={sheet.traits}
+                  choices={optionChoices.filter((it) => it.level === level)}
+                  onSelect={(choice, value) => applyCharacter(selectValue(getValues(), choice, value, context))}
+                  onSelectMany={(choices, values) => applyCharacter(selectValuesForChoices(getValues(), choices, values, context))}
+                />
+              ))}
+            </Stack>
+          </Box>
+
+          <AbilitiesSection
+            sheet={sheet}
+            onSelect={(loadoutType, abilities) => applyCharacter(selectLoadoutAbilities(getValues(), loadoutType, abilities, context))}
+          />
+        </Stack>
+
+        <Snackbar
+          open={showSaved}
+          autoHideDuration={3000}
+          onClose={() => setShowSaved(false)}
+          message="Character saved"
+        />
+      </Box>
+    </CharacterSheetContext.Provider>
   )
 }
 
@@ -598,6 +606,10 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
 }
 
 const AbilityCard = ({ ability }: { ability: Ability }) => {
+  const context = useRulesContext()
+  const sheet = useContext(CharacterSheetContext)
+  const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, context)
+
   return (
     <Card sx={{ height: '100%' }}>
       <CardContent>
@@ -605,6 +617,15 @@ const AbilityCard = ({ ability }: { ability: Ability }) => {
         {!hasDescribedActions(ability) && Objects.isPresent(getActionLabel(ability)) && (
           <Typography variant="caption">{getActionLabel(ability)}</Typography>
         )}
+        {resourceLabels.map((it) => (
+          <Typography
+            key={it}
+            variant="caption"
+            component="p"
+          >
+            {it}
+          </Typography>
+        ))}
         <RichTextDescription text={ability.description} />
         {hasDescribedActions(ability) && <AbilityActions ability={ability} />}
       </CardContent>

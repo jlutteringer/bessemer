@@ -100,7 +100,7 @@ export const resolveWithDetails = <T>(value: T, patches: Array<Patch<T>>, evalua
         currentValue = applyPatch(currentValue, patch.patch, evaluate)
         break
       default:
-        throw new Error(`Unrecognized PatchType for value: ${JSON.stringify(it)}`)
+        throw new Error(`Unrecognized PatchType for value: ${JSON.stringify(patch)}`)
     }
 
     return { value: currentValue, patch }

@@ -1222,6 +1222,24 @@ export const WordOfRadiance = Abilities.defineAbility('spell/word-of-radiance', 
   actions: [{ name: 'Cast Word of Radiance', action: ActionType.Standard }],
 })
 
+// Spells granted by Barbarian features. They're on the Druid and Ranger lists, which aren't modelled yet, so they have no class archetype
+
+export const SpeakWithAnimals = Abilities.defineAbility('spell/speak-with-animals', {
+  name: 'Speak with Animals',
+  description:
+    "<p><strong>Divination</strong> · Action or Ritual · Self · V, S · 10 minutes</p><p>You can understand and talk with Beasts, and use any of the Influence action's skill options on them. Most have little to say beyond survival and companionship, but they can tell you about nearby places and monsters, including anything they've perceived in the past day.</p>",
+  archetypes: [Rank1, Divination],
+  actions: [{ name: 'Cast Speak with Animals', action: ActionType.Standard }],
+})
+
+export const BeastSense = Abilities.defineAbility('spell/beast-sense', {
+  name: 'Beast Sense',
+  description:
+    '<p><strong>Divination</strong> · Action or Ritual · Touch · S · Concentration, up to 1 hour</p><p>A willing Beast you touch shares its senses with you, including any special senses it has, while still letting you use your own.</p>',
+  archetypes: [Rank2, Divination],
+  actions: [{ name: 'Cast Beast Sense', action: ActionType.Standard }],
+})
+
 export const All = [
   Alarm,
   BurningHands,
@@ -1373,4 +1391,6 @@ export const All = [
   SpareTheDying,
   Thaumaturgy,
   WordOfRadiance,
+  SpeakWithAnimals,
+  BeastSense,
 ]

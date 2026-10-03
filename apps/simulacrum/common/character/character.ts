@@ -6,7 +6,7 @@ import { ProgressionTable } from '@simulacrum/common/progression-table'
 import { Ability, AbilityReference, AbilityState } from '@simulacrum/common/ability'
 import { LoadoutSlot } from '@simulacrum/common/loadout'
 import { Characteristic, CharacteristicValue } from '@simulacrum/common/characteristic'
-import { ResourcePoolState } from '@simulacrum/common/resource-pool'
+import { ResourcePoolReference, ResourcePoolState } from '@simulacrum/common/resource-pool'
 import { EvaluateExpression, ExpressionContext, Expressions, ExpressionVariable } from '@bessemer/cornerstone/expression'
 import { Abilities, Characteristics, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/common'
 import { Arrays, Assertions, Misc, ObjectPaths, Objects } from '@bessemer/cornerstone'
@@ -34,7 +34,7 @@ export type CharacterSheet = CharacterRecord & {
   choices: ProgressionTable<CharacterChoice>
   abilities: Array<AbilityState>
   loadout: Array<LoadoutSlot>
-  resources: Record<string, ResourcePoolState>
+  resources: Record<ResourcePoolReference, ResourcePoolState>
 }
 
 export type CharacterState = CharacterSheet & {}
@@ -347,9 +347,21 @@ const evaluateResourcePools = (
   character: CharacterState,
   evaluate: EvaluateExpression,
   context: ApplicationContext
-): Record<string, ResourcePoolState> => {
-  const gainResourcePoolEffects = Effects.filter(getAllEffects(character, context), Effects.GainResourcePool)
-  return Object.fromEntries(gainResourcePoolEffects.map((it) => ResourcePools.buildInitialState(it.resourcePool, evaluate, context)))
+): Record<ResourcePoolReference, ResourcePoolState> => {
+  const effects = getAllEffects(character, context)
+  const modifyResourcePoolEffects = Effects.filter(effects, Effects.ModifyResourcePool)
+
+  const resourcePools = Arrays.dedupe([
+    ...Effects.filter(effects, Effects.GainResourcePool).map((it) => it.resourcePool),
+    ...Arrays.filterMap(character.abilities, (it) => it.ability.resource?.id),
+  ])
+
+  const states = resourcePools.map((resourcePool) => {
+    const modifiers = modifyResourcePoolEffects.filter((it) => it.resourcePool === resourcePool).map((it) => it.modifier)
+    return ResourcePools.buildInitialState(resourcePool, modifiers, evaluate, context)
+  })
+
+  return Object.fromEntries(states.map((it) => [it.resource, it]))
 }
 
 export const buildExpressionContext = (character: CharacterState, context: ApplicationContext): ExpressionContext => {

@@ -51,7 +51,6 @@ test('Test Objects', () => {
   {
     const resourcePool = ResourcePools.defineResourcePool('test-resource-pool', {
       name: 'Hit Points',
-      path: 'hitPoints',
       description: '',
       size: 10,
       refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }],

@@ -5,7 +5,6 @@ import { NumericExpressions } from '@bessemer/cornerstone/expression'
 
 export const TacticPoints = ResourcePools.defineResourcePool('resource-pool/tactic-points', {
   name: 'Tactic Points',
-  path: 'tacticPoints',
   description: '',
   size: NumericExpressions.floor(PlayerCharacteristics.Presence.variable, 1),
   refresh: [

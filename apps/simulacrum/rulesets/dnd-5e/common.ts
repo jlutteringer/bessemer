@@ -35,16 +35,16 @@ export const Dash = Abilities.defineAbility('common/dash', {
   ],
 })
 
-// TODO healing surge is going to need its own resource pool or something...
 // TODO need a way to indicate only useable during a rest...
 export const HealingSurge = Abilities.defineAbility('common/healing-surge', {
   name: 'Healing Surge',
   description:
     '<p>When you finish a <strong>Short Rest</strong>, you can spend Hit Point Dice to recover. For each one you spend, roll it and add your Constitution modifier; you regain that many Hit Points.</p><p>You have a number of Hit Point Dice equal to your level, and regain all of them when you finish a Long Rest.</p>',
+  resource: { size: CharacterValues.Level, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
   actions: [
     {
       action: ActionType.Standard,
-      costs: [{ cost: 1, resource: { size: CharacterValues.Level, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] } }],
     },
   ],
 })
