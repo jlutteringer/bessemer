@@ -127,6 +127,7 @@ export const TacticalMind = Traits.defineTrait('fighter/tactical-mind', {
                 "<p>When you fail an ability check, roll <strong>1d10</strong> and add it to the check. If it still fails, the use isn't expended.</p>",
               action: ActionType.Free,
               costs: [{ cost: 1 }],
+              targeting: {},
             },
           ]),
         })

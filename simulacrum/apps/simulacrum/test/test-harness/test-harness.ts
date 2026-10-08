@@ -22,6 +22,7 @@ export const buildTestContext = (): ApplicationContext => {
     client: {
       correlationId: '123',
       rulesets: [Dnd5e],
+      rulesetExtensions: [],
       tags: [],
       environment: 'test',
       runtime: { test: () => 'hello', codex: { renderers: [] } },
@@ -30,7 +31,7 @@ export const buildTestContext = (): ApplicationContext => {
 }
 
 export const CommonerLevel1: CharacterRecord = {
-  ruleset: Dnd5e.id,
+  ruleset: { id: Dnd5e.id, extensions: [] },
   name: 'Bob the Commoner',
   level: 1,
   initialValues: {
@@ -46,7 +47,7 @@ export const CommonerLevel1: CharacterRecord = {
 }
 
 export const CommonerLevel3: CharacterRecord = {
-  ruleset: Dnd5e.id,
+  ruleset: { id: Dnd5e.id, extensions: [] },
   name: 'Bob the Commoner',
   level: 3,
   initialValues: {
@@ -62,7 +63,7 @@ export const CommonerLevel3: CharacterRecord = {
 }
 
 export const FighterLevel2: CharacterRecord = {
-  ruleset: Dnd5e.id,
+  ruleset: { id: Dnd5e.id, extensions: [] },
   name: 'Bob the Fighter',
   level: 2,
   initialValues: {

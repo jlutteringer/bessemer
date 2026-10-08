@@ -10,16 +10,18 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
-import CardActionArea from '@mui/material/CardActionArea'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
+import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
 import CircularProgress from '@mui/material/CircularProgress'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import MenuItem from '@mui/material/MenuItem'
 import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
-import TextField from '@mui/material/TextField'
+import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SaveIcon from '@mui/icons-material/Save'
@@ -34,7 +36,7 @@ import { CharacterOptionValue } from '@simulacrum/engine/character/character-opt
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
 import { ApplicationContext } from '@simulacrum/application'
 import * as Rulesets from '@simulacrum/engine/ruleset'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import { Ruleset, RulesetConfiguration, RulesetExtension } from '@simulacrum/engine/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
@@ -50,12 +52,12 @@ import {
   getGrantedTraits,
   getInitialValueFieldName,
   getLoadoutAbilities,
+  getPassiveEffects,
+  getPassiveTraits,
   getOptionLabel,
   getCharacterOptionChoices,
   getValueCaption,
-  MaxAbilityScore,
   MaxLevel,
-  MinAbilityScore,
   newCharacter,
   selectLoadoutAbilities,
   selectValue,
@@ -65,8 +67,9 @@ import {
   isTrait,
 } from '@simulacrum/ui/character/builder/character-builder-model'
 
-const useRulesets = (): Array<Ruleset> => {
-  return (useClientContext() as unknown as ApplicationContext).client.rulesets
+const useRulesets = (): { rulesets: Array<Ruleset>; rulesetExtensions: Array<RulesetExtension> } => {
+  const { rulesets, rulesetExtensions } = (useClientContext() as unknown as ApplicationContext).client
+  return { rulesets, rulesetExtensions }
 }
 
 const RulesetContext = createContext<Ruleset | null>(null)
@@ -84,9 +87,15 @@ const CharacterSheetContext = createContext<CharacterSheet | null>(null)
  * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
  */
 export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) => {
-  const rulesets = useRulesets()
+  const { rulesets, rulesetExtensions } = useRulesets()
   const stored = useStoredCharacter(characterId)
-  const [newCharacterRuleset, setNewCharacterRuleset] = useState<Ruleset | null>(null)
+  const [newCharacterConfiguration, setNewCharacterConfiguration] = useState<RulesetConfiguration | null>(null)
+  const configuration = stored?.character.ruleset ?? newCharacterConfiguration
+
+  const ruleset = useMemo(
+    () => (Objects.isPresent(configuration) ? Rulesets.resolveRuleset(configuration, rulesets, rulesetExtensions) : null),
+    [configuration, rulesets, rulesetExtensions]
+  )
 
   // Local storage is only readable once the client has hydrated
   if (stored === null) {
@@ -117,12 +126,12 @@ export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) 
     )
   }
 
-  const ruleset = Objects.isPresent(stored) ? Rulesets.getRuleset(stored.character.ruleset, rulesets) : newCharacterRuleset
-  if (Objects.isNil(ruleset)) {
+  if (Objects.isNil(configuration) || Objects.isNil(ruleset)) {
     return (
       <RulesetSelection
         rulesets={rulesets}
-        onSelect={setNewCharacterRuleset}
+        rulesetExtensions={rulesetExtensions}
+        onSelect={setNewCharacterConfiguration}
       />
     )
   }
@@ -132,44 +141,158 @@ export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) 
       <CharacterEditor
         key={characterId ?? ruleset.id}
         characterId={characterId}
-        initialCharacter={stored?.character ?? newCharacter(ruleset)}
+        initialCharacter={stored?.character ?? newCharacter(configuration, ruleset)}
       />
     </RulesetContext.Provider>
   )
 }
 
-const RulesetSelection = ({ rulesets, onSelect }: { rulesets: Array<Ruleset>; onSelect: (ruleset: Ruleset) => void }) => {
+const RulesetSelection = ({
+  rulesets,
+  rulesetExtensions,
+  onSelect,
+}: {
+  rulesets: Array<Ruleset>
+  rulesetExtensions: Array<RulesetExtension>
+  onSelect: (configuration: RulesetConfiguration) => void
+}) => {
+  const [configuration, setConfiguration] = useState<RulesetConfiguration | null>(null)
+
+  // Selecting a ruleset includes all of its extensions by default
+  const selectRuleset = (ruleset: Ruleset) => {
+    if (configuration?.id !== ruleset.id) {
+      setConfiguration({ id: ruleset.id, extensions: Rulesets.getAvailableExtensions(ruleset, rulesetExtensions).map((it) => it.id) })
+    }
+  }
+
+  const toggleExtension = (extension: RulesetExtension) => {
+    if (Objects.isPresent(configuration)) {
+      const { extensions } = configuration
+      setConfiguration({
+        ...configuration,
+        extensions: extensions.includes(extension.id) ? extensions.filter((it) => it !== extension.id) : [...extensions, extension.id],
+      })
+    }
+  }
+
   return (
     <Box>
       <StandardPageHeader title="New Character" />
       <Card>
         <CardHeader
           title="Choose a Ruleset"
-          subheader="The rules your character is built with. This can't be changed later."
+          subheader="The rules your character is built with, and any optional extensions to include. These can't be changed later."
         />
         <CardContent>
           <Grid
             container
             spacing={2}
           >
-            {rulesets.map((ruleset) => (
-              <Grid
-                key={ruleset.id}
-                size={{ xs: 12, sm: 6 }}
-              >
-                <Card variant="outlined">
-                  <CardActionArea onClick={() => onSelect(ruleset)}>
+            {rulesets.map((ruleset) => {
+              const selected = configuration?.id === ruleset.id
+              const extensions = Rulesets.getAvailableExtensions(ruleset, rulesetExtensions)
+
+              return (
+                <Grid
+                  key={ruleset.id}
+                  size={{ xs: 12, sm: 6 }}
+                >
+                  {/* The whole card selects the ruleset; a CardActionArea can't wrap it, since the extension checkboxes can't be nested in a button */}
+                  <Card
+                    variant="outlined"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => selectRuleset(ruleset)}
+                    onKeyDown={(event) => {
+                      if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
+                        event.preventDefault()
+                        selectRuleset(ruleset)
+                      }
+                    }}
+                    sx={{
+                      height: '100%',
+                      cursor: 'pointer',
+                      borderColor: selected ? 'primary.main' : undefined,
+                      // An inset shadow thickens the selected border without changing the card's size
+                      boxShadow: selected ? (theme) => `inset 0 0 0 1px ${theme.palette.primary.main}` : undefined,
+                      '&:hover': { bgcolor: 'action.hover' },
+                    }}
+                  >
                     <CardContent>
                       <Typography variant="h6">{ruleset.name}</Typography>
                     </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
+                    {!Arrays.isEmpty(extensions) && (
+                      <CardContent sx={{ pt: 0 }}>
+                        <Typography
+                          variant="overline"
+                          color="text.secondary"
+                        >
+                          Extensions
+                        </Typography>
+                        <Stack sx={{ alignItems: 'flex-start' }}>
+                          {extensions.map((extension) => (
+                            <FormControlLabel
+                              key={extension.id}
+                              control={
+                                <Checkbox
+                                  checked={selected && configuration.extensions.includes(extension.id)}
+                                  disabled={!selected}
+                                  onChange={() => toggleExtension(extension)}
+                                />
+                              }
+                              label={extension.name}
+                            />
+                          ))}
+                        </Stack>
+                      </CardContent>
+                    )}
+                  </Card>
+                </Grid>
+              )
+            })}
           </Grid>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+            <Button
+              variant="contained"
+              disabled={Objects.isNil(configuration)}
+              onClick={() => Objects.isPresent(configuration) && onSelect(configuration)}
+            >
+              Create Character
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </Box>
+  )
+}
+
+/**
+ * A number input that can be left blank while typing. A blank field is stored as 0, and shows 0 once the field loses focus.
+ */
+const NumberField = ({
+  value,
+  onChange,
+  onBlur,
+  ...props
+}: Omit<TextFieldProps, 'value' | 'onChange' | 'onBlur' | 'type'> & { value: number; onChange: (value: number) => void; onBlur: () => void }) => {
+  const [text, setText] = useState(String(value))
+  // Follow changes made outside the field (e.g. a reset), but keep what's typed while it still means the same number
+  const displayed = Number(text) === value ? text : String(value)
+
+  return (
+    <TextField
+      {...props}
+      type="number"
+      value={displayed}
+      onChange={(event) => {
+        setText(event.target.value)
+        onChange(Number(event.target.value))
+      }}
+      onBlur={() => {
+        setText(String(value))
+        onBlur()
+      }}
+    />
   )
 }
 
@@ -301,30 +424,24 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                         <Controller
                           name={getInitialValueFieldName(characteristic)}
                           control={control}
-                          rules={{
-                            validate: (value) =>
-                              (typeof value === 'number' && Number.isInteger(value) && value >= MinAbilityScore && value <= MaxAbilityScore) ||
-                              `Must be ${MinAbilityScore}–${MaxAbilityScore}`,
-                          }}
                           render={({ field, fieldState }) => {
                             // Show the score after increases from traits (e.g. a Background), when they change it
                             const total = getCharacteristicValue(sheet, characteristic)
                             const increase = typeof field.value === 'number' ? total - field.value : 0
 
                             return (
-                              <TextField
-                                {...field}
-                                value={field.value ?? ''}
-                                // Keep the value numeric; an empty field stays empty so validation can flag it
-                                onChange={(event) => field.onChange(event.target.value === '' ? '' : Number(event.target.value))}
+                              <NumberField
+                                name={field.name}
+                                inputRef={field.ref}
+                                value={typeof field.value === 'number' ? field.value : 0}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
                                 label={characteristic.name}
-                                type="number"
                                 fullWidth
                                 error={fieldState.invalid}
                                 helperText={
                                   fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)
                                 }
-                                slotProps={{ htmlInput: { min: MinAbilityScore, max: MaxAbilityScore } }}
                               />
                             )
                           }}
@@ -646,7 +763,6 @@ const CardGrid = ({ children, marginTop = 0 }: { children: React.ReactNode; marg
   )
 }
 
-// FUTURE this is where a trait's full description and details will go
 const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string | null }) => {
   return (
     <Card sx={{ height: '100%' }}>
@@ -654,8 +770,29 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
         <Typography variant="h6">{trait.name}</Typography>
         {Objects.isPresent(caption) && <Typography variant="caption">{caption}</Typography>}
         <RichTextDescription text={trait.description} />
+        {!Arrays.isEmpty(getPassiveEffects(trait)) && (
+          <>
+            <Divider sx={{ my: 1 }} />
+            <TraitPassiveEffects trait={trait} />
+          </>
+        )}
       </CardContent>
     </Card>
+  )
+}
+
+// A trait's passive effects under a Passive caption, as shown on both its trait card and its card in the Abilities section
+const TraitPassiveEffects = ({ trait }: { trait: Trait }) => {
+  return (
+    <>
+      <Typography variant="caption">Passive</Typography>
+      {getPassiveEffects(trait).map((it, index) => (
+        <RichTextDescription
+          key={index}
+          text={it.description}
+        />
+      ))}
+    </>
   )
 }
 
@@ -688,6 +825,18 @@ const AbilityCard = ({ ability: rulesetAbility }: { ability: Ability }) => {
           />
         ))}
         {hasDescribedActions(ability) && <AbilityActions ability={ability} />}
+      </CardContent>
+    </Card>
+  )
+}
+
+// A trait's passive effects, shown alongside the character's abilities
+const PassiveTraitCard = ({ trait }: { trait: Trait }) => {
+  return (
+    <Card sx={{ height: '100%' }}>
+      <CardContent>
+        <Typography variant="h6">{trait.name}</Typography>
+        <TraitPassiveEffects trait={trait} />
       </CardContent>
     </Card>
   )
@@ -726,8 +875,8 @@ const AbilityActions = ({ ability }: { ability: Ability }) => {
   )
 }
 
-// The character's abilities: those that don't take a slot and so are always available, followed by a picker for each type of loadout
-// slot (e.g. a Wizard's cantrips), filled from the abilities it has for that type
+// The character's abilities: its traits' passive effects and the abilities that don't take a slot and so are always available, followed by
+// a picker for each type of loadout slot (e.g. a Wizard's cantrips), filled from the abilities it has for that type
 const AbilitiesSection = ({
   sheet,
   onSelect,
@@ -738,8 +887,9 @@ const AbilitiesSection = ({
   const ruleset = useRuleset()
   const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutType(it, ruleset))
   const alwaysAvailable = sheet.abilities.filter((it) => Objects.isNil(it.loadout)).map((it) => it.ability)
+  const passiveTraits = getPassiveTraits(sheet, ruleset)
 
-  if (Arrays.isEmpty(loadoutTypes) && Arrays.isEmpty(alwaysAvailable)) {
+  if (Arrays.isEmpty(loadoutTypes) && Arrays.isEmpty(alwaysAvailable) && Arrays.isEmpty(passiveTraits)) {
     return null
   }
 
@@ -748,7 +898,22 @@ const AbilitiesSection = ({
       <CardHeader title="Abilities" />
       <CardContent>
         <Stack spacing={3}>
-          {!Arrays.isEmpty(alwaysAvailable) && <AbilityCards abilities={alwaysAvailable} />}
+          {(!Arrays.isEmpty(passiveTraits) || !Arrays.isEmpty(alwaysAvailable)) && (
+            <CardGrid>
+              {passiveTraits.map((it) => (
+                <PassiveTraitCard
+                  key={it.id}
+                  trait={it}
+                />
+              ))}
+              {alwaysAvailable.map((it) => (
+                <AbilityCard
+                  key={it.id}
+                  ability={it}
+                />
+              ))}
+            </CardGrid>
+          )}
           {loadoutTypes.map((loadoutType) => {
             const slotCount = sheet.loadout.filter((it) => it.type === loadoutType.id).length
             const options = getLoadoutAbilities(sheet, loadoutType.id)

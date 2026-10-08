@@ -5,18 +5,17 @@ import { Abilities, Archetypes, Effects, ProgressionTables, ResourcePools, Trait
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Characteristic, CharacteristicGroup, CharacteristicValue } from '@simulacrum/engine/characteristic'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import { Ruleset, RulesetConfiguration } from '@simulacrum/engine/ruleset'
 import { Ability, ActionType } from '@simulacrum/engine/ability'
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
+import { DescriptiveEffect } from '@simulacrum/engine/effect'
 import { CooldownRate } from '@simulacrum/engine/resource-pool'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
 export const MaxLevel = 20
-export const MinAbilityScore = 1
-export const MaxAbilityScore = 30
-const DefaultInitialValue = 10
+const DefaultInitialValue = 0
 
 /**
  * A single choice the character gets at a given level, along with the values (traits or abilities) that can fill it. Values whose
@@ -69,9 +68,9 @@ export const setInitialValue = (character: CharacterRecord, characteristic: Char
   return { ...character, initialValues }
 }
 
-export const newCharacter = (ruleset: Ruleset): CharacterRecord => {
+export const newCharacter = (configuration: RulesetConfiguration, ruleset: Ruleset): CharacterRecord => {
   const character: CharacterRecord = {
-    ruleset: ruleset.id,
+    ruleset: configuration,
     name: '',
     level: 1,
     initialValues: {},
@@ -184,6 +183,17 @@ export const getOptionLabel = (option: CharacterOption, ruleset: Ruleset): strin
 // Whether an option's value is a trait, as opposed to an ability (which has actions)
 export const isTrait = (value: CharacterOptionValue): value is Trait => {
   return !('actions' in value)
+}
+
+/**
+ * The effects of a trait shown as its passive effects, both on the trait's card and in the Abilities section.
+ */
+export const getPassiveEffects = (trait: Trait): Array<DescriptiveEffect> => {
+  return Effects.filter(trait.effects, Effects.Descriptive)
+}
+
+export const getPassiveTraits = (sheet: CharacterSheet, ruleset: Ruleset): Array<Trait> => {
+  return Traits.getTraits(Arrays.dedupe(ProgressionTables.getValues(sheet.traits)), ruleset).filter((it) => !Arrays.isEmpty(getPassiveEffects(it)))
 }
 
 /**

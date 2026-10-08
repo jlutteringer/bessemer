@@ -1863,6 +1863,50 @@ export const SpeakWithPlants = Abilities.defineAbility('spell/speak-with-plants'
   actions: [{ name: 'Cast Speak with Plants', action: ActionType.Standard }],
 })
 
+export const ThornWhip = Abilities.defineAbility('spell/thorn-whip', {
+  name: 'Thorn Whip',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Transmutation</strong> · 30 feet · V, S, M (the stem of a plant with thorns) · Instantaneous</p><p>Make a melee spell attack against a creature in range with a thorny vine, dealing 1d6 Piercing damage on a hit. If the target is Large or smaller, you can pull it up to 10 feet straight toward you.</p><p><strong>Cantrip Upgrade:</strong> the damage increases by 1d6 at levels 5, 11, and 17.</p>'
+    ),
+  ],
+  archetypes: [Cantrip, Transmutation],
+  actions: [{ name: 'Cast Thorn Whip', action: ActionType.Standard }],
+})
+
+export const ProtectionFromPoison = Abilities.defineAbility('spell/protection-from-poison', {
+  name: 'Protection from Poison',
+  effects: [
+    Effects.descriptive(
+      '<p><strong>Abjuration</strong> · Touch · V, S · 1 hour</p><p>You touch a creature and end the Poisoned condition on it. For the duration, it has Advantage on saving throws to avoid or end the Poisoned condition, and it has Resistance to Poison damage.</p>'
+    ),
+  ],
+  archetypes: [Rank2, Abjuration, Cleric],
+  actions: [{ name: 'Cast Protection from Poison', action: ActionType.Standard }],
+})
+
+export const ShiningSmite = Abilities.defineAbility('spell/shining-smite', {
+  name: 'Shining Smite',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Transmutation</strong> · Bonus Action, immediately after hitting with a melee weapon or an Unarmed Strike · Self · V · Concentration, up to 1 minute</p><p>The target takes an extra 2d6 Radiant damage. Until the spell ends, it sheds Bright Light in a 5-foot radius, attack rolls against it have Advantage, and it can't benefit from the Invisible condition.</p><p><strong>Higher Levels:</strong> +1d6 damage per slot level above 2.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Transmutation],
+  actions: [{ name: 'Cast Shining Smite', action: ActionType.Bonus }],
+})
+
+export const WardingBond = Abilities.defineAbility('spell/warding-bond', {
+  name: 'Warding Bond',
+  effects: [
+    Effects.descriptive(
+      "<p><strong>Abjuration</strong> · Touch · V, S, M (a pair of platinum rings worth 50+ GP each, which you and the target must wear) · 1 hour</p><p>A willing creature you touch gains a +1 bonus to AC and saving throws and Resistance to all damage. Each time it takes damage, you take the same amount. The spell ends if you drop to 0 Hit Points, if you and the target are more than 60 feet apart, or if it's cast again on either of you.</p><p><strong>Higher Levels:</strong> one extra target per slot level above 2.</p>"
+    ),
+  ],
+  archetypes: [Rank2, Abjuration, Cleric],
+  actions: [{ name: 'Cast Warding Bond', action: ActionType.Standard }],
+})
+
 export const All = [
   Alarm,
   BurningHands,
@@ -2031,4 +2075,8 @@ export const All = [
   ZoneOfTruth,
   PlantGrowth,
   SpeakWithPlants,
+  ThornWhip,
+  ProtectionFromPoison,
+  ShiningSmite,
+  WardingBond,
 ]

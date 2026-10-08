@@ -201,7 +201,7 @@ export const MageHandLegerdemain = Traits.defineTrait('rogue/mage-hand-legerdema
               '<p><strong>Mage Hand Legerdemain:</strong> you can cast it as a Bonus Action and make the hand Invisible, control it as a Bonus Action, and make Dexterity (Sleight of Hand) checks through it.</p>'
             ),
           ]),
-          actions: Patches.concatenate([{ name: 'Cast Mage Hand (Legerdemain)', description: null, action: ActionType.Bonus, costs: [] }]),
+          actions: Patches.concatenate([{ name: 'Cast Mage Hand (Legerdemain)', description: null, action: ActionType.Bonus, costs: [], targeting: {} }]),
         })
       )
     ),

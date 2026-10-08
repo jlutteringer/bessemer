@@ -10,15 +10,25 @@ export namespace CharacteristicTemplates {
     'Vitality Pool',
     ObjectPaths.from('vitalityPool')
   )
-  export const Initiative: CharacteristicTemplate<number> = Characteristics.defineTemplate(
-    'characteristic/initiative',
-    'Initiative',
-    ObjectPaths.from('initiative')
+  export const StaminaPool: CharacteristicTemplate<number> = Characteristics.defineTemplate(
+    'characteristic/stamina-pool',
+    'Stamina Pool',
+    ObjectPaths.from('staminaPool')
+  )
+  export const SoakRating: CharacteristicTemplate<number> = Characteristics.defineTemplate(
+    'characteristic/soak-rating',
+    'Soak Rating',
+    ObjectPaths.from('soakRating')
   )
   export const MovementSpeed: CharacteristicTemplate<number> = Characteristics.defineTemplate(
     'characteristic/movement-speed',
     'Movement Speed',
     ObjectPaths.from('movementSpeed')
+  )
+  export const InitiativeRating: CharacteristicTemplate<number> = Characteristics.defineTemplate(
+    'characteristic/initiative-rating',
+    'Initiative Rating',
+    ObjectPaths.from('initiativeRating')
   )
 }
 
@@ -28,20 +38,30 @@ export namespace CreatureCharacteristics {
     initialValue: true,
   })
 
-  export const Initiative: Characteristic<number> = Characteristics.defineCharacteristic<number>({
-    template: CharacteristicTemplates.Initiative,
+  export const StaminaPool: Characteristic<number> = Characteristics.defineCharacteristic<number>({
+    template: CharacteristicTemplates.StaminaPool,
+    initialValue: true,
+  })
+
+  export const SoakRating: Characteristic<number> = Characteristics.defineCharacteristic<number>({
+    template: CharacteristicTemplates.SoakRating,
     initialValue: true,
   })
 
   export const MovementSpeed: Characteristic<number> = Characteristics.defineCharacteristic<number>({
-    template: CharacteristicTemplates.Initiative,
+    template: CharacteristicTemplates.MovementSpeed,
+    initialValue: true,
+  })
+
+  export const InitiativeRating: Characteristic<number> = Characteristics.defineCharacteristic<number>({
+    template: CharacteristicTemplates.InitiativeRating,
     initialValue: true,
   })
 }
 
 export namespace PlayerCharacteristics {
   export const Brawn: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: Characteristics.defineTemplate('characteristic/brawn', 'Strength', ObjectPaths.from('strength')),
+    template: Characteristics.defineTemplate('characteristic/brawn', 'Brawn', ObjectPaths.from('brawn')),
     initialValue: true,
   })
 
@@ -51,7 +71,7 @@ export namespace PlayerCharacteristics {
   })
 
   export const Willpower: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: Characteristics.defineTemplate('characteristic/willpower', 'Wisdom', ObjectPaths.from('wisdom')),
+    template: Characteristics.defineTemplate('characteristic/willpower', 'Willpower', ObjectPaths.from('willpower')),
     initialValue: true,
   })
 
@@ -61,7 +81,7 @@ export namespace PlayerCharacteristics {
   })
 
   export const Presence: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: Characteristics.defineTemplate('characteristic/presence', 'Charisma', ObjectPaths.from('charisma')),
+    template: Characteristics.defineTemplate('characteristic/presence', 'Presence', ObjectPaths.from('presence')),
     initialValue: true,
   })
 
@@ -70,13 +90,24 @@ export namespace PlayerCharacteristics {
     baseValue: NumericExpressions.sum([10, NumericExpressions.multiply([CharacterValues.Level, 5])]),
   })
 
-  export const Initiative: Characteristic<number> = Characteristics.defineCharacteristic<number>({
-    template: CharacteristicTemplates.Initiative,
-    baseValue: Agility.variable,
+  // From the Standard Progression table's Endurance Points column
+  export const StaminaPool: Characteristic<number> = Characteristics.defineCharacteristic<number>({
+    template: CharacteristicTemplates.StaminaPool,
+    baseValue: NumericExpressions.sum([24, NumericExpressions.multiply([Presence.variable, 4])]),
+  })
+
+  export const SoakRating: Characteristic<number> = Characteristics.defineCharacteristic<number>({
+    template: CharacteristicTemplates.SoakRating,
+    baseValue: Brawn.variable,
   })
 
   export const MovementSpeed: Characteristic<number> = Characteristics.defineCharacteristic<number>({
     template: CharacteristicTemplates.MovementSpeed,
     baseValue: 4,
+  })
+
+  export const InitiativeRating: Characteristic<number> = Characteristics.defineCharacteristic<number>({
+    template: CharacteristicTemplates.InitiativeRating,
+    baseValue: Agility.variable,
   })
 }

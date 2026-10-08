@@ -2,7 +2,7 @@ import { TraitReference } from '@simulacrum/ruleset/trait'
 import { Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { Class } from '@simulacrum/ruleset-khydrian-drift/archetype'
+import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
 import { CharacterValues } from '@simulacrum/ruleset/character'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Patches } from '@bessemer/cornerstone'
@@ -26,6 +26,7 @@ export const Commando = Traits.defineTrait('commando', {
 export const Arsenal = Traits.defineTrait('commando/arsenal', {
   name: 'Arsenal',
   description: '',
+  archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.descriptive('All equipped weapons are considered wielded.')],
 })
@@ -33,6 +34,7 @@ export const Arsenal = Traits.defineTrait('commando/arsenal', {
 export const SoldiersStamina = Traits.defineTrait('commando/soldiers-stamina', {
   name: "Soldier's Stamina",
   description: '',
+  archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.descriptive('Gain healing surges...')],
 })
@@ -40,6 +42,7 @@ export const SoldiersStamina = Traits.defineTrait('commando/soldiers-stamina', {
 export const Momentum = Traits.defineTrait('commando/momentum', {
   name: 'Momentum',
   description: '',
+  archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [
     Effects.modifyCharacteristic(
@@ -49,19 +52,13 @@ export const Momentum = Traits.defineTrait('commando/momentum', {
   ],
 })
 
-export const BaselineQuickGuy = Traits.defineTrait('asdasdaSDasdasDasdasDd', {
-  name: 'BaselineQuickGuy',
-  description: '',
-  prerequisites: [Traits.traitPrerequisite(Commando)],
-  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.MovementSpeed, Attributes.modifier(Patches.set(6)))],
-})
-
 export const Officer = 'commando/officer' as TraitReference
 export const Sentinel = 'commando/sentinel' as TraitReference
 
 export const OfficerTrait = Traits.defineTrait(Officer, {
   name: 'Officer',
   description: '',
+  archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Momentum), Expressions.not(Traits.traitPrerequisite(Sentinel))],
   effects: [
     Effects.gainResourcePool(TacticPoints),
@@ -73,6 +70,7 @@ export const OfficerTrait = Traits.defineTrait(Officer, {
 export const AdvancedOperations = Traits.defineTrait('commando/advanced-operations', {
   name: 'Advanced Operations',
   description: '',
+  archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Officer)],
   effects: [
     // TODO this solution doesn't work - its supposed to add 2 not set 2 - Patch solves!
@@ -84,6 +82,7 @@ export const AdvancedOperations = Traits.defineTrait('commando/advanced-operatio
 export const SentinelTrait = Traits.defineTrait(Sentinel, {
   name: 'Sentinel',
   description: '',
+  archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando), Expressions.not(Traits.traitPrerequisite(Officer))],
   effects: [],
 })

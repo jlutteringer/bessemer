@@ -61,17 +61,7 @@ export const flatMap = <T, N>(table: ProgressionTable<T>, mapper: (element: T) =
 }
 
 export const merge = <T>(first: ProgressionTable<T>, second: ProgressionTable<T>): ProgressionTable<T> => {
-  let primary = first
-  let secondary = second
-  if (getMaxLevel(first) < getMaxLevel(second)) {
-    primary = second
-    secondary = first
-  }
-
-  return mapRows(primary, (primaryRow, level) => {
-    const secondaryRow = secondary[level] ?? []
-    return [...primaryRow, ...secondaryRow]
-  })
+  return getRows(second).reduce<ProgressionTable<T>>((table, [level, values]) => ({ ...table, [level]: [...(table[level] ?? []), ...values] }), first)
 }
 
 export const bisect = <T, L, R>(

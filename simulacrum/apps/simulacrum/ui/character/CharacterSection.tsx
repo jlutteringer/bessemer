@@ -179,8 +179,11 @@ const getDisplayName = (character: StoredCharacter): string => {
 }
 
 const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; onDelete: () => void }) => {
-  const { rulesets } = (useClientContext() as unknown as ApplicationContext).client
-  const ruleset = Rulesets.getRuleset(character.character.ruleset, rulesets)
+  const { rulesets, rulesetExtensions } = (useClientContext() as unknown as ApplicationContext).client
+  const ruleset = useMemo(
+    () => Rulesets.resolveRuleset(character.character.ruleset, rulesets, rulesetExtensions),
+    [character, rulesets, rulesetExtensions]
+  )
   // The names of the traits and abilities selected for the character's choices
   const traitNames = useMemo(() => {
     const sheet = Characters.buildCharacterDefinition(character.character, ruleset)

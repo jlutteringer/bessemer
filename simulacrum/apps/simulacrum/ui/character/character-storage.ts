@@ -4,6 +4,7 @@ import { useSyncExternalStore } from 'react'
 import { Ulids } from '@bessemer/cornerstone'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import { CharacterRecord } from '@simulacrum/engine/character/character'
+import { RulesetConfiguration, RulesetReference } from '@simulacrum/engine/ruleset'
 
 // FUTURE characters are persisted to local storage until there is a real backend
 
@@ -26,10 +27,18 @@ const readCharacters = (): Array<StoredCharacter> => {
   const raw = window.localStorage.getItem(StorageKey)
   if (raw !== cachedRaw) {
     cachedRaw = raw
-    cachedCharacters = raw === null ? EmptyCharacters : (JSON.parse(raw) as Array<StoredCharacter>)
+    cachedCharacters =
+      raw === null
+        ? EmptyCharacters
+        : (JSON.parse(raw) as Array<StoredCharacter>).map((it) => ({ ...it, character: { ...it.character, ruleset: migrateRuleset(it.character.ruleset) } }))
   }
 
   return cachedCharacters
+}
+
+// Characters saved before ruleset extensions existed stored just the ruleset's id
+const migrateRuleset = (ruleset: RulesetConfiguration | RulesetReference): RulesetConfiguration => {
+  return typeof ruleset === 'string' ? { id: ruleset, extensions: [] } : ruleset
 }
 
 const writeCharacters = (characters: Array<StoredCharacter>): void => {

@@ -9,7 +9,6 @@ import { Characteristic, CharacteristicGroup } from '@simulacrum/ruleset/charact
 import { Reference } from '@bessemer/cornerstone/reference'
 
 export type RulesetReference = Reference<'Ruleset'>
-
 export type RulesetExtensionReference = Reference<'RulesetExtension'>
 
 export type AbstractRuleset = {
@@ -22,12 +21,16 @@ export type AbstractRuleset = {
   abilities: Array<Ability>
   resourcePools: Array<ResourcePoolDefinition>
   loadoutTypes: Array<LoadoutType>
+  progressionTable: ProgressionTable<Effect>
 }
 
-export type Ruleset = { id: RulesetReference } & AbstractRuleset & {
-    progressionTable: ProgressionTable<Effect>
-  }
+export type Ruleset = { id: RulesetReference } & AbstractRuleset
 
 export type RulesetExtension = { id: RulesetExtensionReference } & AbstractRuleset & {
     ruleset: RulesetReference
   }
+
+export type RulesetConfiguration = {
+  id: RulesetReference
+  extensions: Array<RulesetExtensionReference>
+}
