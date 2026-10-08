@@ -156,17 +156,13 @@ export const Level5 = Traits.defineTrait('rogue/level-5', {
   ],
 })
 
-export const SelectArcaneTricksterCantrip = CharacterOptions.selectAbilityOption(
-  'rogue/select-arcane-trickster-cantrip',
-  { archetypes: [Wizard, Spells.Cantrip] },
-  'Cantrips'
-)
+export const SelectArcaneTricksterCantrip = CharacterOptions.selectAbilityOption('rogue/select-arcane-trickster-cantrip', 'Cantrips', {
+  archetypes: [Wizard, Spells.Cantrip],
+})
 
-export const SelectArcaneTricksterSpell = CharacterOptions.selectAbilityOption(
-  'rogue/select-arcane-trickster-spell',
-  { archetypes: [Wizard, [Spells.Rank1]] },
-  'Prepared Spells'
-)
+export const SelectArcaneTricksterSpell = CharacterOptions.selectAbilityOption('rogue/select-arcane-trickster-spell', 'Prepared Spells', {
+  archetypes: [Wizard, [Spells.Rank1]],
+})
 
 export const ArcaneTricksterSpellcasting = Abilities.defineAbility('rogue/arcane-trickster-spellcasting', {
   name: 'Spellcasting',
@@ -201,7 +197,9 @@ export const MageHandLegerdemain = Traits.defineTrait('rogue/mage-hand-legerdema
               '<p><strong>Mage Hand Legerdemain:</strong> you can cast it as a Bonus Action and make the hand Invisible, control it as a Bonus Action, and make Dexterity (Sleight of Hand) checks through it.</p>'
             ),
           ]),
-          actions: Patches.concatenate([{ name: 'Cast Mage Hand (Legerdemain)', description: null, action: ActionType.Bonus, costs: [], targeting: {} }]),
+          actions: Patches.concatenate([
+            { name: 'Cast Mage Hand (Legerdemain)', description: null, action: ActionType.Bonus, costs: [], targeting: {} },
+          ]),
         })
       )
     ),

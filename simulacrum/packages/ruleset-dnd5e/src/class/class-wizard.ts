@@ -25,22 +25,22 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard
 
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption(
   'wizard/select-spell-up-to-rank-1',
-  { archetypes: [Wizard, [Spells.Rank1]] },
   'Spells Known',
+  { archetypes: [Wizard, [Spells.Rank1]] },
   PreparedSpellLoadout
 )
 
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption(
   'wizard/select-spell-up-to-rank-2',
-  { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2]] },
   'Spells Known',
+  { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2]] },
   PreparedSpellLoadout
 )
 
 export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-spell-up-to-rank-3',
-  { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Spells Known',
+  { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   PreparedSpellLoadout
 )
 
@@ -194,15 +194,15 @@ export const Level5 = Traits.defineTrait('wizard/level-5', {
 
 export const SelectAbjurationSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-abjuration-savant-spell',
-  { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2]] },
   'Abjuration Savant',
+  { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2]] },
   PreparedSpellLoadout
 )
 
 export const SelectAbjurationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-abjuration-savant-spell-up-to-rank-3',
-  { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Abjuration Savant',
+  { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   PreparedSpellLoadout
 )
 
@@ -244,15 +244,15 @@ export const Abjurer = Traits.defineTrait('wizard/abjurer', {
 
 export const SelectDivinationSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-divination-savant-spell',
-  { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2]] },
   'Divination Savant',
+  { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2]] },
   PreparedSpellLoadout
 )
 
 export const SelectDivinationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-divination-savant-spell-up-to-rank-3',
-  { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Divination Savant',
+  { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   PreparedSpellLoadout
 )
 
@@ -294,15 +294,15 @@ export const Diviner = Traits.defineTrait('wizard/diviner', {
 
 export const SelectEvocationSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-evocation-savant-spell',
-  { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2]] },
   'Evocation Savant',
+  { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2]] },
   PreparedSpellLoadout
 )
 
 export const SelectEvocationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-evocation-savant-spell-up-to-rank-3',
-  { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Evocation Savant',
+  { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   PreparedSpellLoadout
 )
 
@@ -344,15 +344,15 @@ export const Evoker = Traits.defineTrait('wizard/evoker', {
 
 export const SelectIllusionSavantSpell = CharacterOptions.selectAbilityOption(
   'wizard/select-illusion-savant-spell',
-  { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2]] },
   'Illusion Savant',
+  { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2]] },
   PreparedSpellLoadout
 )
 
 export const SelectIllusionSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption(
   'wizard/select-illusion-savant-spell-up-to-rank-3',
-  { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   'Illusion Savant',
+  { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   PreparedSpellLoadout
 )
 

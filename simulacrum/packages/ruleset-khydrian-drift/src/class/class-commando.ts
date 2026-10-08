@@ -19,7 +19,6 @@ export const Commando = Traits.defineTrait('commando', {
     ),
     Effects.gainTrait(BasicCombatTraining),
     // Effects.modifyLoadoutSlotQuantity(GeneralLoadoutSlot, 2),
-    // Effects.modifyLoadoutSlotQuantity(AdvancedHardpointLoadoutSlot, 1),
   ],
 })
 

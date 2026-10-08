@@ -874,17 +874,13 @@ const MagicInitiateSpellcastingAbilities = [MagicInitiateIntelligence, MagicInit
 
 // Two Cleric cantrips and one level 1 Cleric spell, always prepared (FUTURE casting the spell once per Long Rest without a slot isn't
 // tracked yet). Each Magic Initiate variant has its own options, so taking more than one variant keeps their choices apart.
-export const SelectMagicInitiateClericCantrip = CharacterOptions.selectAbilityOption(
-  'feat/magic-initiate-cleric/select-cantrip',
-  { archetypes: [Cleric, Spells.Cantrip] },
-  'Cantrips'
-)
+export const SelectMagicInitiateClericCantrip = CharacterOptions.selectAbilityOption('feat/magic-initiate-cleric/select-cantrip', 'Cantrips', {
+  archetypes: [Cleric, Spells.Cantrip],
+})
 
-export const SelectMagicInitiateClericSpell = CharacterOptions.selectAbilityOption(
-  'feat/magic-initiate-cleric/select-spell',
-  { archetypes: [Cleric, Spells.Rank1] },
-  'Level 1 Spell'
-)
+export const SelectMagicInitiateClericSpell = CharacterOptions.selectAbilityOption('feat/magic-initiate-cleric/select-spell', 'Level 1 Spell', {
+  archetypes: [Cleric, Spells.Rank1],
+})
 
 export const SelectMagicInitiateClericSpellcastingAbility = CharacterOptions.selectTraitOption(
   'feat/magic-initiate-cleric/select-spellcasting-ability',

@@ -7,7 +7,7 @@ import { CharacterOptions } from '@simulacrum/ruleset'
 // one each time it gains a Fighter level), so they're chosen rather than prepared in a loadout.
 export const Maneuver = Archetypes.defineArchetype('maneuver', { name: 'Maneuver' })
 
-export const SelectManeuver = CharacterOptions.selectAbilityOption('maneuver/select', { archetypes: [Maneuver] })
+export const SelectManeuver = CharacterOptions.selectAbilityOption('maneuver/select', 'Maneuvers', { archetypes: [Maneuver] })
 
 // FUTURE the dice grow to d10s at Fighter level 10 and d12s at 18, and the Battle Master gains more at levels 7 and 15
 export const SuperiorityDice = ResourcePools.defineResourcePool('maneuver/superiority-dice', {

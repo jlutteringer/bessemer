@@ -21,25 +21,19 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('bard/s
 
 export const SelectExpertise = CharacterOptions.selectTraitOption('bard/select-expertise', { archetypes: [SkillExpertise.SkillExpertise] })
 
-export const SelectCantrip = CharacterOptions.selectAbilityOption('bard/select-cantrip', { archetypes: [Bard, Spells.Cantrip] }, 'Cantrips')
+export const SelectCantrip = CharacterOptions.selectAbilityOption('bard/select-cantrip', 'Cantrips', { archetypes: [Bard, Spells.Cantrip] })
 
-export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption(
-  'bard/select-spell-up-to-rank-1',
-  { archetypes: [Bard, [Spells.Rank1]] },
-  'Prepared Spells'
-)
+export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-1', 'Prepared Spells', {
+  archetypes: [Bard, [Spells.Rank1]],
+})
 
-export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption(
-  'bard/select-spell-up-to-rank-2',
-  { archetypes: [Bard, [Spells.Rank1, Spells.Rank2]] },
-  'Prepared Spells'
-)
+export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-2', 'Prepared Spells', {
+  archetypes: [Bard, [Spells.Rank1, Spells.Rank2]],
+})
 
-export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption(
-  'bard/select-spell-up-to-rank-3',
-  { archetypes: [Bard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
-  'Prepared Spells'
-)
+export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-3', 'Prepared Spells', {
+  archetypes: [Bard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]],
+})
 
 const CharismaModifierUses = NumericExpressions.max([PlayerCharacteristics.CharismaModifier.variable, 1])
 

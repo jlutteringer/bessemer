@@ -1,5 +1,4 @@
-import { Abilities, Archetypes, Effects } from '@simulacrum/ruleset'
-import { CyberwareLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
+import { Abilities, Archetypes } from '@simulacrum/ruleset'
 
 export const Cyberware = Archetypes.defineArchetype('cyberware', { name: 'Cyberware' })
 
@@ -19,5 +18,3 @@ export const KineticLimbs = Abilities.defineAbility('cyberware/kinetic-limbs', {
 })
 
 export const AllCyberware = [OcularImplants, MyomerArmature, KineticLimbs]
-
-export const gainCyberware = () => AllCyberware.map((it) => Effects.gainAbility(it, CyberwareLoadout))

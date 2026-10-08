@@ -90,19 +90,17 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('artifi
   ],
 })
 
-export const SelectCantrip = CharacterOptions.selectAbilityOption('artificer/select-cantrip', { specificOptions: CantripList }, 'Cantrips')
+export const SelectCantrip = CharacterOptions.selectAbilityOption('artificer/select-cantrip', 'Cantrips', { specificOptions: CantripList })
 
-export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption(
-  'artificer/select-spell-up-to-rank-1',
-  { archetypes: [[Spells.Rank1]], specificOptions: SpellList },
-  'Prepared Spells'
-)
+export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('artificer/select-spell-up-to-rank-1', 'Prepared Spells', {
+  archetypes: [[Spells.Rank1]],
+  specificOptions: SpellList,
+})
 
-export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption(
-  'artificer/select-spell-up-to-rank-2',
-  { archetypes: [[Spells.Rank1, Spells.Rank2]], specificOptions: SpellList },
-  'Prepared Spells'
-)
+export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('artificer/select-spell-up-to-rank-2', 'Prepared Spells', {
+  archetypes: [[Spells.Rank1, Spells.Rank2]],
+  specificOptions: SpellList,
+})
 
 const IntelligenceModifierUses = NumericExpressions.max([PlayerCharacteristics.IntelligenceModifier.variable, 1])
 

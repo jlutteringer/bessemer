@@ -25,7 +25,7 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric
 })
 
 // Cleric cantrips are chosen when the Cleric gains a level, rather than swapped in and out of a loadout like a Wizard's
-export const SelectCantrip = CharacterOptions.selectAbilityOption('cleric/select-cantrip', { archetypes: [Cleric, Spells.Cantrip] }, 'Cantrips')
+export const SelectCantrip = CharacterOptions.selectAbilityOption('cleric/select-cantrip', 'Cantrips', { archetypes: [Cleric, Spells.Cantrip] })
 
 // Uses of a Wisdom-based feature: equal to the Wisdom modifier, but at least one
 const WisdomModifierUses = NumericExpressions.max([PlayerCharacteristics.WisdomModifier.variable, 1])

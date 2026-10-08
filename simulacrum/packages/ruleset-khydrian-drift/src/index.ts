@@ -1,5 +1,4 @@
-import { RulesetReference } from '@simulacrum/ruleset/ruleset'
-import { Ruleset } from '@simulacrum/ruleset/ruleset'
+import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import {
   AdvancedOperations,
   Arsenal,
@@ -16,15 +15,21 @@ import { Immortal } from '@simulacrum/ruleset-khydrian-drift/class/class-immorta
 import { Jaeger } from '@simulacrum/ruleset-khydrian-drift/class/class-jaeger'
 import { Adept } from '@simulacrum/ruleset-khydrian-drift/class/class-adept'
 import * as Cybernetics from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-cybernetics'
-import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
+import * as Khydral from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-khydral'
+import * as Technology from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-technology'
+import {
+  AdvancedCombatTraining,
+  BasicCombatTraining,
+  MeleeCombatMastery,
+  RangedCombatMastery,
+} from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { AdvancedHardpointLoadoutSlot, CyberwareLoadout, GeneralLoadoutSlot, WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
+import { GeneralLoadoutSlot, WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import * as Weapons from '@simulacrum/ruleset-khydrian-drift/weapon'
 import * as Cyberware from '@simulacrum/ruleset-khydrian-drift/cyberware'
-import { Effects, Traits } from '@simulacrum/ruleset'
+import { CharacterOptions, Effects } from '@simulacrum/ruleset'
 import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
-import { CharacterOptions } from '@simulacrum/ruleset'
-import { CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { CharacteristicGroups, CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
 export const SelectClassOption = CharacterOptions.selectTraitOption('select-class-option', { archetypes: [Class] })
 export const SelectTraitOption = CharacterOptions.selectTraitOption('select-trait-option', { archetypes: [Primary] }, 'Select Trait')
@@ -34,7 +39,7 @@ export const KhydrianDrift: Ruleset = {
   name: 'Khydrian Drift',
   creatureCharacteristics: Object.values(CreatureCharacteristics),
   playerCharacteristics: Object.values(PlayerCharacteristics),
-  characteristicGroups: [],
+  characteristicGroups: Object.values(CharacteristicGroups),
   archetypes: [Class, Primary, Weapons.Weapon, Cyberware.Cyberware],
   traits: [
     Commando,
@@ -45,10 +50,17 @@ export const KhydrianDrift: Ruleset = {
     Jaeger,
     Adept,
     BasicCombatTraining,
+    AdvancedCombatTraining,
+    MeleeCombatMastery,
+    RangedCombatMastery,
+    Khydral.KhydralSensitivity,
+    Khydral.KhydralInitiate,
+    Khydral.KhydralAdept,
+    Khydral.KhydralMastery,
     Cybernetics.ModularCybernetics,
     Cybernetics.AnatomicalIntegration,
     Cybernetics.ClosedLoopCirculation,
-    Cybernetics.BrainCybernetics,
+    Cybernetics.NeuralLace,
     Cybernetics.TheFleshIsWeak,
     Cybernetics.JudgementDay,
     Arsenal,
@@ -60,10 +72,19 @@ export const KhydrianDrift: Ruleset = {
   ],
   abilities: [...Weapons.Weapons, ...Cyberware.AllCyberware, Cybernetics.HardLanding],
   resourcePools: [TacticPoints],
-  loadoutTypes: [GeneralLoadoutSlot, AdvancedHardpointLoadoutSlot, WeaponLoadout, CyberwareLoadout],
+  loadoutTypes: [
+    GeneralLoadoutSlot,
+    WeaponLoadout,
+    Cybernetics.CyberwareLoadout,
+    Technology.SmallTechHardpoint,
+    Technology.MediumTechHardpoint,
+    Technology.LargeTechHardpoint,
+  ],
   progressionTable: {
     1: [
       Effects.gainCharacterOption(SelectClassOption),
+      Effects.gainLoadoutSlot(GeneralLoadoutSlot),
+      Effects.gainLoadoutSlot(GeneralLoadoutSlot),
       Effects.gainLoadoutSlot(WeaponLoadout),
       Effects.gainLoadoutSlot(WeaponLoadout),
       ...Weapons.gainWeapons(),

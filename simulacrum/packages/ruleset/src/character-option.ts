@@ -57,8 +57,8 @@ export const selectTraitOption = (reference: string, filter: TraitFilterProps, l
 
 export const selectAbilityOption = (
   reference: string,
+  label: string,
   filter: AbilityFilterProps,
-  label: string | null = null,
   loadout: LoadoutType | null = null
 ): SelectAbilityOption => {
   return {
