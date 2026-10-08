@@ -18,9 +18,9 @@ export const Feat = Archetypes.defineArchetype('feat', { name: 'Feat' })
 // A trait matches a filter when all its archetypes are in the filter, so SelectFeat lists both to offer every feat
 export const OriginFeat = Archetypes.defineArchetype('feat/origin', { name: 'Origin Feat' })
 
-export const SelectFeat = CharacterOptions.selectTraitOption('feat/select', { archetypes: [[Feat, OriginFeat]] }, 'Feat')
+export const SelectFeat = CharacterOptions.selectTraitOption('feat/select', 'Feat', { archetypes: [[Feat, OriginFeat]] })
 
-export const SelectOriginFeat = CharacterOptions.selectTraitOption('feat/select-origin', { archetypes: [OriginFeat] })
+export const SelectOriginFeat = CharacterOptions.selectTraitOption('feat/select-origin', 'Origin Feat', { archetypes: [OriginFeat] })
 
 export const AbilityScoreImprovement = Traits.defineTrait('feat/ability-score-improvement', {
   name: 'Ability Score Improvement',
@@ -31,22 +31,14 @@ export const AbilityScoreImprovement = Traits.defineTrait('feat/ability-score-im
   repeatable: true,
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/ability-score-improvement/ability-score-1',
-        {
-          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/ability-score-improvement/ability-score-1', 'Ability Score +1', {
+        specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+      })
     ),
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/ability-score-improvement/ability-score-2',
-        {
-          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/ability-score-improvement/ability-score-2', 'Ability Score +1', {
+        specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+      })
     ),
   ],
 })
@@ -66,13 +58,9 @@ export const Athlete = Traits.defineTrait('feat/athlete', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/athlete/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/athlete/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -84,13 +72,9 @@ export const Charger = Traits.defineTrait('feat/charger', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/charger/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/charger/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -102,13 +86,9 @@ export const Chef = Traits.defineTrait('feat/chef', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/chef/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Wisdom.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/chef/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Wisdom.featPlusOne],
+      })
     ),
     Effects.gainTrait(ArtisansTools.CooksUtensils),
   ],
@@ -129,13 +109,9 @@ export const Crusher = Traits.defineTrait('feat/crusher', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/crusher/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Constitution.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/crusher/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Constitution.featPlusOne],
+      })
     ),
   ],
 })
@@ -155,13 +131,9 @@ export const DualWielder = Traits.defineTrait('feat/dual-wielder', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/dual-wielder/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/dual-wielder/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -210,11 +182,9 @@ export const ElementalAdeptThunder = Traits.defineTrait('feat/elemental-adept/th
 })
 
 // Elemental Adept can be taken more than once, but its damage types can't, so each time offers a type the character doesn't have yet
-export const SelectElementalAdeptDamageType = CharacterOptions.selectTraitOption(
-  'feat/elemental-adept/select-damage-type',
-  { specificOptions: [ElementalAdeptAcid, ElementalAdeptCold, ElementalAdeptFire, ElementalAdeptLightning, ElementalAdeptThunder] },
-  'Energy Mastery'
-)
+export const SelectElementalAdeptDamageType = CharacterOptions.selectTraitOption('feat/elemental-adept/select-damage-type', 'Energy Mastery', {
+  specificOptions: [ElementalAdeptAcid, ElementalAdeptCold, ElementalAdeptFire, ElementalAdeptLightning, ElementalAdeptThunder],
+})
 
 export const ElementalAdept = Traits.defineTrait('feat/elemental-adept', {
   name: 'Elemental Adept',
@@ -225,17 +195,13 @@ export const ElementalAdept = Traits.defineTrait('feat/elemental-adept', {
   effects: [
     Effects.gainCharacterOption(SelectElementalAdeptDamageType),
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/elemental-adept/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/elemental-adept/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -247,17 +213,13 @@ export const FeyTouched = Traits.defineTrait('feat/fey-touched', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/fey-touched/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/fey-touched/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -269,13 +231,9 @@ export const Grappler = Traits.defineTrait('feat/grappler', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/grappler/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/grappler/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -295,13 +253,9 @@ export const HeavilyArmored = Traits.defineTrait('feat/heavily-armored', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/heavily-armored/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/heavily-armored/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
+      })
     ),
   ],
 })
@@ -313,13 +267,9 @@ export const HeavyArmorMaster = Traits.defineTrait('feat/heavy-armor-master', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/heavy-armor-master/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/heavy-armor-master/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Constitution.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
+      })
     ),
   ],
 })
@@ -331,13 +281,9 @@ export const InspiringLeader = Traits.defineTrait('feat/inspiring-leader', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/inspiring-leader/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Wisdom.featPlusOne, AbilityScoreIncreases.Charisma.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/inspiring-leader/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Wisdom.featPlusOne, AbilityScoreIncreases.Charisma.featPlusOne],
+      })
     ),
   ],
 })
@@ -357,13 +303,9 @@ export const LightlyArmored = Traits.defineTrait('feat/lightly-armored', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/lightly-armored/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/lightly-armored/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -375,13 +317,9 @@ export const MageSlayer = Traits.defineTrait('feat/mage-slayer', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/mage-slayer/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/mage-slayer/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -393,13 +331,9 @@ export const MartialWeaponTraining = Traits.defineTrait('feat/martial-weapon-tra
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/martial-weapon-training/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/martial-weapon-training/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -411,13 +345,9 @@ export const MediumArmorMaster = Traits.defineTrait('feat/medium-armor-master', 
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/medium-armor-master/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/medium-armor-master/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -429,13 +359,9 @@ export const ModeratelyArmored = Traits.defineTrait('feat/moderately-armored', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/moderately-armored/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/moderately-armored/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -447,17 +373,13 @@ export const MountedCombatant = Traits.defineTrait('feat/mounted-combatant', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/mounted-combatant/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Strength.featPlusOne,
-            AbilityScoreIncreases.Dexterity.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/mounted-combatant/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Strength.featPlusOne,
+          AbilityScoreIncreases.Dexterity.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -469,13 +391,9 @@ export const Observant = Traits.defineTrait('feat/observant', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/observant/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Intelligence.featPlusOne, AbilityScoreIncreases.Wisdom.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/observant/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Intelligence.featPlusOne, AbilityScoreIncreases.Wisdom.featPlusOne],
+      })
     ),
   ],
 })
@@ -487,13 +405,9 @@ export const Piercer = Traits.defineTrait('feat/piercer', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/piercer/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/piercer/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -505,13 +419,9 @@ export const Poisoner = Traits.defineTrait('feat/poisoner', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/poisoner/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Intelligence.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/poisoner/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Intelligence.featPlusOne],
+      })
     ),
     Effects.gainTrait(Tools.PoisonersKit),
   ],
@@ -524,13 +434,9 @@ export const PolearmMaster = Traits.defineTrait('feat/polearm-master', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/polearm-master/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/polearm-master/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Strength.featPlusOne],
+      })
     ),
   ],
 })
@@ -542,13 +448,9 @@ export const Resilient = Traits.defineTrait('feat/resilient', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/resilient/ability-score',
-        {
-          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/resilient/ability-score', 'Ability Score +1', {
+        specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+      })
     ),
   ],
 })
@@ -560,17 +462,13 @@ export const RitualCaster = Traits.defineTrait('feat/ritual-caster', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/ritual-caster/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/ritual-caster/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -582,13 +480,9 @@ export const Sentinel = Traits.defineTrait('feat/sentinel', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/sentinel/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/sentinel/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -600,17 +494,13 @@ export const ShadowTouched = Traits.defineTrait('feat/shadow-touched', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/shadow-touched/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/shadow-touched/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -631,11 +521,11 @@ export const ShieldMaster = Traits.defineTrait('feat/shield-master', {
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
-export const SelectSkillExpertProficiency = CharacterOptions.selectTraitOption('feat/skill-expert/select-proficiency', {
+export const SelectSkillExpertProficiency = CharacterOptions.selectTraitOption('feat/skill-expert/select-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
 })
 
-export const SelectSkillExpertExpertise = CharacterOptions.selectTraitOption('feat/skill-expert/select-expertise', {
+export const SelectSkillExpertExpertise = CharacterOptions.selectTraitOption('feat/skill-expert/select-expertise', 'Skill Expertise', {
   archetypes: [SkillExpertise.SkillExpertise],
 })
 
@@ -646,13 +536,9 @@ export const SkillExpert = Traits.defineTrait('feat/skill-expert', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/skill-expert/ability-score',
-        {
-          specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/skill-expert/ability-score', 'Ability Score +1', {
+        specificOptions: AbilityScoreIncreases.AllAbilityScores.map((it) => it.featPlusOne),
+      })
     ),
     Effects.gainCharacterOption(SelectSkillExpertProficiency),
     Effects.gainCharacterOption(SelectSkillExpertExpertise),
@@ -674,13 +560,9 @@ export const Slasher = Traits.defineTrait('feat/slasher', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/slasher/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/slasher/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
   ],
 })
@@ -692,13 +574,9 @@ export const Speedy = Traits.defineTrait('feat/speedy', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/speedy/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Constitution.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/speedy/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Dexterity.featPlusOne, AbilityScoreIncreases.Constitution.featPlusOne],
+      })
     ),
   ],
 })
@@ -710,17 +588,13 @@ export const SpellSniper = Traits.defineTrait('feat/spell-sniper', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/spell-sniper/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/spell-sniper/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -732,17 +606,13 @@ export const Telekinetic = Traits.defineTrait('feat/telekinetic', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/telekinetic/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/telekinetic/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -754,17 +624,13 @@ export const Telepathic = Traits.defineTrait('feat/telepathic', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/telepathic/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/telepathic/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -776,17 +642,13 @@ export const WarCaster = Traits.defineTrait('feat/war-caster', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/war-caster/ability-score',
-        {
-          specificOptions: [
-            AbilityScoreIncreases.Intelligence.featPlusOne,
-            AbilityScoreIncreases.Wisdom.featPlusOne,
-            AbilityScoreIncreases.Charisma.featPlusOne,
-          ],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/war-caster/ability-score', 'Ability Score +1', {
+        specificOptions: [
+          AbilityScoreIncreases.Intelligence.featPlusOne,
+          AbilityScoreIncreases.Wisdom.featPlusOne,
+          AbilityScoreIncreases.Charisma.featPlusOne,
+        ],
+      })
     ),
   ],
 })
@@ -798,13 +660,9 @@ export const WeaponMaster = Traits.defineTrait('feat/weapon-master', {
   archetypes: [Feat],
   effects: [
     Effects.gainCharacterOption(
-      CharacterOptions.selectTraitOption(
-        'feat/weapon-master/ability-score',
-        {
-          specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
-        },
-        'Ability Score +1'
-      )
+      CharacterOptions.selectTraitOption('feat/weapon-master/ability-score', 'Ability Score +1', {
+        specificOptions: [AbilityScoreIncreases.Strength.featPlusOne, AbilityScoreIncreases.Dexterity.featPlusOne],
+      })
     ),
     // One more kind of weapon for Weapon Mastery
     Effects.gainLoadoutSlot(WeaponMasteryLoadout),
@@ -884,8 +742,8 @@ export const SelectMagicInitiateClericSpell = CharacterOptions.selectAbilityOpti
 
 export const SelectMagicInitiateClericSpellcastingAbility = CharacterOptions.selectTraitOption(
   'feat/magic-initiate-cleric/select-spellcasting-ability',
-  { specificOptions: MagicInitiateSpellcastingAbilities },
-  'Spellcasting Ability'
+  'Spellcasting Ability',
+  { specificOptions: MagicInitiateSpellcastingAbilities }
 )
 
 export const MagicInitiateCleric = Traits.defineTrait('feat/magic-initiate-cleric', {
@@ -938,11 +796,9 @@ export const SavageAttacker = Traits.defineTrait('feat/savage-attacker', {
 })
 
 // Any skill or tool; skills and tools the character already has aren't offered
-export const SelectSkilledProficiency = CharacterOptions.selectTraitOption(
-  'feat/skilled/select-proficiency',
-  { archetypes: [[SkillProficiencies.SkillProficiency, ...Tools.AllTools]] },
-  'Skilled'
-)
+export const SelectSkilledProficiency = CharacterOptions.selectTraitOption('feat/skilled/select-proficiency', 'Skilled', {
+  archetypes: [[SkillProficiencies.SkillProficiency, ...Tools.AllTools]],
+})
 
 export const Skilled = Traits.defineTrait('feat/skilled', {
   name: 'Skilled',

@@ -13,7 +13,7 @@ import { Patches } from '@bessemer/cornerstone'
 
 // FUTURE spell slots and the spells a Cleric prepares each day aren't modelled yet; only cantrips and domain spells are
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
   specificOptions: [
     SkillProficiencies.History,
@@ -56,11 +56,9 @@ export const Thaumaturge = Traits.defineTrait('cleric/thaumaturge', {
   effects: [Effects.gainCharacterOption(SelectCantrip)],
 })
 
-export const SelectDivineOrder = CharacterOptions.selectTraitOption(
-  'cleric/select-divine-order',
-  { specificOptions: [Protector, Thaumaturge] },
-  'Divine Order'
-)
+export const SelectDivineOrder = CharacterOptions.selectTraitOption('cleric/select-divine-order', 'Divine Order', {
+  specificOptions: [Protector, Thaumaturge],
+})
 
 export const Level1 = Traits.defineTrait('cleric/level-1', {
   name: 'Cleric',
@@ -129,7 +127,7 @@ export const Level2 = Traits.defineTrait('cleric/level-2', {
 })
 
 export const ClericSubclass = Archetypes.defineArchetype('cleric/subclass', { name: 'Cleric Subclass' })
-export const SelectClericSubclass = CharacterOptions.selectTraitOption('cleric/select-subclass', { archetypes: [ClericSubclass] })
+export const SelectClericSubclass = CharacterOptions.selectTraitOption('cleric/select-subclass', 'Cleric Subclass', { archetypes: [ClericSubclass] })
 
 export const Level3 = Traits.defineTrait('cleric/level-3', {
   name: 'Cleric (3)',

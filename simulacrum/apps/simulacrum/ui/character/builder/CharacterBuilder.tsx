@@ -54,7 +54,6 @@ import {
   getLoadoutAbilities,
   getPassiveEffects,
   getPassiveTraits,
-  getOptionLabel,
   getCharacterOptionChoices,
   getValueCaption,
   MaxLevel,
@@ -530,7 +529,7 @@ const LevelTraits = ({
                 return (
                   <Box key={group[0]!.key}>
                     <MultiValueSelect
-                      label={getOptionLabel(group[0]!.option, ruleset)}
+                      label={group[0]!.option.label}
                       choices={group}
                       onSelect={(values) => onSelectMany(group, values)}
                     />
@@ -547,7 +546,7 @@ const LevelTraits = ({
               return (
                 <Box key={choice.key}>
                   <ValueSelect
-                    label={getOptionLabel(choice.option, ruleset)}
+                    label={choice.option.label}
                     choice={choice}
                     onSelect={(value) => onSelect(choice, value)}
                   />

@@ -15,11 +15,13 @@ import { Patches } from '@bessemer/cornerstone'
 
 // FUTURE spell slots and musical instrument proficiencies aren't modelled yet
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('bard/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('bard/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
 })
 
-export const SelectExpertise = CharacterOptions.selectTraitOption('bard/select-expertise', { archetypes: [SkillExpertise.SkillExpertise] })
+export const SelectExpertise = CharacterOptions.selectTraitOption('bard/select-expertise', 'Skill Expertise', {
+  archetypes: [SkillExpertise.SkillExpertise],
+})
 
 export const SelectCantrip = CharacterOptions.selectAbilityOption('bard/select-cantrip', 'Cantrips', { archetypes: [Bard, Spells.Cantrip] })
 
@@ -112,7 +114,7 @@ export const Level2 = Traits.defineTrait('bard/level-2', {
 })
 
 export const BardSubclass = Archetypes.defineArchetype('bard/subclass', { name: 'Bard Subclass' })
-export const SelectBardSubclass = CharacterOptions.selectTraitOption('bard/select-subclass', { archetypes: [BardSubclass] })
+export const SelectBardSubclass = CharacterOptions.selectTraitOption('bard/select-subclass', 'Bard Subclass', { archetypes: [BardSubclass] })
 
 export const Level3 = Traits.defineTrait('bard/level-3', {
   name: 'Bard (3)',

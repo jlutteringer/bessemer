@@ -3,7 +3,7 @@ import { CharacterOptions } from '@simulacrum/ruleset'
 
 export const FightingStyle = Archetypes.defineArchetype('fighting-style', { name: 'Fighting Style' })
 
-export const SelectFightingStyle = CharacterOptions.selectTraitOption('fighting-style/select', { archetypes: [FightingStyle] })
+export const SelectFightingStyle = CharacterOptions.selectTraitOption('fighting-style/select', 'Fighting Style', { archetypes: [FightingStyle] })
 
 export const Archery = Traits.defineTrait('fighting-style/archery', {
   name: 'Archery',

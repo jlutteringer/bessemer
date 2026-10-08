@@ -31,8 +31,8 @@ import { CharacterOptions, Effects } from '@simulacrum/ruleset'
 import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
 import { CharacteristicGroups, CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
-export const SelectClassOption = CharacterOptions.selectTraitOption('select-class-option', { archetypes: [Class] })
-export const SelectTraitOption = CharacterOptions.selectTraitOption('select-trait-option', { archetypes: [Primary] }, 'Select Trait')
+export const SelectClassOption = CharacterOptions.selectTraitOption('select-class-option', 'Class', { archetypes: [Class] })
+export const SelectTraitOption = CharacterOptions.selectTraitOption('select-trait-option', 'Select Trait', { archetypes: [Primary] })
 
 export const KhydrianDrift: Ruleset = {
   id: 'khydrian-drift' as RulesetReference,

@@ -10,7 +10,7 @@ import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
 
 export const Species = Archetypes.defineArchetype('species', { name: 'Species' })
 
-export const SelectSpecies = CharacterOptions.selectTraitOption('species/select', { archetypes: [Species] })
+export const SelectSpecies = CharacterOptions.selectTraitOption('species/select', 'Species', { archetypes: [Species] })
 
 export const Small = Traits.defineTrait('species/size/small', {
   name: 'Small',
@@ -24,7 +24,7 @@ export const Medium = Traits.defineTrait('species/size/medium', {
   effects: [],
 })
 
-export const SelectSmallOrMedium = CharacterOptions.selectTraitOption('species/select-small-or-medium', { specificOptions: [Medium, Small] }, 'Size')
+export const SelectSmallOrMedium = CharacterOptions.selectTraitOption('species/select-small-or-medium', 'Size', { specificOptions: [Medium, Small] })
 
 export const Darkvision = Abilities.defineAbility('species/darkvision', {
   name: 'Darkvision',
@@ -153,11 +153,9 @@ export const Halfling = Traits.defineTrait('species/halfling', {
 })
 
 // Skillful: proficiency in any one skill
-export const SelectSkillfulProficiency = CharacterOptions.selectTraitOption(
-  'species/human/select-skillful-proficiency',
-  { archetypes: [SkillProficiencies.SkillProficiency] },
-  'Skillful'
-)
+export const SelectSkillfulProficiency = CharacterOptions.selectTraitOption('species/human/select-skillful-proficiency', 'Skillful', {
+  archetypes: [SkillProficiencies.SkillProficiency],
+})
 
 export const Human = Traits.defineTrait('species/human', {
   name: 'Human',

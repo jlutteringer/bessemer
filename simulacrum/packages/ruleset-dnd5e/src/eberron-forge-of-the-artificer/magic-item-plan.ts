@@ -4,11 +4,9 @@ import { Archetypes, CharacterOptions, Traits } from '@simulacrum/ruleset'
 
 export const MagicItemPlan = Archetypes.defineArchetype('artificer/magic-item-plan', { name: 'Magic Item Plan' })
 
-export const SelectMagicItemPlan = CharacterOptions.selectTraitOption(
-  'artificer/select-magic-item-plan',
-  { archetypes: [MagicItemPlan] },
-  'Plans Known'
-)
+export const SelectMagicItemPlan = CharacterOptions.selectTraitOption('artificer/select-magic-item-plan', 'Plans Known', {
+  archetypes: [MagicItemPlan],
+})
 
 export const AlchemyJug = Traits.defineTrait('artificer/plan/alchemy-jug', {
   name: 'Alchemy Jug',

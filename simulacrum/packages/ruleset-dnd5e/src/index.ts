@@ -34,7 +34,7 @@ import { Dash, Disengage, Dodge, HealingSurge } from '@simulacrum/ruleset-dnd5e/
 import { HitPointResourcePool } from '@simulacrum/ruleset-dnd5e/resource-pool'
 import { CantripLoadout, PreparedSpellLoadout, WeaponMasteryLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
 
-export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class-level', { archetypes: [ClassArchetypes.Class] })
+export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class-level', 'Class', { archetypes: [ClassArchetypes.Class] })
 
 export const Dnd5e: Ruleset = {
   id: 'dnd-5e' as RulesetReference,

@@ -18,7 +18,7 @@ export type CharacterOptionValue = Trait | Ability
 
 type CharacterOptionProps = {
   id: CharacterOptionReference
-  label: string | null
+  label: string
 }
 
 export type SelectTraitOption = CharacterOptionProps & {
@@ -46,7 +46,7 @@ export type CharacterSelection = {
   selection: CharacterOptionValueReference
 }
 
-export const selectTraitOption = (reference: string, filter: TraitFilterProps, label: string | null = null): SelectTraitOption => {
+export const selectTraitOption = (reference: string, label: string, filter: TraitFilterProps): SelectTraitOption => {
   return {
     id: reference as CharacterOptionReference,
     type: CharacterOptionType.SelectTrait,

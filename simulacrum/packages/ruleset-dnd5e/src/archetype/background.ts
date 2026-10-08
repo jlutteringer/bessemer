@@ -8,7 +8,7 @@ import * as AbilityScoreIncreases from '@simulacrum/ruleset-dnd5e/archetype/abil
 
 export const Background = Archetypes.defineArchetype('background', { name: 'Background' })
 
-export const SelectBackground = CharacterOptions.selectTraitOption('background/select', { archetypes: [Background] })
+export const SelectBackground = CharacterOptions.selectTraitOption('background/select', 'Background', { archetypes: [Background] })
 
 const AcolyteAbilityScores = AbilityScoreIncreases.forBackground('background/acolyte', [
   AbilityScoreIncreases.Intelligence,

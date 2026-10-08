@@ -155,6 +155,8 @@ export const Viol = Traits.defineTrait('musical-instrument/viol', {
   effects: [],
 })
 
-export const SelectGamingSet = CharacterOptions.selectTraitOption('gaming-set/select', { archetypes: [GamingSet] })
+export const SelectGamingSet = CharacterOptions.selectTraitOption('gaming-set/select', 'Gaming Set', { archetypes: [GamingSet] })
 
-export const SelectMusicalInstrument = CharacterOptions.selectTraitOption('musical-instrument/select', { archetypes: [MusicalInstrument] })
+export const SelectMusicalInstrument = CharacterOptions.selectTraitOption('musical-instrument/select', 'Musical Instrument', {
+  archetypes: [MusicalInstrument],
+})

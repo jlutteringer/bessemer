@@ -3,7 +3,7 @@ import { CharacterOptions } from '@simulacrum/ruleset'
 
 export const ArtisansTools = Archetypes.defineArchetype('artisans-tools', { name: "Artisan's Tools" })
 
-export const SelectArtisansTools = CharacterOptions.selectTraitOption('artisans-tools/select', { archetypes: [ArtisansTools] })
+export const SelectArtisansTools = CharacterOptions.selectTraitOption('artisans-tools/select', "Artisan's Tools", { archetypes: [ArtisansTools] })
 
 export const AlchemistsSupplies = Traits.defineTrait('artisans-tools/alchemists-supplies', {
   name: "Alchemist's Supplies",

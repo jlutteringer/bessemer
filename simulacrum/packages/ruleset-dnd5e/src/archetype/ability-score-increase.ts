@@ -70,17 +70,13 @@ export type BackgroundAbilityScores = {
 export const forBackground = (reference: string, abilityScores: [AbilityScore, AbilityScore, AbilityScore]): BackgroundAbilityScores => {
   const prefix = `${reference}/ability-scores`
 
-  const selectPlusTwo = CharacterOptions.selectTraitOption(
-    `${prefix}/select-plus-two`,
-    { specificOptions: abilityScores.map((it) => it.plusTwo) },
-    'Ability Score +2'
-  )
+  const selectPlusTwo = CharacterOptions.selectTraitOption(`${prefix}/select-plus-two`, 'Ability Score +2', {
+    specificOptions: abilityScores.map((it) => it.plusTwo),
+  })
 
-  const selectPlusOne = CharacterOptions.selectTraitOption(
-    `${prefix}/select-plus-one`,
-    { specificOptions: abilityScores.map((it) => it.plusOne) },
-    'Ability Score +1'
-  )
+  const selectPlusOne = CharacterOptions.selectTraitOption(`${prefix}/select-plus-one`, 'Ability Score +1', {
+    specificOptions: abilityScores.map((it) => it.plusOne),
+  })
 
   const [first, second, third] = abilityScores.map((it) => it.name)
   const plusTwoPlusOne = Traits.defineTrait(`${prefix}/plus-two-plus-one`, {
@@ -97,7 +93,7 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
     effects: abilityScores.flatMap((it) => it.plusOne.effects),
   })
 
-  const option = CharacterOptions.selectTraitOption(`${prefix}/select`, { specificOptions: [plusTwoPlusOne, plusOneToAll] }, 'Ability Scores')
+  const option = CharacterOptions.selectTraitOption(`${prefix}/select`, 'Ability Scores', { specificOptions: [plusTwoPlusOne, plusOneToAll] })
 
   return { option, traits: [plusTwoPlusOne, plusOneToAll] }
 }

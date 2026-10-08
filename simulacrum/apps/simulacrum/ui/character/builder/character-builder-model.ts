@@ -1,5 +1,5 @@
 import { CharacterRecord, CharacterSheet } from '@simulacrum/engine/character/character'
-import { CharacterOption, CharacterOptionType, CharacterOptionValue, CharacterSelection } from '@simulacrum/engine/character/character-option'
+import { CharacterOption, CharacterOptionValue, CharacterSelection } from '@simulacrum/engine/character/character-option'
 import { CharacterOptions, Characters } from '@simulacrum/engine/character'
 import { Abilities, Archetypes, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/engine'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
@@ -165,19 +165,6 @@ export const selectLoadoutAbilities = (
   const loadoutAbilities = getLoadoutAbilities(Characters.buildCharacterDefinition(character, ruleset), loadoutType).map((it) => it.id)
   const otherAbilities = Arrays.difference(character.selectedAbilities, loadoutAbilities)
   return normalizeSelections({ ...character, selectedAbilities: [...otherAbilities, ...abilities.map((it) => it.id)] }, ruleset)
-}
-
-/**
- * Labels an option by its own label if it has one, otherwise by the archetypes its traits are drawn from, e.g. "Class" or
- * "Fighting Style".
- */
-export const getOptionLabel = (option: CharacterOption, ruleset: Ruleset): string => {
-  if (Objects.isPresent(option.label)) {
-    return option.label
-  }
-
-  const archetypeNames = option.filter.archetypes.flat().map((it) => Archetypes.getArchetype(it, ruleset).name)
-  return !Arrays.isEmpty(archetypeNames) ? archetypeNames.join(' / ') : option.type === CharacterOptionType.SelectTrait ? 'Trait' : 'Ability'
 }
 
 // Whether an option's value is a trait, as opposed to an ability (which has actions)

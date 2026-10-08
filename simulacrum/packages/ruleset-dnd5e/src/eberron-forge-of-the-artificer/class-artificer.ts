@@ -77,7 +77,7 @@ export const SpellList = [
   Spells.Web,
 ]
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('artificer/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('artificer/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
   specificOptions: [
     SkillProficiencies.Arcana,
@@ -178,7 +178,9 @@ export const Level2 = Traits.defineTrait('artificer/level-2', {
 })
 
 export const ArtificerSubclass = Archetypes.defineArchetype('artificer/subclass', { name: 'Artificer Subclass' })
-export const SelectArtificerSubclass = CharacterOptions.selectTraitOption('artificer/select-subclass', { archetypes: [ArtificerSubclass] })
+export const SelectArtificerSubclass = CharacterOptions.selectTraitOption('artificer/select-subclass', 'Artificer Subclass', {
+  archetypes: [ArtificerSubclass],
+})
 
 export const Level3 = Traits.defineTrait('artificer/level-3', {
   name: 'Artificer (3)',

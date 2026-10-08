@@ -45,7 +45,7 @@ export const SecondWind = Abilities.defineAbility('fighter/second-wind', {
   ],
 })
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('fighter/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('fighter/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
   specificOptions: [
     SkillProficiencies.Acrobatics,
@@ -149,7 +149,9 @@ export const Level2 = Traits.defineTrait('fighter/level-2', {
 })
 
 export const FighterSubclass = Archetypes.defineArchetype('fighter/subclass', { name: 'Fighter Subclass' })
-export const SelectFighterSubclass = CharacterOptions.selectTraitOption('fighter/select-subclass', { archetypes: [FighterSubclass] })
+export const SelectFighterSubclass = CharacterOptions.selectTraitOption('fighter/select-subclass', 'Fighter Subclass', {
+  archetypes: [FighterSubclass],
+})
 
 export const Level3 = Traits.defineTrait('fighter/level-3', {
   name: 'Fighter (3)',

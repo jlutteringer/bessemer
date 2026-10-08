@@ -13,7 +13,7 @@ import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('rogue/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('rogue/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
   specificOptions: [
     SkillProficiencies.Acrobatics,
@@ -29,7 +29,9 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('rogue/
   ],
 })
 
-export const SelectExpertise = CharacterOptions.selectTraitOption('rogue/select-expertise', { archetypes: [SkillExpertise.SkillExpertise] })
+export const SelectExpertise = CharacterOptions.selectTraitOption('rogue/select-expertise', 'Skill Expertise', {
+  archetypes: [SkillExpertise.SkillExpertise],
+})
 
 export const SneakAttack = Traits.defineTrait('rogue/sneak-attack', {
   name: 'Sneak Attack',
@@ -101,7 +103,7 @@ export const SteadyAim = Abilities.defineAbility('rogue/steady-aim', {
 })
 
 export const RogueSubclass = Archetypes.defineArchetype('rogue/subclass', { name: 'Rogue Subclass' })
-export const SelectRogueSubclass = CharacterOptions.selectTraitOption('rogue/select-subclass', { archetypes: [RogueSubclass] })
+export const SelectRogueSubclass = CharacterOptions.selectTraitOption('rogue/select-subclass', 'Rogue Subclass', { archetypes: [RogueSubclass] })
 
 export const Level3 = Traits.defineTrait('rogue/level-3', {
   name: 'Rogue (3)',

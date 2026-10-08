@@ -10,7 +10,7 @@ import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Arrays, Patches } from '@bessemer/cornerstone'
 import { CantripLoadout, PreparedSpellLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
   specificOptions: [
     SkillProficiencies.Arcana,
@@ -110,7 +110,7 @@ export const Level1 = Traits.defineTrait('wizard/level-1', {
   ],
 })
 
-export const SelectScholarExpertise = CharacterOptions.selectTraitOption('wizard/select-scholar-expertise', {
+export const SelectScholarExpertise = CharacterOptions.selectTraitOption('wizard/select-scholar-expertise', 'Skill Expertise', {
   archetypes: [SkillExpertise.SkillExpertise],
   specificOptions: [
     SkillExpertise.Arcana,
@@ -137,7 +137,7 @@ export const Level2 = Traits.defineTrait('wizard/level-2', {
 })
 
 export const WizardSubclass = Archetypes.defineArchetype('wizard/subclass', { name: 'Wizard Subclass' })
-export const SelectWizardSubclass = CharacterOptions.selectTraitOption('wizard/select-subclass', { archetypes: [WizardSubclass] })
+export const SelectWizardSubclass = CharacterOptions.selectTraitOption('wizard/select-subclass', 'Wizard Subclass', { archetypes: [WizardSubclass] })
 
 export const Level3 = Traits.defineTrait('wizard/level-3', {
   name: 'Wizard (3)',

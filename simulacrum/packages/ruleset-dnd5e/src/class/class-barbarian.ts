@@ -12,7 +12,7 @@ import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SelectSkillProficiency = CharacterOptions.selectTraitOption('barbarian/select-skill-proficiency', {
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('barbarian/select-skill-proficiency', 'Skill Proficiency', {
   archetypes: [SkillProficiencies.SkillProficiency],
   specificOptions: [
     SkillProficiencies.AnimalHandling,
@@ -117,7 +117,9 @@ export const Level2 = Traits.defineTrait('barbarian/level-2', {
 })
 
 export const BarbarianSubclass = Archetypes.defineArchetype('barbarian/subclass', { name: 'Barbarian Subclass' })
-export const SelectBarbarianSubclass = CharacterOptions.selectTraitOption('barbarian/select-subclass', { archetypes: [BarbarianSubclass] })
+export const SelectBarbarianSubclass = CharacterOptions.selectTraitOption('barbarian/select-subclass', 'Barbarian Subclass', {
+  archetypes: [BarbarianSubclass],
+})
 
 export const PrimalKnowledge = Traits.defineTrait('barbarian/primal-knowledge', {
   name: 'Primal Knowledge',
