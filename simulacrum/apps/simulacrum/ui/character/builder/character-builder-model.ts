@@ -272,9 +272,10 @@ const getRecoveryLabels = (refresh: Array<CooldownRate>, evaluate: EvaluateExpre
 }
 
 /**
- * Describes the resources an ability's actions spend, one line each, e.g. "Rage: 3 · 1 / Short Rest · All / Long Rest". The ability's
- * own resource is labelled "Uses" and a shared pool (e.g. Rage or Superiority Dice) with its name. Sizes are the character's, so they
- * include modifiers (e.g. a Barbarian's extra Rage at level 3) and expressions (e.g. uses equal to the Wisdom modifier).
+ * Describes the resources an ability's actions spend, one line each. The ability's own resource (e.g. Rage) is labelled "Uses" with its
+ * size, cost and recovery, e.g. "Uses: 3 · 1 / Short Rest · All / Long Rest". Sizes are the character's, so they include modifiers (e.g. a
+ * Barbarian's extra Rage at level 3) and expressions (e.g. uses equal to the Wisdom modifier). A shared pool (e.g. Superiority Dice or
+ * Stamina) isn't the ability's to describe, so it shows only the cost, e.g. "Stamina: 8".
  */
 export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, ruleset: Ruleset): Array<string> => {
   const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, ruleset))
@@ -287,10 +288,13 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
     Assertions.assertPresent(reference, () => `Ability [${ability.id}] has a cost without a resource, but no resource of its own`)
     const resource = sheet.resources[reference]?.resource ?? ResourcePools.getResourcePool(reference, ruleset)
     const costValue = evaluate(cost)
-    const label = resource.id === ability.resource?.id ? 'Uses' : resource.name
+
+    if (resource.id !== ability.resource?.id) {
+      return `${resource.name}: ${costValue}`
+    }
 
     return [
-      `${label}: ${evaluate(resource.size)}`,
+      `Uses: ${evaluate(resource.size)}`,
       ...(costValue === 1 ? [] : [`costs ${costValue}`]),
       ...getRecoveryLabels(resource.refresh, evaluate),
     ].join(' · ')

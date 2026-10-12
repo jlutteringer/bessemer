@@ -8,6 +8,7 @@ applications:
             - nvm install "$(cat ../../../.nvmrc)"
             - nvm use "$(cat ../../../.nvmrc)"
             - corepack enable
+            - export YARN_NODE_LINKER=node-modules YARN_ENABLE_SCRIPTS=true
             - (cd ../../.. && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn install --immutable)
         build:
           commands:

@@ -6,7 +6,8 @@ import { RichText } from '@bessemer/cornerstone/rich-text'
 import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions, Objects, Patches } from '@bessemer/cornerstone'
 import * as Archetypes from '@simulacrum/ruleset/archetype'
-import { Targeting } from '@simulacrum/ruleset/targeting'
+import * as Targetings from '@simulacrum/ruleset/targeting'
+import { Targeting, TargetingProps } from '@simulacrum/ruleset/targeting'
 import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
 
 export enum ActionType {
@@ -49,7 +50,7 @@ export type AbilityProps = {
     action: ActionType
 
     costs?: Array<ResourceCostProps>
-    targeting?: Targeting
+    targeting?: TargetingProps
   }>
 
   resource?: ResourcePool
@@ -80,7 +81,7 @@ export const defineAbility = <P extends AbilityProps>(reference: string, props: 
       description: it.description ?? null,
       action: it.action,
       costs: Objects.isNil(it.costs) ? costs : it.costs.map(resolveCost),
-      targeting: it.targeting ?? {},
+      targeting: Targetings.resolve(it.targeting ?? {}),
     })),
     resource,
   } as DefinedAbility<P>

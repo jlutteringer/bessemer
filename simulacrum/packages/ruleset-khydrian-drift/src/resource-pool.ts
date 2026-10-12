@@ -14,3 +14,17 @@ export const TacticPoints = ResourcePools.defineResourcePool('resource-pool/tact
     },
   ],
 })
+
+export const Stamina = ResourcePools.defineResourcePool('resource-pool/stamina', {
+  name: 'Stamina',
+  description: '',
+  size: PlayerCharacteristics.StaminaPool.variable,
+  refresh: [],
+})
+
+export const StaminaCost = {
+  Low: 2,
+  Medium: 4,
+  High: 8,
+  VeryHigh: 12,
+}

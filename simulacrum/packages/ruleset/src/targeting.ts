@@ -1,4 +1,5 @@
 import { Expression } from '@bessemer/cornerstone/expression'
+import { Objects } from '@bessemer/cornerstone'
 
 export type Range = Expression<number>
 
@@ -25,3 +26,16 @@ export type TargetSelection = {
 }
 
 export type Targeting = Record<string, TargetSelection>
+
+export type TargetSelectionProps = {
+  from?: string
+  range: Range
+  area?: Area
+  count: Expression<number>
+}
+
+export type TargetingProps = Record<string, TargetSelectionProps>
+
+export const resolve = (props: TargetingProps): Targeting => {
+  return Objects.mapValues(props, (it) => ({ from: it.from ?? null, range: it.range, area: it.area ?? null, count: it.count }))
+}

@@ -23,7 +23,7 @@ import {
   MeleeCombatMastery,
   RangedCombatMastery,
 } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
-import { TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
+import { Stamina, TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 import { GeneralLoadoutSlot, WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import * as Weapons from '@simulacrum/ruleset-khydrian-drift/weapon'
 import * as Cyberware from '@simulacrum/ruleset-khydrian-drift/cyberware'
@@ -70,8 +70,8 @@ export const KhydrianDrift: Ruleset = {
     AdvancedOperations,
     SentinelTrait,
   ],
-  abilities: [...Weapons.Weapons, ...Cyberware.AllCyberware, Cybernetics.HardLanding],
-  resourcePools: [TacticPoints],
+  abilities: [...Weapons.Weapons, ...Cyberware.AllCyberware, Cybernetics.HardLanding, Khydral.Rewind, Khydral.TimeDilation],
+  resourcePools: [TacticPoints, Stamina],
   loadoutTypes: [
     GeneralLoadoutSlot,
     WeaponLoadout,
@@ -83,6 +83,7 @@ export const KhydrianDrift: Ruleset = {
   progressionTable: {
     1: [
       Effects.gainCharacterOption(SelectClassOption),
+      Effects.gainResourcePool(Stamina),
       Effects.gainLoadoutSlot(GeneralLoadoutSlot),
       Effects.gainLoadoutSlot(GeneralLoadoutSlot),
       Effects.gainLoadoutSlot(WeaponLoadout),
