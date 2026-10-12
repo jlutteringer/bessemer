@@ -22,6 +22,9 @@
     "clean": "rm -rf dist && rm -rf .turbo"
   },
   "dependencies": {
-    "@bessemer/core": "workspace:*"
+    "@bessemer/core": "workspace:*",
+    "@bessemer/cornerstone": "workspace:*",
+    "@bessemer/framework": "workspace:*",
+    "@bessemer/mui": "workspace:*"
   }
 }

@@ -564,6 +564,9 @@ __metadata:
   resolution: "@bessemer/foundry@workspace:bessemer/foundry"
   dependencies:
     "@bessemer/core": "workspace:*"
+    "@bessemer/cornerstone": "workspace:*"
+    "@bessemer/framework": "workspace:*"
+    "@bessemer/mui": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -607,7 +610,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bessemer/mui@workspace:bessemer/mui":
+"@bessemer/mui@workspace:*, @bessemer/mui@workspace:bessemer/mui":
   version: 0.0.0-use.local
   resolution: "@bessemer/mui@workspace:bessemer/mui"
   dependencies:
