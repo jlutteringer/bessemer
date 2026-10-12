@@ -7326,6 +7326,9 @@ __metadata:
     "@simulacrum/ruleset": "workspace:*"
     "@simulacrum/ruleset-dnd5e": "workspace:*"
     "@simulacrum/ruleset-khydrian-drift": "workspace:*"
+    next: "npm:16.3.7"
+    react: "npm:19.3.0"
+    react-dom: "npm:19.3.0"
   languageName: unknown
   linkType: soft
 

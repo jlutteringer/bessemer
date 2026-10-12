@@ -17,6 +17,9 @@
     "@simulacrum/common": "workspace:*",
     "@simulacrum/ruleset": "workspace:*",
     "@simulacrum/ruleset-dnd5e": "workspace:*",
-    "@simulacrum/ruleset-khydrian-drift": "workspace:*"
+    "@simulacrum/ruleset-khydrian-drift": "workspace:*",
+    "next": "16.3.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   }
 }
