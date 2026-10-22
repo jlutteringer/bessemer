@@ -3,57 +3,56 @@ import { CharacterOptions } from '@simulacrum/ruleset'
 import { ArtisansTools } from '@simulacrum/ruleset-dnd5e/archetype/artisans-tools'
 
 // Tools other than Artisan's Tools (which have their own module): kits and other single tools, Gaming Sets, and Musical Instruments
-export const Tool = Archetypes.defineArchetype('tool', { name: 'Tool' })
-export const GamingSet = Archetypes.defineArchetype('gaming-set', { name: 'Gaming Set' })
-export const MusicalInstrument = Archetypes.defineArchetype('musical-instrument', { name: 'Musical Instrument' })
+export const Tool = Archetypes.defineArchetype('tool', { name: 'Tool', description: '' })
+export const GamingSet = Archetypes.defineArchetype('gaming-set', { name: 'Gaming Set', description: '' })
+export const MusicalInstrument = Archetypes.defineArchetype('musical-instrument', { name: 'Musical Instrument', description: '' })
 
 // Every kind of tool, for options that offer any tool (e.g. the Skilled feat)
 export const AllTools = [ArtisansTools, Tool, GamingSet, MusicalInstrument]
 
 export const DisguiseKit = Traits.defineTrait('tool/disguise-kit', {
   name: 'Disguise Kit',
-  description: '<p><strong>Ability:</strong> Charisma</p><p>Apply makeup to change your appearance, and craft costumes.</p>',
+  description: '**Ability:** Charisma\n\nApply makeup to change your appearance, and craft costumes.',
   archetypes: [Tool],
   effects: [],
 })
 
 export const ForgeryKit = Traits.defineTrait('tool/forgery-kit', {
   name: 'Forgery Kit',
-  description: "<p><strong>Ability:</strong> Dexterity</p><p>Mimic someone else's handwriting, or duplicate a wax seal.</p>",
+  description: "**Ability:** Dexterity\n\nMimic someone else's handwriting, or duplicate a wax seal.",
   archetypes: [Tool],
   effects: [],
 })
 
 export const HerbalismKit = Traits.defineTrait('tool/herbalism-kit', {
   name: 'Herbalism Kit',
-  description:
-    "<p><strong>Ability:</strong> Intelligence</p><p>Identify plants, and craft antitoxin, candles, Healer's Kits, and Potions of Healing.</p>",
+  description: "**Ability:** Intelligence\n\nIdentify plants, and craft antitoxin, candles, Healer's Kits, and Potions of Healing.",
   archetypes: [Tool],
   effects: [],
 })
 
 export const NavigatorsTools = Traits.defineTrait('tool/navigators-tools', {
   name: "Navigator's Tools",
-  description: '<p><strong>Ability:</strong> Wisdom</p><p>Plot a course, or work out your position by stargazing.</p>',
+  description: '**Ability:** Wisdom\n\nPlot a course, or work out your position by stargazing.',
   archetypes: [Tool],
   effects: [],
 })
 
 export const PoisonersKit = Traits.defineTrait('tool/poisoners-kit', {
   name: "Poisoner's Kit",
-  description: '<p><strong>Ability:</strong> Intelligence</p><p>Detect a poisoned object, and craft basic poison.</p>',
+  description: '**Ability:** Intelligence\n\nDetect a poisoned object, and craft basic poison.',
   archetypes: [Tool],
   effects: [],
 })
 
 export const ThievesTools = Traits.defineTrait('tool/thieves-tools', {
   name: "Thieves' Tools",
-  description: '<p><strong>Ability:</strong> Dexterity</p><p>Pick a lock, or disarm a trap.</p>',
+  description: '**Ability:** Dexterity\n\nPick a lock, or disarm a trap.',
   archetypes: [Tool],
   effects: [],
 })
 
-const GamingSetDescription = '<p><strong>Ability:</strong> Wisdom</p><p>Discern whether someone is cheating, or win a game.</p>'
+const GamingSetDescription = '**Ability:** Wisdom\n\nDiscern whether someone is cheating, or win a game.'
 
 export const DiceSet = Traits.defineTrait('gaming-set/dice', {
   name: 'Dice',
@@ -83,7 +82,7 @@ export const ThreeDragonAnteSet = Traits.defineTrait('gaming-set/three-dragon-an
   effects: [],
 })
 
-const MusicalInstrumentDescription = '<p><strong>Ability:</strong> Charisma</p><p>Play a known tune, or improvise a song.</p>'
+const MusicalInstrumentDescription = '**Ability:** Charisma\n\nPlay a known tune, or improvise a song.'
 
 export const Bagpipes = Traits.defineTrait('musical-instrument/bagpipes', {
   name: 'Bagpipes',
@@ -155,8 +154,16 @@ export const Viol = Traits.defineTrait('musical-instrument/viol', {
   effects: [],
 })
 
-export const SelectGamingSet = CharacterOptions.selectTraitOption('gaming-set/select', 'Gaming Set', { archetypes: [GamingSet] })
+export const SelectGamingSet = CharacterOptions.selectTraitOption('gaming-set/select', {
+  name: 'Gaming Set',
+  description: '',
+  filter: { archetypes: [GamingSet] },
+})
 
-export const SelectMusicalInstrument = CharacterOptions.selectTraitOption('musical-instrument/select', 'Musical Instrument', {
-  archetypes: [MusicalInstrument],
+export const SelectMusicalInstrument = CharacterOptions.selectTraitOption('musical-instrument/select', {
+  name: 'Musical Instrument',
+  description: '',
+  filter: {
+    archetypes: [MusicalInstrument],
+  },
 })

@@ -7,5 +7,21 @@ import * as Effects from './effect'
 import * as Abilities from './ability'
 import * as ResourcePools from './resource-pool'
 import * as ProgressionTables from './progression-table'
+import * as Rulesets from './ruleset'
+import { CharacterOptions, CharacterProgression, Characters } from './character'
 
-export { Attributes, Characteristics, Archetypes, Traits, Loadout, Effects, Abilities, ResourcePools, ProgressionTables }
+export {
+  Attributes,
+  Characteristics,
+  Archetypes,
+  Traits,
+  Loadout,
+  Effects,
+  Abilities,
+  ResourcePools,
+  ProgressionTables,
+  Rulesets,
+  Characters,
+  CharacterOptions,
+  CharacterProgression,
+}

@@ -1,9 +1,7 @@
-import { TraitReference } from '@simulacrum/ruleset/trait'
-import { Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, Effects, RulesetEntities, Traits, CharacterValues } from '@simulacrum/ruleset'
 import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
-import { CharacterValues } from '@simulacrum/ruleset/character'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
@@ -51,10 +49,10 @@ export const Momentum = Traits.defineTrait('commando/momentum', {
   ],
 })
 
-export const Officer = 'commando/officer' as TraitReference
-export const Sentinel = 'commando/sentinel' as TraitReference
+export const Officer = RulesetEntities.buildReference(RulesetEntities.RulesetEntityType.Trait, 'commando/officer')
+export const Sentinel = RulesetEntities.buildReference(RulesetEntities.RulesetEntityType.Trait, 'commando/sentinel')
 
-export const OfficerTrait = Traits.defineTrait(Officer, {
+export const OfficerTrait = Traits.defineTrait('commando/officer', {
   name: 'Officer',
   description: '',
   archetypes: [Primary],
@@ -78,7 +76,7 @@ export const AdvancedOperations = Traits.defineTrait('commando/advanced-operatio
   ],
 })
 
-export const SentinelTrait = Traits.defineTrait(Sentinel, {
+export const SentinelTrait = Traits.defineTrait('commando/sentinel', {
   name: 'Sentinel',
   description: '',
   archetypes: [Primary],

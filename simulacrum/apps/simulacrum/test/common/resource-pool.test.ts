@@ -1,7 +1,6 @@
 import { TestHarness } from '@simulacrum/test/test-harness'
-import { CharacterOptions, Characters } from '@simulacrum/engine/character'
-import { Abilities, Attributes, ResourcePools } from '@simulacrum/engine'
-import { ActionType } from '@simulacrum/engine/ability'
+import { Abilities, Attributes, ResourcePools, CharacterOptions, Characters } from '@simulacrum/engine'
+import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
 import { ResourcePool } from '@simulacrum/engine/resource-pool'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Dnd5e, SelectClassLevel } from '@simulacrum/ruleset-dnd5e'
@@ -73,8 +72,8 @@ test('actions inherit the ability costs unless they set their own', () => {
     resource: Pool,
     costs: [{ cost: 1 }],
     actions: [
-      { name: 'Inherits', action: ActionType.Bonus },
-      { name: 'Overrides', action: ActionType.Standard, costs: [{ cost: 2 }, { cost: 1, resource: SuperiorityDice }] },
+      { name: 'Inherits', action: ActionTypes.BonusAction },
+      { name: 'Overrides', action: ActionTypes.Action, costs: [{ cost: 2 }, { cost: 1, resource: SuperiorityDice }] },
     ],
   })
 

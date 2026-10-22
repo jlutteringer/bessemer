@@ -2,6 +2,10 @@ import { UnknownRecord } from 'type-fest'
 import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Objects from '@bessemer/cornerstone/object'
 import Zod from 'zod'
+import { Nil, NominalType } from '@bessemer/cornerstone/types'
+
+export type EmptyString = ''
+export type BlankString = NominalType<string, 'BlankString'>
 
 export const isString = (value: any): value is string => {
   return typeof value === 'string'
@@ -11,7 +15,7 @@ export const isEmpty = (value: string): boolean => {
   return value.length === 0
 }
 
-export const isEmptyOrNil = (value: string | null | undefined): boolean => {
+export const isEmptyOrNil = (value: string | Nil): boolean => {
   if (Objects.isNil(value)) {
     return true
   }
@@ -27,7 +31,7 @@ export const emptyToNull = (value: string): string | null => {
   return value
 }
 
-export const isBlank = (str?: string | null): boolean => {
+export const isBlank = (str: string | Nil): str is Nil | BlankString => {
   const testStr = str ?? ''
   return /^\s*$/.test(testStr)
 }

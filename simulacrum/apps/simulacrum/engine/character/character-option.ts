@@ -15,6 +15,7 @@ import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Arrays, Assertions, Eithers, Objects } from '@bessemer/cornerstone'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { Ruleset } from '@simulacrum/engine/ruleset'
+import * as Rulesets from '@simulacrum/engine/ruleset'
 
 export const evaluateChoice = (
   option: CharacterOption,
@@ -83,8 +84,8 @@ export const validateSelection = (choices: ProgressionTable<CharacterChoice>, se
 const getOptionValues = (option: CharacterOption, ruleset: Ruleset): Array<CharacterOptionValue> => {
   switch (option.type) {
     case CharacterOptionType.SelectTrait:
-      return Traits.applyFilter(ruleset.traits, option.filter)
+      return Traits.applyFilter(Traits.getTraits(ruleset), option.filter)
     case CharacterOptionType.SelectAbility:
-      return Abilities.applyFilter(ruleset.abilities, option.filter)
+      return Abilities.applyFilter(Abilities.getAbilities(ruleset), option.filter)
   }
 }

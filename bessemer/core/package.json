@@ -23,9 +23,12 @@
   },
   "dependencies": {
     "@bessemer/framework-next": "workspace:*",
-    "@tiptap/core": "2.11.0",
-    "@tiptap/html": "2.11.0",
-    "@tiptap/pm": "2.11.0",
-    "@tiptap/starter-kit": "2.11.0"
+    "@tiptap/core": "3.31.4",
+    "@tiptap/extension-table": "3.31.4",
+    "@tiptap/html": "3.31.4",
+    "@tiptap/markdown": "3.31.4",
+    "@tiptap/pm": "3.31.4",
+    "@tiptap/starter-kit": "3.31.4",
+    "happy-dom": "20.14.5"
   }
 }

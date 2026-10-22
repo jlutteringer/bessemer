@@ -21,14 +21,14 @@ export const buildEffectsTable = (
   const rulesetEffects = ProgressionTables.capAtLevel(ruleset.progressionTable, level)
 
   return ProgressionTables.mapRows(rulesetEffects, (effects, rowLevel) => {
-    const levelTraits = (traits[rowLevel] ?? []).map((it) => Traits.getTrait(it, ruleset))
+    const levelTraits = (traits[rowLevel] ?? []).map((it) => Traits.getTraitById(it, ruleset))
     const selectedAbilities = (choices[rowLevel] ?? []).flatMap((choice) => {
       if (choice.option.type !== CharacterOptionType.SelectAbility || Objects.isNil(choice.selection)) {
         return []
       }
 
-      const ability = Abilities.getAbility(choice.selection.selection as AbilityReference, ruleset)
-      const loadout = Objects.isNil(choice.option.loadout) ? null : Loadout.getLoadoutType(choice.option.loadout, ruleset)
+      const ability = Abilities.getAbilityById(choice.selection.selection as AbilityReference, ruleset)
+      const loadout = Objects.isNil(choice.option.loadout) ? null : Loadout.getLoadoutTypeById(choice.option.loadout, ruleset)
       return [Effects.gainAbility(ability, loadout)]
     })
 

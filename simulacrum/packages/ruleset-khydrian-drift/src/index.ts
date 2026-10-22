@@ -18,10 +18,14 @@ import * as Cybernetics from '@simulacrum/ruleset-khydrian-drift/archetype/arche
 import * as Khydral from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-khydral'
 import * as Technology from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-technology'
 import {
+  ActionSurge,
   AdvancedCombatTraining,
+  BackInTheFight,
   BasicCombatTraining,
+  Blackjack,
   MeleeCombatMastery,
   RangedCombatMastery,
+  Tumble,
 } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { Stamina, TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 import { GeneralLoadoutSlot, WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
@@ -29,19 +33,42 @@ import * as Weapons from '@simulacrum/ruleset-khydrian-drift/weapon'
 import * as Cyberware from '@simulacrum/ruleset-khydrian-drift/cyberware'
 import { CharacterOptions, Effects } from '@simulacrum/ruleset'
 import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
-import { CharacteristicGroups, CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { CharacteristicGroups, PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { AllSkillProficiencies, SkillProficiency } from '@simulacrum/ruleset-khydrian-drift/skill-proficiency'
+import { SkillsContent } from '@simulacrum/ruleset-khydrian-drift/content/content-skills'
+import { CreaturesAndCharactersContent } from '@simulacrum/ruleset-khydrian-drift/content/content-creatures-and-characters'
+import { CombatContent } from '@simulacrum/ruleset-khydrian-drift/content/content-combat'
+import { AllActionTypes } from '@simulacrum/ruleset-khydrian-drift/action-type'
 
-export const SelectClassOption = CharacterOptions.selectTraitOption('select-class-option', 'Class', { archetypes: [Class] })
-export const SelectTraitOption = CharacterOptions.selectTraitOption('select-trait-option', 'Select Trait', { archetypes: [Primary] })
+export const SelectClassOption = CharacterOptions.selectTraitOption('select-class-option', {
+  name: 'Class',
+  description: '',
+  filter: { archetypes: [Class] },
+})
+export const SelectTraitOption = CharacterOptions.selectTraitOption('select-trait-option', {
+  name: 'Select Trait',
+  description: '',
+  filter: { archetypes: [Primary] },
+})
+export const SelectSkillProficiency = CharacterOptions.selectTraitOption('select-skill-proficiency', {
+  name: 'Skill Proficiency',
+  description: '',
+  filter: {
+    archetypes: [SkillProficiency],
+  },
+})
 
 export const KhydrianDrift: Ruleset = {
   id: 'khydrian-drift' as RulesetReference,
   name: 'Khydrian Drift',
-  creatureCharacteristics: Object.values(CreatureCharacteristics),
-  playerCharacteristics: Object.values(PlayerCharacteristics),
-  characteristicGroups: Object.values(CharacteristicGroups),
-  archetypes: [Class, Primary, Weapons.Weapon, Cyberware.Cyberware],
-  traits: [
+  entities: [
+    ...Object.values(PlayerCharacteristics),
+    ...Object.values(CharacteristicGroups),
+    Class,
+    Primary,
+    SkillProficiency,
+    Weapons.Weapon,
+    Cyberware.Cyberware,
     Commando,
     Warblade,
     Operator,
@@ -69,10 +96,19 @@ export const KhydrianDrift: Ruleset = {
     OfficerTrait,
     AdvancedOperations,
     SentinelTrait,
-  ],
-  abilities: [...Weapons.Weapons, ...Cyberware.AllCyberware, Cybernetics.HardLanding, Khydral.Rewind, Khydral.TimeDilation],
-  resourcePools: [TacticPoints, Stamina],
-  loadoutTypes: [
+    ...AllSkillProficiencies,
+    ...Weapons.Weapons,
+    ...Cyberware.AllCyberware,
+    Cybernetics.HardLanding,
+    Khydral.Rewind,
+    Khydral.TimeDilation,
+    BackInTheFight,
+    Blackjack,
+    Tumble,
+    ActionSurge,
+    TacticPoints,
+    Stamina,
+    ...AllActionTypes,
     GeneralLoadoutSlot,
     WeaponLoadout,
     Cybernetics.CyberwareLoadout,
@@ -83,6 +119,8 @@ export const KhydrianDrift: Ruleset = {
   progressionTable: {
     1: [
       Effects.gainCharacterOption(SelectClassOption),
+      Effects.gainCharacterOption(SelectSkillProficiency),
+      Effects.gainCharacterOption(SelectSkillProficiency),
       Effects.gainResourcePool(Stamina),
       Effects.gainLoadoutSlot(GeneralLoadoutSlot),
       Effects.gainLoadoutSlot(GeneralLoadoutSlot),
@@ -100,4 +138,5 @@ export const KhydrianDrift: Ruleset = {
     9: [Effects.gainCharacterOption(SelectTraitOption)],
     10: [Effects.gainCharacterOption(SelectTraitOption)],
   },
+  content: [...CreaturesAndCharactersContent, ...CombatContent, ...SkillsContent],
 }

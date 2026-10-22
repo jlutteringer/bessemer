@@ -2,16 +2,14 @@ import { Arrays } from '@bessemer/cornerstone'
 import { Effect } from '@simulacrum/ruleset/effect'
 import * as Archetypes from '@simulacrum/ruleset/archetype'
 import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
-import { CharacterValues } from '@simulacrum/ruleset/character'
-import { Reference } from '@bessemer/cornerstone/reference'
-import { RichText } from '@bessemer/cornerstone/rich-text'
+import * as CharacterValues from '@simulacrum/ruleset/character-value'
+import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
+import * as Tiptap from '@bessemer/core/tiptap'
 import { Expression, Expressions } from '@bessemer/cornerstone/expression'
 
-export type TraitReference = Reference<'Trait'>
+export type TraitReference = RulesetEntityReference<typeof RulesetEntityType.Trait>
 
-export type TraitProps = {
-  name: string
-  description: RichText
+export type TraitProps = RulesetEntityProps & {
   effects: Array<Effect>
 
   archetypes?: Array<ArchetypeReference | Archetype>
@@ -19,9 +17,8 @@ export type TraitProps = {
   repeatable?: boolean
 }
 
-export type Trait = { id: TraitReference } & {
-  name: string
-  description: RichText
+export type Trait = RulesetEntity & {
+  id: TraitReference
   effects: Array<Effect>
 
   archetypes: Array<ArchetypeReference>
@@ -31,8 +28,9 @@ export type Trait = { id: TraitReference } & {
 
 export const defineTrait = (reference: string, props: TraitProps): Trait => {
   return {
-    id: reference as TraitReference,
     ...props,
+    id: buildReference(RulesetEntityType.Trait, reference),
+    description: Tiptap.markdownToJson(props.description),
     archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
     prerequisites: props.prerequisites ?? [],
     repeatable: props.repeatable ?? false,

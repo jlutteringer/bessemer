@@ -1,4 +1,14 @@
-import { Reference } from '@bessemer/cornerstone/reference'
+import Zod from 'zod'
+import { Uris } from '@bessemer/cornerstone'
+import * as Tiptap from '@bessemer/core/tiptap'
+import {
+  buildReference,
+  RulesetEntity,
+  RulesetEntityProps,
+  RulesetEntityReference,
+  RulesetEntitySchema,
+  RulesetEntityType,
+} from '@simulacrum/ruleset/ruleset-entity'
 import {
   EvaluateExpression,
   Expression,
@@ -9,16 +19,20 @@ import {
 } from '@bessemer/cornerstone/expression'
 import { ObjectPath } from '@bessemer/cornerstone/object/object-path'
 
-export type CharacteristicReference<T> = Reference<'Characteristic'>
+export type CharacteristicReference<T> = RulesetEntityReference<typeof RulesetEntityType.Characteristic>
 
-export type CharacteristicGroupReference = Reference<'CharacteristicGroup'>
+export type CharacteristicGroupReference = RulesetEntityReference<typeof RulesetEntityType.CharacteristicGroup>
 
-export type CharacteristicGroup = { id: CharacteristicGroupReference } & {
-  name: string
+export const CharacteristicGroupSchema = RulesetEntitySchema.extend({
+  id: Zod.string().transform((it) => it as CharacteristicGroupReference),
+})
+
+export type CharacteristicGroup = RulesetEntity & {
+  id: CharacteristicGroupReference
 }
 
-export type CharacteristicTemplate<T> = { id: CharacteristicReference<T> } & {
-  name: string
+export type CharacteristicTemplate<T> = RulesetEntity & {
+  id: CharacteristicReference<T>
   path: ObjectPath
   optimizer: ReducingExpression<T, T>
 }
@@ -34,18 +48,27 @@ export type Characteristic<T> = CharacteristicTemplate<T> & {
   group: CharacteristicGroupReference | null
 }
 
-export const defineTemplate = <T>(id: string, name: string, path: ObjectPath): CharacteristicTemplate<T> => {
+export type CharacteristicTemplateProps = RulesetEntityProps & {
+  path: ObjectPath
+}
+
+export const defineTemplate = <T>(reference: string, props: CharacteristicTemplateProps): CharacteristicTemplate<T> => {
   return {
-    id: id as CharacteristicReference<T>,
-    name,
-    path,
+    id: buildReference(RulesetEntityType.Characteristic, reference),
+    name: props.name,
+    description: Tiptap.markdownToJson(props.description),
+    path: props.path,
     // TODO another instance of us 'hardcoding' numeric attributes...
     optimizer: Expressions.reference(NumericExpressions.MaxExpression) as ReducingExpression<T, T>,
   }
 }
 
-export const defineGroup = (reference: string, props: { name: string }): CharacteristicGroup => {
-  return { id: reference as CharacteristicGroupReference, name: props.name }
+export const defineGroup = (reference: string, props: RulesetEntityProps): CharacteristicGroup => {
+  return CharacteristicGroupSchema.parse({
+    id: Uris.format({ scheme: RulesetEntityType.CharacteristicGroup, location: { path: reference } }),
+    name: props.name,
+    description: Tiptap.markdownToJson(props.description),
+  })
 }
 
 export const defineCharacteristic = <T>(props: CharacteristicProps<T>): Characteristic<T> => {

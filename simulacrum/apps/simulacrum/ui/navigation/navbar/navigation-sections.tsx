@@ -33,7 +33,7 @@ export const NavigationSections: Array<NavigationSection> = [
   {
     label: 'Game Rules',
     content: <Box>Placeholder Content</Box>,
-    links: [],
+    links: [{ label: 'Rulebook', href: '/rulebook' }],
   },
   {
     label: 'Sources',

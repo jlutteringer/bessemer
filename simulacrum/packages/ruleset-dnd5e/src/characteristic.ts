@@ -1,118 +1,103 @@
-import { CharacterValues } from '@simulacrum/ruleset/character'
-import { Characteristics } from '@simulacrum/ruleset'
+import { Characteristics, CharacterValues } from '@simulacrum/ruleset'
 import { Characteristic, CharacteristicTemplate } from '@simulacrum/ruleset/characteristic'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { RoundingMode } from '@bessemer/cornerstone/math'
 import { ObjectPaths } from '@bessemer/cornerstone'
 
 export namespace CharacteristicTemplates {
-  export const HitPoints: CharacteristicTemplate<number> = Characteristics.defineTemplate(
-    'characteristic/hit-points',
-    'Hit Points',
-    ObjectPaths.from('hitPoints')
-  )
-  export const ArmorClass: CharacteristicTemplate<number> = Characteristics.defineTemplate(
-    'characteristic/armor-class',
-    'Armor Class',
-    ObjectPaths.from('armorClass')
-  )
-  export const Initiative: CharacteristicTemplate<number> = Characteristics.defineTemplate(
-    'characteristic/initiative',
-    'Initiative',
-    ObjectPaths.from('initiative')
-  )
-  export const MovementSpeed: CharacteristicTemplate<number> = Characteristics.defineTemplate(
-    'characteristic/movement-speed',
-    'Movement Speed',
-    ObjectPaths.from('movementSpeed')
-  )
-}
-
-export namespace CreatureCharacteristics {
-  export const HitPoints: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: CharacteristicTemplates.HitPoints,
-    initialValue: true,
+  export const HitPoints: CharacteristicTemplate<number> = Characteristics.defineTemplate('hit-points', {
+    name: 'Hit Points',
+    description: '',
+    path: ObjectPaths.from('hitPoints'),
   })
-
-  export const ArmorClass: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: CharacteristicTemplates.ArmorClass,
-    initialValue: true,
+  export const ArmorClass: CharacteristicTemplate<number> = Characteristics.defineTemplate('armor-class', {
+    name: 'Armor Class',
+    description: '',
+    path: ObjectPaths.from('armorClass'),
   })
-
-  export const Initiative: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: CharacteristicTemplates.Initiative,
-    initialValue: true,
+  export const Initiative: CharacteristicTemplate<number> = Characteristics.defineTemplate('initiative', {
+    name: 'Initiative',
+    description: '',
+    path: ObjectPaths.from('initiative'),
   })
-
-  export const MovementSpeed: Characteristic<number> = Characteristics.defineCharacteristic({
-    template: CharacteristicTemplates.Initiative,
-    initialValue: true,
+  export const MovementSpeed: CharacteristicTemplate<number> = Characteristics.defineTemplate('movement-speed', {
+    name: 'Movement Speed',
+    description: '',
+    path: ObjectPaths.from('movementSpeed'),
   })
 }
 
 export namespace CharacteristicGroups {
-  export const Abilities = Characteristics.defineGroup('characteristic-group/abilities', { name: 'Abilities' })
-  export const SavingThrows = Characteristics.defineGroup('characteristic-group/saving-throws', { name: 'Saving Throws' })
-  export const Combat = Characteristics.defineGroup('characteristic-group/combat', { name: 'Combat' })
-  export const Skills = Characteristics.defineGroup('characteristic-group/skills', { name: 'Skills' })
+  export const Abilities = Characteristics.defineGroup('abilities', { name: 'Abilities', description: '' })
+  export const SavingThrows = Characteristics.defineGroup('saving-throws', { name: 'Saving Throws', description: '' })
+  export const Combat = Characteristics.defineGroup('combat', { name: 'Combat', description: '' })
+  export const Skills = Characteristics.defineGroup('skills', { name: 'Skills', description: '' })
 }
 
 export namespace PlayerCharacteristics {
   export const Strength: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/strength', 'Strength', ObjectPaths.from('strength')),
+    template: Characteristics.defineTemplate('strength', { name: 'Strength', description: '', path: ObjectPaths.from('strength') }),
     initialValue: true,
   })
 
   export const Dexterity: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/dexterity', 'Dexterity', ObjectPaths.from('dexterity')),
+    template: Characteristics.defineTemplate('dexterity', { name: 'Dexterity', description: '', path: ObjectPaths.from('dexterity') }),
     initialValue: true,
   })
 
   export const Constitution: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/constitution', 'Constitution', ObjectPaths.from('constitution')),
+    template: Characteristics.defineTemplate('constitution', { name: 'Constitution', description: '', path: ObjectPaths.from('constitution') }),
     initialValue: true,
   })
 
   export const Wisdom: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/wisdom', 'Wisdom', ObjectPaths.from('wisdom')),
+    template: Characteristics.defineTemplate('wisdom', { name: 'Wisdom', description: '', path: ObjectPaths.from('wisdom') }),
     initialValue: true,
   })
 
   export const Intelligence: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/intelligence', 'Intelligence', ObjectPaths.from('intelligence')),
+    template: Characteristics.defineTemplate('intelligence', { name: 'Intelligence', description: '', path: ObjectPaths.from('intelligence') }),
     initialValue: true,
   })
 
   export const Charisma: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/charisma', 'Charisma', ObjectPaths.from('charisma')),
+    template: Characteristics.defineTemplate('charisma', { name: 'Charisma', description: '', path: ObjectPaths.from('charisma') }),
     initialValue: true,
   })
 
   export const StrengthModifier: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/strength-modifier', 'Strength Modifier', ObjectPaths.from('strengthModifier')),
+    template: Characteristics.defineTemplate('strength-modifier', {
+      name: 'Strength Modifier',
+      description: '',
+      path: ObjectPaths.from('strengthModifier'),
+    }),
     baseValue: NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([Strength.variable, -10]), 0.5]), 0, RoundingMode.Down),
   })
 
   export const DexterityModifier: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/dexterity-modifier', 'Dexterity Modifier', ObjectPaths.from('dexterityModifier')),
+    template: Characteristics.defineTemplate('dexterity-modifier', {
+      name: 'Dexterity Modifier',
+      description: '',
+      path: ObjectPaths.from('dexterityModifier'),
+    }),
     baseValue: NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([Dexterity.variable, -10]), 0.5]), 0, RoundingMode.Down),
   })
 
   export const ConstitutionModifier: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate(
-      'characteristic/constitution-modifier',
-      'Constitution Modifier',
-      ObjectPaths.from('constitutionModifier')
-    ),
+    template: Characteristics.defineTemplate('constitution-modifier', {
+      name: 'Constitution Modifier',
+      description: '',
+      path: ObjectPaths.from('constitutionModifier'),
+    }),
     baseValue: NumericExpressions.round(
       NumericExpressions.multiply([NumericExpressions.sum([Constitution.variable, -10]), 0.5]),
       0,
@@ -122,17 +107,21 @@ export namespace PlayerCharacteristics {
 
   export const WisdomModifier: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/wisdom-modifier', 'Wisdom Modifier', ObjectPaths.from('wisdomModifier')),
+    template: Characteristics.defineTemplate('wisdom-modifier', {
+      name: 'Wisdom Modifier',
+      description: '',
+      path: ObjectPaths.from('wisdomModifier'),
+    }),
     baseValue: NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([Wisdom.variable, -10]), 0.5]), 0, RoundingMode.Down),
   })
 
   export const IntelligenceModifier: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate(
-      'characteristic/intelligence-modifier',
-      'Intelligence Modifier',
-      ObjectPaths.from('intelligenceModifier')
-    ),
+    template: Characteristics.defineTemplate('intelligence-modifier', {
+      name: 'Intelligence Modifier',
+      description: '',
+      path: ObjectPaths.from('intelligenceModifier'),
+    }),
     baseValue: NumericExpressions.round(
       NumericExpressions.multiply([NumericExpressions.sum([Intelligence.variable, -10]), 0.5]),
       0,
@@ -142,13 +131,21 @@ export namespace PlayerCharacteristics {
 
   export const CharismaModifier: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Abilities,
-    template: Characteristics.defineTemplate('characteristic/charisma-modifier', 'Charisma Modifier', ObjectPaths.from('charismaModifier')),
+    template: Characteristics.defineTemplate('charisma-modifier', {
+      name: 'Charisma Modifier',
+      description: '',
+      path: ObjectPaths.from('charismaModifier'),
+    }),
     baseValue: NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([Charisma.variable, -10]), 0.5]), 0, RoundingMode.Down),
   })
 
   export const ProficiencyBonus: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Combat,
-    template: Characteristics.defineTemplate('characteristic/proficiency-bonus', 'Proficiency Bonus', ObjectPaths.from('proficiencyBonus')),
+    template: Characteristics.defineTemplate('proficiency-bonus', {
+      name: 'Proficiency Bonus',
+      description: '',
+      path: ObjectPaths.from('proficiencyBonus'),
+    }),
     baseValue: NumericExpressions.sum([
       2,
       NumericExpressions.round(NumericExpressions.multiply([NumericExpressions.sum([CharacterValues.Level, -1]), 0.25]), 0, RoundingMode.Down),
@@ -181,145 +178,177 @@ export namespace PlayerCharacteristics {
 
   export const Acrobatics: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/acrobatics', 'Acrobatics', ObjectPaths.from('acrobatics')),
+    template: Characteristics.defineTemplate('skill/acrobatics', { name: 'Acrobatics', description: '', path: ObjectPaths.from('acrobatics') }),
     baseValue: DexterityModifier.variable,
   })
 
   export const AnimalHandling: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/animal-handling', 'Animal Handling', ObjectPaths.from('animalHandling')),
+    template: Characteristics.defineTemplate('skill/animal-handling', {
+      name: 'Animal Handling',
+      description: '',
+      path: ObjectPaths.from('animalHandling'),
+    }),
     baseValue: WisdomModifier.variable,
   })
 
   export const Arcana: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/arcana', 'Arcana', ObjectPaths.from('arcana')),
+    template: Characteristics.defineTemplate('skill/arcana', { name: 'Arcana', description: '', path: ObjectPaths.from('arcana') }),
     baseValue: IntelligenceModifier.variable,
   })
 
   export const Athletics: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/athletics', 'Athletics', ObjectPaths.from('athletics')),
+    template: Characteristics.defineTemplate('skill/athletics', { name: 'Athletics', description: '', path: ObjectPaths.from('athletics') }),
     baseValue: StrengthModifier.variable,
   })
 
   export const Deception: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/deception', 'Deception', ObjectPaths.from('deception')),
+    template: Characteristics.defineTemplate('skill/deception', { name: 'Deception', description: '', path: ObjectPaths.from('deception') }),
     baseValue: CharismaModifier.variable,
   })
 
   export const History: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/history', 'History', ObjectPaths.from('history')),
+    template: Characteristics.defineTemplate('skill/history', { name: 'History', description: '', path: ObjectPaths.from('history') }),
     baseValue: IntelligenceModifier.variable,
   })
 
   export const Insight: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/insight', 'Insight', ObjectPaths.from('insight')),
+    template: Characteristics.defineTemplate('skill/insight', { name: 'Insight', description: '', path: ObjectPaths.from('insight') }),
     baseValue: WisdomModifier.variable,
   })
 
   export const Intimidation: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/intimidation', 'Intimidation', ObjectPaths.from('intimidation')),
+    template: Characteristics.defineTemplate('skill/intimidation', { name: 'Intimidation', description: '', path: ObjectPaths.from('intimidation') }),
     baseValue: CharismaModifier.variable,
   })
 
   export const Investigation: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/investigation', 'Investigation', ObjectPaths.from('investigation')),
+    template: Characteristics.defineTemplate('skill/investigation', {
+      name: 'Investigation',
+      description: '',
+      path: ObjectPaths.from('investigation'),
+    }),
     baseValue: IntelligenceModifier.variable,
   })
 
   export const Medicine: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/medicine', 'Medicine', ObjectPaths.from('medicine')),
+    template: Characteristics.defineTemplate('skill/medicine', { name: 'Medicine', description: '', path: ObjectPaths.from('medicine') }),
     baseValue: WisdomModifier.variable,
   })
 
   export const Nature: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/nature', 'Nature', ObjectPaths.from('nature')),
+    template: Characteristics.defineTemplate('skill/nature', { name: 'Nature', description: '', path: ObjectPaths.from('nature') }),
     baseValue: IntelligenceModifier.variable,
   })
 
   export const Perception: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/perception', 'Perception', ObjectPaths.from('perception')),
+    template: Characteristics.defineTemplate('skill/perception', { name: 'Perception', description: '', path: ObjectPaths.from('perception') }),
     baseValue: WisdomModifier.variable,
   })
 
   export const Performance: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/performance', 'Performance', ObjectPaths.from('performance')),
+    template: Characteristics.defineTemplate('skill/performance', { name: 'Performance', description: '', path: ObjectPaths.from('performance') }),
     baseValue: CharismaModifier.variable,
   })
 
   export const Persuasion: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/persuasion', 'Persuasion', ObjectPaths.from('persuasion')),
+    template: Characteristics.defineTemplate('skill/persuasion', { name: 'Persuasion', description: '', path: ObjectPaths.from('persuasion') }),
     baseValue: CharismaModifier.variable,
   })
 
   export const Religion: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/religion', 'Religion', ObjectPaths.from('religion')),
+    template: Characteristics.defineTemplate('skill/religion', { name: 'Religion', description: '', path: ObjectPaths.from('religion') }),
     baseValue: IntelligenceModifier.variable,
   })
 
   export const SleightOfHand: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/sleight-of-hand', 'Sleight of Hand', ObjectPaths.from('sleightOfHand')),
+    template: Characteristics.defineTemplate('skill/sleight-of-hand', {
+      name: 'Sleight of Hand',
+      description: '',
+      path: ObjectPaths.from('sleightOfHand'),
+    }),
     baseValue: DexterityModifier.variable,
   })
 
   export const Stealth: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/stealth', 'Stealth', ObjectPaths.from('stealth')),
+    template: Characteristics.defineTemplate('skill/stealth', { name: 'Stealth', description: '', path: ObjectPaths.from('stealth') }),
     baseValue: DexterityModifier.variable,
   })
 
   export const Survival: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.Skills,
-    template: Characteristics.defineTemplate('characteristic/skill/survival', 'Survival', ObjectPaths.from('survival')),
+    template: Characteristics.defineTemplate('skill/survival', { name: 'Survival', description: '', path: ObjectPaths.from('survival') }),
     baseValue: WisdomModifier.variable,
   })
 
   export const StrengthSave: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.SavingThrows,
-    template: Characteristics.defineTemplate('characteristic/saving-throw/strength', 'Strength Save', ObjectPaths.from('strengthSave')),
+    template: Characteristics.defineTemplate('saving-throw/strength', {
+      name: 'Strength Save',
+      description: '',
+      path: ObjectPaths.from('strengthSave'),
+    }),
     baseValue: StrengthModifier.variable,
   })
 
   export const DexteritySave: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.SavingThrows,
-    template: Characteristics.defineTemplate('characteristic/saving-throw/dexterity', 'Dexterity Save', ObjectPaths.from('dexteritySave')),
+    template: Characteristics.defineTemplate('saving-throw/dexterity', {
+      name: 'Dexterity Save',
+      description: '',
+      path: ObjectPaths.from('dexteritySave'),
+    }),
     baseValue: DexterityModifier.variable,
   })
 
   export const ConstitutionSave: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.SavingThrows,
-    template: Characteristics.defineTemplate('characteristic/saving-throw/constitution', 'Constitution Save', ObjectPaths.from('constitutionSave')),
+    template: Characteristics.defineTemplate('saving-throw/constitution', {
+      name: 'Constitution Save',
+      description: '',
+      path: ObjectPaths.from('constitutionSave'),
+    }),
     baseValue: ConstitutionModifier.variable,
   })
 
   export const IntelligenceSave: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.SavingThrows,
-    template: Characteristics.defineTemplate('characteristic/saving-throw/intelligence', 'Intelligence Save', ObjectPaths.from('intelligenceSave')),
+    template: Characteristics.defineTemplate('saving-throw/intelligence', {
+      name: 'Intelligence Save',
+      description: '',
+      path: ObjectPaths.from('intelligenceSave'),
+    }),
     baseValue: IntelligenceModifier.variable,
   })
 
   export const WisdomSave: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.SavingThrows,
-    template: Characteristics.defineTemplate('characteristic/saving-throw/wisdom', 'Wisdom Save', ObjectPaths.from('wisdomSave')),
+    template: Characteristics.defineTemplate('saving-throw/wisdom', { name: 'Wisdom Save', description: '', path: ObjectPaths.from('wisdomSave') }),
     baseValue: WisdomModifier.variable,
   })
 
   export const CharismaSave: Characteristic<number> = Characteristics.defineCharacteristic({
     group: CharacteristicGroups.SavingThrows,
-    template: Characteristics.defineTemplate('characteristic/saving-throw/charisma', 'Charisma Save', ObjectPaths.from('charismaSave')),
+    template: Characteristics.defineTemplate('saving-throw/charisma', {
+      name: 'Charisma Save',
+      description: '',
+      path: ObjectPaths.from('charismaSave'),
+    }),
     baseValue: CharismaModifier.variable,
   })
 }

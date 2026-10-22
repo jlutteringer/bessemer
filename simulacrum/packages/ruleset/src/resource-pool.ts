@@ -1,6 +1,9 @@
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
-import { Reference } from '@bessemer/cornerstone/reference'
+import { Uris } from '@bessemer/cornerstone'
+import * as Tiptap from '@bessemer/core/tiptap'
+import { RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntitySchema, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
+import Zod from 'zod'
 
 export type ResourcePool = {
   size: Expression<number>
@@ -12,14 +15,25 @@ export type CooldownRate = {
   amount: Expression<number> | RelativeAmount
 }
 
-export type ResourcePoolReference = Reference<'ResourcePoolDefinition'>
+export type ResourcePoolReference = RulesetEntityReference<typeof RulesetEntityType.ResourcePool>
 
-export type ResourcePoolProps = ResourcePool & {
-  name: string
-  description: string
-}
+export type ResourcePoolProps = RulesetEntityProps & ResourcePool
 
-export type ResourcePoolDefinition = ResourcePoolProps & { id: ResourcePoolReference }
+export const ResourcePoolDefinitionSchema = RulesetEntitySchema.extend({
+  id: Zod.string().transform((it) => it as ResourcePoolReference),
+  size: Zod.custom<Expression<number>>(),
+  refresh: Zod.array(
+    Zod.object({
+      period: Zod.enum(GameTimeUnit),
+      amount: Zod.union([Zod.enum(RelativeAmount), Zod.custom<Expression<number>>()]),
+    })
+  ),
+})
+
+export type ResourcePoolDefinition = RulesetEntity &
+  ResourcePool & {
+    id: ResourcePoolReference
+  }
 
 export type ResourceCost = {
   cost: Expression<number>
@@ -32,8 +46,11 @@ export type ResourceCostProps = {
 }
 
 export const defineResourcePool = (reference: string, props: ResourcePoolProps): ResourcePoolDefinition => {
-  return {
-    id: reference as ResourcePoolReference,
-    ...props,
-  }
+  return ResourcePoolDefinitionSchema.parse({
+    id: Uris.format({ scheme: RulesetEntityType.ResourcePool, location: { path: reference } }),
+    name: props.name,
+    description: Tiptap.markdownToJson(props.description),
+    size: props.size,
+    refresh: props.refresh,
+  })
 }

@@ -2,11 +2,11 @@ import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SavingThrowProficiency = Archetypes.defineArchetype('saving-throw-proficiency', { name: 'Saving Throw Proficiency' })
+export const SavingThrowProficiency = Archetypes.defineArchetype('saving-throw-proficiency', { name: 'Saving Throw Proficiency', description: '' })
 
 export const Strength = Traits.defineTrait('saving-throw-proficiency/strength', {
   name: 'Strength Saving Throw',
-  description: '<p>You are proficient in <strong>Strength</strong> saving throws, adding your Proficiency Bonus to them.</p>',
+  description: 'You are proficient in **Strength** saving throws, adding your Proficiency Bonus to them.',
   archetypes: [SavingThrowProficiency],
   effects: [
     Effects.modifyCharacteristic(
@@ -18,7 +18,7 @@ export const Strength = Traits.defineTrait('saving-throw-proficiency/strength', 
 
 export const Dexterity = Traits.defineTrait('saving-throw-proficiency/dexterity', {
   name: 'Dexterity Saving Throw',
-  description: '<p>You are proficient in <strong>Dexterity</strong> saving throws, adding your Proficiency Bonus to them.</p>',
+  description: 'You are proficient in **Dexterity** saving throws, adding your Proficiency Bonus to them.',
   archetypes: [SavingThrowProficiency],
   effects: [
     Effects.modifyCharacteristic(
@@ -30,7 +30,7 @@ export const Dexterity = Traits.defineTrait('saving-throw-proficiency/dexterity'
 
 export const Constitution = Traits.defineTrait('saving-throw-proficiency/constitution', {
   name: 'Constitution Saving Throw',
-  description: '<p>You are proficient in <strong>Constitution</strong> saving throws, adding your Proficiency Bonus to them.</p>',
+  description: 'You are proficient in **Constitution** saving throws, adding your Proficiency Bonus to them.',
   archetypes: [SavingThrowProficiency],
   effects: [
     Effects.modifyCharacteristic(
@@ -42,7 +42,7 @@ export const Constitution = Traits.defineTrait('saving-throw-proficiency/constit
 
 export const Intelligence = Traits.defineTrait('saving-throw-proficiency/intelligence', {
   name: 'Intelligence Saving Throw',
-  description: '<p>You are proficient in <strong>Intelligence</strong> saving throws, adding your Proficiency Bonus to them.</p>',
+  description: 'You are proficient in **Intelligence** saving throws, adding your Proficiency Bonus to them.',
   archetypes: [SavingThrowProficiency],
   effects: [
     Effects.modifyCharacteristic(
@@ -54,7 +54,7 @@ export const Intelligence = Traits.defineTrait('saving-throw-proficiency/intelli
 
 export const Wisdom = Traits.defineTrait('saving-throw-proficiency/wisdom', {
   name: 'Wisdom Saving Throw',
-  description: '<p>You are proficient in <strong>Wisdom</strong> saving throws, adding your Proficiency Bonus to them.</p>',
+  description: 'You are proficient in **Wisdom** saving throws, adding your Proficiency Bonus to them.',
   archetypes: [SavingThrowProficiency],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.WisdomSave, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
@@ -63,7 +63,7 @@ export const Wisdom = Traits.defineTrait('saving-throw-proficiency/wisdom', {
 
 export const Charisma = Traits.defineTrait('saving-throw-proficiency/charisma', {
   name: 'Charisma Saving Throw',
-  description: '<p>You are proficient in <strong>Charisma</strong> saving throws, adding your Proficiency Bonus to them.</p>',
+  description: 'You are proficient in **Charisma** saving throws, adding your Proficiency Bonus to them.',
   archetypes: [SavingThrowProficiency],
   effects: [
     Effects.modifyCharacteristic(

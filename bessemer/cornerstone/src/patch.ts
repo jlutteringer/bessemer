@@ -10,24 +10,24 @@ import { UnknownRecord } from 'type-fest'
 import * as Objects from '@bessemer/cornerstone/object'
 
 export enum PatchType {
-  Set = 'Set',
-  Apply = 'Apply',
-  Patch = 'Patch',
+  Set = 'Patch.Set',
+  Apply = 'Patch.Apply',
+  Patch = 'Patch.Patch',
 }
 
 export type SetPatch<T> = {
-  _PatchType: PatchType.Set
+  type: PatchType.Set
   value: Expression<T>
 }
 
 export type ApplyPatch<T> = {
-  _PatchType: PatchType.Apply
+  type: PatchType.Apply
   value: Expression<T>
   reducer: ReducingExpression<T, T>
 }
 
 export type PatchPatch<T> = {
-  _PatchType: PatchType.Patch
+  type: PatchType.Patch
   patch: Patchable<T>
 }
 
@@ -46,16 +46,22 @@ export type Patchable<T> = {
     : Patch<T[P]> | T[P]
 }
 
+const PatchTypes = new Set<unknown>(Object.values(PatchType))
+
+export const isPatch = (value: unknown): value is Patch<unknown> => {
+  return Objects.isObject(value) && PatchTypes.has(value.type)
+}
+
 export const set = <T>(value: Expression<T>): Patch<T> => {
   return {
-    _PatchType: PatchType.Set,
+    type: PatchType.Set,
     value: value as any,
   }
 }
 
 export const apply = <T>(value: Expression<T>, reducer: ReducingExpression<T, T>): Patch<T> => {
   return {
-    _PatchType: PatchType.Apply,
+    type: PatchType.Apply,
     value,
     reducer,
   }
@@ -63,7 +69,7 @@ export const apply = <T>(value: Expression<T>, reducer: ReducingExpression<T, T>
 
 export const patch = <T extends UnknownRecord, N extends Patchable<T> = Patchable<T>>(patch: N): Patch<T> => {
   return {
-    _PatchType: PatchType.Patch,
+    type: PatchType.Patch,
     patch,
   }
 }
@@ -89,7 +95,7 @@ export const resolveWithDetails = <T>(value: T, patches: Array<Patch<T>>, evalua
   let currentValue: T = value
 
   const patchValues = patches.map((patch) => {
-    switch (patch._PatchType) {
+    switch (patch.type) {
       case PatchType.Set:
         currentValue = evaluate(patch.value)
         break
@@ -119,7 +125,7 @@ const applyPatch = <T>(value: T, patch: Patchable<T>, evaluate: EvaluateExpressi
       return value
     }
 
-    if (!Objects.isObject(patch) || !('_PatchType' in patch)) {
+    if (!isPatch(patch)) {
       return undefined
     }
 

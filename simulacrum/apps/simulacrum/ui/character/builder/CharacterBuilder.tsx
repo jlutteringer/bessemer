@@ -18,6 +18,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
 import MenuItem from '@mui/material/MenuItem'
 import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
@@ -25,58 +27,52 @@ import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SaveIcon from '@mui/icons-material/Save'
-import { Arrays, Assertions, Maps, Objects } from '@bessemer/cornerstone'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
 import { CharacterRecord, CharacterSheet } from '@simulacrum/engine/character/character'
-import { Characters } from '@simulacrum/engine/character'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
+import { Characteristic } from '@simulacrum/engine/characteristic'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Abilities, Effects, Loadout } from '@simulacrum/engine'
+import { Abilities, Characters, Effects, Loadout, Rulesets } from '@simulacrum/engine'
 import { Ability } from '@simulacrum/engine/ability'
 import { CharacterOptionValue } from '@simulacrum/engine/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
 import { ApplicationContext } from '@simulacrum/application'
-import * as Rulesets from '@simulacrum/engine/ruleset'
 import { Ruleset, RulesetConfiguration, RulesetExtension } from '@simulacrum/engine/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
-import { RichTextDescription } from '@simulacrum/ui/character/builder/RichTextDescription'
+import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
+import { RulesetEntityTooltip } from '@simulacrum/ui/components/RulesetEntityTooltip'
+import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
+  CharacterOptionChoice,
   getAbilityResourceLabels,
   getActionLabel,
   getActionTypeLabel,
-  hasDescribedActions,
-  getCharacteristicValue,
   getCharacteristicSections,
+  getCharacteristicValue,
+  getCharacterOptionChoices,
   getGrantedTraits,
   getInitialValueFieldName,
   getLoadoutAbilities,
   getPassiveEffects,
   getPassiveTraits,
-  getCharacterOptionChoices,
   getValueCaption,
+  hasDescribedActions,
+  isTrait,
   MaxLevel,
   newCharacter,
   selectLoadoutAbilities,
   selectValue,
   selectValuesForChoices,
   setLevel,
-  CharacterOptionChoice,
-  isTrait,
 } from '@simulacrum/ui/character/builder/character-builder-model'
 
 const useRulesets = (): { rulesets: Array<Ruleset>; rulesetExtensions: Array<RulesetExtension> } => {
   const { rulesets, rulesetExtensions } = (useClientContext() as unknown as ApplicationContext).client
   return { rulesets, rulesetExtensions }
-}
-
-const RulesetContext = createContext<Ruleset | null>(null)
-
-const useRuleset = (): Ruleset => {
-  const ruleset = useContext(RulesetContext)
-  Assertions.assertPresent(ruleset)
-  return ruleset
 }
 
 // The character being edited, for cards deep in the page that show character-specific values (e.g. how many uses an ability has)
@@ -157,7 +153,6 @@ const RulesetSelection = ({
 }) => {
   const [configuration, setConfiguration] = useState<RulesetConfiguration | null>(null)
 
-  // Selecting a ruleset includes all of its extensions by default
   const selectRuleset = (ruleset: Ruleset) => {
     if (configuration?.id !== ruleset.id) {
       setConfiguration({ id: ruleset.id, extensions: Rulesets.getAvailableExtensions(ruleset, rulesetExtensions).map((it) => it.id) })
@@ -268,6 +263,31 @@ const RulesetSelection = ({
 /**
  * A number input that can be left blank while typing. A blank field is stored as 0, and shows 0 once the field loses focus.
  */
+// An info icon at the end of a characteristic's field, opening its description; nothing for a characteristic without one
+const CharacteristicInfo = ({ characteristic }: { characteristic: Characteristic<number> }) => {
+  if (Arrays.isEmpty(characteristic.description.content ?? [])) {
+    return null
+  }
+
+  return (
+    <InputAdornment position="end">
+      <RulesetEntityTooltip
+        entity={characteristic}
+        trigger={
+          <IconButton
+            size="small"
+            edge="end"
+            color="primary"
+            aria-label={`About ${characteristic.name}`}
+          >
+            <InfoOutlinedIcon fontSize="small" />
+          </IconButton>
+        }
+      />
+    </InputAdornment>
+  )
+}
+
 const NumberField = ({
   value,
   onChange,
@@ -437,6 +457,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                                 onBlur={field.onBlur}
                                 label={characteristic.name}
                                 fullWidth
+                                slotProps={{ input: { endAdornment: <CharacteristicInfo characteristic={characteristic} /> } }}
                                 error={fieldState.invalid}
                                 helperText={
                                   fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)
@@ -450,7 +471,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                           label={characteristic.name}
                           value={getCharacteristicValue(sheet, characteristic)}
                           fullWidth
-                          slotProps={{ input: { readOnly: true } }}
+                          slotProps={{ input: { readOnly: true, endAdornment: <CharacteristicInfo characteristic={characteristic} /> } }}
                         />
                       )}
                     </Grid>
@@ -529,7 +550,7 @@ const LevelTraits = ({
                 return (
                   <Box key={group[0]!.key}>
                     <MultiValueSelect
-                      label={group[0]!.option.label}
+                      label={group[0]!.option.name}
                       choices={group}
                       onSelect={(values) => onSelectMany(group, values)}
                     />
@@ -546,7 +567,7 @@ const LevelTraits = ({
               return (
                 <Box key={choice.key}>
                   <ValueSelect
-                    label={choice.option.label}
+                    label={choice.option.name}
                     choice={choice}
                     onSelect={(value) => onSelect(choice, value)}
                   />
@@ -743,7 +764,7 @@ const getTraitAbilities = (traits: Array<Trait>, ruleset: Ruleset): Array<Abilit
   return traits.flatMap((trait) =>
     Effects.filter(trait.effects, Effects.GainAbility)
       .filter((it) => Objects.isNil(it.loadout))
-      .map((it) => Abilities.getAbility(it.ability, ruleset))
+      .map((it) => Abilities.getAbilityById(it.ability, ruleset))
   )
 }
 
@@ -768,7 +789,7 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
       <CardContent>
         <Typography variant="h6">{trait.name}</Typography>
         {Objects.isPresent(caption) && <Typography variant="caption">{caption}</Typography>}
-        <RichTextDescription text={trait.description} />
+        <SimulacrumRichText text={trait.description} />
         {!Arrays.isEmpty(getPassiveEffects(trait)) && (
           <>
             <Divider sx={{ my: 1 }} />
@@ -786,7 +807,7 @@ const TraitPassiveEffects = ({ trait }: { trait: Trait }) => {
     <>
       <Typography variant="caption">Passive</Typography>
       {getPassiveEffects(trait).map((it, index) => (
-        <RichTextDescription
+        <SimulacrumRichText
           key={index}
           text={it.description}
         />
@@ -800,30 +821,41 @@ const AbilityCard = ({ ability: rulesetAbility }: { ability: Ability }) => {
   const sheet = useContext(CharacterSheetContext)
   const ability = sheet?.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
   const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, ruleset)
+  const actionLabel = hasDescribedActions(ability) ? null : getActionLabel(ability, ruleset)
+  const usageLabels = [...(Objects.isPresent(actionLabel) ? [actionLabel] : []), ...resourceLabels]
 
   return (
     <Card sx={{ height: '100%' }}>
       <CardContent>
         <Typography variant="h6">{ability.name}</Typography>
-        {!hasDescribedActions(ability) && Objects.isPresent(getActionLabel(ability)) && (
-          <Typography variant="caption">{getActionLabel(ability)}</Typography>
-        )}
-        {resourceLabels.map((it) => (
+        {!Arrays.isEmpty(usageLabels) && (
           <Typography
-            key={it}
             variant="caption"
             component="p"
           >
-            {it}
+            {usageLabels.join(' · ')}
           </Typography>
-        ))}
+        )}
         {Effects.filter(ability.effects, Effects.Descriptive).map((it, index) => (
-          <RichTextDescription
+          <SimulacrumRichText
             key={index}
             text={it.description}
           />
         ))}
-        {hasDescribedActions(ability) && <AbilityActions ability={ability} />}
+        {hasDescribedActions(ability) ? (
+          <AbilityActions ability={ability} />
+        ) : (
+          ability.actions.flatMap((it, index) =>
+            Objects.isPresent(it.description)
+              ? [
+                  <SimulacrumRichText
+                    key={index}
+                    text={it.description}
+                  />,
+                ]
+              : []
+          )
+        )}
       </CardContent>
     </Card>
   )
@@ -856,6 +888,8 @@ const AbilityCards = ({ abilities }: { abilities: Array<Ability> }) => {
 
 // Each of an ability's actions, with what it takes to use it and its own description
 const AbilityActions = ({ ability }: { ability: Ability }) => {
+  const ruleset = useRuleset()
+
   return (
     <Stack
       spacing={1}
@@ -865,9 +899,9 @@ const AbilityActions = ({ ability }: { ability: Ability }) => {
         <Box key={index}>
           <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
             <Typography variant="subtitle2">{action.name ?? ability.name}</Typography>
-            <Typography variant="caption">{getActionTypeLabel(action.action)}</Typography>
+            <Typography variant="caption">{getActionTypeLabel(action.action, ruleset)}</Typography>
           </Box>
-          {Objects.isPresent(action.description) && <RichTextDescription text={action.description} />}
+          {Objects.isPresent(action.description) && <SimulacrumRichText text={action.description} />}
         </Box>
       ))}
     </Stack>
@@ -884,7 +918,7 @@ const AbilitiesSection = ({
   onSelect: (loadoutType: LoadoutTypeReference, abilities: Array<Ability>) => void
 }) => {
   const ruleset = useRuleset()
-  const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutType(it, ruleset))
+  const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutTypeById(it, ruleset))
   const alwaysAvailable = sheet.abilities.filter((it) => Objects.isNil(it.loadout)).map((it) => it.ability)
   const passiveTraits = getPassiveTraits(sheet, ruleset)
 
@@ -917,7 +951,7 @@ const AbilitiesSection = ({
             const slotCount = sheet.loadout.filter((it) => it.type === loadoutType.id).length
             const options = getLoadoutAbilities(sheet, loadoutType.id)
             const selected = sheet.loadout.flatMap((it) =>
-              it.type === loadoutType.id && Objects.isPresent(it.ability) ? [Abilities.getAbility(it.ability, ruleset)] : []
+              it.type === loadoutType.id && Objects.isPresent(it.ability) ? [Abilities.getAbilityById(it.ability, ruleset)] : []
             )
 
             return (

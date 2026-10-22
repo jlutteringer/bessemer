@@ -1,12 +1,23 @@
 import { CharacterRecord, CharacterSheet } from '@simulacrum/engine/character/character'
 import { CharacterOption, CharacterOptionValue, CharacterSelection } from '@simulacrum/engine/character/character-option'
-import { CharacterOptions, Characters } from '@simulacrum/engine/character'
-import { Abilities, Archetypes, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/engine'
+import {
+  Abilities,
+  Archetypes,
+  Characteristics,
+  Effects,
+  ProgressionTables,
+  ResourcePools,
+  Traits,
+  Rulesets,
+  CharacterOptions,
+  Characters,
+} from '@simulacrum/engine'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Characteristic, CharacteristicGroup, CharacteristicValue } from '@simulacrum/engine/characteristic'
 import { Ruleset, RulesetConfiguration } from '@simulacrum/engine/ruleset'
-import { Ability, ActionType } from '@simulacrum/engine/ability'
+import { Ability } from '@simulacrum/engine/ability'
+import { ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
 import { DescriptiveEffect } from '@simulacrum/engine/effect'
 import { CooldownRate } from '@simulacrum/engine/resource-pool'
@@ -33,7 +44,7 @@ export type CharacterOptionChoice = {
  * The characteristics a player sets directly (e.g. ability scores), as opposed to ones derived from other values.
  */
 export const getInitialValueCharacteristics = (ruleset: Ruleset): Array<Characteristic<number>> => {
-  return ruleset.playerCharacteristics.filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
+  return Characteristics.getCharacteristics(ruleset).filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
 }
 
 export type CharacteristicSection = {
@@ -45,8 +56,8 @@ export type CharacteristicSection = {
  * The character's characteristics, grouped in the order the ruleset lists its groups, followed by any that aren't in a group.
  */
 export const getCharacteristicSections = (ruleset: Ruleset): Array<CharacteristicSection> => {
-  const { playerCharacteristics, characteristicGroups } = ruleset
-  const characteristics = playerCharacteristics as Array<Characteristic<number>>
+  const characteristicGroups = Characteristics.getCharacteristicGroups(ruleset)
+  const characteristics = Characteristics.getCharacteristics(ruleset) as Array<Characteristic<number>>
 
   const sections = [
     ...characteristicGroups.map((group) => ({ group, characteristics: characteristics.filter((it) => it.group === group.id) })),
@@ -180,14 +191,16 @@ export const getPassiveEffects = (trait: Trait): Array<DescriptiveEffect> => {
 }
 
 export const getPassiveTraits = (sheet: CharacterSheet, ruleset: Ruleset): Array<Trait> => {
-  return Traits.getTraits(Arrays.dedupe(ProgressionTables.getValues(sheet.traits)), ruleset).filter((it) => !Arrays.isEmpty(getPassiveEffects(it)))
+  return Traits.getTraitsByIds(Arrays.dedupe(ProgressionTables.getValues(sheet.traits)), ruleset).filter(
+    (it) => !Arrays.isEmpty(getPassiveEffects(it))
+  )
 }
 
 /**
  * Labels an option's value (a trait or an ability) by the archetypes it belongs to, e.g. "Rank 2 / Evocation" or "Class".
  */
 export const getValueCaption = (value: CharacterOptionValue, ruleset: Ruleset): string => {
-  return value.archetypes.map((it) => Archetypes.getArchetype(it, ruleset).name).join(' / ')
+  return value.archetypes.map((it) => Archetypes.getArchetypeById(it, ruleset).name).join(' / ')
 }
 
 export const getCharacterOptionChoices = (sheet: CharacterSheet): Array<CharacterOptionChoice> => {
@@ -224,28 +237,21 @@ export const getGrantedTraits = (
       return []
     }
 
-    const grantedTrait = Traits.getTrait(it.trait, ruleset)
+    const grantedTrait = Traits.getTraitById(it.trait, ruleset)
     return [{ trait: grantedTrait, level: entry[0] }, ...getGrantedTraits(grantedTrait, heldTraits, ruleset)]
   })
 }
 
-const ActionTypeLabels: Record<ActionType, string> = {
-  [ActionType.Standard]: 'Action',
-  [ActionType.Bonus]: 'Bonus Action',
-  [ActionType.Reaction]: 'Reaction',
-  [ActionType.Free]: 'Free',
-}
-
-export const getActionTypeLabel = (actionType: ActionType): string => {
-  return ActionTypeLabels[actionType]
+export const getActionTypeLabel = (actionType: ActionTypeReference, ruleset: Ruleset): string => {
+  return Rulesets.getEntityById(actionType, ruleset).name
 }
 
 /**
  * Labels what it takes to use an ability, e.g. "Bonus Action", or "Free or Reaction" when its actions differ. Null if it has no actions.
  */
-export const getActionLabel = (ability: Ability): string | null => {
+export const getActionLabel = (ability: Ability, ruleset: Ruleset): string | null => {
   const actionTypes = Arrays.dedupe(ability.actions.map((it) => it.action))
-  return Arrays.isEmpty(actionTypes) ? null : actionTypes.map(getActionTypeLabel).join(' or ')
+  return Arrays.isEmpty(actionTypes) ? null : actionTypes.map((it) => getActionTypeLabel(it, ruleset)).join(' or ')
 }
 
 // From shortest to longest
@@ -286,7 +292,7 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
 
   return costs.map(({ cost, reference }) => {
     Assertions.assertPresent(reference, () => `Ability [${ability.id}] has a cost without a resource, but no resource of its own`)
-    const resource = sheet.resources[reference]?.resource ?? ResourcePools.getResourcePool(reference, ruleset)
+    const resource = sheet.resources[reference]?.resource ?? ResourcePools.getResourcePoolById(reference, ruleset)
     const costValue = evaluate(cost)
 
     if (resource.id !== ability.resource?.id) {
@@ -302,9 +308,9 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
 }
 
 /**
- * Whether an ability's actions are worth listing one by one: when any of them has a description of its own (e.g. the options of a
- * transformation). Otherwise the ability's description covers them, and its action label is enough.
+ * Whether an ability's actions are worth listing one by one: when it has several and any of them has a description of its own (e.g. the
+ * options of a transformation). Otherwise the ability's action label is enough, and a lone action's description reads as the ability's own.
  */
 export const hasDescribedActions = (ability: Ability): boolean => {
-  return ability.actions.some((it) => Objects.isPresent(it.description))
+  return ability.actions.length > 1 && ability.actions.some((it) => Objects.isPresent(it.description))
 }

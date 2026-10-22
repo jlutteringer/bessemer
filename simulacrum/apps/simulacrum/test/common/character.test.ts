@@ -1,9 +1,9 @@
 import { TestHarness } from '@simulacrum/test/test-harness'
-import { CharacterOptions, Characters } from '@simulacrum/engine/character'
 import { Dnd5e, SelectClassLevel } from '@simulacrum/ruleset-dnd5e'
 import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
 import { Archery, SelectFightingStyle } from '@simulacrum/ruleset-dnd5e/archetype/fighting-style'
 import { HitPointResourcePool } from '@simulacrum/ruleset-dnd5e/resource-pool'
+import { CharacterOptions, Characters } from '@simulacrum/engine'
 
 // Abilities that take a loadout slot (e.g. weapon masteries) are left out of the counts, since a Fighter has access to all of them
 test('Test Character Choices and Selections', () => {

@@ -29,20 +29,24 @@ import * as Rogue from '@simulacrum/ruleset-dnd5e/class/class-rogue'
 import * as Sorcerer from '@simulacrum/ruleset-dnd5e/class/class-sorcerer'
 import * as Warlock from '@simulacrum/ruleset-dnd5e/class/class-warlock'
 import * as Wizard from '@simulacrum/ruleset-dnd5e/class/class-wizard'
-import { CharacteristicGroups, CreatureCharacteristics, PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
+import { CharacteristicGroups, PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Dash, Disengage, Dodge, HealingSurge } from '@simulacrum/ruleset-dnd5e/common'
 import { HitPointResourcePool } from '@simulacrum/ruleset-dnd5e/resource-pool'
 import { CantripLoadout, PreparedSpellLoadout, WeaponMasteryLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
+import { AllActionTypes } from '@simulacrum/ruleset-dnd5e/action-type'
 
-export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class-level', 'Class', { archetypes: [ClassArchetypes.Class] })
+export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class-level', {
+  name: 'Class',
+  description: '',
+  filter: { archetypes: [ClassArchetypes.Class] },
+})
 
 export const Dnd5e: Ruleset = {
   id: 'dnd-5e' as RulesetReference,
   name: 'Dungeons and Dragons 5e',
-  creatureCharacteristics: Object.values(CreatureCharacteristics),
-  playerCharacteristics: Object.values(PlayerCharacteristics),
-  characteristicGroups: Object.values(CharacteristicGroups),
-  archetypes: [
+  entities: [
+    ...Object.values(PlayerCharacteristics),
+    ...Object.values(CharacteristicGroups),
     ClassArchetypes.Class,
     Backgrounds.Background,
     AbilityScoreIncreases.AbilityScoreIncrease,
@@ -79,8 +83,6 @@ export const Dnd5e: Ruleset = {
     Spells.Illusion,
     Spells.Necromancy,
     Spells.Transmutation,
-  ],
-  traits: [
     Barbarian.Level1,
     Bard.Level1,
     Cleric.Level1,
@@ -167,7 +169,6 @@ export const Dnd5e: Ruleset = {
     SkillExpertise.SleightOfHand,
     SkillExpertise.Stealth,
     SkillExpertise.Survival,
-
     ArtisansTools.AlchemistsSupplies,
     ArtisansTools.BrewersSupplies,
     ArtisansTools.CalligraphersSupplies,
@@ -400,8 +401,6 @@ export const Dnd5e: Ruleset = {
     Fighter.PsiWarrior,
     Fighter.TacticalMind,
     Fighter.TacticalShift,
-  ],
-  abilities: [
     Maneuvers.Ambush,
     Maneuvers.BaitAndSwitch,
     Maneuvers.CommandersStrike,
@@ -468,9 +467,14 @@ export const Dnd5e: Ruleset = {
     Cleric.InvokeDuplicity,
     Cleric.GuidedStrike,
     Cleric.WarPriest,
+    HitPointResourcePool,
+    Cleric.ChannelDivinityPool,
+    Maneuvers.SuperiorityDice,
+    ...AllActionTypes,
+    CantripLoadout,
+    PreparedSpellLoadout,
+    WeaponMasteryLoadout,
   ],
-  resourcePools: [HitPointResourcePool, Cleric.ChannelDivinityPool, Maneuvers.SuperiorityDice],
-  loadoutTypes: [CantripLoadout, PreparedSpellLoadout, WeaponMasteryLoadout],
   progressionTable: {
     1: [
       Effects.gainResourcePool(HitPointResourcePool),
@@ -488,4 +492,5 @@ export const Dnd5e: Ruleset = {
     4: [Effects.gainCharacterOption(SelectClassLevel)],
     5: [Effects.gainCharacterOption(SelectClassLevel)],
   },
+  content: [],
 }

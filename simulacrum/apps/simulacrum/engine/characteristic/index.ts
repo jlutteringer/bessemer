@@ -1,11 +1,22 @@
 export * from '@simulacrum/ruleset/characteristic'
-import { Characteristic, CharacteristicReference } from '@simulacrum/ruleset/characteristic'
+import { Characteristic, CharacteristicGroup, CharacteristicReference } from '@simulacrum/ruleset/characteristic'
+import { Ruleset } from '@simulacrum/engine/ruleset'
+import * as Rulesets from '@simulacrum/engine/ruleset'
+import { RulesetEntities } from '@simulacrum/ruleset'
 import { Attribute, AttributeValue, Modifier } from '@simulacrum/engine/attribute'
 import { Attributes, Effects } from '@simulacrum/engine'
 import { Effect } from '@simulacrum/engine/effect'
 import { CharacterInitialValues } from '@simulacrum/engine/character/character'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
+
+export const getCharacteristics = (ruleset: Ruleset): Array<Characteristic<unknown>> => {
+  return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.Characteristic)
+}
+
+export const getCharacteristicGroups = (ruleset: Ruleset): Array<CharacteristicGroup> => {
+  return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.CharacteristicGroup)
+}
 
 export type CharacteristicValue<T> = AttributeValue<T> & {
   name: string

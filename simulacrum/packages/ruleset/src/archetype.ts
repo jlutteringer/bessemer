@@ -1,19 +1,25 @@
 import { Arrays } from '@bessemer/cornerstone'
-import { Reference } from '@bessemer/cornerstone/reference'
+import Zod from 'zod'
+import { Uris } from '@bessemer/cornerstone'
+import * as Tiptap from '@bessemer/core/tiptap'
+import { RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntitySchema, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 
-export type ArchetypeReference = Reference<'Archetype'>
+export type ArchetypeReference = RulesetEntityReference<typeof RulesetEntityType.Archetype>
 
-export type ArchetypeProps = {
-  name: string
+export const ArchetypeSchema = RulesetEntitySchema.extend({
+  id: Zod.string().transform((it) => it as ArchetypeReference),
+})
+
+export type Archetype = RulesetEntity & {
+  id: ArchetypeReference
 }
 
-export type Archetype = { id: ArchetypeReference } & ArchetypeProps & {}
-
-export const defineArchetype = (reference: string, props: ArchetypeProps): Archetype => {
-  return {
-    id: reference as ArchetypeReference,
-    ...props,
-  }
+export const defineArchetype = (reference: string, props: RulesetEntityProps): Archetype => {
+  return ArchetypeSchema.parse({
+    id: Uris.format({ scheme: RulesetEntityType.Archetype, location: { path: reference } }),
+    name: props.name,
+    description: Tiptap.markdownToJson(props.description),
+  })
 }
 
 export type ArchetypeFilter = Array<Array<ArchetypeReference>>

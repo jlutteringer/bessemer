@@ -1,19 +1,22 @@
 export * from '@simulacrum/ruleset/trait'
 import { Trait, TraitReference } from '@simulacrum/ruleset/trait'
-import { Assertions } from '@bessemer/cornerstone'
 import { Ruleset } from '@simulacrum/engine/ruleset'
 import { TraitFilter } from '@simulacrum/ruleset/trait'
 import * as Archetypes from '@simulacrum/engine/archetype'
 import { Arrays } from '@bessemer/cornerstone'
+import * as Rulesets from '@simulacrum/engine/ruleset'
+import { RulesetEntities } from '@simulacrum/ruleset'
 
-export const getTrait = (trait: TraitReference, ruleset: Ruleset): Trait => {
-  const matchingTrait = ruleset.traits.find((it) => it.id === trait)
-  Assertions.assertPresent(matchingTrait, () => `Unable to find Trait for Reference: ${JSON.stringify(trait)}`)
-  return matchingTrait
+export const getTraits = (ruleset: Ruleset): Array<Trait> => {
+  return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.Trait)
 }
 
-export const getTraits = (traits: Array<TraitReference>, ruleset: Ruleset): Array<Trait> => {
-  return traits.map((trait) => getTrait(trait, ruleset))
+export const getTraitById = (trait: TraitReference, ruleset: Ruleset): Trait => {
+  return Rulesets.getEntityById(trait, ruleset)
+}
+
+export const getTraitsByIds = (traits: Array<TraitReference>, ruleset: Ruleset): Array<Trait> => {
+  return traits.map((trait) => getTraitById(trait, ruleset))
 }
 
 export const applyFilter = (traits: Array<Trait>, filter: TraitFilter): Array<Trait> => {

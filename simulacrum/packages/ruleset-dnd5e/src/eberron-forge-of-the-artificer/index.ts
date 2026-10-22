@@ -8,11 +8,9 @@ export const ForgeOfTheArtificer: RulesetExtension = {
   id: 'dnd-5e/eberron-forge-of-the-artificer' as RulesetExtensionReference,
   ruleset: Dnd5e.id,
   name: 'Eberron: Forge of the Artificer',
-  creatureCharacteristics: [],
-  playerCharacteristics: [],
-  characteristicGroups: [],
-  archetypes: [Artificer.ArtificerSubclass, MagicItemPlans.MagicItemPlan],
-  traits: [
+  entities: [
+    Artificer.ArtificerSubclass,
+    MagicItemPlans.MagicItemPlan,
     Artificer.Level1,
     Artificer.Level2,
     Artificer.Level3,
@@ -46,8 +44,6 @@ export const ForgeOfTheArtificer: RulesetExtension = {
     Artificer.CartographerSpellsLevel5,
     Artificer.GuidedPrecision,
     ...MagicItemPlans.Level2Plans,
-  ],
-  abilities: [
     HomunculusServant,
     Artificer.Spellcasting,
     Artificer.TinkersMagic,
@@ -63,8 +59,8 @@ export const ForgeOfTheArtificer: RulesetExtension = {
     Artificer.AdventurersAtlas,
     Artificer.IlluminatedCartography,
     Artificer.PortalJump,
+    Artificer.ArmorModelLoadout,
   ],
-  resourcePools: [],
-  loadoutTypes: [Artificer.ArmorModelLoadout],
   progressionTable: {},
+  content: [],
 }

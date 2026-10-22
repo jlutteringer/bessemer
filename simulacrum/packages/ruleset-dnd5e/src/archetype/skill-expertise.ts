@@ -5,10 +5,10 @@ import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-p
 
 // FUTURE once skills are modelled as characteristics, these should require (and raise) a proficiency level rather than a specific
 // proficiency trait
-export const SkillExpertise = Archetypes.defineArchetype('skill-expertise', { name: 'Skill Expertise' })
+export const SkillExpertise = Archetypes.defineArchetype('skill-expertise', { name: 'Skill Expertise', description: '' })
 
 const expertiseDescription = (skill: string): string => {
-  return `<p>You have <strong>Expertise</strong> in ${skill}: your Proficiency Bonus is doubled for any ability check you make with it.</p>`
+  return `You have **Expertise** in ${skill}: your Proficiency Bonus is doubled for any ability check you make with it.`
 }
 
 export const Acrobatics = Traits.defineTrait('skill-expertise/acrobatics', {

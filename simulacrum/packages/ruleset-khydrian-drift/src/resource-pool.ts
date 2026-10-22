@@ -3,7 +3,7 @@ import { GameTimeUnit } from '@simulacrum/ruleset/types'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 
-export const TacticPoints = ResourcePools.defineResourcePool('resource-pool/tactic-points', {
+export const TacticPoints = ResourcePools.defineResourcePool('tactic-points', {
   name: 'Tactic Points',
   description: '',
   size: NumericExpressions.floor(PlayerCharacteristics.Presence.variable, 1),
@@ -15,7 +15,7 @@ export const TacticPoints = ResourcePools.defineResourcePool('resource-pool/tact
   ],
 })
 
-export const Stamina = ResourcePools.defineResourcePool('resource-pool/stamina', {
+export const Stamina = ResourcePools.defineResourcePool('stamina', {
   name: 'Stamina',
   description: '',
   size: PlayerCharacteristics.StaminaPool.variable,

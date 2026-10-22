@@ -21,6 +21,9 @@
     "clean": "rm -rf dist && rm -rf .turbo"
   },
   "dependencies": {
-    "@bessemer/cornerstone": "workspace:*"
+    "@bessemer/core": "workspace:*",
+    "@bessemer/cornerstone": "workspace:*",
+    "type-fest": "4.32.0",
+    "zod": "4.4.3"
   }
 }

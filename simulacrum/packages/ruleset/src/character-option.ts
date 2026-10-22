@@ -2,7 +2,8 @@ import { Trait, TraitFilter, TraitFilterProps, TraitReference } from '@simulacru
 import { Abilities, Traits } from '@simulacrum/ruleset'
 import { Ability, AbilityFilter, AbilityFilterProps, AbilityReference } from '@simulacrum/ruleset/ability'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
-import { Reference } from '@bessemer/cornerstone/reference'
+import * as Tiptap from '@bessemer/core/tiptap'
+import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { Ruleset } from '@simulacrum/ruleset/ruleset'
 
 export enum CharacterOptionType {
@@ -10,23 +11,22 @@ export enum CharacterOptionType {
   SelectAbility = 'SelectAbility',
 }
 
-export type CharacterOptionReference = Reference<'CharacterOption'>
+export type CharacterOptionReference = RulesetEntityReference<typeof RulesetEntityType.CharacterOption>
 
 export type CharacterOptionValueReference = TraitReference | AbilityReference
 
 export type CharacterOptionValue = Trait | Ability
 
-type CharacterOptionProps = {
+type CharacterOptionBase = RulesetEntity & {
   id: CharacterOptionReference
-  label: string
 }
 
-export type SelectTraitOption = CharacterOptionProps & {
+export type SelectTraitOption = CharacterOptionBase & {
   type: CharacterOptionType.SelectTrait
   filter: TraitFilter
 }
 
-export type SelectAbilityOption = CharacterOptionProps & {
+export type SelectAbilityOption = CharacterOptionBase & {
   type: CharacterOptionType.SelectAbility
   filter: AbilityFilter
   loadout: LoadoutTypeReference | null
@@ -46,26 +46,32 @@ export type CharacterSelection = {
   selection: CharacterOptionValueReference
 }
 
-export const selectTraitOption = (reference: string, label: string, filter: TraitFilterProps): SelectTraitOption => {
+export type SelectTraitOptionProps = RulesetEntityProps & {
+  filter: TraitFilterProps
+}
+
+export const selectTraitOption = (reference: string, props: SelectTraitOptionProps): SelectTraitOption => {
   return {
-    id: reference as CharacterOptionReference,
+    id: buildReference(RulesetEntityType.CharacterOption, reference),
+    name: props.name,
+    description: Tiptap.markdownToJson(props.description),
     type: CharacterOptionType.SelectTrait,
-    filter: Traits.filter(filter),
-    label,
+    filter: Traits.filter(props.filter),
   }
 }
 
-export const selectAbilityOption = (
-  reference: string,
-  label: string,
-  filter: AbilityFilterProps,
-  loadout: LoadoutType | null = null
-): SelectAbilityOption => {
+export type SelectAbilityOptionProps = RulesetEntityProps & {
+  filter: AbilityFilterProps
+  loadout?: LoadoutType
+}
+
+export const selectAbilityOption = (reference: string, props: SelectAbilityOptionProps): SelectAbilityOption => {
   return {
-    id: reference as CharacterOptionReference,
+    id: buildReference(RulesetEntityType.CharacterOption, reference),
+    name: props.name,
+    description: Tiptap.markdownToJson(props.description),
     type: CharacterOptionType.SelectAbility,
-    filter: Abilities.filter(filter),
-    loadout: loadout?.id ?? null,
-    label,
+    filter: Abilities.filter(props.filter),
+    loadout: props.loadout?.id ?? null,
   }
 }

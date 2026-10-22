@@ -1,10 +1,12 @@
 import { Trait, TraitReference } from '@simulacrum/ruleset/trait'
 import { ResourcePoolDefinition, ResourcePoolReference } from '@simulacrum/ruleset/resource-pool'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
-import { Ability, AbilityReference } from '@simulacrum/ruleset/ability'
+import * as Abilities from '@simulacrum/ruleset/ability'
+import { Ability, AbilityPatchProps, AbilityReference } from '@simulacrum/ruleset/ability'
 import { Characteristic, CharacteristicReference } from '@simulacrum/ruleset/characteristic'
 import { Modifier } from '@simulacrum/ruleset/attribute'
-import { RichText } from '@bessemer/cornerstone/rich-text'
+import { RichTextJson } from '@bessemer/cornerstone/rich-text'
+import * as Tiptap from '@bessemer/core/tiptap'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 
 export enum EffectTypeEnum {
@@ -42,7 +44,7 @@ export const Descriptive: EffectType<DescriptiveEffect> = { type: EffectTypeEnum
 
 export type DescriptiveEffect = Effect & {
   type: EffectTypeEnum.Descriptive
-  description: RichText
+  description: RichTextJson
 }
 
 export const GainCharacterOption: EffectType<GainCharacterOptionEffect> = { type: EffectTypeEnum.GainCharacterOption }
@@ -116,10 +118,10 @@ export type GainLoadoutSlotEffect = Effect & {
   loadoutType: LoadoutTypeReference
 }
 
-export const descriptive = (description: RichText): DescriptiveEffect => {
+export const descriptive = (description: string): DescriptiveEffect => {
   return {
     type: EffectTypeEnum.Descriptive,
-    description,
+    description: Tiptap.markdownToJson(description),
   }
 }
 
@@ -168,11 +170,11 @@ export const gainResourcePool = (resourcePool: ResourcePoolDefinition): GainReso
   }
 }
 
-export const modifyAbility = (ability: Ability, modifier: Modifier<unknown>): ModifyAbilityEffect => {
+export const modifyAbility = (ability: Ability, modifier: Modifier<AbilityPatchProps>): ModifyAbilityEffect => {
   return {
     type: EffectTypeEnum.ModifyAbility,
     ability: ability.id,
-    modifier,
+    modifier: { ...modifier, value: Abilities.resolvePatch(modifier.value) },
   }
 }
 

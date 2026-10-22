@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
-import { Objects } from '@bessemer/cornerstone'
+import { Arrays, Objects } from '@bessemer/cornerstone'
 import { Dictionary } from '@bessemer/cornerstone/types'
 
 export type RichTextRendererProps = { content: RichTextJson; handlers?: Dictionary<RichTextElement> }
@@ -11,6 +11,16 @@ export type RichTextElementProps = {
 }
 
 export type RichTextElement = (props: RichTextElementProps) => ReactNode
+
+const MarkOrder = ['link', 'code', 'bold', 'italic', 'underline', 'strike']
+
+const sortMarks = (content: RichTextJson): RichTextJson => {
+  if (Objects.isNil(content.marks)) {
+    return content
+  }
+
+  return { ...content, marks: Arrays.sortBy(content.marks, (it) => MarkOrder.indexOf(it.type)) }
+}
 
 export const RichTextRenderer = (props: RichTextRendererProps): ReactNode => {
   const { content, handlers = {} } = props
@@ -33,5 +43,5 @@ export const RichTextRenderer = (props: RichTextRendererProps): ReactNode => {
   }
 
   const Handler = handlers[content.type]!
-  return <Handler content={content}>{children}</Handler>
+  return <Handler content={sortMarks(content)}>{children}</Handler>
 }

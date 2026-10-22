@@ -1,24 +1,24 @@
+import Zod, { ZodArray, ZodOptional } from 'zod'
 import { TaggedType } from '@bessemer/cornerstone/types'
-import * as Objects from '@bessemer/cornerstone/object'
 
 // These are to match TipTap types, but without us having to depend on the TipTap library
-export type RichTextJson = {
-  type?: string
-  attrs?: Record<string, any>
-  content?: RichTextJson[]
-  marks?: {
-    type: string
-    attrs?: Record<string, any>
-    [key: string]: any
-  }[]
-  text?: string
-  [key: string]: any
-}
+export const RichTextJsonSchema = Zod.looseObject({
+  type: Zod.string().optional(),
+  attrs: Zod.record(Zod.string(), Zod.any()).optional(),
+  get content(): ZodOptional<ZodArray<typeof RichTextJsonSchema>> {
+    return Zod.array(RichTextJsonSchema).optional()
+  },
+  marks: Zod.array(
+    Zod.looseObject({
+      type: Zod.string(),
+      attrs: Zod.record(Zod.string(), Zod.any()).optional(),
+    })
+  ).optional(),
+  text: Zod.string().optional(),
+})
+
+export type RichTextJson = Zod.infer<typeof RichTextJsonSchema>
 
 export type RichTextString = TaggedType<string, 'RichTextString'>
 
 export type RichText = RichTextString | RichTextJson
-
-export const isJson = (text: RichText): text is RichTextJson => {
-  return Objects.isObject(text)
-}

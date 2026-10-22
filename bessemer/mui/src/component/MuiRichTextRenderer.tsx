@@ -1,5 +1,6 @@
 import { ReactNode, useMemo } from 'react'
-import { RichTextElement, RichTextRenderer, RichTextRendererProps } from '@bessemer/react/component/RichTextRenderer'
+import { RichTextElement, RichTextElementProps, RichTextRenderer, RichTextRendererProps } from '@bessemer/react/component/RichTextRenderer'
+import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { Dictionary } from '@bessemer/cornerstone/types'
 import { Objects } from '@bessemer/cornerstone'
 import {
@@ -22,57 +23,63 @@ import { Code } from '@mui/icons-material'
 
 export const DocTextElement: RichTextElement = (props) => <>{props.children}</>
 
-export const TextTextElement: RichTextElement = (props) => {
-  if (!props.content.marks) {
-    return <span>{props.content.text}</span>
-  }
+export type RichTextMark = NonNullable<RichTextJson['marks']>[number]
 
-  // Sort marks to ensure consistent nesting order
-  const sortedMarks = [...props.content.marks].sort((a, b) => {
-    const order = ['link', 'code', 'bold', 'italic', 'underline', 'strike']
-    return order.indexOf(a.type) - order.indexOf(b.type)
-  })
+export type RichTextMarkElement = (props: { mark: RichTextMark; children?: ReactNode }) => ReactNode
 
-  return sortedMarks.reduce((wrapped: any, mark) => {
-    switch (mark.type) {
-      case 'bold':
-        return <strong>{wrapped}</strong>
-      case 'italic':
-        return <em>{wrapped}</em>
-      case 'strike':
-        return <del>{wrapped}</del>
-      case 'underline':
-        return <u>{wrapped}</u>
-      case 'code':
-        return <code>{wrapped}</code>
-      case 'link':
-        const href = mark.attrs?.href || ''
-        return <Link href={href}>{wrapped}</Link>
-      default:
-        return wrapped
-    }
-  }, props.content.text)
+export const DefaultMarkHandlers: Dictionary<RichTextMarkElement> = {
+  bold: ({ children }) => <strong>{children}</strong>,
+  italic: ({ children }) => <em>{children}</em>,
+  strike: ({ children }) => <del>{children}</del>,
+  underline: ({ children }) => <u>{children}</u>,
+  code: ({ children }) => <code>{children}</code>,
+  link: ({ mark, children }) => <Link href={mark.attrs?.href || ''}>{children}</Link>,
+}
+
+export const TextTextElement = ({ content, marks }: RichTextElementProps & { marks?: Dictionary<RichTextMarkElement> }) => {
+  return (
+    <span>
+      {(content.marks ?? []).reduceRight((wrapped: ReactNode, mark) => {
+        const Mark = marks?.[mark.type] ?? DefaultMarkHandlers[mark.type]
+        return Objects.isNil(Mark) ? wrapped : <Mark mark={mark}>{wrapped}</Mark>
+      }, content.text)}
+    </span>
+  )
 }
 
 const paragraph: RichTextElement = (props) => {
-  return <Typography variant="body1">{props.children}</Typography>
+  return (
+    <Typography
+      variant="body1"
+      sx={{ '&:not(:last-child)': { mb: 1 } }}
+    >
+      {props.children}
+    </Typography>
+  )
 }
 
 const heading: RichTextElement = (props) => {
-  const level = props.content.level || 1
+  const level = props.content.attrs?.level || 1
   return <Typography variant={`h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'}>{props.children}</Typography>
 }
 
 const bulletList: RichTextElement = (props) => {
-  return <List>{props.children}</List>
+  return <List sx={{ listStyleType: 'disc', pl: 4 }}>{props.children}</List>
 }
 
 const orderedList: RichTextElement = (props) => {
-  return <List component="ol">{props.children}</List>
+  return (
+    <List
+      component="ol"
+      sx={{ listStyleType: 'decimal', pl: 4 }}
+    >
+      {props.children}
+    </List>
+  )
 }
 
 const listItem: RichTextElement = (props) => {
-  return <ListItem>{props.children}</ListItem>
+  return <ListItem sx={{ display: 'list-item', py: 0.25, px: 0 }}>{props.children}</ListItem>
 }
 
 const horizontalRule: RichTextElement = () => {
@@ -101,7 +108,7 @@ const blockquote: RichTextElement = (props) => {
 }
 
 const codeBlock: RichTextElement = (props) => {
-  const language = props.content.language || ''
+  const language = props.content.attrs?.language || ''
 
   return (
     <Typography
@@ -121,7 +128,7 @@ const codeBlock: RichTextElement = (props) => {
 }
 
 const img: RichTextElement = (props) => {
-  const { src, alt, title } = props.content
+  const { src, alt, title } = props.content.attrs ?? {}
   return (
     <Box
       component="img"
@@ -139,7 +146,7 @@ const img: RichTextElement = (props) => {
 const mention: RichTextElement = (props) => {
   return (
     <Chip
-      label={props.content.label || props.content.id}
+      label={props.content.attrs?.label || props.content.attrs?.id}
       size="small"
       sx={{ mx: 0.5 }}
     />
@@ -147,15 +154,18 @@ const mention: RichTextElement = (props) => {
 }
 
 const table: RichTextElement = (props) => {
+  const rows = Array.isArray(props.children) ? props.children : [props.children]
+  const firstRow = props.content.content?.[0]
+  const hasHeader = Objects.isPresent(firstRow) && (firstRow.content ?? []).every((cell) => cell.type === 'tableHeader')
+
   return (
     <TableContainer
       component={Paper}
       sx={{ my: 2 }}
     >
       <Table size="small">
-        {Array.isArray(props.children)
-          ? props.children.map((child, index) => (child?.props?.content?.type === 'tableHeader' ? child : <TableBody key={index}>{child}</TableBody>))
-          : props.children}
+        {hasHeader && <TableHead>{rows[0]}</TableHead>}
+        <TableBody>{hasHeader ? rows.slice(1) : rows}</TableBody>
       </Table>
     </TableContainer>
   )
@@ -166,14 +176,17 @@ const tableRow: RichTextElement = (props) => {
 }
 
 const tableCell: RichTextElement = (props) => {
-  return <TableCell align={props.content.alignment || 'left'}>{props.children}</TableCell>
+  return <TableCell align={props.content.attrs?.align ?? 'left'}>{props.children}</TableCell>
 }
 
 const tableHeader: RichTextElement = (props) => {
   return (
-    <TableHead>
-      <TableRow>{props.children}</TableRow>
-    </TableHead>
+    <TableCell
+      variant="head"
+      align={props.content.attrs?.align ?? 'left'}
+    >
+      {props.children}
+    </TableCell>
   )
 }
 

@@ -1,42 +1,44 @@
-import { Abilities, Effects } from '@simulacrum/ruleset'
-import { ActionType } from '@simulacrum/ruleset/ability'
+import { Abilities, Effects, CharacterValues } from '@simulacrum/ruleset'
+import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
-import { CharacterValues } from '@simulacrum/ruleset/character'
 
 export const Dodge = Abilities.defineAbility('common/dodge', {
   name: 'Dodge',
+  description: '',
   effects: [
     Effects.descriptive(
-      '<p>You focus entirely on avoiding attacks. Until the start of your next turn, attack rolls against you have Disadvantage if you can see the attacker, and you make Dexterity saving throws with Advantage.</p><p>You lose these benefits if you have the Incapacitated condition or your Speed is 0.</p>'
+      'You focus entirely on avoiding attacks. Until the start of your next turn, attack rolls against you have Disadvantage if you can see the attacker, and you make Dexterity saving throws with Advantage.\n\nYou lose these benefits if you have the Incapacitated condition or your Speed is 0.'
     ),
   ],
   actions: [
     {
-      action: ActionType.Standard,
+      action: ActionTypes.Action,
     },
   ],
 })
 
 export const Disengage = Abilities.defineAbility('common/disengage', {
   name: 'Disengage',
-  effects: [Effects.descriptive("<p>You move carefully: your movement doesn't provoke Opportunity Attacks for the rest of the current turn.</p>")],
+  description: '',
+  effects: [Effects.descriptive("You move carefully: your movement doesn't provoke Opportunity Attacks for the rest of the current turn.")],
   actions: [
     {
-      action: ActionType.Standard,
+      action: ActionTypes.Action,
     },
   ],
 })
 
 export const Dash = Abilities.defineAbility('common/dash', {
   name: 'Dash',
+  description: '',
   effects: [
     Effects.descriptive(
-      '<p>You gain extra movement for the current turn equal to your Speed, after applying any modifiers. With a Speed of 30 feet, for example, you can move up to 60 feet on your turn.</p>'
+      'You gain extra movement for the current turn equal to your Speed, after applying any modifiers. With a Speed of 30 feet, for example, you can move up to 60 feet on your turn.'
     ),
   ],
   actions: [
     {
-      action: ActionType.Standard,
+      action: ActionTypes.Action,
     },
   ],
 })
@@ -44,16 +46,17 @@ export const Dash = Abilities.defineAbility('common/dash', {
 // TODO need a way to indicate only useable during a rest...
 export const HealingSurge = Abilities.defineAbility('common/healing-surge', {
   name: 'Healing Surge',
+  description: '',
   effects: [
     Effects.descriptive(
-      '<p>When you finish a <strong>Short Rest</strong>, you can spend Hit Point Dice to recover. For each one you spend, roll it and add your Constitution modifier; you regain that many Hit Points.</p><p>You have a number of Hit Point Dice equal to your level, and regain all of them when you finish a Long Rest.</p>'
+      'When you finish a **Short Rest**, you can spend Hit Point Dice to recover. For each one you spend, roll it and add your Constitution modifier; you regain that many Hit Points.\n\nYou have a number of Hit Point Dice equal to your level, and regain all of them when you finish a Long Rest.'
     ),
   ],
   resource: { size: CharacterValues.Level, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
   costs: [{ cost: 1 }],
   actions: [
     {
-      action: ActionType.Standard,
+      action: ActionTypes.Action,
     },
   ],
 })

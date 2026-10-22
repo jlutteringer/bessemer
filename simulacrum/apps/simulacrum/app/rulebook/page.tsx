@@ -1,5 +1,7 @@
+import { RulebookIndex } from '@simulacrum/ui/rulebook/Rulebook'
+
 const RulebookPage = () => {
-  return <div>Page Under Construction</div>
+  return <RulebookIndex />
 }
 
 export default RulebookPage

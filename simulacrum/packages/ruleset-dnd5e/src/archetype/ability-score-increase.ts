@@ -7,7 +7,7 @@ import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-export const AbilityScoreIncrease = Archetypes.defineArchetype('ability-score-increase', { name: 'Ability Score Increase' })
+export const AbilityScoreIncrease = Archetypes.defineArchetype('ability-score-increase', { name: 'Ability Score Increase', description: '' })
 
 export type AbilityScore = {
   name: string
@@ -21,7 +21,7 @@ export type AbilityScore = {
 const defineAbilityScore = (key: string, name: string, characteristic: Characteristic<number>): AbilityScore => {
   const plusTwo = Traits.defineTrait(`ability-score-increase/${key}-plus-two`, {
     name: `${name} +2`,
-    description: `<p>Increase your ${name} score by 2.</p>`,
+    description: `Increase your ${name} score by 2.`,
     archetypes: [AbilityScoreIncrease],
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(2)))],
   })
@@ -29,7 +29,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
   // The +2 is chosen before the +1, so this keeps both from going to the same ability score
   const plusOne = Traits.defineTrait(`ability-score-increase/${key}-plus-one`, {
     name: `${name} +1`,
-    description: `<p>Increase your ${name} score by 1.</p>`,
+    description: `Increase your ${name} score by 1.`,
     archetypes: [AbilityScoreIncrease],
     prerequisites: [Expressions.not(Traits.traitPrerequisite(plusTwo))],
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
@@ -37,7 +37,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
 
   const featPlusOne = Traits.defineTrait(`ability-score-increase/feat/${key}-plus-one`, {
     name: `${name} +1`,
-    description: `<p>Increase your ${name} score by 1.</p>`,
+    description: `Increase your ${name} score by 1.`,
     archetypes: [AbilityScoreIncrease],
     repeatable: true,
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
@@ -70,30 +70,42 @@ export type BackgroundAbilityScores = {
 export const forBackground = (reference: string, abilityScores: [AbilityScore, AbilityScore, AbilityScore]): BackgroundAbilityScores => {
   const prefix = `${reference}/ability-scores`
 
-  const selectPlusTwo = CharacterOptions.selectTraitOption(`${prefix}/select-plus-two`, 'Ability Score +2', {
-    specificOptions: abilityScores.map((it) => it.plusTwo),
+  const selectPlusTwo = CharacterOptions.selectTraitOption(`${prefix}/select-plus-two`, {
+    name: 'Ability Score +2',
+    description: '',
+    filter: {
+      specificOptions: abilityScores.map((it) => it.plusTwo),
+    },
   })
 
-  const selectPlusOne = CharacterOptions.selectTraitOption(`${prefix}/select-plus-one`, 'Ability Score +1', {
-    specificOptions: abilityScores.map((it) => it.plusOne),
+  const selectPlusOne = CharacterOptions.selectTraitOption(`${prefix}/select-plus-one`, {
+    name: 'Ability Score +1',
+    description: '',
+    filter: {
+      specificOptions: abilityScores.map((it) => it.plusOne),
+    },
   })
 
   const [first, second, third] = abilityScores.map((it) => it.name)
   const plusTwoPlusOne = Traits.defineTrait(`${prefix}/plus-two-plus-one`, {
     name: '+2 and +1',
-    description: `<p>Increase one of ${first}, ${second}, or ${third} by 2 and another by 1.</p>`,
+    description: `Increase one of ${first}, ${second}, or ${third} by 2 and another by 1.`,
     archetypes: [AbilityScoreIncrease],
     effects: [Effects.gainCharacterOption(selectPlusTwo), Effects.gainCharacterOption(selectPlusOne)],
   })
 
   const plusOneToAll = Traits.defineTrait(`${prefix}/plus-one-to-all`, {
     name: '+1 to All Three',
-    description: `<p>Increase ${first}, ${second}, and ${third} by 1 each.</p>`,
+    description: `Increase ${first}, ${second}, and ${third} by 1 each.`,
     archetypes: [AbilityScoreIncrease],
     effects: abilityScores.flatMap((it) => it.plusOne.effects),
   })
 
-  const option = CharacterOptions.selectTraitOption(`${prefix}/select`, 'Ability Scores', { specificOptions: [plusTwoPlusOne, plusOneToAll] })
+  const option = CharacterOptions.selectTraitOption(`${prefix}/select`, {
+    name: 'Ability Scores',
+    description: '',
+    filter: { specificOptions: [plusTwoPlusOne, plusOneToAll] },
+  })
 
   return { option, traits: [plusTwoPlusOne, plusOneToAll] }
 }

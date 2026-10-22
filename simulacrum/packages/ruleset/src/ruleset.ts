@@ -6,22 +6,33 @@ import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Effect } from '@simulacrum/ruleset/effect'
 import { Ability } from '@simulacrum/ruleset/ability'
 import { Characteristic, CharacteristicGroup } from '@simulacrum/ruleset/characteristic'
+import { ContentEntity, ContentSection } from '@simulacrum/ruleset/content'
+import { ActionType } from '@simulacrum/ruleset/action-type'
 import { Reference } from '@bessemer/cornerstone/reference'
+import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
+import { CharacterOption } from '@simulacrum/ruleset/character-option'
+
+export type RulesetEntityTypes = {
+  [RulesetEntityType.ActionType]: ActionType
+  [RulesetEntityType.Archetype]: Archetype
+  [RulesetEntityType.Trait]: Trait
+  [RulesetEntityType.Ability]: Ability
+  [RulesetEntityType.Characteristic]: Characteristic<unknown>
+  [RulesetEntityType.CharacteristicGroup]: CharacteristicGroup
+  [RulesetEntityType.CharacterOption]: CharacterOption
+  [RulesetEntityType.ResourcePool]: ResourcePoolDefinition
+  [RulesetEntityType.LoadoutType]: LoadoutType
+  [RulesetEntityType.Content]: ContentEntity
+}
 
 export type RulesetReference = Reference<'Ruleset'>
 export type RulesetExtensionReference = Reference<'RulesetExtension'>
 
 export type AbstractRuleset = {
   name: string
-  creatureCharacteristics: Array<Characteristic<unknown>>
-  playerCharacteristics: Array<Characteristic<unknown>>
-  characteristicGroups: Array<CharacteristicGroup>
-  archetypes: Array<Archetype>
-  traits: Array<Trait>
-  abilities: Array<Ability>
-  resourcePools: Array<ResourcePoolDefinition>
-  loadoutTypes: Array<LoadoutType>
+  entities: Array<RulesetEntity>
   progressionTable: ProgressionTable<Effect>
+  content: Array<ContentSection>
 }
 
 export type Ruleset = { id: RulesetReference } & AbstractRuleset

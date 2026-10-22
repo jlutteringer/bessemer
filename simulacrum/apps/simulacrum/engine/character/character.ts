@@ -1,5 +1,3 @@
-export * from '@simulacrum/ruleset/character'
-import { CharacterValues } from '@simulacrum/ruleset/character'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { Effect } from '@simulacrum/engine/effect'
 import { CharacterChoice, CharacterOptionType, CharacterSelection } from '@simulacrum/engine/character/character-option'
@@ -14,6 +12,8 @@ import { Abilities, Characteristics, Effects, ProgressionTables, ResourcePools, 
 import { Arrays, Assertions, Misc, ObjectPaths, Objects } from '@bessemer/cornerstone'
 import { Ruleset, RulesetConfiguration } from '@simulacrum/engine/ruleset'
 import { UnknownRecord } from 'type-fest'
+import * as Rulesets from '@simulacrum/engine/ruleset'
+import { RulesetEntities, CharacterValues } from '@simulacrum/ruleset'
 
 export type CharacterInitialValues = UnknownRecord
 
@@ -104,13 +104,14 @@ const isSameTraits = (first: ProgressionTable<TraitReference>, second: Progressi
 
 const guessGrantedTraits = (character: CharacterRecord, ruleset: Ruleset): ProgressionTable<TraitReference> => {
   const getGranted = (effects: Array<Effect>): Array<TraitReference> => {
-    return Effects.filter(effects, Effects.GainTrait).flatMap((it) => [it.trait, ...getGranted(Traits.getTrait(it.trait, ruleset).effects)])
+    return Effects.filter(effects, Effects.GainTrait).flatMap((it) => [it.trait, ...getGranted(Traits.getTraitById(it.trait, ruleset).effects)])
   }
 
   const rulesetEffects = ProgressionTables.getEntries(ProgressionTables.capAtLevel(ruleset.progressionTable, character.level))
-  const selectedTraits = ProgressionTables.getEntries(character.selections).flatMap(([level, selection]) =>
-    ruleset.traits.filter((trait) => trait.id === selection.selection).map<[number, Trait]>((trait) => [level, trait])
-  )
+  const selectedTraits = ProgressionTables.getEntries(character.selections).flatMap<[number, Trait]>(([level, selection]) => {
+    const entity = Rulesets.findEntityById(selection.selection, ruleset)
+    return Objects.isPresent(entity) && Rulesets.isEntityType(entity, RulesetEntities.RulesetEntityType.Trait) ? [[level, entity]] : []
+  })
 
   const granted = [
     ...rulesetEffects.flatMap(([level, effect]) => getGranted([effect]).map<[number, TraitReference]>((trait) => [level, trait])),
@@ -155,12 +156,12 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Progre
       choices[level]!.push({ ...choice, selection })
 
       if (Objects.isPresent(selection) && option.type === CharacterOptionType.SelectTrait) {
-        gain(Traits.getTrait(selection.selection as TraitReference, ruleset), level, unmatchedSelections)
+        gain(Traits.getTraitById(selection.selection as TraitReference, ruleset), level, unmatchedSelections)
       }
     })
 
     Effects.filter(effects, Effects.GainTrait).forEach(({ trait }) => {
-      waitingTraits.push(Traits.getTrait(trait, ruleset))
+      waitingTraits.push(Traits.getTraitById(trait, ruleset))
       grantWaitingTraits(level, unmatchedSelections)
     })
   }
@@ -205,7 +206,7 @@ const buildLazyExpressionContext = (
     ...Expressions.buildVariable(CharacterValues.Traits, traits),
   }
 
-  ruleset.playerCharacteristics.forEach((characteristic) => {
+  Characteristics.getCharacteristics(ruleset).forEach((characteristic) => {
     Object.defineProperty(variables, characteristic.variable.name, {
       enumerable: true,
       get: () => {
@@ -299,7 +300,7 @@ const buildInitialCharacterState = (character: CharacterRecord, choices: Progres
 }
 
 const buildInitialCharacteristics = (character: CharacterRecord, ruleset: Ruleset): Record<string, CharacteristicValue<unknown>> => {
-  const characterAttributes = Object.values(ruleset.playerCharacteristics)
+  const characterAttributes = Object.values(Characteristics.getCharacteristics(ruleset))
 
   const characteristicValues = characterAttributes.map((initialCharacteristic) => {
     // TODO we don't support non-numeric characteristics... not sure if we even should...
@@ -317,7 +318,7 @@ const evaluateCharacteristics = (
   ruleset: Ruleset
 ): Record<string, CharacteristicValue<unknown>> => {
   const effects = getAllEffects(character, ruleset)
-  const characterAttributes = Object.values(ruleset.playerCharacteristics)
+  const characterAttributes = Object.values(Characteristics.getCharacteristics(ruleset))
 
   const characteristicValues = characterAttributes.map((initialCharacteristic) => {
     // TODO we don't support non-numeric characteristics... not sure if we even should...
@@ -334,7 +335,7 @@ const evaluateCharacterAbilities = (character: CharacterState, evaluate: Evaluat
   const gainAbilityEffects = Effects.filter(effects, Effects.GainAbility)
   const modifyAbilityEffects = Effects.filter(effects, Effects.ModifyAbility)
   const abilities = Arrays.dedupe(gainAbilityEffects.map((it) => it.ability)).filter((it) =>
-    Abilities.getAbility(it, ruleset).prerequisites.every(evaluate)
+    Abilities.getAbilityById(it, ruleset).prerequisites.every(evaluate)
   )
 
   return abilities.map((ability) => {
@@ -367,7 +368,7 @@ const evaluateResourcePools = (
 }
 
 export const buildExpressionContext = (character: CharacterState, ruleset: Ruleset): ExpressionContext => {
-  const characterAttributes = ruleset.playerCharacteristics
+  const characterAttributes = Characteristics.getCharacteristics(ruleset)
   const attributeVariables = characterAttributes.map((it) => {
     // FUTURE excessive casting - work on api
     const characteristic = ObjectPaths.getValue(it.path as any, character.characteristics) as any as CharacteristicValue<unknown>
