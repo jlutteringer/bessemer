@@ -2,7 +2,8 @@
 
 import * as React from 'react'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Box, Card, CardActionArea, CardContent, Grid, Link, List, ListItem, Typography } from '@mui/material'
+import { Box, Card, CardActionArea, CardContent, Drawer, Fab, Grid, Link, List, ListItem, Theme, Typography, useMediaQuery } from '@mui/material'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 import { Arrays, ErrorEvents, Objects } from '@bessemer/cornerstone'
 import { ContentSection } from '@simulacrum/ruleset/content'
 import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
@@ -177,17 +178,13 @@ export const RulebookReader = ({ rulesetId }: { rulesetId: RulesetReference }) =
   return (
     <RulesetContext.Provider value={ruleset}>
       <StandardPageHeader title={ruleset.name} />
-      <Grid
-        container
-        spacing={4}
-      >
-        <Grid size={{ xs: 12, md: 3 }}>
-          <RulebookSidebar
-            sections={ruleset.content}
-            tree={tree}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, md: 9 }}>
+      <Box sx={{ display: 'flex', gap: 4 }}>
+        <RulebookNavigation
+          sections={ruleset.content}
+          tree={tree}
+        />
+        {/* Leaves room at the bottom on small screens for the floating Contents button */}
+        <Box sx={{ flex: 1, minWidth: 0, pb: { xs: 10, md: 0 } }}>
           {tree.map((node) => (
             <ContentSectionView
               key={node.section.id}
@@ -195,16 +192,28 @@ export const RulebookReader = ({ rulesetId }: { rulesetId: RulesetReference }) =
               depth={0}
             />
           ))}
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </RulesetContext.Provider>
   )
 }
 
-const RulebookSidebar = ({ sections, tree }: { sections: Array<ContentSection>; tree: Array<ContentNode> }) => {
+// A sticky sidebar on larger screens; on small screens, a floating Contents button that opens the same navigation in a drawer
+const RulebookNavigation = ({ sections, tree }: { sections: Array<ContentSection>; tree: Array<ContentNode> }) => {
   const sectionIds = useMemo(() => flattenContentTree(tree), [tree])
   const { activeId, select } = useActiveSection(sectionIds)
   const tableOfContentsRef = useRef<HTMLDivElement>(null)
+  // Matches on the server, which renders the sidebar; small screens hide it with CSS until this updates
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { defaultMatches: true })
+  const [open, setOpen] = useState(false)
+
+  const navigate = useCallback(
+    (id: RulesetEntityReference) => {
+      select(id)
+      setOpen(false)
+    },
+    [select]
+  )
 
   useLayoutEffect(() => {
     const container = tableOfContentsRef.current
@@ -219,11 +228,11 @@ const RulebookSidebar = ({ sections, tree }: { sections: Array<ContentSection>; 
     container.scrollTop += offset
   }, [activeId])
 
-  return (
-    <Box sx={{ position: { md: 'sticky' }, top: 24, maxHeight: { md: 'calc(100vh - 48px)' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
+  const navigation = (
+    <>
       <RulebookSearch
         sections={sections}
-        onSelect={select}
+        onSelect={navigate}
       />
       <Box
         ref={tableOfContentsRef}
@@ -232,10 +241,53 @@ const RulebookSidebar = ({ sections, tree }: { sections: Array<ContentSection>; 
         <TableOfContents
           nodes={tree}
           activeId={activeId}
-          onSelect={select}
+          onSelect={navigate}
         />
       </Box>
-    </Box>
+    </>
+  )
+
+  return (
+    <>
+      <Box
+        component="nav"
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+          flexDirection: 'column',
+          gap: 2,
+          width: '25%',
+          flexShrink: 0,
+          alignSelf: 'flex-start',
+          position: 'sticky',
+          top: 24,
+          maxHeight: 'calc(100vh - 48px)',
+        }}
+      >
+        {isDesktop && navigation}
+      </Box>
+      {!isDesktop && (
+        <>
+          <Fab
+            color="primary"
+            aria-label="Contents"
+            onClick={() => setOpen(true)}
+            sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          >
+            <MenuBookIcon />
+          </Fab>
+          <Drawer
+            anchor="left"
+            open={open}
+            onClose={() => setOpen(false)}
+            keepMounted
+            disableScrollLock
+            slotProps={{ paper: { sx: { width: 'min(320px, 85vw)', p: 2, display: 'flex', flexDirection: 'column', gap: 2 } } }}
+          >
+            {navigation}
+          </Drawer>
+        </>
+      )}
+    </>
   )
 }
 

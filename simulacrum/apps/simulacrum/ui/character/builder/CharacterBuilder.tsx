@@ -43,7 +43,7 @@ import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
 import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
-import { RulesetEntityTooltip } from '@simulacrum/ui/components/RulesetEntityTooltip'
+import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
@@ -271,7 +271,7 @@ const CharacteristicInfo = ({ characteristic }: { characteristic: Characteristic
 
   return (
     <InputAdornment position="end">
-      <RulesetEntityTooltip
+      <RulesetEntityPopover
         entity={characteristic}
         trigger={
           <IconButton

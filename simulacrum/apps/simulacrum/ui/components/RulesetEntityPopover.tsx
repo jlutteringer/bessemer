@@ -2,27 +2,23 @@
 
 import * as React from 'react'
 import { ReactNode } from 'react'
-import { Box, Link, Typography } from '@mui/material'
+import { Box, Link } from '@mui/material'
 import { Objects } from '@bessemer/cornerstone'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
-import { StackedTooltip } from '@simulacrum/ui/components/StackedTooltip'
+import { StackedPopover } from '@simulacrum/ui/components/StackedPopover'
 import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
 import { Rulesets } from '@simulacrum/engine'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 
-export const RulesetEntityTooltip = ({ entity, trigger }: { entity: RulesetEntity; trigger: ReactNode }) => {
+export const RulesetEntityPopover = ({ entity, trigger }: { entity: RulesetEntity; trigger: ReactNode }) => {
   const ruleset = useRuleset()
   const section = Rulesets.findContentSectionById(entity.id, ruleset)
 
   return (
-    <StackedTooltip trigger={trigger}>
-      <Typography
-        variant="subtitle1"
-        sx={{ mb: 1 }}
-      >
-        {entity.name}
-      </Typography>
-
+    <StackedPopover
+      trigger={trigger}
+      title={entity.name}
+    >
       <SimulacrumRichText text={entity.description} />
 
       {Objects.isPresent(section) && (
@@ -35,6 +31,6 @@ export const RulesetEntityTooltip = ({ entity, trigger }: { entity: RulesetEntit
           </Link>
         </Box>
       )}
-    </StackedTooltip>
+    </StackedPopover>
   )
 }

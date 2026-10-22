@@ -12,7 +12,7 @@ import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
 import { RulesetEntities } from '@simulacrum/ruleset'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Rulesets } from '@simulacrum/engine'
-import { RulesetEntityTooltip } from '@simulacrum/ui/components/RulesetEntityTooltip'
+import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 
 export const SimulacrumRichText = ({ text }: { text: RichTextJson }) => {
   if (Arrays.isEmpty(text.content ?? [])) {
@@ -56,7 +56,7 @@ const RuleLinkMark: RichTextMarkElement = ({ mark, children }) => {
   }
 
   return (
-    <RulesetEntityTooltip
+    <RulesetEntityPopover
       entity={entity}
       trigger={<RuleLinkTrigger>{children}</RuleLinkTrigger>}
     />
