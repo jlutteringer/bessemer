@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { ReactNode, useContext } from 'react'
+import { Box } from '@mui/material'
 import { Expression, Expressions, NumericExpressions, StringExpressions, ArrayExpressions } from '@bessemer/cornerstone/expression'
 import { ExpressionMapper } from '@bessemer/cornerstone/expression/expression-mapper'
 import {
@@ -36,16 +37,28 @@ export type ExpressionRenderContext = {
 export const ExpressionFormat = ({ expression }: { expression: Expression<unknown> }) => {
   const ruleset = useRuleset()
   const characterContext = useContext(CharacterSheetContext)
-  const formula = ExpressionRenderer.map(expression, { ruleset })
   const value = Objects.isNil(characterContext) ? null : Expressions.evaluate(expression, characterContext.expressionContext)
 
-  if (!Maths.isNumber(value) || isValue(expression)) {
-    return <>{formula}</>
+  if (isValue(expression)) {
+    return <>{ExpressionRenderer.map(expression, { ruleset })}</>
+  }
+
+  const formula = (
+    <Box
+      component="span"
+      sx={{ bgcolor: 'action.hover', borderRadius: 1, px: 0.75, py: 0.25 }}
+    >
+      {ExpressionRenderer.map(expression, { ruleset })}
+    </Box>
+  )
+
+  if (!Maths.isNumber(value)) {
+    return formula
   }
 
   return (
     <>
-      {value} ({formula})
+      {value} · {formula}
     </>
   )
 }

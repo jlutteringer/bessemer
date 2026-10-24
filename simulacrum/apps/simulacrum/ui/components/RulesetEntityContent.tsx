@@ -9,10 +9,14 @@ import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-en
 import { Ability } from '@simulacrum/engine/ability'
 import { Trait } from '@simulacrum/engine/trait'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
-import { Effects, Rulesets } from '@simulacrum/engine'
+import { Characteristics, Effects, Rulesets } from '@simulacrum/engine'
+import { Modifier } from '@simulacrum/engine/attribute'
+import { EffectSourceType } from '@simulacrum/engine/effect'
+import { PatchType } from '@bessemer/cornerstone/patch'
 import { AbilityAction } from '@simulacrum/ruleset/ability'
-import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
-import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
+import { EvaluateExpression, Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
+import { RuleLinkTrigger, SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
+import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 import { ExpressionFormat } from '@simulacrum/ui/components/ExpressionFormat'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
@@ -43,6 +47,12 @@ export const RulesetEntityContent = ({ entity }: { entity: RulesetEntity }) => {
 }
 
 const CharacteristicContent = ({ characteristic }: { characteristic: Characteristic }) => {
+  const characterContext = useContext(CharacterSheetContext)
+  const modifiers = Objects.isNil(characterContext)
+    ? []
+    : Characteristics.getCharacteristicValue(characterContext.character, characteristic).activeModifiers
+  const hasValues = Objects.isPresent(characteristic.baseValue) || !Arrays.isEmpty(modifiers)
+
   return (
     <>
       {Objects.isPresent(characteristic.baseValue) && (
@@ -51,12 +61,70 @@ const CharacteristicContent = ({ characteristic }: { characteristic: Characteris
           <Typography variant="body2">
             <ExpressionFormat expression={characteristic.baseValue} />
           </Typography>
-          {Objects.isPresent(characteristic.description) && <Divider sx={{ my: 1 }} />}
         </>
       )}
+      {!Arrays.isEmpty(modifiers) && (
+        <>
+          <Typography
+            variant="caption"
+            component="p"
+            sx={{ mt: 0.5 }}
+          >
+            Modifiers
+          </Typography>
+          {modifiers.map((it, index) => (
+            <Typography
+              key={index}
+              variant="body2"
+            >
+              <CharacteristicModifier modifier={it.modifier} />
+            </Typography>
+          ))}
+        </>
+      )}
+      {hasValues && Objects.isPresent(characteristic.description) && <Divider sx={{ my: 1 }} />}
       {Objects.isPresent(characteristic.description) && <SimulacrumRichText text={characteristic.description} />}
     </>
   )
+}
+
+const CharacteristicModifier = ({ modifier }: { modifier: Modifier<number> }) => {
+  const ruleset = useRuleset()
+  const patch = modifier.value
+  if (patch.type === PatchType.Patch) {
+    return null
+  }
+
+  const source =
+    modifier.source?.type === EffectSourceType.Trait
+      ? Rulesets.findEntityById(modifier.source.trait, ruleset)
+      : modifier.source?.type === EffectSourceType.Ability
+      ? Rulesets.findEntityById(modifier.source.ability, ruleset)
+      : null
+  const operator = patch.type === PatchType.Set ? '= ' : ModifierOperators[patch.reducer.expressionKey] ?? ''
+
+  return (
+    <>
+      {Objects.isPresent(source) && (
+        <>
+          <RulesetEntityPopover
+            entity={source}
+            trigger={<RuleLinkTrigger>{source.name}</RuleLinkTrigger>}
+          />
+          {': '}
+        </>
+      )}
+      {operator}
+      <ExpressionFormat expression={patch.value} />
+    </>
+  )
+}
+
+const ModifierOperators: Record<string, string> = {
+  [NumericExpressions.SumExpression.expressionKey]: '+',
+  [NumericExpressions.MultiplyExpression.expressionKey]: '×',
+  [NumericExpressions.MaxExpression.expressionKey]: 'at least ',
+  [NumericExpressions.MinExpression.expressionKey]: 'at most ',
 }
 
 const TraitContent = ({ trait }: { trait: Trait }) => {
@@ -92,7 +160,8 @@ const AbilityContent = ({ ability: rulesetAbility }: { ability: Ability }) => {
   const characterContext = useContext(CharacterSheetContext)
   const ability = characterContext?.character.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
   const evaluate = Objects.isNil(characterContext) ? null : Expressions.evaluator(characterContext.expressionContext)
-  const resourceLabels = Objects.isNil(characterContext) || Objects.isNil(evaluate) ? [] : getAbilityResourceLabels(ability, characterContext.character, evaluate, ruleset)
+  const resourceLabels =
+    Objects.isNil(characterContext) || Objects.isNil(evaluate) ? [] : getAbilityResourceLabels(ability, characterContext.character, evaluate, ruleset)
 
   return (
     <>

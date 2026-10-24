@@ -3,7 +3,7 @@ import { CharacterOption, CharacterOptionValue, CharacterSelection } from '@simu
 import { Abilities, Tags, Characteristics, Effects, ProgressionTables, Traits, CharacterOptions, Characters } from '@simulacrum/engine'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Characteristic, CharacteristicGroup, CharacteristicValue } from '@simulacrum/engine/characteristic'
+import { Characteristic, CharacteristicGroup } from '@simulacrum/engine/characteristic'
 import { Ruleset, RulesetConfiguration } from '@simulacrum/engine/ruleset'
 import { Ability } from '@simulacrum/engine/ability'
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
@@ -189,15 +189,6 @@ export const getCharacterOptionChoices = (sheet: CharacterSheet): Array<Characte
     selection: CharacterOptions.getSelectedValue(choice),
     values: choice.values,
   }))
-}
-
-/**
- * A characteristic's value once the character's effects are applied, e.g. an ability score after a Background's increase.
- */
-export const getCharacteristicValue = (sheet: CharacterSheet, characteristic: Characteristic): number => {
-  // FUTURE excessive casting - see Characters.buildExpressionContext
-  const value = ObjectPaths.getValue(characteristic.path as any, sheet.characteristics) as any as CharacteristicValue
-  return value.value
 }
 
 /**

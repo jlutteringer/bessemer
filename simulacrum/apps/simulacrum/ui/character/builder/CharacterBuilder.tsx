@@ -34,7 +34,7 @@ import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Abilities, Characters, Effects, Loadout, Rulesets } from '@simulacrum/engine'
+import { Abilities, Characteristics, Characters, Effects, Loadout, Rulesets } from '@simulacrum/engine'
 import { Ability } from '@simulacrum/engine/ability'
 import { CharacterOptionValue } from '@simulacrum/engine/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
@@ -45,14 +45,12 @@ import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 import { RulesetEntityContent, TraitPassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
-import { getEntityTexts } from '@simulacrum/ui/components/ruleset-entity-model'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
   CharacterOptionChoice,
   getCharacteristicSections,
-  getCharacteristicValue,
   getCharacterOptionChoices,
   getGrantedTraits,
   getInitialValueFieldName,
@@ -273,15 +271,7 @@ const RulesetSelection = ({
   )
 }
 
-/**
- * A number input that can be left blank while typing. A blank field is stored as 0, and shows 0 once the field loses focus.
- */
-// An info icon at the end of an entity's field, opening its description; nothing for an entity without one
 const RulesetEntityInfo = ({ entity }: { entity: RulesetEntity }) => {
-  if (getEntityTexts(entity).every((it) => Arrays.isEmpty(it.content ?? []))) {
-    return null
-  }
-
   return (
     <InputAdornment position="end">
       <RulesetEntityPopover
@@ -301,6 +291,9 @@ const RulesetEntityInfo = ({ entity }: { entity: RulesetEntity }) => {
   )
 }
 
+/**
+ * A number input that can be left blank while typing. A blank field is stored as 0, and shows 0 once the field loses focus.
+ */
 const NumberField = ({
   value,
   onChange,
@@ -339,7 +332,10 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
 
   const characterRecord = useWatch({ control }) as CharacterRecord
   const character = useMemo(() => Characters.buildCharacterDefinition(characterRecord, ruleset), [characterRecord, ruleset])
-  const characterContext = useMemo(() => ({ character, expressionContext: Characters.buildExpressionContext(character, ruleset) }), [character, ruleset])
+  const characterContext = useMemo(
+    () => ({ character, expressionContext: Characters.buildExpressionContext(character, ruleset) }),
+    [character, ruleset]
+  )
   const optionChoices = useMemo(() => getCharacterOptionChoices(character), [character])
   // A new character has nothing saved yet, so it's always unsaved
   const hasUnsavedChanges = characterId === null || formState.isDirty
@@ -459,7 +455,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                           control={control}
                           render={({ field, fieldState }) => {
                             // Show the score after increases from traits (e.g. a Background), when they change it
-                            const total = getCharacteristicValue(character, characteristic)
+                            const total = Characteristics.getCharacteristicValue(character, characteristic).value
                             const increase = typeof field.value === 'number' ? total - field.value : 0
 
                             return (
@@ -483,7 +479,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                       ) : (
                         <TextField
                           label={characteristic.name}
-                          value={getCharacteristicValue(character, characteristic)}
+                          value={Characteristics.getCharacteristicValue(character, characteristic).value}
                           fullWidth
                           slotProps={{ input: { readOnly: true, endAdornment: <RulesetEntityInfo entity={characteristic} /> } }}
                         />

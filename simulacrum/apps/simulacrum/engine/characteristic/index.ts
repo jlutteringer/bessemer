@@ -6,7 +6,7 @@ import { RulesetEntities } from '@simulacrum/ruleset'
 import { Attribute, AttributeValue, Modifier } from '@simulacrum/engine/attribute'
 import { Attributes, Effects } from '@simulacrum/engine'
 import { Effect } from '@simulacrum/engine/effect'
-import { CharacterInitialValues } from '@simulacrum/engine/character/character'
+import { CharacterInitialValues, CharacterSheet } from '@simulacrum/engine/character/character'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
@@ -53,10 +53,9 @@ export const evaluateCharacteristic = (
 ): CharacteristicValue => {
   const attribute = buildAttribute(characteristic, initialValues)
 
-  // TODO need to set sources or something... gotta figure that one out!
   const modifiers = Effects.filter(effects, Effects.ModifyCharacteristic)
     .filter((it) => it.characteristic === characteristic.id)
-    .map((it) => it.modifier) as Array<Modifier<number>>
+    .map((it) => (Objects.isPresent(it.source) ? { ...it.modifier, source: it.source } : it.modifier)) as Array<Modifier<number>>
 
   const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, evaluate)
 
@@ -65,4 +64,9 @@ export const evaluateCharacteristic = (
     characteristic: characteristic.id,
     ...attributeValue,
   }
+}
+
+export const getCharacteristicValue = (character: CharacterSheet, characteristic: Characteristic): CharacteristicValue => {
+  // FUTURE excessive casting - see Characters.buildExpressionContext
+  return ObjectPaths.getValue(characteristic.path as any, character.characteristics) as any as CharacteristicValue
 }
