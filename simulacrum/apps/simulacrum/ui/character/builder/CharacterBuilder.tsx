@@ -337,9 +337,10 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
     mode: 'onChange',
   })
 
-  const character = useWatch({ control }) as CharacterRecord
-  const sheet = useMemo(() => Characters.buildCharacterDefinition(character, ruleset), [character, ruleset])
-  const optionChoices = useMemo(() => getCharacterOptionChoices(sheet), [sheet])
+  const characterRecord = useWatch({ control }) as CharacterRecord
+  const character = useMemo(() => Characters.buildCharacterDefinition(characterRecord, ruleset), [characterRecord, ruleset])
+  const characterContext = useMemo(() => ({ character, expressionContext: Characters.buildExpressionContext(character, ruleset) }), [character, ruleset])
+  const optionChoices = useMemo(() => getCharacterOptionChoices(character), [character])
   // A new character has nothing saved yet, so it's always unsaved
   const hasUnsavedChanges = characterId === null || formState.isDirty
 
@@ -362,10 +363,10 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
   })
 
   return (
-    <CharacterSheetContext.Provider value={sheet}>
+    <CharacterSheetContext.Provider value={characterContext}>
       <Box>
         <StandardPageHeader
-          title={character.name.trim() || 'New Character'}
+          title={characterRecord.name.trim() || 'New Character'}
           content={
             <Stack
               direction="row"
@@ -422,7 +423,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                     select
                     label="Level"
                     fullWidth
-                    value={character.level}
+                    value={characterRecord.level}
                     onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), ruleset))}
                   >
                     {Arrays.range([1, MaxLevel]).map((level) => (
@@ -458,7 +459,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                           control={control}
                           render={({ field, fieldState }) => {
                             // Show the score after increases from traits (e.g. a Background), when they change it
-                            const total = getCharacteristicValue(sheet, characteristic)
+                            const total = getCharacteristicValue(character, characteristic)
                             const increase = typeof field.value === 'number' ? total - field.value : 0
 
                             return (
@@ -482,7 +483,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                       ) : (
                         <TextField
                           label={characteristic.name}
-                          value={getCharacteristicValue(sheet, characteristic)}
+                          value={getCharacteristicValue(character, characteristic)}
                           fullWidth
                           slotProps={{ input: { readOnly: true, endAdornment: <RulesetEntityInfo entity={characteristic} /> } }}
                         />
@@ -502,11 +503,11 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
               Traits
             </Typography>
             <Stack spacing={3}>
-              {Arrays.range([1, character.level]).map((level) => (
+              {Arrays.range([1, characterRecord.level]).map((level) => (
                 <LevelTraits
                   key={level}
                   level={level}
-                  heldTraits={sheet.traits}
+                  heldTraits={character.traits}
                   choices={optionChoices.filter((it) => it.level === level)}
                   onSelect={(choice, value) => applyCharacter(selectValue(getValues(), choice, value, ruleset))}
                   onSelectMany={(choices, values) => applyCharacter(selectValuesForChoices(getValues(), choices, values, ruleset))}
@@ -516,7 +517,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
           </Box>
 
           <AbilitiesSection
-            sheet={sheet}
+            character={character}
             onSelect={(loadoutType, abilities) => applyCharacter(selectLoadoutAbilities(getValues(), loadoutType, abilities, ruleset))}
           />
         </Stack>
@@ -854,16 +855,16 @@ const AbilityCards = ({ abilities }: { abilities: Array<Ability> }) => {
 }
 
 const AbilitiesSection = ({
-  sheet,
+  character,
   onSelect,
 }: {
-  sheet: CharacterSheet
+  character: CharacterSheet
   onSelect: (loadoutType: LoadoutTypeReference, abilities: Array<Ability>) => void
 }) => {
   const ruleset = useRuleset()
-  const loadoutTypes = Arrays.dedupe(sheet.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutTypeById(it, ruleset))
-  const alwaysAvailable = sheet.abilities.filter((it) => Objects.isNil(it.loadout)).map((it) => it.ability)
-  const passiveTraits = getPassiveTraits(sheet, ruleset)
+  const loadoutTypes = Arrays.dedupe(character.loadout.map((it) => it.type)).map((it) => Loadout.getLoadoutTypeById(it, ruleset))
+  const alwaysAvailable = character.abilities.filter((it) => Objects.isNil(it.loadout)).map((it) => it.ability)
+  const passiveTraits = getPassiveTraits(character, ruleset)
 
   if (Arrays.isEmpty(loadoutTypes) && Arrays.isEmpty(alwaysAvailable) && Arrays.isEmpty(passiveTraits)) {
     return null
@@ -891,9 +892,9 @@ const AbilitiesSection = ({
             </CardGrid>
           )}
           {loadoutTypes.map((loadoutType) => {
-            const slotCount = sheet.loadout.filter((it) => it.type === loadoutType.id).length
-            const options = getLoadoutAbilities(sheet, loadoutType.id)
-            const selected = sheet.loadout.flatMap((it) =>
+            const slotCount = character.loadout.filter((it) => it.type === loadoutType.id).length
+            const options = getLoadoutAbilities(character, loadoutType.id)
+            const selected = character.loadout.flatMap((it) =>
               it.type === loadoutType.id && Objects.isPresent(it.ability) ? [Abilities.getAbilityById(it.ability, ruleset)] : []
             )
 

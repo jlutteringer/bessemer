@@ -2,7 +2,8 @@ import { Abilities, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
-import { Stamina, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
+import { Stamina } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
+import { StaminaCost } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
 export const KhydralSensitivity = Traits.defineTrait('khydral/sensitivity', {
   name: 'Khydral Sensitivity',

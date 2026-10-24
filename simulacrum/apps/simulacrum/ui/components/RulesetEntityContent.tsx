@@ -8,25 +8,24 @@ import { Arrays, Objects } from '@bessemer/cornerstone'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { Ability } from '@simulacrum/engine/ability'
 import { Trait } from '@simulacrum/engine/trait'
-import { Characters, Effects, Rulesets } from '@simulacrum/engine'
+import { Characteristic } from '@simulacrum/ruleset/characteristic'
+import { Effects, Rulesets } from '@simulacrum/engine'
 import { AbilityAction } from '@simulacrum/ruleset/ability'
 import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
 import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
+import { ExpressionFormat } from '@simulacrum/ui/components/ExpressionFormat'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import {
   getAbilityResourceLabels,
   getActionTypeLabel,
-  getPassiveEffects,
   getDurationLabel,
+  getPassiveEffects,
   getRangeLabel,
   getTargetLabel,
   hasDescribedActions,
 } from '@simulacrum/ui/components/ruleset-entity-model'
 
-/**
- * The body of a ruleset entity wherever it's shown: a builder card, a popover or the rulebook. The surrounding frame shows its name.
- */
 export const RulesetEntityContent = ({ entity }: { entity: RulesetEntity }) => {
   if (Rulesets.isEntityType(entity, RulesetEntityType.Trait)) {
     return <TraitContent trait={entity} />
@@ -36,7 +35,28 @@ export const RulesetEntityContent = ({ entity }: { entity: RulesetEntity }) => {
     return <AbilityContent ability={entity} />
   }
 
+  if (Rulesets.isEntityType(entity, RulesetEntityType.Characteristic)) {
+    return <CharacteristicContent characteristic={entity} />
+  }
+
   return Objects.isPresent(entity.description) ? <SimulacrumRichText text={entity.description} /> : null
+}
+
+const CharacteristicContent = ({ characteristic }: { characteristic: Characteristic }) => {
+  return (
+    <>
+      {Objects.isPresent(characteristic.baseValue) && (
+        <>
+          <Typography variant="caption">Base Value</Typography>
+          <Typography variant="body2">
+            <ExpressionFormat expression={characteristic.baseValue} />
+          </Typography>
+          {Objects.isPresent(characteristic.description) && <Divider sx={{ my: 1 }} />}
+        </>
+      )}
+      {Objects.isPresent(characteristic.description) && <SimulacrumRichText text={characteristic.description} />}
+    </>
+  )
 }
 
 const TraitContent = ({ trait }: { trait: Trait }) => {
@@ -69,10 +89,10 @@ export const TraitPassiveEffects = ({ trait }: { trait: Trait }) => {
 
 const AbilityContent = ({ ability: rulesetAbility }: { ability: Ability }) => {
   const ruleset = useRuleset()
-  const sheet = useContext(CharacterSheetContext)
-  const ability = sheet?.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
-  const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, ruleset)
-  const evaluate = Objects.isNil(sheet) ? null : Expressions.evaluator(Characters.buildExpressionContext(sheet, ruleset))
+  const characterContext = useContext(CharacterSheetContext)
+  const ability = characterContext?.character.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
+  const evaluate = Objects.isNil(characterContext) ? null : Expressions.evaluator(characterContext.expressionContext)
+  const resourceLabels = Objects.isNil(characterContext) || Objects.isNil(evaluate) ? [] : getAbilityResourceLabels(ability, characterContext.character, evaluate, ruleset)
 
   return (
     <>
@@ -133,6 +153,7 @@ const AbilityActions = ({ ability, evaluate }: { ability: Ability; evaluate: Eva
 
 const ActionDetails = ({ action, evaluate }: { action: AbilityAction; evaluate: EvaluateExpression | null }) => {
   const ruleset = useRuleset()
+  const durationLabel = getDurationLabel(action.duration, evaluate)
 
   return (
     <Stack
@@ -156,7 +177,7 @@ const ActionDetails = ({ action, evaluate }: { action: AbilityAction; evaluate: 
           </ActionDetail>
         )
       })}
-      <ActionDetail icon={HourglassBottom}>{getDurationLabel(action.duration, evaluate)}</ActionDetail>
+      {Objects.isPresent(durationLabel) && <ActionDetail icon={HourglassBottom}>{durationLabel}</ActionDetail>}
     </Stack>
   )
 }

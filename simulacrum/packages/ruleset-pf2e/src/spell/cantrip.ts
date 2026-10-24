@@ -1,6 +1,5 @@
 import { Abilities } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
-import { DurationType } from '@simulacrum/ruleset/duration'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
 import { Ally, Arcane, Cantrip, Divine, Enemy, Occult, Primal, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { CantripLoadout } from '@simulacrum/ruleset-pf2e/loadout'
@@ -82,9 +81,10 @@ export const Daze = Abilities.defineAbility('spell/daze', {
     {
       name: 'Daze',
       description:
-        "**Range** 60 feet\n\n**Target** 1 creature\n\n**Defense** Will\n\n**Duration** 1 round\n\nYou push into the target's mind and daze it with a mental jolt. The jolt deals 1d6 mental damage, with a basic [Will save](characteristic:will). If the target critically fails the save, it is also [stunned 1](content:conditions/stunned).\n\n**Heightened (+2)** The damage increases by 1d6.",
+        "**Defense** Will\n\nYou push into the target's mind and daze it with a mental jolt. The jolt deals 1d6 mental damage, with a basic [Will save](characteristic:will). If the target critically fails the save, it is also [stunned 1](content:conditions/stunned).\n\n**Heightened (+2)** The damage increases by 1d6.",
       action: ActionTypes.TwoActions,
       targeting: { target: { range: 60, count: 1 } },
+      duration: { rounds: 1 },
     },
   ],
 })
@@ -224,7 +224,7 @@ export const ForbiddingWard = Abilities.defineAbility('spell/forbidding-ward', {
         first: { range: 30, count: 1, filter: { tags: [Ally] } },
         second: { range: 30, count: 1, filter: { tags: [Enemy] } },
       },
-      duration: { type: DurationType.Sustained, rounds: 10 },
+      duration: { rounds: 10 },
     },
   ],
 })

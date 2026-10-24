@@ -313,7 +313,7 @@ export const CharacterStaminaPool = Content.defineSection('characters/stamina-po
   parent: AnatomyOfACharacter,
   content: {
     name: 'Stamina Pool',
-    description: `At first level, characters start with a base [stamina pool](characteristic:stamina-pool) value derived from their [presence rating](characteristic:presence). As a character gains levels, it automatically gains additional points added to its stamina pool, also based on your presence rating. There are also some effects which modify the stamina pool, changing it from the base values described previously.`,
+    description: `A character's [stamina pool](characteristic:stamina-pool) is 24 plus four times their [presence rating](characteristic:presence). There are also some effects which modify the stamina pool, changing it from the base values described previously.`,
   },
 })
 
@@ -416,22 +416,22 @@ export const StandardProgression = Content.defineSection('characters/standard-pr
 | 2 | +2 | 20 | 24 + (PRES * 4) |  |  | 1 |  |
 | 3 | +2 | 25 | 24 + (PRES * 4) |  |  | 2 |  |
 | 4 | +2 | 30 | 24 + (PRES * 4) |  |  | 3 |  |
-| 5 | +2 | 35 |  |  |  | 3 |  |
-| 6 |  | 40 |  |  |  | 5 |  |
-| 7 |  |  |  |  |  | 6 |  |
-| 8 |  |  |  |  |  | 7 |  |
-| 9 |  |  |  |  |  | 8 |  |
-| 10 |  |  |  |  |  | 9 |  |
-| 11 |  |  |  |  |  | 10 |  |
-| 12 |  |  |  |  |  | 11 |  |
-| 13 |  |  |  |  |  | 12 |  |
-| 14 |  |  |  |  |  | 13 |  |
-| 15 |  |  |  |  |  | 14 |  |
-| 16 |  |  |  |  |  | 15 |  |
-| 17 |  |  |  |  |  | 16 |  |
-| 18 |  |  |  |  |  | 17 |  |
-| 19 |  |  |  |  |  | 18 |  |
-| 20 |  |  |  |  |  | 19 |  |`,
+| 5 | +2 | 35 | 24 + (PRES * 4) |  |  | 3 |  |
+| 6 |  | 40 | 24 + (PRES * 4) |  |  | 5 |  |
+| 7 |  |  | 24 + (PRES * 4) |  |  | 6 |  |
+| 8 |  |  | 24 + (PRES * 4) |  |  | 7 |  |
+| 9 |  |  | 24 + (PRES * 4) |  |  | 8 |  |
+| 10 |  |  | 24 + (PRES * 4) |  |  | 9 |  |
+| 11 |  |  | 24 + (PRES * 4) |  |  | 10 |  |
+| 12 |  |  | 24 + (PRES * 4) |  |  | 11 |  |
+| 13 |  |  | 24 + (PRES * 4) |  |  | 12 |  |
+| 14 |  |  | 24 + (PRES * 4) |  |  | 13 |  |
+| 15 |  |  | 24 + (PRES * 4) |  |  | 14 |  |
+| 16 |  |  | 24 + (PRES * 4) |  |  | 15 |  |
+| 17 |  |  | 24 + (PRES * 4) |  |  | 16 |  |
+| 18 |  |  | 24 + (PRES * 4) |  |  | 17 |  |
+| 19 |  |  | 24 + (PRES * 4) |  |  | 18 |  |
+| 20 |  |  | 24 + (PRES * 4) |  |  | 19 |  |`,
   },
 })
 

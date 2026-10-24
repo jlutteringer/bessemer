@@ -63,7 +63,7 @@ const RuleLinkMark: RichTextMarkElement = ({ mark, children }) => {
   )
 }
 
-const RuleLinkTrigger = ({ children }: { children?: ReactNode }) => {
+export const RuleLinkTrigger = ({ children }: { children?: ReactNode }) => {
   return (
     <Link
       component="button"

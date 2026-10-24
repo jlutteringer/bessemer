@@ -5,11 +5,11 @@ import { NumericExpressions } from '@bessemer/cornerstone/expression'
 
 export const TacticPoints = ResourcePools.defineResourcePool('tactic-points', {
   name: 'Tactic Points',
-  size: NumericExpressions.floor(Presence.variable, 1),
+  size: NumericExpressions.max([Presence.variable, 1]),
   refresh: [
     {
       period: GameTimeUnit.LongRest,
-      amount: NumericExpressions.floor(Presence.variable, 1),
+      amount: NumericExpressions.max([Presence.variable, 1]),
     },
   ],
 })
@@ -19,10 +19,3 @@ export const Stamina = ResourcePools.defineResourcePool('stamina', {
   size: StaminaPool.variable,
   refresh: [],
 })
-
-export const StaminaCost = {
-  Low: 2,
-  Medium: 4,
-  High: 8,
-  VeryHigh: 12,
-}

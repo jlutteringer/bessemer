@@ -1,22 +1,19 @@
 import { CharacterSheet } from '@simulacrum/engine/character/character'
-import { Tags, Characters, Effects, ResourcePools, Rulesets } from '@simulacrum/engine'
+import { Tags, Effects, ResourcePools, Rulesets } from '@simulacrum/engine'
 import { Trait } from '@simulacrum/engine/trait'
 import { Ruleset } from '@simulacrum/engine/ruleset'
 import { Ability } from '@simulacrum/engine/ability'
 import { TargetSelection } from '@simulacrum/ruleset/targeting'
-import { Duration, DurationType } from '@simulacrum/ruleset/duration'
+import { Duration } from '@simulacrum/ruleset/duration'
 import { ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { DescriptiveEffect } from '@simulacrum/engine/effect'
 import { CooldownRate } from '@simulacrum/engine/resource-pool'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
-import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
+import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions, Objects } from '@bessemer/cornerstone'
 
-/**
- * The effects of a trait shown as its passive effects, both on the trait's card and in the Abilities section.
- */
 export const getPassiveEffects = (trait: Trait): Array<DescriptiveEffect> => {
   return Effects.filter(trait.effects, Effects.Descriptive)
 }
@@ -25,7 +22,6 @@ export const getActionTypeLabel = (actionType: ActionTypeReference, ruleset: Rul
   return Rulesets.getEntityById(actionType, ruleset).name
 }
 
-// From shortest to longest
 const RecoveryPeriods: Record<GameTimeUnit, string> = {
   [GameTimeUnit.Turn]: 'Turn',
   [GameTimeUnit.Round]: 'Round',
@@ -39,7 +35,6 @@ const isRelativeAmount = (amount: CooldownRate['amount']): amount is RelativeAmo
   return Object.values(RelativeAmount).includes(amount as RelativeAmount)
 }
 
-// Describes how a resource recovers, one label per period, shortest first, e.g. ["1 / Short Rest", "All / Long Rest"]
 const getRecoveryLabels = (refresh: Array<CooldownRate>, evaluate: EvaluateExpression): Array<string> => {
   const periodOrder = Object.keys(RecoveryPeriods)
   return Arrays.sortBy(refresh, (it) => periodOrder.indexOf(it.period)).map((it) => {
@@ -48,14 +43,7 @@ const getRecoveryLabels = (refresh: Array<CooldownRate>, evaluate: EvaluateExpre
   })
 }
 
-/**
- * Describes the resources an ability's actions spend, one line each. The ability's own resource (e.g. Rage) is labelled "Uses" with its
- * size, cost and recovery, e.g. "Uses: 3 · 1 / Short Rest · All / Long Rest". Sizes are the character's, so they include modifiers (e.g. a
- * Barbarian's extra Rage at level 3) and expressions (e.g. uses equal to the Wisdom modifier). A shared pool (e.g. Superiority Dice or
- * Stamina) isn't the ability's to describe, so it shows only the cost, e.g. "Stamina: 8".
- */
-export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, ruleset: Ruleset): Array<string> => {
-  const evaluate = Expressions.evaluator(Characters.buildExpressionContext(sheet, ruleset))
+export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet, evaluate: EvaluateExpression, ruleset: Ruleset): Array<string> => {
   const costs = Arrays.dedupeBy(
     ability.actions.flatMap((it) => it.costs).map((it) => ({ cost: it.cost, reference: it.resource ?? ability.resource?.id })),
     (it) => it.reference
@@ -96,26 +84,19 @@ export const getTargetLabel = ({ count, filter }: TargetSelection, ruleset: Rule
   return Objects.isNil(amount) ? kinds : `${amount} ${kinds}`
 }
 
-export const getDurationLabel = (duration: Duration, evaluate: EvaluateExpression | null): string => {
-  if (duration.type === DurationType.Instant) {
+export const getDurationLabel = (duration: Duration | null, evaluate: EvaluateExpression | null): string | null => {
+  if (Objects.isNil(duration)) {
     return 'Instant'
   }
 
   const rounds = typeof duration.rounds === 'number' ? duration.rounds : evaluate?.(duration.rounds) ?? null
-  return Objects.isNil(rounds) ? 'Sustained' : `Sustained · ${rounds} ${rounds === 1 ? 'round' : 'rounds'}`
+  return Objects.isNil(rounds) ? null : `${rounds} ${rounds === 1 ? 'round' : 'rounds'}`
 }
 
-/**
- * Whether an ability's actions are worth listing one by one: when it has several and any of them has a description of its own (e.g. the
- * options of a transformation). Otherwise the ability's action label is enough, and a lone action's description reads as the ability's own.
- */
 export const hasDescribedActions = (ability: Ability): boolean => {
   return ability.actions.length > 1 && ability.actions.some((it) => Objects.isPresent(it.description))
 }
 
-/**
- * All the rules text RulesetEntityContent shows for an entity, e.g. for searching it or deciding whether it has anything to show.
- */
 export const getEntityTexts = (entity: RulesetEntity): Array<RichTextJson> => {
   const description = Objects.isPresent(entity.description) ? [entity.description] : []
 

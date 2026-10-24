@@ -49,7 +49,7 @@ export const Momentum = Traits.defineTrait('commando/momentum', {
   name: 'Momentum',
   tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
-  effects: [Effects.modifyCharacteristic(MovementSpeed, Attributes.modifier(Patches.sum(NumericExpressions.floor(Agility.variable, 1))))],
+  effects: [Effects.modifyCharacteristic(MovementSpeed, Attributes.modifier(Patches.sum(NumericExpressions.max([Agility.variable, 1]))))],
 })
 
 export const Officer = RulesetEntities.buildReference(RulesetEntities.RulesetEntityType.Trait, 'commando/officer')

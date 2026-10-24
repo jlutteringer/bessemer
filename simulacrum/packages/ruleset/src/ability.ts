@@ -11,7 +11,7 @@ import * as Tags from '@simulacrum/ruleset/tag'
 import { AbilityTag, AbilityTagReference, TagFilter, TagFilterProps } from '@simulacrum/ruleset/tag'
 import * as Targetings from '@simulacrum/ruleset/targeting'
 import { Targeting, TargetingProps } from '@simulacrum/ruleset/targeting'
-import { Duration, DurationType } from '@simulacrum/ruleset/duration'
+import { Duration } from '@simulacrum/ruleset/duration'
 import { ActionType, ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 
@@ -37,7 +37,7 @@ export type AbilityAction = {
   annotation: string | null
   costs: Array<ResourceCost>
   targeting: Targeting
-  duration: Duration
+  duration: Duration | null
 }
 
 export type AbilityProps = RulesetEntityProps & {
@@ -76,7 +76,7 @@ const resolveAction = (props: AbilityActionProps, defaultCosts: Array<ResourceCo
     annotation: props.annotation ?? null,
     costs: Objects.isNil(props.costs) ? defaultCosts : props.costs.map(resolveCost),
     targeting: Targetings.resolve(props.targeting ?? {}),
-    duration: props.duration ?? { type: DurationType.Instant },
+    duration: props.duration ?? null,
   }
 }
 

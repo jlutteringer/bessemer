@@ -125,7 +125,7 @@ export const Presence: Characteristic = Characteristics.defineCharacteristic({
     name: 'Presence',
     description: `Presence measures charisma, charm, and force of personality. It governs the following aspects of your character:
 
-- Presence rating added to [stamina pool](content:characters/stamina-pool)`,
+- Four times presence rating added to [stamina pool](content:characters/stamina-pool)`,
     path: ObjectPaths.from('presence'),
   }),
   baseValue: 0,
@@ -137,17 +137,29 @@ export const VitalityPool: Characteristic = Characteristics.defineCharacteristic
   baseValue: NumericExpressions.sum([10, NumericExpressions.multiply([CharacterValues.Level, 5])]),
 })
 
-// From the Standard Progression table's Endurance Points column
-export const StaminaPool: Characteristic = Characteristics.defineCharacteristic({
-  group: CombatGroup,
-  template: StaminaPoolTemplate,
-  baseValue: NumericExpressions.sum([24, NumericExpressions.multiply([Presence.variable, 4])]),
-})
-
 export const AttributeCap = NumericExpressions.min([
   8,
   NumericExpressions.sum([NumericExpressions.round(NumericExpressions.multiply([CharacterValues.Level, 1 / 3]), 0, RoundingMode.Floor), 3]),
 ])
+
+export const StaminaCost = {
+  Low: 2,
+  Medium: 4,
+  High: 8,
+  VeryHigh: 12,
+}
+
+export const StaminaBase = 24
+export const StaminaPresenceMultiplier = 4
+
+export const StaminaPool: Characteristic = Characteristics.defineCharacteristic({
+  group: CombatGroup,
+  template: StaminaPoolTemplate,
+  baseValue: NumericExpressions.sum([
+    StaminaBase,
+    NumericExpressions.multiply([StaminaPresenceMultiplier, Presence.variable]),
+  ]),
+})
 
 export const ProficiencyBonus: Characteristic = Characteristics.defineCharacteristic({
   group: CombatGroup,
@@ -158,7 +170,6 @@ export const ProficiencyBonus: Characteristic = Characteristics.defineCharacteri
 A character adds its proficiency bonus to its [attack ratings](content:characters/attack-rating) and [defense ratings](content:characters/defense-rating), and to checks with any [skill](content:skills) it is proficient in. A proficiency bonus is only ever added once to the same roll or rating, even when more than one effect would grant it.`,
     path: ObjectPaths.from('proficiencyBonus'),
   }),
-  // +2 through level 5, then +1 every 3 levels up to +6 at level 15
   baseValue: NumericExpressions.max([
     2,
     NumericExpressions.min([
@@ -186,7 +197,6 @@ export const InitiativeRating: Characteristic = Characteristics.defineCharacteri
   baseValue: Agility.variable,
 })
 
-// Standard Progression (Light): 7 + Proficiency + Attribute + ceiling(Proficiency / 2)
 const lightProgressionDefense = (attribute: Characteristic): Expression<number> => {
   return NumericExpressions.sum([
     7,
@@ -196,7 +206,6 @@ const lightProgressionDefense = (attribute: Characteristic): Expression<number> 
   ])
 }
 
-// Added to a class's Medium and Heavy defenses, on top of the Light progression
 export const DefenseBonus = {
   Medium: 3,
   Heavy: 5,

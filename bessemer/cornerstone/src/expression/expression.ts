@@ -125,8 +125,6 @@ const DEFAULT_EXPRESSION_DEFINITIONS: Array<ExpressionDefinition<unknown, Array<
   GreaterThanOrEqualExpression,
   NumericExpressions.SumExpression,
   NumericExpressions.MultiplyExpression,
-  NumericExpressions.FloorExpression,
-  NumericExpressions.CeilingExpression,
   NumericExpressions.BoundExpression,
   NumericExpressions.RoundExpression,
   NumericExpressions.MaxExpression,
