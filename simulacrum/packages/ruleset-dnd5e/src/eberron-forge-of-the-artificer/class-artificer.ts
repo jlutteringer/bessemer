@@ -1,22 +1,22 @@
-import { Abilities, Archetypes, Attributes, CharacterOptions, Effects, Loadout, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterOptions, Effects, Loadout, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
-import { Class } from '@simulacrum/ruleset-dnd5e/archetype'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as ArtisansTools from '@simulacrum/ruleset-dnd5e/archetype/artisans-tools'
-import * as Tools from '@simulacrum/ruleset-dnd5e/archetype/tool'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
-import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
+import { Class } from '@simulacrum/ruleset-dnd5e/tag'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as ArtisansTools from '@simulacrum/ruleset-dnd5e/tag/artisans-tools'
+import * as Tools from '@simulacrum/ruleset-dnd5e/tag/tool'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
+import { SelectFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { HomunculusServant } from '@simulacrum/ruleset-dnd5e/eberron-forge-of-the-artificer/spell'
 import { SelectMagicItemPlan } from '@simulacrum/ruleset-dnd5e/eberron-forge-of-the-artificer/magic-item-plan'
 
 // FUTURE spell slots and Artificer levels 6+ aren't modelled yet
 
-// The existing spells can't be tagged with an Artificer archetype from an extension, so the spell list is named explicitly
+// The existing spells can't be tagged with an Artificer tag from an extension, so the spell list is named explicitly
 export const CantripList = [
   Spells.AcidSplash,
   Spells.DancingLights,
@@ -79,7 +79,7 @@ export const SpellList = [
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('artificer/select-skill-proficiency', {
   name: 'Skill Proficiency',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
     specificOptions: [
       SkillProficiencies.Arcana,
       SkillProficiencies.History,
@@ -100,7 +100,7 @@ export const SelectCantrip = CharacterOptions.selectAbilityOption('artificer/sel
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('artificer/select-spell-up-to-rank-1', {
   name: 'Prepared Spells',
   filter: {
-    archetypes: [[Spells.Rank1]],
+    tags: [[Spells.Rank1]],
     specificOptions: SpellList,
   },
 })
@@ -108,7 +108,7 @@ export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('artifi
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('artificer/select-spell-up-to-rank-2', {
   name: 'Prepared Spells',
   filter: {
-    archetypes: [[Spells.Rank1, Spells.Rank2]],
+    tags: [[Spells.Rank1, Spells.Rank2]],
     specificOptions: SpellList,
   },
 })
@@ -119,7 +119,7 @@ export const Level1 = Traits.defineTrait('artificer/level-1', {
   name: 'Artificer',
   description:
     "A master of invention who uses ingenuity and magic to unlock extraordinary capabilities in objects, casting spells through tools with **Intelligence**.\n\n**Saving Throws:** Constitution and Intelligence. **Armor:** Light and Medium armor, and Shields. **Weapons:** Simple weapons. **Tools:** Thieves' Tools, Tinker's Tools, and one type of Artisan's Tools of your choice.",
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainTrait(SavingThrowProficiencies.Constitution),
     Effects.gainTrait(SavingThrowProficiencies.Intelligence),
@@ -166,7 +166,7 @@ export const TinkersMagic = Abilities.defineAbility('artificer/tinkers-magic', {
 export const Level2 = Traits.defineTrait('artificer/level-2', {
   name: 'Artificer (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainCharacterOption(SelectMagicItemPlan),
@@ -187,18 +187,18 @@ export const ReplicateMagicItem = Abilities.defineAbility('artificer/replicate-m
   ],
 })
 
-export const ArtificerSubclass = Archetypes.defineTraitArchetype('artificer/subclass', { name: 'Artificer Subclass' })
+export const ArtificerSubclass = Tags.defineTraitTag('artificer/subclass', { name: 'Artificer Subclass' })
 export const SelectArtificerSubclass = CharacterOptions.selectTraitOption('artificer/select-subclass', {
   name: 'Artificer Subclass',
   filter: {
-    archetypes: [ArtificerSubclass],
+    tags: [ArtificerSubclass],
   },
 })
 
 export const Level3 = Traits.defineTrait('artificer/level-3', {
   name: 'Artificer (3)',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainCharacterOption(SelectArtificerSubclass),
@@ -209,7 +209,7 @@ export const Level3 = Traits.defineTrait('artificer/level-3', {
 export const Level4 = Traits.defineTrait('artificer/level-4', {
   name: 'Artificer (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     // Ability Score Improvement
@@ -221,7 +221,7 @@ export const Level4 = Traits.defineTrait('artificer/level-4', {
 export const Level5 = Traits.defineTrait('artificer/level-5', {
   name: 'Artificer (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainCharacterOption(SelectSpellUpToRank2),
@@ -259,7 +259,7 @@ export const AlchemicalSavant = Traits.defineTrait('artificer/alchemical-savant'
 export const Alchemist = Traits.defineTrait('artificer/alchemist', {
   name: 'Alchemist',
   description: 'An expert at **combining reagents** to produce magical effects, using their creations to give life and to leech it away.',
-  archetypes: [ArtificerSubclass],
+  tags: [ArtificerSubclass],
   effects: [Effects.gainTrait(AlchemistToolsOfTheTrade), Effects.gainTrait(AlchemistSpells), Effects.gainTrait(AlchemicalSavant)],
 })
 
@@ -359,7 +359,7 @@ export const Armorer = Traits.defineTrait('artificer/armorer', {
   name: 'Armorer',
   description:
     'An inventor who modifies armor to function almost like a **second skin**, honing their magic, unleashing potent attacks, and generating a formidable defense.',
-  archetypes: [ArtificerSubclass],
+  tags: [ArtificerSubclass],
   effects: [Effects.gainTrait(ArmorerToolsOfTheTrade), Effects.gainTrait(ArmorerSpells), Effects.gainTrait(ArmorModel)],
 })
 
@@ -409,7 +409,7 @@ export const ArcaneFirearm = Traits.defineTrait('artificer/arcane-firearm', {
 export const Artillerist = Traits.defineTrait('artificer/artillerist', {
   name: 'Artillerist',
   description: 'A specialist in using magic to **hurl energy, projectiles, and explosions** on a battlefield.',
-  archetypes: [ArtificerSubclass],
+  tags: [ArtificerSubclass],
   effects: [Effects.gainTrait(ArtilleristToolsOfTheTrade), Effects.gainTrait(ArtilleristSpells), Effects.gainTrait(ArcaneFirearm)],
 })
 
@@ -461,7 +461,7 @@ export const BattleSmith = Traits.defineTrait('artificer/battle-smith', {
   name: 'Battle Smith',
   description:
     'A combination of **protector and medic**, expert at defending others and repairing both materiel and personnel, accompanied by a Steel Defender of their own creation.',
-  archetypes: [ArtificerSubclass],
+  tags: [ArtificerSubclass],
   effects: [Effects.gainTrait(BattleSmithToolsOfTheTrade), Effects.gainTrait(BattleSmithSpells), Effects.gainTrait(BattleReady)],
 })
 
@@ -526,7 +526,7 @@ export const Cartographer = Traits.defineTrait('artificer/cartographer', {
   name: 'Cartographer',
   description:
     'A premier **navigator and reconnaissance agent** whose creations highlight threats, safeguard allies, and carve portals to distant locations.',
-  archetypes: [ArtificerSubclass],
+  tags: [ArtificerSubclass],
   effects: [Effects.gainTrait(CartographerToolsOfTheTrade), Effects.gainTrait(CartographerSpells), Effects.gainTrait(GuidedPrecision)],
 })
 

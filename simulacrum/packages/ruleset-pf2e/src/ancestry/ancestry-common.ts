@@ -1,5 +1,5 @@
-import { Archetypes, CharacterOptions, Traits } from '@simulacrum/ruleset'
-import { ClassFeat, FeatLevel1, GeneralFeat } from '@simulacrum/ruleset-pf2e/archetype'
+import { Tags, CharacterOptions, Traits } from '@simulacrum/ruleset'
+import { ClassFeat, FeatLevel1, GeneralFeat } from '@simulacrum/ruleset-pf2e/tag'
 
 export const Darkvision = Traits.defineTrait('sense/darkvision', {
   name: 'Darkvision',
@@ -15,23 +15,23 @@ export const LowLightVision = Traits.defineTrait('sense/low-light-vision', {
   effects: [],
 })
 
-export const DwarfHeritage = Archetypes.defineTraitArchetype('heritage/dwarf', { name: 'Dwarf Heritage' })
-export const ElfHeritage = Archetypes.defineTraitArchetype('heritage/elf', { name: 'Elf Heritage' })
-export const GnomeHeritage = Archetypes.defineTraitArchetype('heritage/gnome', { name: 'Gnome Heritage' })
-export const GoblinHeritage = Archetypes.defineTraitArchetype('heritage/goblin', { name: 'Goblin Heritage' })
-export const HalflingHeritage = Archetypes.defineTraitArchetype('heritage/halfling', { name: 'Halfling Heritage' })
-export const HumanHeritage = Archetypes.defineTraitArchetype('heritage/human', { name: 'Human Heritage' })
-export const LeshyHeritage = Archetypes.defineTraitArchetype('heritage/leshy', { name: 'Leshy Heritage' })
-export const OrcHeritage = Archetypes.defineTraitArchetype('heritage/orc', { name: 'Orc Heritage' })
+export const DwarfHeritage = Tags.defineTraitTag('heritage/dwarf', { name: 'Dwarf Heritage' })
+export const ElfHeritage = Tags.defineTraitTag('heritage/elf', { name: 'Elf Heritage' })
+export const GnomeHeritage = Tags.defineTraitTag('heritage/gnome', { name: 'Gnome Heritage' })
+export const GoblinHeritage = Tags.defineTraitTag('heritage/goblin', { name: 'Goblin Heritage' })
+export const HalflingHeritage = Tags.defineTraitTag('heritage/halfling', { name: 'Halfling Heritage' })
+export const HumanHeritage = Tags.defineTraitTag('heritage/human', { name: 'Human Heritage' })
+export const LeshyHeritage = Tags.defineTraitTag('heritage/leshy', { name: 'Leshy Heritage' })
+export const OrcHeritage = Tags.defineTraitTag('heritage/orc', { name: 'Orc Heritage' })
 
 export const SelectAncestryGeneralFeat1 = CharacterOptions.selectTraitOption('ancestry/select-general-feat-1', {
   name: 'General Feat (Level 1)',
-  filter: { archetypes: [GeneralFeat, FeatLevel1] },
+  filter: { tags: [GeneralFeat, FeatLevel1] },
 })
 
 export const SelectAncestryClassFeat1 = CharacterOptions.selectTraitOption('ancestry/select-class-feat-1', {
   name: 'Class Feat (Level 1)',
-  filter: { archetypes: [ClassFeat, FeatLevel1] },
+  filter: { tags: [ClassFeat, FeatLevel1] },
 })
 
 export const AllAncestryCommonEntities = [

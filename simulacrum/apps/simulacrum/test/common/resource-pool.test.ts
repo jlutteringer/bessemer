@@ -6,7 +6,7 @@ import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Dnd5e, SelectClassLevel } from '@simulacrum/ruleset-dnd5e'
 import * as Barbarian from '@simulacrum/ruleset-dnd5e/class/class-barbarian'
 import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
-import { SuperiorityDice } from '@simulacrum/ruleset-dnd5e/archetype/maneuver'
+import { SuperiorityDice } from '@simulacrum/ruleset-dnd5e/tag/maneuver'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 

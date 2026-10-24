@@ -1,13 +1,13 @@
 import { Abilities } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 export const CounterPerformance = Abilities.defineAbility('spell/counter-performance', {
   name: 'Counter Performance',
   description: '*Uncommon, Bard, Composition, Concentrate, Focus, Fortune, Mental*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -25,7 +25,7 @@ export const CounterPerformance = Abilities.defineAbility('spell/counter-perform
 export const HymnOfHealing = Abilities.defineAbility('spell/hymn-of-healing', {
   name: 'Hymn of Healing',
   description: '*Uncommon, Bard, Composition, Concentrate, Focus, Healing, Vitality*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -42,7 +42,7 @@ export const HymnOfHealing = Abilities.defineAbility('spell/hymn-of-healing', {
 export const LingeringComposition = Abilities.defineAbility('spell/lingering-composition', {
   name: 'Lingering Composition',
   description: '*Uncommon, Bard, Concentrate, Focus, Spellshape*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -58,7 +58,7 @@ export const LingeringComposition = Abilities.defineAbility('spell/lingering-com
 export const LoremastersEtude = Abilities.defineAbility('spell/loremasters-etude', {
   name: "Loremaster's Etude",
   description: '*Uncommon, Bard, Composition, Focus, Fortune, Manipulate*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {

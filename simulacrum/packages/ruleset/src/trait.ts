@@ -1,7 +1,7 @@
 import { Assertions, Objects } from '@bessemer/cornerstone'
 import { Effect } from '@simulacrum/ruleset/effect'
-import * as Archetypes from '@simulacrum/ruleset/archetype'
-import { ArchetypeFilter, ArchetypeFilterProps, TraitArchetype, TraitArchetypeReference } from '@simulacrum/ruleset/archetype'
+import * as Tags from '@simulacrum/ruleset/tag'
+import { TagFilter, TagFilterProps, TraitTag, TraitTagReference } from '@simulacrum/ruleset/tag'
 import * as CharacterValues from '@simulacrum/ruleset/character-value'
 import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import * as Tiptap from '@bessemer/core/tiptap'
@@ -12,7 +12,7 @@ export type TraitReference = RulesetEntityReference<typeof RulesetEntityType.Tra
 export type TraitProps = RulesetEntityProps & {
   effects: Array<Effect>
 
-  archetypes?: Array<TraitArchetype>
+  tags?: Array<TraitTag>
   prerequisites?: Array<Expression<boolean>>
   repeatable?: boolean
 }
@@ -21,7 +21,7 @@ export type Trait = RulesetEntity & {
   id: TraitReference
   effects: Array<Effect>
 
-  archetypes: Array<TraitArchetypeReference>
+  tags: Array<TraitTagReference>
   prerequisites: Array<Expression<boolean>>
   repeatable: boolean
 }
@@ -31,7 +31,7 @@ export const defineTrait = (reference: string, props: TraitProps): Trait => {
     ...props,
     id: buildReference(RulesetEntityType.Trait, reference),
     description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
-    archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
+    tags: (props.tags ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
     prerequisites: props.prerequisites ?? [],
     repeatable: props.repeatable ?? false,
   }
@@ -46,18 +46,18 @@ export const traitPrerequisite = (trait: TraitReference | Trait): Expression<boo
 }
 
 export type TraitFilterProps = {
-  archetypes?: ArchetypeFilterProps<TraitArchetype>
+  tags?: TagFilterProps<TraitTag>
   specificOptions?: Array<TraitReference | Trait>
 }
 
 export type TraitFilter = {
-  archetypes: ArchetypeFilter<TraitArchetypeReference>
+  tags: TagFilter<TraitTagReference>
   specificOptions: Array<TraitReference>
 }
 
 export const filter = (props: TraitFilterProps): TraitFilter => {
   return {
-    archetypes: Archetypes.filter(props.archetypes ?? []),
+    tags: Tags.filter(props.tags ?? []),
     specificOptions: (props.specificOptions ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
   }
 }

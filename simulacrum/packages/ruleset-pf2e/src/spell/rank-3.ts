@@ -1,14 +1,14 @@
 import { Abilities } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Spell, SpellRank3, Arcane, Divine, Occult, Primal } from '@simulacrum/ruleset-pf2e/archetype'
+import { Spell, SpellRank3, Arcane, Divine, Occult, Primal } from '@simulacrum/ruleset-pf2e/tag'
 import { SpellRank3Loadout } from '@simulacrum/ruleset-pf2e/loadout'
 
 export const AqueousOrb = Abilities.defineAbility('spell/aqueous-orb', {
   name: 'Aqueous Orb',
   description:
     '*Concentrate, Manipulate, Water*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -25,7 +25,7 @@ export const BindUndead = Abilities.defineAbility('spell/bind-undead', {
   name: 'Bind Undead',
   description:
     '*Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Divine, Occult],
+  tags: [Spell, SpellRank3, Arcane, Divine, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -43,7 +43,7 @@ export const Blindness = Abilities.defineAbility('spell/blindness', {
   name: 'Blindness',
   description:
     '*Concentrate, Incapacitation, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Divine, Occult, Primal],
+  tags: [Spell, SpellRank3, Arcane, Divine, Occult, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -61,7 +61,7 @@ export const ChillingDarkness = Abilities.defineAbility('spell/chilling-darkness
   name: 'Chilling Darkness',
   description:
     '*Attack, Cold, Concentrate, Darkness, Manipulate, Unholy*\n\n**Tradition** [Divine](trait:spellcasting/divine-spell-list)\n\n**Lesson** Lesson of Shadow',
-  archetypes: [Spell, SpellRank3, Divine],
+  tags: [Spell, SpellRank3, Divine],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -79,7 +79,7 @@ export const Clairaudience = Abilities.defineAbility('spell/clairaudience', {
   name: 'Clairaudience',
   description:
     '*Concentrate, Manipulate, Scrying*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -96,7 +96,7 @@ export const CozyCabin = Abilities.defineAbility('spell/cozy-cabin', {
   name: 'Cozy Cabin',
   description:
     '*Concentrate, Manipulate, Wood*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -112,7 +112,7 @@ export const CozyCabin = Abilities.defineAbility('spell/cozy-cabin', {
 export const CrisisOfFaith = Abilities.defineAbility('spell/crisis-of-faith', {
   name: 'Crisis of Faith',
   description: '*Concentrate, Manipulate, Mental*\n\n**Tradition** [Divine](trait:spellcasting/divine-spell-list)',
-  archetypes: [Spell, SpellRank3, Divine],
+  tags: [Spell, SpellRank3, Divine],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -130,7 +130,7 @@ export const DreamMessage = Abilities.defineAbility('spell/dream-message', {
   name: 'Dream Message',
   description:
     '*Concentrate, Manipulate, Mental*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Divine, Occult],
+  tags: [Spell, SpellRank3, Arcane, Divine, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -147,7 +147,7 @@ export const Earthbind = Abilities.defineAbility('spell/earthbind', {
   name: 'Earthbind',
   description:
     '*Concentrate, Earth, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -165,7 +165,7 @@ export const Enthrall = Abilities.defineAbility('spell/enthrall', {
   name: 'Enthrall',
   description:
     '*Auditory, Concentrate, Emotion, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -182,7 +182,7 @@ export const FeetToFins = Abilities.defineAbility('spell/feet-to-fins', {
   name: 'Feet to Fins',
   description:
     '*Concentrate, Manipulate, Morph*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)\n\n**Lesson** Lesson of the Shark',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -200,7 +200,7 @@ export const Fireball = Abilities.defineAbility('spell/fireball', {
   name: 'Fireball',
   description:
     '*Concentrate, Fire, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -218,7 +218,7 @@ export const GhostlyWeapon = Abilities.defineAbility('spell/ghostly-weapon', {
   name: 'Ghostly Weapon',
   description:
     '*Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -236,7 +236,7 @@ export const Haste = Abilities.defineAbility('spell/haste', {
   name: 'Haste',
   description:
     '*Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult, Primal],
+  tags: [Spell, SpellRank3, Arcane, Occult, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -254,7 +254,7 @@ export const Heroism = Abilities.defineAbility('spell/heroism', {
   name: 'Heroism',
   description:
     '*Concentrate, Manipulate, Mental*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Divine, Occult],
+  tags: [Spell, SpellRank3, Divine, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -272,7 +272,7 @@ export const HolyLight = Abilities.defineAbility('spell/holy-light', {
   name: 'Holy Light',
   description:
     '*Attack, Concentrate, Fire, Holy, Light, Manipulate*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Divine, Primal],
+  tags: [Spell, SpellRank3, Divine, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -289,7 +289,7 @@ export const HolyLight = Abilities.defineAbility('spell/holy-light', {
 export const Hypercognition = Abilities.defineAbility('spell/hypercognition', {
   name: 'Hypercognition',
   description: '*Concentrate*\n\n**Tradition** [Occult](trait:spellcasting/occult-spell-list)\n\n**Lesson** Lesson of Memory',
-  archetypes: [Spell, SpellRank3, Occult],
+  tags: [Spell, SpellRank3, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -306,7 +306,7 @@ export const Hypnotize = Abilities.defineAbility('spell/hypnotize', {
   name: 'Hypnotize',
   description:
     '*Illusion, Manipulate, Subtle, Visual*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -324,7 +324,7 @@ export const InsectForm = Abilities.defineAbility('spell/insect-form', {
   name: 'Insect Form',
   description:
     '*Concentrate, Manipulate, Polymorph*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)\n\n**Lesson** Lesson of Decay',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -341,7 +341,7 @@ export const Levitate = Abilities.defineAbility('spell/levitate', {
   name: 'Levitate',
   description:
     '*Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)\n\n**Lesson** Lesson of the Flock',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -359,7 +359,7 @@ export const LightningBolt = Abilities.defineAbility('spell/lightning-bolt', {
   name: 'Lightning Bolt',
   description:
     '*Concentrate, Electricity, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -377,7 +377,7 @@ export const Locate = Abilities.defineAbility('spell/locate', {
   name: 'Locate',
   description:
     '*Uncommon, Concentrate, Detection, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Divine, Occult],
+  tags: [Spell, SpellRank3, Arcane, Divine, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -394,7 +394,7 @@ export const Locate = Abilities.defineAbility('spell/locate', {
 export const MadMonkeys = Abilities.defineAbility('spell/mad-monkeys', {
   name: 'Mad Monkeys',
   description: '*Concentrate, Manipulate*\n\n**Tradition** [Primal](trait:spellcasting/primal-spell-list)\n\n**Lesson** Lesson of Mischief',
-  archetypes: [Spell, SpellRank3, Primal],
+  tags: [Spell, SpellRank3, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -412,7 +412,7 @@ export const MindReading = Abilities.defineAbility('spell/mind-reading', {
   name: 'Mind Reading',
   description:
     '*Uncommon, Concentrate, Detection, Manipulate, Mental*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -430,7 +430,7 @@ export const OneWithStone = Abilities.defineAbility('spell/one-with-stone', {
   name: 'One with Stone',
   description:
     '*Concentrate, Earth, Manipulate, Polymorph*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -447,7 +447,7 @@ export const Paralyze = Abilities.defineAbility('spell/paralyze', {
   name: 'Paralyze',
   description:
     '*Concentrate, Incapacitation, Manipulate, Mental*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult],
+  tags: [Spell, SpellRank3, Arcane, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -465,7 +465,7 @@ export const RingOfTruth = Abilities.defineAbility('spell/ring-of-truth', {
   name: 'Ring of Truth',
   description:
     '*Uncommon, Concentrate, Detection, Manipulate, Mental*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)\n\n**Lesson** Lesson of Vows',
-  archetypes: [Spell, SpellRank3, Divine, Occult],
+  tags: [Spell, SpellRank3, Divine, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -483,7 +483,7 @@ export const SafePassage = Abilities.defineAbility('spell/safe-passage', {
   name: 'Safe Passage',
   description:
     '*Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Divine, Primal],
+  tags: [Spell, SpellRank3, Arcane, Divine, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -500,7 +500,7 @@ export const Slow = Abilities.defineAbility('spell/slow', {
   name: 'Slow',
   description:
     '*Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult, Primal],
+  tags: [Spell, SpellRank3, Arcane, Occult, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -518,7 +518,7 @@ export const SpeakWithPlants = Abilities.defineAbility('spell/speak-with-plants'
   name: 'Speak with Plants',
   description:
     '*Concentrate, Manipulate, Plant, Wood*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Divine, Occult, Primal],
+  tags: [Spell, SpellRank3, Divine, Occult, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -535,7 +535,7 @@ export const VampiricFeast = Abilities.defineAbility('spell/vampiric-feast', {
   name: 'Vampiric Feast',
   description:
     '*Concentrate, Death, Manipulate, Void*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Divine, Occult],
+  tags: [Spell, SpellRank3, Arcane, Divine, Occult],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -553,7 +553,7 @@ export const VeilOfPrivacy = Abilities.defineAbility('spell/veil-of-privacy', {
   name: 'Veil of Privacy',
   description:
     '*Uncommon, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Occult, Primal],
+  tags: [Spell, SpellRank3, Arcane, Occult, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -571,7 +571,7 @@ export const WallOfThorns = Abilities.defineAbility('spell/wall-of-thorns', {
   name: 'Wall of Thorns',
   description:
     '*Concentrate, Manipulate, Plant, Wood*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [
@@ -588,7 +588,7 @@ export const WallOfWind = Abilities.defineAbility('spell/wall-of-wind', {
   name: 'Wall of Wind',
   description:
     '*Air, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)\n\n**Lesson** Lesson of Snow',
-  archetypes: [Spell, SpellRank3, Arcane, Primal],
+  tags: [Spell, SpellRank3, Arcane, Primal],
   loadout: SpellRank3Loadout,
   universal: false,
   actions: [

@@ -8,7 +8,7 @@ import { Modifier } from '@simulacrum/engine/attribute'
 import { Patches } from '@bessemer/cornerstone'
 import { Ruleset } from '@simulacrum/engine/ruleset'
 import { AbilityFilter } from '@simulacrum/ruleset/ability'
-import * as Archetypes from '@simulacrum/engine/archetype'
+import * as Tags from '@simulacrum/engine/tag'
 import { Arrays } from '@bessemer/cornerstone'
 import * as Rulesets from '@simulacrum/engine/ruleset'
 import { RulesetEntities } from '@simulacrum/ruleset'
@@ -51,8 +51,8 @@ export const buildInitialState = (
 
 export const applyFilter = (abilities: Array<Ability>, filter: AbilityFilter): Array<Ability> => {
   let filteredAbilities = abilities
-  if (!Arrays.isEmpty(filter.archetypes)) {
-    filteredAbilities = filteredAbilities.filter((it) => Archetypes.matchesFilter(filter.archetypes, it.archetypes))
+  if (!Arrays.isEmpty(filter.tags)) {
+    filteredAbilities = filteredAbilities.filter((it) => Tags.matchesFilter(filter.tags, it.tags))
   }
   if (!Arrays.isEmpty(filter.specificOptions)) {
     filteredAbilities = filteredAbilities.filter((it) => Arrays.contains(filter.specificOptions, it.id))

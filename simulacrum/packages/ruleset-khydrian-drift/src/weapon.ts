@@ -1,15 +1,15 @@
-import { Abilities, Archetypes, Effects } from '@simulacrum/ruleset'
+import { Abilities, Tags, Effects } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 
-export const Weapon = Archetypes.defineAbilityArchetype('weapon', { name: 'Weapon' })
+export const Weapon = Tags.defineAbilityTag('weapon', { name: 'Weapon' })
 
 export const Handgun = Abilities.defineAbility('weapon/handgun', {
   name: 'Handgun',
   effects: [
     Effects.descriptive('Make a ranged weapon attack against a creature in **Medium** range, dealing **1d4 Ballistic** damage.\n\nOne-Handed'),
   ],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Handgun', action: ActionTypes.MajorAction }],
 })
@@ -17,7 +17,7 @@ export const Handgun = Abilities.defineAbility('weapon/handgun', {
 export const Dagger = Abilities.defineAbility('weapon/dagger', {
   name: 'Dagger',
   effects: [Effects.descriptive('Make a melee weapon attack against a creature, dealing **1d6 Physical** damage.\n\nDual Wield')],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Dagger', action: ActionTypes.MajorAction }],
 })
@@ -27,7 +27,7 @@ export const SubmachineGun = Abilities.defineAbility('weapon/submachine-gun', {
   effects: [
     Effects.descriptive('Make a ranged weapon attack against a creature in **Medium** range, dealing **1d6 Ballistic** damage.\n\nOne-Handed'),
   ],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Submachine Gun', action: ActionTypes.MajorAction }],
 })
@@ -37,7 +37,7 @@ export const HandCannon = Abilities.defineAbility('weapon/hand-cannon', {
   effects: [
     Effects.descriptive('Make a ranged weapon attack against a creature in **Short** range, dealing **1d8 Ballistic** damage.\n\nOne-Handed'),
   ],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Hand Cannon', action: ActionTypes.MajorAction }],
 })
@@ -47,7 +47,7 @@ export const Carbine = Abilities.defineAbility('weapon/carbine', {
   effects: [
     Effects.descriptive('Make a ranged weapon attack against a creature in **Long** range, dealing **1d10 Ballistic** damage.\n\nTwo-Handed'),
   ],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Carbine', action: ActionTypes.MajorAction }],
 })
@@ -57,7 +57,7 @@ export const Shotgun = Abilities.defineAbility('weapon/shotgun', {
   effects: [
     Effects.descriptive('Make a ranged weapon attack against a creature in **Short** range, dealing **2d6 Ballistic** damage.\n\nTwo-Handed'),
   ],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Shotgun', action: ActionTypes.MajorAction }],
 })
@@ -69,7 +69,7 @@ export const SniperRifle = Abilities.defineAbility('weapon/sniper-rifle', {
       'Make a ranged weapon attack against a creature in **Extreme** range, dealing **1d12 Ballistic** damage. You have Disadvantage when attacking targets in Medium range or closer.\n\nTwo-Handed'
     ),
   ],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Sniper Rifle', action: ActionTypes.MajorAction }],
 })
@@ -77,7 +77,7 @@ export const SniperRifle = Abilities.defineAbility('weapon/sniper-rifle', {
 export const Bow = Abilities.defineAbility('weapon/bow', {
   name: 'Bow',
   effects: [Effects.descriptive('Make a ranged weapon attack against a creature in **Long** range, dealing **1d8 Physical** damage.\n\nTwo-Handed')],
-  archetypes: [Weapon],
+  tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Bow', action: ActionTypes.MajorAction }],
 })

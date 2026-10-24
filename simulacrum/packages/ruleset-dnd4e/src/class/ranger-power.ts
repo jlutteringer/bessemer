@@ -11,7 +11,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Ranger } from '@simulacrum/ruleset-dnd4e/class/class-ranger'
 
 // Generated from the Player's Handbook Ranger powers, levels 1-5. Powers are learned through character options, so they
@@ -21,7 +21,7 @@ export const CarefulAttack = Abilities.defineAbility('ranger/power/careful-attac
   name: 'Careful Attack',
   description: '*You study the enemy, looking for a gap in his defenses. Only when you find it do you strike.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -35,7 +35,7 @@ export const HitAndRun = Abilities.defineAbility('ranger/power/hit-and-run', {
   name: 'Hit and Run',
   description: '*Let the fighter stand toe to toe with the monster. You prefer to make your attack, then withdraw to safer ground.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -49,7 +49,7 @@ export const NimbleStrike = Abilities.defineAbility('ranger/power/nimble-strike'
   name: 'Nimble Strike',
   description: "*You slink past your enemy's guard to make your attack, or you make your attack and then withdraw to a more advantageous position.*",
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -63,7 +63,7 @@ export const TwinStrike = Abilities.defineAbility('ranger/power/twin-strike', {
   name: 'Twin Strike',
   description: "*If the first attack doesn't kill it, the second one might.*",
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -77,7 +77,7 @@ export const DireWolverineStrike = Abilities.defineAbility('ranger/power/dire-wo
   name: 'Dire Wolverine Strike',
   description: '*Enemies surround you—much to their chagrin, as you slash them to pieces with the ferocity of a wounded dire wolverine.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -93,7 +93,7 @@ export const EvasiveStrike = Abilities.defineAbility('ranger/power/evasive-strik
   name: 'Evasive Strike',
   description: '*You confound enemies by weaving through the battlefield unscathed as you make your attacks.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -110,7 +110,7 @@ export const FoxsCunning = Abilities.defineAbility('ranger/power/foxs-cunning', 
   description:
     "*Using the momentum from your enemy's blow to fall back or slip to one side, you make a sudden retaliatory attack as he stumbles to regain his composure.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -126,7 +126,7 @@ export const TwoFangedStrike = Abilities.defineAbility('ranger/power/two-fanged-
   name: 'Two-Fanged Strike',
   description: '*You sink two arrows or both of your blades into the flesh of your enemy, causing it to howl in pain.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -142,7 +142,7 @@ export const HuntersBearTrap = Abilities.defineAbility('ranger/power/hunters-bea
   name: "Hunter's Bear Trap",
   description: '*A well-placed shot to the leg leaves your enemy hobbled and bleeding.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -158,7 +158,7 @@ export const JawsOfTheWolf = Abilities.defineAbility('ranger/power/jaws-of-the-w
   name: 'Jaws of the Wolf',
   description: '*You use your weapons to hedge in your foe and trick him into exposing a weak spot, at which point you strike.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -174,7 +174,7 @@ export const SplitTheTree = Abilities.defineAbility('ranger/power/split-the-tree
   name: 'Split the Tree',
   description: '*You fire two arrows at once, which separate in mid-flight to strike two different targets.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -191,7 +191,7 @@ export const SuddenStrike = Abilities.defineAbility('ranger/power/sudden-strike'
   description:
     '*You hold your weapons blade-down and slash your foe across the face with one of them. As he spins away and drops his guard, you roll to one side, spring to your feet, and plunge your other blade into his back.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -207,7 +207,7 @@ export const CrucialAdvice = Abilities.defineAbility('ranger/power/crucial-advic
   name: 'Crucial Advice',
   description: "*You are wise in all things. The sooner your friends realize this, the safer and better off they'll be.*",
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -223,7 +223,7 @@ export const UnbalancingParry = Abilities.defineAbility('ranger/power/unbalancin
   name: 'Unbalancing Parry',
   description: "*You deftly block your enemy's strike and turn his momentum against him, causing him to stumble to the side.*",
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -239,7 +239,7 @@ export const YieldGround = Abilities.defineAbility('ranger/power/yield-ground', 
   name: 'Yield Ground',
   description: '*Even as your foe connects, you leap backward, out of the way of further harm.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -255,7 +255,7 @@ export const CutAndRun = Abilities.defineAbility('ranger/power/cut-and-run', {
   name: 'Cut and Run',
   description: '*You attack twice while maneuvering yourself into the most advantageous position possible.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -271,7 +271,7 @@ export const DisruptiveStrike = Abilities.defineAbility('ranger/power/disruptive
   name: 'Disruptive Strike',
   description: "*You thwart an enemy's attack with a timely thrust of your blade or a quick shot from your bow.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -287,7 +287,7 @@ export const ShadowWaspStrike = Abilities.defineAbility('ranger/power/shadow-was
   name: 'Shadow Wasp Strike',
   description: '*You strike quickly, like a shadow wasp flying out of the darkness, hitting where your foe is most vulnerable.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -303,7 +303,7 @@ export const ThundertuskBoarStrike = Abilities.defineAbility('ranger/power/thund
   name: 'Thundertusk Boar Strike',
   description: '*You attack twice, causing your foes to stagger backward.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -319,7 +319,7 @@ export const ExcruciatingShot = Abilities.defineAbility('ranger/power/excruciati
   name: 'Excruciating Shot',
   description: '*One well-placed arrow leaves your enemy hunched over and howling in pain.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -336,7 +336,7 @@ export const FrenziedSkirmish = Abilities.defineAbility('ranger/power/frenzied-s
   description:
     '*You leap into the fray and unleash a torrent of steel upon your unsuspecting foes, staggering them with the ferocity of your attacks.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -352,7 +352,7 @@ export const SplinteringShot = Abilities.defineAbility('ranger/power/splintering
   name: 'Splintering Shot',
   description: '*Your arrow burrows into flesh and shatters, sending splinters of wood deep into the wound.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(
@@ -368,7 +368,7 @@ export const TwoWolfPounce = Abilities.defineAbility('ranger/power/two-wolf-poun
   name: 'Two-Wolf Pounce',
   description: '*You set upon a foe with weapons bared, then weave to the side and deal a wound to another adversary.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
     Effects.descriptive(

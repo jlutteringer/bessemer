@@ -3,7 +3,7 @@ import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
-import { Class, ClassFeature, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/archetype'
+import { Class, ClassFeature, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
 import { Fortitude, HealingSurges, HitPoints, Initiative, Will } from '@simulacrum/ruleset-dnd4e/characteristic'
 import { PowerBonus } from '@simulacrum/ruleset-dnd4e/bonus-type'
 import * as Armor from '@simulacrum/ruleset-dnd4e/armor'
@@ -14,7 +14,7 @@ import { Human } from '@simulacrum/ruleset-dnd4e/race'
 export const CombatLeader = Traits.defineTrait('warlord/combat-leader', {
   name: 'Combat Leader',
   description: 'You and each ally within 10 squares who can see and hear you gain a +2 power bonus to initiative.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(2), { combinability: PowerBonus }))],
 })
 
@@ -22,7 +22,7 @@ export const InspiringPresence = Traits.defineTrait('warlord/commanding-presence
   name: 'Inspiring Presence',
   description:
     'When an ally who can see you spends an action point to take an extra action, that ally also regains lost hit points equal to one-half your level + your Charisma modifier.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
@@ -30,7 +30,7 @@ export const TacticalPresence = Traits.defineTrait('warlord/commanding-presence/
   name: 'Tactical Presence',
   description:
     'When an ally you can see spends an action point to make an extra attack, the ally gains a bonus to the attack roll equal to one-half your Intelligence modifier.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
@@ -45,14 +45,14 @@ export const InspiringWordFeature = Traits.defineTrait('warlord/inspiring-word',
   name: 'Inspiring Word',
   description:
     'Using the *inspiring word* power, warlords can grant their comrades additional resilience with nothing more than a shout of encouragement.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
 export const InspiringWord = Abilities.defineAbility('warlord/power/inspiring-word', {
   name: 'Inspiring Word',
   description: '*You call out to a wounded ally and offer inspiring words of courage and determination that helps that ally heal.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(InspiringWordFeature)],
   effects: [
     Effects.descriptive(
@@ -82,7 +82,7 @@ export const Warlord = Traits.defineTrait('warlord', {
   name: 'Warlord',
   description:
     '**Leader.** You are an inspiring commander and a master of battle tactics.\n\n**Power Source:** Martial · **Key Abilities:** Strength, Intelligence, Charisma\n\n**Armor Proficiencies:** Cloth, leather, hide, chainmail; light shield\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged\n\n**Bonus to Defense:** +1 Fortitude, +1 Will · **Hit Points:** 12 + Constitution score at 1st level, 5 per level gained · **Healing Surges:** 7 + Constitution modifier',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(
       HitPoints,
@@ -118,7 +118,7 @@ export const InspiredRecovery = Traits.defineTrait('feat/inspired-recovery', {
   name: 'Inspired Recovery',
   description:
     '**Prerequisites:** Warlord, Inspiring Presence class feature\n\nWhen an ally who can see you spends an action point to gain an extra standard action, that ally can roll a saving throw as a free action, adding your Charisma modifier to the roll.',
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Warlord), Traits.traitPrerequisite(InspiringPresence)],
   effects: [],
 })
@@ -127,7 +127,7 @@ export const TacticalAssault = Traits.defineTrait('feat/tactical-assault', {
   name: 'Tactical Assault',
   description:
     "**Prerequisites:** Warlord, Tactical Presence class feature\n\nWhen an ally who can see you spends an action point to make an attack, the attack's damage roll gains a bonus equal to your Intelligence modifier.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Warlord), Traits.traitPrerequisite(TacticalPresence)],
   effects: [],
 })

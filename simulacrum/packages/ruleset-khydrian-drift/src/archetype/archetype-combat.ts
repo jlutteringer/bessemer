@@ -1,7 +1,7 @@
 import { Abilities, Effects, RulesetEntities, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Expressions } from '@bessemer/cornerstone/expression'
-import { Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
+import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Stamina, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 
@@ -9,7 +9,7 @@ export const BasicCombatTraining = Traits.defineTrait('combat/basic-training', {
   name: 'Basic Combat Training',
   description:
     '*"Blessed be the LORD my strength, which teacheth my hands to war, and my fingers to fight."*\n\nEvery corporate security force, street gang, and private militia teaches the same fundamentals: how to hold a weapon, move under fire, and keep your head when the shooting starts. It is the foundation every other fighting discipline is built on.',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [],
   effects: [],
 })
@@ -77,7 +77,7 @@ export const AdvancedCombatTraining = Traits.defineTrait('combat/advanced-traini
   name: 'Advanced Combat Training',
   description:
     '*"Iron sharpeneth iron."*\n\nBeyond the fundamentals lies training reserved for corporate strike teams, special forces, and veteran mercenaries: coordinated assaults, breaching, and fighting through chaos without hesitation. It is where a fighter begins to specialize, toward the blade or toward the gun.',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
   effects: [Effects.gainLoadoutSlot(GeneralLoadoutSlot)],
 })
@@ -90,7 +90,7 @@ export const MeleeCombatMastery = Traits.defineTrait('combat/melee-mastery', {
   name: 'Melee Combat Mastery',
   description:
     '*"With the jawbone of an ass have I slain a thousand men."*\n\nIn a world of guns, the fighters who choose to close the distance are either desperate or very, very good. Melee mastery covers blades, blunt weapons, and bare hands, and turns every step inside an enemy\'s reach into an advantage.',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(AdvancedCombatTraining), Expressions.not(Traits.traitPrerequisite(RangedCombatMasteryReference))],
   effects: [],
 })
@@ -99,7 +99,7 @@ export const RangedCombatMastery = Traits.defineTrait('combat/ranged-mastery', {
   name: 'Ranged Combat Mastery',
   description:
     '*"He hath bent his bow, and made it ready."*\n\nWhether with a pistol at ten paces or a rifle across a city block, the discipline is the same: preparation, patience, and precision. Ranged mastery lets a fighter control an engagement from beyond the reach of most enemies.',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(AdvancedCombatTraining), Expressions.not(Traits.traitPrerequisite(MeleeCombatMasteryReference))],
   effects: [],
 })

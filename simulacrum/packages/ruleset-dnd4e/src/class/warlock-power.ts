@@ -10,7 +10,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Warlock } from '@simulacrum/ruleset-dnd4e/class/class-warlock'
 
 // Generated from the Player's Handbook Warlock powers, levels 1-5. Powers are learned through character options, so they
@@ -21,7 +21,7 @@ export const DiabolicGrasp = Abilities.defineAbility('warlock/power/diabolic-gra
   description:
     '*You crook your hand into the shape of a claw, and a great talon of sulfurous darkness forms around your enemy. It rakes fiercely at him and drags him a short distance before dissipating again.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -37,7 +37,7 @@ export const DreadfulWord = Abilities.defineAbility('warlock/power/dreadful-word
   name: 'Dreadful Word',
   description: '*You whisper one word of an unthinkable cosmic secret to your foe. His mind reels in terror.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -53,7 +53,7 @@ export const VampiricEmbrace = Abilities.defineAbility('warlock/power/vampiric-e
   name: 'Vampiric Embrace',
   description: "*A ribbon of twisting darkness streams from your hand to your target's heart, feeding on his vital force as you grow stronger.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -70,7 +70,7 @@ export const Witchfire = Abilities.defineAbility('warlock/power/witchfire', {
   description:
     "*From the mystic energy of the Feywild, you draw a brilliant white flame and set it in your enemy's mind and body. Rivulets of argent fire stream up into the air from his eyes, mouth, and hands; agony disrupts his very thoughts.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -87,7 +87,7 @@ export const ArmorOfAgathys = Abilities.defineAbility('warlock/power/armor-of-ag
   description:
     '*You surround yourself in a sheath of black ice from a dark and doleful realm. It protects you from attack and radiates fierce cold.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -104,7 +104,7 @@ export const CurseOfTheDarkDream = Abilities.defineAbility('warlock/power/curse-
   description:
     '*You inflict a waking nightmare upon your enemy so that he can no longer tell what is real and what exists only in his mind. Under its influence he staggers about, trying to avoid falling from imaginary heights or stepping on unreal serpents.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -121,7 +121,7 @@ export const DreadStar = Abilities.defineAbility('warlock/power/dread-star', {
   description:
     '*You create a fist-sized orb of painful blue-white radiance that whirls around your enemy, searing him. Fierce rays shoot from it like jabbing daggers of light, fencing him in where he stands.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -138,7 +138,7 @@ export const FlamesOfPhlegethos = Abilities.defineAbility('warlock/power/flames-
   description:
     '*Rivulets of clinging liquid fire appear and cascade over your target. Anything that is flammable ignites at once and burns long after the streams of magic fire fade away.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -154,7 +154,7 @@ export const BeguilingTongue = Abilities.defineAbility('warlock/power/beguiling-
   name: 'Beguiling Tongue',
   description: '*You channel the grace and glibness of your fey patrons for a time. Your voice gains great power and eloquence.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -171,7 +171,7 @@ export const EtherealStride = Abilities.defineAbility('warlock/power/ethereal-st
   description:
     '*You shift your body out of phase with the world for an instant, teleporting a short distance. When you reappear, you are still somewhat out of phase and difficult to harm or hinder for a short time.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -188,7 +188,7 @@ export const FiendishResilience = Abilities.defineAbility('warlock/power/fiendis
   description:
     '*You call upon your patron entities to protect you with their fell power. Your flesh is infused with mystic strength, lessening the effect of enemy blows.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -204,7 +204,7 @@ export const ShadowVeil = Abilities.defineAbility('warlock/power/shadow-veil', {
   name: 'Shadow Veil',
   description: '*You garb yourself in a pall of murky darkness. While it lasts, you are difficult to see or hear.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -220,7 +220,7 @@ export const EldritchRain = Abilities.defineAbility('warlock/power/eldritch-rain
   name: 'Eldritch Rain',
   description: '*You fire purple rays of eldritch power at your foes.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -236,7 +236,7 @@ export const FieryBolt = Abilities.defineAbility('warlock/power/fiery-bolt', {
   name: 'Fiery Bolt',
   description: '*You call up a bolt of golden flame and hurl it at your foe. Anyone standing close to him is burned as well.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -253,7 +253,7 @@ export const FrigidDarkness = Abilities.defineAbility('warlock/power/frigid-dark
   description:
     '*You create a freezing black shadow around your foe, a small taste of the icy darkness in the depths of the night sky. He is unable to see well enough to defend himself while the shadows cling to him.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -270,7 +270,7 @@ export const OtherwindStride = Abilities.defineAbility('warlock/power/otherwind-
   description:
     '*You call up an unseen maelstrom of fey power that lashes nearby creatures . . . and you step into the vortex and emerge somewhere a short distance away.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -287,7 +287,7 @@ export const AvernianEruption = Abilities.defineAbility('warlock/power/avernian-
   description:
     '*Acrid orange fumes hiss up from beneath the ground, and then suddenly ignite in a thundering detonation. Any creature in the area is burned by the searing flames.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -304,7 +304,7 @@ export const CrownOfMadness = Abilities.defineAbility('warlock/power/crown-of-ma
   description:
     "*You cause an illusory, twisted crown to appear around the target's head. Under its psychic assault, your enemy loses the ability to distinguish friend from foe.*",
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -321,7 +321,7 @@ export const CurseOfTheBloodyFangs = Abilities.defineAbility('warlock/power/curs
   description:
     '*You call up a pack of ferocious, phantasmal beasts from the darkest and most savage depths of the Feywild. Only their slavering fangs appear in this world, snapping and rending in a mad frenzy at the foe you have cursed.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(
@@ -338,7 +338,7 @@ export const HungerOfHadar = Abilities.defineAbility('warlock/power/hunger-of-ha
   description:
     '*You create a zone of complete, impermeable darkness filled with flying, fluttering, fanged shadows. The shadows rend at the very life force of creatures caught within.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
     Effects.descriptive(

@@ -7,8 +7,8 @@ import * as Tiptap from '@bessemer/core/tiptap'
 import { Expression } from '@bessemer/cornerstone/expression'
 import { Objects, Patches } from '@bessemer/cornerstone'
 import { Patch, Patchable } from '@bessemer/cornerstone/patch'
-import * as Archetypes from '@simulacrum/ruleset/archetype'
-import { AbilityArchetype, AbilityArchetypeReference, ArchetypeFilter, ArchetypeFilterProps } from '@simulacrum/ruleset/archetype'
+import * as Tags from '@simulacrum/ruleset/tag'
+import { AbilityTag, AbilityTagReference, TagFilter, TagFilterProps } from '@simulacrum/ruleset/tag'
 import * as Targetings from '@simulacrum/ruleset/targeting'
 import { Targeting, TargetingProps } from '@simulacrum/ruleset/targeting'
 import { Duration, DurationType } from '@simulacrum/ruleset/duration'
@@ -20,7 +20,7 @@ export type AbilityReference = RulesetEntityReference<typeof RulesetEntityType.A
 export type Ability = RulesetEntity & {
   id: AbilityReference
 
-  archetypes: Array<AbilityArchetypeReference>
+  tags: Array<AbilityTagReference>
   prerequisites: Array<Expression<boolean>>
   effects: Array<AbilityEffect>
   actions: Array<AbilityAction>
@@ -41,7 +41,7 @@ export type AbilityAction = {
 }
 
 export type AbilityProps = RulesetEntityProps & {
-  archetypes?: Array<AbilityArchetype>
+  tags?: Array<AbilityTag>
   prerequisites?: Array<Expression<boolean>>
   effects?: Array<AbilityEffect>
   actions?: Array<AbilityActionProps>
@@ -91,7 +91,7 @@ export const defineAbility = <P extends AbilityProps>(reference: string, props: 
     id: buildReference(RulesetEntityType.Ability, reference),
     name: props.name,
     description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
-    archetypes: (props.archetypes ?? []).map((it) => it.id),
+    tags: (props.tags ?? []).map((it) => it.id),
     prerequisites: props.prerequisites ?? [],
     effects: props.effects ?? [],
     actions: (props.actions ?? []).map((it) => resolveAction(it, costs)),
@@ -124,18 +124,18 @@ const mapListPatch = <T, N>(patch: Patch<Array<T>> | Patchable<Array<T>>, mapper
 }
 
 export type AbilityFilterProps = {
-  archetypes?: ArchetypeFilterProps<AbilityArchetype>
+  tags?: TagFilterProps<AbilityTag>
   specificOptions?: Array<Ability>
 }
 
 export type AbilityFilter = {
-  archetypes: ArchetypeFilter<AbilityArchetypeReference>
+  tags: TagFilter<AbilityTagReference>
   specificOptions: Array<AbilityReference>
 }
 
 export const filter = (props: AbilityFilterProps): AbilityFilter => {
   return {
-    archetypes: Archetypes.filter(props.archetypes ?? []),
+    tags: Tags.filter(props.tags ?? []),
     specificOptions: (props.specificOptions ?? []).map((it) => it.id),
   }
 }

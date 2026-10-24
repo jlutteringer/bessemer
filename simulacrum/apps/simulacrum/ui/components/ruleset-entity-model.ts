@@ -1,5 +1,5 @@
 import { CharacterSheet } from '@simulacrum/engine/character/character'
-import { Archetypes, Characters, Effects, ResourcePools, Rulesets } from '@simulacrum/engine'
+import { Tags, Characters, Effects, ResourcePools, Rulesets } from '@simulacrum/engine'
 import { Trait } from '@simulacrum/engine/trait'
 import { Ruleset } from '@simulacrum/engine/ruleset'
 import { Ability } from '@simulacrum/engine/ability'
@@ -89,9 +89,9 @@ export const getRangeLabel = ({ range }: TargetSelection, ruleset: Ruleset, eval
 
 export const getTargetLabel = ({ count, filter }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string => {
   const amount = typeof count === 'number' ? count : evaluate?.(count) ?? null
-  const kinds = Arrays.isEmpty(filter.archetypes)
+  const kinds = Arrays.isEmpty(filter.tags)
     ? 'target'
-    : filter.archetypes.map((group) => group.map((it) => Archetypes.getArchetypeById(it, ruleset).name).join(' or ')).join(' ')
+    : filter.tags.map((group) => group.map((it) => Tags.getTagById(it, ruleset).name).join(' or ')).join(' ')
 
   return Objects.isNil(amount) ? kinds : `${amount} ${kinds}`
 }

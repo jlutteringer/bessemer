@@ -1,11 +1,11 @@
-import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Patches } from '@bessemer/cornerstone'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
 
 // FUTURE once skills are modelled as characteristics, these should require (and raise) a proficiency level rather than a specific
 // proficiency trait
-export const SkillExpertise = Archetypes.defineTraitArchetype('skill-expertise', { name: 'Skill Expertise' })
+export const SkillExpertise = Tags.defineTraitTag('skill-expertise', { name: 'Skill Expertise' })
 
 const expertiseDescription = (skill: string): string => {
   return `You have **Expertise** in ${skill}: your Proficiency Bonus is doubled for any ability check you make with it.`
@@ -15,7 +15,7 @@ export const Acrobatics = Traits.defineTrait('skill-expertise/acrobatics', {
   name: 'Acrobatics (Expertise)',
   description: expertiseDescription('Acrobatics'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Acrobatics)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Acrobatics, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -25,7 +25,7 @@ export const AnimalHandling = Traits.defineTrait('skill-expertise/animal-handlin
   name: 'Animal Handling (Expertise)',
   description: expertiseDescription('Animal Handling'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.AnimalHandling)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(
       PlayerCharacteristics.AnimalHandling,
@@ -38,7 +38,7 @@ export const Arcana = Traits.defineTrait('skill-expertise/arcana', {
   name: 'Arcana (Expertise)',
   description: expertiseDescription('Arcana'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Arcana)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Arcana, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -48,7 +48,7 @@ export const Athletics = Traits.defineTrait('skill-expertise/athletics', {
   name: 'Athletics (Expertise)',
   description: expertiseDescription('Athletics'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Athletics)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Athletics, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -58,7 +58,7 @@ export const Deception = Traits.defineTrait('skill-expertise/deception', {
   name: 'Deception (Expertise)',
   description: expertiseDescription('Deception'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Deception)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Deception, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -68,7 +68,7 @@ export const History = Traits.defineTrait('skill-expertise/history', {
   name: 'History (Expertise)',
   description: expertiseDescription('History'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.History)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.History, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -78,7 +78,7 @@ export const Insight = Traits.defineTrait('skill-expertise/insight', {
   name: 'Insight (Expertise)',
   description: expertiseDescription('Insight'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Insight)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Insight, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -88,7 +88,7 @@ export const Intimidation = Traits.defineTrait('skill-expertise/intimidation', {
   name: 'Intimidation (Expertise)',
   description: expertiseDescription('Intimidation'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Intimidation)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(
       PlayerCharacteristics.Intimidation,
@@ -101,7 +101,7 @@ export const Investigation = Traits.defineTrait('skill-expertise/investigation',
   name: 'Investigation (Expertise)',
   description: expertiseDescription('Investigation'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Investigation)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(
       PlayerCharacteristics.Investigation,
@@ -114,7 +114,7 @@ export const Medicine = Traits.defineTrait('skill-expertise/medicine', {
   name: 'Medicine (Expertise)',
   description: expertiseDescription('Medicine'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Medicine)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Medicine, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -124,7 +124,7 @@ export const Nature = Traits.defineTrait('skill-expertise/nature', {
   name: 'Nature (Expertise)',
   description: expertiseDescription('Nature'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Nature)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Nature, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -134,7 +134,7 @@ export const Perception = Traits.defineTrait('skill-expertise/perception', {
   name: 'Perception (Expertise)',
   description: expertiseDescription('Perception'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Perception)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Perception, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -144,7 +144,7 @@ export const Performance = Traits.defineTrait('skill-expertise/performance', {
   name: 'Performance (Expertise)',
   description: expertiseDescription('Performance'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Performance)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(
       PlayerCharacteristics.Performance,
@@ -157,7 +157,7 @@ export const Persuasion = Traits.defineTrait('skill-expertise/persuasion', {
   name: 'Persuasion (Expertise)',
   description: expertiseDescription('Persuasion'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Persuasion)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Persuasion, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -167,7 +167,7 @@ export const Religion = Traits.defineTrait('skill-expertise/religion', {
   name: 'Religion (Expertise)',
   description: expertiseDescription('Religion'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Religion)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Religion, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -177,7 +177,7 @@ export const SleightOfHand = Traits.defineTrait('skill-expertise/sleight-of-hand
   name: 'Sleight of Hand (Expertise)',
   description: expertiseDescription('Sleight of Hand'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.SleightOfHand)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(
       PlayerCharacteristics.SleightOfHand,
@@ -190,7 +190,7 @@ export const Stealth = Traits.defineTrait('skill-expertise/stealth', {
   name: 'Stealth (Expertise)',
   description: expertiseDescription('Stealth'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Stealth)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Stealth, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],
@@ -200,7 +200,7 @@ export const Survival = Traits.defineTrait('skill-expertise/survival', {
   name: 'Survival (Expertise)',
   description: expertiseDescription('Survival'),
   prerequisites: [Traits.traitPrerequisite(SkillProficiencies.Survival)],
-  archetypes: [SkillExpertise],
+  tags: [SkillExpertise],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.Survival, Attributes.modifier(Patches.sum(PlayerCharacteristics.ProficiencyBonus.variable))),
   ],

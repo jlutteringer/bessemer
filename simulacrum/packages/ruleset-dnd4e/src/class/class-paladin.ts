@@ -3,7 +3,7 @@ import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
-import { AtWillPower, Class, ClassFeature, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/archetype'
+import { AtWillPower, Class, ClassFeature, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
 import { Fortitude, HealingSurges, HitPoints, Reflex, Will, WisdomModifier } from '@simulacrum/ruleset-dnd4e/characteristic'
 import { ChannelDivinity } from '@simulacrum/ruleset-dnd4e/common'
 import { SelectDeity } from '@simulacrum/ruleset-dnd4e/deity'
@@ -16,14 +16,14 @@ export const ChannelDivinityFeature = Traits.defineTrait('paladin/channel-divini
   name: 'Channel Divinity',
   description:
     'Once per encounter you can invoke divine power, filling yourself with the might of your patron deity. With the divine might you invoke you can wield special powers, such as *divine mettle* and *divine strength*. Some paladins learn other uses for this feature; for instance, the divinity feats in Chapter 6 grant characters with access to the Channel Divinity class feature the ability to use additional special powers.\n\nRegardless of how many different uses for Channel Divinity you know, you can use only one such ability per encounter. The special ability or power you invoke works just like your other powers.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.gainResourcePool(ChannelDivinity)],
 })
 
 export const DivineChallengeFeature = Traits.defineTrait('paladin/divine-challenge', {
   name: 'Divine Challenge',
   description: 'The challenge of a paladin is filled with divine menace. You can use the *divine challenge* power to mark an enemy of your choice.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
@@ -31,14 +31,14 @@ export const LayOnHandsFeature = Traits.defineTrait('paladin/lay-on-hands', {
   name: 'Lay on Hands',
   description:
     'Using the *lay on hands* power, paladins can grant their comrades additional resilience with a touch of their hands and a short prayer, though they must give of their own strength to do so.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
 export const DivineMettle = Abilities.defineAbility('paladin/power/divine-mettle', {
   name: 'Channel Divinity: Divine Mettle',
   description: '*Your unswerving faith in your deity empowers a nearby creature to resist a debilitating affliction.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(ChannelDivinityFeature)],
   effects: [
     Effects.descriptive(
@@ -51,7 +51,7 @@ export const DivineMettle = Abilities.defineAbility('paladin/power/divine-mettle
 export const DivineStrength = Abilities.defineAbility('paladin/power/divine-strength', {
   name: 'Channel Divinity: Divine Strength',
   description: '*You petition your deity for the divine strength to lay low your enemies.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(ChannelDivinityFeature)],
   effects: [
     Effects.descriptive(
@@ -64,7 +64,7 @@ export const DivineStrength = Abilities.defineAbility('paladin/power/divine-stre
 export const DivineChallenge = Abilities.defineAbility('paladin/power/divine-challenge', {
   name: 'Divine Challenge',
   description: '*You boldly confront a nearby enemy, searing it with divine light if it ignores your challenge.*',
-  archetypes: [AtWillPower, UtilityPower],
+  tags: [AtWillPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(DivineChallengeFeature)],
   effects: [
     Effects.descriptive(
@@ -77,7 +77,7 @@ export const DivineChallenge = Abilities.defineAbility('paladin/power/divine-cha
 export const LayOnHands = Abilities.defineAbility('paladin/power/lay-on-hands', {
   name: 'Lay on Hands',
   description: '*Your divine touch instantly heals wounds.*',
-  archetypes: [AtWillPower, UtilityPower],
+  tags: [AtWillPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(LayOnHandsFeature)],
   effects: [
     Effects.descriptive(
@@ -111,7 +111,7 @@ export const Paladin = Traits.defineTrait('paladin', {
   name: 'Paladin',
   description:
     '**Defender.** You are extremely durable, with high hit points and the ability to wear the heaviest armor. You can issue bold challenges to foes and compel them to fight you rather than your allies.\n\n**Power Source:** Divine · **Key Abilities:** Strength, Charisma, Wisdom\n\n**Armor Proficiencies:** Cloth, leather, hide, chainmail, scale, plate; light shield, heavy shield\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged · **Implements:** Holy symbol\n\n**Bonus to Defense:** +1 Fortitude, +1 Reflex, +1 Will · **Hit Points:** 15 + Constitution score at 1st level, 6 per level gained · **Healing Surges:** 10 + Constitution modifier',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainCharacterOption(SelectDeity),
     Effects.modifyCharacteristic(
@@ -152,7 +152,7 @@ export const HealingHands = Traits.defineTrait('feat/healing-hands', {
   name: 'Healing Hands',
   description:
     '**Prerequisites:** Paladin, *lay on hands* power\n\nWhen you use the *lay on hands* power, the affected ally regains additional hit points equal to your Charisma modifier.',
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Paladin), Traits.traitPrerequisite(LayOnHandsFeature)],
   effects: [],
 })

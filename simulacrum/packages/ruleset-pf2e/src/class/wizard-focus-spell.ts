@@ -1,12 +1,12 @@
 import { Abilities } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
 export const CharmingPush = Abilities.defineAbility('spell/charming-push', {
   name: 'Charming Push',
   description: '*Uncommon, Concentrate, Focus, Incapacitation, Mental, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -23,7 +23,7 @@ export const CharmingPush = Abilities.defineAbility('spell/charming-push', {
 export const Earthworks = Abilities.defineAbility('spell/earthworks', {
   name: 'Earthworks',
   description: '*Uncommon, Concentrate, Earth, Focus, Manipulate, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -39,7 +39,7 @@ export const Earthworks = Abilities.defineAbility('spell/earthworks', {
 export const ForceBolt = Abilities.defineAbility('spell/force-bolt', {
   name: 'Force Bolt',
   description: '*Uncommon, Focus, Force, Manipulate, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -56,7 +56,7 @@ export const ForceBolt = Abilities.defineAbility('spell/force-bolt', {
 export const FortifySummoning = Abilities.defineAbility('spell/fortify-summoning', {
   name: 'Fortify Summoning',
   description: '*Uncommon, Concentrate, Focus, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -73,7 +73,7 @@ export const FortifySummoning = Abilities.defineAbility('spell/fortify-summoning
 export const HandOfTheApprentice = Abilities.defineAbility('spell/hand-of-the-apprentice', {
   name: 'Hand of the Apprentice',
   description: '*Uncommon, Attack, Focus, Manipulate, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -90,7 +90,7 @@ export const HandOfTheApprentice = Abilities.defineAbility('spell/hand-of-the-ap
 export const ProtectiveWards = Abilities.defineAbility('spell/protective-wards', {
   name: 'Protective Wards',
   description: '*Uncommon, Aura, Focus, Manipulate, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -106,7 +106,7 @@ export const ProtectiveWards = Abilities.defineAbility('spell/protective-wards',
 export const ScrambleBody = Abilities.defineAbility('spell/scramble-body', {
   name: 'Scramble Body',
   description: '*Uncommon, Concentrate, Focus, Manipulate, Wizard*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {

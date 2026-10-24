@@ -3,7 +3,7 @@ import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
-import { AttackPower, Class, ClassFeature, EncounterPower, UtilityPower } from '@simulacrum/ruleset-dnd4e/archetype'
+import { AttackPower, Class, ClassFeature, EncounterPower, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
 import { HealingSurges, HitPoints, Will } from '@simulacrum/ruleset-dnd4e/characteristic'
 import * as Armor from '@simulacrum/ruleset-dnd4e/armor'
 import * as Skills from '@simulacrum/ruleset-dnd4e/skill'
@@ -17,14 +17,14 @@ export const ClericChannelDivinity = Traits.defineTrait('cleric/channel-divinity
   name: 'Channel Divinity',
   description:
     'Once per encounter you can invoke divine power, filling yourself with the might of your patron deity. With the divine might you invoke you can wield special powers, such as *turn undead* and *divine fortune*. Some clerics learn other uses for this feature; for instance, the divinity feats in Chapter 6 grant characters with access to the Channel Divinity class feature the ability to use additional special powers.\n\nRegardless of how many different uses for Channel Divinity you know, you can use only one such ability per encounter. The special ability or power you invoke works just like your other powers.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.gainResourcePool(ChannelDivinity)],
 })
 
 export const DivineFortune = Abilities.defineAbility('cleric/feature/divine-fortune', {
   name: 'Channel Divinity: Divine Fortune',
   description: '*In the face of peril, you hold true to your faith and receive a special boon.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(ClericChannelDivinity)],
   effects: [
     Effects.descriptive(
@@ -37,7 +37,7 @@ export const DivineFortune = Abilities.defineAbility('cleric/feature/divine-fort
 export const TurnUndead = Abilities.defineAbility('cleric/feature/turn-undead', {
   name: 'Channel Divinity: Turn Undead',
   description: '*You sear undead foes, push them back, and root them in place.*',
-  archetypes: [EncounterPower, AttackPower],
+  tags: [EncounterPower, AttackPower],
   prerequisites: [Traits.traitPrerequisite(ClericChannelDivinity)],
   effects: [
     Effects.descriptive(
@@ -51,21 +51,21 @@ export const HealersLore = Traits.defineTrait('cleric/healers-lore', {
   name: "Healer's Lore",
   description:
     'Your study of healing allows you to make the most of your healing prayers. When you grant healing with one of your cleric powers that has the healing keyword, add your Wisdom modifier to the hit points the recipient regains.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
 export const HealingWordFeature = Traits.defineTrait('cleric/healing-word', {
   name: 'Healing Word',
   description: 'Using the *healing word* power, clerics can grant their comrades additional resilience with nothing more than a short prayer.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
 export const HealingWord = Abilities.defineAbility('cleric/feature/healing-word', {
   name: 'Healing Word',
   description: '*You whisper a brief prayer as divine light washes over your target, helping to mend its wounds.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(HealingWordFeature)],
   effects: [
     Effects.descriptive(
@@ -81,7 +81,7 @@ export const RitualCasting = Traits.defineTrait('cleric/ritual-casting', {
   name: 'Ritual Casting',
   description:
     'You gain the Ritual Caster feat (page 200) as a bonus feat, allowing you to use magical rituals (see Chapter 10). You possess a ritual book, and it contains two rituals you have mastered: the Gentle Repose ritual and one other 1st-level ritual of your choice.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.gainTrait(RitualCaster)],
 })
 
@@ -103,7 +103,7 @@ export const Cleric = Traits.defineTrait('cleric', {
   name: 'Cleric',
   description:
     "**Leader.** You lead by shielding allies with your prayers, healing, and using powers that improve your allies' attacks.\n\n**Power Source:** Divine · **Key Abilities:** Wisdom, Strength, Charisma\n\n**Armor Proficiencies:** Cloth, leather, hide, chainmail\n\n**Weapon Proficiencies:** Simple melee, simple ranged · **Implement:** Holy symbol\n\n**Bonus to Defense:** +2 Will · **Hit Points:** 12 + Constitution score at 1st level, 5 per level gained · **Healing Surges:** 7 + Constitution modifier",
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainCharacterOption(SelectDeity),
     Effects.modifyCharacteristic(

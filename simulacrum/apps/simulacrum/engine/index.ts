@@ -1,6 +1,6 @@
 import * as Attributes from './attribute'
 import * as Characteristics from './characteristic'
-import * as Archetypes from './archetype'
+import * as Tags from './tag'
 import * as Traits from './trait'
 import * as Loadout from './loadout'
 import * as Effects from './effect'
@@ -13,7 +13,7 @@ import { CharacterOptions, CharacterProgression, Characters } from './character'
 export {
   Attributes,
   Characteristics,
-  Archetypes,
+  Tags,
   Traits,
   Loadout,
   Effects,

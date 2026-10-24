@@ -1,13 +1,13 @@
 import { Abilities } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
 export const AgileFeet = Abilities.defineAbility('spell/agile-feet', {
   name: 'Agile Feet',
   description: '*Uncommon, Cleric, Focus, Manipulate*\n\n**Domain** Travel',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -23,7 +23,7 @@ export const AgileFeet = Abilities.defineAbility('spell/agile-feet', {
 export const AppearanceOfWealth = Abilities.defineAbility('spell/appearance-of-wealth', {
   name: 'Appearance of Wealth',
   description: '*Uncommon, Cleric, Concentrate, Focus, Illusion, Manipulate*\n\n**Domain** Wealth',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -40,7 +40,7 @@ export const AppearanceOfWealth = Abilities.defineAbility('spell/appearance-of-w
 export const AthleticRush = Abilities.defineAbility('spell/athletic-rush', {
   name: 'Athletic Rush',
   description: '*Uncommon, Cleric, Focus, Manipulate*\n\n**Domain** Might',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -56,7 +56,7 @@ export const AthleticRush = Abilities.defineAbility('spell/athletic-rush', {
 export const BitOfLuck = Abilities.defineAbility('spell/bit-of-luck', {
   name: 'Bit of Luck',
   description: '*Uncommon, Cleric, Concentrate, Focus, Fortune, Manipulate*\n\n**Domain** Luck',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -73,7 +73,7 @@ export const BitOfLuck = Abilities.defineAbility('spell/bit-of-luck', {
 export const CharmingTouch = Abilities.defineAbility('spell/charming-touch', {
   name: 'Charming Touch',
   description: '*Uncommon, Cleric, Emotion, Focus, Incapacitation, Manipulate, Mental, Subtle*\n\n**Domain** Passion',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -90,7 +90,7 @@ export const CharmingTouch = Abilities.defineAbility('spell/charming-touch', {
 export const CloakOfShadow = Abilities.defineAbility('spell/cloak-of-shadow', {
   name: 'Cloak of Shadow',
   description: '*Uncommon, Aura, Cleric, Darkness, Focus, Manipulate, Shadow*\n\n**Domain** Darkness',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -107,7 +107,7 @@ export const CloakOfShadow = Abilities.defineAbility('spell/cloak-of-shadow', {
 export const CreativeSplash = Abilities.defineAbility('spell/creative-splash', {
   name: 'Creative Splash',
   description: '*Uncommon, Cleric, Concentrate, Focus, Illusion, Manipulate, Visual*\n\n**Domain** Creation',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -124,7 +124,7 @@ export const CreativeSplash = Abilities.defineAbility('spell/creative-splash', {
 export const CryOfDestruction = Abilities.defineAbility('spell/cry-of-destruction', {
   name: 'Cry of Destruction',
   description: '*Uncommon, Cleric, Concentrate, Focus, Manipulate, Sonic*\n\n**Domain** Destruction',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -141,7 +141,7 @@ export const CryOfDestruction = Abilities.defineAbility('spell/cry-of-destructio
 export const DazzlingFlash = Abilities.defineAbility('spell/dazzling-flash', {
   name: 'Dazzling Flash',
   description: '*Uncommon, Cleric, Concentrate, Focus, Light, Manipulate, Visual*\n\n**Domain** Sun',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -158,7 +158,7 @@ export const DazzlingFlash = Abilities.defineAbility('spell/dazzling-flash', {
 export const DeathsCall = Abilities.defineAbility('spell/deaths-call', {
   name: "Death's Call",
   description: '*Uncommon, Cleric, Concentrate, Focus*\n\n**Domain** Death',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -174,7 +174,7 @@ export const DeathsCall = Abilities.defineAbility('spell/deaths-call', {
 export const FaceInTheCrowd = Abilities.defineAbility('spell/face-in-the-crowd', {
   name: 'Face in the Crowd',
   description: '*Uncommon, Cleric, Focus, Manipulate, Visual*\n\n**Domain** Cities',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -190,7 +190,7 @@ export const FaceInTheCrowd = Abilities.defineAbility('spell/face-in-the-crowd',
 export const FireRay = Abilities.defineAbility('spell/fire-ray', {
   name: 'Fire Ray',
   description: '*Uncommon, Attack, Cleric, Concentrate, Fire, Focus, Manipulate*\n\n**Domain** Fire',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -207,7 +207,7 @@ export const FireRay = Abilities.defineAbility('spell/fire-ray', {
 export const HealersBlessing = Abilities.defineAbility('spell/healers-blessing', {
   name: "Healer's Blessing",
   description: '*Uncommon, Cleric, Concentrate, Focus*\n\n**Domain** Healing',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -224,7 +224,7 @@ export const HealersBlessing = Abilities.defineAbility('spell/healers-blessing',
 export const HurtlingStone = Abilities.defineAbility('spell/hurtling-stone', {
   name: 'Hurtling Stone',
   description: '*Uncommon, Attack, Cleric, Earth, Focus, Manipulate*\n\n**Domain** Earth',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -241,7 +241,7 @@ export const HurtlingStone = Abilities.defineAbility('spell/hurtling-stone', {
 export const IgniteAmbition = Abilities.defineAbility('spell/ignite-ambition', {
   name: 'Ignite Ambition',
   description: '*Uncommon, Cleric, Concentrate, Emotion, Focus, Mental, Subtle*\n\n**Domain** Ambition',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -257,7 +257,7 @@ export const IgniteAmbition = Abilities.defineAbility('spell/ignite-ambition', {
 export const MagicsVessel = Abilities.defineAbility('spell/magics-vessel', {
   name: "Magic's Vessel",
   description: '*Uncommon, Cleric, Focus, Manipulate*\n\n**Domain** Magic',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -274,7 +274,7 @@ export const MagicsVessel = Abilities.defineAbility('spell/magics-vessel', {
 export const Moonbeam = Abilities.defineAbility('spell/moonbeam', {
   name: 'Moonbeam',
   description: '*Uncommon, Attack, Cleric, Concentrate, Fire, Focus, Light, Manipulate*\n\n**Domain** Moon',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -291,7 +291,7 @@ export const Moonbeam = Abilities.defineAbility('spell/moonbeam', {
 export const Overstuff = Abilities.defineAbility('spell/overstuff', {
   name: 'Overstuff',
   description: '*Uncommon, Cleric, Concentrate, Focus, Manipulate*\n\n**Domain** Indulgence',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -308,7 +308,7 @@ export const Overstuff = Abilities.defineAbility('spell/overstuff', {
 export const PerfectedMind = Abilities.defineAbility('spell/perfected-mind', {
   name: 'Perfected Mind',
   description: '*Uncommon, Cleric, Concentrate, Focus*\n\n**Domain** Perfection',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -324,7 +324,7 @@ export const PerfectedMind = Abilities.defineAbility('spell/perfected-mind', {
 export const ProtectorsSacrifice = Abilities.defineAbility('spell/protectors-sacrifice', {
   name: "Protector's Sacrifice",
   description: '*Uncommon, Cleric, Focus, Manipulate*\n\n**Domain** Protection',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -340,7 +340,7 @@ export const ProtectorsSacrifice = Abilities.defineAbility('spell/protectors-sac
 export const PushingGust = Abilities.defineAbility('spell/pushing-gust', {
   name: 'Pushing Gust',
   description: '*Uncommon, Air, Cleric, Concentrate, Focus, Manipulate*\n\n**Domain** Air',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -357,7 +357,7 @@ export const PushingGust = Abilities.defineAbility('spell/pushing-gust', {
 export const ReadFate = Abilities.defineAbility('spell/read-fate', {
   name: 'Read Fate',
   description: '*Uncommon, Cleric, Concentrate, Focus, Manipulate, Prediction*\n\n**Domain** Fate',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -374,7 +374,7 @@ export const ReadFate = Abilities.defineAbility('spell/read-fate', {
 export const SavorTheSting = Abilities.defineAbility('spell/savor-the-sting', {
   name: 'Savor the Sting',
   description: '*Uncommon, Cleric, Focus, Manipulate, Mental, Nonlethal*\n\n**Domain** Pain',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -391,7 +391,7 @@ export const SavorTheSting = Abilities.defineAbility('spell/savor-the-sting', {
 export const ScholarlyRecollection = Abilities.defineAbility('spell/scholarly-recollection', {
   name: 'Scholarly Recollection',
   description: '*Uncommon, Cleric, Focus, Fortune*\n\n**Domain** Knowledge',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -407,7 +407,7 @@ export const ScholarlyRecollection = Abilities.defineAbility('spell/scholarly-re
 export const SoothingWords = Abilities.defineAbility('spell/soothing-words', {
   name: 'Soothing Words',
   description: '*Uncommon, Cleric, Concentrate, Emotion, Focus, Mental*\n\n**Domain** Family',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -424,7 +424,7 @@ export const SoothingWords = Abilities.defineAbility('spell/soothing-words', {
 export const SuddenShift = Abilities.defineAbility('spell/sudden-shift', {
   name: 'Sudden Shift',
   description: '*Uncommon, Cleric, Focus, Manipulate*\n\n**Domain** Trickery',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -440,7 +440,7 @@ export const SuddenShift = Abilities.defineAbility('spell/sudden-shift', {
 export const SweetDream = Abilities.defineAbility('spell/sweet-dream', {
   name: 'Sweet Dream',
   description: '*Uncommon, Auditory, Cleric, Concentrate, Focus, Linguistic, Manipulate, Mental, Sleep*\n\n**Domain** Dreams',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -457,7 +457,7 @@ export const SweetDream = Abilities.defineAbility('spell/sweet-dream', {
 export const TidalSurge = Abilities.defineAbility('spell/tidal-surge', {
   name: 'Tidal Surge',
   description: '*Uncommon, Cleric, Focus, Manipulate, Water*\n\n**Domain** Water',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -474,7 +474,7 @@ export const TidalSurge = Abilities.defineAbility('spell/tidal-surge', {
 export const TouchOfObedience = Abilities.defineAbility('spell/touch-of-obedience', {
   name: 'Touch of Obedience',
   description: '*Uncommon, Cleric, Focus, Manipulate, Mental*\n\n**Domain** Tyranny',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -491,7 +491,7 @@ export const TouchOfObedience = Abilities.defineAbility('spell/touch-of-obedienc
 export const TouchOfUndeath = Abilities.defineAbility('spell/touch-of-undeath', {
   name: 'Touch of Undeath',
   description: '*Uncommon, Cleric, Focus, Manipulate, Void*\n\n**Domain** Undeath',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -508,7 +508,7 @@ export const TouchOfUndeath = Abilities.defineAbility('spell/touch-of-undeath', 
 export const UnimpededStride = Abilities.defineAbility('spell/unimpeded-stride', {
   name: 'Unimpeded Stride',
   description: '*Uncommon, Cleric, Focus, Manipulate*\n\n**Domain** Freedom',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -524,7 +524,7 @@ export const UnimpededStride = Abilities.defineAbility('spell/unimpeded-stride',
 export const VeilOfConfidence = Abilities.defineAbility('spell/veil-of-confidence', {
   name: 'Veil of Confidence',
   description: '*Uncommon, Cleric, Concentrate, Focus, Mental*\n\n**Domain** Confidence',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -540,7 +540,7 @@ export const VeilOfConfidence = Abilities.defineAbility('spell/veil-of-confidenc
 export const VibrantThorns = Abilities.defineAbility('spell/vibrant-thorns', {
   name: 'Vibrant Thorns',
   description: '*Uncommon, Cleric, Focus, Manipulate, Morph, Plant, Wood*\n\n**Domain** [Nature](characteristic:skill/nature)',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -556,7 +556,7 @@ export const VibrantThorns = Abilities.defineAbility('spell/vibrant-thorns', {
 export const WakingNightmare = Abilities.defineAbility('spell/waking-nightmare', {
   name: 'Waking Nightmare',
   description: '*Uncommon, Cleric, Concentrate, Emotion, Fear, Focus, Manipulate, Mental*\n\n**Domain** Nightmares',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -573,7 +573,7 @@ export const WakingNightmare = Abilities.defineAbility('spell/waking-nightmare',
 export const WeaponSurge = Abilities.defineAbility('spell/weapon-surge', {
   name: 'Weapon Surge',
   description: '*Uncommon, Cleric, Focus, Manipulate, Sanctified*\n\n**Domain** Zeal',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -590,7 +590,7 @@ export const WeaponSurge = Abilities.defineAbility('spell/weapon-surge', {
 export const WhisperingQuiet = Abilities.defineAbility('spell/whispering-quiet', {
   name: 'Whispering Quiet',
   description: '*Uncommon, Cleric, Focus, Manipulate, Sonic*\n\n**Domain** Secrecy',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -607,7 +607,7 @@ export const WhisperingQuiet = Abilities.defineAbility('spell/whispering-quiet',
 export const WordOfTruth = Abilities.defineAbility('spell/word-of-truth', {
   name: 'Word of Truth',
   description: '*Uncommon, Cleric, Concentrate, Focus*\n\n**Domain** Truth',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {

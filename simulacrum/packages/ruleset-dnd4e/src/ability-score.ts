@@ -1,52 +1,52 @@
-import { Archetypes, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as Characteristics from '@simulacrum/ruleset-dnd4e/characteristic'
 
-export const RacialAbilityBonus = Archetypes.defineTraitArchetype('ability-score/racial', { name: 'Racial Ability Bonus' })
-export const AbilityIncrease = Archetypes.defineTraitArchetype('ability-score/increase', { name: 'Ability Increase' })
+export const RacialAbilityBonus = Tags.defineTraitTag('ability-score/racial', { name: 'Racial Ability Bonus' })
+export const AbilityIncrease = Tags.defineTraitTag('ability-score/increase', { name: 'Ability Increase' })
 
 // A human's +2 to one ability score of its choice
 
 export const HumanStrength = Traits.defineTrait('ability-score/human/strength', {
   name: 'Strength +2',
   description: 'Increase your Strength score by 2.',
-  archetypes: [RacialAbilityBonus],
+  tags: [RacialAbilityBonus],
   effects: [Effects.modifyCharacteristic(Characteristics.Strength, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const HumanConstitution = Traits.defineTrait('ability-score/human/constitution', {
   name: 'Constitution +2',
   description: 'Increase your Constitution score by 2.',
-  archetypes: [RacialAbilityBonus],
+  tags: [RacialAbilityBonus],
   effects: [Effects.modifyCharacteristic(Characteristics.Constitution, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const HumanDexterity = Traits.defineTrait('ability-score/human/dexterity', {
   name: 'Dexterity +2',
   description: 'Increase your Dexterity score by 2.',
-  archetypes: [RacialAbilityBonus],
+  tags: [RacialAbilityBonus],
   effects: [Effects.modifyCharacteristic(Characteristics.Dexterity, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const HumanIntelligence = Traits.defineTrait('ability-score/human/intelligence', {
   name: 'Intelligence +2',
   description: 'Increase your Intelligence score by 2.',
-  archetypes: [RacialAbilityBonus],
+  tags: [RacialAbilityBonus],
   effects: [Effects.modifyCharacteristic(Characteristics.Intelligence, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const HumanWisdom = Traits.defineTrait('ability-score/human/wisdom', {
   name: 'Wisdom +2',
   description: 'Increase your Wisdom score by 2.',
-  archetypes: [RacialAbilityBonus],
+  tags: [RacialAbilityBonus],
   effects: [Effects.modifyCharacteristic(Characteristics.Wisdom, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const HumanCharisma = Traits.defineTrait('ability-score/human/charisma', {
   name: 'Charisma +2',
   description: 'Increase your Charisma score by 2.',
-  archetypes: [RacialAbilityBonus],
+  tags: [RacialAbilityBonus],
   effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(2)))],
 })
 
@@ -55,14 +55,14 @@ export const HumanCharisma = Traits.defineTrait('ability-score/human/charisma', 
 export const FirstStrengthIncrease = Traits.defineTrait('ability-score/increase/strength-first', {
   name: 'Strength +1',
   description: 'Increase your Strength score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   effects: [Effects.modifyCharacteristic(Characteristics.Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const SecondStrengthIncrease = Traits.defineTrait('ability-score/increase/strength-second', {
   name: 'Strength +1',
   description: 'Increase your Strength score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   prerequisites: [Expressions.not(Traits.traitPrerequisite(FirstStrengthIncrease))],
   effects: [Effects.modifyCharacteristic(Characteristics.Strength, Attributes.modifier(Patches.sum(1)))],
 })
@@ -70,14 +70,14 @@ export const SecondStrengthIncrease = Traits.defineTrait('ability-score/increase
 export const FirstConstitutionIncrease = Traits.defineTrait('ability-score/increase/constitution-first', {
   name: 'Constitution +1',
   description: 'Increase your Constitution score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   effects: [Effects.modifyCharacteristic(Characteristics.Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const SecondConstitutionIncrease = Traits.defineTrait('ability-score/increase/constitution-second', {
   name: 'Constitution +1',
   description: 'Increase your Constitution score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   prerequisites: [Expressions.not(Traits.traitPrerequisite(FirstConstitutionIncrease))],
   effects: [Effects.modifyCharacteristic(Characteristics.Constitution, Attributes.modifier(Patches.sum(1)))],
 })
@@ -85,14 +85,14 @@ export const SecondConstitutionIncrease = Traits.defineTrait('ability-score/incr
 export const FirstDexterityIncrease = Traits.defineTrait('ability-score/increase/dexterity-first', {
   name: 'Dexterity +1',
   description: 'Increase your Dexterity score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   effects: [Effects.modifyCharacteristic(Characteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const SecondDexterityIncrease = Traits.defineTrait('ability-score/increase/dexterity-second', {
   name: 'Dexterity +1',
   description: 'Increase your Dexterity score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   prerequisites: [Expressions.not(Traits.traitPrerequisite(FirstDexterityIncrease))],
   effects: [Effects.modifyCharacteristic(Characteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
@@ -100,14 +100,14 @@ export const SecondDexterityIncrease = Traits.defineTrait('ability-score/increas
 export const FirstIntelligenceIncrease = Traits.defineTrait('ability-score/increase/intelligence-first', {
   name: 'Intelligence +1',
   description: 'Increase your Intelligence score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   effects: [Effects.modifyCharacteristic(Characteristics.Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const SecondIntelligenceIncrease = Traits.defineTrait('ability-score/increase/intelligence-second', {
   name: 'Intelligence +1',
   description: 'Increase your Intelligence score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   prerequisites: [Expressions.not(Traits.traitPrerequisite(FirstIntelligenceIncrease))],
   effects: [Effects.modifyCharacteristic(Characteristics.Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
@@ -115,14 +115,14 @@ export const SecondIntelligenceIncrease = Traits.defineTrait('ability-score/incr
 export const FirstWisdomIncrease = Traits.defineTrait('ability-score/increase/wisdom-first', {
   name: 'Wisdom +1',
   description: 'Increase your Wisdom score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   effects: [Effects.modifyCharacteristic(Characteristics.Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const SecondWisdomIncrease = Traits.defineTrait('ability-score/increase/wisdom-second', {
   name: 'Wisdom +1',
   description: 'Increase your Wisdom score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   prerequisites: [Expressions.not(Traits.traitPrerequisite(FirstWisdomIncrease))],
   effects: [Effects.modifyCharacteristic(Characteristics.Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
@@ -130,14 +130,14 @@ export const SecondWisdomIncrease = Traits.defineTrait('ability-score/increase/w
 export const FirstCharismaIncrease = Traits.defineTrait('ability-score/increase/charisma-first', {
   name: 'Charisma +1',
   description: 'Increase your Charisma score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const SecondCharismaIncrease = Traits.defineTrait('ability-score/increase/charisma-second', {
   name: 'Charisma +1',
   description: 'Increase your Charisma score by 1.',
-  archetypes: [AbilityIncrease],
+  tags: [AbilityIncrease],
   prerequisites: [Expressions.not(Traits.traitPrerequisite(FirstCharismaIncrease))],
   effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(1)))],
 })

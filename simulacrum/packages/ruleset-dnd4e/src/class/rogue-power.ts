@@ -11,7 +11,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Rogue } from '@simulacrum/ruleset-dnd4e/class/class-rogue'
 import * as Skills from '@simulacrum/ruleset-dnd4e/skill'
 
@@ -22,7 +22,7 @@ export const DeftStrike = Abilities.defineAbility('rogue/power/deft-strike', {
   name: 'Deft Strike',
   description: '*A final lunge brings you into an advantageous position.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -36,7 +36,7 @@ export const PiercingStrike = Abilities.defineAbility('rogue/power/piercing-stri
   name: 'Piercing Strike',
   description: '*A needle-sharp point slips past armor and into tender flesh.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -50,7 +50,7 @@ export const RiposteStrike = Abilities.defineAbility('rogue/power/riposte-strike
   name: 'Riposte Strike',
   description: '*With a calculated strike, you leave your foe vulnerable to an adroit riposte should he dare attack you.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -64,7 +64,7 @@ export const SlyFlourish = Abilities.defineAbility('rogue/power/sly-flourish', {
   name: 'Sly Flourish',
   description: '*A distracting flourish causes the enemy to forget the blade at his throat.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -78,7 +78,7 @@ export const DazingStrike = Abilities.defineAbility('rogue/power/dazing-strike',
   name: 'Dazing Strike',
   description: '*An expert strike catches your foe by surprise and leaves him reeling from the pain.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -94,7 +94,7 @@ export const KingsCastle = Abilities.defineAbility('rogue/power/kings-castle', {
   name: "King's Castle",
   description: "*It's hard to get to the little guy when he takes cover behind an ally who can crush plate armor in his teeth.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -110,7 +110,7 @@ export const PositioningStrike = Abilities.defineAbility('rogue/power/positionin
   name: 'Positioning Strike',
   description: '*A false stumble and a shove place the enemy exactly where you want him.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -126,7 +126,7 @@ export const TorturousStrike = Abilities.defineAbility('rogue/power/torturous-st
   name: 'Torturous Strike',
   description: '*If you twist the blade in the wound just so, you can make your enemy howl in pain.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -142,7 +142,7 @@ export const BlindingBarrage = Abilities.defineAbility('rogue/power/blinding-bar
   name: 'Blinding Barrage',
   description: '*A rapid barrage of projectiles leaves your enemies clearing the blood from their eyes.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -158,7 +158,7 @@ export const EasyTarget = Abilities.defineAbility('rogue/power/easy-target', {
   name: 'Easy Target',
   description: '*You deal a staggering blow to your enemy, setting it up for future attacks.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -174,7 +174,7 @@ export const TrickStrike = Abilities.defineAbility('rogue/power/trick-strike', {
   name: 'Trick Strike',
   description: '*Through a series of feints and lures, you maneuver your foe right where you want him.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -190,7 +190,7 @@ export const FleetingGhost = Abilities.defineAbility('rogue/power/fleeting-ghost
   name: 'Fleeting Ghost',
   description: '*You are stealthy and fleet of foot at the same time.*',
   universal: false,
-  archetypes: [AtWillPower, UtilityPower, PowerLevel2],
+  tags: [AtWillPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedStealth)],
   effects: [
     Effects.descriptive(
@@ -204,7 +204,7 @@ export const GreatLeap = Abilities.defineAbility('rogue/power/great-leap', {
   name: 'Great Leap',
   description: '*You leap a great distance without a running start.*',
   universal: false,
-  archetypes: [AtWillPower, UtilityPower, PowerLevel2],
+  tags: [AtWillPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAthletics)],
   effects: [
     Effects.descriptive(
@@ -218,7 +218,7 @@ export const MasterOfDeceit = Abilities.defineAbility('rogue/power/master-of-dec
   name: 'Master of Deceit',
   description: '*The line between truth and deception is thin, and you cross it with ease.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedBluff)],
   effects: [
     Effects.descriptive(
@@ -234,7 +234,7 @@ export const QuickFingers = Abilities.defineAbility('rogue/power/quick-fingers',
   name: 'Quick Fingers',
   description: '*You can pilfer a coin pouch in the blink of an eye.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedThievery)],
   effects: [
     Effects.descriptive(
@@ -250,7 +250,7 @@ export const Tumble = Abilities.defineAbility('rogue/power/tumble', {
   name: 'Tumble',
   description: "*You tumble out of harm's way, dodging the opportunistic attacks of your enemies.*",
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
   effects: [
     Effects.descriptive(
@@ -266,7 +266,7 @@ export const BaitAndSwitch = Abilities.defineAbility('rogue/power/bait-and-switc
   name: 'Bait and Switch',
   description: '*You strike and weave, causing your foe to lurch forward so that you can duck around him and slip into his space.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -282,7 +282,7 @@ export const SetupStrike = Abilities.defineAbility('rogue/power/setup-strike', {
   name: 'Setup Strike',
   description: '*You land a calculated blow that causes your enemy to drop his guard, leaving him vulnerable to subsequent attacks.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -298,7 +298,7 @@ export const ToppleOver = Abilities.defineAbility('rogue/power/topple-over', {
   name: 'Topple Over',
   description: '*Balance and momentum are your allies as you lunge forward, strike deftly, and knock your opponent to the ground.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -314,7 +314,7 @@ export const TrickstersBlade = Abilities.defineAbility('rogue/power/tricksters-b
   name: "Trickster's Blade",
   description: '*You land an expert blow and follow up with a clever series of feints that bewilder your enemies.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -330,7 +330,7 @@ export const CleverRiposte = Abilities.defineAbility('rogue/power/clever-riposte
   name: 'Clever Riposte',
   description: "*You follow up a fierce attack with a series of quick, painful strikes woven between your enemy's attacks.*",
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -346,7 +346,7 @@ export const DeepCut = Abilities.defineAbility('rogue/power/deep-cut', {
   name: 'Deep Cut',
   description: "*Each drop of blood is another nail in your enemy's coffin.*",
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(
@@ -362,7 +362,7 @@ export const WalkingWounded = Abilities.defineAbility('rogue/power/walking-wound
   name: 'Walking Wounded',
   description: '*You topple your enemy with a crippling blow and force him to stumble around the battlefield.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
     Effects.descriptive(

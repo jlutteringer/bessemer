@@ -1,5 +1,5 @@
 import { Trait } from '@simulacrum/ruleset/trait'
-import { AbilityArchetype, CreatureArchetype, TraitArchetype } from '@simulacrum/ruleset/archetype'
+import { AbilityTag, CreatureTag, TraitTag } from '@simulacrum/ruleset/tag'
 import { ResourcePoolDefinition } from '@simulacrum/ruleset/resource-pool'
 import { LoadoutType } from '@simulacrum/ruleset/loadout'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
@@ -15,9 +15,9 @@ import { DistanceUnit } from '@simulacrum/ruleset/targeting'
 
 export type RulesetEntityTypes = {
   [RulesetEntityType.ActionType]: ActionType
-  [RulesetEntityType.TraitArchetype]: TraitArchetype
-  [RulesetEntityType.AbilityArchetype]: AbilityArchetype
-  [RulesetEntityType.CreatureArchetype]: CreatureArchetype
+  [RulesetEntityType.TraitTag]: TraitTag
+  [RulesetEntityType.AbilityTag]: AbilityTag
+  [RulesetEntityType.CreatureTag]: CreatureTag
   [RulesetEntityType.Trait]: Trait
   [RulesetEntityType.Ability]: Ability
   [RulesetEntityType.Characteristic]: Characteristic

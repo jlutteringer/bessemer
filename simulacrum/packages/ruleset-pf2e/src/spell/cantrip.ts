@@ -2,13 +2,13 @@ import { Abilities } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
 import { DurationType } from '@simulacrum/ruleset/duration'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Ally, Arcane, Cantrip, Divine, Enemy, Occult, Primal, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { Ally, Arcane, Cantrip, Divine, Enemy, Occult, Primal, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { CantripLoadout } from '@simulacrum/ruleset-pf2e/loadout'
 
 export const Allegro = Abilities.defineAbility('spell/allegro', {
   name: 'Allegro',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Emotion, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -25,7 +25,7 @@ export const CausticBlast = Abilities.defineAbility('spell/caustic-blast', {
   name: 'Caustic Blast',
   description:
     '*Acid, Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Primal],
+  tags: [Spell, Cantrip, Arcane, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -42,7 +42,7 @@ export const CausticBlast = Abilities.defineAbility('spell/caustic-blast', {
 export const ClingingIce = Abilities.defineAbility('spell/clinging-ice', {
   name: 'Clinging Ice',
   description: '*Uncommon, Cantrip, Cold, Hex, Manipulate, Witch*\n\n**Patron Theme** Silence in Snow',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -58,7 +58,7 @@ export const ClingingIce = Abilities.defineAbility('spell/clinging-ice', {
 export const CourageousAnthem = Abilities.defineAbility('spell/courageous-anthem', {
   name: 'Courageous Anthem',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Emotion, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -75,7 +75,7 @@ export const Daze = Abilities.defineAbility('spell/daze', {
   name: 'Daze',
   description:
     '*Cantrip, Concentrate, Manipulate, Mental, Nonlethal*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -93,7 +93,7 @@ export const DetectMagic = Abilities.defineAbility('spell/detect-magic', {
   name: 'Detect Magic',
   description:
     '*Cantrip, Concentrate, Detection, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -110,7 +110,7 @@ export const DetectMagic = Abilities.defineAbility('spell/detect-magic', {
 export const DirgeOfDoom = Abilities.defineAbility('spell/dirge-of-doom', {
   name: 'Dirge of Doom',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Emotion, Fear, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -126,7 +126,7 @@ export const DirgeOfDoom = Abilities.defineAbility('spell/dirge-of-doom', {
 export const DiscernSecrets = Abilities.defineAbility('spell/discern-secrets', {
   name: 'Discern Secrets',
   description: '*Uncommon, Cantrip, Hex, Manipulate, Witch*\n\n**Patron Theme** The Inscribed One',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -142,7 +142,7 @@ export const DiscernSecrets = Abilities.defineAbility('spell/discern-secrets', {
 export const DivineLance = Abilities.defineAbility('spell/divine-lance', {
   name: 'Divine Lance',
   description: '*Attack, Cantrip, Concentrate, Manipulate, Sanctified, Spirit*\n\n**Tradition** [Divine](trait:spellcasting/divine-spell-list)',
-  archetypes: [Spell, Cantrip, Divine],
+  tags: [Spell, Cantrip, Divine],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -160,7 +160,7 @@ export const ElectricArc = Abilities.defineAbility('spell/electric-arc', {
   name: 'Electric Arc',
   description:
     '*Cantrip, Concentrate, Electricity, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Primal],
+  tags: [Spell, Cantrip, Arcane, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -177,7 +177,7 @@ export const ElectricArc = Abilities.defineAbility('spell/electric-arc', {
 export const EvilEye = Abilities.defineAbility('spell/evil-eye', {
   name: 'Evil Eye',
   description: '*Uncommon, Cantrip, Curse, Hex, Manipulate, Witch*\n\n**Patron Theme** The Resentment',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -194,7 +194,7 @@ export const Figment = Abilities.defineAbility('spell/figment', {
   name: 'Figment',
   description:
     '*Cantrip, Concentrate, Illusion, Manipulate, Subtle*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Occult],
+  tags: [Spell, Cantrip, Arcane, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -211,7 +211,7 @@ export const ForbiddingWard = Abilities.defineAbility('spell/forbidding-ward', {
   name: 'Forbidding Ward',
   description:
     '*Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Divine, Occult],
+  tags: [Spell, Cantrip, Divine, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -221,8 +221,8 @@ export const ForbiddingWard = Abilities.defineAbility('spell/forbidding-ward', {
         "You ward an ally against the attacks and hostile spells from the target enemy. The target ally gains a +1 status bonus to [Armor Class](characteristic:armor-class) and saving throws against the target enemy's attacks, spells, and other effects.\n\n**Heightened (6th)** The status bonus increases to +2.",
       action: ActionTypes.TwoActions,
       targeting: {
-        first: { range: 30, count: 1, filter: { archetypes: [Ally] } },
-        second: { range: 30, count: 1, filter: { archetypes: [Enemy] } },
+        first: { range: 30, count: 1, filter: { tags: [Ally] } },
+        second: { range: 30, count: 1, filter: { tags: [Enemy] } },
       },
       duration: { type: DurationType.Sustained, rounds: 10 },
     },
@@ -233,7 +233,7 @@ export const Frostbite = Abilities.defineAbility('spell/frostbite', {
   name: 'Frostbite',
   description:
     '*Cantrip, Cold, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Primal],
+  tags: [Spell, Cantrip, Arcane, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -251,7 +251,7 @@ export const GougingClaw = Abilities.defineAbility('spell/gouging-claw', {
   name: 'Gouging Claw',
   description:
     '*Attack, Cantrip, Concentrate, Manipulate, Morph*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Primal],
+  tags: [Spell, Cantrip, Arcane, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -269,7 +269,7 @@ export const Guidance = Abilities.defineAbility('spell/guidance', {
   name: 'Guidance',
   description:
     '*Cantrip, Concentrate*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -286,7 +286,7 @@ export const Guidance = Abilities.defineAbility('spell/guidance', {
 export const HouseOfImaginaryWalls = Abilities.defineAbility('spell/house-of-imaginary-walls', {
   name: 'House of Imaginary Walls',
   description: '*Uncommon, Bard, Cantrip, Composition, Illusion, Manipulate, Visual*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -302,7 +302,7 @@ export const Ignition = Abilities.defineAbility('spell/ignition', {
   name: 'Ignition',
   description:
     '*Attack, Cantrip, Concentrate, Fire, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Primal],
+  tags: [Spell, Cantrip, Arcane, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -320,7 +320,7 @@ export const KnowTheWay = Abilities.defineAbility('spell/know-the-way', {
   name: 'Know the Way',
   description:
     '*Cantrip, Concentrate, Detection, Manipulate*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -337,7 +337,7 @@ export const Light = Abilities.defineAbility('spell/light', {
   name: 'Light',
   description:
     '*Cantrip, Concentrate, Light, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -354,7 +354,7 @@ export const Message = Abilities.defineAbility('spell/message', {
   name: 'Message',
   description:
     '*Auditory, Cantrip, Concentrate, Illusion, Linguistic, Mental, Subtle*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -371,7 +371,7 @@ export const Message = Abilities.defineAbility('spell/message', {
 export const NudgeFate = Abilities.defineAbility('spell/nudge-fate', {
   name: 'Nudge Fate',
   description: '*Uncommon, Cantrip, Concentrate, Hex, Witch*\n\n**Patron Theme** Spinner of Threads',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -388,7 +388,7 @@ export const Prestidigitation = Abilities.defineAbility('spell/prestidigitation'
   name: 'Prestidigitation',
   description:
     '*Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -405,7 +405,7 @@ export const Prestidigitation = Abilities.defineAbility('spell/prestidigitation'
 export const RallyingAnthem = Abilities.defineAbility('spell/rallying-anthem', {
   name: 'Rallying Anthem',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Emotion, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -422,7 +422,7 @@ export const ReadAura = Abilities.defineAbility('spell/read-aura', {
   name: 'Read Aura',
   description:
     '*Cantrip, Concentrate, Detection, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -440,7 +440,7 @@ export const Shield = Abilities.defineAbility('spell/shield', {
   name: 'Shield',
   description:
     '*Cantrip, Concentrate, Force*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -456,7 +456,7 @@ export const Shield = Abilities.defineAbility('spell/shield', {
 export const ShroudOfNight = Abilities.defineAbility('spell/shroud-of-night', {
   name: 'Shroud of Night',
   description: '*Uncommon, Cantrip, Darkness, Hex, Manipulate, Witch*\n\n**Patron Theme** Starless Shadow',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -473,7 +473,7 @@ export const Sigil = Abilities.defineAbility('spell/sigil', {
   name: 'Sigil',
   description:
     '*Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -490,7 +490,7 @@ export const Sigil = Abilities.defineAbility('spell/sigil', {
 export const SongOfMarching = Abilities.defineAbility('spell/song-of-marching', {
   name: 'Song of Marching',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -506,7 +506,7 @@ export const SongOfMarching = Abilities.defineAbility('spell/song-of-marching', 
 export const SongOfStrength = Abilities.defineAbility('spell/song-of-strength', {
   name: 'Song of Strength',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Emotion, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -523,7 +523,7 @@ export const Stabilize = Abilities.defineAbility('spell/stabilize', {
   name: 'Stabilize',
   description:
     '*Cantrip, Concentrate, Healing, Manipulate, Vitality*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Divine, Primal],
+  tags: [Spell, Cantrip, Divine, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -540,7 +540,7 @@ export const Stabilize = Abilities.defineAbility('spell/stabilize', {
 export const StokeTheHeart = Abilities.defineAbility('spell/stoke-the-heart', {
   name: 'Stoke the Heart',
   description: "*Uncommon, Cantrip, Concentrate, Emotion, Hex, Witch*\n\n**Patron Theme** Faith's Flamekeeper",
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -557,7 +557,7 @@ export const SummonInstrument = Abilities.defineAbility('spell/summon-instrument
   name: 'Summon Instrument',
   description:
     '*Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -574,7 +574,7 @@ export const TangleVine = Abilities.defineAbility('spell/tangle-vine', {
   name: 'Tangle Vine',
   description:
     '*Attack, Cantrip, Concentrate, Manipulate, Plant, Wood*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Primal],
+  tags: [Spell, Cantrip, Arcane, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -592,7 +592,7 @@ export const TelekineticHand = Abilities.defineAbility('spell/telekinetic-hand',
   name: 'Telekinetic Hand',
   description:
     '*Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Occult],
+  tags: [Spell, Cantrip, Arcane, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -610,7 +610,7 @@ export const TelekineticProjectile = Abilities.defineAbility('spell/telekinetic-
   name: 'Telekinetic Projectile',
   description:
     '*Attack, Cantrip, Concentrate, Manipulate*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Occult],
+  tags: [Spell, Cantrip, Arcane, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -627,7 +627,7 @@ export const TelekineticProjectile = Abilities.defineAbility('spell/telekinetic-
 export const TripleTime = Abilities.defineAbility('spell/triple-time', {
   name: 'Triple Time',
   description: '*Uncommon, Bard, Cantrip, Composition, Emotion, Manipulate, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -643,7 +643,7 @@ export const TripleTime = Abilities.defineAbility('spell/triple-time', {
 export const UpliftingOverture = Abilities.defineAbility('spell/uplifting-overture', {
   name: 'Uplifting Overture',
   description: '*Uncommon, Bard, Cantrip, Composition, Concentrate, Emotion, Mental*',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {
@@ -660,7 +660,7 @@ export const VitalityLash = Abilities.defineAbility('spell/vitality-lash', {
   name: 'Vitality Lash',
   description:
     '*Cantrip, Concentrate, Manipulate, Vitality*\n\n**Traditions** [Divine](trait:spellcasting/divine-spell-list), [Primal](trait:spellcasting/primal-spell-list)',
-  archetypes: [Spell, Cantrip, Divine, Primal],
+  tags: [Spell, Cantrip, Divine, Primal],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -678,7 +678,7 @@ export const VoidWarp = Abilities.defineAbility('spell/void-warp', {
   name: 'Void Warp',
   description:
     '*Cantrip, Concentrate, Manipulate, Void*\n\n**Traditions** [Arcane](trait:spellcasting/arcane-spell-list), [Divine](trait:spellcasting/divine-spell-list), [Occult](trait:spellcasting/occult-spell-list)',
-  archetypes: [Spell, Cantrip, Arcane, Divine, Occult],
+  tags: [Spell, Cantrip, Arcane, Divine, Occult],
   loadout: CantripLoadout,
   universal: false,
   actions: [
@@ -695,7 +695,7 @@ export const VoidWarp = Abilities.defineAbility('spell/void-warp', {
 export const WildingWord = Abilities.defineAbility('spell/wilding-word', {
   name: 'Wilding Word',
   description: '*Uncommon, Cantrip, Hex, Mental, Witch*\n\n**Patron Theme** Wilding Steward',
-  archetypes: [Spell, Cantrip],
+  tags: [Spell, Cantrip],
   universal: false,
   actions: [
     {

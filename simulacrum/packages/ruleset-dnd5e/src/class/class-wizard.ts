@@ -1,10 +1,10 @@
-import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import { Class, Wizard } from '@simulacrum/ruleset-dnd5e/archetype'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
-import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/archetype/skill-expertise'
-import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
+import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import { Class, Wizard } from '@simulacrum/ruleset-dnd5e/tag'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
+import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/tag/skill-expertise'
+import { SelectFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Arrays, Patches } from '@bessemer/cornerstone'
@@ -13,7 +13,7 @@ import { CantripLoadout, PreparedSpellLoadout } from '@simulacrum/ruleset-dnd5e/
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard/select-skill-proficiency', {
   name: 'Skill Proficiency',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
     specificOptions: [
       SkillProficiencies.Arcana,
       SkillProficiencies.History,
@@ -28,26 +28,26 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('wizard
 
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('wizard/select-spell-up-to-rank-1', {
   name: 'Spells Known',
-  filter: { archetypes: [Wizard, [Spells.Rank1]] },
+  filter: { tags: [Wizard, [Spells.Rank1]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('wizard/select-spell-up-to-rank-2', {
   name: 'Spells Known',
-  filter: { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2]] },
+  filter: { tags: [Wizard, [Spells.Rank1, Spells.Rank2]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption('wizard/select-spell-up-to-rank-3', {
   name: 'Spells Known',
-  filter: { archetypes: [Wizard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
+  filter: { tags: [Wizard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const Level1 = Traits.defineTrait('wizard/level-1', {
   name: 'Wizard',
   description: 'A scholar of arcane magic who records spells in a **spellbook** and casts them with **Intelligence**.',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainTrait(SavingThrowProficiencies.Intelligence),
     Effects.gainTrait(SavingThrowProficiencies.Wisdom),
@@ -63,9 +63,7 @@ export const Level1 = Traits.defineTrait('wizard/level-1', {
     Effects.gainLoadoutSlot(CantripLoadout),
     Effects.gainLoadoutSlot(CantripLoadout),
     Effects.gainLoadoutSlot(CantripLoadout),
-    ...Spells.All.filter((it) => Arrays.containsAll(it.archetypes, [Wizard.id, Spells.Cantrip.id])).map((it) =>
-      Effects.gainAbility(it, CantripLoadout)
-    ),
+    ...Spells.All.filter((it) => Arrays.containsAll(it.tags, [Wizard.id, Spells.Cantrip.id])).map((it) => Effects.gainAbility(it, CantripLoadout)),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
@@ -110,7 +108,7 @@ export const ArcaneRecovery = Abilities.defineAbility('wizard/arcane-recovery', 
 export const SelectScholarExpertise = CharacterOptions.selectTraitOption('wizard/select-scholar-expertise', {
   name: 'Skill Expertise',
   filter: {
-    archetypes: [SkillExpertise.SkillExpertise],
+    tags: [SkillExpertise.SkillExpertise],
     specificOptions: [
       SkillExpertise.Arcana,
       SkillExpertise.History,
@@ -125,7 +123,7 @@ export const SelectScholarExpertise = CharacterOptions.selectTraitOption('wizard
 export const Level2 = Traits.defineTrait('wizard/level-2', {
   name: 'Wizard (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(4))),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
@@ -135,16 +133,16 @@ export const Level2 = Traits.defineTrait('wizard/level-2', {
   ],
 })
 
-export const WizardSubclass = Archetypes.defineTraitArchetype('wizard/subclass', { name: 'Wizard Subclass' })
+export const WizardSubclass = Tags.defineTraitTag('wizard/subclass', { name: 'Wizard Subclass' })
 export const SelectWizardSubclass = CharacterOptions.selectTraitOption('wizard/select-subclass', {
   name: 'Wizard Subclass',
-  filter: { archetypes: [WizardSubclass] },
+  filter: { tags: [WizardSubclass] },
 })
 
 export const Level3 = Traits.defineTrait('wizard/level-3', {
   name: 'Wizard (3)',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(4))),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
@@ -157,7 +155,7 @@ export const Level3 = Traits.defineTrait('wizard/level-3', {
 export const Level4 = Traits.defineTrait('wizard/level-4', {
   name: 'Wizard (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(4))),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
@@ -171,7 +169,7 @@ export const Level4 = Traits.defineTrait('wizard/level-4', {
 export const Level5 = Traits.defineTrait('wizard/level-5', {
   name: 'Wizard (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(4))),
     Effects.gainLoadoutSlot(PreparedSpellLoadout),
@@ -193,13 +191,13 @@ export const MemorizeSpell = Abilities.defineAbility('wizard/memorize-spell', {
 
 export const SelectAbjurationSavantSpell = CharacterOptions.selectAbilityOption('wizard/select-abjuration-savant-spell', {
   name: 'Abjuration Savant',
-  filter: { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2]] },
+  filter: { tags: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const SelectAbjurationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption('wizard/select-abjuration-savant-spell-up-to-rank-3', {
   name: 'Abjuration Savant',
-  filter: { archetypes: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
+  filter: { tags: [Wizard, Spells.Abjuration, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   loadout: PreparedSpellLoadout,
 })
 
@@ -218,7 +216,7 @@ export const Abjurer = Traits.defineTrait('wizard/abjurer', {
   name: 'Abjurer',
   description:
     'A specialist in magic that **blocks, banishes, and protects**, sought out to exorcise spirits, guard against scrying, and close planar portals.',
-  archetypes: [WizardSubclass],
+  tags: [WizardSubclass],
   effects: [Effects.gainTrait(AbjurationSavant)],
 })
 
@@ -234,13 +232,13 @@ export const ArcaneWard = Abilities.defineAbility('wizard/arcane-ward', {
 
 export const SelectDivinationSavantSpell = CharacterOptions.selectAbilityOption('wizard/select-divination-savant-spell', {
   name: 'Divination Savant',
-  filter: { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2]] },
+  filter: { tags: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const SelectDivinationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption('wizard/select-divination-savant-spell-up-to-rank-3', {
   name: 'Divination Savant',
-  filter: { archetypes: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
+  filter: { tags: [Wizard, Spells.Divination, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   loadout: PreparedSpellLoadout,
 })
 
@@ -259,7 +257,7 @@ export const Diviner = Traits.defineTrait('wizard/diviner', {
   name: 'Diviner',
   description:
     'A seer who works to part the veils of **space, time, and consciousness**, mastering spells of discernment, remote viewing, and foresight.',
-  archetypes: [WizardSubclass],
+  tags: [WizardSubclass],
   effects: [Effects.gainTrait(DivinationSavant)],
 })
 
@@ -275,13 +273,13 @@ export const Portent = Abilities.defineAbility('wizard/portent', {
 
 export const SelectEvocationSavantSpell = CharacterOptions.selectAbilityOption('wizard/select-evocation-savant-spell', {
   name: 'Evocation Savant',
-  filter: { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2]] },
+  filter: { tags: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const SelectEvocationSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption('wizard/select-evocation-savant-spell-up-to-rank-3', {
   name: 'Evocation Savant',
-  filter: { archetypes: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
+  filter: { tags: [Wizard, Spells.Evocation, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   loadout: PreparedSpellLoadout,
 })
 
@@ -299,7 +297,7 @@ export const EvocationSavant = Traits.defineTrait('wizard/evocation-savant', {
 export const Evoker = Traits.defineTrait('wizard/evoker', {
   name: 'Evoker',
   description: 'A wielder of **explosive elemental magic** such as frost, flame, thunder, lightning, and acid, often valued as living artillery.',
-  archetypes: [WizardSubclass],
+  tags: [WizardSubclass],
   effects: [Effects.gainTrait(EvocationSavant)],
 })
 
@@ -315,13 +313,13 @@ export const PotentCantrip = Abilities.defineAbility('wizard/potent-cantrip', {
 
 export const SelectIllusionSavantSpell = CharacterOptions.selectAbilityOption('wizard/select-illusion-savant-spell', {
   name: 'Illusion Savant',
-  filter: { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2]] },
+  filter: { tags: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2]] },
   loadout: PreparedSpellLoadout,
 })
 
 export const SelectIllusionSavantSpellUpToRank3 = CharacterOptions.selectAbilityOption('wizard/select-illusion-savant-spell-up-to-rank-3', {
   name: 'Illusion Savant',
-  filter: { archetypes: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
+  filter: { tags: [Wizard, Spells.Illusion, [Spells.Rank1, Spells.Rank2, Spells.Rank3]] },
   loadout: PreparedSpellLoadout,
 })
 
@@ -339,7 +337,7 @@ export const IllusionSavant = Traits.defineTrait('wizard/illusion-savant', {
 export const Illusionist = Traits.defineTrait('wizard/illusionist', {
   name: 'Illusionist',
   description: 'A master of magic that **dazzles the senses and tricks the mind**, making the impossible seem real.',
-  archetypes: [WizardSubclass],
+  tags: [WizardSubclass],
   effects: [Effects.gainTrait(IllusionSavant)],
 })
 

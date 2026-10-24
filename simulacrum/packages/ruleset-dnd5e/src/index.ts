@@ -1,22 +1,22 @@
 import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { Effects } from '@simulacrum/ruleset'
 import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
-import * as FightingStyles from '@simulacrum/ruleset-dnd5e/archetype/fighting-style'
-import { FightingStyle } from '@simulacrum/ruleset-dnd5e/archetype/fighting-style'
-import * as WeaponMasteries from '@simulacrum/ruleset-dnd5e/archetype/weapon-mastery'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import { SkillProficiency } from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
-import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/archetype/skill-expertise'
-import * as ArtisansTools from '@simulacrum/ruleset-dnd5e/archetype/artisans-tools'
-import * as Tools from '@simulacrum/ruleset-dnd5e/archetype/tool'
-import * as Maneuvers from '@simulacrum/ruleset-dnd5e/archetype/maneuver'
-import * as Feats from '@simulacrum/ruleset-dnd5e/archetype/feat'
-import * as Backgrounds from '@simulacrum/ruleset-dnd5e/archetype/background'
-import * as AbilityScoreIncreases from '@simulacrum/ruleset-dnd5e/archetype/ability-score-increase'
-import * as Species from '@simulacrum/ruleset-dnd5e/archetype/species'
-import * as ClassArchetypes from '@simulacrum/ruleset-dnd5e/archetype'
+import * as FightingStyles from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
+import { FightingStyle } from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
+import * as WeaponMasteries from '@simulacrum/ruleset-dnd5e/tag/weapon-mastery'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import { SkillProficiency } from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
+import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/tag/skill-expertise'
+import * as ArtisansTools from '@simulacrum/ruleset-dnd5e/tag/artisans-tools'
+import * as Tools from '@simulacrum/ruleset-dnd5e/tag/tool'
+import * as Maneuvers from '@simulacrum/ruleset-dnd5e/tag/maneuver'
+import * as Feats from '@simulacrum/ruleset-dnd5e/tag/feat'
+import * as Backgrounds from '@simulacrum/ruleset-dnd5e/tag/background'
+import * as AbilityScoreIncreases from '@simulacrum/ruleset-dnd5e/tag/ability-score-increase'
+import * as Species from '@simulacrum/ruleset-dnd5e/tag/species'
+import * as ClassTags from '@simulacrum/ruleset-dnd5e/tag'
 import * as Barbarian from '@simulacrum/ruleset-dnd5e/class/class-barbarian'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import * as Cleric from '@simulacrum/ruleset-dnd5e/class/class-cleric'
@@ -37,7 +37,7 @@ import { AllActionTypes } from '@simulacrum/ruleset-dnd5e/action-type'
 
 export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class-level', {
   name: 'Class',
-  filter: { archetypes: [ClassArchetypes.Class] },
+  filter: { tags: [ClassTags.Class] },
 })
 
 export const Dnd5e: Ruleset = {
@@ -47,7 +47,7 @@ export const Dnd5e: Ruleset = {
   entities: [
     ...Object.values(PlayerCharacteristics),
     ...Object.values(CharacteristicGroups),
-    ClassArchetypes.Class,
+    ClassTags.Class,
     Backgrounds.Background,
     AbilityScoreIncreases.AbilityScoreIncrease,
     Species.Species,
@@ -68,9 +68,9 @@ export const Dnd5e: Ruleset = {
     Maneuvers.Maneuver,
     Feats.Feat,
     Feats.OriginFeat,
-    ClassArchetypes.Bard,
-    ClassArchetypes.Cleric,
-    ClassArchetypes.Wizard,
+    ClassTags.Bard,
+    ClassTags.Cleric,
+    ClassTags.Wizard,
     Spells.Cantrip,
     Spells.Rank1,
     Spells.Rank2,

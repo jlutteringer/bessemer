@@ -1,17 +1,17 @@
-import { Abilities, Archetypes, Effects, Traits, CharacterValues } from '@simulacrum/ruleset'
+import { Abilities, Tags, Effects, Traits, CharacterValues } from '@simulacrum/ruleset'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Expressions } from '@bessemer/cornerstone/expression'
-import { SelectOriginFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
+import { SelectOriginFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
 
-export const Species = Archetypes.defineTraitArchetype('species', { name: 'Species' })
+export const Species = Tags.defineTraitTag('species', { name: 'Species' })
 
 export const SelectSpecies = CharacterOptions.selectTraitOption('species/select', {
   name: 'Species',
-  filter: { archetypes: [Species] },
+  filter: { tags: [Species] },
 })
 
 export const Small = Traits.defineTrait('species/size/small', {
@@ -35,7 +35,7 @@ export const Aasimar = Traits.defineTrait('species/aasimar', {
   name: 'Aasimar',
   description:
     'Mortals who carry a spark of the Upper Planes within their souls, able to fan that spark to bring light, ease wounds, and unleash the fury of the heavens.\n\n**Size:** Medium or Small. **Speed:** 30 feet.',
-  archetypes: [Species],
+  tags: [Species],
   effects: [Effects.gainCharacterOption(SelectSmallOrMedium), Effects.gainAbility(Spells.Light)],
 })
 
@@ -108,7 +108,7 @@ export const Dragonborn = Traits.defineTrait('species/dragonborn', {
   name: 'Dragonborn',
   description:
     "Descendants of dragons, with draconic features and a dragon's breath. **Size:** Medium. **Speed:** 30 feet.\n\n**Draconic Ancestry:** choose a dragon (Black, Blue, Brass, Bronze, Copper, Gold, Green, Red, Silver, or White), which sets your damage type.\n\n**Breath Weapon:** in place of an attack, exhale a 15-foot Cone or 30-foot Line; creatures make a Dexterity save or take 1d10 damage (rising with level), half on a success. Usable a number of times equal to your Proficiency Bonus per Long Rest.\n\n**Damage Resistance:** Resistance to your ancestry's damage type.\n\n**Darkvision:** 60 feet.\n\n**Draconic Flight:** at level 5, sprout spectral wings for 10 minutes as a Bonus Action, gaining a Fly Speed equal to your Speed (once per Long Rest).",
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -116,7 +116,7 @@ export const Dwarf = Traits.defineTrait('species/dwarf', {
   name: 'Dwarf',
   description:
     'Hardy folk raised from the earth, with a deep connection to stone. **Size:** Medium. **Speed:** 30 feet.\n\n**Darkvision:** 120 feet.\n\n**Dwarven Resilience:** Resistance to Poison damage, and Advantage on saves to avoid or end the Poisoned condition.\n\n**Dwarven Toughness:** your Hit Point maximum increases by 1, and by 1 more each time you gain a level.\n\n**Stonecunning:** as a Bonus Action, gain Tremorsense with a range of 60 feet for 10 minutes while on or touching stone. Usable a number of times equal to your Proficiency Bonus per Long Rest.',
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -124,7 +124,7 @@ export const Elf = Traits.defineTrait('species/elf', {
   name: 'Elf',
   description:
     "Long-lived people touched by the magic of the Feywild. **Size:** Medium. **Speed:** 30 feet.\n\n**Darkvision:** 60 feet.\n\n**Elven Lineage:** choose Drow, High Elf, or Wood Elf, each granting a cantrip and further spells at levels 3 and 5.\n\n**Fey Ancestry:** Advantage on saves to avoid or end the Charmed condition.\n\n**Keen Senses:** proficiency in Insight, Perception, or Survival.\n\n**Trance:** you finish a Long Rest in 4 hours of meditation, and magic can't put you to sleep.",
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -132,7 +132,7 @@ export const Gnome = Traits.defineTrait('species/gnome', {
   name: 'Gnome',
   description:
     'Small, curious folk with a knack for magic and invention. **Size:** Small. **Speed:** 30 feet.\n\n**Darkvision:** 60 feet.\n\n**Gnomish Cunning:** Advantage on Intelligence, Wisdom, and Charisma saving throws.\n\n**Gnomish Lineage:** choose Forest Gnome (Minor Illusion, and Speak with Animals a number of times equal to your Proficiency Bonus per Long Rest) or Rock Gnome (Mending and Prestidigitation, and tiny clockwork devices).',
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -140,7 +140,7 @@ export const Goliath = Traits.defineTrait('species/goliath', {
   name: 'Goliath',
   description:
     'Towering descendants of giants. **Size:** Medium. **Speed:** 35 feet.\n\n**Giant Ancestry:** choose a boon from your giant ancestors (Cloud, Fire, Frost, Hill, Stone, or Storm), usable a number of times equal to your Proficiency Bonus per Long Rest.\n\n**Large Form:** at level 5, become Large for 10 minutes as a Bonus Action, gaining Advantage on Strength checks and 10 feet of Speed (once per Long Rest).\n\n**Powerful Build:** Advantage on checks to end the Grappled condition, and you count as one size larger for carrying capacity.',
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -148,7 +148,7 @@ export const Halfling = Traits.defineTrait('species/halfling', {
   name: 'Halfling',
   description:
     'Small, cheerful folk who value home and comfort, yet are braver than their size suggests. **Size:** Small. **Speed:** 30 feet.\n\n**Brave:** Advantage on saves to avoid or end the Frightened condition.\n\n**Halfling Nimbleness:** you can move through the space of any creature that is a size larger than you.\n\n**Luck:** when you roll a 1 on the d20 of a D20 Test, you can reroll it and must use the new roll.\n\n**Naturally Stealthy:** you can take the Hide action when obscured only by a creature at least one size larger than you.',
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -156,7 +156,7 @@ export const Halfling = Traits.defineTrait('species/halfling', {
 export const SelectSkillfulProficiency = CharacterOptions.selectTraitOption('species/human/select-skillful-proficiency', {
   name: 'Skillful',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
   },
 })
 
@@ -164,7 +164,7 @@ export const Human = Traits.defineTrait('species/human', {
   name: 'Human',
   description:
     'The most widespread and adaptable of the common peoples. **Size:** Medium or Small. **Speed:** 30 feet.\n\n**Resourceful:** you gain Heroic Inspiration whenever you finish a Long Rest.\n\n**Skillful:** proficiency in one skill of your choice.\n\n**Versatile:** you gain an Origin feat of your choice.',
-  archetypes: [Species],
+  tags: [Species],
   effects: [Effects.gainCharacterOption(SelectSkillfulProficiency), Effects.gainCharacterOption(SelectOriginFeat)],
 })
 
@@ -172,7 +172,7 @@ export const Orc = Traits.defineTrait('species/orc', {
   name: 'Orc',
   description:
     "Tireless wanderers gifted with the endurance to survive hardship. **Size:** Medium. **Speed:** 30 feet.\n\n**Adrenaline Rush:** take the Dash action as a Bonus Action, gaining Temporary Hit Points equal to your Proficiency Bonus. Usable a number of times equal to your Proficiency Bonus per Short or Long Rest.\n\n**Darkvision:** 120 feet.\n\n**Relentless Endurance:** when you're reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead (once per Long Rest).",
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })
 
@@ -180,6 +180,6 @@ export const Tiefling = Traits.defineTrait('species/tiefling', {
   name: 'Tiefling',
   description:
     'Mortals bound by blood to the Lower Planes. **Size:** Medium or Small. **Speed:** 30 feet.\n\n**Darkvision:** 60 feet.\n\n**Fiendish Legacy:** choose Abyssal, Chthonic, or Infernal, granting a damage Resistance, a cantrip, and further spells at levels 3 and 5.\n\n**Otherworldly Presence:** you know the Thaumaturgy cantrip.',
-  archetypes: [Species],
+  tags: [Species],
   effects: [],
 })

@@ -1,14 +1,14 @@
 import { Abilities, Effects, ResourcePools } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
-import { AtWillPower, AttackPower, EncounterPower, UtilityPower } from '@simulacrum/ruleset-dnd4e/archetype'
+import { AtWillPower, AttackPower, EncounterPower, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
 
 // Powers every character has
 
 export const MeleeBasicAttack = Abilities.defineAbility('common/melee-basic-attack', {
   name: 'Melee Basic Attack',
   description: '*You resort to the simple attack you learned when you first picked up a melee weapon.*',
-  archetypes: [AtWillPower, AttackPower],
+  tags: [AtWillPower, AttackPower],
   effects: [
     Effects.descriptive(
       '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
@@ -20,7 +20,7 @@ export const MeleeBasicAttack = Abilities.defineAbility('common/melee-basic-atta
 export const RangedBasicAttack = Abilities.defineAbility('common/ranged-basic-attack', {
   name: 'Ranged Basic Attack',
   description: '*You resort to the simple attack you learned when you first picked up a ranged weapon.*',
-  archetypes: [AtWillPower, AttackPower],
+  tags: [AtWillPower, AttackPower],
   effects: [
     Effects.descriptive(
       '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.'
@@ -32,7 +32,7 @@ export const RangedBasicAttack = Abilities.defineAbility('common/ranged-basic-at
 export const SecondWind = Abilities.defineAbility('common/second-wind', {
   name: 'Second Wind',
   description: '*You dig deep for the strength to keep fighting.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   effects: [
     Effects.descriptive(
       '**Second Wind**\n\n**Encounter** ✦ Healing\n\n**Standard Action** · Personal\n\n**Effect:** You spend a healing surge and regain hit points equal to your surge value. You gain a +2 bonus to all defenses until the start of your next turn.'

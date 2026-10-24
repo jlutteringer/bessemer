@@ -1,61 +1,61 @@
-import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { ArmorLoadout, ShieldLoadout } from '@simulacrum/ruleset-dnd4e/loadout'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { ArmorClass, HalfLevel, Reflex } from '@simulacrum/ruleset-dnd4e/characteristic'
 import { ArmorBonus, ShieldBonus } from '@simulacrum/ruleset-dnd4e/bonus-type'
 
-export const ArmorProficiency = Archetypes.defineTraitArchetype('armor-proficiency', { name: 'Armor Proficiency' })
-export const Armor = Archetypes.defineAbilityArchetype('armor', { name: 'Armor' })
+export const ArmorProficiency = Tags.defineTraitTag('armor-proficiency', { name: 'Armor Proficiency' })
+export const Armor = Tags.defineAbilityTag('armor', { name: 'Armor' })
 
 // Everyone is proficient with cloth armor
 
 export const LeatherProficiency = Traits.defineTrait('armor-proficiency/leather', {
   name: 'Proficiency: Leather Armor',
   description: 'You can use leather armor effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
 export const HideProficiency = Traits.defineTrait('armor-proficiency/hide', {
   name: 'Proficiency: Hide Armor',
   description: 'You can use hide armor effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
 export const ChainmailProficiency = Traits.defineTrait('armor-proficiency/chainmail', {
   name: 'Proficiency: Chainmail',
   description: 'You can use chainmail effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
 export const ScaleProficiency = Traits.defineTrait('armor-proficiency/scale', {
   name: 'Proficiency: Scale Armor',
   description: 'You can use scale armor effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
 export const PlateProficiency = Traits.defineTrait('armor-proficiency/plate', {
   name: 'Proficiency: Plate Armor',
   description: 'You can use plate armor effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
 export const LightShieldProficiency = Traits.defineTrait('armor-proficiency/light-shield', {
   name: 'Proficiency: Light Shields',
   description: 'You can use light shields effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
 export const HeavyShieldProficiency = Traits.defineTrait('armor-proficiency/heavy-shield', {
   name: 'Proficiency: Heavy Shields',
   description: 'You can use heavy shields effectively.',
-  archetypes: [ArmorProficiency],
+  tags: [ArmorProficiency],
   effects: [],
 })
 
@@ -63,14 +63,14 @@ export const HeavyShieldProficiency = Traits.defineTrait('armor-proficiency/heav
 
 export const ClothArmor = Abilities.defineAbility('armor/cloth', {
   name: 'Cloth Armor',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ArmorLoadout,
   effects: [Effects.descriptive('**Light armor** · Armor bonus +0 · Check — · Speed —')],
 })
 
 export const LeatherArmor = Abilities.defineAbility('armor/leather', {
   name: 'Leather Armor',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LeatherProficiency)],
   effects: [
@@ -81,7 +81,7 @@ export const LeatherArmor = Abilities.defineAbility('armor/leather', {
 
 export const HideArmor = Abilities.defineAbility('armor/hide', {
   name: 'Hide Armor',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(HideProficiency)],
   effects: [
@@ -94,7 +94,7 @@ export const HideArmor = Abilities.defineAbility('armor/hide', {
 
 export const Chainmail = Abilities.defineAbility('armor/chainmail', {
   name: 'Chainmail',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(ChainmailProficiency)],
   effects: [
@@ -105,7 +105,7 @@ export const Chainmail = Abilities.defineAbility('armor/chainmail', {
 
 export const ScaleArmor = Abilities.defineAbility('armor/scale', {
   name: 'Scale Armor',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(ScaleProficiency)],
   effects: [
@@ -116,7 +116,7 @@ export const ScaleArmor = Abilities.defineAbility('armor/scale', {
 
 export const PlateArmor = Abilities.defineAbility('armor/plate', {
   name: 'Plate Armor',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(PlateProficiency)],
   effects: [
@@ -129,7 +129,7 @@ export const PlateArmor = Abilities.defineAbility('armor/plate', {
 
 export const LightShield = Abilities.defineAbility('shield/light', {
   name: 'Light Shield',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ShieldLoadout,
   prerequisites: [Traits.traitPrerequisite(LightShieldProficiency)],
   effects: [
@@ -141,7 +141,7 @@ export const LightShield = Abilities.defineAbility('shield/light', {
 
 export const HeavyShield = Abilities.defineAbility('shield/heavy', {
   name: 'Heavy Shield',
-  archetypes: [Armor],
+  tags: [Armor],
   loadout: ShieldLoadout,
   prerequisites: [Traits.traitPrerequisite(HeavyShieldProficiency)],
   effects: [

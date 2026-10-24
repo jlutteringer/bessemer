@@ -2,7 +2,7 @@ import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Trai
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Class, ClassFeature, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FighterFeat } from '@simulacrum/ruleset-pf2e/archetype'
+import { Class, ClassFeature, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FighterFeat } from '@simulacrum/ruleset-pf2e/tag'
 import { DexterityKeyAttribute, StrengthKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import {
@@ -39,17 +39,17 @@ export const SelectFighterSkill = CharacterOptions.selectTraitOption('fighter/se
 
 export const SelectFighterFeat1 = CharacterOptions.selectTraitOption('fighter/select-feat-1', {
   name: 'Fighter Feat (Level 1)',
-  filter: { archetypes: [FighterFeat, FeatLevel1] },
+  filter: { tags: [FighterFeat, FeatLevel1] },
 })
 
 export const SelectFighterFeat2 = CharacterOptions.selectTraitOption('fighter/select-feat-2', {
   name: 'Fighter Feat (Level 2)',
-  filter: { archetypes: [FighterFeat, [FeatLevel1, FeatLevel2]] },
+  filter: { tags: [FighterFeat, [FeatLevel1, FeatLevel2]] },
 })
 
 export const SelectFighterFeat4 = CharacterOptions.selectTraitOption('fighter/select-feat-4', {
   name: 'Fighter Feat (Level 4)',
-  filter: { archetypes: [FighterFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+  filter: { tags: [FighterFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
 })
 
 export const FighterWeaponMasteryAxe = Traits.defineTrait('fighter/fighter-weapon-mastery/axe', {
@@ -192,7 +192,7 @@ export const ReactiveStrike = Traits.defineTrait('fighter/reactive-strike', {
   name: 'Reactive Strike',
   description:
     "Ever watchful for weaknesses, you can quickly attack foes that leave an opening in their defenses. You gain the Reactive [Strike](content:playing-the-game/strike) reaction.\n\n**Trigger** A creature within your reach uses a [manipulate](content:traits/manipulate) action or a [move](content:traits/move) action, makes a ranged attack, or leaves a square during a move action it's using.\n\nYou lash out at a foe that leaves an opening. Make a melee [Strike](content:playing-the-game/strike) against the triggering creature. If your attack is a critical hit and the trigger was a [manipulate](content:traits/manipulate) action, you [disrupt](content:playing-the-game/disrupting-actions) that action. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike.",
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [],
 })
 
@@ -212,7 +212,7 @@ export const ReactiveStrikeAction = Abilities.defineAbility('fighter/reactive-st
 export const FighterShieldBlock = Traits.defineTrait('fighter/shield-block', {
   name: 'Shield Block',
   description: 'You gain the [Shield Block](trait:feat/shield-block) general feat, a reaction that lets you reduce damage with your shield.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.gainTrait(ShieldBlock)],
 })
 
@@ -220,7 +220,7 @@ export const Bravery = Traits.defineTrait('fighter/bravery', {
   name: 'Bravery',
   description:
     'Having faced countless foes and the chaos of battle, you have learned how to stand strong in the face of fear. Your proficiency rank for [Will saves](characteristic:will) increases to expert. When you roll a success at a Will save against a [fear](content:traits/fear) effect, you get a critical success instead. In addition, anytime you gain the [frightened](content:conditions/frightened) condition, reduce its value by 1.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
@@ -228,7 +228,7 @@ export const FighterWeaponMastery = Traits.defineTrait('fighter/fighter-weapon-m
   name: 'Fighter Weapon Mastery',
   description:
     'Hours spent training with your preferred weapons, learning and developing new combat techniques, have made you particularly effective with your weapons of choice. Choose one weapon group. Your proficiency rank increases to master with the simple weapons, martial weapons, and unarmed attacks in that group, and to expert with the advanced weapons in that group. You gain access to the [critical specialization effects](content:equipment/critical-specialization) of all weapons and unarmed attacks for which you have master proficiency.',
-  archetypes: [ClassFeature],
+  tags: [ClassFeature],
   effects: [Effects.gainCharacterOption(SelectFighterWeaponMastery)],
 })
 
@@ -236,7 +236,7 @@ export const Fighter = Traits.defineTrait('fighter', {
   name: 'Fighter',
   description:
     "_Fighting for honor, greed, loyalty, or simply the thrill of battle, you are an undisputed master of weaponry and combat techniques. You combine your actions through clever combinations of opening moves, finishing strikes, and counterattacks whenever your foes are unwise enough to drop their guard. Whether you are a knight, mercenary, sharpshooter, or blade master, you have honed your martial skills into an art form and perform devastating critical attacks on your enemies._\n\n**Key Attribute** Strength or Dexterity. At 1st level, your class gives you an attribute boost to your choice of Strength or Dexterity.\n\n**Hit Points** 10 plus your Constitution modifier. You increase your maximum number of HP by this number at 1st level and every level thereafter.\n\n**Initial Proficiencies**\n\n- **Perception** Expert in Perception\n- **Saving Throws** Expert in Fortitude, Expert in Reflex, Trained in Will\n- **Skills** Trained in your choice of Acrobatics or Athletics; Trained in a number of additional skills equal to 3 plus your Intelligence modifier\n- **Attacks** Expert in simple weapons; Expert in martial weapons; Trained in advanced weapons; Expert in unarmed attacks\n- **Defenses** Trained in all armor; Trained in unarmored defense\n- **Class DC** Trained in fighter class DC\n\n**Key Terms**\n\nBelow are some key terms in many fighter class features.\n\n**[Flourish](content:traits/flourish):** Actions with the flourish trait are special techniques that require too much exertion for you to perform frequently. You can use only one action with the flourish trait per round.\n\n**[Press](content:traits/press):** Actions with this trait allow you to follow up earlier attacks. An action with the press trait can be used only if you are currently affected by a multiple attack penalty. You can't use a press action when it's not your turn, even if you use the [Ready](content:playing-the-game/ready) activity. Some actions with the press trait also grant an effect on a failure. The effects that are added on a failure don't apply on a critical failure. If your press action succeeds, you can choose to apply the failure effect instead. (For example, you may wish to do this when an attack deals no damage due to resistance.)\n\n**[Stance](content:traits/stance):** A stance is a general combat strategy that you enter by using an action with the stance trait, and you remain in for some time. A stance lasts until you get knocked out, until its requirements (if any) are violated, until the encounter ends, or until you use a stance action again, whichever comes first. After you take an action with the stance trait, you can't take another one for 1 round. You can enter or be in a stance only in encounter mode. You can Dismiss a stance.",
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(
       HitPoints,

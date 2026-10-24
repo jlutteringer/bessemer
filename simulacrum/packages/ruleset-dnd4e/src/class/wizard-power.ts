@@ -12,7 +12,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Wizard, WizardCantrips } from '@simulacrum/ruleset-dnd4e/class/class-wizard'
 
 // Generated from the Player's Handbook Wizard powers, levels 1-5. Powers are learned through character options, so they
@@ -22,7 +22,7 @@ import { Wizard, WizardCantrips } from '@simulacrum/ruleset-dnd4e/class/class-wi
 export const GhostSound = Abilities.defineAbility('wizard/power/ghost-sound', {
   name: 'Ghost Sound',
   description: '*With a wink, you create an illusory sound that emanates from somewhere close by.*',
-  archetypes: [AtWillPower, Cantrip, UtilityPower],
+  tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
     Effects.descriptive(
@@ -36,7 +36,7 @@ export const Light = Abilities.defineAbility('wizard/power/light', {
   name: 'Light',
   description:
     '*With a wave of your hand, you cause a bright light to appear on the tip of your staff, upon some other object, or in a nearby space.*',
-  archetypes: [AtWillPower, Cantrip, UtilityPower],
+  tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
     Effects.descriptive(
@@ -49,7 +49,7 @@ export const Light = Abilities.defineAbility('wizard/power/light', {
 export const MageHand = Abilities.defineAbility('wizard/power/mage-hand', {
   name: 'Mage Hand',
   description: '*You gesture toward an object nearby, and a spectral floating hand lifts the object into the air and moves it where you wish.*',
-  archetypes: [AtWillPower, Cantrip, UtilityPower],
+  tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
     Effects.descriptive(
@@ -63,7 +63,7 @@ export const Prestidigitation = Abilities.defineAbility('wizard/power/prestidigi
   name: 'Prestidigitation',
   description:
     '*You perform an amusing magical trick, such as creating a dancing wisp of light, freshening a wilting flower, making a coin invisible, or warming a cold drink.*',
-  archetypes: [AtWillPower, Cantrip, UtilityPower],
+  tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
     Effects.descriptive(
@@ -77,7 +77,7 @@ export const CloudOfDaggers = Abilities.defineAbility('wizard/power/cloud-of-dag
   name: 'Cloud of Daggers',
   description: '*You create a small cloud of whirling daggers of force that relentlessly attack creatures in the area.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -91,7 +91,7 @@ export const MagicMissile = Abilities.defineAbility('wizard/power/magic-missile'
   name: 'Magic Missile',
   description: '*You launch a silvery bolt of force at an enemy.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -105,7 +105,7 @@ export const RayOfFrost = Abilities.defineAbility('wizard/power/ray-of-frost', {
   name: 'Ray of Frost',
   description: '*A blisteringly cold ray of white frost streaks to your target.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -119,7 +119,7 @@ export const ScorchingBurst = Abilities.defineAbility('wizard/power/scorching-bu
   name: 'Scorching Burst',
   description: '*A vertical column of golden flames burns all within.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -133,7 +133,7 @@ export const Thunderwave = Abilities.defineAbility('wizard/power/thunderwave', {
   name: 'Thunderwave',
   description: '*You create a whip-crack of sonic power that lashes up from the ground.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -147,7 +147,7 @@ export const BurningHands = Abilities.defineAbility('wizard/power/burning-hands'
   name: 'Burning Hands',
   description: '*A fierce burst of flame erupts from your hands and scorches nearby foes.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -163,7 +163,7 @@ export const ChillStrike = Abilities.defineAbility('wizard/power/chill-strike', 
   name: 'Chill Strike',
   description: '*You create a bolt of frigid purple energy around your hand and send it hurtling toward your foe.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -179,7 +179,7 @@ export const ForceOrb = Abilities.defineAbility('wizard/power/force-orb', {
   name: 'Force Orb',
   description: '*You hurl an orb of magical force at an enemy.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -195,7 +195,7 @@ export const IcyTerrain = Abilities.defineAbility('wizard/power/icy-terrain', {
   name: 'Icy Terrain',
   description: '*With frosty breath, you utter a single arcane word that creates a treacherous patch of ice on the ground, hampering your foes.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -211,7 +211,7 @@ export const RayOfEnfeeblement = Abilities.defineAbility('wizard/power/ray-of-en
   name: 'Ray of Enfeeblement',
   description: '*You point three fingers at your foe, curling them like talons.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -227,7 +227,7 @@ export const AcidArrow = Abilities.defineAbility('wizard/power/acid-arrow', {
   name: 'Acid Arrow',
   description: '*A shimmering arrow of green, glowing liquid streaks to your target and bursts in a spray of sizzling acid.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -243,7 +243,7 @@ export const FlamingSphere = Abilities.defineAbility('wizard/power/flaming-spher
   name: 'Flaming Sphere',
   description: '*You conjure a rolling ball of fire and control where it goes.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -259,7 +259,7 @@ export const FreezingCloud = Abilities.defineAbility('wizard/power/freezing-clou
   name: 'Freezing Cloud',
   description: '*A pellet shoots from your hand and explodes into a cloud of icy mist at the point of impact.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -275,7 +275,7 @@ export const Sleep = Abilities.defineAbility('wizard/power/sleep', {
   name: 'Sleep',
   description: '*You exert your will against your foes, seeking to overwhelm them with a tide of magical weariness.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -291,7 +291,7 @@ export const ExpeditiousRetreat = Abilities.defineAbility('wizard/power/expediti
   name: 'Expeditious Retreat',
   description: '*Your form blurs as you hastily withdraw from the battlefield.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive('**Wizard Utility 2**\n\n**Daily** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** Shift up to twice your speed.'),
@@ -305,7 +305,7 @@ export const FeatherFall = Abilities.defineAbility('wizard/power/feather-fall', 
   name: 'Feather Fall',
   description: '*You or a creature you choose falls gently, like a feather.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -321,7 +321,7 @@ export const Jump = Abilities.defineAbility('wizard/power/jump', {
   name: 'Jump',
   description: '*You or another creature you choose can suddenly leap great distances.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -337,7 +337,7 @@ export const Shield = Abilities.defineAbility('wizard/power/shield', {
   name: 'Shield',
   description: '*You throw up your hand, and a shield of arcane energy springs into existence, protecting you against imminent attacks.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -353,7 +353,7 @@ export const ColorSpray = Abilities.defineAbility('wizard/power/color-spray', {
   name: 'Color Spray',
   description: '*A brilliant blast of flashing colors springs from your outstretched fingers, knocking nearby enemies senseless.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -369,7 +369,7 @@ export const FireShroud = Abilities.defineAbility('wizard/power/fire-shroud', {
   name: 'Fire Shroud',
   description: '*With a subtle gesture, you wreathe nearby enemies in flames.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -385,7 +385,7 @@ export const IcyRays = Abilities.defineAbility('wizard/power/icy-rays', {
   name: 'Icy Rays',
   description: '*You fire two bolts of brilliant blue-white energy.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -402,7 +402,7 @@ export const ShockSphere = Abilities.defineAbility('wizard/power/shock-sphere', 
   description:
     '*You hurl a crackling orb of lightning that explodes at a point you designate, engulfing all nearby creatures in its electric embrace.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -418,7 +418,7 @@ export const BigbysIcyGrasp = Abilities.defineAbility('wizard/power/bigbys-icy-g
   name: "Bigby's Icy Grasp",
   description: '*You conjure a giant floating hand made of chiseled ice that clutches foes and freezes them.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -434,7 +434,7 @@ export const Fireball = Abilities.defineAbility('wizard/power/fireball', {
   name: 'Fireball',
   description: '*A globe of orange flame coalesces in your hand.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -450,7 +450,7 @@ export const StinkingCloud = Abilities.defineAbility('wizard/power/stinking-clou
   name: 'Stinking Cloud',
   description: '*You call forth a thick cloud of bilious yellow vapors.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(
@@ -466,7 +466,7 @@ export const Web = Abilities.defineAbility('wizard/power/web', {
   name: 'Web',
   description: '*You call into being a giant web made of thick magical strands that hang in midair, trapping those within it.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
     Effects.descriptive(

@@ -1,7 +1,7 @@
 import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
-import { AttackPower, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/archetype'
+import { AttackPower, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
 import { ChannelDivinity } from '@simulacrum/ruleset-dnd4e/common'
 import * as Deities from '@simulacrum/ruleset-dnd4e/deity'
 import { ClericChannelDivinity } from '@simulacrum/ruleset-dnd4e/class/class-cleric'
@@ -13,7 +13,7 @@ export const ArmorOfBahamut = Traits.defineTrait('feat/armor-of-bahamut', {
   name: 'Armor of Bahamut',
   description:
     '**Prerequisites:** Channel Divinity class feature, must worship Bahamut\n\nYou can invoke the power of your deity to use *armor of Bahamut*.',
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Bahamut),
@@ -24,7 +24,7 @@ export const ArmorOfBahamut = Traits.defineTrait('feat/armor-of-bahamut', {
 export const ArmorOfBahamutPower = Abilities.defineAbility('feat/power/armor-of-bahamut', {
   name: 'Channel Divinity: Armor of Bahamut',
   description: '*Bahamut protects you or a friend from devastating harm.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(ArmorOfBahamut)],
   effects: [
     Effects.descriptive(
@@ -38,7 +38,7 @@ export const AvandrasRescue = Traits.defineTrait('feat/avandras-rescue', {
   name: "Avandra's Rescue",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Avandra\n\nYou can invoke the power of your deity to use *Avandra's rescue*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Avandra),
@@ -49,7 +49,7 @@ export const AvandrasRescue = Traits.defineTrait('feat/avandras-rescue', {
 export const AvandrasRescuePower = Abilities.defineAbility('feat/power/avandras-rescue', {
   name: "Channel Divinity: Avandra's Rescue",
   description: '*Avandra smiles upon you and helps you rescue a friend in need.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(AvandrasRescue)],
   effects: [
     Effects.descriptive(
@@ -63,7 +63,7 @@ export const CorellonsGrace = Traits.defineTrait('feat/corellons-grace', {
   name: "Corellon's Grace",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Corellon\n\nYou can invoke the power of your deity to use *Corellon's grace*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Corellon),
@@ -74,7 +74,7 @@ export const CorellonsGrace = Traits.defineTrait('feat/corellons-grace', {
 export const CorellonsGracePower = Abilities.defineAbility('feat/power/corellons-grace', {
   name: "Channel Divinity: Corellon's Grace",
   description: "*Corellon's grace allows you to move when others take action.*",
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(CorellonsGrace)],
   effects: [
     Effects.descriptive(
@@ -88,7 +88,7 @@ export const HarmonyOfErathis = Traits.defineTrait('feat/harmony-of-erathis', {
   name: 'Harmony of Erathis',
   description:
     '**Prerequisites:** Channel Divinity class feature, must worship Erathis\n\nYou can invoke the power of your deity to use *harmony of Erathis*.',
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Erathis),
@@ -99,7 +99,7 @@ export const HarmonyOfErathis = Traits.defineTrait('feat/harmony-of-erathis', {
 export const HarmonyOfErathisPower = Abilities.defineAbility('feat/power/harmony-of-erathis', {
   name: 'Channel Divinity: Harmony of Erathis',
   description: '*Erathis brings harmony of purpose to like-minded allies.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(HarmonyOfErathis)],
   effects: [
     Effects.descriptive(
@@ -113,7 +113,7 @@ export const IounsPoise = Traits.defineTrait('feat/iouns-poise', {
   name: "Ioun's Poise",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Ioun\n\nYou can invoke the power of your deity to use *Ioun's poise*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Ioun),
@@ -124,7 +124,7 @@ export const IounsPoise = Traits.defineTrait('feat/iouns-poise', {
 export const IounsPoisePower = Abilities.defineAbility('feat/power/iouns-poise', {
   name: "Channel Divinity: Ioun's Poise",
   description: '*Ioun grants strength of will to those she favors.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(IounsPoise)],
   effects: [
     Effects.descriptive(
@@ -138,7 +138,7 @@ export const KordsFavor = Traits.defineTrait('feat/kords-favor', {
   name: "Kord's Favor",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Kord\n\nYou can invoke the power of your deity to use *Kord's favor*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Kord),
@@ -149,7 +149,7 @@ export const KordsFavor = Traits.defineTrait('feat/kords-favor', {
 export const KordsFavorPower = Abilities.defineAbility('feat/power/kords-favor', {
   name: "Channel Divinity: Kord's Favor",
   description: '*Kord favors a strong hit in combat with healing.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(KordsFavor)],
   effects: [
     Effects.descriptive(
@@ -163,7 +163,7 @@ export const MelorasTide = Traits.defineTrait('feat/meloras-tide', {
   name: "Melora's Tide",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Melora\n\nYou can invoke the power of your deity to use *Melora's tide*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Melora),
@@ -174,7 +174,7 @@ export const MelorasTide = Traits.defineTrait('feat/meloras-tide', {
 export const MelorasTidePower = Abilities.defineAbility('feat/power/meloras-tide', {
   name: "Channel Divinity: Melora's Tide",
   description: '*Melora sends a tide of healing energy to aid you or a bloodied friend.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(MelorasTide)],
   effects: [
     Effects.descriptive(
@@ -188,7 +188,7 @@ export const MoradinsResolve = Traits.defineTrait('feat/moradins-resolve', {
   name: "Moradin's Resolve",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Moradin\n\nYou can invoke the power of your deity to use *Moradin's resolve*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Moradin),
@@ -199,7 +199,7 @@ export const MoradinsResolve = Traits.defineTrait('feat/moradins-resolve', {
 export const MoradinsResolvePower = Abilities.defineAbility('feat/power/moradins-resolve', {
   name: "Channel Divinity: Moradin's Resolve",
   description: "*Moradin's blessing puts the small on more equal footing with the large.*",
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(MoradinsResolve)],
   effects: [
     Effects.descriptive(
@@ -213,7 +213,7 @@ export const PelorsRadiance = Traits.defineTrait('feat/pelors-radiance', {
   name: "Pelor's Radiance",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Pelor\n\nYou can invoke the power of your deity to use *Pelor's radiance*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Pelor),
@@ -224,7 +224,7 @@ export const PelorsRadiance = Traits.defineTrait('feat/pelors-radiance', {
 export const PelorsRadiancePower = Abilities.defineAbility('feat/power/pelors-radiance', {
   name: "Channel Divinity: Pelor's Radiance",
   description: "*When undead creatures abound, Pelor's radiance shines to aid the faithful.*",
-  archetypes: [EncounterPower, AttackPower],
+  tags: [EncounterPower, AttackPower],
   prerequisites: [Traits.traitPrerequisite(PelorsRadiance)],
   effects: [
     Effects.descriptive(
@@ -238,7 +238,7 @@ export const RavenQueensBlessing = Traits.defineTrait('feat/raven-queens-blessin
   name: "Raven Queen's Blessing",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship the Raven Queen\n\nYou can invoke the power of your deity to use *Raven Queen's blessing*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.RavenQueen),
@@ -249,7 +249,7 @@ export const RavenQueensBlessing = Traits.defineTrait('feat/raven-queens-blessin
 export const RavenQueensBlessingPower = Abilities.defineAbility('feat/power/raven-queens-blessing', {
   name: "Channel Divinity: Raven Queen's Blessing",
   description: '*The Raven Queen grants a boon to those who send the dead on their way.*',
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(RavenQueensBlessing)],
   effects: [
     Effects.descriptive(
@@ -263,7 +263,7 @@ export const SehaninesReversal = Traits.defineTrait('feat/sehanines-reversal', {
   name: "Sehanine's Reversal",
   description:
     "**Prerequisites:** Channel Divinity class feature, must worship Sehanine\n\nYou can invoke the power of your deity to use *Sehanine's reversal*.",
-  archetypes: [Feat],
+  tags: [Feat],
   prerequisites: [
     Expressions.or([Traits.traitPrerequisite(ClericChannelDivinity), Traits.traitPrerequisite(ChannelDivinityFeature)]),
     Traits.traitPrerequisite(Deities.Sehanine),
@@ -274,7 +274,7 @@ export const SehaninesReversal = Traits.defineTrait('feat/sehanines-reversal', {
 export const SehaninesReversalPower = Abilities.defineAbility('feat/power/sehanines-reversal', {
   name: "Channel Divinity: Sehanine's Reversal",
   description: "*Sehanine's blessing turns the powers of your enemies against them.*",
-  archetypes: [EncounterPower, UtilityPower],
+  tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(SehaninesReversal)],
   effects: [
     Effects.descriptive(

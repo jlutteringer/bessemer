@@ -11,7 +11,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Warlord } from '@simulacrum/ruleset-dnd4e/class/class-warlord'
 
 // Generated from the Player's Handbook Warlord powers, levels 1-5. Powers are learned through character options, so they
@@ -21,7 +21,7 @@ export const CommandersStrike = Abilities.defineAbility('warlord/power/commander
   name: "Commander's Strike",
   description: '*With a shout, you command an ally to attack.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -36,7 +36,7 @@ export const FuriousSmash = Abilities.defineAbility('warlord/power/furious-smash
   description:
     "*You slam your shield into your enemy, bash him with your weapon's haft, or drive your shoulder into his gut. Your attack doesn't do much damage—but your anger inspires your ally to match your ferocity.*",
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -50,7 +50,7 @@ export const VipersStrike = Abilities.defineAbility('warlord/power/vipers-strike
   name: "Viper's Strike",
   description: '*You trick your adversary into making a tactical error that gives your comrade a chance to strike.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -64,7 +64,7 @@ export const WolfPackTactics = Abilities.defineAbility('warlord/power/wolf-pack-
   name: 'Wolf Pack Tactics',
   description: '*Step by step, you and your friends surround the enemy.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -79,7 +79,7 @@ export const GuardingAttack = Abilities.defineAbility('warlord/power/guarding-at
   description:
     "*With a calculated strike, you knock your adversary off balance and grant your comrade-in-arms some protection against the villain's attacks.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -95,7 +95,7 @@ export const HammerAndAnvil = Abilities.defineAbility('warlord/power/hammer-and-
   name: 'Hammer and Anvil',
   description: '*You land a ringing blow against your foe, inspiring a nearby ally to strike a blow of his own.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -111,7 +111,7 @@ export const LeafOnTheWind = Abilities.defineAbility('warlord/power/leaf-on-the-
   name: 'Leaf on the Wind',
   description: '*Like a leaf caught in the autumn wind, your foe is driven by the flow of battle. Your fierce attacks force him to give ground.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -127,7 +127,7 @@ export const WarlordsFavor = Abilities.defineAbility('warlord/power/warlords-fav
   name: "Warlord's Favor",
   description: '*With a calculated blow, you leave your adversary exposed to an imminent attack from one of your closest allies.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -143,7 +143,7 @@ export const BastionOfDefense = Abilities.defineAbility('warlord/power/bastion-o
   name: 'Bastion of Defense',
   description: '*Honorable warriors never fall!*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -159,7 +159,7 @@ export const LeadTheAttack = Abilities.defineAbility('warlord/power/lead-the-att
   name: 'Lead the Attack',
   description: '*Under your direction, arrows hit their marks and blades drive home.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -175,7 +175,7 @@ export const PinTheFoe = Abilities.defineAbility('warlord/power/pin-the-foe', {
   name: 'Pin the Foe',
   description: '*No matter where your foe turns, one of your allies is waiting for him.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -192,7 +192,7 @@ export const WhiteRavenOnslaught = Abilities.defineAbility('warlord/power/white-
   description:
     '*You lead the way with a powerful attack, using your success to create an opportunity for one of your allies. Each of your comrades in turn seizes on your example and begins to display true teamwork.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -208,7 +208,7 @@ export const AidTheInjured = Abilities.defineAbility('warlord/power/aid-the-inju
   name: 'Aid the Injured',
   description: '*Your presence is both a comfort and an inspiration.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -224,7 +224,7 @@ export const CrescendoOfViolence = Abilities.defineAbility('warlord/power/cresce
   name: 'Crescendo of Violence',
   description: '*A timely critical hit affords you the opportunity to rally a wounded ally.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -240,7 +240,7 @@ export const KnightsMove = Abilities.defineAbility('warlord/power/knights-move',
   name: "Knight's Move",
   description: '*With a sharp wave of your arm, you direct one of your allies to a more tactically advantageous position.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -256,7 +256,7 @@ export const ShakeItOff = Abilities.defineAbility('warlord/power/shake-it-off', 
   name: 'Shake It Off',
   description: '*You convince yourself or an ally to shake off a debilitating effect.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -272,7 +272,7 @@ export const HoldTheLine = Abilities.defineAbility('warlord/power/hold-the-line'
   name: 'Hold the Line',
   description: '*With a snap series of commands, you keep your allies in formation and well defended as you assault your adversary.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -289,7 +289,7 @@ export const InspiringWarCry = Abilities.defineAbility('warlord/power/inspiring-
   description:
     '*As you strike, you shout a fierce war cry that heartens a nearby ally. He immediately attempts to shake off whatever condition troubles him most.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -306,7 +306,7 @@ export const SteelMonsoon = Abilities.defineAbility('warlord/power/steel-monsoon
   description:
     '*You leap into the fray with a wild, whirling attack—but your movements are carefully calculated to distract nearby enemies and give your allies a chance to move into position.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -322,7 +322,7 @@ export const WarlordsStrike = Abilities.defineAbility('warlord/power/warlords-st
   name: "Warlord's Strike",
   description: "*One convincing cut is all you need to reveal the enemy's weakness and spur your allies into finishing him off.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -339,7 +339,7 @@ export const StandTheFallen = Abilities.defineAbility('warlord/power/stand-the-f
   description:
     '*You will not be denied victory! A determined strike lifts the spirits of your beleaguered allies and restores their fighting spirit.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -355,7 +355,7 @@ export const TurningPoint = Abilities.defineAbility('warlord/power/turning-point
   name: 'Turning Point',
   description: '*A well-placed strike catches your foe off guard and allows you or a nearby ally to shake off some effect.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(
@@ -371,7 +371,7 @@ export const VillainsNightmare = Abilities.defineAbility('warlord/power/villains
   name: "Villain's Nightmare",
   description: '*You use weapon thrusts, lunges, and parries to hedge in your adversary, preventing him from moving away from you.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlord)],
   effects: [
     Effects.descriptive(

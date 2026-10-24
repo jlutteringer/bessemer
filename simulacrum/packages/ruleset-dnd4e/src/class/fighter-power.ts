@@ -11,7 +11,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Fighter } from '@simulacrum/ruleset-dnd4e/class/class-fighter'
 
 // Generated from the Player's Handbook Fighter powers, levels 1-5. Powers are learned through character options, so they
@@ -22,7 +22,7 @@ export const Cleave = Abilities.defineAbility('fighter/power/cleave', {
   name: 'Cleave',
   description: '*You hit one enemy, then cleave into another.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -36,7 +36,7 @@ export const ReapingStrike = Abilities.defineAbility('fighter/power/reaping-stri
   name: 'Reaping Strike',
   description: "*You punctuate your scything attacks with wicked jabs and small cutting blows that slip through your enemy's defenses.*",
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -50,7 +50,7 @@ export const SureStrike = Abilities.defineAbility('fighter/power/sure-strike', {
   name: 'Sure Strike',
   description: '*You trade power for precision.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -64,7 +64,7 @@ export const TideOfIron = Abilities.defineAbility('fighter/power/tide-of-iron', 
   name: 'Tide of Iron',
   description: '*After each mighty swing, you bring your shield to bear and use it to push your enemy back.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -78,7 +78,7 @@ export const CoveringAttack = Abilities.defineAbility('fighter/power/covering-at
   name: 'Covering Attack',
   description: '*You launch a dizzying barrage of thrusts at your enemy, compelling him to give you all his attention.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -94,7 +94,7 @@ export const PassingAttack = Abilities.defineAbility('fighter/power/passing-atta
   name: 'Passing Attack',
   description: '*You strike at one foe and allow momentum to carry you forward into a second strike against a second foe.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -111,7 +111,7 @@ export const SpinningSweep = Abilities.defineAbility('fighter/power/spinning-swe
   description:
     "*You spin beneath your enemy's guard with a long, powerful cut, and then sweep your leg through his an instant later to knock him head over heels.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -127,7 +127,7 @@ export const SteelSerpentStrike = Abilities.defineAbility('fighter/power/steel-s
   name: 'Steel Serpent Strike',
   description: "*You stab viciously at your foe's knee or foot to slow him down.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -143,7 +143,7 @@ export const BruteStrike = Abilities.defineAbility('fighter/power/brute-strike',
   name: 'Brute Strike',
   description: '*You shatter armor and bone with a ringing blow.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -159,7 +159,7 @@ export const ComebackStrike = Abilities.defineAbility('fighter/power/comeback-st
   name: 'Comeback Strike',
   description: '*A timely strike against a hated foe invigorates you, giving you the strength and resolve to fight on.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -175,7 +175,7 @@ export const VillainsMenace = Abilities.defineAbility('fighter/power/villains-me
   name: "Villain's Menace",
   description: '*You strike your enemy hard and hound him with skilled parries and stern reprisals.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -191,7 +191,7 @@ export const BoundlessEndurance = Abilities.defineAbility('fighter/power/boundle
   name: 'Boundless Endurance',
   description: '*You shake off the worst of your wounds.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -207,7 +207,7 @@ export const GetOverHere = Abilities.defineAbility('fighter/power/get-over-here'
   name: 'Get Over Here',
   description: '*You pull one of your allies into a more advantageous position.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -223,7 +223,7 @@ export const NoOpening = Abilities.defineAbility('fighter/power/no-opening', {
   name: 'No Opening',
   description: '*You raise your weapon or shield to block an opening in your defenses.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -239,7 +239,7 @@ export const Unstoppable = Abilities.defineAbility('fighter/power/unstoppable', 
   name: 'Unstoppable',
   description: '*You let your adrenaline surge carry you through the battle.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -255,7 +255,7 @@ export const ArmorPiercingThrust = Abilities.defineAbility('fighter/power/armor-
   name: 'Armor-Piercing Thrust',
   description: "*You drive your weapon through a weak point in your foe's defenses.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -271,7 +271,7 @@ export const CrushingBlow = Abilities.defineAbility('fighter/power/crushing-blow
   name: 'Crushing Blow',
   description: '*You wind up and deliver a devastating blow with your weapon.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -287,7 +287,7 @@ export const DanceOfSteel = Abilities.defineAbility('fighter/power/dance-of-stee
   name: 'Dance of Steel',
   description: '*Weaving your weapon in a graceful figure-eight, you lash out with a sudden attack.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -303,7 +303,7 @@ export const PreciseStrike = Abilities.defineAbility('fighter/power/precise-stri
   name: 'Precise Strike',
   description: '*You trade damage for accuracy when you really want to land an attack on your opponent.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -319,7 +319,7 @@ export const RainOfBlows = Abilities.defineAbility('fighter/power/rain-of-blows'
   name: 'Rain of Blows',
   description: '*You become a blur of motion, raining a series of blows upon your opponent.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -335,7 +335,7 @@ export const SweepingBlow = Abilities.defineAbility('fighter/power/sweeping-blow
   name: 'Sweeping Blow',
   description: '*You put all your strength into a single mighty swing that strikes many enemies at once.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -351,7 +351,7 @@ export const CrackTheShell = Abilities.defineAbility('fighter/power/crack-the-sh
   name: 'Crack the Shell',
   description: "*You break through your enemy's armor and deal a painful bleeding wound.*",
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -367,7 +367,7 @@ export const DizzyingBlow = Abilities.defineAbility('fighter/power/dizzying-blow
   name: 'Dizzying Blow',
   description: '*You crack your foe upside the head.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(
@@ -383,7 +383,7 @@ export const RainOfSteel = Abilities.defineAbility('fighter/power/rain-of-steel'
   name: 'Rain of Steel',
   description: '*You constantly swing your weapon about, slashing and cutting into nearby enemies.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
     Effects.descriptive(

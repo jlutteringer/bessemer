@@ -11,7 +11,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Cleric } from '@simulacrum/ruleset-dnd4e/class/class-cleric'
 
 // Generated from the Player's Handbook Cleric powers, levels 1-5. Powers are learned through character options, so they
@@ -22,7 +22,7 @@ export const LanceOfFaith = Abilities.defineAbility('cleric/power/lance-of-faith
   description:
     "*A brilliant ray of light sears your foe with golden radiance. Sparkles of light linger around the target, guiding your ally's attack.*",
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -36,7 +36,7 @@ export const PriestsShield = Abilities.defineAbility('cleric/power/priests-shiel
   name: "Priest's Shield",
   description: '*You utter a minor defensive prayer as you attack with your weapon.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -51,7 +51,7 @@ export const RighteousBrand = Abilities.defineAbility('cleric/power/righteous-br
   description:
     "*You smite your foe with your weapon and brand it with a ghostly, glowing symbol of your deity's anger. By naming one of your allies when the symbol appears, you add divine power to that ally's attacks against the branded foe.*",
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -66,7 +66,7 @@ export const SacredFlame = Abilities.defineAbility('cleric/power/sacred-flame', 
   description:
     '*Sacred light shines from above, searing a single enemy with its radiance while at the same time aiding an ally with its beneficent power.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -80,7 +80,7 @@ export const CauseFear = Abilities.defineAbility('cleric/power/cause-fear', {
   name: 'Cause Fear',
   description: '*Your holy symbol ignites with the fury of your god. Uncontrollable terror grips your enemy, causing him to instantly recoil.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -97,7 +97,7 @@ export const DivineGlow = Abilities.defineAbility('cleric/power/divine-glow', {
   description:
     '*Murmuring a prayer to your deity, you invoke a blast of white radiance from your holy symbol. Foes burn in its stern light, but your allies are heartened and guided by it.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -114,7 +114,7 @@ export const HealingStrike = Abilities.defineAbility('cleric/power/healing-strik
   description:
     '*Divine radiance gleams from your weapon. When you smite your enemy, your deity bestows a minor blessing in the form of healing for you or one of your allies.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -130,7 +130,7 @@ export const WrathfulThunder = Abilities.defineAbility('cleric/power/wrathful-th
   name: 'Wrathful Thunder',
   description: '*Your arm is made strong by the power of your deity. When you strike, a terrible thunder clap smites your adversary and dazes him.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -146,7 +146,7 @@ export const AvengingFlame = Abilities.defineAbility('cleric/power/avenging-flam
   name: 'Avenging Flame',
   description: '*You slam your weapon into your foe, who bursts into flame. Divine fire avenges each attack your enemy dares to make.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -163,7 +163,7 @@ export const BeaconOfHope = Abilities.defineAbility('cleric/power/beacon-of-hope
   description:
     '*A burst of divine energy harms your foes and heals your allies. The radiant energy lingers around your holy symbol and improves your healing powers for the rest of the battle.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -179,7 +179,7 @@ export const CascadeOfLight = Abilities.defineAbility('cleric/power/cascade-of-l
   name: 'Cascade of Light',
   description: '*A burst of divine radiance sears your foe.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -196,7 +196,7 @@ export const GuardianOfFaith = Abilities.defineAbility('cleric/power/guardian-of
   description:
     "*You conjure a ghostly guardian, indistinct except for a glowing shield emblazoned with your deity's symbol. A burst of radiance erupts from it to sear foes that move next to it.*",
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -212,7 +212,7 @@ export const Bless = Abilities.defineAbility('cleric/power/bless', {
   name: 'Bless',
   description: '*You beseech your deity to bless you and your allies.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -229,7 +229,7 @@ export const CureLightWounds = Abilities.defineAbility('cleric/power/cure-light-
   description:
     '*You utter a simple prayer and gain the power to instantly heal wounds, and your touch momentarily suffuses you or a wounded creature with a dim silver light.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -245,7 +245,7 @@ export const DivineAid = Abilities.defineAbility('cleric/power/divine-aid', {
   name: 'Divine Aid',
   description: '*You beseech your deity to grant you or one of your allies the strength to overcome a hindrance.*',
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -261,7 +261,7 @@ export const Sanctuary = Abilities.defineAbility('cleric/power/sanctuary', {
   name: 'Sanctuary',
   description: "*You cast a protective ward upon a creature that makes enemies' attacks less effective.*",
   universal: false,
-  archetypes: [EncounterPower, UtilityPower, PowerLevel2],
+  tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -277,7 +277,7 @@ export const ShieldOfFaith = Abilities.defineAbility('cleric/power/shield-of-fai
   name: 'Shield of Faith',
   description: '*A gleaming shield of divine energy appears over you, granting you and nearby allies protection against attacks.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -294,7 +294,7 @@ export const BlazingBeacon = Abilities.defineAbility('cleric/power/blazing-beaco
   description:
     "*You invoke your deity's name, and holy light envelops your weapon. When you strike your foe, a blazing beacon in the form of a holy rune floats above its head to guide your allies' ranged attacks as well.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -311,7 +311,7 @@ export const Command = Abilities.defineAbility('cleric/power/command', {
   description:
     '*You utter a single word to your foe, a word that demands obedience. You can choose to drive the foe back, order it closer, or cause the foe to throw itself to the ground.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -327,7 +327,7 @@ export const DauntingLight = Abilities.defineAbility('cleric/power/daunting-ligh
   name: 'Daunting Light',
   description: "*A burning column of light engulfs your foe. Its brilliance burns and hinders your foe's defense for a short time.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -344,7 +344,7 @@ export const SplitTheSky = Abilities.defineAbility('cleric/power/split-the-sky',
   description:
     '*You invoke ancient words of wrath as you attack with your weapon. The thundering power of your melee strike causes your foe to stumble backward and fall.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -361,7 +361,7 @@ export const ConsecratedGround = Abilities.defineAbility('cleric/power/consecrat
   description:
     '*With a wave of your hand, jagged lines of radiant light spread across the ground around you like a crackling web, moving at your whim. Enemies that stand upon this ground suffer the wrath of your deity.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -377,7 +377,7 @@ export const RuneOfPeace = Abilities.defineAbility('cleric/power/rune-of-peace',
   name: 'Rune of Peace',
   description: '*You smash your weapon into your foe, leaving behind a glowing rune that prevents your foe from making attacks.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -394,7 +394,7 @@ export const SpiritualWeapon = Abilities.defineAbility('cleric/power/spiritual-w
   description:
     "*You conjure a glowing weapon adorned with the symbol of your deity. The weapon attacks one of your foes and guides your allies' attacks against the same target.*",
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(
@@ -410,7 +410,7 @@ export const WeaponOfTheGods = Abilities.defineAbility('cleric/power/weapon-of-t
   name: 'Weapon of the Gods',
   description: '*Your weapon glows with divine radiance, enhancing your attacks.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
     Effects.descriptive(

@@ -33,7 +33,7 @@ import { AllArmor, AllArmorProficiencies, Armor, ArmorProficiency } from '@simul
 import * as Weapons from '@simulacrum/ruleset-khydrian-drift/weapon'
 import * as Cyberware from '@simulacrum/ruleset-khydrian-drift/cyberware'
 import { Effects } from '@simulacrum/ruleset'
-import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
+import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { AllCharacteristicGroups, AllCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { AllSkillProficiencies, SkillProficiency } from '@simulacrum/ruleset-khydrian-drift/skill-proficiency'
 import { SkillsContent } from '@simulacrum/ruleset-khydrian-drift/content/content-skills'
@@ -121,6 +121,7 @@ export const KhydrianDrift: Ruleset = {
   progressionTable: {
     1: [
       Effects.gainCharacterOption(SelectClassOption),
+      Effects.gainCharacterOption(SelectTraitOption),
       Effects.gainCharacterOption(SelectAttributeIncrease),
       Effects.gainCharacterOption(SelectAttributeIncrease),
       Effects.gainCharacterOption(SelectAttributeIncrease),
@@ -144,16 +145,16 @@ export const KhydrianDrift: Ruleset = {
     8: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
     9: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
     10: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
-    11: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    12: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    13: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    14: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    15: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    16: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    17: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    18: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    19: [Effects.gainCharacterOption(SelectAttributeIncrease)],
-    20: [Effects.gainCharacterOption(SelectAttributeIncrease)],
+    11: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    12: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    13: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    14: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    15: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    16: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    17: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    18: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    19: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
+    20: [Effects.gainCharacterOption(SelectAttributeIncrease), Effects.gainCharacterOption(SelectTraitOption)],
   },
   content: [...CreaturesAndCharactersContent, ...CombatContent, ...SkillsContent],
 }

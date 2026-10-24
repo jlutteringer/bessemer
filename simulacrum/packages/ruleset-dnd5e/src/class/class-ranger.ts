@@ -1,37 +1,37 @@
 import { Effects, Traits } from '@simulacrum/ruleset'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import { Class } from '@simulacrum/ruleset-dnd5e/archetype'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import { Class } from '@simulacrum/ruleset-dnd5e/tag'
 
 export const Level1 = Traits.defineTrait('ranger/level-1', {
   name: 'Ranger',
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.gainTrait(SavingThrowProficiencies.Strength), Effects.gainTrait(SavingThrowProficiencies.Dexterity)],
 })
 
 export const Level2 = Traits.defineTrait('ranger/level-2', {
   name: 'Ranger (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [],
 })
 
 export const Level3 = Traits.defineTrait('ranger/level-3', {
   name: 'Ranger (3)',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [],
 })
 
 export const Level4 = Traits.defineTrait('ranger/level-4', {
   name: 'Ranger (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [],
 })
 
 export const Level5 = Traits.defineTrait('ranger/level-5', {
   name: 'Ranger (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [],
 })

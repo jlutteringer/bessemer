@@ -1,6 +1,6 @@
 import * as Attributes from '@simulacrum/ruleset/attribute'
 import * as Characteristics from '@simulacrum/ruleset/characteristic'
-import * as Archetypes from '@simulacrum/ruleset/archetype'
+import * as Tags from '@simulacrum/ruleset/tag'
 import * as Traits from '@simulacrum/ruleset/trait'
 import * as Loadout from '@simulacrum/ruleset/loadout'
 import * as Effects from '@simulacrum/ruleset/effect'
@@ -16,7 +16,7 @@ import * as CharacterValues from '@simulacrum/ruleset/character-value'
 export {
   Attributes,
   Characteristics,
-  Archetypes,
+  Tags,
   Traits,
   Loadout,
   Effects,

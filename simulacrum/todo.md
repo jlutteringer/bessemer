@@ -2,10 +2,10 @@
 
 ## Improve trait filter semantics
 
-An option only offers a trait if _all_ of the trait's archetypes are in its filter (`Traits.applyFilter`). Now that spells have
-both a rank and a school archetype, a filter has to list every school it allows as well as the ranks, so `UpToRank1/2/3` in
-`packages/ruleset-dnd5e/src/archetype/spell.ts` include all the schools just to keep Spells Known working (the comment at the top of that
-file explains this). This gets awkward as traits pick up more archetypes (it's effectively an OR across all archetypes rather than
+An option only offers a trait if _all_ of the trait's tags are in its filter (`Traits.applyFilter`). Now that spells have
+both a rank and a school tag, a filter has to list every school it allows as well as the ranks, so `UpToRank1/2/3` in
+`packages/ruleset-dnd5e/src/tag/spell.ts` include all the schools just to keep Spells Known working (the comment at the top of that
+file explains this). This gets awkward as traits pick up more tags (it's effectively an OR across all tags rather than
 "rank ≤ N AND school = X").
 
 Find a filter model that can express both, e.g. per-dimension constraints.

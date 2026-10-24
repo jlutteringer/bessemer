@@ -1,16 +1,16 @@
-import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
 import { Agility, AttributeCap, Brawn, Intelligence, Presence, Willpower } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-export const AttributeIncrease = Archetypes.defineTraitArchetype('attribute-increase', { name: 'Attribute Increase' })
+export const AttributeIncrease = Tags.defineTraitTag('attribute-increase', { name: 'Attribute Increase' })
 
 const defineAttributeIncrease = (key: string, name: string, characteristic: Characteristic) => {
   return Traits.defineTrait(`attribute-increase/${key}`, {
     name: `${name} +1`,
     description: `Increase your ${name} by 1.`,
-    archetypes: [AttributeIncrease],
+    tags: [AttributeIncrease],
     repeatable: true,
     prerequisites: [Expressions.lessThan(characteristic.variable, AttributeCap)],
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],

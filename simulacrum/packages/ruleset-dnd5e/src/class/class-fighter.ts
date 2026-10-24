@@ -1,12 +1,12 @@
-import { Abilities, Archetypes, Attributes, CharacterOptions, Effects, Traits, CharacterValues } from '@simulacrum/ruleset'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import { Class } from '@simulacrum/ruleset-dnd5e/archetype'
-import { SelectFightingStyle } from '@simulacrum/ruleset-dnd5e/archetype/fighting-style'
+import { Abilities, Tags, Attributes, CharacterOptions, Effects, Traits, CharacterValues } from '@simulacrum/ruleset'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import { Class } from '@simulacrum/ruleset-dnd5e/tag'
+import { SelectFightingStyle } from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
 import { WeaponMasteryLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import { SelectArtisansTools } from '@simulacrum/ruleset-dnd5e/archetype/artisans-tools'
-import { SelectManeuver, SuperiorityDice } from '@simulacrum/ruleset-dnd5e/archetype/maneuver'
-import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import { SelectArtisansTools } from '@simulacrum/ruleset-dnd5e/tag/artisans-tools'
+import { SelectManeuver, SuperiorityDice } from '@simulacrum/ruleset-dnd5e/tag/maneuver'
+import { SelectFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { AbilityPatchProps } from '@simulacrum/ruleset/ability'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
@@ -18,7 +18,7 @@ import { Patches } from '@bessemer/cornerstone'
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('fighter/select-skill-proficiency', {
   name: 'Skill Proficiency',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
     specificOptions: [
       SkillProficiencies.Acrobatics,
       SkillProficiencies.AnimalHandling,
@@ -47,7 +47,7 @@ export const WeaponMastery = Traits.defineTrait('fighter/weapon-mastery', {
 export const Level1 = Traits.defineTrait('fighter/level-1', {
   name: 'Fighter',
   description: 'A master of martial combat, at home with **any weapon** and **any armor**.',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainTrait(SavingThrowProficiencies.Strength),
     Effects.gainTrait(SavingThrowProficiencies.Constitution),
@@ -115,7 +115,7 @@ export const TacticalMind = Traits.defineTrait('fighter/tactical-mind', {
 export const Level2 = Traits.defineTrait('fighter/level-2', {
   name: 'Fighter (2)',
   prerequisites: [Expressions.contains(CharacterValues.Traits, [Level1.id])],
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))), Effects.gainTrait(TacticalMind)],
 })
 
@@ -144,18 +144,18 @@ export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
   ],
 })
 
-export const FighterSubclass = Archetypes.defineTraitArchetype('fighter/subclass', { name: 'Fighter Subclass' })
+export const FighterSubclass = Tags.defineTraitTag('fighter/subclass', { name: 'Fighter Subclass' })
 export const SelectFighterSubclass = CharacterOptions.selectTraitOption('fighter/select-subclass', {
   name: 'Fighter Subclass',
   filter: {
-    archetypes: [FighterSubclass],
+    tags: [FighterSubclass],
   },
 })
 
 export const Level3 = Traits.defineTrait('fighter/level-3', {
   name: 'Fighter (3)',
   prerequisites: [Expressions.contains(CharacterValues.Traits, [Level2.id])],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
     Effects.gainCharacterOption(SelectFighterSubclass),
@@ -176,7 +176,7 @@ export const CombatSuperiority = Traits.defineTrait('fighter/combat-superiority'
 
 export const BattleMaster = Traits.defineTrait('fighter/battle-master', {
   name: 'Battle Master',
-  archetypes: [FighterSubclass],
+  tags: [FighterSubclass],
   effects: [
     Effects.gainTrait(CombatSuperiority),
     // Student of War
@@ -187,26 +187,26 @@ export const BattleMaster = Traits.defineTrait('fighter/battle-master', {
 
 export const Champion = Traits.defineTrait('fighter/champion', {
   name: 'Champion',
-  archetypes: [FighterSubclass],
+  tags: [FighterSubclass],
   effects: [Effects.descriptive('Improved Critical!'), Effects.descriptive('Remarkable Athlete!')],
 })
 
 export const EldritchKnight = Traits.defineTrait('fighter/eldritch-knight', {
   name: 'Eldritch Knight',
-  archetypes: [FighterSubclass],
+  tags: [FighterSubclass],
   effects: [Effects.descriptive('Spells!'), Effects.descriptive('War Bond!')],
 })
 
 export const PsiWarrior = Traits.defineTrait('fighter/psi-warrior', {
   name: 'Psi Warrior',
-  archetypes: [FighterSubclass],
+  tags: [FighterSubclass],
   effects: [Effects.descriptive('Psionic Power!')],
 })
 
 export const Level4 = Traits.defineTrait('fighter/level-4', {
   name: 'Fighter (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainLoadoutSlot(WeaponMasteryLoadout),
     Effects.gainCharacterOption(SelectFeat),
@@ -237,7 +237,7 @@ export const TacticalShift = Traits.defineTrait('fighter/tactical-shift', {
 export const Level5 = Traits.defineTrait('fighter/level-5', {
   name: 'Fighter (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.gainTrait(TacticalShift)],
 })
 

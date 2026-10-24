@@ -1,6 +1,6 @@
 import { CharacterRecord, CharacterSheet } from '@simulacrum/engine/character/character'
 import { CharacterOption, CharacterOptionValue, CharacterSelection } from '@simulacrum/engine/character/character-option'
-import { Abilities, Archetypes, Characteristics, Effects, ProgressionTables, Traits, CharacterOptions, Characters } from '@simulacrum/engine'
+import { Abilities, Tags, Characteristics, Effects, ProgressionTables, Traits, CharacterOptions, Characters } from '@simulacrum/engine'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Characteristic, CharacteristicGroup, CharacteristicValue } from '@simulacrum/engine/characteristic'
@@ -175,10 +175,10 @@ export const getPassiveTraits = (sheet: CharacterSheet, ruleset: Ruleset): Array
 }
 
 /**
- * Labels an option's value (a trait or an ability) by the archetypes it belongs to, e.g. "Rank 2 / Evocation" or "Class".
+ * Labels an option's value (a trait or an ability) by the tags it belongs to, e.g. "Rank 2 / Evocation" or "Class".
  */
 export const getValueCaption = (value: CharacterOptionValue, ruleset: Ruleset): string => {
-  return value.archetypes.map((it) => Archetypes.getArchetypeById(it, ruleset).name).join(' / ')
+  return value.tags.map((it) => Tags.getTagById(it, ruleset).name).join(' / ')
 }
 
 export const getCharacterOptionChoices = (sheet: CharacterSheet): Array<CharacterOptionChoice> => {

@@ -1,9 +1,9 @@
-import { Abilities, Archetypes, Attributes, Effects, ResourcePools, Traits } from '@simulacrum/ruleset'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import { Class, Cleric } from '@simulacrum/ruleset-dnd5e/archetype'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
-import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
+import { Abilities, Tags, Attributes, Effects, ResourcePools, Traits } from '@simulacrum/ruleset'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import { Class, Cleric } from '@simulacrum/ruleset-dnd5e/tag'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
+import { SelectFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
@@ -16,7 +16,7 @@ import { Patches } from '@bessemer/cornerstone'
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric/select-skill-proficiency', {
   name: 'Skill Proficiency',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
     specificOptions: [
       SkillProficiencies.History,
       SkillProficiencies.Insight,
@@ -30,7 +30,7 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric
 // Cleric cantrips are chosen when the Cleric gains a level, rather than swapped in and out of a loadout like a Wizard's
 export const SelectCantrip = CharacterOptions.selectAbilityOption('cleric/select-cantrip', {
   name: 'Cantrips',
-  filter: { archetypes: [Cleric, Spells.Cantrip] },
+  filter: { tags: [Cleric, Spells.Cantrip] },
 })
 
 // Uses of a Wisdom-based feature: equal to the Wisdom modifier, but at least one
@@ -60,7 +60,7 @@ export const Level1 = Traits.defineTrait('cleric/level-1', {
   name: 'Cleric',
   description:
     'A priest who channels **divine magic**, wielding the power of the gods to heal, protect, and smite, and casting spells with **Wisdom**.\n\n**Saving Throws:** Wisdom and Charisma. **Armor:** Light and Medium armor, and Shields. **Weapons:** Simple weapons.',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainTrait(SavingThrowProficiencies.Wisdom),
     Effects.gainTrait(SavingThrowProficiencies.Charisma),
@@ -130,20 +130,20 @@ export const TurnUndead = Abilities.defineAbility('cleric/turn-undead', {
 export const Level2 = Traits.defineTrait('cleric/level-2', {
   name: 'Cleric (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))), Effects.gainTrait(ChannelDivinity)],
 })
 
-export const ClericSubclass = Archetypes.defineTraitArchetype('cleric/subclass', { name: 'Cleric Subclass' })
+export const ClericSubclass = Tags.defineTraitTag('cleric/subclass', { name: 'Cleric Subclass' })
 export const SelectClericSubclass = CharacterOptions.selectTraitOption('cleric/select-subclass', {
   name: 'Cleric Subclass',
-  filter: { archetypes: [ClericSubclass] },
+  filter: { tags: [ClericSubclass] },
 })
 
 export const Level3 = Traits.defineTrait('cleric/level-3', {
   name: 'Cleric (3)',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainCharacterOption(SelectClericSubclass),
@@ -153,7 +153,7 @@ export const Level3 = Traits.defineTrait('cleric/level-3', {
 export const Level4 = Traits.defineTrait('cleric/level-4', {
   name: 'Cleric (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     // Ability Score Improvement
@@ -172,7 +172,7 @@ export const SearUndead = Traits.defineTrait('cleric/sear-undead', {
 export const Level5 = Traits.defineTrait('cleric/level-5', {
   name: 'Cleric (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))), Effects.gainTrait(SearUndead)],
 })
 
@@ -202,7 +202,7 @@ export const LifeDomain = Traits.defineTrait('cleric/life-domain', {
   name: 'Life Domain',
   description:
     'A domain of **vibrant positive energy**, the force that sustains all living things, whose priests heal the sick and wounded and care for those in need.',
-  archetypes: [ClericSubclass],
+  tags: [ClericSubclass],
   effects: [Effects.gainTrait(DiscipleOfLife), Effects.gainTrait(LifeDomainSpells)],
 })
 
@@ -234,7 +234,7 @@ export const LightDomain = Traits.defineTrait('cleric/light-domain', {
   name: 'Light Domain',
   description:
     'A domain of **rebirth and renewal**, truth, vigilance, and beauty, whose priests are enlightened souls who burn away darkness and lies with radiant flame.',
-  archetypes: [ClericSubclass],
+  tags: [ClericSubclass],
   effects: [Effects.gainTrait(LightDomainSpells)],
 })
 
@@ -284,7 +284,7 @@ export const TrickeryDomain = Traits.defineTrait('cleric/trickery-domain', {
   name: 'Trickery Domain',
   description:
     'A domain of **mischief and deception**, whose priests are a disruptive force in the world, puncturing pride, mocking tyrants, and freeing captives.',
-  archetypes: [ClericSubclass],
+  tags: [ClericSubclass],
   effects: [Effects.gainTrait(TrickeryDomainSpells)],
 })
 
@@ -330,7 +330,7 @@ export const WarDomain = Traits.defineTrait('cleric/war-domain', {
   name: 'War Domain',
   description:
     'A domain of **war and violence**, whose priests inspire valor in the faithful, punish the foes of their gods, and fight as champions of the battlefield.',
-  archetypes: [ClericSubclass],
+  tags: [ClericSubclass],
   effects: [Effects.gainTrait(WarDomainSpells)],
 })
 

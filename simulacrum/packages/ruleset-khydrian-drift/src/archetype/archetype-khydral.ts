@@ -1,26 +1,26 @@
 import { Abilities, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
-import { Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
+import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Stamina, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 
 export const KhydralSensitivity = Traits.defineTrait('khydral/sensitivity', {
   name: 'Khydral Sensitivity',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [],
   effects: [],
 })
 
 export const KhydralInitiate = Traits.defineTrait('khydral/initiate', {
   name: 'Khydral Initiate',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(KhydralSensitivity)],
   effects: [],
 })
 
 export const KhydralAdept = Traits.defineTrait('khydral/adept', {
   name: 'Khydral Adept',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(KhydralInitiate)],
   effects: [],
 })
@@ -43,7 +43,7 @@ export const TimeDilation = Abilities.defineAbility('khydral/time-dilation', {
 
 export const KhydralMastery = Traits.defineTrait('khydral/mastery', {
   name: 'Khydral Mastery',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(KhydralAdept)],
   effects: [],
 })

@@ -1,12 +1,12 @@
 import { Abilities } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
 export const Cornucopia = Abilities.defineAbility('spell/cornucopia', {
   name: 'Cornucopia',
   description: '*Uncommon, Concentrate, Druid, Focus, Healing, Manipulate, Plant, Vitality*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -22,7 +22,7 @@ export const Cornucopia = Abilities.defineAbility('spell/cornucopia', {
 export const HealAnimal = Abilities.defineAbility('spell/heal-animal', {
   name: 'Heal Animal',
   description: '*Uncommon, Druid, Focus, Healing, Manipulate, Vitality*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -38,7 +38,7 @@ export const HealAnimal = Abilities.defineAbility('spell/heal-animal', {
 export const TempestSurge = Abilities.defineAbility('spell/tempest-surge', {
   name: 'Tempest Surge',
   description: '*Uncommon, Air, Concentrate, Druid, Electricity, Focus, Manipulate*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -55,7 +55,7 @@ export const TempestSurge = Abilities.defineAbility('spell/tempest-surge', {
 export const UntamedForm = Abilities.defineAbility('spell/untamed-form', {
   name: 'Untamed Form',
   description: '*Uncommon, Concentrate, Druid, Focus, Manipulate, Polymorph*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -71,7 +71,7 @@ export const UntamedForm = Abilities.defineAbility('spell/untamed-form', {
 export const UntamedShift = Abilities.defineAbility('spell/untamed-shift', {
   name: 'Untamed Shift',
   description: '*Uncommon, Concentrate, Druid, Focus, Manipulate, Morph*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {

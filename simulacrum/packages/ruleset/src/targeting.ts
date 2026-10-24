@@ -1,7 +1,7 @@
 import { Expression } from '@bessemer/cornerstone/expression'
 import { Objects } from '@bessemer/cornerstone'
-import * as Archetypes from '@simulacrum/ruleset/archetype'
-import { ArchetypeFilter, ArchetypeFilterProps, CreatureArchetype, CreatureArchetypeReference } from '@simulacrum/ruleset/archetype'
+import * as Tags from '@simulacrum/ruleset/tag'
+import { TagFilter, TagFilterProps, CreatureTag, CreatureTagReference } from '@simulacrum/ruleset/tag'
 
 export type Range = Expression<number>
 
@@ -46,16 +46,16 @@ export type TargetSelectionProps = {
 export type TargetingProps = Record<string, TargetSelectionProps>
 
 export type TargetFilterProps = {
-  archetypes?: ArchetypeFilterProps<CreatureArchetype>
+  tags?: TagFilterProps<CreatureTag>
 }
 
 export type TargetFilter = {
-  archetypes: ArchetypeFilter<CreatureArchetypeReference>
+  tags: TagFilter<CreatureTagReference>
 }
 
 export const filter = (props: TargetFilterProps): TargetFilter => {
   return {
-    archetypes: Archetypes.filter(props.archetypes ?? []),
+    tags: Tags.filter(props.tags ?? []),
   }
 }
 

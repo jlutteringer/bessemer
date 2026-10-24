@@ -1,4 +1,4 @@
-import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
@@ -7,7 +7,7 @@ import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-export const AbilityScoreIncrease = Archetypes.defineTraitArchetype('ability-score-increase', { name: 'Ability Score Increase' })
+export const AbilityScoreIncrease = Tags.defineTraitTag('ability-score-increase', { name: 'Ability Score Increase' })
 
 export type AbilityScore = {
   name: string
@@ -22,7 +22,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
   const plusTwo = Traits.defineTrait(`ability-score-increase/${key}-plus-two`, {
     name: `${name} +2`,
     description: `Increase your ${name} score by 2.`,
-    archetypes: [AbilityScoreIncrease],
+    tags: [AbilityScoreIncrease],
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(2)))],
   })
 
@@ -30,7 +30,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
   const plusOne = Traits.defineTrait(`ability-score-increase/${key}-plus-one`, {
     name: `${name} +1`,
     description: `Increase your ${name} score by 1.`,
-    archetypes: [AbilityScoreIncrease],
+    tags: [AbilityScoreIncrease],
     prerequisites: [Expressions.not(Traits.traitPrerequisite(plusTwo))],
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
   })
@@ -38,7 +38,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
   const featPlusOne = Traits.defineTrait(`ability-score-increase/feat/${key}-plus-one`, {
     name: `${name} +1`,
     description: `Increase your ${name} score by 1.`,
-    archetypes: [AbilityScoreIncrease],
+    tags: [AbilityScoreIncrease],
     repeatable: true,
     effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
   })
@@ -88,14 +88,14 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
   const plusTwoPlusOne = Traits.defineTrait(`${prefix}/plus-two-plus-one`, {
     name: '+2 and +1',
     description: `Increase one of ${first}, ${second}, or ${third} by 2 and another by 1.`,
-    archetypes: [AbilityScoreIncrease],
+    tags: [AbilityScoreIncrease],
     effects: [Effects.gainCharacterOption(selectPlusTwo), Effects.gainCharacterOption(selectPlusOne)],
   })
 
   const plusOneToAll = Traits.defineTrait(`${prefix}/plus-one-to-all`, {
     name: '+1 to All Three',
     description: `Increase ${first}, ${second}, and ${third} by 1 each.`,
-    archetypes: [AbilityScoreIncrease],
+    tags: [AbilityScoreIncrease],
     effects: abilityScores.flatMap((it) => it.plusOne.effects),
   })
 

@@ -1,10 +1,10 @@
-import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import { Bard, Class } from '@simulacrum/ruleset-dnd5e/archetype'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/archetype/skill-expertise'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
-import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
+import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import { Bard, Class } from '@simulacrum/ruleset-dnd5e/tag'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as SkillExpertise from '@simulacrum/ruleset-dnd5e/tag/skill-expertise'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
+import { SelectFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
@@ -18,40 +18,40 @@ import { Patches } from '@bessemer/cornerstone'
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('bard/select-skill-proficiency', {
   name: 'Skill Proficiency',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
   },
 })
 
 export const SelectExpertise = CharacterOptions.selectTraitOption('bard/select-expertise', {
   name: 'Skill Expertise',
   filter: {
-    archetypes: [SkillExpertise.SkillExpertise],
+    tags: [SkillExpertise.SkillExpertise],
   },
 })
 
 export const SelectCantrip = CharacterOptions.selectAbilityOption('bard/select-cantrip', {
   name: 'Cantrips',
-  filter: { archetypes: [Bard, Spells.Cantrip] },
+  filter: { tags: [Bard, Spells.Cantrip] },
 })
 
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-1', {
   name: 'Prepared Spells',
   filter: {
-    archetypes: [Bard, [Spells.Rank1]],
+    tags: [Bard, [Spells.Rank1]],
   },
 })
 
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-2', {
   name: 'Prepared Spells',
   filter: {
-    archetypes: [Bard, [Spells.Rank1, Spells.Rank2]],
+    tags: [Bard, [Spells.Rank1, Spells.Rank2]],
   },
 })
 
 export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-3', {
   name: 'Prepared Spells',
   filter: {
-    archetypes: [Bard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]],
+    tags: [Bard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]],
   },
 })
 
@@ -61,7 +61,7 @@ export const Level1 = Traits.defineTrait('bard/level-1', {
   name: 'Bard',
   description:
     'A performer whose words, music, and dance carry **magic**, inspiring allies and casting spells with **Charisma**.\n\n**Saving Throws:** Dexterity and Charisma. **Armor:** Light armor. **Weapons:** Simple weapons. **Tools:** three Musical Instruments of your choice.',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainTrait(SavingThrowProficiencies.Dexterity),
     Effects.gainTrait(SavingThrowProficiencies.Charisma),
@@ -120,7 +120,7 @@ export const JackOfAllTrades = Traits.defineTrait('bard/jack-of-all-trades', {
 export const Level2 = Traits.defineTrait('bard/level-2', {
   name: 'Bard (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainCharacterOption(SelectExpertise),
@@ -130,16 +130,16 @@ export const Level2 = Traits.defineTrait('bard/level-2', {
   ],
 })
 
-export const BardSubclass = Archetypes.defineTraitArchetype('bard/subclass', { name: 'Bard Subclass' })
+export const BardSubclass = Tags.defineTraitTag('bard/subclass', { name: 'Bard Subclass' })
 export const SelectBardSubclass = CharacterOptions.selectTraitOption('bard/select-subclass', {
   name: 'Bard Subclass',
-  filter: { archetypes: [BardSubclass] },
+  filter: { tags: [BardSubclass] },
 })
 
 export const Level3 = Traits.defineTrait('bard/level-3', {
   name: 'Bard (3)',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainCharacterOption(SelectBardSubclass),
@@ -157,7 +157,7 @@ export const DazzlingFootwork = Traits.defineTrait('bard/dazzling-footwork', {
 export const CollegeOfDance = Traits.defineTrait('bard/college-of-dance', {
   name: 'College of Dance',
   description: 'Bards who express the Words of Creation through **movement**, in harmony with a whirling cosmos of agility and grace.',
-  archetypes: [BardSubclass],
+  tags: [BardSubclass],
   effects: [Effects.gainTrait(DazzlingFootwork)],
 })
 
@@ -171,7 +171,7 @@ export const BeguilingMagic = Traits.defineTrait('bard/beguiling-magic', {
 export const CollegeOfGlamour = Traits.defineTrait('bard/college-of-glamour', {
   name: 'College of Glamour',
   description: 'Bards who weave the **beguiling magic of the Feywild** into their performances, stirring wonder and dread alike.',
-  archetypes: [BardSubclass],
+  tags: [BardSubclass],
   effects: [Effects.gainTrait(BeguilingMagic)],
 })
 
@@ -199,7 +199,7 @@ export const BonusProficiencies = Traits.defineTrait('bard/bonus-proficiencies',
 export const CollegeOfLore = Traits.defineTrait('bard/college-of-lore', {
   name: 'College of Lore',
   description: 'Bards who **collect spells and secrets** from every source, and use their wit to expose lies and deflate the self-important.',
-  archetypes: [BardSubclass],
+  tags: [BardSubclass],
   effects: [Effects.gainTrait(BonusProficiencies)],
 })
 
@@ -231,14 +231,14 @@ export const MartialTraining = Traits.defineTrait('bard/martial-training', {
 export const CollegeOfValor = Traits.defineTrait('bard/college-of-valor', {
   name: 'College of Valor',
   description: 'Bards who **sing the deeds of ancient heroes**, keeping their memory alive and inspiring new heroes on the battlefield.',
-  archetypes: [BardSubclass],
+  tags: [BardSubclass],
   effects: [Effects.gainTrait(CombatInspiration), Effects.gainTrait(MartialTraining)],
 })
 
 export const Level4 = Traits.defineTrait('bard/level-4', {
   name: 'Bard (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     // Ability Score Improvement
@@ -265,7 +265,7 @@ export const FontOfInspiration = Traits.defineTrait('bard/font-of-inspiration', 
 export const Level5 = Traits.defineTrait('bard/level-5', {
   name: 'Bard (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     Effects.gainTrait(FontOfInspiration),

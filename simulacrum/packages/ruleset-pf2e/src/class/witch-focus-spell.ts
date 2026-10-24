@@ -1,12 +1,12 @@
 import { Abilities } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
 export const BloodWard = Abilities.defineAbility('spell/blood-ward', {
   name: 'Blood Ward',
   description: '*Uncommon, Focus, Hex, Manipulate, Witch*\n\n**Lesson** Lesson of Protection',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -23,7 +23,7 @@ export const BloodWard = Abilities.defineAbility('spell/blood-ward', {
 export const Cackle = Abilities.defineAbility('spell/cackle', {
   name: 'Cackle',
   description: '*Uncommon, Concentrate, Focus, Hex, Witch*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -39,7 +39,7 @@ export const Cackle = Abilities.defineAbility('spell/cackle', {
 export const ElementalBetrayal = Abilities.defineAbility('spell/elemental-betrayal', {
   name: 'Elemental Betrayal',
   description: '*Uncommon, Concentrate, Focus, Hex, Witch*\n\n**Lesson** Lesson of the Elements',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -56,7 +56,7 @@ export const ElementalBetrayal = Abilities.defineAbility('spell/elemental-betray
 export const LifeBoost = Abilities.defineAbility('spell/life-boost', {
   name: 'Life Boost',
   description: '*Uncommon, Focus, Healing, Hex, Manipulate, Vitality, Witch*\n\n**Lesson** Lesson of Life',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -73,7 +73,7 @@ export const LifeBoost = Abilities.defineAbility('spell/life-boost', {
 export const NeedleOfVengeance = Abilities.defineAbility('spell/needle-of-vengeance', {
   name: 'Needle of Vengeance',
   description: '*Uncommon, Focus, Hex, Manipulate, Mental, Witch*\n\n**Lesson** Lesson of Vengeance',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -90,7 +90,7 @@ export const NeedleOfVengeance = Abilities.defineAbility('spell/needle-of-vengea
 export const PatronsPuppet = Abilities.defineAbility('spell/patrons-puppet', {
   name: "Patron's Puppet",
   description: '*Uncommon, Focus, Hex, Witch*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -106,7 +106,7 @@ export const PatronsPuppet = Abilities.defineAbility('spell/patrons-puppet', {
 export const PhaseFamiliar = Abilities.defineAbility('spell/phase-familiar', {
   name: 'Phase Familiar',
   description: '*Uncommon, Focus, Hex, Manipulate, Witch*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -123,7 +123,7 @@ export const PhaseFamiliar = Abilities.defineAbility('spell/phase-familiar', {
 export const VeilOfDreams = Abilities.defineAbility('spell/veil-of-dreams', {
   name: 'Veil of Dreams',
   description: '*Uncommon, Focus, Hex, Manipulate, Mental, Witch*\n\n**Lesson** Lesson of Dreams',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -140,7 +140,7 @@ export const VeilOfDreams = Abilities.defineAbility('spell/veil-of-dreams', {
 export const DeceiversCloak = Abilities.defineAbility('spell/deceivers-cloak', {
   name: "Deceiver's Cloak",
   description: '*Uncommon, Concentrate, Focus, Hex, Illusion, Manipulate, Witch*\n\n**Lesson** Lesson of Mischief',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -156,7 +156,7 @@ export const DeceiversCloak = Abilities.defineAbility('spell/deceivers-cloak', {
 export const MaliciousShadow = Abilities.defineAbility('spell/malicious-shadow', {
   name: 'Malicious Shadow',
   description: '*Uncommon, Concentrate, Focus, Hex, Manipulate, Shadow, Witch*\n\n**Lesson** Lesson of Shadow',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -173,7 +173,7 @@ export const MaliciousShadow = Abilities.defineAbility('spell/malicious-shadow',
 export const PersonalBlizzard = Abilities.defineAbility('spell/personal-blizzard', {
   name: 'Personal Blizzard',
   description: '*Uncommon, Cold, Focus, Hex, Witch*\n\n**Lesson** Lesson of Snow',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {

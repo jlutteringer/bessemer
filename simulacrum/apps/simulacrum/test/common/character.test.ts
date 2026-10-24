@@ -1,7 +1,7 @@
 import { TestHarness } from '@simulacrum/test/test-harness'
 import { Dnd5e, SelectClassLevel } from '@simulacrum/ruleset-dnd5e'
 import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
-import { Archery, SelectFightingStyle } from '@simulacrum/ruleset-dnd5e/archetype/fighting-style'
+import { Archery, SelectFightingStyle } from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
 import { HitPointResourcePool } from '@simulacrum/ruleset-dnd5e/resource-pool'
 import { CharacterOptions, Characters } from '@simulacrum/engine'
 

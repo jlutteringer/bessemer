@@ -2,7 +2,7 @@ import { Effects } from '@simulacrum/ruleset'
 import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { AllActionTypes } from '@simulacrum/ruleset-pf2e/action-type'
-import { AllArchetypes } from '@simulacrum/ruleset-pf2e/archetype'
+import { AllTags } from '@simulacrum/ruleset-pf2e/tag'
 import { AllCharacteristicGroups, AllCharacteristics, Intelligence } from '@simulacrum/ruleset-pf2e/characteristic'
 import { AllAttributeBoosts, SelectLevel1Boost, SelectLevel5Boost } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { AllSkillTraits, SelectSkillIncrease, SelectTrainedSkill } from '@simulacrum/ruleset-pf2e/skill'
@@ -49,7 +49,7 @@ export const Pf2e: Ruleset = {
   entities: [
     ...AllCharacteristics,
     ...AllCharacteristicGroups,
-    ...AllArchetypes,
+    ...AllTags,
     ...AllActionTypes,
     ...AllAttributeBoosts,
     ...AllSkillTraits,

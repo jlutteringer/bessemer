@@ -1,8 +1,8 @@
 import { Attributes, Effects, RulesetEntities, Traits, CharacterValues } from '@simulacrum/ruleset'
 import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { LightArmorProficiency, MediumArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/armor'
-import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
+import { HeavyArmorProficiency, LightArmorProficiency, MediumArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/armor'
+import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import {
   Agility,
   DefenseBonus,
@@ -18,12 +18,13 @@ export const Commando = Traits.defineTrait('commando', {
   name: 'Commando',
   description:
     '*"For by wise counsel thou shalt make thy war: and in multitude of counsellors there is safety."*\n\nCommandos are the professional soldiers of the sprawl, trained by corporate armies and mercenary outfits to lead squads through the worst fighting the city has to offer. They pin enemies down with suppressing fire, adapt their tactics as a fight turns, and draw on tech hardpoints and weapon specializations to fill whatever role their squad needs.',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(FortitudeDefense, Attributes.modifier(Patches.sum(DefenseBonus.Heavy))),
     Effects.modifyCharacteristic(ReflexDefense, Attributes.modifier(Patches.sum(DefenseBonus.Medium))),
     Effects.gainTrait(LightArmorProficiency),
     Effects.gainTrait(MediumArmorProficiency),
+    Effects.gainTrait(HeavyArmorProficiency),
     Effects.modifyCharacteristic(VitalityPool, Attributes.modifier(Patches.sum(NumericExpressions.multiply([CharacterValues.Level, 2])))),
     Effects.gainTrait(BasicCombatTraining),
     // Effects.modifyLoadoutSlotQuantity(GeneralLoadoutSlot, 2),
@@ -32,21 +33,21 @@ export const Commando = Traits.defineTrait('commando', {
 
 export const Arsenal = Traits.defineTrait('commando/arsenal', {
   name: 'Arsenal',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.descriptive('All equipped weapons are considered wielded.')],
 })
 
 export const SoldiersStamina = Traits.defineTrait('commando/soldiers-stamina', {
   name: "Soldier's Stamina",
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.descriptive('Gain healing surges...')],
 })
 
 export const Momentum = Traits.defineTrait('commando/momentum', {
   name: 'Momentum',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando)],
   effects: [Effects.modifyCharacteristic(MovementSpeed, Attributes.modifier(Patches.sum(NumericExpressions.floor(Agility.variable, 1))))],
 })
@@ -56,7 +57,7 @@ export const Sentinel = RulesetEntities.buildReference(RulesetEntities.RulesetEn
 
 export const OfficerTrait = Traits.defineTrait('commando/officer', {
   name: 'Officer',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Momentum), Expressions.not(Traits.traitPrerequisite(Sentinel))],
   effects: [
     Effects.gainResourcePool(TacticPoints),
@@ -67,7 +68,7 @@ export const OfficerTrait = Traits.defineTrait('commando/officer', {
 
 export const AdvancedOperations = Traits.defineTrait('commando/advanced-operations', {
   name: 'Advanced Operations',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Officer)],
   effects: [
     // TODO this solution doesn't work - its supposed to add 2 not set 2 - Patch solves!
@@ -78,7 +79,7 @@ export const AdvancedOperations = Traits.defineTrait('commando/advanced-operatio
 
 export const SentinelTrait = Traits.defineTrait('commando/sentinel', {
   name: 'Sentinel',
-  archetypes: [Primary],
+  tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(Commando), Expressions.not(Traits.traitPrerequisite(Officer))],
   effects: [],
 })

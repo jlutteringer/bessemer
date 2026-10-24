@@ -11,7 +11,7 @@ import {
   PowerLevel3,
   PowerLevel5,
   UtilityPower,
-} from '@simulacrum/ruleset-dnd4e/archetype'
+} from '@simulacrum/ruleset-dnd4e/tag'
 import { Paladin } from '@simulacrum/ruleset-dnd4e/class/class-paladin'
 
 // Generated from the Player's Handbook Paladin powers, levels 1-5. Powers are learned through character options, so they
@@ -21,7 +21,7 @@ export const BolsteringStrike = Abilities.defineAbility('paladin/power/bolsterin
   name: 'Bolstering Strike',
   description: '*You attack your foe without mercy or reprieve, and your accuracy is rewarded with a divine gift of vigor.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -35,7 +35,7 @@ export const EnfeeblingStrike = Abilities.defineAbility('paladin/power/enfeeblin
   name: 'Enfeebling Strike',
   description: '*Your brutal weapon attack leaves your foe weakened.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -49,7 +49,7 @@ export const HolyStrike = Abilities.defineAbility('paladin/power/holy-strike', {
   name: 'Holy Strike',
   description: '*You strike an enemy with your weapon, which ignites with holy light.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -63,7 +63,7 @@ export const ValiantStrike = Abilities.defineAbility('paladin/power/valiant-stri
   name: 'Valiant Strike',
   description: '*As you bring your weapon to bear, the odds against you add strength to your attack.*',
   universal: false,
-  archetypes: [AtWillPower, AttackPower, PowerLevel1],
+  tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -77,7 +77,7 @@ export const FearsomeSmite = Abilities.defineAbility('paladin/power/fearsome-smi
   name: 'Fearsome Smite',
   description: '*When you strike a foe with your weapon, the force of the blow causes him to shudder and second-guess his tactics.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -93,7 +93,7 @@ export const PiercingSmite = Abilities.defineAbility('paladin/power/piercing-smi
   name: 'Piercing Smite',
   description: "*Silvery spikes cover your weapon, punching through your foe's armor.*",
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -110,7 +110,7 @@ export const RadiantSmite = Abilities.defineAbility('paladin/power/radiant-smite
   description:
     '*Your weapon glows with a pearly luminescence. Enemies shrink from its pure light, especially creatures of supernatural evil such as demons and devils.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -126,7 +126,7 @@ export const ShieldingSmite = Abilities.defineAbility('paladin/power/shielding-s
   name: 'Shielding Smite',
   description: '*A translucent golden shield forms in front of a nearby ally as you attack with your weapon.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel1],
+  tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -142,7 +142,7 @@ export const OnPainOfDeath = Abilities.defineAbility('paladin/power/on-pain-of-d
   name: 'On Pain of Death',
   description: '*You invoke a prayer that wracks your foe with terrible pain and causes further pain whenever he makes an attack.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -158,7 +158,7 @@ export const PaladinsJudgment = Abilities.defineAbility('paladin/power/paladins-
   name: "Paladin's Judgment",
   description: '*Your melee attack punishes your enemy and heals an ally.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -174,7 +174,7 @@ export const RadiantDelirium = Abilities.defineAbility('paladin/power/radiant-de
   name: 'Radiant Delirium',
   description: '*You engulf your enemy in searing ribbons of radiance.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel1],
+  tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -190,7 +190,7 @@ export const AstralSpeech = Abilities.defineAbility('paladin/power/astral-speech
   name: 'Astral Speech',
   description: '*You speak with such compelling conviction that others find it difficult to refute your beliefs and claims.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -206,7 +206,7 @@ export const MartyrsBlessing = Abilities.defineAbility('paladin/power/martyrs-bl
   name: "Martyr's Blessing",
   description: '*You step into an attack made against an adjacent ally to save your comrade.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -223,7 +223,7 @@ export const SacredCircle = Abilities.defineAbility('paladin/power/sacred-circle
   description:
     '*You trace a circle around you with your hand, and it quickly expands into a wide circle of faintly glowing runes that glows brightly and protects you and your close allies.*',
   universal: false,
-  archetypes: [DailyPower, UtilityPower, PowerLevel2],
+  tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -239,7 +239,7 @@ export const ArcingSmite = Abilities.defineAbility('paladin/power/arcing-smite',
   name: 'Arcing Smite',
   description: '*You swing your weapon in a wide arc that strikes not one but two creatures within your reach.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -255,7 +255,7 @@ export const InvigoratingSmite = Abilities.defineAbility('paladin/power/invigora
   name: 'Invigorating Smite',
   description: '*When you hit an enemy with your weapon, you and your allies suddenly feel invigorated by the divine power of your faith.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -271,7 +271,7 @@ export const RighteousSmite = Abilities.defineAbility('paladin/power/righteous-s
   name: 'Righteous Smite',
   description: '*Your righteous blow fills you and your nearby allies with preternatural resolve.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -287,7 +287,7 @@ export const StaggeringSmite = Abilities.defineAbility('paladin/power/staggering
   name: 'Staggering Smite',
   description: '*With a mighty swing of your weapon, you knock your enemy back.*',
   universal: false,
-  archetypes: [EncounterPower, AttackPower, PowerLevel3],
+  tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -304,7 +304,7 @@ export const HallowedCircle = Abilities.defineAbility('paladin/power/hallowed-ci
   description:
     '*You wave your hand through the air, and a wide circle of faintly glowing symbols appears around you, damaging enemies and protecting allies within its confines.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -320,7 +320,7 @@ export const MartyrsRetribution = Abilities.defineAbility('paladin/power/martyrs
   name: "Martyr's Retribution",
   description: '*Divine light engulfs your weapon as you sacrifice your ability to heal in order to strike down your enemy.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(
@@ -336,7 +336,7 @@ export const SignOfVulnerability = Abilities.defineAbility('paladin/power/sign-o
   name: 'Sign of Vulnerability',
   description: '*You cause a nearby foe to convulse with pain and render it more susceptible to radiant energy.*',
   universal: false,
-  archetypes: [DailyPower, AttackPower, PowerLevel5],
+  tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
     Effects.descriptive(

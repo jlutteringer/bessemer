@@ -1,12 +1,12 @@
 import { Abilities } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/archetype'
+import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
 export const GravityWeapon = Abilities.defineAbility('spell/gravity-weapon', {
   name: 'Gravity Weapon',
   description: '*Uncommon, Focus, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -22,7 +22,7 @@ export const GravityWeapon = Abilities.defineAbility('spell/gravity-weapon', {
 export const HealCompanion = Abilities.defineAbility('spell/heal-companion', {
   name: 'Heal Companion',
   description: '*Uncommon, Focus, Healing, Ranger, Vitality*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -38,7 +38,7 @@ export const HealCompanion = Abilities.defineAbility('spell/heal-companion', {
 export const MagicHide = Abilities.defineAbility('spell/magic-hide', {
   name: 'Magic Hide',
   description: '*Uncommon, Focus, Manipulate, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -55,7 +55,7 @@ export const MagicHide = Abilities.defineAbility('spell/magic-hide', {
 export const AnimalFeature = Abilities.defineAbility('spell/animal-feature', {
   name: 'Animal Feature',
   description: '*Uncommon, Concentrate, Focus, Manipulate, Morph, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -71,7 +71,7 @@ export const AnimalFeature = Abilities.defineAbility('spell/animal-feature', {
 export const EnlargeCompanion = Abilities.defineAbility('spell/enlarge-companion', {
   name: 'Enlarge Companion',
   description: '*Uncommon, Concentrate, Focus, Manipulate, Polymorph, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -88,7 +88,7 @@ export const EnlargeCompanion = Abilities.defineAbility('spell/enlarge-companion
 export const HuntersLuck = Abilities.defineAbility('spell/hunters-luck', {
   name: "Hunter's Luck",
   description: '*Uncommon, Concentrate, Focus, Fortune, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -104,7 +104,7 @@ export const HuntersLuck = Abilities.defineAbility('spell/hunters-luck', {
 export const SoothingMist = Abilities.defineAbility('spell/soothing-mist', {
   name: 'Soothing Mist',
   description: '*Uncommon, Concentrate, Focus, Healing, Manipulate, Ranger, Vitality*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -121,7 +121,7 @@ export const SoothingMist = Abilities.defineAbility('spell/soothing-mist', {
 export const EphemeralTracking = Abilities.defineAbility('spell/ephemeral-tracking', {
   name: 'Ephemeral Tracking',
   description: '*Uncommon, Concentrate, Focus, Manipulate, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {
@@ -137,7 +137,7 @@ export const EphemeralTracking = Abilities.defineAbility('spell/ephemeral-tracki
 export const RangersBramble = Abilities.defineAbility('spell/rangers-bramble', {
   name: "Ranger's Bramble",
   description: '*Uncommon, Concentrate, Focus, Manipulate, Plant, Ranger*',
-  archetypes: [Spell, FocusSpell],
+  tags: [Spell, FocusSpell],
   universal: false,
   actions: [
     {

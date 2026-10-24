@@ -1,9 +1,9 @@
-import { Abilities, Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
-import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/archetype/saving-throw-proficiency'
-import { Class } from '@simulacrum/ruleset-dnd5e/archetype'
-import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
-import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
-import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
+import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
+import { Class } from '@simulacrum/ruleset-dnd5e/tag'
+import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
+import * as Spells from '@simulacrum/ruleset-dnd5e/tag/spell'
+import { SelectFeat } from '@simulacrum/ruleset-dnd5e/tag/feat'
 import { WeaponMasteryLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
@@ -15,7 +15,7 @@ import { Patches } from '@bessemer/cornerstone'
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('barbarian/select-skill-proficiency', {
   name: 'Skill Proficiency',
   filter: {
-    archetypes: [SkillProficiencies.SkillProficiency],
+    tags: [SkillProficiencies.SkillProficiency],
     specificOptions: [
       SkillProficiencies.AnimalHandling,
       SkillProficiencies.Athletics,
@@ -46,7 +46,7 @@ export const Level1 = Traits.defineTrait('barbarian/level-1', {
   name: 'Barbarian',
   description:
     'A fierce warrior fueled by a primal **Rage**, shrugging off blows and fighting with savage strength.\n\n**Saving Throws:** Strength and Constitution. **Armor:** Light and Medium armor, and Shields. **Weapons:** Simple and Martial weapons.',
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.gainTrait(SavingThrowProficiencies.Strength),
     Effects.gainTrait(SavingThrowProficiencies.Constitution),
@@ -97,7 +97,7 @@ export const DangerSense = Traits.defineTrait('barbarian/danger-sense', {
 export const Level2 = Traits.defineTrait('barbarian/level-2', {
   name: 'Barbarian (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))), Effects.gainTrait(DangerSense)],
 })
 
@@ -112,11 +112,11 @@ export const RecklessAttack = Abilities.defineAbility('barbarian/reckless-attack
   actions: [{ name: 'Attack Recklessly', action: ActionTypes.Free }],
 })
 
-export const BarbarianSubclass = Archetypes.defineTraitArchetype('barbarian/subclass', { name: 'Barbarian Subclass' })
+export const BarbarianSubclass = Tags.defineTraitTag('barbarian/subclass', { name: 'Barbarian Subclass' })
 export const SelectBarbarianSubclass = CharacterOptions.selectTraitOption('barbarian/select-subclass', {
   name: 'Barbarian Subclass',
   filter: {
-    archetypes: [BarbarianSubclass],
+    tags: [BarbarianSubclass],
   },
 })
 
@@ -130,7 +130,7 @@ export const PrimalKnowledge = Traits.defineTrait('barbarian/primal-knowledge', 
 export const Level3 = Traits.defineTrait('barbarian/level-3', {
   name: 'Barbarian (3)',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
     Effects.gainCharacterOption(SelectBarbarianSubclass),
@@ -149,7 +149,7 @@ export const Frenzy = Traits.defineTrait('barbarian/frenzy', {
 export const PathOfTheBerserker = Traits.defineTrait('barbarian/path-of-the-berserker', {
   name: 'Path of the Berserker',
   description: 'Barbarians who channel their Rage into **untrammeled violence**, thrilling in the chaos of battle.',
-  archetypes: [BarbarianSubclass],
+  tags: [BarbarianSubclass],
   effects: [Effects.gainTrait(Frenzy)],
 })
 
@@ -169,7 +169,7 @@ export const RageOfTheWilds = Traits.defineTrait('barbarian/rage-of-the-wilds', 
 export const PathOfTheWildHeart = Traits.defineTrait('barbarian/path-of-the-wild-heart', {
   name: 'Path of the Wild Heart',
   description: 'Barbarians who see themselves as **kin to animals**, speaking with them and drawing on their might when they Rage.',
-  archetypes: [BarbarianSubclass],
+  tags: [BarbarianSubclass],
   effects: [Effects.gainTrait(AnimalSpeaker), Effects.gainTrait(RageOfTheWilds)],
 })
 
@@ -184,7 +184,7 @@ export const PathOfTheWorldTree = Traits.defineTrait('barbarian/path-of-the-worl
   name: 'Path of the World Tree',
   description:
     'Barbarians whose Rage connects them to **Yggdrasil**, the cosmic tree linking the planes, drawing on its magic for vitality and travel.',
-  archetypes: [BarbarianSubclass],
+  tags: [BarbarianSubclass],
   effects: [Effects.gainTrait(VitalityOfTheTree)],
 })
 
@@ -198,7 +198,7 @@ export const DivineFury = Traits.defineTrait('barbarian/divine-fury', {
 export const PathOfTheZealot = Traits.defineTrait('barbarian/path-of-the-zealot', {
   name: 'Path of the Zealot',
   description: 'Barbarians who rage in **ecstatic union with a god**, infused with divine power and often allied with its priests.',
-  archetypes: [BarbarianSubclass],
+  tags: [BarbarianSubclass],
   effects: [Effects.gainTrait(DivineFury)],
 })
 
@@ -226,7 +226,7 @@ export const WarriorOfTheGods = Abilities.defineAbility('barbarian/warrior-of-th
 export const Level4 = Traits.defineTrait('barbarian/level-4', {
   name: 'Barbarian (4)',
   prerequisites: [Traits.traitPrerequisite(Level3)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
     // Ability Score Improvement
@@ -245,7 +245,7 @@ export const FastMovement = Traits.defineTrait('barbarian/fast-movement', {
 export const Level5 = Traits.defineTrait('barbarian/level-5', {
   name: 'Barbarian (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
-  archetypes: [Class],
+  tags: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))), Effects.gainTrait(FastMovement)],
 })
 

@@ -1,7 +1,7 @@
 import { CharacterOptions, Effects } from '@simulacrum/ruleset'
 import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { AllActionTypes } from '@simulacrum/ruleset-dnd4e/action-type'
-import { AllArchetypes, Class } from '@simulacrum/ruleset-dnd4e/archetype'
+import { AllTags, Class } from '@simulacrum/ruleset-dnd4e/tag'
 import { AllCharacteristicGroups, AllCharacteristics } from '@simulacrum/ruleset-dnd4e/characteristic'
 import { AllLoadouts, ArmorLoadout, ShieldLoadout } from '@simulacrum/ruleset-dnd4e/loadout'
 import { AllArmor, AllArmorProficiencies, Armor, ArmorProficiency } from '@simulacrum/ruleset-dnd4e/armor'
@@ -37,7 +37,7 @@ import { AllWarlordPowers } from '@simulacrum/ruleset-dnd4e/class/warlord-power'
 
 export const SelectClass = CharacterOptions.selectTraitOption('class/select', {
   name: 'Class',
-  filter: { archetypes: [Class] },
+  filter: { tags: [Class] },
 })
 
 export const Dnd4e: Ruleset = {
@@ -47,7 +47,7 @@ export const Dnd4e: Ruleset = {
   entities: [
     ...AllCharacteristics,
     ...AllCharacteristicGroups,
-    ...AllArchetypes,
+    ...AllTags,
     ArmorProficiency,
     Armor,
     RacialAbilityBonus,

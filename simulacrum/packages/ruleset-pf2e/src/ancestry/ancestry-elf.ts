@@ -15,7 +15,7 @@ import {
   NephilimFeat,
   OrcFeat,
   VersatileHeritage,
-} from '@simulacrum/ruleset-pf2e/archetype'
+} from '@simulacrum/ruleset-pf2e/tag'
 import { Constitution, Dexterity, HitPoints, Intelligence, Speed } from '@simulacrum/ruleset-pf2e/characteristic'
 import {
   CharismaAncestryBoost,
@@ -32,7 +32,7 @@ export const AncientElf = Traits.defineTrait('heritage/ancient-elf', {
   name: 'Ancient Elf',
   description:
     "In your long life, you've dabbled in many paths and many styles. A typical ancient elf is at least 100 years old, though you might be younger at the GM's discretion. Choose a class other than your own. You gain the [multiclass dedication](content:traits/multiclass) feat for that class, even though you don't meet its level prerequisite. You must still meet its other prerequisites to gain the feat.",
-  archetypes: [Heritage, ElfHeritage],
+  tags: [Heritage, ElfHeritage],
   effects: [],
 })
 
@@ -40,7 +40,7 @@ export const ArcticElf = Traits.defineTrait('heritage/arctic-elf', {
   name: 'Arctic Elf',
   description:
     'You dwell deep in the frozen north and have gained incredible resilience against cold environments, granting you cold resistance equal to half your level (minimum 1). You treat environmental cold effects as if they were one step less extreme (incredible cold becomes extreme, extreme cold becomes severe, and so on).',
-  archetypes: [Heritage, ElfHeritage],
+  tags: [Heritage, ElfHeritage],
   effects: [],
 })
 
@@ -48,7 +48,7 @@ export const CavernElf = Traits.defineTrait('heritage/cavern-elf', {
   name: 'Cavern Elf',
   description:
     'You were born or spent many years in underground tunnels or caverns where light is scarce. You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision).',
-  archetypes: [Heritage, ElfHeritage],
+  tags: [Heritage, ElfHeritage],
   effects: [Effects.gainTrait(Darkvision)],
 })
 
@@ -56,7 +56,7 @@ export const SeerElf = Traits.defineTrait('heritage/seer-elf', {
   name: 'Seer Elf',
   description:
     'You have an inborn ability to detect and understand magical phenomena. You can cast the [_detect magic_](ability:spell/detect-magic) cantrip as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. In addition, you gain a +1 circumstance bonus to checks to [Identify Magic](content:skills/identify-magic) and to [Decipher Writing](content:skills/decipher-writing) of a magical nature. These skill actions typically use the [Arcana](characteristic:skill/arcana), [Nature](characteristic:skill/nature), [Occultism](characteristic:skill/occultism), or [Religion](characteristic:skill/religion) skill.',
-  archetypes: [Heritage, ElfHeritage],
+  tags: [Heritage, ElfHeritage],
   effects: [],
 })
 
@@ -64,7 +64,7 @@ export const WhisperElf = Traits.defineTrait('heritage/whisper-elf', {
   name: 'Whisper Elf',
   description:
     "Your ears are finely tuned, able to detect even the slightest whispers of sound. You gain a +2 circumstance bonus when using the [Seek](content:playing-the-game/seek) action to find [hidden](content:conditions/hidden) or [undetected](content:conditions/undetected) creatures within 30 feet of you. When you target an opponent that is [concealed](content:conditions/concealed) from you or hidden from you, reduce the DC of the flat check to 3 for a concealed target or 9 for a hidden one. This benefit doesn't apply if you can't hear or if the creature is incapable of making sound (for example, if it's affected by a [_silence_](ability:spell/silence) spell).",
-  archetypes: [Heritage, ElfHeritage],
+  tags: [Heritage, ElfHeritage],
   effects: [],
 })
 
@@ -72,23 +72,23 @@ export const WoodlandElf = Traits.defineTrait('heritage/woodland-elf', {
   name: 'Woodland Elf',
   description:
     "You're adapted to life in the forest, the deep jungle, or a similar environment, and you know how to climb trees and use foliage to your advantage. When [Climbing](content:skills/climb) trees, vines, and other foliage, you move at half your [Speed](characteristic:speed) on a success and at full Speed on a critical success (and you move at full Speed on a success if you have Quick Climb). This doesn't affect you if you're using a climb Speed.\n\nYou can always use the [Take Cover](content:playing-the-game/take-cover) action when you are within forest terrain to gain cover, even if you're not next to an obstacle you can Take Cover behind.",
-  archetypes: [Heritage, ElfHeritage],
+  tags: [Heritage, ElfHeritage],
   effects: [],
 })
 
 export const SelectElfHeritage = CharacterOptions.selectTraitOption('ancestry/elf/select-heritage', {
   name: 'Elf Heritage',
-  filter: { archetypes: [[ElfHeritage, VersatileHeritage]] },
+  filter: { tags: [[ElfHeritage, VersatileHeritage]] },
 })
 
 export const SelectElfFeat1 = CharacterOptions.selectTraitOption('ancestry/elf/select-feat-1', {
   name: 'Ancestry Feat (Level 1)',
-  filter: { archetypes: [AncestryFeat, [ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat], FeatLevel1] },
+  filter: { tags: [AncestryFeat, [ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat], FeatLevel1] },
 })
 
 export const SelectElfFeat5 = CharacterOptions.selectTraitOption('ancestry/elf/select-feat-5', {
   name: 'Ancestry Feat (Level 5)',
-  filter: { archetypes: [AncestryFeat, [ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat], [FeatLevel1, FeatLevel5]] },
+  filter: { tags: [AncestryFeat, [ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat], [FeatLevel1, FeatLevel5]] },
 })
 
 export const SelectElfAncestryBoost = CharacterOptions.selectTraitOption('ancestry/elf/select-boost', {
@@ -100,7 +100,7 @@ export const Elf = Traits.defineTrait('ancestry/elf', {
   name: 'Elf',
   description:
     "*Elf, Humanoid*\n\n_Elves are a tall, long-lived people with a strong tradition of art and magic._\n\nIf you want a character who is magical, mystical, and mysterious, you should play an elf.\n\nRead the full entry in [Elves](content:ancestries-and-backgrounds/elves).\n\n**Hit Points** 6\n\n**Size** Medium\n\n**Speed** 30 feet\n\n**Attribute Boosts** Dexterity, Intelligence, Free\n\n**Attribute Flaws** Constitution\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Elven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Draconic](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Empyrean](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Fey](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Kholo](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Orcish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Low-Light Vision** You can see in dim light as though it were bright light, so you ignore the [concealed](content:conditions/concealed) condition due to dim light.",
-  archetypes: [Ancestry],
+  tags: [Ancestry],
   effects: [
     Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
     Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(30))),
@@ -119,7 +119,7 @@ export const AncestralLongevity = Traits.defineTrait('ancestry/elf/ancestral-lon
   name: 'Ancestral Longevity',
   description:
     '*Elf*\n\n**Prerequisites** at least 100 years old\n\nYou have accumulated a vast array of lived knowledge over the years. During your daily preparations, you can reflect upon your life experiences to gain the trained proficiency rank in one skill of your choice. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can’t use it as a prerequisite for a skill increase or a permanent character option like a feat.',
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -128,7 +128,7 @@ export const ElvenLore = Traits.defineTrait('ancestry/elf/elven-lore', {
   name: 'Elven Lore',
   description:
     "*Elf*\n\nYou've studied traditional elven arts, learning about arcane magic and the world around you. You gain the trained proficiency rank in [Arcana](characteristic:skill/arcana) and [Nature](characteristic:skill/nature). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Elf [Lore](content:skills/lore)",
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [Effects.gainTrait(TrainedArcana), Effects.gainTrait(TrainedNature), Effects.gainTrait(AdditionalLore)],
 })
@@ -137,7 +137,7 @@ export const ElvenWeaponFamiliarity = Traits.defineTrait('ancestry/elf/elven-wea
   name: 'Elven Weapon Familiarity',
   description:
     '*Elf*\n\nYou favor bows and other elegant weapons. You gain access to all uncommon weapons with the [elf](content:traits/elf) trait. You have familiarity with weapons with the elf trait plus longbows, composite longbows, rapiers, shortbows, and composite shortbows—for the purposes of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons.\n\nAt 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect.',
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -146,7 +146,7 @@ export const Forlorn = Traits.defineTrait('ancestry/elf/forlorn', {
   name: 'Forlorn',
   description:
     '*Elf*\n\nWatching your friends age and die fills you with moroseness that protects you against harmful emotions. You gain a +1 circumstance bonus to saving throws against emotion effects. If you roll a success on a saving throw against an emotion effect, you get a critical success instead.',
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -154,7 +154,7 @@ export const Forlorn = Traits.defineTrait('ancestry/elf/forlorn', {
 export const NimbleElf = Traits.defineTrait('ancestry/elf/nimble-elf', {
   name: 'Nimble Elf',
   description: '*Elf*\n\nYour muscles are tightly honed. Your [Speed](characteristic:speed) increases by 5 feet.',
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
 })
@@ -163,7 +163,7 @@ export const OtherworldlyMagic = Traits.defineTrait('ancestry/elf/otherworldly-m
   name: 'Otherworldly Magic',
   description:
     "*Elf*\n\nYour elven magic manifests as a simple arcane spell, even if you aren't formally trained in magic. Choose one cantrip from the [arcane](trait:spellcasting/arcane-spell-list) spell list. You can cast this cantrip as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up.",
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -172,7 +172,7 @@ export const UnwaveringMien = Traits.defineTrait('ancestry/elf/unwavering-mien',
   name: 'Unwavering Mien',
   description:
     '*Elf*\n\nYour mystic control and meditations allow you to resist external influences upon your consciousness. Whenever you are affected by a mental effect that lasts at least 2 rounds, you can reduce the duration by 1 round.\n\nYou still require natural sleep, but you treat your saving throws against effects that would cause you to fall asleep as one degree of success better. This protects only against sleep effects, not against other forms of falling [unconscious](content:conditions/unconscious).',
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -181,7 +181,7 @@ export const AgelessPatience = Traits.defineTrait('ancestry/elf/ageless-patience
   name: 'Ageless Patience',
   description:
     "*Elf*\n\nYou work at a pace born from longevity that enhances your thoroughness. You can voluntarily spend twice as much time as normal on a [Perception](characteristic:perception) check or skill check that takes 1 action or longer. If you do, you gain a +2 circumstance bonus to the check and don't automatically reduce your degree of success on a natural 1 (you get a critical failure only if your result is 10 lower than the DC). For example, you could get these benefits if you spent 2 actions to [Seek](content:playing-the-game/seek), which normally takes 1 action. You can get these benefits during exploration by taking twice as long exploring as normal, or in downtime by spending twice as much downtime.\n\nThe GM might determine a situation doesn't grant you a benefit if a delay would be directly counterproductive to your success, such as a tense negotiation with an impatient creature.",
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel5],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel5],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -190,7 +190,7 @@ export const AncestralSuspicion = Traits.defineTrait('ancestry/elf/ancestral-sus
   name: 'Ancestral Suspicion',
   description:
     "*Elf*\n\nLong-lived elves have seen civilizations rise and fall, often at the hands of outside forces. As a result, they have developed a wariness of others who might seek to influence or control them. You've been trained to resist such manipulation, gaining a +2 circumstance bonus to saving throws against effects that would make you controlled, such as _dominate_, and to [Perception](characteristic:perception) checks to [Sense Motive](content:playing-the-game/sense-motive) when trying to determine if a creature is under the influence of such an effect. When you roll a success on a saving throw against such an effect, you get a critical success instead.",
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel5],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel5],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
@@ -199,7 +199,7 @@ export const MartialExperience = Traits.defineTrait('ancestry/elf/martial-experi
   name: 'Martial Experience',
   description:
     "*Elf*\n\nYou've crossed blades with a wide variety of foes wielding a wide variety of weapons, and you've learned the basics of fighting with nearly any of them. When wielding a weapon you aren't proficient with, treat your level as your proficiency bonus.\n\nAt 11th level, you become trained in all weapons.",
-  archetypes: [Feat, AncestryFeat, ElfFeat, FeatLevel5],
+  tags: [Feat, AncestryFeat, ElfFeat, FeatLevel5],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
   effects: [],
 })
