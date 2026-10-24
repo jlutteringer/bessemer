@@ -1,8 +1,7 @@
 import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { ArmorLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Patches } from '@bessemer/cornerstone'
-import { NumericExpressions } from '@bessemer/cornerstone/expression'
-import { AttributeCap, ArmorClass, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { ArmorClass, defenseRating, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
 export const Armor = Tags.defineAbilityTag('armor', { name: 'Armor' })
 
@@ -40,7 +39,7 @@ export const LightArmor = Abilities.defineAbility('armor/light', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LightArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(1)))],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const MediumArmor = Abilities.defineAbility('armor/medium', {
@@ -48,7 +47,7 @@ export const MediumArmor = Abilities.defineAbility('armor/medium', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(MediumArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3)))],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
@@ -56,9 +55,7 @@ export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(HeavyArmorProficiency)],
-  effects: [
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([12, ProficiencyBonus.variable, AttributeCap])))),
-  ],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(defenseRating(11, ProficiencyBonus.variable))))],
 })
 
 export const AllArmorProficiencies = [LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency]

@@ -137,11 +137,6 @@ export const VitalityPool: Characteristic = Characteristics.defineCharacteristic
   baseValue: NumericExpressions.sum([10, NumericExpressions.multiply([CharacterValues.Level, 5])]),
 })
 
-export const AttributeCap = NumericExpressions.min([
-  8,
-  NumericExpressions.sum([NumericExpressions.round(NumericExpressions.multiply([CharacterValues.Level, 1 / 3]), 0, RoundingMode.Floor), 3]),
-])
-
 export const StaminaCost = {
   Low: 2,
   Medium: 4,
@@ -155,27 +150,23 @@ export const StaminaPresenceMultiplier = 4
 export const StaminaPool: Characteristic = Characteristics.defineCharacteristic({
   group: CombatGroup,
   template: StaminaPoolTemplate,
-  baseValue: NumericExpressions.sum([
-    StaminaBase,
-    NumericExpressions.multiply([StaminaPresenceMultiplier, Presence.variable]),
-  ]),
+  baseValue: NumericExpressions.sum([StaminaBase, NumericExpressions.multiply([StaminaPresenceMultiplier, Presence.variable])]),
 })
 
 export const ProficiencyBonus: Characteristic = Characteristics.defineCharacteristic({
   group: CombatGroup,
   template: Characteristics.defineTemplate('proficiency-bonus', {
     name: 'Proficiency Bonus',
-    description: `Proficiency bonus represents a character’s training and experience. It starts at +2 and grows as the character gains levels, as shown in the [standard progression](content:characters/standard-progression).
+    description: `Proficiency bonus represents a character’s training and experience. It starts at +3 and grows to +8 as the character gains levels, as shown in the [standard progression](content:characters/standard-progression).
 
-A character adds its proficiency bonus to its [attack ratings](content:characters/attack-rating) and [defense ratings](content:characters/defense-rating), and to checks with any [skill](content:skills) it is proficient in. A proficiency bonus is only ever added once to the same roll or rating, even when more than one effect would grant it.`,
+A character adds its proficiency bonus to its [attack ratings](content:characters/attack-rating) and [defense ratings](content:characters/defense-rating), and to checks with any [skill](content:skills) it is proficient in. A proficiency bonus is only ever added once to the same roll or rating, even when more than one effect would grant it.
+
+A character's [attributes](content:characters/attributes) can't be increased above its proficiency bonus.`,
     path: ObjectPaths.from('proficiencyBonus'),
   }),
-  baseValue: NumericExpressions.max([
-    2,
-    NumericExpressions.min([
-      6,
-      NumericExpressions.sum([NumericExpressions.round(NumericExpressions.multiply([CharacterValues.Level, 1 / 3]), 0, RoundingMode.Floor), 1]),
-    ]),
+  baseValue: NumericExpressions.min([
+    8,
+    NumericExpressions.sum([NumericExpressions.round(NumericExpressions.multiply([CharacterValues.Level, 1 / 3]), 0, RoundingMode.Floor), 3]),
   ]),
 })
 
@@ -197,11 +188,11 @@ export const InitiativeRating: Characteristic = Characteristics.defineCharacteri
   baseValue: Agility.variable,
 })
 
-const lightProgressionDefense = (attribute: Characteristic): Expression<number> => {
+export const defenseRating = (base: number, attribute: Expression<number>): Expression<number> => {
   return NumericExpressions.sum([
-    7,
+    base,
     ProficiencyBonus.variable,
-    attribute.variable,
+    attribute,
     NumericExpressions.round(NumericExpressions.multiply([ProficiencyBonus.variable, 0.5]), 0, RoundingMode.Ceiling),
   ])
 }
@@ -214,25 +205,25 @@ export const DefenseBonus = {
 export const ArmorClass: Characteristic = Characteristics.defineCharacteristic({
   group: DefensesGroup,
   template: ArmorClassTemplate,
-  baseValue: NumericExpressions.sum([8, ProficiencyBonus.variable, Agility.variable]),
+  baseValue: defenseRating(4, Agility.variable),
 })
 
 export const FortitudeDefense: Characteristic = Characteristics.defineCharacteristic({
   group: DefensesGroup,
   template: FortitudeDefenseTemplate,
-  baseValue: lightProgressionDefense(Brawn),
+  baseValue: defenseRating(6, Brawn.variable),
 })
 
 export const ReflexDefense: Characteristic = Characteristics.defineCharacteristic({
   group: DefensesGroup,
   template: ReflexDefenseTemplate,
-  baseValue: lightProgressionDefense(Agility),
+  baseValue: defenseRating(6, Agility.variable),
 })
 
 export const WillDefense: Characteristic = Characteristics.defineCharacteristic({
   group: DefensesGroup,
   template: WillDefenseTemplate,
-  baseValue: lightProgressionDefense(Willpower),
+  baseValue: defenseRating(6, Willpower.variable),
 })
 
 export const BrawnAttackRating: Characteristic = Characteristics.defineCharacteristic({

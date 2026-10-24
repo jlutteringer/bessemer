@@ -65,11 +65,22 @@ export const ExpressionFormat = ({ expression }: { expression: Expression<unknow
 
 const ExpressionRenderer = new ExpressionMapper<ReactNode, ExpressionRenderContext>()
 
-const LooseExpressionKeys: Array<string> = [NumericExpressions.SumExpression.expressionKey, AndExpression.expressionKey, OrExpression.expressionKey]
+const InfixExpressionKeys: Array<string> = [
+  NumericExpressions.SumExpression.expressionKey,
+  NumericExpressions.MultiplyExpression.expressionKey,
+  AndExpression.expressionKey,
+  OrExpression.expressionKey,
+  EqualsExpression.expressionKey,
+  ContainsExpression.expressionKey,
+  LessThanExpression.expressionKey,
+  LessThanOrEqualExpression.expressionKey,
+  GreaterThanExpression.expressionKey,
+  GreaterThanOrEqualExpression.expressionKey,
+]
 
 const renderOperand = (expression: Expression<unknown>, map: (expression: Expression<unknown>) => ReactNode): ReactNode => {
-  const isLoose = ExpressionInternal.isExpression(expression) && LooseExpressionKeys.includes(expression.expressionKey)
-  return isLoose ? <>({map(expression)})</> : map(expression)
+  const isInfix = ExpressionInternal.isExpression(expression) && InfixExpressionKeys.includes(expression.expressionKey)
+  return isInfix ? <>({map(expression)})</> : map(expression)
 }
 
 const renderList = (operands: Array<ReactNode>, separator: ReactNode): ReactNode => {
@@ -126,7 +137,7 @@ ExpressionRenderer.register(NumericExpressions.SumExpression, ({ operands }, map
     return (
       <React.Fragment key={index}>
         {index > 0 && (isSubtracted ? ' − ' : ' + ')}
-        {isSubtracted ? Math.abs(it) : map(it)}
+        {isSubtracted ? Math.abs(it) : renderOperand(it, map)}
       </React.Fragment>
     )
   })
@@ -174,11 +185,11 @@ ExpressionRenderer.register(NumericExpressions.RoundExpression, ({ value, roundi
 
 ExpressionRenderer.register(NotExpression, ({ value }, map) => <>not {renderOperand(value, map)}</>)
 
-ExpressionRenderer.register(AndExpression, ({ operands }, map) => renderList(operands.map(map), ' and '))
+ExpressionRenderer.register(AndExpression, ({ operands }, map) => renderList(operands.map((it) => renderOperand(it, map)), ' and '))
 
-ExpressionRenderer.register(OrExpression, ({ operands }, map) => renderList(operands.map(map), ' or '))
+ExpressionRenderer.register(OrExpression, ({ operands }, map) => renderList(operands.map((it) => renderOperand(it, map)), ' or '))
 
-ExpressionRenderer.register(EqualsExpression, ({ operands }, map) => renderList(operands.map(map), ' = '))
+ExpressionRenderer.register(EqualsExpression, ({ operands }, map) => renderList(operands.map((it) => renderOperand(it, map)), ' = '))
 
 ExpressionRenderer.register(ContainsExpression, ({ collection, operands }, map) => (
   <>
@@ -188,25 +199,25 @@ ExpressionRenderer.register(ContainsExpression, ({ collection, operands }, map) 
 
 ExpressionRenderer.register(LessThanExpression, ({ left, right }, map) => (
   <>
-    {map(left)} {'<'} {map(right)}
+    {renderOperand(left, map)} {'<'} {renderOperand(right, map)}
   </>
 ))
 
 ExpressionRenderer.register(LessThanOrEqualExpression, ({ left, right }, map) => (
   <>
-    {map(left)} ≤ {map(right)}
+    {renderOperand(left, map)} ≤ {renderOperand(right, map)}
   </>
 ))
 
 ExpressionRenderer.register(GreaterThanExpression, ({ left, right }, map) => (
   <>
-    {map(left)} {'>'} {map(right)}
+    {renderOperand(left, map)} {'>'} {renderOperand(right, map)}
   </>
 ))
 
 ExpressionRenderer.register(GreaterThanOrEqualExpression, ({ left, right }, map) => (
   <>
-    {map(left)} ≥ {map(right)}
+    {renderOperand(left, map)} ≥ {renderOperand(right, map)}
   </>
 ))
 

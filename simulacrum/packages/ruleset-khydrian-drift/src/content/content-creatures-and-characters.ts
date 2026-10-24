@@ -333,10 +333,10 @@ export const CharacterDefenseRating = Content.defineSection('characters/defense-
     name: 'Defense Rating',
     description: `Player defense rating is calculated differently according to the type and is based off of the attributes of the character. There are also some effects which modify defense rating, changing it from the base calculations described below.
 
-- [Armor Class](characteristic:armor-class) is typically calculated by 8 + Proficiency + Agility Rating + Armor Rating, but some armor types are an exception to this rule
-- [Fortitude](characteristic:fortitude) is calculated by 7 + Proficiency + Brawn Rating + half of Proficiency (rounded up)
-- [Reflex](characteristic:reflex) is calculated by 7 + Proficiency + Agility Rating + half of Proficiency (rounded up)
-- [Will](characteristic:will) is calculated by 7 + Proficiency + Willpower Rating + half of Proficiency (rounded up)`,
+- [Armor Class](characteristic:armor-class) is calculated by 4 + Proficiency + Agility Rating + half of Proficiency (rounded up). Light armor adds 2 and medium armor adds 5. Heavy armor instead sets it to 11 + Proficiency + Proficiency + half of Proficiency (rounded up), ignoring Agility
+- [Fortitude](characteristic:fortitude) is calculated by 6 + Proficiency + Brawn Rating + half of Proficiency (rounded up)
+- [Reflex](characteristic:reflex) is calculated by 6 + Proficiency + Agility Rating + half of Proficiency (rounded up)
+- [Will](characteristic:will) is calculated by 6 + Proficiency + Willpower Rating + half of Proficiency (rounded up)`,
   },
 })
 
@@ -412,26 +412,26 @@ export const StandardProgression = Content.defineSection('characters/standard-pr
 
 | Level | Prof | Hit Points | Endurance Points | Attribute Points | Skill Points | Ability Points | Feats |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| 1 | +2 | 15 | 24 + (PRES * 4) |  |  | 0 |  |
-| 2 | +2 | 20 | 24 + (PRES * 4) |  |  | 1 |  |
-| 3 | +2 | 25 | 24 + (PRES * 4) |  |  | 2 |  |
-| 4 | +2 | 30 | 24 + (PRES * 4) |  |  | 3 |  |
-| 5 | +2 | 35 | 24 + (PRES * 4) |  |  | 3 |  |
-| 6 |  | 40 | 24 + (PRES * 4) |  |  | 5 |  |
-| 7 |  |  | 24 + (PRES * 4) |  |  | 6 |  |
-| 8 |  |  | 24 + (PRES * 4) |  |  | 7 |  |
-| 9 |  |  | 24 + (PRES * 4) |  |  | 8 |  |
-| 10 |  |  | 24 + (PRES * 4) |  |  | 9 |  |
-| 11 |  |  | 24 + (PRES * 4) |  |  | 10 |  |
-| 12 |  |  | 24 + (PRES * 4) |  |  | 11 |  |
-| 13 |  |  | 24 + (PRES * 4) |  |  | 12 |  |
-| 14 |  |  | 24 + (PRES * 4) |  |  | 13 |  |
-| 15 |  |  | 24 + (PRES * 4) |  |  | 14 |  |
-| 16 |  |  | 24 + (PRES * 4) |  |  | 15 |  |
-| 17 |  |  | 24 + (PRES * 4) |  |  | 16 |  |
-| 18 |  |  | 24 + (PRES * 4) |  |  | 17 |  |
-| 19 |  |  | 24 + (PRES * 4) |  |  | 18 |  |
-| 20 |  |  | 24 + (PRES * 4) |  |  | 19 |  |`,
+| 1 | +3 | 15 | 24 + (PRES * 4) |  |  | 0 |  |
+| 2 | +3 | 20 | 24 + (PRES * 4) |  |  | 1 |  |
+| 3 | +4 | 25 | 24 + (PRES * 4) |  |  | 2 |  |
+| 4 | +4 | 30 | 24 + (PRES * 4) |  |  | 3 |  |
+| 5 | +4 | 35 | 24 + (PRES * 4) |  |  | 3 |  |
+| 6 | +5 | 40 | 24 + (PRES * 4) |  |  | 5 |  |
+| 7 | +5 |  | 24 + (PRES * 4) |  |  | 6 |  |
+| 8 | +5 |  | 24 + (PRES * 4) |  |  | 7 |  |
+| 9 | +6 |  | 24 + (PRES * 4) |  |  | 8 |  |
+| 10 | +6 |  | 24 + (PRES * 4) |  |  | 9 |  |
+| 11 | +6 |  | 24 + (PRES * 4) |  |  | 10 |  |
+| 12 | +7 |  | 24 + (PRES * 4) |  |  | 11 |  |
+| 13 | +7 |  | 24 + (PRES * 4) |  |  | 12 |  |
+| 14 | +7 |  | 24 + (PRES * 4) |  |  | 13 |  |
+| 15 | +8 |  | 24 + (PRES * 4) |  |  | 14 |  |
+| 16 | +8 |  | 24 + (PRES * 4) |  |  | 15 |  |
+| 17 | +8 |  | 24 + (PRES * 4) |  |  | 16 |  |
+| 18 | +8 |  | 24 + (PRES * 4) |  |  | 17 |  |
+| 19 | +8 |  | 24 + (PRES * 4) |  |  | 18 |  |
+| 20 | +8 |  | 24 + (PRES * 4) |  |  | 19 |  |`,
   },
 })
 
