@@ -10,6 +10,7 @@ import { ContentSection } from '@simulacrum/ruleset/content'
 import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Rulesets } from '@simulacrum/engine'
+import { getEntityTexts } from '@simulacrum/ui/components/ruleset-entity-model'
 
 type SearchDocument = {
   id: RulesetEntityReference
@@ -55,15 +56,15 @@ export const RulebookSearch = ({ sections, onSelect }: { sections: Array<Content
 
     const documents = new Map<RulesetEntityReference, SearchDocument>(
       sections.map((it) => {
-        const { name, description } = Rulesets.getEntityById(it.id, ruleset)
+        const entity = Rulesets.getEntityById(it.id, ruleset)
         const id = it.id
         return [
           id,
           {
             id,
-            title: name,
+            title: entity.name,
             path: getPath(it).join(' › '),
-            text: Objects.isNil(description) ? '' : toPlainText(description).replace(/\s+/g, ' ').trim(),
+            text: getEntityTexts(entity).map(toPlainText).join(' ').replace(/\s+/g, ' ').trim(),
           },
         ]
       })

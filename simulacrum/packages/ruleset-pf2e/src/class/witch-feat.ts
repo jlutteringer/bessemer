@@ -10,7 +10,7 @@ import { SelectWitchBasicLesson } from '@simulacrum/ruleset-pf2e/class/witch-les
 export const Cackle = Traits.defineTrait('feat/cackle', {
   name: 'Cackle',
   description:
-    '*Witch*\n\nYour patron’s power fills you with confidence, letting you sustain a magical working even as a quick burst of laughter leaves your lips. You learn the _cackle_ hex.',
+    '*Witch*\n\nYour patron’s power fills you with confidence, letting you sustain a magical working even as a quick burst of laughter leaves your lips. You learn the [_cackle_](ability:spell/cackle) hex.',
   archetypes: [Feat, ClassFeat, WitchFeat, FeatLevel1],
   effects: [
     Effects.gainAbility(WitchFocusSpells.Cackle),
@@ -21,7 +21,7 @@ export const Cackle = Traits.defineTrait('feat/cackle', {
 export const Cauldron = Traits.defineTrait('feat/cauldron', {
   name: 'Cauldron',
   description:
-    '*Witch*\n\nYou can brew magic in your cauldron, creating useful magical concoctions. You can use the Craft activity to create oils and potions. You immediately gain the formulas for four common 1st-level oils or potions. At 4th level and every 2 levels beyond that, you gain the formula for a common oil or potion of that level or lower (a 4th-level potion if you’re 4th level, a 6th-level potion if you’re 6th level, and so on). If you have a familiar, you can have your familiar learn these formulas rather than storing them in a formula book. Your familiar can learn new formulas in the same way it learns new spells, and these formulas are transferred from a slain familiar to a new familiar in the same way spells are.\n\nDuring your daily preparations, you can create one temporary oil or potion using a formula you know. If you have master proficiency in spell DC, you can create a batch of two temporary oils or potions during your daily preparations, and if you have legendary proficiency, you can create a batch of three. Any items you create this way become inert bottles of liquid the next time you make your daily preparations, and any remaining effects of the temporary items end. A temporary oil or potion has no value.',
+    '*Witch*\n\nYou can brew magic in your cauldron, creating useful magical concoctions. You can use the [Craft](content:skills/craft) activity to create oils and potions. You immediately gain the formulas for four common 1st-level oils or potions. At 4th level and every 2 levels beyond that, you gain the formula for a common oil or potion of that level or lower (a 4th-level potion if you’re 4th level, a 6th-level potion if you’re 6th level, and so on). If you have a familiar, you can have your familiar learn these formulas rather than storing them in a formula book. Your familiar can learn new formulas in the same way it learns new spells, and these formulas are transferred from a slain familiar to a new familiar in the same way spells are.\n\nDuring your daily preparations, you can create one temporary oil or potion using a formula you know. If you have master proficiency in [spell DC](characteristic:spell-dc), you can create a batch of two temporary oils or potions during your daily preparations, and if you have legendary proficiency, you can create a batch of three. Any items you create this way become inert bottles of liquid the next time you make your daily preparations, and any remaining effects of the temporary items end. A temporary oil or potion has no value.',
   archetypes: [Feat, ClassFeat, WitchFeat, FeatLevel1],
   effects: [],
 })
@@ -29,17 +29,23 @@ export const Cauldron = Traits.defineTrait('feat/cauldron', {
 export const Counterspell = Traits.defineTrait('feat/counterspell', {
   name: 'Counterspell',
   description:
-    "*Witch, Wizard*\n\n**Trigger** A creature Casts a Spell that you have prepared\n\nWhen a foe Casts a Spell and you can see its manifestations, you can use your magic to disrupt it. You expend a prepared spell to counter the triggering creature's casting of that same spell. You lose your spell slot as if you had cast the triggering spell. You then attempt to counteract the triggering spell.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, primal, or occult).",
+    "*Witch, Wizard*\n\n**Trigger** A creature Casts a Spell that you have prepared\n\nWhen a foe Casts a Spell and you can see its manifestations, you can use your magic to disrupt it. You expend a prepared spell to counter the triggering creature's casting of that same spell. You lose your spell slot as if you had cast the triggering spell. You then attempt to [counteract](content:playing-the-game/counteracting) the triggering spell.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, primal, or occult).",
   archetypes: [Feat, ClassFeat, WitchFeat, WizardFeat, FeatLevel1],
   effects: [],
 })
 
 export const CounterspellAction = Abilities.defineAbility('feat/counterspell/action', {
   name: 'Counterspell',
-  description:
-    "*Witch, Wizard*\n\n**Trigger** A creature Casts a Spell that you have prepared\n\nWhen a foe Casts a Spell and you can see its manifestations, you can use your magic to disrupt it. You expend a prepared spell to counter the triggering creature's casting of that same spell. You lose your spell slot as if you had cast the triggering spell. You then attempt to counteract the triggering spell.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, primal, or occult).",
+  description: '*Witch, Wizard*',
   prerequisites: [Traits.traitPrerequisite(Counterspell)],
-  actions: [{ name: 'Counterspell', action: ActionTypes.Reaction }],
+  actions: [
+    {
+      name: 'Counterspell',
+      description:
+        "**Trigger** A creature Casts a Spell that you have prepared\n\nWhen a foe Casts a Spell and you can see its manifestations, you can use your magic to disrupt it. You expend a prepared spell to counter the triggering creature's casting of that same spell. You lose your spell slot as if you had cast the triggering spell. You then attempt to [counteract](content:playing-the-game/counteracting) the triggering spell.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, primal, or occult).",
+      action: ActionTypes.Reaction,
+    },
+  ],
 })
 
 export const WitchsArmamentsEldritchNails = Traits.defineTrait('feat/witchs-armaments/eldritch-nails', {
@@ -88,23 +94,29 @@ export const BasicLesson = Traits.defineTrait('feat/basic-lesson', {
 export const ConcealSpell = Traits.defineTrait('feat/conceal-spell', {
   name: 'Conceal Spell',
   description:
-    "*Animist, Concentrate, Necromancer, Spellshape, Witch, Wizard*\n\nThrough sheer mental effort, you can simplify the incantations and gestures needed to spellcast, leaving them barely noticeable. If the next action you use is to Cast a Spell, the spell gains the subtle trait, hiding the shining runes, sparks of magic, and other manifestations that would usually give away your spellcasting. The trait hides only the spell's spellcasting actions and manifestations, not its effects, so an observer might still see a ray streak out from you or see you vanish into thin air.",
+    "*Animist, Concentrate, Necromancer, Spellshape, Witch, Wizard*\n\nThrough sheer mental effort, you can simplify the incantations and gestures needed to spellcast, leaving them barely noticeable. If the next action you use is to [Cast a Spell](content:spells/cast-a-spell), the spell gains the [subtle](content:traits/subtle) trait, hiding the shining runes, sparks of magic, and other manifestations that would usually give away your spellcasting. The trait hides only the spell's spellcasting actions and manifestations, not its effects, so an observer might still see a ray streak out from you or see you vanish into thin air.",
   archetypes: [Feat, ClassFeat, WitchFeat, WizardFeat, FeatLevel2],
   effects: [],
 })
 
 export const ConcealSpellAction = Abilities.defineAbility('feat/conceal-spell/action', {
   name: 'Conceal Spell',
-  description:
-    "*Animist, Concentrate, Necromancer, Spellshape, Witch, Wizard*\n\nThrough sheer mental effort, you can simplify the incantations and gestures needed to spellcast, leaving them barely noticeable. If the next action you use is to Cast a Spell, the spell gains the subtle trait, hiding the shining runes, sparks of magic, and other manifestations that would usually give away your spellcasting. The trait hides only the spell's spellcasting actions and manifestations, not its effects, so an observer might still see a ray streak out from you or see you vanish into thin air.",
+  description: '*Animist, Concentrate, Necromancer, Spellshape, Witch, Wizard*',
   prerequisites: [Traits.traitPrerequisite(ConcealSpell)],
-  actions: [{ name: 'Conceal Spell', action: ActionTypes.SingleAction }],
+  actions: [
+    {
+      name: 'Conceal Spell',
+      description:
+        "Through sheer mental effort, you can simplify the incantations and gestures needed to spellcast, leaving them barely noticeable. If the next action you use is to [Cast a Spell](content:spells/cast-a-spell), the spell gains the [subtle](content:traits/subtle) trait, hiding the shining runes, sparks of magic, and other manifestations that would usually give away your spellcasting. The trait hides only the spell's spellcasting actions and manifestations, not its effects, so an observer might still see a ray streak out from you or see you vanish into thin air.",
+      action: ActionTypes.SingleAction,
+    },
+  ],
 })
 
 export const FamiliarsLanguage = Traits.defineTrait('feat/familiars-language', {
   name: "Familiar's Language",
   description:
-    '*Witch*\n\n**Prerequisites** a familiar\n\nYou’ve learned to speak with your familiar and other creatures like it. You can ask questions of, receive answers from, and use the Diplomacy skill with creatures of the same family of animals as your familiar. For example, if your familiar were a cat, you could gain the effects of speak with animals for any felines (including leopards, lions, and tigers, among others). This ability doesn’t make them more friendly than normal. If your familiar ever changes to a different creature, you can’t use this ability for 1 week while you absorb your new familiar’s language.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal).',
+    '*Witch*\n\n**Prerequisites** a familiar\n\nYou’ve learned to speak with your familiar and other creatures like it. You can ask questions of, receive answers from, and use the [Diplomacy](characteristic:skill/diplomacy) skill with creatures of the same family of animals as your familiar. For example, if your familiar were a cat, you could gain the effects of speak with animals for any felines (including leopards, lions, and tigers, among others). This ability doesn’t make them more friendly than normal. If your familiar ever changes to a different creature, you can’t use this ability for 1 week while you absorb your new familiar’s language.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal).',
   archetypes: [Feat, ClassFeat, WitchFeat, FeatLevel2],
   effects: [],
 })
@@ -120,7 +132,7 @@ export const RitesOfConvocation = Traits.defineTrait('feat/rites-of-convocation'
 export const SympatheticStrike = Traits.defineTrait('feat/sympathetic-strike', {
   name: 'Sympathetic Strike',
   description:
-    "*Witch*\n\n**Frequency** once per round\n\n**Prerequisites** Witch's Armaments\n\nYou collect your patron’s magic into one of your witch armaments, causing them to shine with runes, light, or another signifier of your patron. Make an unarmed Strike with one with your witch’s armaments. If you hit, you establish a sympathetic link with the target, making it easier for your patron to affect them. Until the beginning of your next turn, the target takes a –1 circumstance penalty to its saves against your hexes, or a –2 penalty if the triggering Strike was a critical hit.",
+    "*Witch*\n\n**Frequency** once per round\n\n**Prerequisites** [Witch's Armaments](trait:feat/witchs-armaments)\n\nYou collect your patron’s magic into one of your witch armaments, causing them to shine with runes, light, or another signifier of your patron. Make an unarmed [Strike](content:playing-the-game/strike) with one with your witch’s armaments. If you hit, you establish a sympathetic link with the target, making it easier for your patron to affect them. Until the beginning of your next turn, the target takes a –1 circumstance penalty to its saves against your hexes, or a –2 penalty if the triggering Strike was a critical hit.",
   archetypes: [Feat, ClassFeat, WitchFeat, FeatLevel4],
   prerequisites: [Traits.traitPrerequisite(WitchsArmaments)],
   effects: [],
@@ -128,10 +140,16 @@ export const SympatheticStrike = Traits.defineTrait('feat/sympathetic-strike', {
 
 export const SympatheticStrikeAction = Abilities.defineAbility('feat/sympathetic-strike/action', {
   name: 'Sympathetic Strike',
-  description:
-    "*Witch*\n\n**Frequency** once per round\n\n**Prerequisites** Witch's Armaments\n\nYou collect your patron’s magic into one of your witch armaments, causing them to shine with runes, light, or another signifier of your patron. Make an unarmed Strike with one with your witch’s armaments. If you hit, you establish a sympathetic link with the target, making it easier for your patron to affect them. Until the beginning of your next turn, the target takes a –1 circumstance penalty to its saves against your hexes, or a –2 penalty if the triggering Strike was a critical hit.",
+  description: '*Witch*',
   prerequisites: [Traits.traitPrerequisite(SympatheticStrike)],
-  actions: [{ name: 'Sympathetic Strike', action: ActionTypes.SingleAction }],
+  actions: [
+    {
+      name: 'Sympathetic Strike',
+      description:
+        "**Frequency** once per round\n\n**Prerequisites** [Witch's Armaments](trait:feat/witchs-armaments)\n\nYou collect your patron’s magic into one of your witch armaments, causing them to shine with runes, light, or another signifier of your patron. Make an unarmed [Strike](content:playing-the-game/strike) with one with your witch’s armaments. If you hit, you establish a sympathetic link with the target, making it easier for your patron to affect them. Until the beginning of your next turn, the target takes a –1 circumstance penalty to its saves against your hexes, or a –2 penalty if the triggering Strike was a critical hit.",
+      action: ActionTypes.SingleAction,
+    },
+  ],
 })
 
 export const AllWitchFeatEntities = [

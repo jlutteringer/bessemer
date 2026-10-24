@@ -6,7 +6,7 @@ export const EquipmentSection = Content.defineSection('equipment', {
   content: {
     name: 'Equipment',
     description:
-      "To make your mark on the world, you'll need to have the right equipment, including armor, weapons, and other gear. This chapter presents the various equipment that you can purchase during character creation. You can usually find these items for sale in most cities and other large settlements. Your character starts out with **15 gold pieces (150 silver pieces)** to spend on any common items from this chapter. Items with an uncommon rarity can be purchased only if you have special access from abilities you selected during character creation or your GM gives you permission to purchase them. Quick equipment packages for each class appear on page 268.\n\nOnce you've purchased your starting items, there are three main ways to gain new items and equipment: you can find them during an adventure, make them using the Crafting skill, or purchase them from a merchant.\n\n**Quick Equipment Packages**\n\nIf you want to quickly decide how to spend your starting money on what your class needs, start with one of these batches of starting gear. An adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. The Options section lists items that aren’t in the base package but that many characters of the class might like to buy.",
+      "To make your mark on the world, you'll need to have the right equipment, including armor, weapons, and other gear. This chapter presents the various equipment that you can purchase during character creation. You can usually find these items for sale in most cities and other large settlements. Your character starts out with **15 gold pieces (150 silver pieces)** to spend on any common items from this chapter. Items with an uncommon rarity can be purchased only if you have special access from abilities you selected during character creation or your GM gives you permission to purchase them. Quick equipment packages for each class appear on page 268.\n\nOnce you've purchased your starting items, there are three main ways to gain new items and equipment: you can find them during an adventure, make them using the [Crafting](characteristic:skill/crafting) skill, or purchase them from a merchant.\n\n**Quick Equipment Packages**\n\nIf you want to quickly decide how to spend your starting money on what your class needs, start with one of these batches of starting gear. An adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. The Options section lists items that aren’t in the base package but that many characters of the class might like to buy.",
   },
 })
 
@@ -24,7 +24,7 @@ export const OtherCurrencySection = Content.defineSection('equipment/other-curre
   content: {
     name: 'Other Currency',
     description:
-      'Art objects, gems, and raw materials (such as those used for the Craft activity) can be used much like currency: you can sell them for the same Price you can buy them.',
+      'Art objects, gems, and raw materials (such as those used for the [Craft](content:skills/craft) activity) can be used much like currency: you can sell them for the same Price you can buy them.',
   },
 })
 
@@ -33,7 +33,7 @@ export const PriceSection = Content.defineSection('equipment/price', {
   content: {
     name: 'Price',
     description:
-      'Most items in the following tables have a Price, which is the amount of currency it typically takes to purchase that item. An item with a Price of “—“ can’t be purchased. An item with a Price of 0 is normally free, but its value could be higher based on the materials used to create it. Most items can be sold for half their Price, but coins, gems, art objects, and raw materials (such as components for the Craft activity) can be exchanged for their full Price.',
+      'Most items in the following tables have a Price, which is the amount of currency it typically takes to purchase that item. An item with a Price of “—“ can’t be purchased. An item with a Price of 0 is normally free, but its value could be higher based on the materials used to create it. Most items can be sold for half their Price, but coins, gems, art objects, and raw materials (such as components for the [Craft](content:skills/craft) activity) can be exchanged for their full Price.',
   },
 })
 
@@ -42,7 +42,7 @@ export const ItemLevelSection = Content.defineSection('equipment/item-level', {
   content: {
     name: 'Item Level',
     description:
-      'Each item has an item level, which represents the item’s complexity and any magic used in its construction. Simpler items with a lower level are easier to construct, and you can’t Craft items that have a higher level than your own (page 236). If an item’s level isn’t listed, its level is 0. While characters can use items of any level, GMs should keep in mind that allowing characters access to items far above their current level may have a negative impact on the game.',
+      'Each item has an item level, which represents the item’s complexity and any magic used in its construction. Simpler items with a lower level are easier to construct, and you can’t [Craft](content:skills/craft) items that have a higher level than your own (page 236). If an item’s level isn’t listed, its level is 0. While characters can use items of any level, GMs should keep in mind that allowing characters access to items far above their current level may have a negative impact on the game.',
   },
 })
 
@@ -96,7 +96,7 @@ export const BulkSection = Content.defineSection('equipment/bulk', {
   content: {
     name: 'Bulk',
     description:
-      'Carrying especially heavy or unwieldy items can make it more difficult for you to move, as can overloading yourself with too much gear. The Bulk value of an item reflects how difficult the item is to handle, representing its size, weight, and general awkwardness. If you have a high Strength modifier, you usually don’t need to worry about Bulk unless you’re carrying numerous substantial items.',
+      'Carrying especially heavy or unwieldy items can make it more difficult for you to move, as can overloading yourself with too much gear. The Bulk value of an item reflects how difficult the item is to handle, representing its size, weight, and general awkwardness. If you have a high [Strength modifier](characteristic:strength), you usually don’t need to worry about Bulk unless you’re carrying numerous substantial items.',
   },
 })
 
@@ -105,7 +105,7 @@ export const BulkLimitsSection = Content.defineSection('equipment/bulk-limits', 
   content: {
     name: 'Bulk Limits',
     description:
-      'You can carry an amount of Bulk equal to 5 plus your Strength modifier without penalty; if you carry more, you gain the [encumbered](content:conditions/encumbered) condition. You can’t hold or carry more Bulk than 10 plus your Strength modifier.\n\n**Encumbered**\n\nYou are carrying more weight than you can manage. While you’re encumbered, you’re clumsy 1 and take a –10-foot penalty to all your Speeds. As with all penalties to your Speed, this can’t reduce your Speed below 5 feet.',
+      'You can carry an amount of Bulk equal to 5 plus your [Strength modifier](characteristic:strength) without penalty; if you carry more, you gain the [encumbered](content:conditions/encumbered) condition. You can’t hold or carry more Bulk than 10 plus your Strength modifier.\n\n**Encumbered**\n\nYou are carrying more weight than you can manage. While you’re encumbered, you’re [clumsy](content:conditions/clumsy) 1 and take a –10-foot penalty to all your Speeds. As with all penalties to your [Speed](characteristic:speed), this can’t reduce your Speed below 5 feet.',
   },
 })
 
@@ -159,7 +159,7 @@ export const ItemDamageSection = Content.defineSection('equipment/item-damage', 
   content: {
     name: 'Item Damage',
     description:
-      "An item can be broken or destroyed if it takes enough damage. Every item has a Hardness value. Each time an item takes damage, reduce any damage the item takes by its Hardness. The rest of the damage reduces the item's Hit Points. Normally an item takes damage only when a creature is directly attacking it—commonly targeted items include doors and traps. A creature that attacks you doesn't normally damage your armor or other gear, even if it hits you. However, the Shield Block reaction can cause your shield to take damage as you use it to prevent damage to yourself, and some monsters have exceptional abilities that can damage your items.\n\nAn item that takes damage can become **broken** and eventually destroyed. It becomes broken when its Hit Points are equal to or lower than its **Broken Threshold (BT);** once its Hit Points are reduced to 0, it is **destroyed.** A broken item has the broken condition until Repaired above its Broken Threshold. Anything that automatically makes an item broken immediately reduces its Hit Points to its Broken Threshold if the item had more Hit Points than that when the effect occurred. If an item has no Broken Threshold, then it has no relevant changes to its function due to being broken, but it's still destroyed at 0 Hit Points. A destroyed item can't be Repaired.\n\nAn item's Hardness, Hit Points, and Broken Threshold usually depend on the material the item is made of. Information on materials appears in GM Core.\n\n**Broken**\n\nBroken is a condition that affects objects. An object is broken when damage has reduced its Hit Points below its Broken Threshold. A broken object can't be used for its normal function, nor does it grant bonuses—with the exception of armor. Broken armor still grants its item bonus to AC, but it also imparts a status penalty to AC depending on its category: –1 for broken light armor, –2 for broken medium armor, or –3 for broken heavy armor.\n\nA broken item still imposes penalties and limitations normally incurred by carrying, holding, or wearing it. For example, broken armor would still impose its Dexterity modifier cap, check penalty, and so forth.\n\nIf an effect makes an item broken automatically and the item has more HP than its Broken Threshold, that effect also reduces the item's current HP to the Broken Threshold.",
+      "An item can be broken or destroyed if it takes enough damage. Every item has a Hardness value. Each time an item takes damage, reduce any damage the item takes by its Hardness. The rest of the damage reduces the item's [Hit Points](characteristic:hit-points). Normally an item takes damage only when a creature is directly attacking it—commonly targeted items include doors and traps. A creature that attacks you doesn't normally damage your armor or other gear, even if it hits you. However, the Shield Block reaction can cause your shield to take damage as you use it to prevent damage to yourself, and some monsters have exceptional abilities that can damage your items.\n\nAn item that takes damage can become **broken** and eventually destroyed. It becomes broken when its Hit Points are equal to or lower than its **Broken Threshold (BT);** once its Hit Points are reduced to 0, it is **destroyed.** A broken item has the broken condition until Repaired above its Broken Threshold. Anything that automatically makes an item broken immediately reduces its Hit Points to its Broken Threshold if the item had more Hit Points than that when the effect occurred. If an item has no Broken Threshold, then it has no relevant changes to its function due to being broken, but it's still destroyed at 0 Hit Points. A destroyed item can't be Repaired.\n\nAn item's Hardness, Hit Points, and Broken Threshold usually depend on the material the item is made of. Information on materials appears in GM Core.\n\n**Broken**\n\nBroken is a condition that affects objects. An object is broken when damage has reduced its Hit Points below its Broken Threshold. A broken object can't be used for its normal function, nor does it grant bonuses—with the exception of armor. Broken armor still grants its item bonus to [AC](characteristic:armor-class), but it also imparts a status penalty to AC depending on its category: –1 for broken light armor, –2 for broken medium armor, or –3 for broken heavy armor.\n\nA broken item still imposes penalties and limitations normally incurred by carrying, holding, or wearing it. For example, broken armor would still impose its [Dexterity modifier](characteristic:dexterity) cap, check penalty, and so forth.\n\nIf an effect makes an item broken automatically and the item has more HP than its Broken Threshold, that effect also reduces the item's current HP to the Broken Threshold.",
   },
 })
 
@@ -168,7 +168,7 @@ export const ObjectImmunitiesSection = Content.defineSection('equipment/object-i
   content: {
     name: 'Object Immunities',
     description:
-      'Inanimate objects and hazards are immune to bleed, death effects, disease, healing, mental effects, nonlethal attacks, poison, spirit, vitality, void, as well as the doomed, drained, fatigued, paralyzed, sickened, and unconscious conditions. Conscious, thinking items are not immune to mental effects. Many objects are immune to other conditions, at the GM’s discretion. For instance, a sword can’t move, so it can’t take a penalty to its Speed, but a spinning blade trap might be affected.',
+      'Inanimate objects and hazards are immune to bleed, death effects, disease, healing, mental effects, nonlethal attacks, poison, spirit, vitality, void, as well as the [doomed](content:conditions/doomed), [drained](content:conditions/drained), [fatigued](content:conditions/fatigued), [paralyzed](content:conditions/paralyzed), [sickened](content:conditions/sickened), and [unconscious](content:conditions/unconscious) conditions. Conscious, thinking items are not immune to mental effects. Many objects are immune to other conditions, at the GM’s discretion. For instance, a sword can’t move, so it can’t take a penalty to its [Speed](characteristic:speed), but a spinning blade trap might be affected.',
   },
 })
 
@@ -177,7 +177,7 @@ export const ShoddyItemsSection = Content.defineSection('equipment/shoddy-items'
   content: {
     name: 'Shoddy Items',
     description:
-      "Improvised or of dubious make, shoddy items are never available for purchase except for in the most desperate of communities. When available, a shoddy item usually costs half the Price of a standard item, though you can never sell one.\n\nAttacks and checks involving a shoddy item take a –2 item penalty. This penalty also applies to any DCs that a shoddy item applies to (such as the AC provided when wearing shoddy armor, or the DC to break out of shoddy manacles). A shoddy suit of armor also worsens the armor's check penalty by 2. A shoddy item's Hit Points and Broken Threshold are each half that of a normal item of its type.",
+      "Improvised or of dubious make, shoddy items are never available for purchase except for in the most desperate of communities. When available, a shoddy item usually costs half the Price of a standard item, though you can never sell one.\n\nAttacks and checks involving a shoddy item take a –2 item penalty. This penalty also applies to any DCs that a shoddy item applies to (such as the [AC](characteristic:armor-class) provided when wearing shoddy armor, or the DC to break out of shoddy manacles). A shoddy suit of armor also worsens the armor's check penalty by 2. A shoddy item's [Hit Points](characteristic:hit-points) and Broken Threshold are each half that of a normal item of its type.",
   },
 })
 
@@ -186,7 +186,7 @@ export const ItemsAndSizesSection = Content.defineSection('equipment/items-and-s
   content: {
     name: 'Items and Sizes',
     description:
-      "The Bulk rules in this chapter are for Small and Medium creatures, as most ancestries are these sizes; however, other uncommon or rare ancestries might be larger or smaller and require items specially made for creatures of those sizes. Large creatures can carry more, and smaller creatures can carry less, as noted on the Bulk Conversions table.\n\nThese rules for Bulk limits come up most often when a group tries to load up a mount or animal companion. The rules for items of different sizes tend to come into play when the characters defeat a big creature that has gear, since usually the only creatures of other sizes are creatures under the GM's control.\n\nIn most cases, Small or Medium creatures can wield a Large weapon, though it's unwieldy, giving them the clumsy 1 condition, and the larger size is canceled by the difficulty of swinging the weapon, so it grants no special benefit. Large armor is simply too large for Small and Medium creatures.",
+      "The Bulk rules in this chapter are for Small and Medium creatures, as most ancestries are these sizes; however, other uncommon or rare ancestries might be larger or smaller and require items specially made for creatures of those sizes. Large creatures can carry more, and smaller creatures can carry less, as noted on the Bulk Conversions table.\n\nThese rules for Bulk limits come up most often when a group tries to load up a mount or animal companion. The rules for items of different sizes tend to come into play when the characters defeat a big creature that has gear, since usually the only creatures of other sizes are creatures under the GM's control.\n\nIn most cases, Small or Medium creatures can wield a Large weapon, though it's unwieldy, giving them the [clumsy](content:conditions/clumsy) 1 condition, and the larger size is canceled by the difficulty of swinging the weapon, so it grants no special benefit. Large armor is simply too large for Small and Medium creatures.",
   },
 })
 
@@ -195,7 +195,7 @@ export const BulkConversionsForDifferentSizesSection = Content.defineSection('eq
   content: {
     name: 'Bulk Conversions for Different Sizes',
     description:
-      'As shown in the Bulk Conversions table, Large or larger creatures are less encumbered by bulky items than Small or Medium creatures, while Tiny creatures become overburdened more quickly. A Large creature treats 10 items of 1 Bulk as 1 Bulk, a Huge creature treats 10 items of 2 Bulk as 1 Bulk, and so on. A Tiny creature treats 10 items of negligible Bulk as 1 Bulk. Negligible items work in a similar way—a Huge creature treats items of 1 Bulk as negligible, so it can carry any number of items of 1 Bulk. A Tiny creature doesn’t treat any items as having negligible Bulk.\n\n## Table 6-19: Bulk Conversions\n\n| **Creature Size** | **Bulk Limit** | **Treats as Light** | **Treats as Negligible** |\n|---|---|---|---|\n| Tiny | Half | \\- | none |\n| Small or Med. | Standard | L | \\- |\n| Large | x2 | 1 Bulk | L |\n| Huge | x4 | 2 Bulk | 1 Bulk |\n| Gargantuan | x8 | 4 Bulk | 2 Bulk |',
+      'As shown in the Bulk Conversions table, Large or larger creatures are less [encumbered](content:conditions/encumbered) by bulky items than Small or Medium creatures, while Tiny creatures become overburdened more quickly. A Large creature treats 10 items of 1 Bulk as 1 Bulk, a Huge creature treats 10 items of 2 Bulk as 1 Bulk, and so on. A Tiny creature treats 10 items of negligible Bulk as 1 Bulk. Negligible items work in a similar way—a Huge creature treats items of 1 Bulk as negligible, so it can carry any number of items of 1 Bulk. A Tiny creature doesn’t treat any items as having negligible Bulk.\n\n## Table 6-19: Bulk Conversions\n\n| **Creature Size** | **Bulk Limit** | **Treats as Light** | **Treats as Negligible** |\n|---|---|---|---|\n| Tiny | Half | \\- | none |\n| Small or Med. | Standard | L | \\- |\n| Large | x2 | 1 Bulk | L |\n| Huge | x4 | 2 Bulk | 1 Bulk |\n| Gargantuan | x8 | 4 Bulk | 2 Bulk |',
   },
 })
 
@@ -222,7 +222,7 @@ export const ArmorClassSection = Content.defineSection('equipment/armor-class', 
   content: {
     name: 'Armor Class',
     description:
-      "Your Armor Class (AC) measures how well you can defend against attacks. When a creature attacks you, your Armor Class is the DC for that attack roll.\n\n**Armor Class = 10 + Dexterity modifier (up to your armor's Dex Cap) + proficiency bonus + armor's item bonus to AC + other bonuses + penalties** Use your proficiency bonus for the category (light, medium, or heavy) or for the specific type of armor you're wearing. If you're not wearing armor, use your proficiency in unarmored defense.",
+      "Your [Armor Class](characteristic:armor-class) (AC) measures how well you can defend against attacks. When a creature attacks you, your Armor Class is the DC for that attack roll.\n\n**Armor Class = 10 + Dexterity modifier (up to your armor's Dex Cap) + proficiency bonus + armor's item bonus to AC + other bonuses + penalties** Use your proficiency bonus for the category (light, medium, or heavy) or for the specific type of armor you're wearing. If you're not wearing armor, use your proficiency in unarmored defense.",
   },
 })
 
@@ -231,7 +231,7 @@ export const DonningAndRemovingArmorSection = Content.defineSection('equipment/d
   content: {
     name: 'Donning and Removing Armor',
     description:
-      'Getting in and out of armor is time consuming—so make sure you’re wearing it when you need it! Donning and removing armor are both activities involving many Interact actions. It takes 1 minute to don light armor, 5 minutes to don medium or heavy armor, and 1 minute to remove any armor.',
+      'Getting in and out of armor is time consuming—so make sure you’re wearing it when you need it! Donning and removing armor are both activities involving many [Interact](content:playing-the-game/interact) actions. It takes 1 minute to don light armor, 5 minutes to don medium or heavy armor, and 1 minute to remove any armor.',
   },
 })
 
@@ -263,7 +263,10 @@ export const HeavyArmorSection = Content.linkEntity(CategorySection, Characteris
 
 export const ACBonusSection = Content.defineSection('equipment/ac-bonus', {
   parent: ArmorStatisticsSection,
-  content: { name: 'AC Bonus', description: 'This number is the item bonus you add for the armor when determining Armor Class.' },
+  content: {
+    name: 'AC Bonus',
+    description: 'This number is the item bonus you add for the armor when determining [Armor Class](characteristic:armor-class).',
+  },
 })
 
 export const DexterityModifierCapDexCapSection = Content.defineSection('equipment/dexterity-modifier-cap-dex-cap', {
@@ -271,7 +274,7 @@ export const DexterityModifierCapDexCapSection = Content.defineSection('equipmen
   content: {
     name: 'Dexterity Modifier Cap (Dex Cap)',
     description:
-      'This number is the maximum amount of your Dexterity modifier that can apply to your AC while you are wearing a given suit of armor. For example, if you have a Dexterity modifier of +4 and you are wearing a suit of half plate, you apply only a +1 bonus from your Dexterity modifier to your AC while wearing that armor.',
+      'This number is the maximum amount of your [Dexterity modifier](characteristic:dexterity) that can apply to your [AC](characteristic:armor-class) while you are wearing a given suit of armor. For example, if you have a Dexterity modifier of +4 and you are wearing a suit of half plate, you apply only a +1 bonus from your Dexterity modifier to your AC while wearing that armor.',
   },
 })
 
@@ -289,7 +292,7 @@ export const SpeedPenaltySection = Content.defineSection('equipment/speed-penalt
   content: {
     name: 'Speed Penalty',
     description:
-      'While wearing a suit of armor, you take the penalty listed in this entry to your Speed, as well as to any other movement types you have, such as a climb Speed or swim Speed, to a minimum Speed of 5 feet. If you meet the armor’s Strength threshold (see below), you reduce the penalty by 5 feet.',
+      'While wearing a suit of armor, you take the penalty listed in this entry to your [Speed](characteristic:speed), as well as to any other movement types you have, such as a climb Speed or swim Speed, to a minimum Speed of 5 feet. If you meet the armor’s Strength threshold (see below), you reduce the penalty by 5 feet.',
   },
 })
 
@@ -298,7 +301,7 @@ export const StrengthSection = Content.defineSection('equipment/strength', {
   content: {
     name: 'Strength',
     description:
-      'This entry indicates the Strength modifier at which you are strong enough to overcome some of the armor’s penalties. If your Strength modifier is equal to or greater than this value, you no longer take the armor’s check penalty, and you decrease the Speed penalty by 5 feet (to no penalty if the penalty was –5 feet, or to a –5-foot penalty if the penalty was –10 feet).',
+      'This entry indicates the [Strength modifier](characteristic:strength) at which you are strong enough to overcome some of the armor’s penalties. If your Strength modifier is equal to or greater than this value, you no longer take the armor’s check penalty, and you decrease the [Speed](characteristic:speed) penalty by 5 feet (to no penalty if the penalty was –5 feet, or to a –5-foot penalty if the penalty was –10 feet).',
   },
 })
 
@@ -363,7 +366,7 @@ export const ShieldsSection = Content.defineSection('equipment/shields', {
   content: {
     name: 'Shields',
     description:
-      "A shield can increase your character's defense beyond the protection their armor provides. Your character must be wielding a shield in one hand to make use of it, and it grants its bonus to AC only if they use an action to Raise a Shield. This action grants the shield's bonus to AC as a circumstance bonus until their next turn starts. A shield's Speed penalty applies whenever your character is holding the shield, whether they have raised it or not.\n\n[Raise a Shield](content:playing-the-game/raise-a-shield) is the action most commonly used with shields. All shields, unless specifically noted or described otherwise, must be strapped to your arm and held in one hand, so you can't hold anything with that hand and Raise a Shield, and you lose the shield's benefits if that hand is no longer free. A buckler, however, doesn't take up your hand, so you can Raise a Shield with a buckler if the hand is free (or, at the GM's discretion, if it's holding a simple, lightweight object that's not a weapon).\n\nWhen you have a tower shield raised, you can use the [Take Cover](content:playing-the-game/take-cover) action to increase the circumstance bonus to AC to +4. This lasts until the shield is no longer raised, or until any of the normal conditions that end Take Cover, whichever comes first. If you would provide lesser cover against an attack, having your tower shield raised provides standard cover against it (and other creatures can Take Cover as normal using the cover from your shield).\n\nIf you have access to the Shield Block reaction (from your class or from a feat), you can use it while Raising your Shield to reduce the damage you take by an amount equal to the shield's Hardness. Both you and the shield then take any remaining damage.",
+      "A shield can increase your character's defense beyond the protection their armor provides. Your character must be wielding a shield in one hand to make use of it, and it grants its bonus to [AC](characteristic:armor-class) only if they use an action to Raise a Shield. This action grants the shield's bonus to AC as a circumstance bonus until their next turn starts. A shield's [Speed](characteristic:speed) penalty applies whenever your character is holding the shield, whether they have raised it or not.\n\n[Raise a Shield](content:playing-the-game/raise-a-shield) is the action most commonly used with shields. All shields, unless specifically noted or described otherwise, must be strapped to your arm and held in one hand, so you can't hold anything with that hand and Raise a Shield, and you lose the shield's benefits if that hand is no longer free. A buckler, however, doesn't take up your hand, so you can Raise a Shield with a buckler if the hand is free (or, at the GM's discretion, if it's holding a simple, lightweight object that's not a weapon).\n\nWhen you have a tower shield raised, you can use the [Take Cover](content:playing-the-game/take-cover) action to increase the circumstance bonus to AC to +4. This lasts until the shield is no longer raised, or until any of the normal conditions that end Take Cover, whichever comes first. If you would provide lesser cover against an attack, having your tower shield raised provides standard cover against it (and other creatures can Take Cover as normal using the cover from your shield).\n\nIf you have access to the Shield Block reaction (from your class or from a feat), you can use it while Raising your Shield to reduce the damage you take by an amount equal to the shield's Hardness. Both you and the shield then take any remaining damage.",
   },
 })
 
@@ -372,7 +375,7 @@ export const ShieldStatisticsSection = Content.defineSection('equipment/shield-s
   content: {
     name: 'Shield Statistics',
     description:
-      'Shields have statistics that follow the same rules as armor: Price, Speed Penalty, and Bulk. See [armor](content:equipment/armor) for the rules for those statistics. Their other statistics are described here.',
+      'Shields have statistics that follow the same rules as armor: Price, [Speed](characteristic:speed) Penalty, and Bulk. See [armor](content:equipment/armor) for the rules for those statistics. Their other statistics are described here.',
   },
 })
 
@@ -381,7 +384,7 @@ export const ShieldStatisticsACBonusSection = Content.defineSection('equipment/s
   content: {
     name: 'AC Bonus',
     description:
-      'A shield grants a circumstance bonus to AC, but only when the shield is raised. This requires using the [Raise a Shield](content:playing-the-game/raise-a-shield) action.',
+      'A shield grants a circumstance bonus to [AC](characteristic:armor-class), but only when the shield is raised. This requires using the [Raise a Shield](content:playing-the-game/raise-a-shield) action.',
   },
 })
 
@@ -399,7 +402,7 @@ export const HPBTSection = Content.defineSection('equipment/hp-bt', {
   content: {
     name: 'HP (BT)',
     description:
-      'This column lists the shield’s Hit Points (HP) and Broken Threshold (BT). These measure how much damage the shield can take before it’s destroyed (its total HP) and how much it can take before being broken and unusable (its BT). These matter primarily for the Shield Block reaction.',
+      'This column lists the shield’s [Hit Points](characteristic:hit-points) (HP) and Broken Threshold (BT). These measure how much damage the shield can take before it’s destroyed (its total HP) and how much it can take before being broken and unusable (its BT). These matter primarily for the Shield Block reaction.',
   },
 })
 
@@ -443,7 +446,7 @@ export const MultipleAttackPenaltySection = Content.defineSection('equipment/mul
   content: {
     name: 'Multiple Attack Penalty',
     description:
-      "If you use an action with the attack trait more than once on the same turn, your attacks after the first take a penalty called a multiple attack penalty. Your second attack takes a –5 penalty, and any subsequent attacks take a –10 penalty.\n\nThe multiple attack penalty doesn't apply to attacks you make when it isn't your turn (such as attacks made as part of a reaction, like Reactive Strike). You can use a weapon with the [agile](content:traits/agile) trait (page 282) to reduce your multiple attack penalty.",
+      "If you use an action with the attack trait more than once on the same turn, your attacks after the first take a penalty called a multiple attack penalty. Your second attack takes a –5 penalty, and any subsequent attacks take a –10 penalty.\n\nThe multiple attack penalty doesn't apply to attacks you make when it isn't your turn (such as attacks made as part of a reaction, like Reactive [Strike](content:playing-the-game/strike)). You can use a weapon with the [agile](content:traits/agile) trait (page 282) to reduce your multiple attack penalty.",
   },
 })
 
@@ -452,7 +455,7 @@ export const DamageRollsSection = Content.defineSection('equipment/damage-rolls'
   content: {
     name: 'Damage Rolls',
     description:
-      "When the result of your attack roll with a weapon or unarmed attack equals or exceeds your target's AC, you hit your target! Roll the weapon or unarmed attack's damage die and add the relevant modifiers, bonuses, and penalties to determine the amount of damage you deal. Calculate a damage roll as follows (full details are on page 406).\n\n**Melee damage roll = damage die of weapon or unarmed attack + Strength modifier + bonuses + penalties**\n\n**Ranged damage roll = damage die of weapon (+ Strength modifier for a thrown weapon or half Strength modifier for a propulsive weapon) + bonuses + penalties** Ranged weapons don't normally add an attribute modifier to the damage roll, though weapons with the [propulsive](content:traits/propulsive) trait (page 282) add half your Strength modifier (or your full modifier if it is a negative number), and thrown weapons add your full Strength modifier.\n\nMagic weapons with striking, greater striking, or major striking runes add one or more weapon damage dice to your damage roll. These extra dice are the same die size as the weapon's damage die. At higher levels, most characters also gain extra damage from weapon specialization.",
+      "When the result of your attack roll with a weapon or unarmed attack equals or exceeds your target's [AC](characteristic:armor-class), you hit your target! Roll the weapon or unarmed attack's damage die and add the relevant modifiers, bonuses, and penalties to determine the amount of damage you deal. Calculate a damage roll as follows (full details are on page 406).\n\n**Melee damage roll = damage die of weapon or unarmed attack + Strength modifier + bonuses + penalties**\n\n**Ranged damage roll = damage die of weapon (+ Strength modifier for a thrown weapon or half Strength modifier for a propulsive weapon) + bonuses + penalties** Ranged weapons don't normally add an attribute modifier to the damage roll, though weapons with the [propulsive](content:traits/propulsive) trait (page 282) add half your [Strength modifier](characteristic:strength) (or your full modifier if it is a negative number), and thrown weapons add your full Strength modifier.\n\nMagic weapons with striking, greater striking, or major striking runes add one or more weapon damage dice to your damage roll. These extra dice are the same die size as the weapon's damage die. At higher levels, most characters also gain extra damage from weapon specialization.",
   },
 })
 
@@ -461,7 +464,7 @@ export const CriticalHitsSection = Content.defineSection('equipment/critical-hit
   content: {
     name: 'Critical Hits',
     description:
-      'When you make a Strike with a weapon or unarmed attack and succeed with a natural 20 (the number on the die is 20), or if the result of your attack exceeds the target’s AC by 10, you achieve a critical success (also known as a critical hit). If you critically succeed at a Strike (page 418), your attack deals double damage.',
+      'When you make a [Strike](content:playing-the-game/strike) with a weapon or unarmed attack and succeed with a natural 20 (the number on the die is 20), or if the result of your attack exceeds the target’s [AC](characteristic:armor-class) by 10, you achieve a critical success (also known as a critical hit). If you critically succeed at a Strike (page 418), your attack deals double damage.',
   },
 })
 
@@ -470,7 +473,7 @@ export const UnarmedAttacksSection = Content.defineSection('equipment/unarmed-at
   content: {
     name: 'Unarmed Attacks',
     description:
-      "Almost all characters start out trained in unarmed attacks. You can Strike with your fist or another body part, calculating your attack and damage rolls in the same way you would with a weapon. Unarmed attacks can belong to a weapon group (page 276), and they might have weapon traits (page 276). However, unarmed attacks aren't weapons, and effects and abilities that work with weapons never work with unarmed attacks unless they specifically say so.\n\nThe Unarmed Attacks table (page 277) lists the statistics for an unarmed attack with a fist, though you'll usually use the same statistics for attacks made with any other parts of your body. Certain ancestry feats, class features, and spells give access to special, more powerful unarmed attacks. For instance, goblins with the razortooth heritage can attack with their sharp jaws. While most unarmed attacks are melee, some, especially those from certain ancestries, might even be ranged, like the leshy's ability to launch hard seedpods. Details for those unarmed attacks are provided in the abilities that grant them.",
+      "Almost all characters start out trained in unarmed attacks. You can [Strike](content:playing-the-game/strike) with your fist or another body part, calculating your attack and damage rolls in the same way you would with a weapon. Unarmed attacks can belong to a weapon group (page 276), and they might have weapon traits (page 276). However, unarmed attacks aren't weapons, and effects and abilities that work with weapons never work with unarmed attacks unless they specifically say so.\n\nThe Unarmed Attacks table (page 277) lists the statistics for an unarmed attack with a fist, though you'll usually use the same statistics for attacks made with any other parts of your body. Certain ancestry feats, class features, and spells give access to special, more powerful unarmed attacks. For instance, goblins with the razortooth heritage can attack with their sharp jaws. While most unarmed attacks are melee, some, especially those from certain ancestries, might even be ranged, like the leshy's ability to launch hard seedpods. Details for those unarmed attacks are provided in the abilities that grant them.",
   },
 })
 
@@ -515,7 +518,7 @@ export const ReloadSection = Content.defineSection('equipment/reload', {
   content: {
     name: 'Reload',
     description:
-      'While all weapons need some amount of time to get into position, many ranged weapons also need to be loaded and reloaded. This entry indicates how many Interact actions it takes to reload such weapons or draw certain thrown weapons, like shuriken. This can be 0 if drawing ammunition and firing or throwing the weapon are part of the same action. If an item takes 2 or more actions to reload, the GM determines whether they must be performed together as an activity, or you can spend some of those actions during one turn and the rest during your next turn.\n\nAn item with an entry of “—” must be drawn to be thrown, which usually takes an Interact action just like drawing any other weapon. Reloading a ranged weapon and drawing a thrown weapon both require a free hand. Switching your grip to free a hand and then to place your hands in the grip necessary to wield the weapon are both included in the actions you spend to reload a weapon.',
+      'While all weapons need some amount of time to get into position, many ranged weapons also need to be loaded and reloaded. This entry indicates how many [Interact](content:playing-the-game/interact) actions it takes to reload such weapons or draw certain thrown weapons, like shuriken. This can be 0 if drawing ammunition and firing or throwing the weapon are part of the same action. If an item takes 2 or more actions to reload, the GM determines whether they must be performed together as an activity, or you can spend some of those actions during one turn and the rest during your next turn.\n\nAn item with an entry of “—” must be drawn to be thrown, which usually takes an Interact action just like drawing any other weapon. Reloading a ranged weapon and drawing a thrown weapon both require a free hand. Switching your grip to free a hand and then to place your hands in the grip necessary to wield the weapon are both included in the actions you spend to reload a weapon.',
   },
 })
 
@@ -578,7 +581,7 @@ export const CriticalSpecializationSection = Content.defineSection('equipment/cr
   content: {
     name: 'Critical Specialization',
     description:
-      'Certain effects can grant you benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon.',
+      'Certain effects can grant you benefits when you make a [Strike](content:playing-the-game/strike) with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon.',
   },
 })
 
@@ -613,7 +616,7 @@ export const GearStatisticsHandsSection = Content.defineSection('equipment/gear-
   content: {
     name: 'Hands',
     description:
-      'This lists how many hands it takes to use the item effectively. Most items that require two hands can be carried in only one hand, but you must spend an Interact action to change your grip in order to use the item. The GM may determine that an item is too big to carry in one hand (or even two hands, for particularly large items).',
+      'This lists how many hands it takes to use the item effectively. Most items that require two hands can be carried in only one hand, but you must spend an [Interact](content:playing-the-game/interact) action to change your grip in order to use the item. The GM may determine that an item is too big to carry in one hand (or even two hands, for particularly large items).',
   },
 })
 
@@ -622,7 +625,7 @@ export const WearingToolkitsSection = Content.defineSection('equipment/wearing-t
   content: {
     name: 'Wearing Toolkits',
     description:
-      "You can make a toolkit (such as an alchemist's toolkit or healer's toolkit) easier to use by wearing it. This easy access allows you to draw and replace the tools within as part of the action that uses them, rather than needing to Interact to draw them. You can wear up to 2 Bulk of toolkits in this manner; any beyond this limit must be stowed or drawn with an Interact action to use.\n\nYou can use a toolkit with 1 hand if you're wearing it or 2 if you're holding it.",
+      "You can make a toolkit (such as an alchemist's toolkit or healer's toolkit) easier to use by wearing it. This easy access allows you to draw and replace the tools within as part of the action that uses them, rather than needing to [Interact](content:playing-the-game/interact) to draw them. You can wear up to 2 Bulk of toolkits in this manner; any beyond this limit must be stowed or drawn with an Interact action to use.\n\nYou can use a toolkit with 1 hand if you're wearing it or 2 if you're holding it.",
   },
 })
 
@@ -645,7 +648,7 @@ export const AlchemicalBombsSection = Content.defineSection('equipment/alchemica
   content: {
     name: 'Alchemical Bombs',
     description:
-      "Alchemical bombs are consumable weapons that deal damage or produce special effects, and they sometimes deal splash damage. A bomb is a martial thrown weapon with a range increment of 20 feet. It can't benefit from runes, and it doesn't add your Strength modifier to damage despite being a thrown weapon.\n\nA bomb deals any listed splash damage to the target on a failure, success, or critical success, and to all other creatures within 5 feet of the target on a success or critical success. Add the damage together before applying resistance or weakness, and don't multiply splash damage on a critical hit.",
+      "Alchemical bombs are consumable weapons that deal damage or produce special effects, and they sometimes deal splash damage. A bomb is a martial thrown weapon with a range increment of 20 feet. It can't benefit from runes, and it doesn't add your [Strength modifier](characteristic:strength) to damage despite being a thrown weapon.\n\nA bomb deals any listed splash damage to the target on a failure, success, or critical success, and to all other creatures within 5 feet of the target on a success or critical success. Add the damage together before applying resistance or weakness, and don't multiply splash damage on a critical hit.",
   },
 })
 
@@ -671,7 +674,7 @@ export const AssistiveItemsSection = Content.defineSection('equipment/assistive-
   content: {
     name: 'Assistive Items',
     description:
-      "Included in this section are assistive items for a variety of disabilities. If a character has been disabled from birth or for a significant period of time before setting out on their adventure, they should begin with any basic assistive items they require as part of their backstory. These items don’t count against their starting money (page 25), and any item granted in this way likewise has no value when sold.\n\n**Wheelchair Rules**\n\nEach wheelchair operates in the following ways.\n\n**Adjustable Seat Belts:** These belts strap around your waist, knees, and shins to keep you in the chair if it's thrown, knocked, or handled roughly. You can open and release your belts with an Interact action.\n\n**Bulk Limit:** A wheelchair is strong enough to support you and any amount of Bulk you could typically hold or carry. Your total carried Bulk includes all the items you are wearing, carrying, and stowing on your wheelchair. You take the usual effects when there's too much Bulk on you and your wheelchair: if you're carrying an amount of Bulk equal to 5 + your Strength modifier, you're encumbered, and you and your wheelchair can't hold or carry more than 10 + your Strength modifier. The wheelchair's own Bulk doesn't count against your Bulk limit while riding in the wheelchair; it's listed in case you need to carry the wheelchair separately.\n\n**Frame:** A wheelchair is typically made from common materials like wood, but they can also be made from steel, other metals, or even rarer materials like dawnsilver. The wheelchairs presented here are made from durable wood. Magic: The wheelchair is considered an extension of yourself. Spells or abilities that change your bodily form also apply to the chair, and it transforms with you so long as you're using it. You can choose what appearance this has.\n\n**Movement:** While using a wheelchair, you Stride at your normal Speed (listed in your ancestry, with any additional bonuses, penalties, and adjustments applied). You propel a wheelchair by using the hand rims. You can propel the wheelchair even while holding something in your hands, but not if you're restrained or otherwise unable to move your hands freely. You're still affected by difficult terrain and other terrain features. Any effect that would immobilize you, give a penalty to your Speeds, or similar by entangling or hindering your legs applies to the chair as well. You can use all of your actions while in a wheelchair.\n\n**Quick-Righting:** If the chair is tipped or you're knocked prone while in the chair, you can right yourself using the Stand action, though in this case you are righting the wheelchair instead. An ally can use an Interact action to help right you, allowing you to Stand as a free action triggered by their Interact action.",
+      "Included in this section are assistive items for a variety of disabilities. If a character has been disabled from birth or for a significant period of time before setting out on their adventure, they should begin with any basic assistive items they require as part of their backstory. These items don’t count against their starting money (page 25), and any item granted in this way likewise has no value when sold.\n\n**Wheelchair Rules**\n\nEach wheelchair operates in the following ways.\n\n**Adjustable Seat Belts:** These belts strap around your waist, knees, and shins to keep you in the chair if it's thrown, knocked, or handled roughly. You can open and release your belts with an [Interact](content:playing-the-game/interact) action.\n\n**Bulk Limit:** A wheelchair is strong enough to support you and any amount of Bulk you could typically hold or carry. Your total carried Bulk includes all the items you are wearing, carrying, and stowing on your wheelchair. You take the usual effects when there's too much Bulk on you and your wheelchair: if you're carrying an amount of Bulk equal to 5 + your [Strength modifier](characteristic:strength), you're [encumbered](content:conditions/encumbered), and you and your wheelchair can't hold or carry more than 10 + your Strength modifier. The wheelchair's own Bulk doesn't count against your Bulk limit while riding in the wheelchair; it's listed in case you need to carry the wheelchair separately.\n\n**Frame:** A wheelchair is typically made from common materials like wood, but they can also be made from steel, other metals, or even rarer materials like dawnsilver. The wheelchairs presented here are made from durable wood. Magic: The wheelchair is considered an extension of yourself. Spells or abilities that change your bodily form also apply to the chair, and it transforms with you so long as you're using it. You can choose what appearance this has.\n\n**Movement:** While using a wheelchair, you [Stride](content:playing-the-game/stride) at your normal [Speed](characteristic:speed) (listed in your ancestry, with any additional bonuses, penalties, and adjustments applied). You propel a wheelchair by using the hand rims. You can propel the wheelchair even while holding something in your hands, but not if you're [restrained](content:conditions/restrained) or otherwise unable to move your hands freely. You're still affected by difficult terrain and other terrain features. Any effect that would immobilize you, give a penalty to your Speeds, or similar by entangling or hindering your legs applies to the chair as well. You can use all of your actions while in a wheelchair.\n\n**Quick-Righting:** If the chair is tipped or you're knocked [prone](content:conditions/prone) while in the chair, you can right yourself using the Stand action, though in this case you are righting the wheelchair instead. An ally can use an Interact action to help right you, allowing you to Stand as a free action triggered by their Interact action.",
   },
 })
 
@@ -680,7 +683,7 @@ export const FormulasSection = Content.defineSection('equipment/formulas', {
   content: {
     name: 'Formulas',
     description:
-      "Formulas are formalized instructions for making items. Their primary purpose is to reduce the time it takes you to start the Craft activity, which is helpful for items you'll make frequently. You can usually read a formula as long as you can read the language it's written in, even if you lack the skill to Craft the item. Often, alchemists and crafting guilds use obscure languages or create codes to protect their formulas. If you obtain a formula for an uncommon or rarer item, you have access to that item so you can Craft it. These formulas can be significantly more valuable—if you can find them at all!\n\nFor the Price listed on the table, you can buy a common formula or pay an NPC to let you copy their formula. A purchased formula is typically a schematic on rolled-up parchment of light Bulk. You can copy a formula into your formula book in 1 hour.\n\nIf you have a formula, you can Craft a copy of it using the Crafting skill. You can also Craft a formula by reverse-engineering it from an item you possess. Use the formula's Price and the item's Craft DC. You must meet any requirements to Craft the item, except you don't need to have access to the item or meet any special Craft Requirements listed in the item's stat block unless the GM determines otherwise.\n\n## Table 6-13: Formulas\n\n| **Item Level** | **Formula Price** |\n|---|---|\n| 0* | 5 sp |\n| 1 | 1 gp |\n| 2 | 2 gp |\n| 3 | 3 gp |\n| 4 | 5 gp |\n| 5 | 8 gp |\n| 6 | 13 gp |\n| 7 | 18 gp |\n| 8 | 25 gp |\n| 9 | 35 gp |\n| 10 | 50 gp |\n| 11 | 70 gp |\n| 12 | 100 gp |\n| 13 | 150 gp |\n| 14 | 225 gp |\n| 15 | 325 gp |\n| 16 | 500 gp |\n| 17 | 750 gp |\n| 18 | 1,200 gp |\n| 19 | 2,000 gp |\n| 20 | 3,500 gp |\n\n*Formulas for all 0-level common items from this chapter can be purchased collectively in a basic crafter's book.",
+      "Formulas are formalized instructions for making items. Their primary purpose is to reduce the time it takes you to start the [Craft](content:skills/craft) activity, which is helpful for items you'll make frequently. You can usually read a formula as long as you can read the language it's written in, even if you lack the skill to Craft the item. Often, alchemists and crafting guilds use obscure languages or create codes to protect their formulas. If you obtain a formula for an uncommon or rarer item, you have access to that item so you can Craft it. These formulas can be significantly more valuable—if you can find them at all!\n\nFor the Price listed on the table, you can buy a common formula or pay an NPC to let you copy their formula. A purchased formula is typically a schematic on rolled-up parchment of light Bulk. You can copy a formula into your formula book in 1 hour.\n\nIf you have a formula, you can Craft a copy of it using the [Crafting](characteristic:skill/crafting) skill. You can also Craft a formula by reverse-engineering it from an item you possess. Use the formula's Price and the item's Craft DC. You must meet any requirements to Craft the item, except you don't need to have access to the item or meet any special Craft Requirements listed in the item's stat block unless the GM determines otherwise.\n\n## Table 6-13: Formulas\n\n| **Item Level** | **Formula Price** |\n|---|---|\n| 0* | 5 sp |\n| 1 | 1 gp |\n| 2 | 2 gp |\n| 3 | 3 gp |\n| 4 | 5 gp |\n| 5 | 8 gp |\n| 6 | 13 gp |\n| 7 | 18 gp |\n| 8 | 25 gp |\n| 9 | 35 gp |\n| 10 | 50 gp |\n| 11 | 70 gp |\n| 12 | 100 gp |\n| 13 | 150 gp |\n| 14 | 225 gp |\n| 15 | 325 gp |\n| 16 | 500 gp |\n| 17 | 750 gp |\n| 18 | 1,200 gp |\n| 19 | 2,000 gp |\n| 20 | 3,500 gp |\n\n*Formulas for all 0-level common items from this chapter can be purchased collectively in a basic crafter's book.",
   },
 })
 
@@ -716,7 +719,7 @@ export const CostOfLivingSection = Content.defineSection('equipment/cost-of-livi
   content: {
     name: 'Cost of Living',
     description:
-      'Cost of living provides a total cost to covers room and board, dues, taxes, and other fees. You typically need to track and pay for your cost of living only during downtime.\n\n## Table 6-16: Cost of Living\n\n| **Standard of Living** | **Week** | **Month** | **Year** |\n|---|---|---|---|\n| Subsistence* | 4 sp | 2 gp | 24 gp |\n| Comfortable | 1 gp | 4 gp | 52 gp |\n| Fine | 30 gp | 130 gp | 1,600 gp |\n| Extravagant | 100 gp | 430 gp | 5,200 gp |\n\n* You can attempt to Subsist using [Society](characteristic:skill/society) or [Survival](characteristic:skill/survival) for free.',
+      'Cost of living provides a total cost to covers room and board, dues, taxes, and other fees. You typically need to track and pay for your cost of living only during downtime.\n\n## Table 6-16: Cost of Living\n\n| **Standard of Living** | **Week** | **Month** | **Year** |\n|---|---|---|---|\n| Subsistence* | 4 sp | 2 gp | 24 gp |\n| Comfortable | 1 gp | 4 gp | 52 gp |\n| Fine | 30 gp | 130 gp | 1,600 gp |\n| Extravagant | 100 gp | 430 gp | 5,200 gp |\n\n* You can attempt to [Subsist](content:skills/subsist) using [Society](characteristic:skill/society) or [Survival](characteristic:skill/survival) for free.',
   },
 })
 

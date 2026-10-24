@@ -48,7 +48,7 @@ export const SelectVoiceOfNature = CharacterOptions.selectTraitOption('druid/sel
 export const DruidSpellcasting = Traits.defineTrait('druid/druid-spellcasting', {
   name: 'Druid Spellcasting',
   description:
-    "The power of the wild world flows through you. You are a spellcaster and can cast spells of the primal tradition using the Cast a Spell activity (see Casting Spells). As a druid, your spellcasting incantations might be pleas to the environment around you or the invocation of ancient vows; your hands might sway like willows or curl into clawlike shapes as your gestures direct your magic.\n\nAt 1st level, you can prepare two 1st-rank spells and five cantrips each morning from the common spells on the primal spell list, or from other primal spells to which you gain access and learn via Learn a Spell. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare each day is called your spell slots.\n\nAs you increase in level as a druid, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in the Druid Spells per Day table.\n\nSome of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Wisdom, your spell attack modifier and spell DC use your Wisdom modifier.\n\n**Heightening Spells**\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n**Cantrips**\n\nSome of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up— this is usually equal to the highest rank of druid spell slot you have. For example, as a 1st-level druid, your cantrips are 1st-rank spells, and a 5th-level druid's are 3rd rank.",
+    "The power of the wild world flows through you. You are a spellcaster and can cast spells of the primal tradition using the [Cast a Spell](content:spells/cast-a-spell) activity (see [Casting Spells](content:spells/casting-spells)). As a druid, your spellcasting incantations might be pleas to the environment around you or the invocation of ancient vows; your hands might sway like willows or curl into clawlike shapes as your gestures direct your magic.\n\nAt 1st level, you can prepare two 1st-rank spells and five cantrips each morning from the common spells on the [primal](trait:spellcasting/primal-spell-list) spell list, or from other primal spells to which you gain access and learn via [Learn a Spell](content:skills/learn-a-spell). Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare each day is called your spell slots.\n\nAs you increase in level as a druid, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in the Druid Spells per Day table.\n\nSome of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your [spell DC](characteristic:spell-dc) (typically by attempting a saving throw). Since your key attribute is Wisdom, your [spell attack modifier](characteristic:spell-attack) and spell DC use your [Wisdom modifier](characteristic:wisdom).\n\n**Heightening Spells**\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n**Cantrips**\n\nSome of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up— this is usually equal to the highest rank of druid spell slot you have. For example, as a 1st-level druid, your cantrips are 1st-rank spells, and a 5th-level druid's are 3rd rank.",
   archetypes: [ClassFeature],
   effects: [
     Effects.gainTrait(PrimalSpellList),
@@ -65,7 +65,7 @@ export const DruidSpellcasting = Traits.defineTrait('druid/druid-spellcasting', 
 export const DruidAnathema = Traits.defineTrait('druid/anathema', {
   name: 'Anathema',
   description:
-    "As stewards of the natural order, druids find affronts to nature anathema. If you repeatedly perform these acts, you lose your magical abilities from the druid class, including your druid spellcasting and the benefits of your order. These abilities can be regained only if you demonstrate your repentance with an _atone_ ritual. The following acts are anathema to all druids.\n\n**Anathema** despoil natural places, consume more natural resources than you require to live comfortably, teach the Wildsong to non-druids.\n\nYour choice of druidic order adds further anathema, as detailed in the order's entry",
+    "As stewards of the natural order, druids find affronts to nature anathema. If you repeatedly perform these acts, you lose your magical abilities from the druid class, including your druid spellcasting and the benefits of your order. These abilities can be regained only if you demonstrate your repentance with an _atone_ ritual. The following acts are anathema to all druids.\n\n**Anathema** despoil natural places, consume more natural resources than you require to live comfortably, teach the [Wildsong](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) to non-druids.\n\nYour choice of druidic order adds further anathema, as detailed in the order's entry",
   archetypes: [ClassFeature],
   effects: [],
 })
@@ -73,21 +73,22 @@ export const DruidAnathema = Traits.defineTrait('druid/anathema', {
 export const DruidicOrderFeature = Traits.defineTrait('druid/druidic-order', {
   name: 'Druidic Order',
   description:
-    "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order. While you'll always be a member of your initial order, it's not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders.\n\nOrder spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to commune with local nature spirits or otherwise tend to the wilderness in a way befitting your order.\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. The full rules for focus spells appear here.",
+    "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order. While you'll always be a member of your initial order, it's not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders.\n\nOrder spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the [Refocus](content:spells/refocus) activity to commune with local nature spirits or otherwise tend to the wilderness in a way befitting your order.\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. The full rules for focus spells appear [here](content:spells/focus-spells).",
   archetypes: [ClassFeature],
   effects: [Effects.gainCharacterOption(SelectDruidicOrder)],
 })
 
 export const DruidShieldBlock = Traits.defineTrait('druid/shield-block', {
   name: 'Shield Block',
-  description: 'You gain the Shield Block general feat, a reaction that lets you reduce damage with your shield.',
+  description: 'You gain the [Shield Block](trait:feat/shield-block) general feat, a reaction that lets you reduce damage with your shield.',
   archetypes: [ClassFeature],
   effects: [Effects.gainTrait(ShieldBlock)],
 })
 
 export const VoiceOfNature = Traits.defineTrait('druid/voice-of-nature', {
   name: 'Voice of Nature',
-  description: 'You gain your choice of the Animal Empathy or Plant Empathy druid feat.',
+  description:
+    'You gain your choice of the [Animal Empathy](trait:feat/animal-empathy-druid) or [Plant Empathy](trait:feat/plant-empathy) druid feat.',
   archetypes: [ClassFeature],
   effects: [Effects.gainCharacterOption(SelectVoiceOfNature)],
 })
@@ -95,28 +96,29 @@ export const VoiceOfNature = Traits.defineTrait('druid/voice-of-nature', {
 export const Wildsong = Traits.defineTrait('druid/wildsong', {
   name: 'Wildsong',
   description:
-    "You know the Wildsong, a secret language known only within druid orders, in addition to any languages you know through your ancestry. The Wildsong is a melodic and tonal language sounding more like animal calls than a spoken tongue, and its alphabet involves fractals and spirals, like the arrangement of a seashell's chambers, a snowflake's crystals, or a fern's fronds. Teaching the Wildsong to non-druids is anathema.",
+    "You know the [Wildsong](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), a secret language known only within druid orders, in addition to any languages you know through your ancestry. The Wildsong is a melodic and tonal language sounding more like animal calls than a spoken tongue, and its alphabet involves fractals and spirals, like the arrangement of a seashell's chambers, a snowflake's crystals, or a fern's fronds. Teaching the Wildsong to non-druids is anathema.",
   archetypes: [ClassFeature],
   effects: [],
 })
 
 export const DruidPerceptionExpertise = Traits.defineTrait('druid/perception-expertise', {
   name: 'Perception Expertise',
-  description: 'You remain alert to threats around you. Your proficiency rank for Perception increases to expert.',
+  description: 'You remain alert to threats around you. Your proficiency rank for [Perception](characteristic:perception) increases to expert.',
   archetypes: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const DruidFortitudeExpertise = Traits.defineTrait('druid/fortitude-expertise', {
   name: 'Fortitude Expertise',
-  description: 'Adventures have made your physique more hardy. Your proficiency rank for Fortitude saves increases to expert.',
+  description:
+    'Adventures have made your physique more hardy. Your proficiency rank for [Fortitude](characteristic:fortitude) saves increases to expert.',
   archetypes: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const DruidReflexExpertise = Traits.defineTrait('druid/reflex-expertise', {
   name: 'Reflex Expertise',
-  description: "You've honed your ability to dodge dangers. Your proficiency rank for Reflex saves increases to expert.",
+  description: "You've honed your ability to dodge dangers. Your proficiency rank for [Reflex](characteristic:reflex) saves increases to expert.",
   archetypes: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })

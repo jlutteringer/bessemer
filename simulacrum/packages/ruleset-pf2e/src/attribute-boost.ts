@@ -1,7 +1,7 @@
 import { Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
-import { AncestryBoost, AncestryFlaw, BackgroundBoost, KeyAttribute, Level1Boost, Level5Boost } from '@simulacrum/ruleset-pf2e/archetype'
+import { AncestryBoost, BackgroundBoost, KeyAttribute, Level1Boost, Level5Boost } from '@simulacrum/ruleset-pf2e/archetype'
 import { ClassDC, Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma } from '@simulacrum/ruleset-pf2e/characteristic'
 
 // Each source of boosts has its own traits, so the boosts from one source always go to different attributes
@@ -46,48 +46,6 @@ export const CharismaAncestryBoost = Traits.defineTrait('ancestry-boost/charisma
   description: 'Your ancestry increases your Charisma modifier by 1.',
   archetypes: [AncestryBoost],
   effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
-})
-
-export const StrengthAncestryFlaw = Traits.defineTrait('ancestry-flaw/strength', {
-  name: 'Strength (Ancestry Flaw)',
-  description: 'Your ancestry decreases your Strength modifier by 1.',
-  archetypes: [AncestryFlaw],
-  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(-1)))],
-})
-
-export const DexterityAncestryFlaw = Traits.defineTrait('ancestry-flaw/dexterity', {
-  name: 'Dexterity (Ancestry Flaw)',
-  description: 'Your ancestry decreases your Dexterity modifier by 1.',
-  archetypes: [AncestryFlaw],
-  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(-1)))],
-})
-
-export const ConstitutionAncestryFlaw = Traits.defineTrait('ancestry-flaw/constitution', {
-  name: 'Constitution (Ancestry Flaw)',
-  description: 'Your ancestry decreases your Constitution modifier by 1.',
-  archetypes: [AncestryFlaw],
-  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(-1)))],
-})
-
-export const IntelligenceAncestryFlaw = Traits.defineTrait('ancestry-flaw/intelligence', {
-  name: 'Intelligence (Ancestry Flaw)',
-  description: 'Your ancestry decreases your Intelligence modifier by 1.',
-  archetypes: [AncestryFlaw],
-  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(-1)))],
-})
-
-export const WisdomAncestryFlaw = Traits.defineTrait('ancestry-flaw/wisdom', {
-  name: 'Wisdom (Ancestry Flaw)',
-  description: 'Your ancestry decreases your Wisdom modifier by 1.',
-  archetypes: [AncestryFlaw],
-  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(-1)))],
-})
-
-export const CharismaAncestryFlaw = Traits.defineTrait('ancestry-flaw/charisma', {
-  name: 'Charisma (Ancestry Flaw)',
-  description: 'Your ancestry decreases your Charisma modifier by 1.',
-  archetypes: [AncestryFlaw],
-  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(-1)))],
 })
 
 export const StrengthBackgroundBoost = Traits.defineTrait('background-boost/strength', {
@@ -320,12 +278,6 @@ export const AllAttributeBoosts = [
   IntelligenceAncestryBoost,
   WisdomAncestryBoost,
   CharismaAncestryBoost,
-  StrengthAncestryFlaw,
-  DexterityAncestryFlaw,
-  ConstitutionAncestryFlaw,
-  IntelligenceAncestryFlaw,
-  WisdomAncestryFlaw,
-  CharismaAncestryFlaw,
   StrengthBackgroundBoost,
   DexterityBackgroundBoost,
   ConstitutionBackgroundBoost,

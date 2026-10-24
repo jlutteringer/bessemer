@@ -59,7 +59,7 @@ export const AmphibiousSection = Content.defineSection('traits/amphibious', {
   content: {
     name: 'Amphibious',
     description:
-      'An amphibious creature can breathe in water and in air, even outside of its preferred environment, usually indefinitely but at least for hours. These creatures often have a swim Speed. Their bludgeoning and slashing unarmed Strikes don’t take the usual –2 penalty for being underwater.',
+      'An amphibious creature can breathe in water and in air, even outside of its preferred environment, usually indefinitely but at least for hours. These creatures often have a swim [Speed](characteristic:speed). Their bludgeoning and slashing unarmed Strikes don’t take the usual –2 penalty for being underwater.',
   },
 })
 
@@ -110,7 +110,7 @@ export const AttachedSection = Content.defineSection('traits/attached', {
   content: {
     name: 'Attached',
     description:
-      "An attached weapon must be combined with another piece of gear to be used. The trait lists what type of item the weapon must be attached to. You must be wielding or wearing the item the weapon is attached to in order to attack with it. For example, shield spikes are attached to a shield, allowing you to attack with the spikes instead of a shield bash. An attached weapon is usually bolted onto or built into the item it’s attached to, and typically an item can have only one weapon attached to it. An attached weapon can be affixed to an item with 10 minutes of work and a successful DC 10 Crafting check; this includes the time needed to remove the weapon from a previous item, if necessary. Typically the weapon can't be used if the item it's attached to is broken. If an item is destroyed, its attached weapon can usually be salvaged.",
+      "An attached weapon must be combined with another piece of gear to be used. The trait lists what type of item the weapon must be attached to. You must be wielding or wearing the item the weapon is attached to in order to attack with it. For example, shield spikes are attached to a shield, allowing you to attack with the spikes instead of a shield bash. An attached weapon is usually bolted onto or built into the item it’s attached to, and typically an item can have only one weapon attached to it. An attached weapon can be affixed to an item with 10 minutes of work and a successful DC 10 [Crafting](characteristic:skill/crafting) check; this includes the time needed to remove the weapon from a previous item, if necessary. Typically the weapon can't be used if the item it's attached to is broken. If an item is destroyed, its attached weapon can usually be salvaged.",
   },
 })
 
@@ -174,7 +174,7 @@ export const BeastSection = Content.defineSection('traits/beast', {
   content: {
     name: 'Beast',
     description:
-      'A creature similar to an animal but with an Intelligence modifier of –3 or higher is usually a beast. Unlike an animal, a beast might be able to speak and reason.',
+      'A creature similar to an animal but with an [Intelligence modifier](characteristic:intelligence) of –3 or higher is usually a beast. Unlike an animal, a beast might be able to speak and reason.',
   },
 })
 
@@ -192,7 +192,7 @@ export const BulwarkSection = Content.defineSection('traits/bulwark', {
   content: {
     name: 'Bulwark',
     description:
-      'The armor covers you so completely that it provides benefits against some damaging effects. On Reflex saves to avoid a damaging effect, such as a fireball, you add a +3 modifier instead of your Dexterity modifier',
+      'The armor covers you so completely that it provides benefits against some damaging effects. On [Reflex](characteristic:reflex) saves to avoid a damaging effect, such as a fireball, you add a +3 modifier instead of your [Dexterity modifier](characteristic:dexterity)',
   },
 })
 
@@ -257,7 +257,7 @@ export const ConcealableSection = Content.defineSection('traits/concealable', {
   content: {
     name: 'Concealable',
     description:
-      'This weapon is designed to be inconspicuous or easily concealed. You gain a +2 circumstance bonus to Stealth checks and DCs to hide or conceal a weapon with this trait.',
+      'This weapon is designed to be inconspicuous or easily concealed. You gain a +2 circumstance bonus to [Stealth](characteristic:skill/stealth) checks and DCs to hide or conceal a weapon with this trait.',
   },
 })
 
@@ -280,7 +280,7 @@ export const ConstructSection = Content.defineSection('traits/construct', {
   content: {
     name: 'Construct',
     description:
-      'A construct is an artificial creature empowered by a force other than vitality or void. Constructs are often [mindless](content:traits/mindless); they’re immune to [bleed damage](content:conditions/persistent-damage), [death effects](content:playing-the-game/death-effects), [disease](content:traits/disease), [healing](content:traits/healing), [nonlethal attacks](content:playing-the-game/nonlethal-attacks), [poison](content:traits/poison), [vitality](content:traits/vitality), [void](content:traits/void), and the [doomed](content:conditions/doomed), [drained](content:conditions/drained), [fatigued](content:conditions/fatigued), [paralyzed](content:conditions/paralyzed), [sickened](content:conditions/sickened), and [unconscious](content:conditions/unconscious) conditions; and they might have Hardness based on the materials used to construct their bodies. Constructs are not living creatures, nor are they undead. When reduced to 0 Hit Points, a construct creature is destroyed.',
+      'A construct is an artificial creature empowered by a force other than vitality or void. Constructs are often [mindless](content:traits/mindless); they’re immune to [bleed damage](content:conditions/persistent-damage), [death effects](content:playing-the-game/death-effects), [disease](content:traits/disease), [healing](content:traits/healing), [nonlethal attacks](content:playing-the-game/nonlethal-attacks), [poison](content:traits/poison), [vitality](content:traits/vitality), [void](content:traits/void), and the [doomed](content:conditions/doomed), [drained](content:conditions/drained), [fatigued](content:conditions/fatigued), [paralyzed](content:conditions/paralyzed), [sickened](content:conditions/sickened), and [unconscious](content:conditions/unconscious) conditions; and they might have Hardness based on the materials used to construct their bodies. Constructs are not living creatures, nor are they undead. When reduced to 0 [Hit Points](characteristic:hit-points), a construct creature is destroyed.',
   },
 })
 
@@ -289,7 +289,7 @@ export const ConsumableSection = Content.defineSection('traits/consumable', {
   content: {
     name: 'Consumable',
     description:
-      'An item with this trait can be used only once. Unless stated otherwise, it’s destroyed after activation. Consumable items include alchemical items and magical consumables such as scrolls and talismans. A character can Craft consumable items in batches of four.',
+      'An item with this trait can be used only once. Unless stated otherwise, it’s destroyed after activation. Consumable items include alchemical items and magical consumables such as scrolls and talismans. A character can [Craft](content:skills/craft) consumable items in batches of four.',
   },
 })
 
@@ -368,7 +368,7 @@ export const DisarmSection = Content.defineSection('traits/disarm', {
   content: {
     name: 'Disarm',
     description:
-      'You can use this weapon to Disarm with the Athletics skill even if you don’t have a free hand. This uses the weapon’s reach (if different from your own) and adds the weapon’s item bonus to attack rolls (if any) as an item bonus to the Athletics check. If you critically fail a check to Disarm using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure. On a critical success, you still need a free hand if you want to take the item.',
+      'You can use this weapon to [Disarm](content:skills/disarm) with the [Athletics](characteristic:skill/athletics) skill even if you don’t have a free hand. This uses the weapon’s reach (if different from your own) and adds the weapon’s item bonus to attack rolls (if any) as an item bonus to the Athletics check. If you critically fail a check to Disarm using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure. On a critical success, you still need a free hand if you want to take the item.',
   },
 })
 
@@ -541,7 +541,7 @@ export const FinesseSection = Content.defineSection('traits/finesse', {
   content: {
     name: 'Finesse',
     description:
-      'You can use your Dexterity modifier instead of your Strength modifier on attack rolls using this melee weapon. You still calculate damage using Strength.',
+      'You can use your [Dexterity modifier](characteristic:dexterity) instead of your [Strength modifier](characteristic:strength) on attack rolls using this melee weapon. You still calculate damage using Strength.',
   },
 })
 
@@ -558,7 +558,8 @@ export const FlexibleSection = Content.defineSection('traits/flexible', {
   parent: TraitGlossarySection,
   content: {
     name: 'Flexible',
-    description: 'The armor is pliable and doesn’t hinder most actions. You don’t apply its check penalty to Acrobatics or Athletics checks.',
+    description:
+      'The armor is pliable and doesn’t hinder most actions. You don’t apply its check penalty to [Acrobatics](characteristic:skill/acrobatics) or [Athletics](characteristic:skill/athletics) checks.',
   },
 })
 
@@ -653,7 +654,7 @@ export const GrappleSection = Content.defineSection('traits/grapple', {
   content: {
     name: 'Grapple',
     description:
-      "You can use this weapon to [Grapple](content:skills/grapple) with the Athletics skill even if you don't have a free hand. This uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls as an item bonus to the Athletics check. If you critically fail a check to Grapple using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure.",
+      "You can use this weapon to [Grapple](content:skills/grapple) with the [Athletics](characteristic:skill/athletics) skill even if you don't have a free hand. This uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls as an item bonus to the Athletics check. If you critically fail a check to Grapple using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure.",
   },
 })
 
@@ -676,7 +677,7 @@ export const HealingSection = Content.defineSection('traits/healing', {
   content: {
     name: 'Healing',
     description:
-      'A healing effect restores a creature’s body, typically by restoring Hit Points, but sometimes by removing diseases or other debilitating effects.',
+      'A healing effect restores a creature’s body, typically by restoring [Hit Points](characteristic:hit-points), but sometimes by removing diseases or other debilitating effects.',
   },
 })
 
@@ -728,7 +729,7 @@ export const IllusionSection = Content.defineSection('traits/illusion', {
   content: {
     name: 'Illusion',
     description:
-      "Effects and magic items with this trait involve false sensory stimuli. Magic with the illusion trait creates false sensory stimuli. Sometimes illusions allow creatures a chance to disbelieve the spell, which lets the creature ignore the spell if it succeeds at doing so. This usually happens when a creature Seeks, Interacts, or otherwise spends actions to engage with the illusion, comparing the result of its Perception check (or another check or save the GM chooses) to the caster's spell DC. Mental illusions typically provide rules in the spell's description for disbelieving the effect (usually via a Will save).\n\nIf a creature engages with an illusion in a way that would prove it's not what it seems, the creature might know that an illusion is present, but it still can't ignore the illusion without successfully disbelieving it. Disbelieving a visual illusion makes it and those things it blocks seem hazy and indistinct, which might block vision enough to leave the other side [concealed](content:conditions/concealed).",
+      "Effects and magic items with this trait involve false sensory stimuli. Magic with the illusion trait creates false sensory stimuli. Sometimes illusions allow creatures a chance to disbelieve the spell, which lets the creature ignore the spell if it succeeds at doing so. This usually happens when a creature Seeks, Interacts, or otherwise spends actions to engage with the illusion, comparing the result of its [Perception](characteristic:perception) check (or another check or save the GM chooses) to the caster's [spell DC](characteristic:spell-dc). Mental illusions typically provide rules in the spell's description for disbelieving the effect (usually via a [Will save](characteristic:will)).\n\nIf a creature engages with an illusion in a way that would prove it's not what it seems, the creature might know that an illusion is present, but it still can't ignore the illusion without successfully disbelieving it. Disbelieving a visual illusion makes it and those things it blocks seem hazy and indistinct, which might block vision enough to leave the other side [concealed](content:conditions/concealed).",
   },
 })
 
@@ -901,7 +902,7 @@ export const NoisySection = Content.defineSection('traits/noisy', {
   content: {
     name: 'Noisy',
     description:
-      'This armor is loud and likely to alert others to your presence. The armor’s check penalty applies to Stealth checks even if you have the required Strength modifier.',
+      'This armor is loud and likely to alert others to your presence. The armor’s check penalty applies to [Stealth](characteristic:skill/stealth) checks even if you have the required [Strength modifier](characteristic:strength).',
   },
 })
 
@@ -910,7 +911,7 @@ export const NonlethalSection = Content.defineSection('traits/nonlethal', {
   content: {
     name: 'Nonlethal',
     description:
-      'Attacks with this weapon are [nonlethal](content:playing-the-game/nonlethal-attacks), and are used to knock creatures unconscious instead of kill them. You can use a nonlethal weapon to make a lethal attack with a –2 circumstance penalty.',
+      'Attacks with this weapon are [nonlethal](content:playing-the-game/nonlethal-attacks), and are used to knock creatures [unconscious](content:conditions/unconscious) instead of kill them. You can use a nonlethal weapon to make a lethal attack with a –2 circumstance penalty.',
   },
 })
 
@@ -955,7 +956,7 @@ export const ParrySection = Content.defineSection('traits/parry', {
   content: {
     name: 'Parry',
     description:
-      'This weapon can be used defensively to block attacks. While wielding this weapon, if your proficiency with it is trained or better, you can spend a single action to position your weapon defensively, gaining a +1 circumstance bonus to AC until the start of your next turn.',
+      'This weapon can be used defensively to block attacks. While wielding this weapon, if your proficiency with it is trained or better, you can spend a single action to position your weapon defensively, gaining a +1 circumstance bonus to [AC](characteristic:armor-class) until the start of your next turn.',
   },
 })
 
@@ -991,7 +992,7 @@ export const PossessionSection = Content.defineSection('traits/possession', {
   content: {
     name: 'Possession',
     description:
-      'Effects with this trait allow a creature to project its mind and spirit into a target. A creature immune to mental effects can’t use a possession effect. While possessing a target, a possessor’s true body is unconscious (and can’t wake up normally), unless the possession effect allows the creature to physically enter the target. Whenever the target takes damage, the possessor takes half that amount of damage as mental damage.\n\nA possessor loses the benefits of any of its active spells or abilities that affect its physical body, though it gains the benefits of the target’s active spells and abilities that affect their body. A possessor can use any of the target’s abilities that are purely physical, and it can’t use any of its own abilities except spells and purely mental abilities. The GM decides whether an ability is purely physical or purely mental. A possessor uses the target’s attack modifier, AC, Fortitude save, Reflex save, Perception, and physical skills, and its own Will save, mental skills, spell attack modifier, and spell DC; benefits of invested items apply where relevant (the possessor’s invested items apply when using its own values, and the target’s invested items apply when using the target’s values). A possessor gains no benefit from casting spells that normally affect only the caster, since it isn’t in its own body. The possessor must use its own actions to make the possessed creature act.\n\nIf a possessor reaches 0 Hit Points through any combination of damage to its true body and mental damage from the possession, it is knocked out as normal and the possession immediately ends. If the target reaches 0 Hit Points first, the possessor can either fall unconscious with the body and continue the possession or end the effect as a free action and return to its body. If the target dies, the possession ends immediately, and the possessor is stunned for 1 minute.',
+      'Effects with this trait allow a creature to project its mind and spirit into a target. A creature immune to mental effects can’t use a possession effect. While possessing a target, a possessor’s true body is [unconscious](content:conditions/unconscious) (and can’t wake up normally), unless the possession effect allows the creature to physically enter the target. Whenever the target takes damage, the possessor takes half that amount of damage as mental damage.\n\nA possessor loses the benefits of any of its active spells or abilities that affect its physical body, though it gains the benefits of the target’s active spells and abilities that affect their body. A possessor can use any of the target’s abilities that are purely physical, and it can’t use any of its own abilities except spells and purely mental abilities. The GM decides whether an ability is purely physical or purely mental. A possessor uses the target’s attack modifier, [AC](characteristic:armor-class), [Fortitude](characteristic:fortitude) save, [Reflex](characteristic:reflex) save, [Perception](characteristic:perception), and physical skills, and its own [Will save](characteristic:will), mental skills, [spell attack modifier](characteristic:spell-attack), and [spell DC](characteristic:spell-dc); benefits of invested items apply where relevant (the possessor’s invested items apply when using its own values, and the target’s invested items apply when using the target’s values). A possessor gains no benefit from casting spells that normally affect only the caster, since it isn’t in its own body. The possessor must use its own actions to make the possessed creature act.\n\nIf a possessor reaches 0 [Hit Points](characteristic:hit-points) through any combination of damage to its true body and mental damage from the possession, it is knocked out as normal and the possession immediately ends. If the target reaches 0 Hit Points first, the possessor can either fall unconscious with the body and continue the possession or end the effect as a free action and return to its body. If the target dies, the possession ends immediately, and the possessor is [stunned](content:conditions/stunned) for 1 minute.',
   },
 })
 
@@ -1010,7 +1011,7 @@ export const PressSection = Content.defineSection('traits/press', {
   content: {
     name: 'Press',
     description:
-      'Actions with this trait allow you to follow up earlier attacks. An action with the press trait can be used only if you are currently affected by a multiple attack penalty. You can’t use a press action when it’s not your turn, even if you use the Ready activity.\n\nSome actions with the press trait also grant an effect on a failure. The effects that are added on a failure don’t apply on a critical failure. If your press action succeeds, you can choose to apply the failure effect instead. (For example, you may wish to do this when an attack deals no damage due to resistance.)',
+      'Actions with this trait allow you to follow up earlier attacks. An action with the press trait can be used only if you are currently affected by a multiple attack penalty. You can’t use a press action when it’s not your turn, even if you use the [Ready](content:playing-the-game/ready) activity.\n\nSome actions with the press trait also grant an effect on a failure. The effects that are added on a failure don’t apply on a critical failure. If your press action succeeds, you can choose to apply the failure effect instead. (For example, you may wish to do this when an attack deals no damage due to resistance.)',
   },
 })
 
@@ -1028,7 +1029,7 @@ export const PropulsiveSection = Content.defineSection('traits/propulsive', {
   content: {
     name: 'Propulsive',
     description:
-      'You add half your Strength modifier (if positive) to damage rolls with a propulsive ranged weapon. If you have a negative Strength modifier, you add your full Strength modifier instead.',
+      'You add half your [Strength modifier](characteristic:strength) (if positive) to damage rolls with a propulsive ranged weapon. If you have a negative Strength modifier, you add your full Strength modifier instead.',
   },
 })
 
@@ -1037,7 +1038,7 @@ export const RangedTripSection = Content.defineSection('traits/ranged-trip', {
   content: {
     name: 'Ranged Trip',
     description:
-      'The weapon can be used to Trip with the Athletics skill within the weapon’s first range increment. The skill check takes a –2 circumstance penalty. You can add the weapon’s item bonus to attack rolls as a bonus to the check. A ranged trip weapon doesn’t deal any damage when used to Trip. These weapons are usually thrown.',
+      'The weapon can be used to [Trip](content:skills/trip) with the [Athletics](characteristic:skill/athletics) skill within the weapon’s first range increment. The skill check takes a –2 circumstance penalty. You can add the weapon’s item bonus to attack rolls as a bonus to the check. A ranged trip weapon doesn’t deal any damage when used to Trip. These weapons are usually thrown.',
   },
 })
 
@@ -1110,7 +1111,7 @@ export const ShoveSection = Content.defineSection('traits/shove', {
   content: {
     name: 'Shove',
     description:
-      "You can use this weapon to [Shove](content:skills/shove) with the Athletics skill even if you don't have a free hand. This uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls as an item bonus to the Athletics check. If you critically fail a check to Shove using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure.",
+      "You can use this weapon to [Shove](content:skills/shove) with the [Athletics](characteristic:skill/athletics) skill even if you don't have a free hand. This uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls as an item bonus to the Athletics check. If you critically fail a check to Shove using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure.",
   },
 })
 
@@ -1192,7 +1193,7 @@ export const SummonedSection = Content.defineSection('traits/summoned', {
   content: {
     name: 'Summoned',
     description:
-      "A creature called by a spell or effect gains the summoned trait. A summoned creature can't summon other creatures, create things of value, or cast spells that require a cost. It has the [minion](content:traits/minion) trait. If it tries to Cast a Spell of equal or higher rank than the spell that summoned it, it overpowers the summoning magic, causing its own spell to fail and the summon spell to end. Otherwise, the summoned creature uses the standard abilities for a creature of its kind. It generally attacks your enemies to the best of its ability. If you can communicate with it, you can attempt to command it, but the GM determines the degree to which it follows your commands.\n\nImmediately when you finish Casting the Spell, the summoned creature uses its 2 actions for that turn. A spawn or other creature generated from a summoned creature returns to its unaltered state (usually a corpse in the case of spawn) once the summoned creature is gone. If it's unclear what this state would be, the GM decides. Summoned creatures can be banished by various spells and effects. They are automatically banished if reduced to 0 Hit Points or if the spell that called them ends.",
+      "A creature called by a spell or effect gains the summoned trait. A summoned creature can't summon other creatures, create things of value, or cast spells that require a cost. It has the [minion](content:traits/minion) trait. If it tries to [Cast a Spell](content:spells/cast-a-spell) of equal or higher rank than the spell that summoned it, it overpowers the summoning magic, causing its own spell to fail and the summon spell to end. Otherwise, the summoned creature uses the standard abilities for a creature of its kind. It generally attacks your enemies to the best of its ability. If you can communicate with it, you can attempt to command it, but the GM determines the degree to which it follows your commands.\n\nImmediately when you finish Casting the Spell, the summoned creature uses its 2 actions for that turn. A spawn or other creature generated from a summoned creature returns to its unaltered state (usually a corpse in the case of spawn) once the summoned creature is gone. If it's unclear what this state would be, the GM decides. Summoned creatures can be banished by various spells and effects. They are automatically banished if reduced to 0 [Hit Points](characteristic:hit-points) or if the spell that called them ends.",
   },
 })
 
@@ -1219,7 +1220,7 @@ export const ThrownSection = Content.defineSection('traits/thrown', {
   content: {
     name: 'Thrown',
     description:
-      "You can throw this weapon as a ranged attack; it is a ranged weapon when thrown. You add your Strength modifier to damage as you would for a melee weapon. When this trait appears on a melee weapon, it also includes the range increment. Ranged weapons with this trait use the range increment in the weapon's Range entry.",
+      "You can throw this weapon as a ranged attack; it is a ranged weapon when thrown. You add your [Strength modifier](characteristic:strength) to damage as you would for a melee weapon. When this trait appears on a melee weapon, it also includes the range increment. Ranged weapons with this trait use the range increment in the weapon's Range entry.",
   },
 })
 
@@ -1233,7 +1234,7 @@ export const TripSection = Content.defineSection('traits/trip', {
   content: {
     name: 'Trip',
     description:
-      "You can use this weapon to [Trip](content:skills/trip) with the Athletics skill even if you don't have a free hand. This uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls as an item bonus to the Athletics check. If you critically fail a check to Trip using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure.",
+      "You can use this weapon to [Trip](content:skills/trip) with the [Athletics](characteristic:skill/athletics) skill even if you don't have a free hand. This uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls as an item bonus to the Athletics check. If you critically fail a check to Trip using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure.",
   },
 })
 
@@ -1278,7 +1279,7 @@ export const UndeadSection = Content.defineSection('traits/undead', {
   content: {
     name: 'Undead',
     description:
-      'Once living, these creatures were infused after death with void energy and soul-corrupting unholy magic. When reduced to 0 Hit Points, an undead creature is destroyed. Undead creatures are damaged by vitality energy and are healed by void energy, and don’t benefit from healing vitality effects.',
+      'Once living, these creatures were infused after death with void energy and soul-corrupting unholy magic. When reduced to 0 [Hit Points](characteristic:hit-points), an undead creature is destroyed. Undead creatures are damaged by vitality energy and are healed by void energy, and don’t benefit from healing vitality effects.',
   },
 })
 
@@ -1332,7 +1333,7 @@ export const VoidSection = Content.defineSection('traits/void', {
   content: {
     name: 'Void',
     description:
-      'Effects with this trait heal [undead](content:traits/undead) creatures with void energy, deal void damage to living creatures, or manipulate void energy.\n\nPlanes with this trait are vast, empty reaches that suck the life from the living. They tend to be lonely, haunted planes, drained of color and filled with winds carrying the moans of the dead At the end of each round, a living creature takes at least minor void environmental damage. In the strongest areas of a void plane, they could take moderate or even major void damage at the end of each round. This damage has the death trait, and if a living creature is reduced to 0 Hit Points by this void damage and killed, it crumbles into ash and can become a wraith (see Monster Core).',
+      'Effects with this trait heal [undead](content:traits/undead) creatures with void energy, deal void damage to living creatures, or manipulate void energy.\n\nPlanes with this trait are vast, empty reaches that suck the life from the living. They tend to be lonely, haunted planes, [drained](content:conditions/drained) of color and filled with winds carrying the moans of the dead At the end of each round, a living creature takes at least minor void environmental damage. In the strongest areas of a void plane, they could take moderate or even major void damage at the end of each round. This damage has the death trait, and if a living creature is reduced to 0 [Hit Points](characteristic:hit-points) by this void damage and killed, it crumbles into ash and can become a wraith (see Monster Core).',
   },
 })
 

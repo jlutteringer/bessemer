@@ -10,7 +10,8 @@ export const Darkvision = Traits.defineTrait('sense/darkvision', {
 
 export const LowLightVision = Traits.defineTrait('sense/low-light-vision', {
   name: 'Low-Light Vision',
-  description: 'You can see in dim light as though it were bright light, so you ignore the concealed condition due to dim light.',
+  description:
+    'You can see in dim light as though it were bright light, so you ignore the [concealed](content:conditions/concealed) condition due to dim light.',
   effects: [],
 })
 

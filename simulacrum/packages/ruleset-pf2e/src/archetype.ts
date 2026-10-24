@@ -47,7 +47,6 @@ export const Divine = Archetypes.defineArchetype('spell/tradition/divine', { nam
 export const Occult = Archetypes.defineArchetype('spell/tradition/occult', { name: 'Occult' })
 export const Primal = Archetypes.defineArchetype('spell/tradition/primal', { name: 'Primal' })
 export const AncestryBoost = Archetypes.defineArchetype('attribute/ancestry-boost', { name: 'Ancestry Boost' })
-export const AncestryFlaw = Archetypes.defineArchetype('attribute/ancestry-flaw', { name: 'Ancestry Flaw' })
 export const BackgroundBoost = Archetypes.defineArchetype('attribute/background-boost', { name: 'Background Boost' })
 export const KeyAttribute = Archetypes.defineArchetype('attribute/key', { name: 'Key Attribute' })
 export const Level1Boost = Archetypes.defineArchetype('attribute/level-1-boost', { name: 'Level 1 Boost' })
@@ -106,7 +105,6 @@ export const AllArchetypes = [
   Occult,
   Primal,
   AncestryBoost,
-  AncestryFlaw,
   BackgroundBoost,
   KeyAttribute,
   Level1Boost,

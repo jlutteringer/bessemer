@@ -6,7 +6,7 @@ import { Box, Link } from '@mui/material'
 import { Objects } from '@bessemer/cornerstone'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
 import { StackedPopover } from '@simulacrum/ui/components/StackedPopover'
-import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
+import { RulesetEntityContent } from '@simulacrum/ui/components/RulesetEntityContent'
 import { Rulesets } from '@simulacrum/engine'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 
@@ -19,7 +19,7 @@ export const RulesetEntityPopover = ({ entity, trigger }: { entity: RulesetEntit
       trigger={trigger}
       title={entity.name}
     >
-      {Objects.isPresent(entity.description) && <SimulacrumRichText text={entity.description} />}
+      <RulesetEntityContent entity={entity} />
 
       {Objects.isPresent(section) && (
         <Box sx={{ mt: 1 }}>

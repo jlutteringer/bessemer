@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { createContext, useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm, useWatch } from 'react-hook-form'
@@ -16,7 +16,6 @@ import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
 import CircularProgress from '@mui/material/CircularProgress'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -44,25 +43,22 @@ import { Ruleset, RulesetConfiguration, RulesetExtension } from '@simulacrum/eng
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
-import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
+import { RulesetEntityContent, TraitPassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
+import { getEntityTexts } from '@simulacrum/ui/components/ruleset-entity-model'
+import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
   CharacterOptionChoice,
-  getAbilityResourceLabels,
-  getActionLabel,
-  getActionTypeLabel,
   getCharacteristicSections,
   getCharacteristicValue,
   getCharacterOptionChoices,
   getGrantedTraits,
   getInitialValueFieldName,
   getLoadoutAbilities,
-  getPassiveEffects,
   getPassiveTraits,
   getValueCaption,
-  hasDescribedActions,
   isTrait,
   MaxLevel,
   newCharacter,
@@ -76,9 +72,6 @@ const useRulesets = (): { rulesets: Array<Ruleset>; rulesetExtensions: Array<Rul
   const { rulesets, rulesetExtensions } = (useClientContext() as unknown as ApplicationContext).client
   return { rulesets, rulesetExtensions }
 }
-
-// The character being edited, for cards deep in the page that show character-specific values (e.g. how many uses an ability has)
-const CharacterSheetContext = createContext<CharacterSheet | null>(null)
 
 /**
  * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
@@ -285,7 +278,7 @@ const RulesetSelection = ({
  */
 // An info icon at the end of an entity's field, opening its description; nothing for an entity without one
 const RulesetEntityInfo = ({ entity }: { entity: RulesetEntity }) => {
-  if (Objects.isNil(entity.description) || Arrays.isEmpty(entity.description.content ?? [])) {
+  if (getEntityTexts(entity).every((it) => Arrays.isEmpty(it.content ?? []))) {
     return null
   }
 
@@ -818,77 +811,24 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
       <CardContent>
         <Typography variant="h6">{trait.name}</Typography>
         {Objects.isPresent(caption) && <Typography variant="caption">{caption}</Typography>}
-        {Objects.isPresent(trait.description) && <SimulacrumRichText text={trait.description} />}
-        {!Arrays.isEmpty(getPassiveEffects(trait)) && (
-          <>
-            <Divider sx={{ my: 1 }} />
-            <TraitPassiveEffects trait={trait} />
-          </>
-        )}
+        <RulesetEntityContent entity={trait} />
       </CardContent>
     </Card>
   )
 }
 
-const TraitPassiveEffects = ({ trait }: { trait: Trait }) => {
-  return (
-    <>
-      <Typography variant="caption">Passive</Typography>
-      {getPassiveEffects(trait).map((it, index) => (
-        <SimulacrumRichText
-          key={index}
-          text={it.description}
-        />
-      ))}
-    </>
-  )
-}
-
-const AbilityCard = ({ ability: rulesetAbility }: { ability: Ability }) => {
-  const ruleset = useRuleset()
-  const sheet = useContext(CharacterSheetContext)
-  const ability = sheet?.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
-  const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, ruleset)
-  const actionLabel = hasDescribedActions(ability) ? null : getActionLabel(ability, ruleset)
-  const usageLabels = [...(Objects.isPresent(actionLabel) ? [actionLabel] : []), ...resourceLabels]
-
+const AbilityCard = ({ ability }: { ability: Ability }) => {
   return (
     <Card sx={{ height: '100%' }}>
       <CardContent>
         <Typography variant="h6">{ability.name}</Typography>
-        {!Arrays.isEmpty(usageLabels) && (
-          <Typography
-            variant="caption"
-            component="p"
-          >
-            {usageLabels.join(' · ')}
-          </Typography>
-        )}
-        {Effects.filter(ability.effects, Effects.Descriptive).map((it, index) => (
-          <SimulacrumRichText
-            key={index}
-            text={it.description}
-          />
-        ))}
-        {hasDescribedActions(ability) ? (
-          <AbilityActions ability={ability} />
-        ) : (
-          ability.actions.flatMap((it, index) =>
-            Objects.isPresent(it.description)
-              ? [
-                  <SimulacrumRichText
-                    key={index}
-                    text={it.description}
-                  />,
-                ]
-              : []
-          )
-        )}
+        <RulesetEntityContent entity={ability} />
       </CardContent>
     </Card>
   )
 }
 
+// A trait in the Abilities section, which summarizes what it does in play rather than describing it
 const PassiveTraitCard = ({ trait }: { trait: Trait }) => {
   return (
     <Card sx={{ height: '100%' }}>
@@ -910,27 +850,6 @@ const AbilityCards = ({ abilities }: { abilities: Array<Ability> }) => {
         />
       ))}
     </CardGrid>
-  )
-}
-
-const AbilityActions = ({ ability }: { ability: Ability }) => {
-  const ruleset = useRuleset()
-
-  return (
-    <Stack
-      spacing={1}
-      sx={{ mt: 1 }}
-    >
-      {ability.actions.map((action, index) => (
-        <Box key={index}>
-          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-            <Typography variant="subtitle2">{action.name ?? ability.name}</Typography>
-            <Typography variant="caption">{getActionTypeLabel(action.action, ruleset)}</Typography>
-          </Box>
-          {Objects.isPresent(action.description) && <SimulacrumRichText text={action.description} />}
-        </Box>
-      ))}
-    </Stack>
   )
 }
 

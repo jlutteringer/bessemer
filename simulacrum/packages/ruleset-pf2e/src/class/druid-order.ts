@@ -170,7 +170,7 @@ export const SelectOrderMagic = CharacterOptions.selectTraitOption('feat/order-m
 export const OrderMagic = Traits.defineTrait('feat/order-magic', {
   name: 'Order Magic',
   description:
-    '*Druid*\n\n**Prerequisites** Order Explorer\n\nYou have delved deeper into the teaching of a new order, gaining access to a coveted order spell. Choose an order you have selected with Order Explorer. You gain the initial order spell from that order.\n\n**Special** You can take this feat multiple times. Each time you do, you must choose a different order you have selected with Order Explorer.',
+    '*Druid*\n\n**Prerequisites** [Order Explorer](trait:feat/order-explorer)\n\nYou have delved deeper into the teaching of a new order, gaining access to a coveted order spell. Choose an order you have selected with Order Explorer. You gain the initial order spell from that order.\n\n**Special** You can take this feat multiple times. Each time you do, you must choose a different order you have selected with Order Explorer.',
   archetypes: [Feat, ClassFeat, DruidFeat, FeatLevel4],
   prerequisites: [Traits.traitPrerequisite(OrderExplorer)],
   repeatable: true,

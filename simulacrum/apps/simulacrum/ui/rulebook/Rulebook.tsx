@@ -11,7 +11,7 @@ import { Ruleset, RulesetReference } from '@simulacrum/engine/ruleset'
 import { ApplicationContext } from '@simulacrum/application'
 import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
-import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
+import { RulesetEntityContent } from '@simulacrum/ui/components/RulesetEntityContent'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { RulebookSearch } from '@simulacrum/ui/rulebook/RulebookSearch'
 import { Rulesets } from '@simulacrum/engine'
@@ -352,7 +352,8 @@ const HeadingVariants = ['h4', 'h5', 'h6', 'subtitle2'] as const
 
 const ContentSectionView = ({ node, depth }: { node: ContentNode; depth: number }) => {
   const ruleset = useRuleset()
-  const { name, description } = Rulesets.getEntityById(node.section.id, ruleset)
+  const entity = Rulesets.getEntityById(node.section.id, ruleset)
+  const { name } = entity
   const variant = HeadingVariants[Math.min(depth, HeadingVariants.length - 1)]
 
   if (depth >= HeadingVariants.length - 1) {
@@ -365,7 +366,7 @@ const ContentSectionView = ({ node, depth }: { node: ContentNode; depth: number 
         >
           {name}
         </Typography>
-        {Objects.isPresent(description) && <SimulacrumRichText text={description} />}
+        <RulesetEntityContent entity={entity} />
         {node.children.map((child) => (
           <ContentSectionView
             key={child.section.id}
@@ -390,7 +391,7 @@ const ContentSectionView = ({ node, depth }: { node: ContentNode; depth: number 
         {name}
       </Typography>
 
-      {Objects.isPresent(description) && <SimulacrumRichText text={description} />}
+      <RulesetEntityContent entity={entity} />
 
       {node.children.map((child) => (
         <ContentSectionView

@@ -67,7 +67,7 @@ export const ArmorProficiency = Traits.defineTrait('feat/armor-proficiency', {
 export const BreathControl = Traits.defineTrait('feat/breath-control', {
   name: 'Breath Control',
   description:
-    '*General*\n\nYou can breathe even in hazardous or sparse air. You can hold your breath for 25 times as long as usual before suffocating. You gain a +1 circumstance bonus to saving throws against inhaled threats, such as inhaled poisons, and if you roll a success on such a saving throw, you get a critical success instead.',
+    '*General*\n\nYou can breathe even in hazardous or sparse air. You can hold your breath for 25 times as long as usual before [suffocating](content:playing-the-game/drowning-and-suffocating). You gain a +1 circumstance bonus to saving throws against inhaled threats, such as inhaled poisons, and if you roll a success on such a saving throw, you get a critical success instead.',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [],
 })
@@ -104,14 +104,15 @@ export const SelectCannyAcumen = CharacterOptions.selectTraitOption('feat/canny-
 export const CannyAcumen = Traits.defineTrait('feat/canny-acumen', {
   name: 'Canny Acumen',
   description:
-    '*General*\n\nYour avoidance or observation is beyond the ken of most in your profession. Choose Fortitude saves, Reflex saves, Will saves, or Perception. You become an expert in your choice. At 17th level, you become a master in your choice.',
+    '*General*\n\nYour avoidance or observation is beyond the ken of most in your profession. Choose [Fortitude](characteristic:fortitude) saves, [Reflex](characteristic:reflex) saves, [Will saves](characteristic:will), or [Perception](characteristic:perception). You become an expert in your choice. At 17th level, you become a master in your choice.',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [Effects.gainCharacterOption(SelectCannyAcumen)],
 })
 
 export const Diehard = Traits.defineTrait('feat/diehard', {
   name: 'Diehard',
-  description: '*General*\n\nIt takes more to kill you than most. You die from the dying condition at dying 5, rather than dying 4.',
+  description:
+    '*General*\n\nIt takes more to kill you than most. You die from the [dying](content:conditions/dying) condition at dying 5, rather than dying 4.',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [],
 })
@@ -119,7 +120,7 @@ export const Diehard = Traits.defineTrait('feat/diehard', {
 export const FastRecovery = Traits.defineTrait('feat/fast-recovery', {
   name: 'Fast Recovery',
   description:
-    '*General*\n\n**Prerequisites** Constitution +2\n\nYour body quickly bounces back from afflictions. You regain twice as many Hit Points from resting. Each time you succeed at a Fortitude save against an ongoing disease or poison, you reduce its stage by 2, or by 1 against a virulent disease or poison. Each critical success you achieve against an ongoing disease or poison reduces its stage by 3, or by 2 against a virulent disease or poison. In addition, you reduce the severity of your drained condition by 2 when you rest for a night instead of by 1.',
+    '*General*\n\n**Prerequisites** Constitution +2\n\nYour body quickly bounces back from afflictions. You regain twice as many [Hit Points](characteristic:hit-points) from resting. Each time you succeed at a [Fortitude](characteristic:fortitude) save against an ongoing [disease](content:traits/disease) or [poison](content:traits/poison), you reduce its stage by 2, or by 1 against a virulent disease or poison. Each critical success you achieve against an ongoing disease or poison reduces its stage by 3, or by 2 against a virulent disease or poison. In addition, you reduce the severity of your [drained](content:conditions/drained) condition by 2 when you rest for a night instead of by 1.',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   prerequisites: [Expressions.greaterThanOrEqual(Constitution.variable, 2)],
   effects: [],
@@ -127,7 +128,8 @@ export const FastRecovery = Traits.defineTrait('feat/fast-recovery', {
 
 export const FeatherStep = Traits.defineTrait('feat/feather-step', {
   name: 'Feather Step',
-  description: '*General*\n\n**Prerequisites** Dexterity +2\n\nYou step carefully and quickly. You can Step into difficult terrain.',
+  description:
+    '*General*\n\n**Prerequisites** Dexterity +2\n\nYou step carefully and quickly. You can [Step](content:playing-the-game/step) into [difficult terrain](content:playing-the-game/difficult-terrain).',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   prerequisites: [Expressions.greaterThanOrEqual(Dexterity.variable, 2)],
   effects: [],
@@ -135,7 +137,7 @@ export const FeatherStep = Traits.defineTrait('feat/feather-step', {
 
 export const Fleet = Traits.defineTrait('feat/fleet', {
   name: 'Fleet',
-  description: '*General*\n\nYou move more quickly on foot. Your Speed increases by 5 feet.',
+  description: '*General*\n\nYou move more quickly on foot. Your [Speed](characteristic:speed) increases by 5 feet.',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
 })
@@ -150,7 +152,7 @@ export const IncredibleInitiative = Traits.defineTrait('feat/incredible-initiati
 export const Pet = Traits.defineTrait('feat/pet', {
   name: 'Pet',
   description:
-    "*General*\n\nYou have a pet-a Tiny animal of a type you choose, such as a cat, bird, or rodent. It has the minion trait, meaning it gains 2 actions during your turn if you use the Command an Animal action to command it; this replaces the usual effects of Command an Animal, and you don't need to attempt a Nature check. A pet can't take attack actions except to Escape or Force Open.\n\n**Level** Your pet's level is equal to yours.\n\n**Modifiers and AC** Your pet's save modifiers and AC are equal to yours before applying circumstance or status bonuses or penalties. It uses 3 + your level as its modifier for Perception, Acrobatics, and Stealth, and just your level as its modifier for other skill checks. It doesn't have or use its own attribute modifiers and can never benefit from item bonuses.\n\n**Hit Points** Your pet has 5 Hit Points per level.\n\n**Senses** Your pet has low-light vision and can gain additional senses from pet abilities.\n\n**Speed** Your pet has a Speed of 25 feet. You can choose to instead have an aquatic pet, which breathes in water instead of air and has the aquatic trait, no land Speed, and a swim Speed of 25 feet.\n\n**Pet Abilities** When you gain your pet, choose two of the following abilities. If your pet is an animal that naturally has one of these abilities (for instance, an owl has a fly Speed), you must select that ability. Your pet can't be an animal that naturally has more pet abilities than the maximum. In some cases, the GM might add some familiar abilities described on pages 212–213 to the pet abilities you can choose.\n\n- **Amphibious** It gains the amphibious trait, allowing it to breathe in both air and water, and has both a land Speed and a swim Speed, each equal to its highest land Speed or swim Speed.\n\n- **Burrower** It gains a burrow Speed of 5 feet, allowing it to dig Tiny holes.\n\n- **Climber** It gains a climb Speed of 25 feet.\n\n- **Darkvision** It gains darkvision.\n\n- **Echolocation** Your pet can use hearing as a precise sense within 20 feet.\n\n- **Fast Movement** Increase one of the pet's Speeds from 25 feet to 40 feet.\n\n- **Flier** It gains a fly Speed of 25 feet.\n\n- **Manual Dexterity** It can use up to two of its limbs as if they were hands to perform manipulate actions.\n\n- **Scent** Your pet can use scent as an imprecise sense within 30 feet\n\n- **Tough** Your pet's max HP increase by 2 per level.\n\n**Special** You can replace a pet or gain a new one by spending 1 week of downtime, releasing any previous pet you have. If you later gain a familiar or other companion that uses the Pet feat, you can immediately retrain this feat.",
+    "*General*\n\nYou have a pet-a Tiny animal of a type you choose, such as a cat, bird, or rodent. It has the minion trait, meaning it gains 2 actions during your turn if you use the [Command an Animal](content:skills/command-an-animal) action to command it; this replaces the usual effects of Command an Animal, and you don't need to attempt a [Nature](characteristic:skill/nature) check. A pet can't take [attack](content:traits/attack) actions except to [Escape](content:playing-the-game/escape) or [Force Open](content:skills/force-open).\n\n**Level** Your pet's level is equal to yours.\n\n**Modifiers and AC** Your pet's save modifiers and [AC](characteristic:armor-class) are equal to yours before applying circumstance or status bonuses or penalties. It uses 3 + your level as its modifier for [Perception](characteristic:perception), [Acrobatics](characteristic:skill/acrobatics), and [Stealth](characteristic:skill/stealth), and just your level as its modifier for other skill checks. It doesn't have or use its own attribute modifiers and can never benefit from item bonuses.\n\n**Hit Points** Your pet has 5 [Hit Points](characteristic:hit-points) per level.\n\n**Senses** Your pet has low-light vision and can gain additional senses from pet abilities.\n\n**Speed** Your pet has a [Speed](characteristic:speed) of 25 feet. You can choose to instead have an aquatic pet, which breathes in water instead of air and has the aquatic trait, no land Speed, and a swim Speed of 25 feet.\n\n**Pet Abilities** When you gain your pet, choose two of the following abilities. If your pet is an animal that naturally has one of these abilities (for instance, an owl has a fly Speed), you must select that ability. Your pet can't be an animal that naturally has more pet abilities than the maximum. In some cases, the GM might add some familiar abilities described on pages 212–213 to the pet abilities you can choose.\n\n- **Amphibious** It gains the amphibious trait, allowing it to breathe in both air and water, and has both a land Speed and a swim Speed, each equal to its highest land Speed or swim Speed.\n\n- **Burrower** It gains a burrow Speed of 5 feet, allowing it to dig Tiny holes.\n\n- **Climber** It gains a climb Speed of 25 feet.\n\n- **Darkvision** It gains darkvision.\n\n- **Echolocation** Your pet can use hearing as a precise sense within 20 feet.\n\n- **Fast Movement** Increase one of the pet's Speeds from 25 feet to 40 feet.\n\n- **Flier** It gains a fly Speed of 25 feet.\n\n- **Manual Dexterity** It can use up to two of its limbs as if they were hands to perform manipulate actions.\n\n- **Scent** Your pet can use scent as an imprecise sense within 30 feet\n\n- **Tough** Your pet's max HP increase by 2 per level.\n\n**Special** You can replace a pet or gain a new one by spending 1 week of downtime, releasing any previous pet you have. If you later gain a familiar or other companion that uses the Pet feat, you can immediately retrain this feat.",
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [],
 })
@@ -158,7 +160,7 @@ export const Pet = Traits.defineTrait('feat/pet', {
 export const Ride = Traits.defineTrait('feat/ride', {
   name: 'Ride',
   description:
-    "*General*\n\nWhen you Command an Animal you're mounted on to take a move action (such as Stride), you automatically succeed instead of needing to attempt a check. Any animal you're mounted on acts on your turn, like a minion. If you Mount an animal in the middle of an encounter, it skips its next turn and then acts on your next turn.",
+    "*General*\n\nWhen you [Command an Animal](content:skills/command-an-animal) you're mounted on to take a move action (such as [Stride](content:playing-the-game/stride)), you automatically succeed instead of needing to attempt a check. Any animal you're mounted on acts on your turn, like a [minion](content:traits/minion). If you [Mount](content:playing-the-game/mount) an animal in the middle of an encounter, it skips its next turn and then acts on your next turn.",
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [],
 })
@@ -173,16 +175,22 @@ export const ShieldBlock = Traits.defineTrait('feat/shield-block', {
 
 export const ShieldBlockAction = Abilities.defineAbility('feat/shield-block/action', {
   name: 'Shield Block',
-  description:
-    '*General*\n\n**Trigger** While you have your shield raised, you would take physical damage (bludgeoning, piercing, or slashing) from an attack.\n\nYou snap your shield in place to ward off a blow. Your shield prevents you from taking an amount of damage up to the shield’s Hardness. You and the shield each take any remaining damage, possibly breaking or destroying the shield.',
+  description: '*General*',
   prerequisites: [Traits.traitPrerequisite(ShieldBlock)],
-  actions: [{ name: 'Shield Block', action: ActionTypes.Reaction }],
+  actions: [
+    {
+      name: 'Shield Block',
+      description:
+        '**Trigger** While you have your shield raised, you would take physical damage (bludgeoning, piercing, or slashing) from an attack.\n\nYou snap your shield in place to ward off a blow. Your shield prevents you from taking an amount of damage up to the shield’s Hardness. You and the shield each take any remaining damage, possibly breaking or destroying the shield.',
+      action: ActionTypes.Reaction,
+    },
+  ],
 })
 
 export const Toughness = Traits.defineTrait('feat/toughness', {
   name: 'Toughness',
   description:
-    '*General*\n\nYour body can withstand more punishment than most before succumbing. Increase your maximum Hit Points by your level. You reduce the DC of recovery checks by 1.',
+    '*General*\n\nYour body can withstand more punishment than most before succumbing. Increase your maximum [Hit Points](characteristic:hit-points) by your level. You reduce the DC of [recovery checks](content:playing-the-game/recovery-checks) by 1.',
   archetypes: [Feat, GeneralFeat, FeatLevel1],
   effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(CharacterValues.Level)))],
 })
@@ -207,7 +215,7 @@ export const AncestralParagon = Traits.defineTrait('feat/ancestral-paragon', {
 export const PrescientPlanner = Traits.defineTrait('feat/prescient-planner', {
   name: 'Prescient Planner',
   description:
-    "*General*\n\n**Cost** the Price of the chosen item\n\n**Requirements** You haven’t used this ability since the last time you were able to purchase goods\n\nYou regularly create convoluted plans and contingencies, using your resources to enact them. You take 1 minute to remove your backpack, then carefully remove an item you hadn't previously declared that you purchased—you intuited that you would come to need the item and purchased it at the latest opportunity. The item must be a piece of adventuring gear, and can't be a weapon, armor, alchemical item, magic item, or other treasure. It must be common with a level no higher than half your level, and its Bulk must be low enough that carrying it wouldn't have made you encumbered.",
+    "*General*\n\n**Cost** the Price of the chosen item\n\n**Requirements** You haven’t used this ability since the last time you were able to purchase goods\n\nYou regularly create convoluted plans and contingencies, using your resources to enact them. You take 1 minute to remove your backpack, then carefully remove an item you hadn't previously declared that you purchased—you intuited that you would come to need the item and purchased it at the latest opportunity. The item must be a piece of adventuring gear, and can't be a weapon, armor, alchemical item, magic item, or other treasure. It must be common with a level no higher than half your level, and its Bulk must be low enough that carrying it wouldn't have made you [encumbered](content:conditions/encumbered).",
   archetypes: [Feat, GeneralFeat, FeatLevel3],
   effects: [],
 })

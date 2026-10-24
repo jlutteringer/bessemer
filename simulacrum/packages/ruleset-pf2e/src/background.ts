@@ -219,7 +219,7 @@ export const SelectTeacherSkill = CharacterOptions.selectTraitOption('background
 export const Acolyte = Traits.defineTrait('background/acolyte', {
   name: 'Acolyte',
   description:
-    "You spent your early days in a religious monastery or cloister. You may have traveled out into the world to spread the message of your religion or because you cast away the teachings of your faith, but deep down you’ll always carry within you the lessons you learned.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Religion skill, and the Scribing Lore skill. You gain the Student of the Canon skill feat.",
+    "You spent your early days in a religious monastery or cloister. You may have traveled out into the world to spread the message of your religion or because you cast away the teachings of your faith, but deep down you’ll always carry within you the lessons you learned.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Religion](characteristic:skill/religion) skill, and the Scribing Lore skill. You gain the [Student of the Canon](trait:feat/student-of-the-canon) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrWisdomBackgroundBoost),
@@ -233,7 +233,7 @@ export const Acolyte = Traits.defineTrait('background/acolyte', {
 export const Acrobat = Traits.defineTrait('background/acrobat', {
   name: 'Acrobat',
   description:
-    "In a circus or on the streets, you earned your pay by performing as an acrobat. You might have turned to adventuring when the money dried up, or simply decided to put your skills to better use.\n\nChoose two attribute boosts. One must be to Strength or Dexterity, and one is a free attribute boost.\n\nYou're trained in the Acrobatics skill, and the Circus Lore skill. You gain the Steady Balance skill feat.",
+    "In a circus or on the streets, you earned your pay by performing as an acrobat. You might have turned to adventuring when the money dried up, or simply decided to put your skills to better use.\n\nChoose two attribute boosts. One must be to Strength or Dexterity, and one is a free attribute boost.\n\nYou're trained in the [Acrobatics](characteristic:skill/acrobatics) skill, and the Circus Lore skill. You gain the [Steady Balance](trait:feat/steady-balance) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrDexterityBackgroundBoost),
@@ -247,7 +247,7 @@ export const Acrobat = Traits.defineTrait('background/acrobat', {
 export const AnimalWhisperer = Traits.defineTrait('background/animal-whisperer', {
   name: 'Animal Whisperer',
   description:
-    "You have always felt a connection to animals, and it was only a small leap to learn to train them. As you travel, you continuously encounter different creatures, befriending them along the way.\n\nChoose two attribute boosts. One must be to Wisdom or Charisma, and one is a free attribute boost.\n\nYou're trained in the Nature skill, and a Lore skill related to one terrain inhabited by animals you like (such as Plains Lore or Swamp Lore). You gain the Train Animal skill feat.",
+    "You have always felt a connection to animals, and it was only a small leap to learn to train them. As you travel, you continuously encounter different creatures, befriending them along the way.\n\nChoose two attribute boosts. One must be to Wisdom or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Nature](characteristic:skill/nature) skill, and a Lore skill related to one terrain inhabited by animals you like (such as Plains Lore or Swamp Lore). You gain the [Train Animal](trait:feat/train-animal) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectWisdomOrCharismaBackgroundBoost),
@@ -261,7 +261,7 @@ export const AnimalWhisperer = Traits.defineTrait('background/animal-whisperer',
 export const Artisan = Traits.defineTrait('background/artisan', {
   name: 'Artisan',
   description:
-    "As an apprentice, you practiced a particular form of building or crafting, developing specialized skill. You might have been a blacksmith’s apprentice toiling over the forge for countless hours, a young tailor sewing garments of all kinds, or a shipwright shaping the hulls of ships.\n\nChoose two attribute boosts. One must be to Strength or Intelligence, and one is a free attribute boost.\n\nYou're trained in the Crafting skill, and the Guild Lore skill. You gain the Specialty Crafting skill feat.",
+    "As an apprentice, you practiced a particular form of building or crafting, developing specialized skill. You might have been a blacksmith’s apprentice toiling over the forge for countless hours, a young tailor sewing garments of all kinds, or a shipwright shaping the hulls of ships.\n\nChoose two attribute boosts. One must be to Strength or Intelligence, and one is a free attribute boost.\n\nYou're trained in the [Crafting](characteristic:skill/crafting) skill, and the Guild Lore skill. You gain the [Specialty Crafting](trait:feat/specialty-crafting) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrIntelligenceBackgroundBoost),
@@ -275,7 +275,7 @@ export const Artisan = Traits.defineTrait('background/artisan', {
 export const Artist = Traits.defineTrait('background/artist', {
   name: 'Artist',
   description:
-    "Your art is your greatest passion, whatever form it takes. Adventuring might help you find inspiration, or simply be a way to survive until you become a world-famous artist.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the Crafting skill, and the Art Lore skill. You gain the Specialty Crafting skill feat.",
+    "Your art is your greatest passion, whatever form it takes. Adventuring might help you find inspiration, or simply be a way to survive until you become a world-famous artist.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Crafting](characteristic:skill/crafting) skill, and the Art Lore skill. You gain the [Specialty Crafting](trait:feat/specialty-crafting) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrCharismaBackgroundBoost),
@@ -289,7 +289,7 @@ export const Artist = Traits.defineTrait('background/artist', {
 export const Bandit = Traits.defineTrait('background/bandit', {
   name: 'Bandit',
   description:
-    "Your past includes no small amount of rural banditry, robbing travelers on the road and scraping by. Whether your robbery was sanctioned by a local noble or you did so of your own accord, you eventually got caught up in the adventuring life. Now, adventure is your stock and trade, and years of camping and skirmishing have only helped.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the Intimidation skill, and a Lore skill related to the terrain you worked in (such as Desert Lore or Plains Lore). You gain the Group Coercion skill feat.",
+    "Your past includes no small amount of rural banditry, robbing travelers on the road and scraping by. Whether your robbery was sanctioned by a local noble or you did so of your own accord, you eventually got caught up in the adventuring life. Now, adventure is your stock and trade, and years of camping and skirmishing have only helped.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Intimidation](characteristic:skill/intimidation) skill, and a Lore skill related to the terrain you worked in (such as Desert Lore or Plains Lore). You gain the [Group Coercion](trait:feat/group-coercion) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrCharismaBackgroundBoost),
@@ -303,7 +303,7 @@ export const Bandit = Traits.defineTrait('background/bandit', {
 export const Barkeep = Traits.defineTrait('background/barkeep', {
   name: 'Barkeep',
   description:
-    "You have five specialties: hefting barrels, drinking, polishing steins, drinking, and drinking. You worked in a bar, where you learned how to hold your liquor and rowdily socialize.\n\nChoose two attribute boosts. One must be to Constitution or Charisma, and one is a free attribute boost.\n\nYou're trained in the Diplomacy skill, and the Alcohol Lore skill. You gain the Hobnobber skill feat.",
+    "You have five specialties: hefting barrels, drinking, polishing steins, drinking, and drinking. You worked in a bar, where you learned how to hold your liquor and rowdily socialize.\n\nChoose two attribute boosts. One must be to Constitution or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Diplomacy](characteristic:skill/diplomacy) skill, and the Alcohol Lore skill. You gain the [Hobnobber](trait:feat/hobnobber) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrCharismaBackgroundBoost),
@@ -317,7 +317,7 @@ export const Barkeep = Traits.defineTrait('background/barkeep', {
 export const Barrister = Traits.defineTrait('background/barrister', {
   name: 'Barrister',
   description:
-    "Piles of legal manuals, stern teachers, and experience in the courtroom have instructed you in legal matters. You’re capable of mounting a prosecution or defense in court, and you tend to keep abreast of local laws, as you never can tell when you might need to know them on short notice.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Diplomacy skill, and the Legal Lore skill. You gain the Group Impression skill feat.",
+    "Piles of legal manuals, stern teachers, and experience in the courtroom have instructed you in legal matters. You’re capable of mounting a prosecution or defense in court, and you tend to keep abreast of local laws, as you never can tell when you might need to know them on short notice.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Diplomacy](characteristic:skill/diplomacy) skill, and the Legal Lore skill. You gain the [Group Impression](trait:feat/group-impression) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -331,7 +331,7 @@ export const Barrister = Traits.defineTrait('background/barrister', {
 export const BountyHunter = Traits.defineTrait('background/bounty-hunter', {
   name: 'Bounty Hunter',
   description:
-    "Bringing in lawbreakers lined your pockets. Maybe you had an altruistic motive and sought to bring in criminals to make the streets safer, or maybe the coin was motivation enough. Your techniques for hunting down criminals transfer easily to the life of an adventurer.\n\nChoose two attribute boosts. One must be to Strength or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Survival skill, and the Legal Lore skill. You gain the Experienced Tracker skill feat.",
+    "Bringing in lawbreakers lined your pockets. Maybe you had an altruistic motive and sought to bring in criminals to make the streets safer, or maybe the coin was motivation enough. Your techniques for hunting down criminals transfer easily to the life of an adventurer.\n\nChoose two attribute boosts. One must be to Strength or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Survival](characteristic:skill/survival) skill, and the Legal Lore skill. You gain the [Experienced Tracker](trait:feat/experienced-tracker) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrWisdomBackgroundBoost),
@@ -345,7 +345,7 @@ export const BountyHunter = Traits.defineTrait('background/bounty-hunter', {
 export const Charlatan = Traits.defineTrait('background/charlatan', {
   name: 'Charlatan',
   description:
-    "You traveled from place to place, peddling false fortunes and snake oil in one town, pretending to be royalty in exile to seduce a wealthy heir in the next. Becoming an adventurer might be your next big scam or an attempt to put your talents to use for a greater cause. Perhaps it’s a bit of both, as you realize that after pretending to be a hero, you’ve become the mask.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Deception skill, and the Underworld Lore skill. You gain the Charming Liar skill feat.",
+    "You traveled from place to place, peddling false fortunes and snake oil in one town, pretending to be royalty in exile to seduce a wealthy heir in the next. Becoming an adventurer might be your next big scam or an attempt to put your talents to use for a greater cause. Perhaps it’s a bit of both, as you realize that after pretending to be a hero, you’ve become the mask.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Deception](characteristic:skill/deception) skill, and the Underworld Lore skill. You gain the [Charming Liar](trait:feat/charming-liar) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -359,7 +359,7 @@ export const Charlatan = Traits.defineTrait('background/charlatan', {
 export const Cook = Traits.defineTrait('background/cook', {
   name: 'Cook',
   description:
-    "You grew up in the kitchens of a tavern or other dining establishment and excelled there, becoming an exceptional cook. Baking, cooking, a little brewing on the side—you’ve spent lots of time out of sight. It’s about time you went out into the world to catch some sights for yourself.\n\nChoose two attribute boosts. One must be to Constitution or Intelligence, and one is a free attribute boost.\n\nYou're trained in the Survival skill, and the Cooking Lore skill. You gain the Seasoned skill feat.",
+    "You grew up in the kitchens of a tavern or other dining establishment and excelled there, becoming an exceptional cook. Baking, cooking, a little brewing on the side—you’ve spent lots of time out of sight. It’s about time you went out into the world to catch some sights for yourself.\n\nChoose two attribute boosts. One must be to Constitution or Intelligence, and one is a free attribute boost.\n\nYou're trained in the [Survival](characteristic:skill/survival) skill, and the Cooking Lore skill. You gain the [Seasoned](trait:feat/seasoned) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrIntelligenceBackgroundBoost),
@@ -373,7 +373,7 @@ export const Cook = Traits.defineTrait('background/cook', {
 export const Criminal = Traits.defineTrait('background/criminal', {
   name: 'Criminal',
   description:
-    "As an unscrupulous independent or as a member of an underworld organization, you lived a life of crime. You might have become an adventurer to seek redemption, to escape the law, or simply to get access to bigger and better loot.\n\nChoose two attribute boosts. One must be to Dexterity or Intelligence, and one is a free attribute boost.\n\nYou're trained in the Stealth skill, and the Underworld Lore skill. You gain the Experienced Smuggler skill feat.",
+    "As an unscrupulous independent or as a member of an underworld organization, you lived a life of crime. You might have become an adventurer to seek redemption, to escape the law, or simply to get access to bigger and better loot.\n\nChoose two attribute boosts. One must be to Dexterity or Intelligence, and one is a free attribute boost.\n\nYou're trained in the [Stealth](characteristic:skill/stealth) skill, and the Underworld Lore skill. You gain the [Experienced Smuggler](trait:feat/experienced-smuggler) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrIntelligenceBackgroundBoost),
@@ -387,7 +387,7 @@ export const Criminal = Traits.defineTrait('background/criminal', {
 export const Cultist = Traits.defineTrait('background/cultist', {
   name: 'Cultist',
   description:
-    "You were (or still are) a member of a cult whose rites may involve sacred dances to ensure a strong harvest or dire rituals that call upon dark powers. You might have taken up adventuring to further your cult’s aims, to initiate yourself into the world’s grander mysteries, or to flee unsavory practices or strictures.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Occultism skill, and a Lore skill related to your deity or cult. You gain the Schooled in Secrets skill feat.",
+    "You were (or still are) a member of a cult whose rites may involve sacred dances to ensure a strong harvest or dire rituals that call upon dark powers. You might have taken up adventuring to further your cult’s aims, to initiate yourself into the world’s grander mysteries, or to flee unsavory practices or strictures.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Occultism](characteristic:skill/occultism) skill, and a Lore skill related to your deity or cult. You gain the [Schooled in Secrets](trait:feat/schooled-in-secrets) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -401,7 +401,7 @@ export const Cultist = Traits.defineTrait('background/cultist', {
 export const Detective = Traits.defineTrait('background/detective', {
   name: 'Detective',
   description:
-    "You solved crimes as a police inspector or took jobs for wealthy clients as a private investigator. You might have become an adventurer as part of your next big mystery, but likely it was due to the consequences or aftermath of a prior case.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Society skill, and the Underworld Lore skill. You gain the Streetwise skill feat.",
+    "You solved crimes as a police inspector or took jobs for wealthy clients as a private investigator. You might have become an adventurer as part of your next big mystery, but likely it was due to the consequences or aftermath of a prior case.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Society](characteristic:skill/society) skill, and the Underworld Lore skill. You gain the [Streetwise](trait:feat/streetwise) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrWisdomBackgroundBoost),
@@ -415,7 +415,7 @@ export const Detective = Traits.defineTrait('background/detective', {
 export const Emissary = Traits.defineTrait('background/emissary', {
   name: 'Emissary',
   description:
-    "As a diplomat or messenger, you traveled to lands far and wide. Communicating with new people and forming alliances were your stock and trade.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Society skill, and a Lore skill related to one city you've visited often. You gain the Multilingual skill feat.",
+    "As a diplomat or messenger, you traveled to lands far and wide. Communicating with new people and forming alliances were your stock and trade.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Society](characteristic:skill/society) skill, and a Lore skill related to one city you've visited often. You gain the [Multilingual](trait:feat/multilingual) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -429,7 +429,7 @@ export const Emissary = Traits.defineTrait('background/emissary', {
 export const Entertainer = Traits.defineTrait('background/entertainer', {
   name: 'Entertainer',
   description:
-    "Through an education in the arts or sheer dogged practice, you learned to entertain crowds. You might have been an actor, a dancer, a musician, a street magician, or any other sort of performer.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the Performance skill, and the Theater Lore skill. You gain the Fascinating Performance skill feat.",
+    "Through an education in the arts or sheer dogged practice, you learned to entertain crowds. You might have been an actor, a dancer, a musician, a street magician, or any other sort of performer.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Performance](characteristic:skill/performance) skill, and the Theater Lore skill. You gain the [Fascinating Performance](trait:feat/fascinating-performance) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrCharismaBackgroundBoost),
@@ -443,7 +443,7 @@ export const Entertainer = Traits.defineTrait('background/entertainer', {
 export const Farmhand = Traits.defineTrait('background/farmhand', {
   name: 'Farmhand',
   description:
-    "With a strong back and an understanding of seasonal cycles, you tilled the land and tended crops. Your farm could have been razed by invaders, you could have lost the family tying you to the land, or you might have simply tired of the drudgery, but at some point you became an adventurer.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Athletics skill, and the Farming Lore skill. You gain the Assurance skill feat with Athletics.",
+    "With a strong back and an understanding of seasonal cycles, you tilled the land and tended crops. Your farm could have been razed by invaders, you could have lost the family tying you to the land, or you might have simply tired of the drudgery, but at some point you became an adventurer.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Athletics](characteristic:skill/athletics) skill, and the Farming Lore skill. You gain the [Assurance](trait:feat/assurance) skill feat with [Athletics](characteristic:skill/athletics).",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrWisdomBackgroundBoost),
@@ -457,7 +457,7 @@ export const Farmhand = Traits.defineTrait('background/farmhand', {
 export const FieldMedic = Traits.defineTrait('background/field-medic', {
   name: 'Field Medic',
   description:
-    "In the chaotic rush of battle, you learned to adapt to rapidly changing conditions as you administered to battle casualties. You patched up soldiers, guards, or other combatants, and learned a fair amount about the logistics of war.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Medicine skill, and the Warfare Lore skill. You gain the Battle Medicine skill feat.",
+    "In the chaotic rush of battle, you learned to adapt to rapidly changing conditions as you administered to battle casualties. You patched up soldiers, guards, or other combatants, and learned a fair amount about the logistics of war.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Medicine](characteristic:skill/medicine) skill, and the Warfare Lore skill. You gain the [Battle Medicine](trait:feat/battle-medicine) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrWisdomBackgroundBoost),
@@ -471,7 +471,7 @@ export const FieldMedic = Traits.defineTrait('background/field-medic', {
 export const FortuneTeller = Traits.defineTrait('background/fortune-teller', {
   name: 'Fortune Teller',
   description:
-    "The strands of fate are clear to you, as you have learned many traditional forms by which laypeople can divine the future. You might have used these skills to guide your community, or simply to make money. But even the slightest peek into these practices connects you to the occult mysteries of the universe.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Occultism skill, and the Fortune-Telling Lore skill. You gain the Oddity Identification skill feat.",
+    "The strands of fate are clear to you, as you have learned many traditional forms by which laypeople can divine the future. You might have used these skills to guide your community, or simply to make money. But even the slightest peek into these practices connects you to the occult mysteries of the universe.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Occultism](characteristic:skill/occultism) skill, and the Fortune-Telling Lore skill. You gain the [Oddity Identification](trait:feat/oddity-identification) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -485,7 +485,7 @@ export const FortuneTeller = Traits.defineTrait('background/fortune-teller', {
 export const Gambler = Traits.defineTrait('background/gambler', {
   name: 'Gambler',
   description:
-    "The thrill of the win drew you into games of chance. This might have been a lucrative sideline that paled in comparison to the real risks of adventuring, or you might have fallen on hard times due to your gambling and pursued adventuring as a way out of a spiral.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the Deception skill, and the Games Lore skill. You gain the Lie to Me skill feat.",
+    "The thrill of the win drew you into games of chance. This might have been a lucrative sideline that paled in comparison to the real risks of adventuring, or you might have fallen on hard times due to your gambling and pursued adventuring as a way out of a spiral.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Deception](characteristic:skill/deception) skill, and the Games Lore skill. You gain the [Lie to Me](trait:feat/lie-to-me) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrCharismaBackgroundBoost),
@@ -499,7 +499,7 @@ export const Gambler = Traits.defineTrait('background/gambler', {
 export const Gladiator = Traits.defineTrait('background/gladiator', {
   name: 'Gladiator',
   description:
-    "The bloody games of the arena taught you the art of combat. Before you attained true fame, you departed—or escaped—the arena to explore the world. Your skill at drawing both blood and a crowd’s attention pay off in a new adventuring life.\n\nChoose two attribute boosts. One must be to Strength or Charisma, and one is a free attribute boost.\n\nYou're trained in the Performance skill, and the Gladiatorial Lore skill. You gain the Impressive Performance skill feat.",
+    "The bloody games of the arena taught you the art of combat. Before you attained true fame, you departed—or escaped—the arena to explore the world. Your skill at drawing both blood and a crowd’s attention pay off in a new adventuring life.\n\nChoose two attribute boosts. One must be to Strength or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Performance](characteristic:skill/performance) skill, and the Gladiatorial Lore skill. You gain the [Impressive Performance](trait:feat/impressive-performance) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrCharismaBackgroundBoost),
@@ -513,7 +513,7 @@ export const Gladiator = Traits.defineTrait('background/gladiator', {
 export const Guard = Traits.defineTrait('background/guard', {
   name: 'Guard',
   description:
-    "You served in the guard, out of either patriotism or the need for coin. Either way, you know how to get a difficult suspect to talk. However you left the guard, you might think of adventuring as a way to use your skills on a wider stage.\n\nChoose two attribute boosts. One must be to Strength or Charisma, and one is a free attribute boost.\n\nYou're trained in the Intimidation skill, and the Legal Lore skill or Warfare Lore skill. You gain the Quick Coercion skill feat.",
+    "You served in the guard, out of either patriotism or the need for coin. Either way, you know how to get a difficult suspect to talk. However you left the guard, you might think of adventuring as a way to use your skills on a wider stage.\n\nChoose two attribute boosts. One must be to Strength or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Intimidation](characteristic:skill/intimidation) skill, and the Legal Lore skill or Warfare Lore skill. You gain the [Quick Coercion](trait:feat/quick-coercion) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrCharismaBackgroundBoost),
@@ -527,7 +527,7 @@ export const Guard = Traits.defineTrait('background/guard', {
 export const Herbalist = Traits.defineTrait('background/herbalist', {
   name: 'Herbalist',
   description:
-    "As a formally trained apothecary or a rural practitioner of folk medicine, you learned the healing properties of various herbs. You’re adept at collecting the right natural cures in all sorts of environments and preparing them properly.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Nature skill, and the Herbalism Lore skill. You gain the Natural Medicine skill feat.",
+    "As a formally trained apothecary or a rural practitioner of folk medicine, you learned the healing properties of various herbs. You’re adept at collecting the right natural cures in all sorts of environments and preparing them properly.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Nature](characteristic:skill/nature) skill, and the Herbalism Lore skill. You gain the [Natural Medicine](trait:feat/natural-medicine) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrWisdomBackgroundBoost),
@@ -541,7 +541,7 @@ export const Herbalist = Traits.defineTrait('background/herbalist', {
 export const Hermit = Traits.defineTrait('background/hermit', {
   name: 'Hermit',
   description:
-    "In an isolated place—like a cave, remote oasis, or secluded mansion—you lived a life of solitude. Adventuring might represent your first foray out among other people in some time. This might be a welcome reprieve from solitude or an unwanted change, but in either case, you’re likely still rough around the edges.\n\nChoose two attribute boosts. One must be to Constitution or Intelligence, and one is a free attribute boost.\n\nYou're trained in your choice of either the Nature or the Occultism skill, as well as a Lore skill related to the terrain you lived in as a hermit (such as Cave Lore or Desert Lore). You gain the Dubious Knowledge skill feat.",
+    "In an isolated place—like a cave, remote oasis, or secluded mansion—you lived a life of solitude. Adventuring might represent your first foray out among other people in some time. This might be a welcome reprieve from solitude or an unwanted change, but in either case, you’re likely still rough around the edges.\n\nChoose two attribute boosts. One must be to Constitution or Intelligence, and one is a free attribute boost.\n\nYou're trained in your choice of either the [Nature](characteristic:skill/nature) or the [Occultism](characteristic:skill/occultism) skill, as well as a Lore skill related to the terrain you lived in as a hermit (such as Cave Lore or Desert Lore). You gain the [Dubious Knowledge](trait:feat/dubious-knowledge) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrIntelligenceBackgroundBoost),
@@ -555,7 +555,7 @@ export const Hermit = Traits.defineTrait('background/hermit', {
 export const Hunter = Traits.defineTrait('background/hunter', {
   name: 'Hunter',
   description:
-    "You stalked and took down animals and other creatures of the wild. Skinning animals, harvesting their flesh, and cooking them were also part of your training, all of which can give you useful resources while you adventure.\n\nChoose two attribute boosts. One must be to Dexterity or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Survival skill, and the Tanning Lore skill. You gain the Survey Wildlife skill feat.",
+    "You stalked and took down animals and other creatures of the wild. Skinning animals, harvesting their flesh, and cooking them were also part of your training, all of which can give you useful resources while you adventure.\n\nChoose two attribute boosts. One must be to Dexterity or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Survival](characteristic:skill/survival) skill, and the Tanning Lore skill. You gain the [Survey Wildlife](trait:feat/survey-wildlife) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrWisdomBackgroundBoost),
@@ -569,7 +569,7 @@ export const Hunter = Traits.defineTrait('background/hunter', {
 export const Laborer = Traits.defineTrait('background/laborer', {
   name: 'Laborer',
   description:
-    "You’ve spent years performing arduous physical labor. It was a difficult life, but you somehow survived. You may have embraced adventuring as an easier method to make your way in the world, or you might adventure under someone else’s command.\n\nChoose two attribute boosts. One must be to Strength or Constitution, and one is a free attribute boost.\n\nYou're trained in the Athletics skill, and the Labor Lore skill. You gain the Hefty Hauler skill feat.",
+    "You’ve spent years performing arduous physical labor. It was a difficult life, but you somehow survived. You may have embraced adventuring as an easier method to make your way in the world, or you might adventure under someone else’s command.\n\nChoose two attribute boosts. One must be to Strength or Constitution, and one is a free attribute boost.\n\nYou're trained in the [Athletics](characteristic:skill/athletics) skill, and the Labor Lore skill. You gain the [Hefty Hauler](trait:feat/hefty-hauler) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrConstitutionBackgroundBoost),
@@ -583,7 +583,7 @@ export const Laborer = Traits.defineTrait('background/laborer', {
 export const MartialDisciple = Traits.defineTrait('background/martial-disciple', {
   name: 'Martial Disciple',
   description:
-    "You dedicated yourself to intense training and rigorous study to become a great warrior. The school you attended might have been a traditionalist monastery, an elite military academy, or the local branch of a prestigious mercenary organization.\n\nChoose two attribute boosts. One must be to Strength or Dexterity, and one is a free attribute boost.\n\nYou're trained in your choice of either the Acrobatics or the Athletics skill, as well as the Warfare Lore skill. You gain a skill feat: Cat Fall if you chose Acrobatics or Quick Jump if you chose Athletics.",
+    "You dedicated yourself to intense training and rigorous study to become a great warrior. The school you attended might have been a traditionalist monastery, an elite military academy, or the local branch of a prestigious mercenary organization.\n\nChoose two attribute boosts. One must be to Strength or Dexterity, and one is a free attribute boost.\n\nYou're trained in your choice of either the [Acrobatics](characteristic:skill/acrobatics) or the [Athletics](characteristic:skill/athletics) skill, as well as the Warfare Lore skill. You gain a skill feat: [Cat Fall](trait:feat/cat-fall) if you chose [Acrobatics](characteristic:skill/acrobatics) or [Quick Jump](trait:feat/quick-jump) if you chose [Athletics](characteristic:skill/athletics).",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrDexterityBackgroundBoost),
@@ -596,7 +596,7 @@ export const MartialDisciple = Traits.defineTrait('background/martial-disciple',
 export const Merchant = Traits.defineTrait('background/merchant', {
   name: 'Merchant',
   description:
-    "In a dusty shop, market stall, or merchant caravan, you bartered wares for coin and trade goods. The skills you picked up still apply in the adventuring life, in which a good deal on a suit of armor could prevent your death.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Diplomacy skill, and the Mercantile Lore skill. You gain the Bargain Hunter skill feat.",
+    "In a dusty shop, market stall, or merchant caravan, you bartered wares for coin and trade goods. The skills you picked up still apply in the adventuring life, in which a good deal on a suit of armor could prevent your death.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Diplomacy](characteristic:skill/diplomacy) skill, and the Mercantile Lore skill. You gain the [Bargain Hunter](trait:feat/bargain-hunter) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -610,7 +610,7 @@ export const Merchant = Traits.defineTrait('background/merchant', {
 export const Miner = Traits.defineTrait('background/miner', {
   name: 'Miner',
   description:
-    "You earned a living wrenching precious minerals from the lightless depths of the earth. Adventuring might have seemed lucrative or glamorous compared to this backbreaking labor— and if you have to head back underground, this time you plan to do so armed with a real weapon instead of a miner’s pick.\n\nChoose two attribute boosts. One must be to Strength or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Survival skill, and the Mining Lore skill. You gain the Terrain Expertise skill feat with underground terrain.",
+    "You earned a living wrenching precious minerals from the lightless depths of the earth. Adventuring might have seemed lucrative or glamorous compared to this backbreaking labor— and if you have to head back underground, this time you plan to do so armed with a real weapon instead of a miner’s pick.\n\nChoose two attribute boosts. One must be to Strength or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Survival](characteristic:skill/survival) skill, and the Mining Lore skill. You gain the [Terrain Expertise](trait:feat/terrain-expertise) skill feat with underground terrain.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrWisdomBackgroundBoost),
@@ -624,7 +624,7 @@ export const Miner = Traits.defineTrait('background/miner', {
 export const Noble = Traits.defineTrait('background/noble', {
   name: 'Noble',
   description:
-    "To the common folk, the life of a noble seems one of idyllic luxury, but growing up as a noble or member of the aspiring gentry, you know the reality: a noble’s lot is obligation and intrigue. Whether you seek to escape your duties by adventuring or to better your station, you have traded silks and pageantry for an adventurer’s life.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Society skill, and the Genealogy Lore skill or Heraldry Lore skill. You gain the Courtly Graces skill feat.",
+    "To the common folk, the life of a noble seems one of idyllic luxury, but growing up as a noble or member of the aspiring gentry, you know the reality: a noble’s lot is obligation and intrigue. Whether you seek to escape your duties by adventuring or to better your station, you have traded silks and pageantry for an adventurer’s life.\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the [Society](characteristic:skill/society) skill, and the Genealogy Lore skill or Heraldry Lore skill. You gain the [Courtly Graces](trait:feat/courtly-graces) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrCharismaBackgroundBoost),
@@ -638,7 +638,7 @@ export const Noble = Traits.defineTrait('background/noble', {
 export const Nomad = Traits.defineTrait('background/nomad', {
   name: 'Nomad',
   description:
-    "Traveling far and wide, you picked up basic tactics for surviving on the road and in unknown lands, getting by with few supplies and even fewer comforts. As an adventurer, you travel still, often into even more dangerous places.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Survival skill, and a Lore skill related to one terrain you traveled in (such as Desert Lore or Swamp Lore). You gain the Assurance skill feat with Survival.",
+    "Traveling far and wide, you picked up basic tactics for surviving on the road and in unknown lands, getting by with few supplies and even fewer comforts. As an adventurer, you travel still, often into even more dangerous places.\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Survival](characteristic:skill/survival) skill, and a Lore skill related to one terrain you traveled in (such as Desert Lore or Swamp Lore). You gain the [Assurance](trait:feat/assurance) skill feat with [Survival](characteristic:skill/survival).",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectConstitutionOrWisdomBackgroundBoost),
@@ -652,7 +652,7 @@ export const Nomad = Traits.defineTrait('background/nomad', {
 export const Prisoner = Traits.defineTrait('background/prisoner', {
   name: 'Prisoner',
   description:
-    "You might have been imprisoned for crimes (whether you were guilty or not), or enslaved for some part of your upbringing. In your adventuring life, you take full advantage of your newfound freedom.\n\nChoose two attribute boosts. One must be to Strength or Constitution, and one is a free attribute boost.\n\nYou're trained in the Stealth skill, and the Underworld Lore skill. You gain the Experienced Smuggler skill feat.",
+    "You might have been imprisoned for crimes (whether you were guilty or not), or enslaved for some part of your upbringing. In your adventuring life, you take full advantage of your newfound freedom.\n\nChoose two attribute boosts. One must be to Strength or Constitution, and one is a free attribute boost.\n\nYou're trained in the [Stealth](characteristic:skill/stealth) skill, and the Underworld Lore skill. You gain the [Experienced Smuggler](trait:feat/experienced-smuggler) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrConstitutionBackgroundBoost),
@@ -666,7 +666,7 @@ export const Prisoner = Traits.defineTrait('background/prisoner', {
 export const RaisedByBelief = Traits.defineTrait('background/raised-by-belief', {
   name: 'Raised by Belief',
   description:
-    'Whether in a monastery, a religious household, or just as part of your everyday life, your upbringing was steeped in the traditions of a faith or philosophy. You might remain committed or you may have turned from your childhood creed, but your skills are still founded in your devotion.\n\nChoose two ability boosts. One must be to an attribute specified in your deity’s Divine Attribute and the other is a free attribute boost.\n\nYou’re trained in your deity’s associated skill, and you gain Assurance with that skill. You gain a Lore skill with a subcategory associated with your deity (Abadar Lore, for instance).',
+    'Whether in a monastery, a religious household, or just as part of your everyday life, your upbringing was steeped in the traditions of a faith or philosophy. You might remain committed or you may have turned from your childhood creed, but your skills are still founded in your devotion.\n\nChoose two ability boosts. One must be to an attribute specified in your deity’s Divine Attribute and the other is a free attribute boost.\n\nYou’re trained in your deity’s associated skill, and you gain [Assurance](trait:feat/assurance) with that skill. You gain a [Lore](content:skills/lore) skill with a subcategory associated with your deity (Abadar Lore, for instance).',
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectBackgroundBoost),
@@ -680,7 +680,7 @@ export const RaisedByBelief = Traits.defineTrait('background/raised-by-belief', 
 export const Sailor = Traits.defineTrait('background/sailor', {
   name: 'Sailor',
   description:
-    "You heard the call of the sea from a young age. Perhaps you signed onto a merchant’s vessel, joined the navy, or even fell in with a crew of pirates and scalawags.\n\nChoose two attribute boosts. One must be to Strength or Dexterity, and one is a free attribute boost.\n\nYou're trained in the Athletics skill, and the Sailing Lore skill. You gain the Underwater Marauder skill feat.",
+    "You heard the call of the sea from a young age. Perhaps you signed onto a merchant’s vessel, joined the navy, or even fell in with a crew of pirates and scalawags.\n\nChoose two attribute boosts. One must be to Strength or Dexterity, and one is a free attribute boost.\n\nYou're trained in the [Athletics](characteristic:skill/athletics) skill, and the Sailing Lore skill. You gain the [Underwater Marauder](trait:feat/underwater-marauder) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrDexterityBackgroundBoost),
@@ -694,7 +694,7 @@ export const Sailor = Traits.defineTrait('background/sailor', {
 export const Scholar = Traits.defineTrait('background/scholar', {
   name: 'Scholar',
   description:
-    'You have a knack for learning, and sequestered yourself from the outside world to learn all you could. You read about so many wondrous places and things in your books, and always dreamed about one day seeing the real things. Eventually, that curiosity led you to leave your studies and become an adventurer.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou’re trained in your choice of the Arcana, Nature, Occultism, or Religion skill, and the Academia Lore skill. You gain the Assurance skill feat in your chosen skill.',
+    'You have a knack for learning, and sequestered yourself from the outside world to learn all you could. You read about so many wondrous places and things in your books, and always dreamed about one day seeing the real things. Eventually, that curiosity led you to leave your studies and become an adventurer.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou’re trained in your choice of the [Arcana](characteristic:skill/arcana), [Nature](characteristic:skill/nature), [Occultism](characteristic:skill/occultism), or [Religion](characteristic:skill/religion) skill, and the Academia Lore skill. You gain the [Assurance](trait:feat/assurance) skill feat in your chosen skill.',
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrWisdomBackgroundBoost),
@@ -708,7 +708,7 @@ export const Scholar = Traits.defineTrait('background/scholar', {
 export const Scout = Traits.defineTrait('background/scout', {
   name: 'Scout',
   description:
-    "You called the wilderness home as you found trails and guided travelers. Your wanderlust could have called you to the adventuring life, or perhaps you served as a scout for soldiers and found you liked battle.\n\nChoose two attribute boosts. One must be to Dexterity or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Survival skill, and a Lore skill related to one terrain you scouted in (such as Forest Lore or Cavern Lore). You gain the Forager skill feat.",
+    "You called the wilderness home as you found trails and guided travelers. Your wanderlust could have called you to the adventuring life, or perhaps you served as a scout for soldiers and found you liked battle.\n\nChoose two attribute boosts. One must be to Dexterity or Wisdom, and one is a free attribute boost.\n\nYou're trained in the [Survival](characteristic:skill/survival) skill, and a Lore skill related to one terrain you scouted in (such as Forest Lore or Cavern Lore). You gain the [Forager](trait:feat/forager) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrWisdomBackgroundBoost),
@@ -722,7 +722,7 @@ export const Scout = Traits.defineTrait('background/scout', {
 export const StreetUrchin = Traits.defineTrait('background/street-urchin', {
   name: 'Street Urchin',
   description:
-    "You eked out a living by picking pockets on the streets of a major city, never knowing where you’d find your next meal. While some folk adventure for the glory, you do so to survive.\n\nChoose two attribute boosts. One must be to Dexterity or Constitution, and one is a free attribute boost.\n\nYou're trained in the Thievery skill, and a Lore skill for the city you lived in as a street urchin (such as Absalom Lore or Magnimar Lore). You gain the Pickpocket skill feat.",
+    "You eked out a living by picking pockets on the streets of a major city, never knowing where you’d find your next meal. While some folk adventure for the glory, you do so to survive.\n\nChoose two attribute boosts. One must be to Dexterity or Constitution, and one is a free attribute boost.\n\nYou're trained in the [Thievery](characteristic:skill/thievery) skill, and a Lore skill for the city you lived in as a street urchin (such as Absalom Lore or Magnimar Lore). You gain the [Pickpocket](trait:feat/pickpocket) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrConstitutionBackgroundBoost),
@@ -736,7 +736,7 @@ export const StreetUrchin = Traits.defineTrait('background/street-urchin', {
 export const Teacher = Traits.defineTrait('background/teacher', {
   name: 'Teacher',
   description:
-    "You are incredibly knowledgeable, skilled, and perhaps even trained to teach children and adults about the world and its wonders. From books to classes, you’re committed to imparting knowledge to all. Not everything can be taught or learned from a book, though, so you’ve become an adventurer to learn subjects more directly and bring that wisdom back to your students.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in your choice of either the Performance or the Society skill, as well as the Academia Lore skill. You gain the Experienced Professional skill feat.",
+    "You are incredibly knowledgeable, skilled, and perhaps even trained to teach children and adults about the world and its wonders. From books to classes, you’re committed to imparting knowledge to all. Not everything can be taught or learned from a book, though, so you’ve become an adventurer to learn subjects more directly and bring that wisdom back to your students.\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in your choice of either the [Performance](characteristic:skill/performance) or the [Society](characteristic:skill/society) skill, as well as the Academia Lore skill. You gain the [Experienced Professional](trait:feat/experienced-professional) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectIntelligenceOrWisdomBackgroundBoost),
@@ -750,7 +750,7 @@ export const Teacher = Traits.defineTrait('background/teacher', {
 export const Tinker = Traits.defineTrait('background/tinker', {
   name: 'Tinker',
   description:
-    "Creating all sorts of minor inventions scratches your itch for problem-solving. Your engineering skills take a particularly creative bent, and no one know what you’ll come up with next. It might be a genius device with tremendous potential... or it might explode.\n\nChoose two attribute boosts. One must be to Dexterity or Intelligence, and one is a free attribute boost.\n\nYou're trained in the Crafting skill, and the Engineering Lore skill. You gain the Specialty Crafting skill feat.",
+    "Creating all sorts of minor inventions scratches your itch for problem-solving. Your engineering skills take a particularly creative bent, and no one know what you’ll come up with next. It might be a genius device with tremendous potential... or it might explode.\n\nChoose two attribute boosts. One must be to Dexterity or Intelligence, and one is a free attribute boost.\n\nYou're trained in the [Crafting](characteristic:skill/crafting) skill, and the Engineering Lore skill. You gain the [Specialty Crafting](trait:feat/specialty-crafting) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectDexterityOrIntelligenceBackgroundBoost),
@@ -764,7 +764,7 @@ export const Tinker = Traits.defineTrait('background/tinker', {
 export const Warrior = Traits.defineTrait('background/warrior', {
   name: 'Warrior',
   description:
-    "In your younger days, you waded into battle as a mercenary, a warrior defending a nomadic people, or a member of a militia or army. You might have wanted to break out from the regimented structure of these forces, or you could have always been as independent a warrior as you are now.\n\nChoose two attribute boosts. One must be to Strength or Constitution, and one is a free attribute boost.\n\nYou're trained in the Intimidation skill, and the Warfare Lore skill. You gain the Intimidating Glare skill feat.",
+    "In your younger days, you waded into battle as a mercenary, a warrior defending a nomadic people, or a member of a militia or army. You might have wanted to break out from the regimented structure of these forces, or you could have always been as independent a warrior as you are now.\n\nChoose two attribute boosts. One must be to Strength or Constitution, and one is a free attribute boost.\n\nYou're trained in the [Intimidation](characteristic:skill/intimidation) skill, and the Warfare Lore skill. You gain the [Intimidating Glare](trait:feat/intimidating-glare) skill feat.",
   archetypes: [Background],
   effects: [
     Effects.gainCharacterOption(SelectStrengthOrConstitutionBackgroundBoost),
