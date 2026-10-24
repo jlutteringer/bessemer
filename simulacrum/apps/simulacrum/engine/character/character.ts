@@ -1,19 +1,20 @@
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
-import { Effect } from '@simulacrum/engine/effect'
+import { ConditionalEffect, Effect, EffectSourceType } from '@simulacrum/engine/effect'
 import { CharacterChoice, CharacterOptionType, CharacterSelection } from '@simulacrum/engine/character/character-option'
 import { CharacterOptions, CharacterProgression } from '@simulacrum/engine/character/index'
+import { CharacterProgress } from '@simulacrum/engine/character/character-progression'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { AbilityReference, AbilityState } from '@simulacrum/engine/ability'
 import { LoadoutSlot } from '@simulacrum/engine/loadout'
-import { Characteristic, CharacteristicValue } from '@simulacrum/engine/characteristic'
+import { CharacteristicValue } from '@simulacrum/engine/characteristic'
 import { ResourcePoolReference, ResourcePoolState } from '@simulacrum/engine/resource-pool'
 import { EvaluateExpression, ExpressionContext, Expressions } from '@bessemer/cornerstone/expression'
 import { Abilities, Characteristics, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/engine'
 import { Arrays, Assertions, Misc, ObjectPaths, Objects } from '@bessemer/cornerstone'
+import * as Rulesets from '@simulacrum/engine/ruleset'
 import { Ruleset, RulesetConfiguration } from '@simulacrum/engine/ruleset'
 import { UnknownRecord } from 'type-fest'
-import * as Rulesets from '@simulacrum/engine/ruleset'
-import { RulesetEntities, CharacterValues } from '@simulacrum/ruleset'
+import { CharacterValues, RulesetEntities } from '@simulacrum/ruleset'
 
 export type CharacterInitialValues = UnknownRecord
 
@@ -27,15 +28,14 @@ export type CharacterRecord = {
 }
 
 export type CharacterSheet = CharacterRecord & {
-  characteristics: Record<string, CharacteristicValue<unknown>>
+  characteristics: Record<string, CharacteristicValue>
   traits: ProgressionTable<TraitReference>
   choices: ProgressionTable<CharacterChoice>
+  conditionalEffects: ProgressionTable<Effect>
   abilities: Array<AbilityState>
   loadout: Array<LoadoutSlot>
   resources: Record<ResourcePoolReference, ResourcePoolState>
 }
-
-export type CharacterState = CharacterSheet & {}
 
 export const selectOption = (character: CharacterRecord, selection: CharacterSelection, ruleset: Ruleset): CharacterSheet => {
   const characterDefinition = buildCharacterDefinition(character, ruleset)
@@ -47,43 +47,23 @@ export const selectOption = (character: CharacterRecord, selection: CharacterSel
 }
 
 export const buildCharacterDefinition = (character: CharacterRecord, ruleset: Ruleset): CharacterSheet => {
-  const { choices, traits } = evaluateCharacterOptions(character, ruleset)
-
-  // TODO If the computed selections didn't match up with the character... do some error thing...
-  const characterState = buildCharacterState({ ...character, selections: getSelections(choices) }, traits, choices, ruleset)
-  characterState.choices = choices
+  const { traits, choices, conditionalEffects } = evaluateCharacterOptions(character, ruleset)
+  const characterState = buildCharacterState({ ...character, selections: getSelections(choices) }, { traits, choices, conditionalEffects }, ruleset)
   characterState.selectedAbilities = Arrays.fromNilable(characterState.loadout.map((it) => it.ability))
   return characterState
 }
 
-type CharacterProgress = {
-  choices: ProgressionTable<CharacterChoice>
-  traits: ProgressionTable<TraitReference>
+type WalkProgress = CharacterProgress & {
   grantedTraits: ProgressionTable<TraitReference>
 }
 
-/**
- * Walks the options granted to the character in order: level by level, and within a level a trait's options right after the option
- * that selected it, then those of traits granted outright. Each option is evaluated against the character as it stood just before
- * it, so its prerequisites and already-held traits account for everything selected at lower levels and earlier at the same level, but
- * no later selections. Its prerequisites also count traits granted outright at its level or earlier, wherever they're granted (e.g. a
- * Background's skill proficiency for a class's Expertise). A selection that isn't allowed at that point is dropped.
- *
- * A trait granted outright applies once its prerequisites are met, which may be at a later level (e.g. a subclass feature that improves
- * at a higher class level). Until then it waits, and is checked again whenever the character gains a trait and at each new level.
- *
- * Traits granted outright (e.g. a Background's skill proficiencies) take priority over choices wherever they're granted: no option
- * offers them, even one that comes before the trait that grants them. Which traits are granted depends on the selections the walk
- * accepts, so the walk starts from the traits the character's selections would grant and is repeated until they agree.
- */
-const evaluateCharacterOptions = (character: CharacterRecord, ruleset: Ruleset): CharacterProgress => {
-  type Walk = { reservedTraits: ProgressionTable<TraitReference>; progress: CharacterProgress }
+const evaluateCharacterOptions = (character: CharacterRecord, ruleset: Ruleset): WalkProgress => {
+  type Walk = { reservedTraits: ProgressionTable<TraitReference>; progress: WalkProgress }
 
   const { progress } = Misc.doUntilConsistent<Walk>(
     (previous) => {
       const reservedTraits = Objects.isNil(previous) ? guessGrantedTraits(character, ruleset) : previous.progress.grantedTraits
 
-      // The previous walk already used these granted traits, so walking again would give the same result
       if (Objects.isPresent(previous) && isSameTraits(previous.reservedTraits, reservedTraits)) {
         return previous
       }
@@ -122,31 +102,41 @@ const guessGrantedTraits = (character: CharacterRecord, ruleset: Ruleset): Progr
   return table
 }
 
-const walkCharacterOptions = (character: CharacterRecord, reservedTraits: ProgressionTable<TraitReference>, ruleset: Ruleset): CharacterProgress => {
+const walkCharacterOptions = (character: CharacterRecord, reservedTraits: ProgressionTable<TraitReference>, ruleset: Ruleset): WalkProgress => {
   const choices = ProgressionTables.empty<CharacterChoice>(character.level)
   const traits = ProgressionTables.empty<TraitReference>(character.level)
   const grantedTraits = ProgressionTables.empty<TraitReference>(character.level)
+  const conditionalEffects = ProgressionTables.empty<Effect>(character.level)
 
   const waitingTraits: Array<Trait> = []
+  const waitingConditionals: Array<ConditionalEffect> = []
 
   const getEvaluatorSoFar = (level: number): EvaluateExpression => {
-    const traitsSoFar = ProgressionTables.map(traits, (it) => it)
-    const choicesSoFar = ProgressionTables.map(choices, (it) => it)
+    const progressSoFar: CharacterProgress = {
+      traits: ProgressionTables.map(traits, (it) => it),
+      choices: ProgressionTables.map(choices, (it) => it),
+      conditionalEffects: ProgressionTables.map(conditionalEffects, (it) => it),
+    }
     const buildCharacterSoFar = () =>
-      buildCharacterState({ ...character, level, selections: getSelections(choicesSoFar) }, traitsSoFar, choicesSoFar, ruleset)
+      buildCharacterState({ ...character, level, selections: getSelections(progressSoFar.choices) }, progressSoFar, ruleset)
     const reservedSoFar = ProgressionTables.getValues(ProgressionTables.capAtLevel(reservedTraits, level))
     return Expressions.evaluator(
-      buildLazyExpressionContext(level, [...ProgressionTables.getValues(traitsSoFar), ...reservedSoFar], buildCharacterSoFar, ruleset)
+      buildLazyExpressionContext(level, [...ProgressionTables.getValues(progressSoFar.traits), ...reservedSoFar], buildCharacterSoFar, ruleset)
     )
   }
 
   const visit = (effects: Array<Effect>, level: number, unmatchedSelections: Array<CharacterSelection>) => {
     Effects.filter(effects, Effects.GainCharacterOption).forEach(({ option }) => {
+      const evaluate = getEvaluatorSoFar(level)
+      const universalAbilities = Abilities.getAbilities(ruleset).filter((it) => it.universal && it.prerequisites.every(evaluate))
       const held = {
         traits: [...ProgressionTables.getValues(traits), ...ProgressionTables.getValues(reservedTraits)],
-        abilities: getGrantedAbilities(CharacterProgression.buildEffectsTable(level, traits, choices, ruleset)),
+        abilities: [
+          ...getGrantedAbilities(CharacterProgression.buildEffectsTable(level, { traits, choices, conditionalEffects }, ruleset)),
+          ...universalAbilities.map((it) => it.id),
+        ],
       }
-      const choice = CharacterOptions.evaluateChoice(option, held, getEvaluatorSoFar(level), ruleset)
+      const choice = CharacterOptions.evaluateChoice(option, held, evaluate, ruleset)
 
       const match = Arrays.findWithIndex(
         unmatchedSelections,
@@ -162,42 +152,55 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Progre
 
     Effects.filter(effects, Effects.GainTrait).forEach(({ trait }) => {
       waitingTraits.push(Traits.getTraitById(trait, ruleset))
-      grantWaitingTraits(level, unmatchedSelections)
+      applyWaiting(level, unmatchedSelections)
+    })
+
+    Effects.filter(effects, Effects.Conditional).forEach((conditional) => {
+      waitingConditionals.push(conditional)
+      applyWaiting(level, unmatchedSelections)
     })
   }
 
   const gain = (trait: Trait, level: number, unmatchedSelections: Array<CharacterSelection>) => {
     traits[level]!.push(trait.id)
     visit(trait.effects, level, unmatchedSelections)
-    grantWaitingTraits(level, unmatchedSelections)
+    applyWaiting(level, unmatchedSelections)
   }
 
-  const grantWaitingTraits = (level: number, unmatchedSelections: Array<CharacterSelection>) => {
+  const applyWaiting = (level: number, unmatchedSelections: Array<CharacterSelection>) => {
     const evaluate = getEvaluatorSoFar(level)
-    const match = Arrays.findWithIndex(waitingTraits, (it) => it.prerequisites.every(evaluate))
-    if (Objects.isNil(match)) {
+    const traitMatch = Arrays.findWithIndex(waitingTraits, (it) => it.prerequisites.every(evaluate))
+    if (Objects.isPresent(traitMatch)) {
+      const [trait, index] = traitMatch
+      waitingTraits.splice(index, 1)
+      grantedTraits[level]!.push(trait.id)
+      gain(trait, level, unmatchedSelections)
       return
     }
 
-    const [trait, index] = match
-    waitingTraits.splice(index, 1)
-    grantedTraits[level]!.push(trait.id)
-    gain(trait, level, unmatchedSelections)
+    const conditionalMatch = Arrays.findWithIndex(waitingConditionals, (it) => evaluate(it.condition))
+    if (Objects.isPresent(conditionalMatch)) {
+      const [conditional, index] = conditionalMatch
+      waitingConditionals.splice(index, 1)
+      conditionalEffects[level]!.push(...conditional.effects)
+      visit(conditional.effects, level, unmatchedSelections)
+      applyWaiting(level, unmatchedSelections)
+    }
   }
 
   Arrays.range([1, character.level]).forEach((level) => {
     const unmatchedSelections = [...(character.selections[level] ?? [])]
-    grantWaitingTraits(level, unmatchedSelections)
+    applyWaiting(level, unmatchedSelections)
     visit(ruleset.progressionTable[level] ?? [], level, unmatchedSelections)
   })
 
-  return { choices, traits, grantedTraits }
+  return { choices, traits, grantedTraits, conditionalEffects }
 }
 
 const buildLazyExpressionContext = (
   level: number,
   traits: Array<TraitReference>,
-  buildCharacter: () => CharacterState,
+  buildCharacter: () => CharacterSheet,
   ruleset: Ruleset
 ): ExpressionContext => {
   let fullContext: ExpressionContext | null = null
@@ -227,13 +230,22 @@ const getSelections = (choices: ProgressionTable<CharacterChoice>): ProgressionT
   return ProgressionTables.flatMap(choices, (it) => Arrays.fromNilable([it.selection]))
 }
 
-// The effects of the character's progression. An ability's effects describe what it does and aren't applied to the character.
-const getAllEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
-  return ProgressionTables.getValues(CharacterProgression.buildEffectsTable(character.level, character.traits, character.choices, ruleset))
+const getProgressionEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
+  return ProgressionTables.getValues(CharacterProgression.buildEffectsTable(character.level, character, ruleset))
 }
 
-const evaluateLoadout = (character: CharacterState, ruleset: Ruleset): Array<LoadoutSlot> => {
-  const slots: Array<LoadoutSlot> = Effects.filter(getAllEffects(character, ruleset), Effects.GainLoadoutSlot).map((it) => ({
+const getLoadoutEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
+  return Arrays.fromNilable(character.loadout.map((it) => it.ability)).flatMap((reference) =>
+    Effects.sourceEffects(Abilities.getAbilityById(reference, ruleset).effects, { type: EffectSourceType.Ability, ability: reference })
+  )
+}
+
+const getAllEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
+  return [...getProgressionEffects(character, ruleset), ...getLoadoutEffects(character, ruleset)]
+}
+
+const evaluateLoadout = (character: CharacterSheet, ruleset: Ruleset): Array<LoadoutSlot> => {
+  const slots: Array<LoadoutSlot> = Effects.filter(getProgressionEffects(character, ruleset), Effects.GainLoadoutSlot).map((it) => ({
     type: it.loadoutType,
     ability: null,
   }))
@@ -250,21 +262,10 @@ const evaluateLoadout = (character: CharacterState, ruleset: Ruleset): Array<Loa
   return slots
 }
 
-const buildCharacterState = (
-  character: CharacterRecord,
-  traits: ProgressionTable<TraitReference>,
-  choices: ProgressionTable<CharacterChoice>,
-  ruleset: Ruleset
-): CharacterState => {
-  const result = Misc.doUntilConsistent<CharacterState>(
+const buildCharacterState = (character: CharacterRecord, progress: CharacterProgress, ruleset: Ruleset): CharacterSheet => {
+  return Misc.doUntilConsistent<CharacterSheet>(
     (previous) => {
-      let characterState
-      if (Objects.isNil(previous)) {
-        characterState = buildInitialCharacterState(character, choices, ruleset)
-        characterState.traits = traits
-      } else {
-        characterState = { ...previous }
-      }
+      const characterState = Objects.isNil(previous) ? buildInitialCharacterState(character, progress, ruleset) : { ...previous }
 
       const evaluator = Expressions.evaluator(buildExpressionContext(characterState, ruleset))
       characterState.characteristics = evaluateCharacteristics(characterState, evaluator, ruleset)
@@ -283,80 +284,76 @@ const buildCharacterState = (
       })
     }
   )
-
-  return result
 }
 
-const buildInitialCharacterState = (character: CharacterRecord, choices: ProgressionTable<CharacterChoice>, ruleset: Ruleset): CharacterState => {
+const buildInitialCharacterState = (character: CharacterRecord, progress: CharacterProgress, ruleset: Ruleset): CharacterSheet => {
   return {
     ...character,
+    ...progress,
     characteristics: buildInitialCharacteristics(character, ruleset),
-    traits: [],
-    choices,
     abilities: [],
     loadout: [],
     resources: {},
   }
 }
 
-const buildInitialCharacteristics = (character: CharacterRecord, ruleset: Ruleset): Record<string, CharacteristicValue<unknown>> => {
-  const characterAttributes = Object.values(Characteristics.getCharacteristics(ruleset))
-
-  const characteristicValues = characterAttributes.map((initialCharacteristic) => {
-    // TODO we don't support non-numeric characteristics... not sure if we even should...
-    const characteristic = initialCharacteristic as Characteristic<number>
+const buildInitialCharacteristics = (character: CharacterRecord, ruleset: Ruleset): Record<string, CharacteristicValue> => {
+  const characteristicValues = Characteristics.getCharacteristics(ruleset).map((characteristic) => {
     const attributeValue = Characteristics.simpleValue(0, characteristic, character.initialValues)
     return ObjectPaths.applyAnyValue(characteristic.path, {}, attributeValue)
   })
 
-  return Objects.deepMergeAll(characteristicValues) as Record<string, CharacteristicValue<unknown>>
+  return Objects.deepMergeAll(characteristicValues) as Record<string, CharacteristicValue>
 }
 
-const evaluateCharacteristics = (
-  character: CharacterState,
-  evaluate: EvaluateExpression,
-  ruleset: Ruleset
-): Record<string, CharacteristicValue<unknown>> => {
+const evaluateCharacteristics = (character: CharacterSheet, evaluate: EvaluateExpression, ruleset: Ruleset): Record<string, CharacteristicValue> => {
   const effects = getAllEffects(character, ruleset)
-  const characterAttributes = Object.values(Characteristics.getCharacteristics(ruleset))
-
-  const characteristicValues = characterAttributes.map((initialCharacteristic) => {
-    // TODO we don't support non-numeric characteristics... not sure if we even should...
-    const characteristic = initialCharacteristic as Characteristic<number>
+  const characteristicValues = Characteristics.getCharacteristics(ruleset).map((characteristic) => {
     const characteristicValue = Characteristics.evaluateCharacteristic(characteristic, character.initialValues, effects, evaluate)
     return ObjectPaths.applyAnyValue(characteristic.path, {}, characteristicValue)
   })
 
-  return Objects.deepMergeAll(characteristicValues) as Record<string, CharacteristicValue<unknown>>
+  return Objects.deepMergeAll(characteristicValues) as Record<string, CharacteristicValue>
 }
 
-const evaluateCharacterAbilities = (character: CharacterState, evaluate: EvaluateExpression, ruleset: Ruleset): Array<AbilityState> => {
-  const effects = getAllEffects(character, ruleset)
+const evaluateCharacterAbilities = (character: CharacterSheet, evaluate: EvaluateExpression, ruleset: Ruleset): Array<AbilityState> => {
+  const effects = getProgressionEffects(character, ruleset)
   const gainAbilityEffects = Effects.filter(effects, Effects.GainAbility)
   const modifyAbilityEffects = Effects.filter(effects, Effects.ModifyAbility)
-  const abilities = Arrays.dedupe(gainAbilityEffects.map((it) => it.ability)).filter((it) =>
-    Abilities.getAbilityById(it, ruleset).prerequisites.every(evaluate)
-  )
+  const universalAbilities = Abilities.getAbilities(ruleset)
+    .filter((it) => it.universal)
+    .map((it) => it.id)
+  const abilities = Abilities.getAbilitiesByIds(
+    Arrays.dedupe([...gainAbilityEffects.map((it) => it.ability), ...universalAbilities]),
+    ruleset
+  ).filter((it) => it.prerequisites.every(evaluate))
 
   return abilities.map((ability) => {
-    const grants = gainAbilityEffects.filter((it) => it.ability === ability)
-    const loadout = grants.some((it) => Objects.isNil(it.loadout)) ? null : grants[0]!.loadout
-    const modifiers = modifyAbilityEffects.filter((it) => it.ability === ability).map((it) => it.modifier)
-    return Abilities.buildInitialState(ability, loadout, modifiers, evaluate, ruleset)
+    const loadouts = gainAbilityEffects.filter((it) => it.ability === ability.id).map((it) => it.loadout)
+    const loadout = Arrays.isEmpty(loadouts) ? ability.loadout : loadouts.includes(null) ? null : loadouts[0]!
+    const modifiers = modifyAbilityEffects.filter((it) => it.ability === ability.id).map((it) => it.modifier)
+    return Abilities.buildInitialState(ability.id, loadout, modifiers, evaluate, ruleset)
   })
 }
 
+const isUsable = (ability: AbilityState, character: CharacterSheet): boolean => {
+  return Objects.isNil(ability.loadout) || character.loadout.some((it) => it.ability === ability.ability.id)
+}
+
 const evaluateResourcePools = (
-  character: CharacterState,
+  character: CharacterSheet,
   evaluate: EvaluateExpression,
   ruleset: Ruleset
 ): Record<ResourcePoolReference, ResourcePoolState> => {
-  const effects = getAllEffects(character, ruleset)
+  const effects = getProgressionEffects(character, ruleset)
   const modifyResourcePoolEffects = Effects.filter(effects, Effects.ModifyResourcePool)
 
   const resourcePools = Arrays.dedupe([
     ...Effects.filter(effects, Effects.GainResourcePool).map((it) => it.resourcePool),
-    ...Arrays.filterMap(character.abilities, (it) => it.ability.resource?.id),
+    ...Arrays.filterMap(
+      character.abilities.filter((it) => isUsable(it, character)),
+      (it) => it.ability.resource?.id
+    ),
   ])
 
   const states = resourcePools.map((resourcePool) => {
@@ -367,11 +364,10 @@ const evaluateResourcePools = (
   return Object.fromEntries(states.map((it) => [it.resource.id, it]))
 }
 
-export const buildExpressionContext = (character: CharacterState, ruleset: Ruleset): ExpressionContext => {
+export const buildExpressionContext = (character: CharacterSheet, ruleset: Ruleset): ExpressionContext => {
   const characterAttributes = Characteristics.getCharacteristics(ruleset)
   const attributeVariables = characterAttributes.map((it) => {
-    // FUTURE excessive casting - work on api
-    const characteristic = ObjectPaths.getValue(it.path as any, character.characteristics) as any as CharacteristicValue<unknown>
+    const characteristic = ObjectPaths.getValue(it.path as any, character.characteristics) as any as CharacteristicValue
     Assertions.assertPresent(characteristic)
     return Expressions.buildVariable(it.variable, characteristic.value)
   })

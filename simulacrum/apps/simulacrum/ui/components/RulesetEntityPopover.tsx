@@ -19,7 +19,7 @@ export const RulesetEntityPopover = ({ entity, trigger }: { entity: RulesetEntit
       trigger={trigger}
       title={entity.name}
     >
-      <SimulacrumRichText text={entity.description} />
+      {Objects.isPresent(entity.description) && <SimulacrumRichText text={entity.description} />}
 
       {Objects.isPresent(section) && (
         <Box sx={{ mt: 1 }}>

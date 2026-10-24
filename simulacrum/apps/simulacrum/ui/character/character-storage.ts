@@ -30,7 +30,10 @@ const readCharacters = (): Array<StoredCharacter> => {
     cachedCharacters =
       raw === null
         ? EmptyCharacters
-        : (JSON.parse(raw) as Array<StoredCharacter>).map((it) => ({ ...it, character: { ...it.character, ruleset: migrateRuleset(it.character.ruleset) } }))
+        : (JSON.parse(raw) as Array<StoredCharacter>).map((it) => ({
+            ...it,
+            character: { ...it.character, ruleset: migrateRuleset(it.character.ruleset) },
+          }))
   }
 
   return cachedCharacters

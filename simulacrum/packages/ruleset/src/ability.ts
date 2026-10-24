@@ -4,14 +4,15 @@ import { ResourceCost, ResourceCostProps, ResourcePool, ResourcePoolDefinition }
 import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import * as Tiptap from '@bessemer/core/tiptap'
-import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
-import { Arrays, Assertions, Objects, Patches } from '@bessemer/cornerstone'
+import { Expression } from '@bessemer/cornerstone/expression'
+import { Objects, Patches } from '@bessemer/cornerstone'
 import { Patch, Patchable } from '@bessemer/cornerstone/patch'
 import * as Archetypes from '@simulacrum/ruleset/archetype'
+import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
 import * as Targetings from '@simulacrum/ruleset/targeting'
 import { Targeting, TargetingProps } from '@simulacrum/ruleset/targeting'
 import { ActionType, ActionTypeReference } from '@simulacrum/ruleset/action-type'
-import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
+import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 
 export type AbilityReference = RulesetEntityReference<typeof RulesetEntityType.Ability>
 
@@ -23,6 +24,8 @@ export type Ability = RulesetEntity & {
   effects: Array<AbilityEffect>
   actions: Array<AbilityAction>
   resource: ResourcePoolDefinition | null
+  universal: boolean
+  loadout: LoadoutTypeReference | null
 }
 
 export type AbilityAction = {
@@ -42,6 +45,9 @@ export type AbilityProps = RulesetEntityProps & {
 
   resource?: ResourcePool
   costs?: Array<ResourceCostProps>
+
+  universal?: boolean
+  loadout?: LoadoutType
 }
 
 export type AbilityActionProps = {
@@ -70,21 +76,21 @@ const resolveAction = (props: AbilityActionProps, defaultCosts: Array<ResourceCo
 type DefinedAbility<P extends AbilityProps> = Ability & (P extends { resource: ResourcePool } ? { resource: ResourcePoolDefinition } : {})
 
 export const defineAbility = <P extends AbilityProps>(reference: string, props: P): DefinedAbility<P> => {
-  const resource = Objects.isNil(props.resource)
-    ? null
-    : ResourcePools.defineResourcePool(reference, { name: props.name, description: '', ...props.resource })
+  const resource = Objects.isNil(props.resource) ? null : ResourcePools.defineResourcePool(reference, { name: props.name, ...props.resource })
 
   const costs = (props.costs ?? []).map(resolveCost)
 
   return {
     id: buildReference(RulesetEntityType.Ability, reference),
     name: props.name,
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
     archetypes: (props.archetypes ?? []).map((it) => it.id),
     prerequisites: props.prerequisites ?? [],
     effects: props.effects ?? [],
     actions: (props.actions ?? []).map((it) => resolveAction(it, costs)),
     resource,
+    universal: props.universal ?? true,
+    loadout: props.loadout?.id ?? null,
   } as DefinedAbility<P>
 }
 

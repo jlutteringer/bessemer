@@ -15,39 +15,8 @@ import { Expressions } from '@bessemer/cornerstone/expression'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SecondWind = Abilities.defineAbility('fighter/second-wind', {
-  name: 'Second Wind',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      'You draw on a reserve of stamina to regain Hit Points equal to **1d10 + your Fighter level**.\n\nYou can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).'
-    ),
-  ],
-  resource: {
-    size: 2,
-    refresh: [
-      {
-        period: GameTimeUnit.LongRest,
-        amount: RelativeAmount.All,
-      },
-      {
-        period: GameTimeUnit.ShortRest,
-        amount: 1,
-      },
-    ],
-  },
-  costs: [{ cost: 1 }],
-  actions: [
-    {
-      name: 'Use Second Wind',
-      action: ActionTypes.BonusAction,
-    },
-  ],
-})
-
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('fighter/select-skill-proficiency', {
   name: 'Skill Proficiency',
-  description: '',
   filter: {
     archetypes: [SkillProficiencies.SkillProficiency],
     specificOptions: [
@@ -87,31 +56,35 @@ export const Level1 = Traits.defineTrait('fighter/level-1', {
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectFightingStyle),
     Effects.gainTrait(WeaponMastery),
-    Effects.gainAbility(SecondWind),
   ],
 })
 
-export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
-  name: 'Action Surge',
-  description: '',
+export const SecondWind = Abilities.defineAbility('fighter/second-wind', {
+  name: 'Second Wind',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
   effects: [
     Effects.descriptive(
-      "On your turn, you can push yourself beyond your normal limits to take **one additional action**, as long as it isn't the Magic action.\n\nOnce you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn."
+      'You draw on a reserve of stamina to regain Hit Points equal to **1d10 + your Fighter level**.\n\nYou can use this feature twice. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest. The number of uses increases as you gain Fighter levels (three at level 4 and four at level 10).'
     ),
   ],
   resource: {
-    size: 1,
+    size: 2,
     refresh: [
       {
-        period: GameTimeUnit.ShortRest,
+        period: GameTimeUnit.LongRest,
         amount: RelativeAmount.All,
+      },
+      {
+        period: GameTimeUnit.ShortRest,
+        amount: 1,
       },
     ],
   },
   costs: [{ cost: 1 }],
   actions: [
     {
-      action: ActionTypes.Free,
+      name: 'Use Second Wind',
+      action: ActionTypes.BonusAction,
     },
   ],
 })
@@ -141,20 +114,39 @@ export const TacticalMind = Traits.defineTrait('fighter/tactical-mind', {
 
 export const Level2 = Traits.defineTrait('fighter/level-2', {
   name: 'Fighter (2)',
-  description: '',
   prerequisites: [Expressions.contains(CharacterValues.Traits, [Level1.id])],
   archetypes: [Class],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))), Effects.gainTrait(TacticalMind)],
+})
+
+export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
+  name: 'Action Surge',
+  prerequisites: [Traits.traitPrerequisite(Level2)],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(6))),
-    Effects.gainAbility(ActionSurge),
-    Effects.gainTrait(TacticalMind),
+    Effects.descriptive(
+      "On your turn, you can push yourself beyond your normal limits to take **one additional action**, as long as it isn't the Magic action.\n\nOnce you use this feature, you can't do so again until you finish a Short or Long Rest. Starting at level 17, you can use it twice before a rest, but only once on the same turn."
+    ),
+  ],
+  resource: {
+    size: 1,
+    refresh: [
+      {
+        period: GameTimeUnit.ShortRest,
+        amount: RelativeAmount.All,
+      },
+    ],
+  },
+  costs: [{ cost: 1 }],
+  actions: [
+    {
+      action: ActionTypes.Free,
+    },
   ],
 })
 
-export const FighterSubclass = Archetypes.defineArchetype('fighter/subclass', { name: 'Fighter Subclass', description: '' })
+export const FighterSubclass = Archetypes.defineArchetype('fighter/subclass', { name: 'Fighter Subclass' })
 export const SelectFighterSubclass = CharacterOptions.selectTraitOption('fighter/select-subclass', {
   name: 'Fighter Subclass',
-  description: '',
   filter: {
     archetypes: [FighterSubclass],
   },
@@ -162,7 +154,6 @@ export const SelectFighterSubclass = CharacterOptions.selectTraitOption('fighter
 
 export const Level3 = Traits.defineTrait('fighter/level-3', {
   name: 'Fighter (3)',
-  description: '',
   prerequisites: [Expressions.contains(CharacterValues.Traits, [Level2.id])],
   archetypes: [Class],
   effects: [
@@ -185,7 +176,6 @@ export const CombatSuperiority = Traits.defineTrait('fighter/combat-superiority'
 
 export const BattleMaster = Traits.defineTrait('fighter/battle-master', {
   name: 'Battle Master',
-  description: '',
   archetypes: [FighterSubclass],
   effects: [
     Effects.gainTrait(CombatSuperiority),
@@ -197,28 +187,24 @@ export const BattleMaster = Traits.defineTrait('fighter/battle-master', {
 
 export const Champion = Traits.defineTrait('fighter/champion', {
   name: 'Champion',
-  description: '',
   archetypes: [FighterSubclass],
   effects: [Effects.descriptive('Improved Critical!'), Effects.descriptive('Remarkable Athlete!')],
 })
 
 export const EldritchKnight = Traits.defineTrait('fighter/eldritch-knight', {
   name: 'Eldritch Knight',
-  description: '',
   archetypes: [FighterSubclass],
   effects: [Effects.descriptive('Spells!'), Effects.descriptive('War Bond!')],
 })
 
 export const PsiWarrior = Traits.defineTrait('fighter/psi-warrior', {
   name: 'Psi Warrior',
-  description: '',
   archetypes: [FighterSubclass],
   effects: [Effects.descriptive('Psionic Power!')],
 })
 
 export const Level4 = Traits.defineTrait('fighter/level-4', {
   name: 'Fighter (4)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
   effects: [
@@ -226,12 +212,6 @@ export const Level4 = Traits.defineTrait('fighter/level-4', {
     Effects.gainCharacterOption(SelectFeat),
     Effects.modifyResourcePool(SecondWind.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
-})
-
-export const ExtraAttack = Abilities.defineAbility('fighter/extra-attack', {
-  name: 'Extra Attack',
-  description: '',
-  effects: [Effects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
 })
 
 export const TacticalShift = Traits.defineTrait('fighter/tactical-shift', {
@@ -256,8 +236,13 @@ export const TacticalShift = Traits.defineTrait('fighter/tactical-shift', {
 
 export const Level5 = Traits.defineTrait('fighter/level-5', {
   name: 'Fighter (5)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
-  effects: [Effects.gainAbility(ExtraAttack), Effects.gainTrait(TacticalShift)],
+  effects: [Effects.gainTrait(TacticalShift)],
+})
+
+export const ExtraAttack = Abilities.defineAbility('fighter/extra-attack', {
+  name: 'Extra Attack',
+  prerequisites: [Traits.traitPrerequisite(Level5)],
+  effects: [Effects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
 })

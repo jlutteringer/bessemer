@@ -1,6 +1,6 @@
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
-import { Uris } from '@bessemer/cornerstone'
+import { Uris, Objects } from '@bessemer/cornerstone'
 import * as Tiptap from '@bessemer/core/tiptap'
 import { RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntitySchema, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import Zod from 'zod'
@@ -49,7 +49,7 @@ export const defineResourcePool = (reference: string, props: ResourcePoolProps):
   return ResourcePoolDefinitionSchema.parse({
     id: Uris.format({ scheme: RulesetEntityType.ResourcePool, location: { path: reference } }),
     name: props.name,
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
     size: props.size,
     refresh: props.refresh,
   })

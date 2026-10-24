@@ -7,7 +7,7 @@ import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-export const AbilityScoreIncrease = Archetypes.defineArchetype('ability-score-increase', { name: 'Ability Score Increase', description: '' })
+export const AbilityScoreIncrease = Archetypes.defineArchetype('ability-score-increase', { name: 'Ability Score Increase' })
 
 export type AbilityScore = {
   name: string
@@ -18,7 +18,7 @@ export type AbilityScore = {
   featPlusOne: Trait
 }
 
-const defineAbilityScore = (key: string, name: string, characteristic: Characteristic<number>): AbilityScore => {
+const defineAbilityScore = (key: string, name: string, characteristic: Characteristic): AbilityScore => {
   const plusTwo = Traits.defineTrait(`ability-score-increase/${key}-plus-two`, {
     name: `${name} +2`,
     description: `Increase your ${name} score by 2.`,
@@ -72,7 +72,6 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
 
   const selectPlusTwo = CharacterOptions.selectTraitOption(`${prefix}/select-plus-two`, {
     name: 'Ability Score +2',
-    description: '',
     filter: {
       specificOptions: abilityScores.map((it) => it.plusTwo),
     },
@@ -80,7 +79,6 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
 
   const selectPlusOne = CharacterOptions.selectTraitOption(`${prefix}/select-plus-one`, {
     name: 'Ability Score +1',
-    description: '',
     filter: {
       specificOptions: abilityScores.map((it) => it.plusOne),
     },
@@ -103,7 +101,6 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
 
   const option = CharacterOptions.selectTraitOption(`${prefix}/select`, {
     name: 'Ability Scores',
-    description: '',
     filter: { specificOptions: [plusTwoPlusOne, plusOneToAll] },
   })
 

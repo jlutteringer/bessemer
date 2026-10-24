@@ -24,9 +24,7 @@
   },
   "dependencies": {
     "@js-temporal/polyfill": "0.5.1",
-    "@types/lodash-es": "4.17.12",
     "immer": "11.1.4",
-    "lodash-es": "4.17.21",
     "minimatch": "10.0.1",
     "type-fest": "4.32.0",
     "ulid": "2.3.0",

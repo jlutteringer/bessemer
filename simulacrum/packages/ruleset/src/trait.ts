@@ -1,4 +1,4 @@
-import { Arrays } from '@bessemer/cornerstone'
+import { Arrays, Assertions, Objects } from '@bessemer/cornerstone'
 import { Effect } from '@simulacrum/ruleset/effect'
 import * as Archetypes from '@simulacrum/ruleset/archetype'
 import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
@@ -30,7 +30,7 @@ export const defineTrait = (reference: string, props: TraitProps): Trait => {
   return {
     ...props,
     id: buildReference(RulesetEntityType.Trait, reference),
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
     archetypes: (props.archetypes ?? []).map((it) => (typeof it === 'string' ? it : it.id)),
     prerequisites: props.prerequisites ?? [],
     repeatable: props.repeatable ?? false,
@@ -38,6 +38,10 @@ export const defineTrait = (reference: string, props: TraitProps): Trait => {
 }
 
 export const traitPrerequisite = (trait: TraitReference | Trait): Expression<boolean> => {
+  Assertions.assertPresent(
+    trait,
+    () => 'traitPrerequisite received an undefined trait, usually a circular import referencing it before it is defined'
+  )
   return Expressions.contains(CharacterValues.Traits, [typeof trait === 'string' ? trait : trait.id])
 }
 

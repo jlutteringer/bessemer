@@ -1,5 +1,5 @@
 import Zod from 'zod'
-import { Uris } from '@bessemer/cornerstone'
+import { Uris, Objects } from '@bessemer/cornerstone'
 import { RichTextJsonSchema } from '@bessemer/cornerstone/rich-text'
 import * as Tiptap from '@bessemer/core/tiptap'
 import { RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
@@ -21,7 +21,7 @@ export const EmbeddedContentSectionSchema = Zod.object({
   parent: ParentSchema,
   content: Zod.object({
     name: Zod.string(),
-    description: RichTextJsonSchema,
+    description: RichTextJsonSchema.nullable(),
   }),
 })
 
@@ -49,7 +49,10 @@ export const defineSection = (reference: string, props: ContentSectionProps): Co
   return EmbeddedContentSectionSchema.parse({
     id: Uris.format({ scheme: RulesetEntityType.Content, location: { path: reference } }),
     parent: props.parent?.id ?? null,
-    content: { name: props.content.name, description: Tiptap.markdownToJson(props.content.description) },
+    content: {
+      name: props.content.name,
+      description: Objects.isNil(props.content.description) ? null : Tiptap.markdownToJson(props.content.description),
+    },
   })
 }
 

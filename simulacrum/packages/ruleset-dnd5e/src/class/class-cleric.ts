@@ -15,7 +15,6 @@ import { Patches } from '@bessemer/cornerstone'
 
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric/select-skill-proficiency', {
   name: 'Skill Proficiency',
-  description: '',
   filter: {
     archetypes: [SkillProficiencies.SkillProficiency],
     specificOptions: [
@@ -31,25 +30,11 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('cleric
 // Cleric cantrips are chosen when the Cleric gains a level, rather than swapped in and out of a loadout like a Wizard's
 export const SelectCantrip = CharacterOptions.selectAbilityOption('cleric/select-cantrip', {
   name: 'Cantrips',
-  description: '',
   filter: { archetypes: [Cleric, Spells.Cantrip] },
 })
 
 // Uses of a Wisdom-based feature: equal to the Wisdom modifier, but at least one
 const WisdomModifierUses = NumericExpressions.max([PlayerCharacteristics.WisdomModifier.variable, 1])
-
-export const Spellcasting = Abilities.defineAbility('cleric/spellcasting', {
-  name: 'Spellcasting',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      'You cast Cleric spells using **Wisdom**, with a Holy Symbol as your focus. You know three cantrips, gaining a fourth at level 4, and can swap one for another Cleric cantrip when you gain a level.'
-    ),
-    Effects.descriptive(
-      'After a Long Rest, you prepare a list of Cleric spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. You can change the list after each Long Rest. You regain all spell slots on a Long Rest.'
-    ),
-  ],
-})
 
 export const Protector = Traits.defineTrait('cleric/protector', {
   name: 'Protector',
@@ -66,7 +51,6 @@ export const Thaumaturge = Traits.defineTrait('cleric/thaumaturge', {
 
 export const SelectDivineOrder = CharacterOptions.selectTraitOption('cleric/select-divine-order', {
   name: 'Divine Order',
-  description: '',
   filter: {
     specificOptions: [Protector, Thaumaturge],
   },
@@ -87,14 +71,25 @@ export const Level1 = Traits.defineTrait('cleric/level-1', {
     Effects.gainCharacterOption(SelectCantrip),
     Effects.gainCharacterOption(SelectCantrip),
     Effects.gainCharacterOption(SelectDivineOrder),
-    Effects.gainAbility(Spellcasting),
+  ],
+})
+
+export const Spellcasting = Abilities.defineAbility('cleric/spellcasting', {
+  name: 'Spellcasting',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
+  effects: [
+    Effects.descriptive(
+      'You cast Cleric spells using **Wisdom**, with a Holy Symbol as your focus. You know three cantrips, gaining a fourth at level 4, and can swap one for another Cleric cantrip when you gain a level.'
+    ),
+    Effects.descriptive(
+      'After a Long Rest, you prepare a list of Cleric spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. You can change the list after each Long Rest. You regain all spell slots on a Long Rest.'
+    ),
   ],
 })
 
 // Shared by every Channel Divinity effect, including those from a Cleric's domain
 export const ChannelDivinityPool = ResourcePools.defineResourcePool('cleric/channel-divinity', {
   name: 'Channel Divinity',
-  description: '',
   // FUTURE a third use at Cleric level 6 and a fourth at level 18
   size: 2,
   refresh: [
@@ -103,9 +98,16 @@ export const ChannelDivinityPool = ResourcePools.defineResourcePool('cleric/chan
   ],
 })
 
+export const ChannelDivinity = Traits.defineTrait('cleric/channel-divinity', {
+  name: 'Channel Divinity',
+  description:
+    'You can channel divine energy directly from the Outer Planes to fuel magical effects: **Divine Spark** and **Turn Undead**, plus any your domain grants. Each use expends one of your uses of this feature, and if an effect calls for a saving throw, the DC equals your spell save DC.\n\nYou have two uses, regaining one when you finish a Short Rest and all of them when you finish a Long Rest. You gain a third use at Cleric level 6 and a fourth at level 18.',
+  effects: [Effects.gainResourcePool(ChannelDivinityPool)],
+})
+
 export const DivineSpark = Abilities.defineAbility('cleric/divine-spark', {
   name: 'Divine Spark',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(ChannelDivinity)],
   effects: [
     Effects.descriptive(
       'As a **Magic action**, you point your Holy Symbol at another creature you can see within 30 feet and roll **1d8 + your Wisdom modifier**. Either the creature regains that many Hit Points, or it makes a Constitution save, taking that much Necrotic or Radiant damage (your choice) on a failure or half as much on a success.\n\nThe roll increases to 2d8 at Cleric level 7, 3d8 at level 13, and 4d8 at level 18.'
@@ -116,7 +118,7 @@ export const DivineSpark = Abilities.defineAbility('cleric/divine-spark', {
 
 export const TurnUndead = Abilities.defineAbility('cleric/turn-undead', {
   name: 'Turn Undead',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(ChannelDivinity)],
   effects: [
     Effects.descriptive(
       'As a **Magic action**, you present your Holy Symbol and censure the undead. Each Undead of your choice within 30 feet of you makes a Wisdom save. On a failure, it has the Frightened and Incapacitated conditions for 1 minute, and tries to move as far from you as it can on its turns.\n\nThe effect ends early on a creature if it takes damage, if you have the Incapacitated condition, or if you die.'
@@ -125,31 +127,21 @@ export const TurnUndead = Abilities.defineAbility('cleric/turn-undead', {
   actions: [{ name: 'Use Turn Undead', action: ActionTypes.Action, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
-export const ChannelDivinity = Traits.defineTrait('cleric/channel-divinity', {
-  name: 'Channel Divinity',
-  description:
-    'You can channel divine energy directly from the Outer Planes to fuel magical effects: **Divine Spark** and **Turn Undead**, plus any your domain grants. Each use expends one of your uses of this feature, and if an effect calls for a saving throw, the DC equals your spell save DC.\n\nYou have two uses, regaining one when you finish a Short Rest and all of them when you finish a Long Rest. You gain a third use at Cleric level 6 and a fourth at level 18.',
-  effects: [Effects.gainResourcePool(ChannelDivinityPool), Effects.gainAbility(DivineSpark), Effects.gainAbility(TurnUndead)],
-})
-
 export const Level2 = Traits.defineTrait('cleric/level-2', {
   name: 'Cleric (2)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   archetypes: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))), Effects.gainTrait(ChannelDivinity)],
 })
 
-export const ClericSubclass = Archetypes.defineArchetype('cleric/subclass', { name: 'Cleric Subclass', description: '' })
+export const ClericSubclass = Archetypes.defineArchetype('cleric/subclass', { name: 'Cleric Subclass' })
 export const SelectClericSubclass = CharacterOptions.selectTraitOption('cleric/select-subclass', {
   name: 'Cleric Subclass',
-  description: '',
   filter: { archetypes: [ClericSubclass] },
 })
 
 export const Level3 = Traits.defineTrait('cleric/level-3', {
   name: 'Cleric (3)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level2)],
   archetypes: [Class],
   effects: [
@@ -160,7 +152,6 @@ export const Level3 = Traits.defineTrait('cleric/level-3', {
 
 export const Level4 = Traits.defineTrait('cleric/level-4', {
   name: 'Cleric (4)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
   effects: [
@@ -180,21 +171,12 @@ export const SearUndead = Traits.defineTrait('cleric/sear-undead', {
 
 export const Level5 = Traits.defineTrait('cleric/level-5', {
   name: 'Cleric (5)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))), Effects.gainTrait(SearUndead)],
 })
 
-// Each domain's spells are always prepared, so they're granted without a loadout: four from Cleric level 3, and two more once its
-// prerequisite of Cleric level 5 is met
-
-export const LifeDomainSpellsLevel5 = Traits.defineTrait('cleric/life-domain-spells-level-5', {
-  name: 'Life Domain Spells (Level 5)',
-  description: 'You always have **Mass Healing Word** and **Revivify** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.MassHealingWord), Effects.gainAbility(Spells.Revivify)],
-})
+// Each domain's spells are always prepared, so they're granted without a loadout
 
 export const LifeDomainSpells = Traits.defineTrait('cleric/life-domain-spells', {
   name: 'Life Domain Spells',
@@ -205,7 +187,7 @@ export const LifeDomainSpells = Traits.defineTrait('cleric/life-domain-spells', 
     Effects.gainAbility(Spells.Bless),
     Effects.gainAbility(Spells.CureWounds),
     Effects.gainAbility(Spells.LesserRestoration),
-    Effects.gainTrait(LifeDomainSpellsLevel5),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.MassHealingWord), Effects.gainAbility(Spells.Revivify)]),
   ],
 })
 
@@ -216,30 +198,23 @@ export const DiscipleOfLife = Traits.defineTrait('cleric/disciple-of-life', {
   effects: [],
 })
 
+export const LifeDomain = Traits.defineTrait('cleric/life-domain', {
+  name: 'Life Domain',
+  description:
+    'A domain of **vibrant positive energy**, the force that sustains all living things, whose priests heal the sick and wounded and care for those in need.',
+  archetypes: [ClericSubclass],
+  effects: [Effects.gainTrait(DiscipleOfLife), Effects.gainTrait(LifeDomainSpells)],
+})
+
 export const PreserveLife = Abilities.defineAbility('cleric/preserve-life', {
   name: 'Preserve Life',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(LifeDomain)],
   effects: [
     Effects.descriptive(
       'As a **Magic action**, you expend a use of your **Channel Divinity** and present your Holy Symbol to evoke healing energy that can restore Hit Points equal to **five times your Cleric level**. Divide those Hit Points among any Bloodied creatures within 30 feet of you, which can include you.\n\nThis feature can restore a creature to no more than half its Hit Point maximum.'
     ),
   ],
   actions: [{ name: 'Use Preserve Life', action: ActionTypes.Action, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
-})
-
-export const LifeDomain = Traits.defineTrait('cleric/life-domain', {
-  name: 'Life Domain',
-  description:
-    'A domain of **vibrant positive energy**, the force that sustains all living things, whose priests heal the sick and wounded and care for those in need.',
-  archetypes: [ClericSubclass],
-  effects: [Effects.gainTrait(DiscipleOfLife), Effects.gainTrait(LifeDomainSpells), Effects.gainAbility(PreserveLife)],
-})
-
-export const LightDomainSpellsLevel5 = Traits.defineTrait('cleric/light-domain-spells-level-5', {
-  name: 'Light Domain Spells (Level 5)',
-  description: 'You always have **Daylight** and **Fireball** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.Daylight), Effects.gainAbility(Spells.Fireball)],
 })
 
 export const LightDomainSpells = Traits.defineTrait('cleric/light-domain-spells', {
@@ -251,13 +226,21 @@ export const LightDomainSpells = Traits.defineTrait('cleric/light-domain-spells'
     Effects.gainAbility(Spells.FaerieFire),
     Effects.gainAbility(Spells.ScorchingRay),
     Effects.gainAbility(Spells.SeeInvisibility),
-    Effects.gainTrait(LightDomainSpellsLevel5),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.Daylight), Effects.gainAbility(Spells.Fireball)]),
   ],
+})
+
+export const LightDomain = Traits.defineTrait('cleric/light-domain', {
+  name: 'Light Domain',
+  description:
+    'A domain of **rebirth and renewal**, truth, vigilance, and beauty, whose priests are enlightened souls who burn away darkness and lies with radiant flame.',
+  archetypes: [ClericSubclass],
+  effects: [Effects.gainTrait(LightDomainSpells)],
 })
 
 export const RadianceOfTheDawn = Abilities.defineAbility('cleric/radiance-of-the-dawn', {
   name: 'Radiance of the Dawn',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(LightDomain)],
   effects: [
     Effects.descriptive(
       'As a **Magic action**, you expend a use of your **Channel Divinity** and present your Holy Symbol, dispelling any magical Darkness within 30 feet of you. Each creature of your choice within that radius makes a Constitution save, taking Radiant damage equal to **2d10 + your Cleric level** on a failure or half as much on a success.'
@@ -268,7 +251,7 @@ export const RadianceOfTheDawn = Abilities.defineAbility('cleric/radiance-of-the
 
 export const WardingFlare = Abilities.defineAbility('cleric/warding-flare', {
   name: 'Warding Flare',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(LightDomain)],
   effects: [
     Effects.descriptive(
       'When a creature you can see within 30 feet of you makes an attack roll, you can take a **Reaction** to impose Disadvantage on it, causing light to flare before it hits or misses.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Long Rest.'
@@ -284,21 +267,6 @@ export const WardingFlare = Abilities.defineAbility('cleric/warding-flare', {
   ],
 })
 
-export const LightDomain = Traits.defineTrait('cleric/light-domain', {
-  name: 'Light Domain',
-  description:
-    'A domain of **rebirth and renewal**, truth, vigilance, and beauty, whose priests are enlightened souls who burn away darkness and lies with radiant flame.',
-  archetypes: [ClericSubclass],
-  effects: [Effects.gainTrait(LightDomainSpells), Effects.gainAbility(RadianceOfTheDawn), Effects.gainAbility(WardingFlare)],
-})
-
-export const TrickeryDomainSpellsLevel5 = Traits.defineTrait('cleric/trickery-domain-spells-level-5', {
-  name: 'Trickery Domain Spells (Level 5)',
-  description: 'You always have **Hypnotic Pattern** and **Nondetection** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.HypnoticPattern), Effects.gainAbility(Spells.Nondetection)],
-})
-
 export const TrickeryDomainSpells = Traits.defineTrait('cleric/trickery-domain-spells', {
   name: 'Trickery Domain Spells',
   description:
@@ -308,13 +276,21 @@ export const TrickeryDomainSpells = Traits.defineTrait('cleric/trickery-domain-s
     Effects.gainAbility(Spells.DisguiseSelf),
     Effects.gainAbility(Spells.Invisibility),
     Effects.gainAbility(Spells.PassWithoutTrace),
-    Effects.gainTrait(TrickeryDomainSpellsLevel5),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.HypnoticPattern), Effects.gainAbility(Spells.Nondetection)]),
   ],
+})
+
+export const TrickeryDomain = Traits.defineTrait('cleric/trickery-domain', {
+  name: 'Trickery Domain',
+  description:
+    'A domain of **mischief and deception**, whose priests are a disruptive force in the world, puncturing pride, mocking tyrants, and freeing captives.',
+  archetypes: [ClericSubclass],
+  effects: [Effects.gainTrait(TrickeryDomainSpells)],
 })
 
 export const BlessingOfTheTrickster = Abilities.defineAbility('cleric/blessing-of-the-trickster', {
   name: 'Blessing of the Trickster',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(TrickeryDomain)],
   effects: [
     Effects.descriptive(
       'As a **Magic action**, you can choose yourself or a willing creature within 30 feet of you to have **Advantage on Dexterity (Stealth) checks**. The blessing lasts until you finish a Long Rest or you use this feature again.'
@@ -325,7 +301,7 @@ export const BlessingOfTheTrickster = Abilities.defineAbility('cleric/blessing-o
 
 export const InvokeDuplicity = Abilities.defineAbility('cleric/invoke-duplicity', {
   name: 'Invoke Duplicity',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(TrickeryDomain)],
   effects: [
     Effects.descriptive(
       "You expend a use of your **Channel Divinity** to create a perfect visual illusion of yourself in an unoccupied space you can see within 30 feet of you. It's intangible and lasts for 1 minute, until you dismiss it (no action required), or until you have the Incapacitated condition. As a Bonus Action, you can move it up to 30 feet to a space within 120 feet of you."
@@ -337,21 +313,6 @@ export const InvokeDuplicity = Abilities.defineAbility('cleric/invoke-duplicity'
   actions: [{ name: 'Use Invoke Duplicity', action: ActionTypes.BonusAction, costs: [{ cost: 1, resource: ChannelDivinityPool }] }],
 })
 
-export const TrickeryDomain = Traits.defineTrait('cleric/trickery-domain', {
-  name: 'Trickery Domain',
-  description:
-    'A domain of **mischief and deception**, whose priests are a disruptive force in the world, puncturing pride, mocking tyrants, and freeing captives.',
-  archetypes: [ClericSubclass],
-  effects: [Effects.gainTrait(TrickeryDomainSpells), Effects.gainAbility(BlessingOfTheTrickster), Effects.gainAbility(InvokeDuplicity)],
-})
-
-export const WarDomainSpellsLevel5 = Traits.defineTrait('cleric/war-domain-spells-level-5', {
-  name: 'War Domain Spells (Level 5)',
-  description: "You always have **Crusader's Mantle** and **Spirit Guardians** prepared.",
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.CrusadersMantle), Effects.gainAbility(Spells.SpiritGuardians)],
-})
-
 export const WarDomainSpells = Traits.defineTrait('cleric/war-domain-spells', {
   name: 'War Domain Spells',
   description:
@@ -361,13 +322,21 @@ export const WarDomainSpells = Traits.defineTrait('cleric/war-domain-spells', {
     Effects.gainAbility(Spells.MagicWeapon),
     Effects.gainAbility(Spells.ShieldOfFaith),
     Effects.gainAbility(Spells.SpiritualWeapon),
-    Effects.gainTrait(WarDomainSpellsLevel5),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.CrusadersMantle), Effects.gainAbility(Spells.SpiritGuardians)]),
   ],
+})
+
+export const WarDomain = Traits.defineTrait('cleric/war-domain', {
+  name: 'War Domain',
+  description:
+    'A domain of **war and violence**, whose priests inspire valor in the faithful, punish the foes of their gods, and fight as champions of the battlefield.',
+  archetypes: [ClericSubclass],
+  effects: [Effects.gainTrait(WarDomainSpells)],
 })
 
 export const GuidedStrike = Abilities.defineAbility('cleric/guided-strike', {
   name: 'Guided Strike',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(WarDomain)],
   effects: [
     Effects.descriptive(
       "When you or a creature within 30 feet of you misses with an attack roll, you can expend a use of your **Channel Divinity** and give that roll a **+10 bonus**, potentially causing it to hit.\n\nUsing this feature on another creature's attack roll takes your **Reaction**."
@@ -381,7 +350,7 @@ export const GuidedStrike = Abilities.defineAbility('cleric/guided-strike', {
 
 export const WarPriest = Abilities.defineAbility('cleric/war-priest', {
   name: 'War Priest',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(WarDomain)],
   effects: [
     Effects.descriptive(
       'You can make one attack with a weapon or an Unarmed Strike.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all uses when you finish a Short or Long Rest.'
@@ -401,12 +370,4 @@ export const WarPriest = Abilities.defineAbility('cleric/war-priest', {
       action: ActionTypes.BonusAction,
     },
   ],
-})
-
-export const WarDomain = Traits.defineTrait('cleric/war-domain', {
-  name: 'War Domain',
-  description:
-    'A domain of **war and violence**, whose priests inspire valor in the faithful, punish the foes of their gods, and fight as champions of the battlefield.',
-  archetypes: [ClericSubclass],
-  effects: [Effects.gainTrait(WarDomainSpells), Effects.gainAbility(GuidedStrike), Effects.gainAbility(WarPriest)],
 })

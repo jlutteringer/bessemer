@@ -1,3 +1,4 @@
+import { Objects } from '@bessemer/cornerstone'
 import { Trait, TraitFilter, TraitFilterProps, TraitReference } from '@simulacrum/ruleset/trait'
 import { Abilities, Traits } from '@simulacrum/ruleset'
 import { Ability, AbilityFilter, AbilityFilterProps, AbilityReference } from '@simulacrum/ruleset/ability'
@@ -29,7 +30,7 @@ export type SelectTraitOption = CharacterOptionBase & {
 export type SelectAbilityOption = CharacterOptionBase & {
   type: CharacterOptionType.SelectAbility
   filter: AbilityFilter
-  loadout: LoadoutTypeReference | null
+  loadout?: LoadoutTypeReference | null
 }
 
 export type CharacterOption = SelectTraitOption | SelectAbilityOption
@@ -54,7 +55,7 @@ export const selectTraitOption = (reference: string, props: SelectTraitOptionPro
   return {
     id: buildReference(RulesetEntityType.CharacterOption, reference),
     name: props.name,
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
     type: CharacterOptionType.SelectTrait,
     filter: Traits.filter(props.filter),
   }
@@ -62,16 +63,16 @@ export const selectTraitOption = (reference: string, props: SelectTraitOptionPro
 
 export type SelectAbilityOptionProps = RulesetEntityProps & {
   filter: AbilityFilterProps
-  loadout?: LoadoutType
+  loadout?: LoadoutType | null
 }
 
 export const selectAbilityOption = (reference: string, props: SelectAbilityOptionProps): SelectAbilityOption => {
   return {
     id: buildReference(RulesetEntityType.CharacterOption, reference),
     name: props.name,
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
     type: CharacterOptionType.SelectAbility,
     filter: Abilities.filter(props.filter),
-    loadout: props.loadout?.id ?? null,
+    ...(props.loadout === undefined ? {} : { loadout: props.loadout?.id ?? null }),
   }
 }

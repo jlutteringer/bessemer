@@ -1,5 +1,5 @@
 import Zod from 'zod'
-import { Uris } from '@bessemer/cornerstone'
+import { Uris, Objects } from '@bessemer/cornerstone'
 import * as Tiptap from '@bessemer/core/tiptap'
 import { RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntitySchema, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 
@@ -17,6 +17,6 @@ export const defineActionType = (reference: string, props: RulesetEntityProps): 
   return ActionTypeSchema.parse({
     id: Uris.format({ scheme: RulesetEntityType.ActionType, location: { path: reference } }),
     name: props.name,
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
   })
 }

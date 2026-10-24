@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.lib.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "@simulacrum/ruleset-pf2e": ["./src"],
+      "@simulacrum/ruleset-pf2e/*": ["./src/*"]
+    }
+  },
+  "exclude": ["dist", "node_modules", "test", "jest.config.js"]
+}

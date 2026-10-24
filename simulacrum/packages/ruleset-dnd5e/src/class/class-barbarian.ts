@@ -14,7 +14,6 @@ import { Patches } from '@bessemer/cornerstone'
 
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('barbarian/select-skill-proficiency', {
   name: 'Skill Proficiency',
-  description: '',
   filter: {
     archetypes: [SkillProficiencies.SkillProficiency],
     specificOptions: [
@@ -26,36 +25,6 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('barbar
       SkillProficiencies.Survival,
     ],
   },
-})
-
-export const Rage = Abilities.defineAbility('barbarian/rage', {
-  name: 'Rage',
-  description: '',
-  effects: [
-    Effects.descriptive("As a **Bonus Action**, if you aren't wearing Heavy armor, you enter a primal Rage."),
-    Effects.descriptive('**Damage Resistance:** while raging, you have Resistance to Bludgeoning, Piercing, and Slashing damage.'),
-    Effects.descriptive(
-      '**Rage Damage:** while raging, your Strength-based attacks with weapons or Unarmed Strikes deal **+2** damage (rising as you gain Barbarian levels).'
-    ),
-    Effects.descriptive('**Strength Advantage:** while raging, you have Advantage on Strength checks and saves.'),
-    Effects.descriptive("**No Concentration or Spells:** while raging, you can't concentrate or cast spells."),
-    Effects.descriptive(
-      'The Rage lasts until the end of your next turn, and you can keep extending it a round at a time (up to 10 minutes) by attacking an enemy, forcing an enemy to make a save, or using a Bonus Action. It ends early if you put on Heavy armor or are Incapacitated.'
-    ),
-    Effects.descriptive(
-      'You have **two** uses, regaining one when you finish a Short Rest and all of them when you finish a Long Rest. You gain more uses as you gain Barbarian levels (three at level 3).'
-    ),
-  ],
-  resource: {
-    // Barbarian levels add uses with ModifyResourcePool effects (a third at level 3, rising to six by level 17)
-    size: 2,
-    refresh: [
-      { period: GameTimeUnit.LongRest, amount: RelativeAmount.All },
-      { period: GameTimeUnit.ShortRest, amount: 1 },
-    ],
-  },
-  costs: [{ cost: 1 }],
-  actions: [{ name: 'Enter Rage', action: ActionTypes.BonusAction }],
 })
 
 // FUTURE stub: Armor Class isn't adjusted for Unarmored Defense yet
@@ -84,10 +53,39 @@ export const Level1 = Traits.defineTrait('barbarian/level-1', {
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(12))),
     Effects.gainCharacterOption(SelectSkillProficiency),
     Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainAbility(Rage),
     Effects.gainTrait(UnarmoredDefense),
     Effects.gainTrait(WeaponMastery),
   ],
+})
+
+export const Rage = Abilities.defineAbility('barbarian/rage', {
+  name: 'Rage',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
+  effects: [
+    Effects.descriptive("As a **Bonus Action**, if you aren't wearing Heavy armor, you enter a primal Rage."),
+    Effects.descriptive('**Damage Resistance:** while raging, you have Resistance to Bludgeoning, Piercing, and Slashing damage.'),
+    Effects.descriptive(
+      '**Rage Damage:** while raging, your Strength-based attacks with weapons or Unarmed Strikes deal **+2** damage (rising as you gain Barbarian levels).'
+    ),
+    Effects.descriptive('**Strength Advantage:** while raging, you have Advantage on Strength checks and saves.'),
+    Effects.descriptive("**No Concentration or Spells:** while raging, you can't concentrate or cast spells."),
+    Effects.descriptive(
+      'The Rage lasts until the end of your next turn, and you can keep extending it a round at a time (up to 10 minutes) by attacking an enemy, forcing an enemy to make a save, or using a Bonus Action. It ends early if you put on Heavy armor or are Incapacitated.'
+    ),
+    Effects.descriptive(
+      'You have **two** uses, regaining one when you finish a Short Rest and all of them when you finish a Long Rest. You gain more uses as you gain Barbarian levels (three at level 3).'
+    ),
+  ],
+  resource: {
+    // Barbarian levels add uses with ModifyResourcePool effects (a third at level 3, rising to six by level 17)
+    size: 2,
+    refresh: [
+      { period: GameTimeUnit.LongRest, amount: RelativeAmount.All },
+      { period: GameTimeUnit.ShortRest, amount: 1 },
+    ],
+  },
+  costs: [{ cost: 1 }],
+  actions: [{ name: 'Enter Rage', action: ActionTypes.BonusAction }],
 })
 
 export const DangerSense = Traits.defineTrait('barbarian/danger-sense', {
@@ -96,9 +94,16 @@ export const DangerSense = Traits.defineTrait('barbarian/danger-sense', {
   effects: [],
 })
 
+export const Level2 = Traits.defineTrait('barbarian/level-2', {
+  name: 'Barbarian (2)',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
+  archetypes: [Class],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))), Effects.gainTrait(DangerSense)],
+})
+
 export const RecklessAttack = Abilities.defineAbility('barbarian/reckless-attack', {
   name: 'Reckless Attack',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(Level2)],
   effects: [
     Effects.descriptive(
       'When you make your first attack roll on your turn, you can choose to attack recklessly. Until the start of your next turn, you have **Advantage on attack rolls using Strength**, but attack rolls against you also have Advantage.'
@@ -107,22 +112,9 @@ export const RecklessAttack = Abilities.defineAbility('barbarian/reckless-attack
   actions: [{ name: 'Attack Recklessly', action: ActionTypes.Free }],
 })
 
-export const Level2 = Traits.defineTrait('barbarian/level-2', {
-  name: 'Barbarian (2)',
-  description: '',
-  prerequisites: [Traits.traitPrerequisite(Level1)],
-  archetypes: [Class],
-  effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
-    Effects.gainTrait(DangerSense),
-    Effects.gainAbility(RecklessAttack),
-  ],
-})
-
-export const BarbarianSubclass = Archetypes.defineArchetype('barbarian/subclass', { name: 'Barbarian Subclass', description: '' })
+export const BarbarianSubclass = Archetypes.defineArchetype('barbarian/subclass', { name: 'Barbarian Subclass' })
 export const SelectBarbarianSubclass = CharacterOptions.selectTraitOption('barbarian/select-subclass', {
   name: 'Barbarian Subclass',
-  description: '',
   filter: {
     archetypes: [BarbarianSubclass],
   },
@@ -137,7 +129,6 @@ export const PrimalKnowledge = Traits.defineTrait('barbarian/primal-knowledge', 
 
 export const Level3 = Traits.defineTrait('barbarian/level-3', {
   name: 'Barbarian (3)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level2)],
   archetypes: [Class],
   effects: [
@@ -204,9 +195,16 @@ export const DivineFury = Traits.defineTrait('barbarian/divine-fury', {
   effects: [],
 })
 
+export const PathOfTheZealot = Traits.defineTrait('barbarian/path-of-the-zealot', {
+  name: 'Path of the Zealot',
+  description: 'Barbarians who rage in **ecstatic union with a god**, infused with divine power and often allied with its priests.',
+  archetypes: [BarbarianSubclass],
+  effects: [Effects.gainTrait(DivineFury)],
+})
+
 export const WarriorOfTheGods = Abilities.defineAbility('barbarian/warrior-of-the-gods', {
   name: 'Warrior of the Gods',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(PathOfTheZealot)],
   effects: [
     Effects.descriptive(
       'You have a pool of **four d12s** to heal yourself. As a **Bonus Action**, spend any number of them, roll them, and regain that many Hit Points. The pool refills when you finish a Long Rest.\n\nThe pool grows by one die at Barbarian levels 6, 12, and 17.'
@@ -225,16 +223,8 @@ export const WarriorOfTheGods = Abilities.defineAbility('barbarian/warrior-of-th
   ],
 })
 
-export const PathOfTheZealot = Traits.defineTrait('barbarian/path-of-the-zealot', {
-  name: 'Path of the Zealot',
-  description: 'Barbarians who rage in **ecstatic union with a god**, infused with divine power and often allied with its priests.',
-  archetypes: [BarbarianSubclass],
-  effects: [Effects.gainTrait(DivineFury), Effects.gainAbility(WarriorOfTheGods)],
-})
-
 export const Level4 = Traits.defineTrait('barbarian/level-4', {
   name: 'Barbarian (4)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
   effects: [
@@ -243,13 +233,6 @@ export const Level4 = Traits.defineTrait('barbarian/level-4', {
     Effects.gainCharacterOption(SelectFeat),
     Effects.gainLoadoutSlot(WeaponMasteryLoadout),
   ],
-})
-
-// FUTURE stub: Extra Attack isn't modelled yet
-export const ExtraAttack = Abilities.defineAbility('barbarian/extra-attack', {
-  name: 'Extra Attack',
-  description: '',
-  effects: [Effects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
 })
 
 // FUTURE stub: Speed isn't adjusted for Fast Movement yet
@@ -261,12 +244,14 @@ export const FastMovement = Traits.defineTrait('barbarian/fast-movement', {
 
 export const Level5 = Traits.defineTrait('barbarian/level-5', {
   name: 'Barbarian (5)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
-  effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
-    Effects.gainAbility(ExtraAttack),
-    Effects.gainTrait(FastMovement),
-  ],
+  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))), Effects.gainTrait(FastMovement)],
+})
+
+// FUTURE stub: Extra Attack isn't modelled yet
+export const ExtraAttack = Abilities.defineAbility('barbarian/extra-attack', {
+  name: 'Extra Attack',
+  prerequisites: [Traits.traitPrerequisite(Level5)],
+  effects: [Effects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
 })

@@ -551,10 +551,8 @@ __metadata:
   resolution: "@bessemer/cornerstone@workspace:bessemer/cornerstone"
   dependencies:
     "@js-temporal/polyfill": "npm:0.5.1"
-    "@types/lodash-es": "npm:4.17.12"
     expect-type: "npm:1.2.2"
     immer: "npm:11.1.4"
-    lodash-es: "npm:4.17.21"
     minimatch: "npm:10.0.1"
     type-fest: "npm:4.32.0"
     ulid: "npm:2.3.0"
@@ -1978,6 +1976,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@simulacrum/ruleset-dnd4e@workspace:*, @simulacrum/ruleset-dnd4e@workspace:simulacrum/packages/ruleset-dnd4e":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/ruleset-dnd4e@workspace:simulacrum/packages/ruleset-dnd4e"
+  dependencies:
+    "@bessemer/cornerstone": "workspace:*"
+    "@simulacrum/ruleset": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@simulacrum/ruleset-dnd5e@workspace:*, @simulacrum/ruleset-dnd5e@workspace:simulacrum/packages/ruleset-dnd5e":
   version: 0.0.0-use.local
   resolution: "@simulacrum/ruleset-dnd5e@workspace:simulacrum/packages/ruleset-dnd5e"
@@ -1990,6 +1997,15 @@ __metadata:
 "@simulacrum/ruleset-khydrian-drift@workspace:*, @simulacrum/ruleset-khydrian-drift@workspace:simulacrum/packages/ruleset-khydrian-drift":
   version: 0.0.0-use.local
   resolution: "@simulacrum/ruleset-khydrian-drift@workspace:simulacrum/packages/ruleset-khydrian-drift"
+  dependencies:
+    "@bessemer/cornerstone": "workspace:*"
+    "@simulacrum/ruleset": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@simulacrum/ruleset-pf2e@workspace:*, @simulacrum/ruleset-pf2e@workspace:simulacrum/packages/ruleset-pf2e":
+  version: 0.0.0-use.local
+  resolution: "@simulacrum/ruleset-pf2e@workspace:simulacrum/packages/ruleset-pf2e"
   dependencies:
     "@bessemer/cornerstone": "workspace:*"
     "@simulacrum/ruleset": "workspace:*"
@@ -2512,22 +2528,6 @@ __metadata:
     expect: "npm:^29.0.0"
     pretty-format: "npm:^29.0.0"
   checksum: 10c0/18e0712d818890db8a8dab3d91e9ea9f7f19e3f83c2e50b312f557017dc81466207a71f3ed79cf4428e813ba939954fa26ffa0a9a7f153181ba174581b1c2aed
-  languageName: node
-  linkType: hard
-
-"@types/lodash-es@npm:4.17.12":
-  version: 4.17.12
-  resolution: "@types/lodash-es@npm:4.17.12"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10c0/5d12d2cede07f07ab067541371ed1b838a33edb3c35cb81b73284e93c6fd0c4bbeaefee984e69294bffb53f62d7272c5d679fdba8e595ff71e11d00f2601dde0
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:*":
-  version: 4.17.14
-  resolution: "@types/lodash@npm:4.17.14"
-  checksum: 10c0/343c6f722e0b39969036a885ad5aad6578479ead83987128c9b994e6b7f2fb9808244d802d4d332396bb09096f720a6c7060de16a492f5460e06a44560360322
   languageName: node
   linkType: hard
 
@@ -5525,13 +5525,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:4.17.21":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 10c0/fb407355f7e6cd523a9383e76e6b455321f0f153a6c9625e21a8827d10c54c2a2341bd2ae8d034358b60e07325e1330c14c224ff582d04612a46a4f0479ff2f2
-  languageName: node
-  linkType: hard
-
 "lodash._reinterpolate@npm:^3.0.0":
   version: 3.0.0
   resolution: "lodash._reinterpolate@npm:3.0.0"
@@ -7348,8 +7341,10 @@ __metadata:
     "@bessemer/redis": "workspace:*"
     "@simulacrum/common": "workspace:*"
     "@simulacrum/ruleset": "workspace:*"
+    "@simulacrum/ruleset-dnd4e": "workspace:*"
     "@simulacrum/ruleset-dnd5e": "workspace:*"
     "@simulacrum/ruleset-khydrian-drift": "workspace:*"
+    "@simulacrum/ruleset-pf2e": "workspace:*"
     minisearch: "npm:7.2.0"
     next: "npm:16.3.7"
     react: "npm:19.3.0"

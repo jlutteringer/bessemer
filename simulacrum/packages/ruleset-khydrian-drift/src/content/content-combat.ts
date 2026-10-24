@@ -30,7 +30,7 @@ export const Initiative = Content.defineSection('combat/initiative', {
   parent: OrderOfCombat,
   content: {
     name: 'Initiative',
-    description: `Initiative determines the order of [turns](content:combat/turn) during combat. When combat starts, every participant makes an [agility](content:characters/agility) check to determine their place in the initiative order. To speed up combat, the GM can make one roll for an entire group of identical creatures, so each member of the group acts at the same time.
+    description: `Initiative determines the order of [turns](content:combat/turn) during combat. When combat starts, every participant makes an [agility](characteristic:agility) check to determine their place in the initiative order. To speed up combat, the GM can make one roll for an entire group of identical creatures, so each member of the group acts at the same time.
 
 The GM ranks the combatants in order from the one with the highest check total to the one with the lowest. This is the order (called the initiative order) in which they act during each round. The initiative order remains the same from round to round, unless modified by other circumstances such as new combatants arriving or abilities which alter the initiative ordering.
 
@@ -46,7 +46,7 @@ export const Turn = Content.defineSection('combat/turn', {
   parent: OrderOfCombat,
   content: {
     name: 'Turn',
-    description: `On a turn, a creature can move a distance up to its [movement speed](content:creatures/movement-speed), take one [major action](action-type:major-action), take one [minor action](action-type:minor-action), and take any number of [free actions](action-type:free-action).
+    description: `On a turn, a creature can move a distance up to its [movement speed](characteristic:movement-speed), take one [major action](action-type:major-action), take one [minor action](action-type:minor-action), and take any number of [free actions](action-type:free-action).
 
 It decides whether to move first or take its action first. Its speed, sometimes called walking speed, is noted in its statistics.
 
@@ -470,9 +470,9 @@ export const Cover = Content.defineSection('combat/cover', {
 
 There are three degrees of cover. If a target is behind multiple sources of cover, only the most protective degree of cover applies—the bonuses are not cumulative. For example, if a target is behind a creature that gives half cover and a tree trunk that gives three-quarters cover, the target has three-quarters cover.
 
-A target with **half cover** has a +2 bonus to its Guard and Reflex defense. A target has half cover if an obstacle blocks at least half of its body. Examples include a low wall, a large piece of furniture, a narrow tree trunk, or another creature (enemy or friend).
+A target with **half cover** has a +2 bonus to its Armor Class and Reflex defense. A target has half cover if an obstacle blocks at least half of its body. Examples include a low wall, a large piece of furniture, a narrow tree trunk, or another creature (enemy or friend).
 
-A target with **three-quarters cover** has a +5 bonus to its Guard and Reflex defense. A target has three-quarters cover if approximately three-quarters of it is covered by an obstacle, such as a gate, a bunker, or a thick tree trunk.
+A target with **three-quarters cover** has a +5 bonus to its Armor Class and Reflex defense. A target has three-quarters cover if approximately three-quarters of it is covered by an obstacle, such as a gate, a bunker, or a thick tree trunk.
 
 A target with **total cover** cannot be targeted directly by abilities. However, some abilities can reach such a target by including it in an area of effect. A target has total cover if it is completely concealed by an obstacle.`,
   },
@@ -620,7 +620,6 @@ export const Conditions = Content.defineSection('combat/conditions', {
   parent: Combat,
   content: {
     name: 'Conditions',
-    description: ``,
   },
 })
 
@@ -778,7 +777,7 @@ export const Restrained = Content.defineSection('combat/restrained', {
     description: `A restrained creature is bound or entangled, whether by restraints, a net, or a gravity snare.
 
 - The creature cannot move.
-- Attack rolls against the creature’s Guard, Fortitude and Reflex defense have advantage.
+- Attack rolls against the creature’s Armor Class, Fortitude and Reflex defense have advantage.
 - The creature’s attack rolls have disadvantage.`,
   },
 })

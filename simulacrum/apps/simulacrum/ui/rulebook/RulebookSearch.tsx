@@ -57,7 +57,15 @@ export const RulebookSearch = ({ sections, onSelect }: { sections: Array<Content
       sections.map((it) => {
         const { name, description } = Rulesets.getEntityById(it.id, ruleset)
         const id = it.id
-        return [id, { id, title: name, path: getPath(it).join(' › '), text: toPlainText(description).replace(/\s+/g, ' ').trim() }]
+        return [
+          id,
+          {
+            id,
+            title: name,
+            path: getPath(it).join(' › '),
+            text: Objects.isNil(description) ? '' : toPlainText(description).replace(/\s+/g, ' ').trim(),
+          },
+        ]
       })
     )
 

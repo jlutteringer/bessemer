@@ -4,7 +4,6 @@ import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 
 export const HitPointResourcePool = ResourcePools.defineResourcePool('hit-point', {
   name: 'Hit Points',
-  description: '',
   size: PlayerCharacteristics.HitPoints.variable,
   refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }],
 })

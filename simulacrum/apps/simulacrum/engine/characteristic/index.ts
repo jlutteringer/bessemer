@@ -10,7 +10,7 @@ import { CharacterInitialValues } from '@simulacrum/engine/character/character'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
-export const getCharacteristics = (ruleset: Ruleset): Array<Characteristic<unknown>> => {
+export const getCharacteristics = (ruleset: Ruleset): Array<Characteristic> => {
   return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.Characteristic)
 }
 
@@ -18,26 +18,26 @@ export const getCharacteristicGroups = (ruleset: Ruleset): Array<CharacteristicG
   return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.CharacteristicGroup)
 }
 
-export type CharacteristicValue<T> = AttributeValue<T> & {
+export type CharacteristicValue = AttributeValue<number> & {
   name: string
-  characteristic: CharacteristicReference<T>
+  characteristic: CharacteristicReference
 }
 
-export const buildAttribute = <T>(characteristic: Characteristic<T>, initialValues: CharacterInitialValues): Attribute<T> => {
+export const buildAttribute = (characteristic: Characteristic, initialValues: CharacterInitialValues): Attribute<number> => {
   let baseValue
   if (Objects.isPresent(characteristic.baseValue)) {
     baseValue = characteristic.baseValue
   } else {
     // FUTURE cast...
-    const initialValue = ObjectPaths.getValue(characteristic.path as any, initialValues)
+    const initialValue = ObjectPaths.getValue(characteristic.path as any, initialValues) as any as number | undefined
     Assertions.assertPresent(initialValue)
-    baseValue = initialValue as T
+    baseValue = initialValue
   }
 
   return Attributes.attribute(baseValue, characteristic.optimizer)
 }
 
-export const simpleValue = <T>(value: T, characteristic: Characteristic<T>, initialValues: CharacterInitialValues): CharacteristicValue<T> => {
+export const simpleValue = (value: number, characteristic: Characteristic, initialValues: CharacterInitialValues): CharacteristicValue => {
   return {
     name: characteristic.name,
     characteristic: characteristic.id,
@@ -45,18 +45,18 @@ export const simpleValue = <T>(value: T, characteristic: Characteristic<T>, init
   }
 }
 
-export const evaluateCharacteristic = <T>(
-  characteristic: Characteristic<T>,
+export const evaluateCharacteristic = (
+  characteristic: Characteristic,
   initialValues: CharacterInitialValues,
   effects: Array<Effect>,
   evaluate: EvaluateExpression
-): CharacteristicValue<T> => {
+): CharacteristicValue => {
   const attribute = buildAttribute(characteristic, initialValues)
 
   // TODO need to set sources or something... gotta figure that one out!
   const modifiers = Effects.filter(effects, Effects.ModifyCharacteristic)
     .filter((it) => it.characteristic === characteristic.id)
-    .map((it) => it.modifier) as Array<Modifier<T>>
+    .map((it) => it.modifier) as Array<Modifier<number>>
 
   const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, evaluate)
 

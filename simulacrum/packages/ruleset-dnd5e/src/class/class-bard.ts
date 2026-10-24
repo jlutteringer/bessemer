@@ -17,7 +17,6 @@ import { Patches } from '@bessemer/cornerstone'
 
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('bard/select-skill-proficiency', {
   name: 'Skill Proficiency',
-  description: '',
   filter: {
     archetypes: [SkillProficiencies.SkillProficiency],
   },
@@ -25,7 +24,6 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('bard/s
 
 export const SelectExpertise = CharacterOptions.selectTraitOption('bard/select-expertise', {
   name: 'Skill Expertise',
-  description: '',
   filter: {
     archetypes: [SkillExpertise.SkillExpertise],
   },
@@ -33,13 +31,11 @@ export const SelectExpertise = CharacterOptions.selectTraitOption('bard/select-e
 
 export const SelectCantrip = CharacterOptions.selectAbilityOption('bard/select-cantrip', {
   name: 'Cantrips',
-  description: '',
   filter: { archetypes: [Bard, Spells.Cantrip] },
 })
 
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-1', {
   name: 'Prepared Spells',
-  description: '',
   filter: {
     archetypes: [Bard, [Spells.Rank1]],
   },
@@ -47,7 +43,6 @@ export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('bard/s
 
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-2', {
   name: 'Prepared Spells',
-  description: '',
   filter: {
     archetypes: [Bard, [Spells.Rank1, Spells.Rank2]],
   },
@@ -55,45 +50,12 @@ export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('bard/s
 
 export const SelectSpellUpToRank3 = CharacterOptions.selectAbilityOption('bard/select-spell-up-to-rank-3', {
   name: 'Prepared Spells',
-  description: '',
   filter: {
     archetypes: [Bard, [Spells.Rank1, Spells.Rank2, Spells.Rank3]],
   },
 })
 
 const CharismaModifierUses = NumericExpressions.max([PlayerCharacteristics.CharismaModifier.variable, 1])
-
-export const BardicInspiration = Abilities.defineAbility('bard/bardic-inspiration', {
-  name: 'Bardic Inspiration',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      'As a **Bonus Action**, you inspire another creature within 60 feet that can see or hear you, giving it one of your Bardic Inspiration dice (a **d6**). A creature can only have one at a time.'
-    ),
-    Effects.descriptive(
-      'Once within the next hour, when the creature fails a D20 Test, it can roll the die and add the result, possibly turning the failure into a success.'
-    ),
-    Effects.descriptive(
-      'You can do this a number of times equal to your Charisma modifier (minimum once), regaining all uses on a Long Rest. The die becomes a d8 at Bard level 5, a d10 at level 10, and a d12 at level 15.'
-    ),
-  ],
-  resource: { size: CharismaModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
-  costs: [{ cost: 1 }],
-  actions: [{ name: 'Use Bardic Inspiration', action: ActionTypes.BonusAction }],
-})
-
-export const Spellcasting = Abilities.defineAbility('bard/spellcasting', {
-  name: 'Spellcasting',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      'You cast Bard spells using **Charisma**, with a Musical Instrument as your focus. You know two cantrips, gaining a third at level 4, and can swap one for another Bard cantrip when you gain a level.'
-    ),
-    Effects.descriptive(
-      'You prepare a list of Bard spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. When you gain a level, you can swap one of them for another Bard spell you have slots for. You regain all spell slots on a Long Rest.'
-    ),
-  ],
-})
 
 export const Level1 = Traits.defineTrait('bard/level-1', {
   name: 'Bard',
@@ -113,8 +75,38 @@ export const Level1 = Traits.defineTrait('bard/level-1', {
     Effects.gainCharacterOption(SelectSpellUpToRank1),
     Effects.gainCharacterOption(SelectSpellUpToRank1),
     Effects.gainCharacterOption(SelectSpellUpToRank1),
-    Effects.gainAbility(BardicInspiration),
-    Effects.gainAbility(Spellcasting),
+  ],
+})
+
+export const BardicInspiration = Abilities.defineAbility('bard/bardic-inspiration', {
+  name: 'Bardic Inspiration',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
+  effects: [
+    Effects.descriptive(
+      'As a **Bonus Action**, you inspire another creature within 60 feet that can see or hear you, giving it one of your Bardic Inspiration dice (a **d6**). A creature can only have one at a time.'
+    ),
+    Effects.descriptive(
+      'Once within the next hour, when the creature fails a D20 Test, it can roll the die and add the result, possibly turning the failure into a success.'
+    ),
+    Effects.descriptive(
+      'You can do this a number of times equal to your Charisma modifier (minimum once), regaining all uses on a Long Rest. The die becomes a d8 at Bard level 5, a d10 at level 10, and a d12 at level 15.'
+    ),
+  ],
+  resource: { size: CharismaModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+  actions: [{ name: 'Use Bardic Inspiration', action: ActionTypes.BonusAction }],
+})
+
+export const Spellcasting = Abilities.defineAbility('bard/spellcasting', {
+  name: 'Spellcasting',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
+  effects: [
+    Effects.descriptive(
+      'You cast Bard spells using **Charisma**, with a Musical Instrument as your focus. You know two cantrips, gaining a third at level 4, and can swap one for another Bard cantrip when you gain a level.'
+    ),
+    Effects.descriptive(
+      'You prepare a list of Bard spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. When you gain a level, you can swap one of them for another Bard spell you have slots for. You regain all spell slots on a Long Rest.'
+    ),
   ],
 })
 
@@ -127,7 +119,6 @@ export const JackOfAllTrades = Traits.defineTrait('bard/jack-of-all-trades', {
 
 export const Level2 = Traits.defineTrait('bard/level-2', {
   name: 'Bard (2)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   archetypes: [Class],
   effects: [
@@ -139,16 +130,14 @@ export const Level2 = Traits.defineTrait('bard/level-2', {
   ],
 })
 
-export const BardSubclass = Archetypes.defineArchetype('bard/subclass', { name: 'Bard Subclass', description: '' })
+export const BardSubclass = Archetypes.defineArchetype('bard/subclass', { name: 'Bard Subclass' })
 export const SelectBardSubclass = CharacterOptions.selectTraitOption('bard/select-subclass', {
   name: 'Bard Subclass',
-  description: '',
   filter: { archetypes: [BardSubclass] },
 })
 
 export const Level3 = Traits.defineTrait('bard/level-3', {
   name: 'Bard (3)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level2)],
   archetypes: [Class],
   effects: [
@@ -179,22 +168,22 @@ export const BeguilingMagic = Traits.defineTrait('bard/beguiling-magic', {
   effects: [Effects.gainAbility(Spells.CharmPerson), Effects.gainAbility(Spells.MirrorImage)],
 })
 
+export const CollegeOfGlamour = Traits.defineTrait('bard/college-of-glamour', {
+  name: 'College of Glamour',
+  description: 'Bards who weave the **beguiling magic of the Feywild** into their performances, stirring wonder and dread alike.',
+  archetypes: [BardSubclass],
+  effects: [Effects.gainTrait(BeguilingMagic)],
+})
+
 export const MantleOfInspiration = Abilities.defineAbility('bard/mantle-of-inspiration', {
   name: 'Mantle of Inspiration',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(CollegeOfGlamour)],
   effects: [
     Effects.descriptive(
       'As a **Bonus Action**, spend a use of Bardic Inspiration and roll the die. Up to a number of other creatures within 60 feet equal to your Charisma modifier (minimum one) each gain Temporary Hit Points equal to **twice the roll**, and can use their Reaction to move up to their Speed without provoking Opportunity Attacks.'
     ),
   ],
   actions: [{ name: 'Use Mantle of Inspiration', action: ActionTypes.BonusAction, costs: [{ cost: 1, resource: BardicInspiration.resource }] }],
-})
-
-export const CollegeOfGlamour = Traits.defineTrait('bard/college-of-glamour', {
-  name: 'College of Glamour',
-  description: 'Bards who weave the **beguiling magic of the Feywild** into their performances, stirring wonder and dread alike.',
-  archetypes: [BardSubclass],
-  effects: [Effects.gainTrait(BeguilingMagic), Effects.gainAbility(MantleOfInspiration)],
 })
 
 export const BonusProficiencies = Traits.defineTrait('bard/bonus-proficiencies', {
@@ -207,22 +196,22 @@ export const BonusProficiencies = Traits.defineTrait('bard/bonus-proficiencies',
   ],
 })
 
+export const CollegeOfLore = Traits.defineTrait('bard/college-of-lore', {
+  name: 'College of Lore',
+  description: 'Bards who **collect spells and secrets** from every source, and use their wit to expose lies and deflate the self-important.',
+  archetypes: [BardSubclass],
+  effects: [Effects.gainTrait(BonusProficiencies)],
+})
+
 export const CuttingWords = Abilities.defineAbility('bard/cutting-words', {
   name: 'Cutting Words',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(CollegeOfLore)],
   effects: [
     Effects.descriptive(
       "When a creature you can see within 60 feet makes a damage roll or succeeds on an ability check or attack roll, you can use your **Reaction** to spend a use of Bardic Inspiration. Roll the die and subtract it from the creature's roll, possibly reducing the damage or turning the success into a failure."
     ),
   ],
   actions: [{ name: 'Use Cutting Words', action: ActionTypes.Reaction, costs: [{ cost: 1, resource: BardicInspiration.resource }] }],
-})
-
-export const CollegeOfLore = Traits.defineTrait('bard/college-of-lore', {
-  name: 'College of Lore',
-  description: 'Bards who **collect spells and secrets** from every source, and use their wit to expose lies and deflate the self-important.',
-  archetypes: [BardSubclass],
-  effects: [Effects.gainTrait(BonusProficiencies), Effects.gainAbility(CuttingWords)],
 })
 
 export const CombatInspiration = Traits.defineTrait('bard/combat-inspiration', {
@@ -248,7 +237,6 @@ export const CollegeOfValor = Traits.defineTrait('bard/college-of-valor', {
 
 export const Level4 = Traits.defineTrait('bard/level-4', {
   name: 'Bard (4)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
   effects: [
@@ -276,7 +264,6 @@ export const FontOfInspiration = Traits.defineTrait('bard/font-of-inspiration', 
 
 export const Level5 = Traits.defineTrait('bard/level-5', {
   name: 'Bard (5)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
   effects: [

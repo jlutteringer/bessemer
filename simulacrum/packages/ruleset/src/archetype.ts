@@ -1,4 +1,4 @@
-import { Arrays } from '@bessemer/cornerstone'
+import { Arrays, Objects } from '@bessemer/cornerstone'
 import Zod from 'zod'
 import { Uris } from '@bessemer/cornerstone'
 import * as Tiptap from '@bessemer/core/tiptap'
@@ -18,7 +18,7 @@ export const defineArchetype = (reference: string, props: RulesetEntityProps): A
   return ArchetypeSchema.parse({
     id: Uris.format({ scheme: RulesetEntityType.Archetype, location: { path: reference } }),
     name: props.name,
-    description: Tiptap.markdownToJson(props.description),
+    description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
   })
 }
 

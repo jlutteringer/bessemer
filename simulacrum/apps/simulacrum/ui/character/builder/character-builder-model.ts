@@ -43,13 +43,13 @@ export type CharacterOptionChoice = {
 /**
  * The characteristics a player sets directly (e.g. ability scores), as opposed to ones derived from other values.
  */
-export const getInitialValueCharacteristics = (ruleset: Ruleset): Array<Characteristic<number>> => {
-  return Characteristics.getCharacteristics(ruleset).filter((it) => Objects.isNil(it.baseValue)) as Array<Characteristic<number>>
+export const getInitialValueCharacteristics = (ruleset: Ruleset): Array<Characteristic> => {
+  return Characteristics.getCharacteristics(ruleset).filter((it) => Objects.isNil(it.baseValue))
 }
 
 export type CharacteristicSection = {
   group: CharacteristicGroup | null
-  characteristics: Array<Characteristic<number>>
+  characteristics: Array<Characteristic>
 }
 
 /**
@@ -57,7 +57,7 @@ export type CharacteristicSection = {
  */
 export const getCharacteristicSections = (ruleset: Ruleset): Array<CharacteristicSection> => {
   const characteristicGroups = Characteristics.getCharacteristicGroups(ruleset)
-  const characteristics = Characteristics.getCharacteristics(ruleset) as Array<Characteristic<number>>
+  const characteristics = Characteristics.getCharacteristics(ruleset)
 
   const sections = [
     ...characteristicGroups.map((group) => ({ group, characteristics: characteristics.filter((it) => it.group === group.id) })),
@@ -70,11 +70,11 @@ export const getCharacteristicSections = (ruleset: Ruleset): Array<Characteristi
 /**
  * The form field name for a characteristic's initial value, e.g. "initialValues.strength".
  */
-export const getInitialValueFieldName = (characteristic: Characteristic<number>): `initialValues.${string}` => {
+export const getInitialValueFieldName = (characteristic: Characteristic): `initialValues.${string}` => {
   return `initialValues.${characteristic.path.map((it) => (Array.isArray(it) ? it[0] : it)).join('.')}`
 }
 
-export const setInitialValue = (character: CharacterRecord, characteristic: Characteristic<number>, value: number): CharacterRecord => {
+export const setInitialValue = (character: CharacterRecord, characteristic: Characteristic, value: number): CharacterRecord => {
   const initialValues = ObjectPaths.applyAnyValue(characteristic.path, character.initialValues, value) as CharacterRecord['initialValues']
   return { ...character, initialValues }
 }
@@ -216,9 +216,9 @@ export const getCharacterOptionChoices = (sheet: CharacterSheet): Array<Characte
 /**
  * A characteristic's value once the character's effects are applied, e.g. an ability score after a Background's increase.
  */
-export const getCharacteristicValue = (sheet: CharacterSheet, characteristic: Characteristic<number>): number => {
+export const getCharacteristicValue = (sheet: CharacterSheet, characteristic: Characteristic): number => {
   // FUTURE excessive casting - see Characters.buildExpressionContext
-  const value = ObjectPaths.getValue(characteristic.path as any, sheet.characteristics) as any as CharacteristicValue<number>
+  const value = ObjectPaths.getValue(characteristic.path as any, sheet.characteristics) as any as CharacteristicValue
   return value.value
 }
 

@@ -1,11 +1,10 @@
 import { Archetypes, Traits } from '@simulacrum/ruleset'
 import { CharacterOptions } from '@simulacrum/ruleset'
 
-export const ArtisansTools = Archetypes.defineArchetype('artisans-tools', { name: "Artisan's Tools", description: '' })
+export const ArtisansTools = Archetypes.defineArchetype('artisans-tools', { name: "Artisan's Tools" })
 
 export const SelectArtisansTools = CharacterOptions.selectTraitOption('artisans-tools/select', {
   name: "Artisan's Tools",
-  description: '',
   filter: { archetypes: [ArtisansTools] },
 })
 

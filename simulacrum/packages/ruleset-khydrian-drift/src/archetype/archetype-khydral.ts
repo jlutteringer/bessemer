@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
@@ -6,7 +6,6 @@ import { Stamina, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/resourc
 
 export const KhydralSensitivity = Traits.defineTrait('khydral/sensitivity', {
   name: 'Khydral Sensitivity',
-  description: '',
   archetypes: [Primary],
   prerequisites: [],
   effects: [],
@@ -14,15 +13,22 @@ export const KhydralSensitivity = Traits.defineTrait('khydral/sensitivity', {
 
 export const KhydralInitiate = Traits.defineTrait('khydral/initiate', {
   name: 'Khydral Initiate',
-  description: '',
   archetypes: [Primary],
   prerequisites: [Traits.traitPrerequisite(KhydralSensitivity)],
   effects: [],
 })
 
+export const KhydralAdept = Traits.defineTrait('khydral/adept', {
+  name: 'Khydral Adept',
+  archetypes: [Primary],
+  prerequisites: [Traits.traitPrerequisite(KhydralInitiate)],
+  effects: [],
+})
+
 export const TimeDilation = Abilities.defineAbility('khydral/time-dilation', {
   name: 'Time Dilation',
-  description: '',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(KhydralAdept)],
   actions: [
     {
       name: 'Time Dilation',
@@ -35,17 +41,17 @@ export const TimeDilation = Abilities.defineAbility('khydral/time-dilation', {
   ],
 })
 
-export const KhydralAdept = Traits.defineTrait('khydral/adept', {
-  name: 'Khydral Adept',
-  description: '',
+export const KhydralMastery = Traits.defineTrait('khydral/mastery', {
+  name: 'Khydral Mastery',
   archetypes: [Primary],
-  prerequisites: [Traits.traitPrerequisite(KhydralInitiate)],
-  effects: [Effects.gainAbility(TimeDilation, GeneralLoadoutSlot)],
+  prerequisites: [Traits.traitPrerequisite(KhydralAdept)],
+  effects: [],
 })
 
 export const Rewind = Abilities.defineAbility('khydral/rewind', {
   name: 'Rewind',
-  description: '',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(KhydralMastery)],
   actions: [
     {
       name: 'Rewind',
@@ -56,12 +62,4 @@ export const Rewind = Abilities.defineAbility('khydral/rewind', {
       targeting: { target: { range: 12, count: 1 } },
     },
   ],
-})
-
-export const KhydralMastery = Traits.defineTrait('khydral/mastery', {
-  name: 'Khydral Mastery',
-  description: '',
-  archetypes: [Primary],
-  prerequisites: [Traits.traitPrerequisite(KhydralAdept)],
-  effects: [Effects.gainAbility(Rewind, GeneralLoadoutSlot)],
 })

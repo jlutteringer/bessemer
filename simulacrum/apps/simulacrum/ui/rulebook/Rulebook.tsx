@@ -365,7 +365,7 @@ const ContentSectionView = ({ node, depth }: { node: ContentNode; depth: number 
         >
           {name}
         </Typography>
-        <SimulacrumRichText text={description} />
+        {Objects.isPresent(description) && <SimulacrumRichText text={description} />}
         {node.children.map((child) => (
           <ContentSectionView
             key={child.section.id}
@@ -390,7 +390,7 @@ const ContentSectionView = ({ node, depth }: { node: ContentNode; depth: number 
         {name}
       </Typography>
 
-      <SimulacrumRichText text={description} />
+      {Objects.isPresent(description) && <SimulacrumRichText text={description} />}
 
       {node.children.map((child) => (
         <ContentSectionView

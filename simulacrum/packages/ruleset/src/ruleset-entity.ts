@@ -30,18 +30,18 @@ export type RulesetEntityReference<T extends RulesetEntityType = RulesetEntityTy
 export const RulesetEntitySchema = Zod.object({
   id: Zod.string().transform((it) => it as RulesetEntityReference),
   name: Zod.string(),
-  description: RichTextJsonSchema,
+  description: RichTextJsonSchema.nullable(),
 })
 
 export type RulesetEntity = {
   id: RulesetEntityReference
   name: string
-  description: RichTextJson
+  description: RichTextJson | null
 }
 
 export type RulesetEntityProps = {
   name: string
-  description: string
+  description?: string
 }
 
 export const buildReference = <T extends RulesetEntityType>(type: T, reference: string): RulesetEntityReference<T> => {

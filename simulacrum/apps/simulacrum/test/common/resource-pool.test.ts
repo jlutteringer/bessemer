@@ -68,7 +68,6 @@ test('Fighter levels add Second Wind uses', () => {
 test('actions inherit the ability costs unless they set their own', () => {
   const ability = Abilities.defineAbility('test/ability', {
     name: 'Test Ability',
-    description: '',
     resource: Pool,
     costs: [{ cost: 1 }],
     actions: [

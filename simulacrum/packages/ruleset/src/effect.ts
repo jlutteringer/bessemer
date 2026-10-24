@@ -8,6 +8,7 @@ import { Modifier } from '@simulacrum/ruleset/attribute'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import * as Tiptap from '@bessemer/core/tiptap'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
+import { Expression } from '@bessemer/cornerstone/expression'
 
 export enum EffectTypeEnum {
   Descriptive = 'Descriptive',
@@ -20,6 +21,7 @@ export enum EffectTypeEnum {
   GainResourcePool = 'GainResourcePool',
   ModifyResourcePool = 'ModifyResourcePool',
   GainLoadoutSlot = 'GainLoadoutSlot',
+  Conditional = 'Conditional',
 }
 
 export interface Effect {
@@ -54,6 +56,14 @@ export type GainCharacterOptionEffect = Effect & {
   option: CharacterOption
 }
 
+export const Conditional: EffectType<ConditionalEffect> = { type: EffectTypeEnum.Conditional }
+
+export type ConditionalEffect = Effect & {
+  type: EffectTypeEnum.Conditional
+  condition: Expression<boolean>
+  effects: Array<Effect>
+}
+
 export const GainTrait: EffectType<GainTraitEffect> = { type: EffectTypeEnum.GainTrait }
 
 export type GainTraitEffect = Effect & {
@@ -65,14 +75,14 @@ export const GainCharacteristic: EffectType<GainCharacteristicEffect> = { type: 
 
 export type GainCharacteristicEffect = Effect & {
   type: EffectTypeEnum.GainCharacteristic
-  characteristic: CharacteristicReference<unknown>
+  characteristic: CharacteristicReference
 }
 
 export const ModifyCharacteristic: EffectType<ModifyCharacteristicEffect> = { type: EffectTypeEnum.ModifyCharacteristic }
 
 export type ModifyCharacteristicEffect = Effect & {
   type: EffectTypeEnum.ModifyCharacteristic
-  characteristic: CharacteristicReference<unknown>
+  characteristic: CharacteristicReference
   modifier: Modifier<unknown>
 }
 
@@ -132,6 +142,14 @@ export const gainCharacterOption = (option: CharacterOption): GainCharacterOptio
   }
 }
 
+export const conditional = (condition: Expression<boolean>, effects: Array<Effect>): ConditionalEffect => {
+  return {
+    type: EffectTypeEnum.Conditional,
+    condition,
+    effects,
+  }
+}
+
 export const gainTrait = (trait: Trait): GainTraitEffect => {
   return {
     type: EffectTypeEnum.GainTrait,
@@ -139,23 +157,23 @@ export const gainTrait = (trait: Trait): GainTraitEffect => {
   }
 }
 
-export const gainAbility = (ability: Ability, loadout: LoadoutType | null = null): GainAbilityEffect => {
+export const gainAbility = (ability: Ability, loadout?: LoadoutType | null): GainAbilityEffect => {
   return {
     type: EffectTypeEnum.GainAbility,
     name: `Gain Ability: ${ability.name}`,
     ability: ability.id,
-    loadout: loadout?.id ?? null,
+    loadout: loadout === undefined ? ability.loadout : loadout?.id ?? null,
   }
 }
 
-export const gainCharacteristic = (characteristic: Characteristic<number>): GainCharacteristicEffect => {
+export const gainCharacteristic = (characteristic: Characteristic): GainCharacteristicEffect => {
   return {
     type: EffectTypeEnum.GainCharacteristic,
     characteristic: characteristic.id,
   }
 }
 
-export const modifyCharacteristic = (characteristic: Characteristic<number>, modifier: Modifier<unknown>): ModifyCharacteristicEffect => {
+export const modifyCharacteristic = (characteristic: Characteristic, modifier: Modifier<unknown>): ModifyCharacteristicEffect => {
   return {
     type: EffectTypeEnum.ModifyCharacteristic,
     characteristic: characteristic.id,

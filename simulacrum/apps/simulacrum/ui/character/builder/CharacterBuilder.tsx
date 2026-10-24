@@ -28,10 +28,12 @@ import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SaveIcon from '@mui/icons-material/Save'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
 import { CharacterRecord, CharacterSheet } from '@simulacrum/engine/character/character'
 import { Trait, TraitReference } from '@simulacrum/engine/trait'
-import { Characteristic } from '@simulacrum/engine/characteristic'
+import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
+import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Abilities, Characters, Effects, Loadout, Rulesets } from '@simulacrum/engine'
 import { Ability } from '@simulacrum/engine/ability'
@@ -213,7 +215,25 @@ const RulesetSelection = ({
                     }}
                   >
                     <CardContent>
-                      <Typography variant="h6">{ruleset.name}</Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Typography variant="h6">{ruleset.name}</Typography>
+                        {!Arrays.isEmpty(ruleset.content) && (
+                          <IconButton
+                            component="a"
+                            href={`/rulebook/${ruleset.id}`}
+                            target="_blank"
+                            rel="noopener"
+                            size="small"
+                            color="primary"
+                            aria-label={`${ruleset.name} rulebook`}
+                            onClick={(event) => event.stopPropagation()}
+                            // Centred on the heading's capitals rather than its line, which leaves room for descenders
+                            sx={{ transform: 'translateY(-1px)' }}
+                          >
+                            <MenuBookIcon fontSize="small" />
+                          </IconButton>
+                        )}
+                      </Box>
                     </CardContent>
                     {!Arrays.isEmpty(extensions) && (
                       <CardContent sx={{ pt: 0 }}>
@@ -263,22 +283,22 @@ const RulesetSelection = ({
 /**
  * A number input that can be left blank while typing. A blank field is stored as 0, and shows 0 once the field loses focus.
  */
-// An info icon at the end of a characteristic's field, opening its description; nothing for a characteristic without one
-const CharacteristicInfo = ({ characteristic }: { characteristic: Characteristic<number> }) => {
-  if (Arrays.isEmpty(characteristic.description.content ?? [])) {
+// An info icon at the end of an entity's field, opening its description; nothing for an entity without one
+const RulesetEntityInfo = ({ entity }: { entity: RulesetEntity }) => {
+  if (Objects.isNil(entity.description) || Arrays.isEmpty(entity.description.content ?? [])) {
     return null
   }
 
   return (
     <InputAdornment position="end">
       <RulesetEntityPopover
-        entity={characteristic}
+        entity={entity}
         trigger={
           <IconButton
             size="small"
             edge="end"
             color="primary"
-            aria-label={`About ${characteristic.name}`}
+            aria-label={`About ${entity.name}`}
           >
             <InfoOutlinedIcon fontSize="small" />
           </IconButton>
@@ -457,7 +477,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                                 onBlur={field.onBlur}
                                 label={characteristic.name}
                                 fullWidth
-                                slotProps={{ input: { endAdornment: <CharacteristicInfo characteristic={characteristic} /> } }}
+                                slotProps={{ input: { endAdornment: <RulesetEntityInfo entity={characteristic} /> } }}
                                 error={fieldState.invalid}
                                 helperText={
                                   fieldState.error?.message ?? (increase !== 0 ? `${increase > 0 ? '+' : ''}${increase} → ${total}` : undefined)
@@ -471,7 +491,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                           label={characteristic.name}
                           value={getCharacteristicValue(sheet, characteristic)}
                           fullWidth
-                          slotProps={{ input: { readOnly: true, endAdornment: <CharacteristicInfo characteristic={characteristic} /> } }}
+                          slotProps={{ input: { readOnly: true, endAdornment: <RulesetEntityInfo entity={characteristic} /> } }}
                         />
                       )}
                     </Grid>
@@ -550,7 +570,7 @@ const LevelTraits = ({
                 return (
                   <Box key={group[0]!.key}>
                     <MultiValueSelect
-                      label={group[0]!.option.name}
+                      option={group[0]!.option}
                       choices={group}
                       onSelect={(values) => onSelectMany(group, values)}
                     />
@@ -567,7 +587,6 @@ const LevelTraits = ({
               return (
                 <Box key={choice.key}>
                   <ValueSelect
-                    label={choice.option.name}
                     choice={choice}
                     onSelect={(value) => onSelect(choice, value)}
                   />
@@ -593,11 +612,11 @@ const groupChoicesByOption = (choices: Array<CharacterOptionChoice>): Array<Arra
 }
 
 const MultiValueSelect = ({
-  label,
+  option,
   choices,
   onSelect,
 }: {
-  label: string
+  option: CharacterOption
   choices: Array<CharacterOptionChoice>
   onSelect: (values: Array<CharacterOptionValue>) => void
 }) => {
@@ -608,13 +627,16 @@ const MultiValueSelect = ({
     (it) => it.id
   )
   const isFull = selected.length >= choices.length
+  const isRepeatable = options.every((it) => 'repeatable' in it && it.repeatable)
+  const nextChoice = choices.find((it) => Objects.isNil(it.selection))
 
   return (
     <Autocomplete
       multiple
+      disableCloseOnSelect={isRepeatable}
       options={options}
-      value={selected}
-      onChange={(_, values) => onSelect(values)}
+      value={isRepeatable ? [] : selected}
+      onChange={(_, values) => onSelect(isRepeatable ? [...selected, ...values] : values)}
       getOptionLabel={(value) => value.name}
       renderOption={({ key, ...props }, value) => (
         <li
@@ -625,43 +647,61 @@ const MultiValueSelect = ({
         </li>
       )}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      getOptionDisabled={(value) => isFull && !selected.some((it) => it.id === value.id)}
+      getOptionDisabled={(value) =>
+        isRepeatable ? !(nextChoice?.values.some((it) => it.id === value.id) ?? false) : isFull && !selected.some((it) => it.id === value.id)
+      }
       filterSelectedOptions
       renderInput={(params) => (
         <TextField
           {...params}
-          label={`${label} (${selected.length}/${choices.length})`}
+          label={`${option.name} (${selected.length}/${choices.length})`}
           sx={selected.length < choices.length ? UnselectedChoiceSx : undefined}
+          slotProps={{
+            ...params.slotProps,
+            input: {
+              ...params.slotProps.input,
+              startAdornment: isRepeatable
+                ? selected.map((value, index) => (
+                    <Chip
+                      key={index}
+                      size="small"
+                      label={value.name}
+                      onDelete={() => onSelect(selected.filter((_, it) => it !== index))}
+                      sx={{ m: 0.375 }}
+                    />
+                  ))
+                : params.slotProps.input.startAdornment,
+              endAdornment: (
+                <>
+                  <RulesetEntityInfo entity={option} />
+                  {params.slotProps.input.endAdornment}
+                </>
+              ),
+            },
+          }}
         />
       )}
     />
   )
 }
 
-// Highlights a choice that still needs a selection
 const UnselectedChoiceSx = {
   '& .MuiOutlinedInput-notchedOutline': { borderColor: 'primary.main', borderWidth: 2 },
 }
 
-const ValueSelect = ({
-  label,
-  choice,
-  onSelect,
-}: {
-  label: string
-  choice: CharacterOptionChoice
-  onSelect: (value: CharacterOptionValue | null) => void
-}) => {
+const ValueSelect = ({ choice, onSelect }: { choice: CharacterOptionChoice; onSelect: (value: CharacterOptionValue | null) => void }) => {
   return (
     <TextField
       select
       fullWidth
-      label={label}
+      label={choice.option.name}
       sx={Objects.isNil(choice.selection) ? UnselectedChoiceSx : undefined}
       value={choice.selection?.id ?? ''}
       onChange={(event) => onSelect(choice.values.find((it) => it.id === event.target.value) ?? null)}
-      // The closed select shows just the value's name, without its archetypes
-      slotProps={{ select: { renderValue: () => choice.selection?.name ?? '' } }}
+      slotProps={{
+        select: { renderValue: () => choice.selection?.name ?? '' },
+        input: { endAdornment: <RulesetEntityInfo entity={choice.option} /> },
+      }}
     >
       <MenuItem value="">
         <em>None</em>
@@ -678,7 +718,6 @@ const ValueSelect = ({
   )
 }
 
-// A dropdown entry: the value's name, with its archetypes (for a trait) as a caption beside it
 const ValueOptionText = ({ value }: { value: CharacterOptionValue }) => {
   const ruleset = useRuleset()
   return (
@@ -689,7 +728,6 @@ const ValueOptionText = ({ value }: { value: CharacterOptionValue }) => {
   )
 }
 
-// Cards for the values selected for a choice: traits, along with the traits they grant, and abilities
 const SelectedValues = ({
   values,
   level,
@@ -704,7 +742,7 @@ const SelectedValues = ({
   return (
     <>
       <SelectedTraits
-        traits={values.filter(isTrait)}
+        traits={Arrays.dedupeBy(values.filter(isTrait), (it) => it.id)}
         level={level}
         heldTraits={heldTraits}
       />
@@ -717,17 +755,11 @@ const SelectedValues = ({
   )
 }
 
-// A card for each selected trait, shown under its dropdown, followed by the traits each one grants outright (e.g. a Background's
-// skill proficiencies). A granted trait that applied at a later level (e.g. a subclass feature that improves) says so.
 const SelectedTraits = ({ traits, level, heldTraits }: { traits: Array<Trait>; level: number; heldTraits: ProgressionTable<TraitReference> }) => {
   const ruleset = useRuleset()
 
-  // One grid for all the selected traits (e.g. both skill proficiencies), each followed by what it grants. CardGrid gives each child its
-  // own cell, so the cards are built as a flat list rather than grouped in fragments.
   const cards = traits.flatMap((trait) => {
     const grantedTraits = getGrantedTraits(trait, heldTraits, ruleset)
-    // The abilities the trait grants, along with those of the traits it grants at this level (a trait granted at a later level, e.g. a
-    // subclass feature that improves, doesn't count here)
     const abilities = getTraitAbilities([trait, ...grantedTraits.flatMap((it) => (it.level === level ? [it.trait] : []))], ruleset)
 
     return [
@@ -758,8 +790,6 @@ const SelectedTraits = ({ traits, level, heldTraits }: { traits: Array<Trait>; l
   return <CardGrid marginTop={2}>{cards}</CardGrid>
 }
 
-// The abilities the given traits grant outright. Abilities that take a loadout slot (e.g. a Wizard's cantrips) are shown in the Abilities
-// section instead.
 const getTraitAbilities = (traits: Array<Trait>, ruleset: Ruleset): Array<Ability> => {
   return traits.flatMap((trait) =>
     Effects.filter(trait.effects, Effects.GainAbility)
@@ -768,7 +798,6 @@ const getTraitAbilities = (traits: Array<Trait>, ruleset: Ruleset): Array<Abilit
   )
 }
 
-// Lays out cards three to a row on wide screens
 const CardGrid = ({ children, marginTop = 0 }: { children: React.ReactNode; marginTop?: number }) => {
   return (
     <Grid
@@ -789,7 +818,7 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
       <CardContent>
         <Typography variant="h6">{trait.name}</Typography>
         {Objects.isPresent(caption) && <Typography variant="caption">{caption}</Typography>}
-        <SimulacrumRichText text={trait.description} />
+        {Objects.isPresent(trait.description) && <SimulacrumRichText text={trait.description} />}
         {!Arrays.isEmpty(getPassiveEffects(trait)) && (
           <>
             <Divider sx={{ my: 1 }} />
@@ -801,7 +830,6 @@ const TraitCard = ({ trait, caption = null }: { trait: Trait; caption?: string |
   )
 }
 
-// A trait's passive effects under a Passive caption, as shown on both its trait card and its card in the Abilities section
 const TraitPassiveEffects = ({ trait }: { trait: Trait }) => {
   return (
     <>
@@ -861,7 +889,6 @@ const AbilityCard = ({ ability: rulesetAbility }: { ability: Ability }) => {
   )
 }
 
-// A trait's passive effects, shown alongside the character's abilities
 const PassiveTraitCard = ({ trait }: { trait: Trait }) => {
   return (
     <Card sx={{ height: '100%' }}>
@@ -886,7 +913,6 @@ const AbilityCards = ({ abilities }: { abilities: Array<Ability> }) => {
   )
 }
 
-// Each of an ability's actions, with what it takes to use it and its own description
 const AbilityActions = ({ ability }: { ability: Ability }) => {
   const ruleset = useRuleset()
 
@@ -908,8 +934,6 @@ const AbilityActions = ({ ability }: { ability: Ability }) => {
   )
 }
 
-// The character's abilities: its traits' passive effects and the abilities that don't take a slot and so are always available, followed by
-// a picker for each type of loadout slot (e.g. a Wizard's cantrips), filled from the abilities it has for that type
 const AbilitiesSection = ({
   sheet,
   onSelect,

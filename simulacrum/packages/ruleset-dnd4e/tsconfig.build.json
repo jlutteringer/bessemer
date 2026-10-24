@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.lib.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "@simulacrum/ruleset-dnd4e": ["./src"],
+      "@simulacrum/ruleset-dnd4e/*": ["./src/*"]
+    }
+  },
+  "exclude": ["dist", "node_modules", "test", "jest.config.js"]
+}

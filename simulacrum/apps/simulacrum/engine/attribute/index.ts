@@ -1,7 +1,8 @@
 export * from '@simulacrum/ruleset/attribute'
 import { Attribute, Modifier } from '@simulacrum/ruleset/attribute'
-import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
-import { Arrays, Combinables, Equalitors, Objects, Patches, Sets } from '@bessemer/cornerstone'
+import { EvaluateExpression, Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
+import { Arrays, Combinables, Equalitors, Objects, Patches } from '@bessemer/cornerstone'
+import { Patch, PatchType } from '@bessemer/cornerstone/patch'
 
 export type Attributable<T> =
   | {
@@ -62,34 +63,32 @@ export const simpleAttributeValue = <T>(value: T, attribute: Attribute<T>): Attr
   }
 }
 
+const getPatchPhase = (patch: Patch<unknown>): number => {
+  if (patch.type === PatchType.Set) {
+    return 0
+  }
+
+  if (patch.type === PatchType.Apply && Objects.deepEqual(patch.reducer, Expressions.reference(NumericExpressions.MultiplyExpression))) {
+    return 2
+  }
+
+  return 1
+}
+
 export const evaluateAttribute = <T>(attribute: Attribute<T>, modifiers: Array<Modifier<T>>, evaluate: EvaluateExpression): AttributeValue<T> => {
   const initialValue = evaluate(attribute.baseValue)
   const { activeModifiers, inactiveModifiers } = evaluateModifiers(modifiers, evaluate)
   const modifierCombinations = Combinables.combinations(activeModifiers)
 
-  // TODO we should refactor expressions to make this impossible.... but later
-  // evaluate(Expressions.dereference(reducer, []))
-  // evaluate(reducer)
-
   const combinationValues: Array<[T, Array<ModifierValue<T>>]> = modifierCombinations.map((combination) => {
-    const permutationValues: Array<[T, Array<ModifierValue<T>>]> = Sets.permute(combination).map((permutations) => {
-      const { value, patchValues } = Patches.resolveWithDetails(
-        initialValue,
-        permutations.map((it) => it.value),
-        evaluate
-      )
+    const orderedModifiers = Arrays.sortBy(combination, (it) => getPatchPhase(it.value))
+    const { value, patchValues } = Patches.resolveWithDetails(
+      initialValue,
+      orderedModifiers.map((it) => it.value),
+      evaluate
+    )
 
-      const modifierValues = permutations.map((it) => {
-        return buildModifierValue(patchValues.find((patch) => it.value === patch.patch)!.value, it)
-      })
-
-      return [value, modifierValues]
-    })
-
-    // FUTURE we added a cast here as a temporary fix - it should be fixed for real
-    const winningPermutationValue = evaluate(Expressions.dereference(attribute.optimizer, permutationValues.map(Arrays.first) as any))
-    const [_, winningModifiers] = permutationValues.find((it) => winningPermutationValue === Arrays.first(it)) ?? []
-    return [winningPermutationValue, winningModifiers ?? []]
+    return [value, orderedModifiers.map((it, index) => buildModifierValue(patchValues[index]!.value, it))]
   })
 
   let value: T

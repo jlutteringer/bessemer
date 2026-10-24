@@ -5,9 +5,19 @@ import { Primary } from '@simulacrum/ruleset-khydrian-drift/archetype'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Stamina, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 
+export const BasicCombatTraining = Traits.defineTrait('combat/basic-training', {
+  name: 'Basic Combat Training',
+  description:
+    '*"Blessed be the LORD my strength, which teacheth my hands to war, and my fingers to fight."*\n\nEvery corporate security force, street gang, and private militia teaches the same fundamentals: how to hold a weapon, move under fire, and keep your head when the shooting starts. It is the foundation every other fighting discipline is built on.',
+  archetypes: [Primary],
+  prerequisites: [],
+  effects: [],
+})
+
 export const BackInTheFight = Abilities.defineAbility('combat/back-in-the-fight', {
   name: 'Back in the Fight',
-  description: '',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
   actions: [
     {
       name: 'Back in the Fight',
@@ -21,7 +31,8 @@ export const BackInTheFight = Abilities.defineAbility('combat/back-in-the-fight'
 
 export const Blackjack = Abilities.defineAbility('combat/blackjack', {
   name: 'Blackjack',
-  description: '',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
   actions: [
     {
       name: 'Blackjack',
@@ -35,7 +46,8 @@ export const Blackjack = Abilities.defineAbility('combat/blackjack', {
 
 export const Tumble = Abilities.defineAbility('combat/tumble', {
   name: 'Tumble',
-  description: '',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
   actions: [
     {
       name: 'Tumble',
@@ -49,7 +61,8 @@ export const Tumble = Abilities.defineAbility('combat/tumble', {
 
 export const ActionSurge = Abilities.defineAbility('combat/action-surge', {
   name: 'Action Surge',
-  description: '',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
   actions: [
     {
       name: 'Action Surge',
@@ -57,20 +70,6 @@ export const ActionSurge = Abilities.defineAbility('combat/action-surge', {
       action: ActionTypes.MinorAction,
       costs: [{ cost: StaminaCost.High, resource: Stamina }],
     },
-  ],
-})
-
-export const BasicCombatTraining = Traits.defineTrait('combat/basic-training', {
-  name: 'Basic Combat Training',
-  description:
-    '*"Blessed be the LORD my strength, which teacheth my hands to war, and my fingers to fight."*\n\nEvery corporate security force, street gang, and private militia teaches the same fundamentals: how to hold a weapon, move under fire, and keep your head when the shooting starts. It is the foundation every other fighting discipline is built on.',
-  archetypes: [Primary],
-  prerequisites: [],
-  effects: [
-    Effects.gainAbility(BackInTheFight, GeneralLoadoutSlot),
-    Effects.gainAbility(Blackjack, GeneralLoadoutSlot),
-    Effects.gainAbility(Tumble, GeneralLoadoutSlot),
-    Effects.gainAbility(ActionSurge, GeneralLoadoutSlot),
   ],
 })
 

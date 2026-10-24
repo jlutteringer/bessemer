@@ -7,11 +7,10 @@ import { SelectOriginFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
 import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
 
-export const Species = Archetypes.defineArchetype('species', { name: 'Species', description: '' })
+export const Species = Archetypes.defineArchetype('species', { name: 'Species' })
 
 export const SelectSpecies = CharacterOptions.selectTraitOption('species/select', {
   name: 'Species',
-  description: '',
   filter: { archetypes: [Species] },
 })
 
@@ -29,13 +28,20 @@ export const Medium = Traits.defineTrait('species/size/medium', {
 
 export const SelectSmallOrMedium = CharacterOptions.selectTraitOption('species/select-small-or-medium', {
   name: 'Size',
-  description: '',
   filter: { specificOptions: [Medium, Small] },
+})
+
+export const Aasimar = Traits.defineTrait('species/aasimar', {
+  name: 'Aasimar',
+  description:
+    'Mortals who carry a spark of the Upper Planes within their souls, able to fan that spark to bring light, ease wounds, and unleash the fury of the heavens.\n\n**Size:** Medium or Small. **Speed:** 30 feet.',
+  archetypes: [Species],
+  effects: [Effects.gainCharacterOption(SelectSmallOrMedium), Effects.gainAbility(Spells.Light)],
 })
 
 export const Darkvision = Abilities.defineAbility('species/darkvision', {
   name: 'Darkvision',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(Aasimar)],
   effects: [
     Effects.descriptive(
       'You can see in Dim Light within **60 feet** of you as if it were Bright Light, and in Darkness as if it were Dim Light. You discern colors in that Darkness only as shades of gray.'
@@ -45,13 +51,13 @@ export const Darkvision = Abilities.defineAbility('species/darkvision', {
 
 export const CelestialResistance = Abilities.defineAbility('species/aasimar/celestial-resistance', {
   name: 'Celestial Resistance',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(Aasimar)],
   effects: [Effects.descriptive('You have Resistance to **Necrotic** and **Radiant** damage.')],
 })
 
 export const HealingHands = Abilities.defineAbility('species/aasimar/healing-hands', {
   name: 'Healing Hands',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(Aasimar)],
   effects: [
     Effects.descriptive(
       "As a **Magic action**, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled.\n\nOnce you use this trait, you can't use it again until you finish a Long Rest."
@@ -69,13 +75,12 @@ export const HealingHands = Abilities.defineAbility('species/aasimar/healing-han
 
 export const CelestialRevelation = Abilities.defineAbility('species/aasimar/celestial-revelation', {
   name: 'Celestial Revelation',
-  description: '',
   effects: [
     Effects.descriptive(
       "You transform for 1 minute or until you end it (no action required). Until the transformation ends, once on each of your turns you can deal extra damage to one target when you deal damage to it with an attack or a spell. The extra damage equals your Proficiency Bonus, and is Necrotic for Necrotic Shroud or Radiant otherwise.\n\nOnce you transform, you can't do so again until you finish a Long Rest."
     ),
   ], // Available from character level 3
-  prerequisites: [Expressions.greaterThanOrEqual(CharacterValues.Level, 3)],
+  prerequisites: [Traits.traitPrerequisite(Aasimar), Expressions.greaterThanOrEqual(CharacterValues.Level, 3)],
   resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
   costs: [{ cost: 1 }],
   actions: [
@@ -96,21 +101,6 @@ export const CelestialRevelation = Abilities.defineAbility('species/aasimar/cele
         'Your eyes briefly become pools of darkness, and flightless wings sprout from your back temporarily. Creatures other than your allies within 10 feet of you must succeed on a Charisma saving throw (DC 8 plus your Charisma modifier and Proficiency Bonus) or have the Frightened condition until the end of your next turn.',
       action: ActionTypes.BonusAction,
     },
-  ],
-})
-
-export const Aasimar = Traits.defineTrait('species/aasimar', {
-  name: 'Aasimar',
-  description:
-    'Mortals who carry a spark of the Upper Planes within their souls, able to fan that spark to bring light, ease wounds, and unleash the fury of the heavens.\n\n**Size:** Medium or Small. **Speed:** 30 feet.',
-  archetypes: [Species],
-  effects: [
-    Effects.gainCharacterOption(SelectSmallOrMedium),
-    Effects.gainAbility(CelestialResistance),
-    Effects.gainAbility(Darkvision),
-    Effects.gainAbility(HealingHands),
-    Effects.gainAbility(Spells.Light),
-    Effects.gainAbility(CelestialRevelation),
   ],
 })
 
@@ -165,7 +155,6 @@ export const Halfling = Traits.defineTrait('species/halfling', {
 // Skillful: proficiency in any one skill
 export const SelectSkillfulProficiency = CharacterOptions.selectTraitOption('species/human/select-skillful-proficiency', {
   name: 'Skillful',
-  description: '',
   filter: {
     archetypes: [SkillProficiencies.SkillProficiency],
   },

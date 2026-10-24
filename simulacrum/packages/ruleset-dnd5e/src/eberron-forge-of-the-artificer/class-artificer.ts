@@ -11,7 +11,6 @@ import * as Tools from '@simulacrum/ruleset-dnd5e/archetype/tool'
 import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
 import { SelectFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
-import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
 import { HomunculusServant } from '@simulacrum/ruleset-dnd5e/eberron-forge-of-the-artificer/spell'
 import { SelectMagicItemPlan } from '@simulacrum/ruleset-dnd5e/eberron-forge-of-the-artificer/magic-item-plan'
 
@@ -79,7 +78,6 @@ export const SpellList = [
 
 export const SelectSkillProficiency = CharacterOptions.selectTraitOption('artificer/select-skill-proficiency', {
   name: 'Skill Proficiency',
-  description: '',
   filter: {
     archetypes: [SkillProficiencies.SkillProficiency],
     specificOptions: [
@@ -96,13 +94,11 @@ export const SelectSkillProficiency = CharacterOptions.selectTraitOption('artifi
 
 export const SelectCantrip = CharacterOptions.selectAbilityOption('artificer/select-cantrip', {
   name: 'Cantrips',
-  description: '',
   filter: { specificOptions: CantripList },
 })
 
 export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('artificer/select-spell-up-to-rank-1', {
   name: 'Prepared Spells',
-  description: '',
   filter: {
     archetypes: [[Spells.Rank1]],
     specificOptions: SpellList,
@@ -111,7 +107,6 @@ export const SelectSpellUpToRank1 = CharacterOptions.selectAbilityOption('artifi
 
 export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('artificer/select-spell-up-to-rank-2', {
   name: 'Prepared Spells',
-  description: '',
   filter: {
     archetypes: [[Spells.Rank1, Spells.Rank2]],
     specificOptions: SpellList,
@@ -119,32 +114,6 @@ export const SelectSpellUpToRank2 = CharacterOptions.selectAbilityOption('artifi
 })
 
 const IntelligenceModifierUses = NumericExpressions.max([PlayerCharacteristics.IntelligenceModifier.variable, 1])
-
-export const Spellcasting = Abilities.defineAbility('artificer/spellcasting', {
-  name: 'Spellcasting',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      "You cast Artificer spells using **Intelligence**, producing them through tools: you must hold Thieves' Tools, Tinker's Tools, or Artisan's Tools you're proficient with as your Spellcasting Focus. You know two cantrips, and can replace one with another Artificer cantrip after a Long Rest."
-    ),
-    Effects.descriptive(
-      'You prepare a list of Artificer spells you can cast with your spell slots: 2 at level 1, rising to 6 by level 5. You can change the list after each Long Rest. You regain all spell slots on a Long Rest.'
-    ),
-  ],
-})
-
-export const TinkersMagic = Abilities.defineAbility('artificer/tinkers-magic', {
-  name: "Tinker's Magic",
-  description: '',
-  effects: [
-    Effects.descriptive(
-      "As a **Magic action** while holding Tinker's Tools, you create one item in an unoccupied space within 5 feet of you: Ball Bearings, a Basket, Bedroll, Bell, Blanket, Block and Tackle, Glass Bottle, Bucket, Caltrops, Candle, Crowbar, Flask, Grappling Hook, Hunting Trap, Jug, Lamp, Manacles, Net, Oil, Paper, Parchment, Pole, Pouch, Rope, Sack, Shovel, Iron Spikes, String, a Tinderbox, Torch, or Vial. It lasts until you finish a Long Rest, when it vanishes.\n\nYou can do this a number of times equal to your Intelligence modifier (minimum once), regaining all uses on a Long Rest. You also know the **Mending** cantrip."
-    ),
-  ],
-  resource: { size: IntelligenceModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
-  costs: [{ cost: 1 }],
-  actions: [{ name: "Use Tinker's Magic", action: ActionTypes.Action }],
-})
 
 export const Level1 = Traits.defineTrait('artificer/level-1', {
   name: 'Artificer',
@@ -164,30 +133,42 @@ export const Level1 = Traits.defineTrait('artificer/level-1', {
     Effects.gainCharacterOption(SelectCantrip),
     Effects.gainCharacterOption(SelectSpellUpToRank1),
     Effects.gainCharacterOption(SelectSpellUpToRank1),
-    Effects.gainAbility(Spellcasting),
-    Effects.gainAbility(TinkersMagic),
     Effects.gainAbility(Spells.Mending),
   ],
 })
 
-export const ReplicateMagicItem = Abilities.defineAbility('artificer/replicate-magic-item', {
-  name: 'Replicate Magic Item',
-  description: '',
+export const Spellcasting = Abilities.defineAbility('artificer/spellcasting', {
+  name: 'Spellcasting',
+  prerequisites: [Traits.traitPrerequisite(Level1)],
   effects: [
     Effects.descriptive(
-      "You know **four plans** for making magic items, and can replace one with another plan you qualify for whenever you gain an Artificer level.\n\nWhen you finish a Long Rest with Tinker's Tools in hand, you can create one or two different magic items, each from a different plan you know, and attune to them instantly if they require it. You can have no more than **two** items from this feature at once; creating another makes the oldest vanish.\n\nThe items vanish 1d4 days after you die, or immediately if you replace their plan. You can use a Wand or Weapon made this way as your Spellcasting Focus."
+      "You cast Artificer spells using **Intelligence**, producing them through tools: you must hold Thieves' Tools, Tinker's Tools, or Artisan's Tools you're proficient with as your Spellcasting Focus. You know two cantrips, and can replace one with another Artificer cantrip after a Long Rest."
+    ),
+    Effects.descriptive(
+      'You prepare a list of Artificer spells you can cast with your spell slots: 2 at level 1, rising to 6 by level 5. You can change the list after each Long Rest. You regain all spell slots on a Long Rest.'
     ),
   ],
 })
 
+export const TinkersMagic = Abilities.defineAbility('artificer/tinkers-magic', {
+  name: "Tinker's Magic",
+  prerequisites: [Traits.traitPrerequisite(Level1)],
+  effects: [
+    Effects.descriptive(
+      "As a **Magic action** while holding Tinker's Tools, you create one item in an unoccupied space within 5 feet of you: Ball Bearings, a Basket, Bedroll, Bell, Blanket, Block and Tackle, Glass Bottle, Bucket, Caltrops, Candle, Crowbar, Flask, Grappling Hook, Hunting Trap, Jug, Lamp, Manacles, Net, Oil, Paper, Parchment, Pole, Pouch, Rope, Sack, Shovel, Iron Spikes, String, a Tinderbox, Torch, or Vial. It lasts until you finish a Long Rest, when it vanishes.\n\nYou can do this a number of times equal to your Intelligence modifier (minimum once), regaining all uses on a Long Rest. You also know the **Mending** cantrip."
+    ),
+  ],
+  resource: { size: IntelligenceModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+  actions: [{ name: "Use Tinker's Magic", action: ActionTypes.Action }],
+})
+
 export const Level2 = Traits.defineTrait('artificer/level-2', {
   name: 'Artificer (2)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   archetypes: [Class],
   effects: [
     Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
-    Effects.gainAbility(ReplicateMagicItem),
     Effects.gainCharacterOption(SelectMagicItemPlan),
     Effects.gainCharacterOption(SelectMagicItemPlan),
     Effects.gainCharacterOption(SelectMagicItemPlan),
@@ -196,10 +177,19 @@ export const Level2 = Traits.defineTrait('artificer/level-2', {
   ],
 })
 
-export const ArtificerSubclass = Archetypes.defineArchetype('artificer/subclass', { name: 'Artificer Subclass', description: '' })
+export const ReplicateMagicItem = Abilities.defineAbility('artificer/replicate-magic-item', {
+  name: 'Replicate Magic Item',
+  prerequisites: [Traits.traitPrerequisite(Level2)],
+  effects: [
+    Effects.descriptive(
+      "You know **four plans** for making magic items, and can replace one with another plan you qualify for whenever you gain an Artificer level.\n\nWhen you finish a Long Rest with Tinker's Tools in hand, you can create one or two different magic items, each from a different plan you know, and attune to them instantly if they require it. You can have no more than **two** items from this feature at once; creating another makes the oldest vanish.\n\nThe items vanish 1d4 days after you die, or immediately if you replace their plan. You can use a Wand or Weapon made this way as your Spellcasting Focus."
+    ),
+  ],
+})
+
+export const ArtificerSubclass = Archetypes.defineArchetype('artificer/subclass', { name: 'Artificer Subclass' })
 export const SelectArtificerSubclass = CharacterOptions.selectTraitOption('artificer/select-subclass', {
   name: 'Artificer Subclass',
-  description: '',
   filter: {
     archetypes: [ArtificerSubclass],
   },
@@ -207,7 +197,6 @@ export const SelectArtificerSubclass = CharacterOptions.selectTraitOption('artif
 
 export const Level3 = Traits.defineTrait('artificer/level-3', {
   name: 'Artificer (3)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level2)],
   archetypes: [Class],
   effects: [
@@ -219,7 +208,6 @@ export const Level3 = Traits.defineTrait('artificer/level-3', {
 
 export const Level4 = Traits.defineTrait('artificer/level-4', {
   name: 'Artificer (4)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   archetypes: [Class],
   effects: [
@@ -232,7 +220,6 @@ export const Level4 = Traits.defineTrait('artificer/level-4', {
 
 export const Level5 = Traits.defineTrait('artificer/level-5', {
   name: 'Artificer (5)',
-  description: '',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   archetypes: [Class],
   effects: [
@@ -241,8 +228,7 @@ export const Level5 = Traits.defineTrait('artificer/level-5', {
   ],
 })
 
-// Each subclass's spells are always prepared, so they're granted without a loadout: two (or three) from Artificer level 3, and two more
-// once its prerequisite of Artificer level 5 is met
+// Each subclass's spells are always prepared, so they're granted without a loadout
 
 export const AlchemistToolsOfTheTrade = Traits.defineTrait('artificer/alchemist-tools-of-the-trade', {
   name: 'Tools of the Trade',
@@ -251,29 +237,15 @@ export const AlchemistToolsOfTheTrade = Traits.defineTrait('artificer/alchemist-
   effects: [Effects.gainTrait(ArtisansTools.AlchemistsSupplies), Effects.gainTrait(Tools.HerbalismKit)],
 })
 
-export const AlchemistSpellsLevel5 = Traits.defineTrait('artificer/alchemist-spells-level-5', {
-  name: 'Alchemist Spells (Level 5)',
-  description: "You always have **Flaming Sphere** and **Melf's Acid Arrow** prepared.",
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.FlamingSphere), Effects.gainAbility(Spells.MelfsAcidArrow)],
-})
-
 export const AlchemistSpells = Traits.defineTrait('artificer/alchemist-spells', {
   name: 'Alchemist Spells',
   description:
     "You always have **Healing Word** and **Ray of Sickness** prepared. At Artificer level 5, you also always have **Flaming Sphere** and **Melf's Acid Arrow** prepared.",
-  effects: [Effects.gainAbility(Spells.HealingWord), Effects.gainAbility(Spells.RayOfSickness), Effects.gainTrait(AlchemistSpellsLevel5)],
-})
-
-export const ExperimentalElixir = Abilities.defineAbility('artificer/experimental-elixir', {
-  name: 'Experimental Elixir',
-  description: '',
   effects: [
-    Effects.descriptive(
-      "When you finish a Long Rest holding Alchemist's Supplies, you produce **two elixirs** (three at Artificer level 5), rolling a d6 for each one's effect. Any left over vanish on your next Long Rest. A creature can drink an elixir, or give it to a creature within 5 feet, as a Bonus Action.\n\n**1 Healing:** regain 2d8 + your Intelligence modifier Hit Points. **2 Swiftness:** +10 feet Speed for 1 hour. **3 Resilience:** +1 AC for 10 minutes. **4 Boldness:** add 1d4 to attack rolls and saving throws for 1 minute. **5 Flight:** a 10-foot Fly Speed for 10 minutes. **6** choose another effect.\n\nAs a Magic action while holding Alchemist's Supplies, you can expend a spell slot to create another elixir, choosing its effect instead of rolling."
-    ),
+    Effects.gainAbility(Spells.HealingWord),
+    Effects.gainAbility(Spells.RayOfSickness),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.FlamingSphere), Effects.gainAbility(Spells.MelfsAcidArrow)]),
   ],
-  actions: [{ name: 'Create an Elixir', action: ActionTypes.Action }],
 })
 
 export const AlchemicalSavant = Traits.defineTrait('artificer/alchemical-savant', {
@@ -288,12 +260,18 @@ export const Alchemist = Traits.defineTrait('artificer/alchemist', {
   name: 'Alchemist',
   description: 'An expert at **combining reagents** to produce magical effects, using their creations to give life and to leech it away.',
   archetypes: [ArtificerSubclass],
+  effects: [Effects.gainTrait(AlchemistToolsOfTheTrade), Effects.gainTrait(AlchemistSpells), Effects.gainTrait(AlchemicalSavant)],
+})
+
+export const ExperimentalElixir = Abilities.defineAbility('artificer/experimental-elixir', {
+  name: 'Experimental Elixir',
+  prerequisites: [Traits.traitPrerequisite(Alchemist)],
   effects: [
-    Effects.gainTrait(AlchemistToolsOfTheTrade),
-    Effects.gainTrait(AlchemistSpells),
-    Effects.gainAbility(ExperimentalElixir),
-    Effects.gainTrait(AlchemicalSavant),
+    Effects.descriptive(
+      "When you finish a Long Rest holding Alchemist's Supplies, you produce **two elixirs** (three at Artificer level 5), rolling a d6 for each one's effect. Any left over vanish on your next Long Rest. A creature can drink an elixir, or give it to a creature within 5 feet, as a Bonus Action.\n\n**1 Healing:** regain 2d8 + your Intelligence modifier Hit Points. **2 Swiftness:** +10 feet Speed for 1 hour. **3 Resilience:** +1 AC for 10 minutes. **4 Boldness:** add 1d4 to attack rolls and saving throws for 1 minute. **5 Flight:** a 10-foot Fly Speed for 10 minutes. **6** choose another effect.\n\nAs a Magic action while holding Alchemist's Supplies, you can expend a spell slot to create another elixir, choosing its effect instead of rolling."
+    ),
   ],
+  actions: [{ name: 'Create an Elixir', action: ActionTypes.Action }],
 })
 
 export const ArmorerToolsOfTheTrade = Traits.defineTrait('artificer/armorer-tools-of-the-trade', {
@@ -303,37 +281,31 @@ export const ArmorerToolsOfTheTrade = Traits.defineTrait('artificer/armorer-tool
   effects: [Effects.gainTrait(ArtisansTools.SmithsTools)],
 })
 
-export const ArmorerSpellsLevel5 = Traits.defineTrait('artificer/armorer-spells-level-5', {
-  name: 'Armorer Spells (Level 5)',
-  description: 'You always have **Mirror Image** and **Shatter** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.MirrorImage), Effects.gainAbility(Spells.Shatter)],
-})
-
 export const ArmorerSpells = Traits.defineTrait('artificer/armorer-spells', {
   name: 'Armorer Spells',
   description:
     'You always have **Magic Missile** and **Thunderwave** prepared. At Artificer level 5, you also always have **Mirror Image** and **Shatter** prepared.',
-  effects: [Effects.gainAbility(Spells.MagicMissile), Effects.gainAbility(Spells.Thunderwave), Effects.gainTrait(ArmorerSpellsLevel5)],
-})
-
-export const ArcaneArmor = Abilities.defineAbility('artificer/arcane-armor', {
-  name: 'Arcane Armor',
-  description: '',
   effects: [
-    Effects.descriptive(
-      "As a **Magic action** with Smith's Tools in hand, you turn a suit of armor you're wearing into Arcane Armor until you don another suit or die. While wearing it, you ignore its Strength requirement, can don or doff it as a Utilize action (it can't be removed against your will), and can use it as your Spellcasting Focus."
-    ),
+    Effects.gainAbility(Spells.MagicMissile),
+    Effects.gainAbility(Spells.Thunderwave),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.MirrorImage), Effects.gainAbility(Spells.Shatter)]),
   ],
-  actions: [{ name: 'Create Arcane Armor', action: ActionTypes.Action }],
 })
 
 // The armor's model can be changed after a Short or Long Rest, so the models are swapped in and out of a single loadout slot
-export const ArmorModelLoadout = Loadout.defineLoadoutType('armor-model', { name: 'Armor Model', description: '' })
+export const ArmorModelLoadout = Loadout.defineLoadoutType('armor-model', { name: 'Armor Model' })
+
+export const ArmorModel = Traits.defineTrait('artificer/armor-model', {
+  name: 'Armor Model',
+  description:
+    "You customize your Arcane Armor as a **Dreadnaught**, **Guardian**, or **Infiltrator**, each with its own special weapon. You can change the model whenever you finish a Short or Long Rest with Smith's Tools in hand.",
+  effects: [Effects.gainLoadoutSlot(ArmorModelLoadout)],
+})
 
 export const Dreadnaught = Abilities.defineAbility('artificer/armor-model/dreadnaught', {
   name: 'Dreadnaught',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(ArmorModel)],
+  loadout: ArmorModelLoadout,
   effects: [
     Effects.descriptive(
       '**Force Demolisher:** a Simple Melee weapon with the Reach property that deals 1d10 Force damage, using your Intelligence modifier for its attack and damage rolls. When you hit a creature at least one size smaller than you, you can push it up to 10 feet away or pull it up to 10 feet toward you.'
@@ -352,7 +324,8 @@ export const Dreadnaught = Abilities.defineAbility('artificer/armor-model/dreadn
 
 export const Guardian = Abilities.defineAbility('artificer/armor-model/guardian', {
   name: 'Guardian',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(ArmorModel)],
+  loadout: ArmorModelLoadout,
   effects: [
     Effects.descriptive(
       '**Thunder Pulse:** a Simple Melee weapon that deals 1d8 Thunder damage, using your Intelligence modifier for its attack and damage rolls. A creature it hits has Disadvantage on attack rolls against targets other than you until the start of your next turn.'
@@ -369,7 +342,8 @@ export const Guardian = Abilities.defineAbility('artificer/armor-model/guardian'
 
 export const Infiltrator = Abilities.defineAbility('artificer/armor-model/infiltrator', {
   name: 'Infiltrator',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(ArmorModel)],
+  loadout: ArmorModelLoadout,
   effects: [
     Effects.descriptive(
       '**Lightning Launcher:** a Simple Ranged weapon (range 90/300 feet) that deals 1d6 Lightning damage, using your Intelligence modifier for its attack and damage rolls. Once on each of your turns when you hit a creature with it, you can deal an extra 1d6 Lightning damage to that target.'
@@ -381,37 +355,29 @@ export const Infiltrator = Abilities.defineAbility('artificer/armor-model/infilt
   actions: [{ name: 'Attack with Lightning Launcher', action: ActionTypes.Action }],
 })
 
-export const ArmorModel = Traits.defineTrait('artificer/armor-model', {
-  name: 'Armor Model',
-  description:
-    "You customize your Arcane Armor as a **Dreadnaught**, **Guardian**, or **Infiltrator**, each with its own special weapon. You can change the model whenever you finish a Short or Long Rest with Smith's Tools in hand.",
-  effects: [
-    Effects.gainLoadoutSlot(ArmorModelLoadout),
-    Effects.gainAbility(Dreadnaught, ArmorModelLoadout),
-    Effects.gainAbility(Guardian, ArmorModelLoadout),
-    Effects.gainAbility(Infiltrator, ArmorModelLoadout),
-  ],
-})
-
-export const ArmorerExtraAttack = Traits.defineTrait('artificer/armorer-extra-attack', {
-  name: 'Extra Attack',
-  description: 'You can attack **twice**, instead of once, whenever you take the Attack action on your turn.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Fighter.ExtraAttack)],
-})
-
 export const Armorer = Traits.defineTrait('artificer/armorer', {
   name: 'Armorer',
   description:
     'An inventor who modifies armor to function almost like a **second skin**, honing their magic, unleashing potent attacks, and generating a formidable defense.',
   archetypes: [ArtificerSubclass],
+  effects: [Effects.gainTrait(ArmorerToolsOfTheTrade), Effects.gainTrait(ArmorerSpells), Effects.gainTrait(ArmorModel)],
+})
+
+export const ArmorerExtraAttack = Abilities.defineAbility('artificer/armorer-extra-attack', {
+  name: 'Extra Attack',
+  prerequisites: [Traits.traitPrerequisite(Armorer), Traits.traitPrerequisite(Level5)],
+  effects: [Effects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
+})
+
+export const ArcaneArmor = Abilities.defineAbility('artificer/arcane-armor', {
+  name: 'Arcane Armor',
+  prerequisites: [Traits.traitPrerequisite(Armorer)],
   effects: [
-    Effects.gainTrait(ArmorerToolsOfTheTrade),
-    Effects.gainTrait(ArmorerSpells),
-    Effects.gainAbility(ArcaneArmor),
-    Effects.gainTrait(ArmorModel),
-    Effects.gainTrait(ArmorerExtraAttack),
+    Effects.descriptive(
+      "As a **Magic action** with Smith's Tools in hand, you turn a suit of armor you're wearing into Arcane Armor until you don another suit or die. While wearing it, you ignore its Strength requirement, can don or doff it as a Utilize action (it can't be removed against your will), and can use it as your Spellcasting Focus."
+    ),
   ],
+  actions: [{ name: 'Create Arcane Armor', action: ActionTypes.Action }],
 })
 
 export const ArtilleristToolsOfTheTrade = Traits.defineTrait('artificer/artillerist-tools-of-the-trade', {
@@ -421,23 +387,35 @@ export const ArtilleristToolsOfTheTrade = Traits.defineTrait('artificer/artiller
   effects: [Effects.gainTrait(ArtisansTools.WoodcarversTools)],
 })
 
-export const ArtilleristSpellsLevel5 = Traits.defineTrait('artificer/artillerist-spells-level-5', {
-  name: 'Artillerist Spells (Level 5)',
-  description: 'You always have **Scorching Ray** and **Shatter** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.ScorchingRay), Effects.gainAbility(Spells.Shatter)],
-})
-
 export const ArtilleristSpells = Traits.defineTrait('artificer/artillerist-spells', {
   name: 'Artillerist Spells',
   description:
     'You always have **Shield** and **Thunderwave** prepared. At Artificer level 5, you also always have **Scorching Ray** and **Shatter** prepared.',
-  effects: [Effects.gainAbility(Spells.Shield), Effects.gainAbility(Spells.Thunderwave), Effects.gainTrait(ArtilleristSpellsLevel5)],
+  effects: [
+    Effects.gainAbility(Spells.Shield),
+    Effects.gainAbility(Spells.Thunderwave),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.ScorchingRay), Effects.gainAbility(Spells.Shatter)]),
+  ],
+})
+
+export const ArcaneFirearm = Traits.defineTrait('artificer/arcane-firearm', {
+  name: 'Arcane Firearm',
+  description:
+    "When you finish a Long Rest, you can use Woodcarver's Tools to carve sigils into a Rod, Staff, Wand, or Martial Ranged weapon, making it your Arcane Firearm. You can use it as your Spellcasting Focus, and when you cast an Artificer spell through it, roll a d8 and add the number rolled to one of the spell's damage rolls.",
+  prerequisites: [Traits.traitPrerequisite(Level5)],
+  effects: [],
+})
+
+export const Artillerist = Traits.defineTrait('artificer/artillerist', {
+  name: 'Artillerist',
+  description: 'A specialist in using magic to **hurl energy, projectiles, and explosions** on a battlefield.',
+  archetypes: [ArtificerSubclass],
+  effects: [Effects.gainTrait(ArtilleristToolsOfTheTrade), Effects.gainTrait(ArtilleristSpells), Effects.gainTrait(ArcaneFirearm)],
 })
 
 export const EldritchCannon = Abilities.defineAbility('artificer/eldritch-cannon', {
   name: 'Eldritch Cannon',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(Artillerist)],
   effects: [
     Effects.descriptive(
       "As a **Magic action** using Smith's Tools or Woodcarver's Tools, you create a Small or Tiny Eldritch Cannon on a horizontal surface within 5 feet of you. It has AC 18 and Hit Points equal to five times your Artificer level, and is immune to Poison and Psychic damage. It disappears after 1 hour or at 0 Hit Points, and you can dismiss it as a Magic action. You can have only one cannon at a time, and can create one again after a Long Rest or by expending a spell slot."
@@ -454,26 +432,6 @@ export const EldritchCannon = Abilities.defineAbility('artificer/eldritch-cannon
   ],
 })
 
-export const ArcaneFirearm = Traits.defineTrait('artificer/arcane-firearm', {
-  name: 'Arcane Firearm',
-  description:
-    "When you finish a Long Rest, you can use Woodcarver's Tools to carve sigils into a Rod, Staff, Wand, or Martial Ranged weapon, making it your Arcane Firearm. You can use it as your Spellcasting Focus, and when you cast an Artificer spell through it, roll a d8 and add the number rolled to one of the spell's damage rolls.",
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [],
-})
-
-export const Artillerist = Traits.defineTrait('artificer/artillerist', {
-  name: 'Artillerist',
-  description: 'A specialist in using magic to **hurl energy, projectiles, and explosions** on a battlefield.',
-  archetypes: [ArtificerSubclass],
-  effects: [
-    Effects.gainTrait(ArtilleristToolsOfTheTrade),
-    Effects.gainTrait(ArtilleristSpells),
-    Effects.gainAbility(EldritchCannon),
-    Effects.gainTrait(ArcaneFirearm),
-  ],
-})
-
 export const BattleSmithToolsOfTheTrade = Traits.defineTrait('artificer/battle-smith-tools-of-the-trade', {
   name: 'Tools of the Trade',
   description:
@@ -481,18 +439,15 @@ export const BattleSmithToolsOfTheTrade = Traits.defineTrait('artificer/battle-s
   effects: [Effects.gainTrait(ArtisansTools.SmithsTools)],
 })
 
-export const BattleSmithSpellsLevel5 = Traits.defineTrait('artificer/battle-smith-spells-level-5', {
-  name: 'Battle Smith Spells (Level 5)',
-  description: 'You always have **Shining Smite** and **Warding Bond** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.ShiningSmite), Effects.gainAbility(Spells.WardingBond)],
-})
-
 export const BattleSmithSpells = Traits.defineTrait('artificer/battle-smith-spells', {
   name: 'Battle Smith Spells',
   description:
     'You always have **Heroism** and **Shield** prepared. At Artificer level 5, you also always have **Shining Smite** and **Warding Bond** prepared.',
-  effects: [Effects.gainAbility(Spells.Heroism), Effects.gainAbility(Spells.Shield), Effects.gainTrait(BattleSmithSpellsLevel5)],
+  effects: [
+    Effects.gainAbility(Spells.Heroism),
+    Effects.gainAbility(Spells.Shield),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.ShiningSmite), Effects.gainAbility(Spells.WardingBond)]),
+  ],
 })
 
 export const BattleReady = Traits.defineTrait('artificer/battle-ready', {
@@ -502,9 +457,27 @@ export const BattleReady = Traits.defineTrait('artificer/battle-ready', {
   effects: [],
 })
 
+export const BattleSmith = Traits.defineTrait('artificer/battle-smith', {
+  name: 'Battle Smith',
+  description:
+    'A combination of **protector and medic**, expert at defending others and repairing both materiel and personnel, accompanied by a Steel Defender of their own creation.',
+  archetypes: [ArtificerSubclass],
+  effects: [Effects.gainTrait(BattleSmithToolsOfTheTrade), Effects.gainTrait(BattleSmithSpells), Effects.gainTrait(BattleReady)],
+})
+
+export const BattleSmithExtraAttack = Abilities.defineAbility('artificer/battle-smith-extra-attack', {
+  name: 'Extra Attack',
+  prerequisites: [Traits.traitPrerequisite(BattleSmith), Traits.traitPrerequisite(Level5)],
+  effects: [
+    Effects.descriptive(
+      'You can attack **twice**, instead of once, whenever you take the Attack action on your turn. You can forgo one of those attacks to command your Steel Defender to use its Force-Empowered Rend.'
+    ),
+  ],
+})
+
 export const SteelDefender = Abilities.defineAbility('artificer/steel-defender', {
   name: 'Steel Defender',
-  description: '',
+  prerequisites: [Traits.traitPrerequisite(BattleSmith)],
   effects: [
     Effects.descriptive(
       'You are accompanied by a **Steel Defender**, a Medium Construct with AC 12 + your Intelligence modifier, Hit Points equal to 5 + five times your Artificer level, and a Speed of 40 feet. It adds your Proficiency Bonus to its ability checks and saving throws, and vanishes if you die.'
@@ -522,50 +495,11 @@ export const SteelDefender = Abilities.defineAbility('artificer/steel-defender',
   ],
 })
 
-export const BattleSmithExtraAttack = Abilities.defineAbility('artificer/battle-smith-extra-attack', {
-  name: 'Extra Attack',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      'You can attack **twice**, instead of once, whenever you take the Attack action on your turn. You can forgo one of those attacks to command your Steel Defender to use its Force-Empowered Rend.'
-    ),
-  ],
-})
-
-export const BattleSmithLevel5 = Traits.defineTrait('artificer/battle-smith-level-5', {
-  name: 'Extra Attack',
-  description:
-    'You can attack **twice**, instead of once, whenever you take the Attack action on your turn, and can forgo one of those attacks to command your Steel Defender.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(BattleSmithExtraAttack)],
-})
-
-export const BattleSmith = Traits.defineTrait('artificer/battle-smith', {
-  name: 'Battle Smith',
-  description:
-    'A combination of **protector and medic**, expert at defending others and repairing both materiel and personnel, accompanied by a Steel Defender of their own creation.',
-  archetypes: [ArtificerSubclass],
-  effects: [
-    Effects.gainTrait(BattleSmithToolsOfTheTrade),
-    Effects.gainTrait(BattleSmithSpells),
-    Effects.gainTrait(BattleReady),
-    Effects.gainAbility(SteelDefender),
-    Effects.gainTrait(BattleSmithLevel5),
-  ],
-})
-
 export const CartographerToolsOfTheTrade = Traits.defineTrait('artificer/cartographer-tools-of-the-trade', {
   name: 'Tools of the Trade',
   description:
     "You gain proficiency with **Calligrapher's Supplies** and **Cartographer's Tools** (or with another type of Artisan's Tools for each you already have). Scribing a Spell Scroll takes you half the usual time.",
   effects: [Effects.gainTrait(ArtisansTools.CalligraphersSupplies), Effects.gainTrait(ArtisansTools.CartographersTools)],
-})
-
-export const CartographerSpellsLevel5 = Traits.defineTrait('artificer/cartographer-spells-level-5', {
-  name: 'Cartographer Spells (Level 5)',
-  description: 'You always have **Locate Object** and **Mind Spike** prepared.',
-  prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.gainAbility(Spells.LocateObject), Effects.gainAbility(Spells.MindSpike)],
 })
 
 export const CartographerSpells = Traits.defineTrait('artificer/cartographer-spells', {
@@ -576,42 +510,8 @@ export const CartographerSpells = Traits.defineTrait('artificer/cartographer-spe
     Effects.gainAbility(Spells.FaerieFire),
     Effects.gainAbility(Spells.GuidingBolt),
     Effects.gainAbility(Spells.HealingWord),
-    Effects.gainTrait(CartographerSpellsLevel5),
+    Effects.conditional(Traits.traitPrerequisite(Level5), [Effects.gainAbility(Spells.LocateObject), Effects.gainAbility(Spells.MindSpike)]),
   ],
-})
-
-export const AdventurersAtlas = Abilities.defineAbility('artificer/adventurers-atlas', {
-  name: "Adventurer's Atlas",
-  description: '',
-  effects: [
-    Effects.descriptive(
-      "When you finish a Long Rest holding Cartographer's Tools, you create magical maps for at least two creatures you touch (which can include you), up to 1 + your Intelligence modifier creatures. The maps last until you die or use this feature again.\n\nA map holder adds 1d4 to its Initiative rolls and knows the location of every other map holder on the same plane. It can target another map holder with a spell or effect that requires seeing the target, regardless of sight or cover, as long as they're within range."
-    ),
-  ],
-})
-
-export const IlluminatedCartography = Abilities.defineAbility('artificer/illuminated-cartography', {
-  name: 'Illuminated Cartography',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      'You can cast **Faerie Fire** without expending a spell slot, outlining the affected creatures as if in ink. You can do this a number of times equal to your Intelligence modifier (minimum once), regaining all uses on a Long Rest.'
-    ),
-  ],
-  resource: { size: IntelligenceModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
-  costs: [{ cost: 1 }],
-  actions: [{ name: 'Cast Faerie Fire', action: ActionTypes.Action }],
-})
-
-export const PortalJump = Abilities.defineAbility('artificer/portal-jump', {
-  name: 'Portal Jump',
-  description: '',
-  effects: [
-    Effects.descriptive(
-      "On your turn, you can spend movement equal to half your Speed to teleport to an unoccupied space you can see within 10 feet of you, or within 5 feet of a creature within 30 feet of you that's holding one of your Adventurer's Atlas maps. You can't do this if your Speed is 0."
-    ),
-  ],
-  actions: [{ name: 'Use Portal Jump', action: ActionTypes.Free }],
 })
 
 export const GuidedPrecision = Traits.defineTrait('artificer/guided-precision', {
@@ -627,12 +527,39 @@ export const Cartographer = Traits.defineTrait('artificer/cartographer', {
   description:
     'A premier **navigator and reconnaissance agent** whose creations highlight threats, safeguard allies, and carve portals to distant locations.',
   archetypes: [ArtificerSubclass],
+  effects: [Effects.gainTrait(CartographerToolsOfTheTrade), Effects.gainTrait(CartographerSpells), Effects.gainTrait(GuidedPrecision)],
+})
+
+export const AdventurersAtlas = Abilities.defineAbility('artificer/adventurers-atlas', {
+  name: "Adventurer's Atlas",
+  prerequisites: [Traits.traitPrerequisite(Cartographer)],
   effects: [
-    Effects.gainTrait(CartographerToolsOfTheTrade),
-    Effects.gainTrait(CartographerSpells),
-    Effects.gainAbility(AdventurersAtlas),
-    Effects.gainAbility(IlluminatedCartography),
-    Effects.gainAbility(PortalJump),
-    Effects.gainTrait(GuidedPrecision),
+    Effects.descriptive(
+      "When you finish a Long Rest holding Cartographer's Tools, you create magical maps for at least two creatures you touch (which can include you), up to 1 + your Intelligence modifier creatures. The maps last until you die or use this feature again.\n\nA map holder adds 1d4 to its Initiative rolls and knows the location of every other map holder on the same plane. It can target another map holder with a spell or effect that requires seeing the target, regardless of sight or cover, as long as they're within range."
+    ),
   ],
+})
+
+export const IlluminatedCartography = Abilities.defineAbility('artificer/illuminated-cartography', {
+  name: 'Illuminated Cartography',
+  prerequisites: [Traits.traitPrerequisite(Cartographer)],
+  effects: [
+    Effects.descriptive(
+      'You can cast **Faerie Fire** without expending a spell slot, outlining the affected creatures as if in ink. You can do this a number of times equal to your Intelligence modifier (minimum once), regaining all uses on a Long Rest.'
+    ),
+  ],
+  resource: { size: IntelligenceModifierUses, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+  actions: [{ name: 'Cast Faerie Fire', action: ActionTypes.Action }],
+})
+
+export const PortalJump = Abilities.defineAbility('artificer/portal-jump', {
+  name: 'Portal Jump',
+  prerequisites: [Traits.traitPrerequisite(Cartographer)],
+  effects: [
+    Effects.descriptive(
+      "On your turn, you can spend movement equal to half your Speed to teleport to an unoccupied space you can see within 10 feet of you, or within 5 feet of a creature within 30 feet of you that's holding one of your Adventurer's Atlas maps. You can't do this if your Speed is 0."
+    ),
+  ],
+  actions: [{ name: 'Use Portal Jump', action: ActionTypes.Free }],
 })

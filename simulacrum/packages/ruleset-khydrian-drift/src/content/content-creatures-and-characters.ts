@@ -1,12 +1,33 @@
 import { Content } from '@simulacrum/ruleset'
-import { PlayerCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { SelectClassOption } from '@simulacrum/ruleset-khydrian-drift/character-option'
+import {
+  FortitudeDefense,
+  ArmorClass,
+  InitiativeRating,
+  MovementSpeed,
+  ProficiencyBonus,
+  ReflexDefense,
+  SoakRating,
+  StaminaPool,
+  VitalityPool,
+  WillDefense,
+  BrawnAttackRating,
+  AgilityAttackRating,
+  WillpowerAttackRating,
+  IntelligenceAttackRating,
+  Brawn,
+  Agility,
+  Willpower,
+  Intelligence,
+  Presence,
+} from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
 export const CreaturesAndCharacters = Content.defineSection('creatures-and-characters', {
   content: {
     name: 'Creatures and Characters',
     description: `This section details the core statistics, resources, and attributes for both creatures and player characters in Khydrian Drift, providing the essential framework for interaction and combat within the game world.
 
-The distinction lies in their role: creatures are primarily non-player entities controlled by the GM, characterized by fixed statistics. In contrast, player characters are highly customizable, player-driven entities defined by their unique combination of [Class](content:characters/class), [Race](content:characters/race), and [Attributes](content:characters/attributes).`,
+The distinction lies in their role: creatures are primarily non-player entities controlled by the GM, characterized by fixed statistics. In contrast, player characters are highly customizable, player-driven entities defined by their unique combination of [Class](character-option:select-class-option), [Race](content:characters/race), and [Attributes](content:characters/attributes).`,
   },
 })
 
@@ -14,11 +35,11 @@ export const AnatomyOfACreature = Content.defineSection('creatures', {
   parent: CreaturesAndCharacters,
   content: {
     name: 'Anatomy of a Creature',
-    description: `This section details the fundamental attributes and resources, such as [vitality](characteristic:vitality-pool), [defense](content:creatures/defense-rating), and [movement speed](content:creatures/movement-speed), that collectively define a creature's core capabilities in the game world.`,
+    description: `This section details the fundamental attributes and resources, such as [vitality](characteristic:vitality-pool), [defense](content:creatures/defense-rating), and [movement speed](characteristic:movement-speed), that collectively define a creature's core capabilities in the game world.`,
   },
 })
 
-export const CreatureVitalityPool = Content.linkEntity(AnatomyOfACreature, PlayerCharacteristics.VitalityPool)
+export const CreatureVitalityPool = Content.linkEntity(AnatomyOfACreature, VitalityPool)
 
 export const CreatureVitalityPoints = Content.defineSection('creatures/vitality-points', {
   parent: CreatureVitalityPool,
@@ -30,7 +51,7 @@ Whenever a character’s vitality points reaches zero, it is [incapacitated](con
   },
 })
 
-export const CreatureStaminaPool = Content.linkEntity(AnatomyOfACreature, PlayerCharacteristics.StaminaPool)
+export const CreatureStaminaPool = Content.linkEntity(AnatomyOfACreature, StaminaPool)
 
 export const CreatureStaminaPoints = Content.defineSection('creatures/stamina-points', {
   parent: CreatureStaminaPool,
@@ -42,7 +63,7 @@ If a creature does not have enough stamina points to cover an action’s cost th
   },
 })
 
-export const CreatureSoakRating = Content.linkEntity(AnatomyOfACreature, PlayerCharacteristics.SoakRating)
+export const CreatureSoakRating = Content.linkEntity(AnatomyOfACreature, SoakRating)
 
 export const CreatureSoakPoints = Content.defineSection('creatures/soak-points', {
   parent: CreatureSoakRating,
@@ -56,61 +77,21 @@ export const CreatureDefenseRating = Content.defineSection('creatures/defense-ra
   parent: AnatomyOfACreature,
   content: {
     name: 'Defense Rating',
-    description: `Defense rating represents how hard it is to hit a creature with an attack. The more defense rating a creature has, the harder it is to hit. There are four types of defenses: [Guard](content:creatures/guard), [Fortitude](content:creatures/fortitude), [Reflex](content:creatures/reflex) and [Will](content:creatures/will). Different attacks will target types of defenses.`,
+    description: `Defense rating represents how hard it is to hit a creature with an attack. The more defense rating a creature has, the harder it is to hit. There are four types of defenses: [Armor Class](characteristic:armor-class), [Fortitude](characteristic:fortitude), [Reflex](characteristic:reflex) and [Will](characteristic:will). Different attacks will target types of defenses.`,
   },
 })
 
-export const GuardDefense = Content.defineSection('creatures/guard', {
-  parent: CreatureDefenseRating,
-  content: {
-    name: 'Guard',
-    description: `Guard represents how hard a creature is to hit with physical attacks such as weapons and guns, either by dodging the attack or by being heavily armored. This is by far the most common type of defense.`,
-  },
-})
+export const CreatureArmorClass = Content.linkEntity(CreatureDefenseRating, ArmorClass)
 
-export const FortitudeDefense = Content.defineSection('creatures/fortitude', {
-  parent: CreatureDefenseRating,
-  content: {
-    name: 'Fortitude',
-    description: `Fortitude represents how well a creature can overcome attacks on their body through sheer fortitude and might.`,
-  },
-})
+export const CreatureFortitudeDefense = Content.linkEntity(CreatureDefenseRating, FortitudeDefense)
 
-export const ReflexDefense = Content.defineSection('creatures/reflex', {
-  parent: CreatureDefenseRating,
-  content: {
-    name: 'Reflex',
-    description: `Reflex represents how well a creature can dodge attacks.`,
-  },
-})
+export const CreatureReflexDefense = Content.linkEntity(CreatureDefenseRating, ReflexDefense)
 
-export const WillDefense = Content.defineSection('creatures/will', {
-  parent: CreatureDefenseRating,
-  content: {
-    name: 'Will',
-    description: `Will represents how well a creature can withstand mental effects through sheer force of will.`,
-  },
-})
+export const CreatureWillDefense = Content.linkEntity(CreatureDefenseRating, WillDefense)
 
-export const CreatureMovementSpeed = Content.defineSection('creatures/movement-speed', {
-  parent: AnatomyOfACreature,
-  content: {
-    name: 'Movement Speed',
-    description: `Movement speed represents how far a creature can move on its turn. This speed is typically given in squares, where one square represents about five feet of movement.
+export const CreatureMovementSpeed = Content.linkEntity(AnatomyOfACreature, MovementSpeed)
 
-Some creatures have different types of movement, such as [flying](content:combat/flying-movement) or [climbing](content:combat/climbing). These different types of movement will have separate speeds and will be indicated in the creature’s statistics.
-
-Learn more about movement in the [Movement and Position](content:combat/movement-and-position) section of the rules.`,
-  },
-})
-
-export const CreatureInitiativeRating = Content.defineSection('creatures/initiative-rating', {
-  parent: AnatomyOfACreature,
-  content: {
-    name: 'Initiative Rating',
-    description: `Initiative rating represents how quickly a creature can react to circumstances in combat. Initiative rating is added to [initiative rolls](content:combat/initiative) at the start of combat.`,
-  },
-})
+export const CreatureInitiativeRating = Content.linkEntity(AnatomyOfACreature, InitiativeRating)
 
 export const CreatureSize = Content.defineSection('creatures/size', {
   parent: AnatomyOfACreature,
@@ -288,15 +269,7 @@ export const AnatomyOfACharacter = Content.defineSection('characters', {
   },
 })
 
-export const CharacterClass = Content.defineSection('characters/class', {
-  parent: AnatomyOfACharacter,
-  content: {
-    name: 'Class',
-    description: `Class is the primary definition of what your character can do. It’s more than a profession; it’s your character’s calling. Class shapes the way you think about the world, how you interact with it, and your relationship with other people and powers in the universe.
-
-Your class gives you its own trait tree and abilities, such as a Commando’s mastery of weapons and tactics or a Warblade’s elemental strikes. At low levels, your class grants only a few [traits](content:characters/traits), but as you advance in level, you unlock more of its trait tree and gain access to more powerful abilities.`,
-  },
-})
+export const CharacterClass = Content.linkEntity(AnatomyOfACharacter, SelectClassOption)
 
 export const CharacterRace = Content.defineSection('characters/race', {
   parent: AnatomyOfACharacter,
@@ -312,78 +285,27 @@ export const CharacterAttributes = Content.defineSection('characters/attributes'
   parent: AnatomyOfACharacter,
   content: {
     name: 'Attributes',
-    description: `Much of what your character does in the game depends on five core attributes: [Brawn](content:characters/brawn), [Agility](content:characters/agility), [Willpower](content:characters/willpower), [Intelligence](content:characters/intelligence), and [Presence](content:characters/presence). Each attribute has a rating, which ranges from 0 to 6 and is a number you record on your character sheet.
+    description: `Much of what your character does in the game depends on five core attributes: [Brawn](characteristic:brawn), [Agility](characteristic:agility), [Willpower](characteristic:willpower), [Intelligence](characteristic:intelligence), and [Presence](characteristic:presence). Each attribute has a rating, which ranges from 0 to 6 and is a number you record on your character sheet.
 
 These attributes and their use in the game are described in the Using Ability Scores section. The Ability Score Summary table provides a quick reference for what qualities are measured by each attribute, what races increase which attributes, and what classes consider each attribute particularly important.`,
   },
 })
 
-export const Brawn = Content.defineSection('characters/brawn', {
-  parent: CharacterAttributes,
-  content: {
-    name: 'Brawn',
-    description: `Brawn measures bodily power, athletic training, and the extent to which you can exert raw physical force. It governs the following aspects of your character:
+export const CharacterBrawn = Content.linkEntity(CharacterAttributes, Brawn)
 
-- Brawn rating added to [melee physical attack rolls](content:characters/brawn-attack-rating)
-- Brawn rating added to [brawn potency](content:characters/potency)
-- Brawn rating added to [soak rating](content:characters/soak-rating)
-- Brawn rating added to [healing surge rolls](content:combat/healing-surges)
-- Brawn rating added to [Fortitude](content:creatures/fortitude) defense`,
-  },
-})
+export const CharacterAgility = Content.linkEntity(CharacterAttributes, Agility)
 
-export const Agility = Content.defineSection('characters/agility', {
-  parent: CharacterAttributes,
-  content: {
-    name: 'Agility',
-    description: `Agility measures dexterity, reflexes, and balance. It governs the following aspects of your character:
+export const CharacterWillpower = Content.linkEntity(CharacterAttributes, Willpower)
 
-- Agility rating added to [ranged physical attack rolls](content:characters/agility-attack-rating)
-- Agility rating added to [agility potency](content:characters/potency)
-- Agility rating added to [initiative rolls](content:combat/initiative)
-- Agility rating added to [Guard](content:creatures/guard) defense, depending on armor type
-- Agility rating added to [Reflex](content:creatures/reflex) defense`,
-  },
-})
+export const CharacterIntelligence = Content.linkEntity(CharacterAttributes, Intelligence)
 
-export const Willpower = Content.defineSection('characters/willpower', {
-  parent: CharacterAttributes,
-  content: {
-    name: 'Willpower',
-    description: `Willpower measures mental fortitude, resilience, and determination. It governs the following aspects of your character:
-
-- Willpower rating added to [Khydrian attack rolls](content:characters/willpower-attack-rating)
-- Willpower rating added to [willpower potency](content:characters/potency)
-- Willpower rating added to [Will](content:creatures/will) defense`,
-  },
-})
-
-export const Intelligence = Content.defineSection('characters/intelligence', {
-  parent: CharacterAttributes,
-  content: {
-    name: 'Intelligence',
-    description: `Intelligence measures cognitive aptitude, problem-solving ability, and knowledge retention. It governs the following aspects of your character:
-
-- Intelligence rating added to [tech attack rolls](content:characters/intelligence-attack-rating)
-- Intelligence rating added to [intelligence potency](content:characters/potency)`,
-  },
-})
-
-export const Presence = Content.defineSection('characters/presence', {
-  parent: CharacterAttributes,
-  content: {
-    name: 'Presence',
-    description: `Presence measures charisma, charm, and force of personality. It governs the following aspects of your character:
-
-- Presence rating added to [stamina pool](content:characters/stamina-pool)`,
-  },
-})
+export const CharacterPresence = Content.linkEntity(CharacterAttributes, Presence)
 
 export const CharacterVitalityPool = Content.defineSection('characters/vitality-pool', {
   parent: AnatomyOfACharacter,
   content: {
     name: 'Starting Vitality Pool',
-    description: `At first level, characters start with a base [vitality pool](characteristic:vitality-pool) value derived from their [class](content:characters/class). As a character gains levels, they automatically gain additional points added to their vitality pool. The amount gained is based on their class, which is outlined in the individual class sections later in this guide. There are also some effects which modify the vitality pool, changing it from the base values described previously.`,
+    description: `At first level, characters start with a base [vitality pool](characteristic:vitality-pool) value derived from their [class](character-option:select-class-option). As a character gains levels, they automatically gain additional points added to their vitality pool. The amount gained is based on their class, which is outlined in the individual class sections later in this guide. There are also some effects which modify the vitality pool, changing it from the base values described previously.`,
   },
 })
 
@@ -391,15 +313,17 @@ export const CharacterStaminaPool = Content.defineSection('characters/stamina-po
   parent: AnatomyOfACharacter,
   content: {
     name: 'Stamina Pool',
-    description: `At first level, characters start with a base [stamina pool](characteristic:stamina-pool) value derived from their [presence rating](content:characters/presence). As a character gains levels, it automatically gains additional points added to its stamina pool, also based on your presence rating. There are also some effects which modify the stamina pool, changing it from the base values described previously.`,
+    description: `At first level, characters start with a base [stamina pool](characteristic:stamina-pool) value derived from their [presence rating](characteristic:presence). As a character gains levels, it automatically gains additional points added to its stamina pool, also based on your presence rating. There are also some effects which modify the stamina pool, changing it from the base values described previously.`,
   },
 })
+
+export const CharacterProficiencyBonus = Content.linkEntity(AnatomyOfACharacter, ProficiencyBonus)
 
 export const CharacterSoakRating = Content.defineSection('characters/soak-rating', {
   parent: AnatomyOfACharacter,
   content: {
     name: 'Soak Rating',
-    description: `A character’s base [soak rating](characteristic:soak-rating) is equivalent to its [brawn rating](content:characters/brawn). There are also some effects which modify soak rating, changing it from the base values described previously.`,
+    description: `A character’s base [soak rating](characteristic:soak-rating) is equivalent to its [brawn rating](characteristic:brawn). There are also some effects which modify soak rating, changing it from the base values described previously.`,
   },
 })
 
@@ -409,10 +333,10 @@ export const CharacterDefenseRating = Content.defineSection('characters/defense-
     name: 'Defense Rating',
     description: `Player defense rating is calculated differently according to the type and is based off of the attributes of the character. There are also some effects which modify defense rating, changing it from the base calculations described below.
 
-- [Guard](content:creatures/guard) is typically calculated by 8 + Proficiency + Agility Rating + Armor Rating, but some armor types are an exception to this rule
-- [Fortitude](content:creatures/fortitude) is calculated by 8 + Proficiency + Brawn Rating
-- [Reflex](content:creatures/reflex) is calculated by 8 + Proficiency + Agility Rating
-- [Will](content:creatures/will) is calculated by 8 + Proficiency + Willpower Rating`,
+- [Armor Class](characteristic:armor-class) is typically calculated by 8 + Proficiency + Agility Rating + Armor Rating, but some armor types are an exception to this rule
+- [Fortitude](characteristic:fortitude) is calculated by 7 + Proficiency + Brawn Rating + half of Proficiency (rounded up)
+- [Reflex](characteristic:reflex) is calculated by 7 + Proficiency + Agility Rating + half of Proficiency (rounded up)
+- [Will](characteristic:will) is calculated by 7 + Proficiency + Willpower Rating + half of Proficiency (rounded up)`,
   },
 })
 
@@ -420,41 +344,17 @@ export const CharacterAttackRating = Content.defineSection('characters/attack-ra
   parent: AnatomyOfACharacter,
   content: {
     name: 'Attack Rating',
-    description: `Attack rating represents how easily a character can hit an enemy with an attack. The more attack rating a character has, the more likely they are to hit enemies. There are four types of attack rating: [Brawn](content:characters/brawn-attack-rating), [Agility](content:characters/agility-attack-rating), [Willpower](content:characters/willpower-attack-rating), and [Intelligence](content:characters/intelligence-attack-rating). Different types of abilities will use the different types of attack rating outlined below.`,
+    description: `Attack rating represents how easily a character can hit an enemy with an attack. The more attack rating a character has, the more likely they are to hit enemies. There are four types of attack rating: [Brawn](characteristic:brawn-attack-rating), [Agility](characteristic:agility-attack-rating), [Willpower](characteristic:willpower-attack-rating), and [Intelligence](characteristic:intelligence-attack-rating). Different types of abilities will use the different types of attack rating outlined below.`,
   },
 })
 
-export const BrawnAttackRating = Content.defineSection('characters/brawn-attack-rating', {
-  parent: CharacterAttackRating,
-  content: {
-    name: 'Brawn Attack Rating',
-    description: `Brawn attack rating applies to [melee weapon attack rolls](content:combat/melee-attacks) and melee physical attack rolls. It is calculated by Proficiency + [Brawn Rating](content:characters/brawn).`,
-  },
-})
+export const CharacterBrawnAttackRating = Content.linkEntity(CharacterAttackRating, BrawnAttackRating)
 
-export const AgilityAttackRating = Content.defineSection('characters/agility-attack-rating', {
-  parent: CharacterAttackRating,
-  content: {
-    name: 'Agility Attack Rating',
-    description: `Agility attack rating applies to [ranged weapon attack rolls](content:combat/ranged-attacks) and ranged physical attack rolls. It is calculated by Proficiency + [Agility Rating](content:characters/agility).`,
-  },
-})
+export const CharacterAgilityAttackRating = Content.linkEntity(CharacterAttackRating, AgilityAttackRating)
 
-export const WillpowerAttackRating = Content.defineSection('characters/willpower-attack-rating', {
-  parent: CharacterAttackRating,
-  content: {
-    name: 'Willpower Attack Rating',
-    description: `Willpower attack rating applies to Khydrian attack rolls. It is calculated by Proficiency + [Willpower Rating](content:characters/willpower).`,
-  },
-})
+export const CharacterWillpowerAttackRating = Content.linkEntity(CharacterAttackRating, WillpowerAttackRating)
 
-export const IntelligenceAttackRating = Content.defineSection('characters/intelligence-attack-rating', {
-  parent: CharacterAttackRating,
-  content: {
-    name: 'Intelligence Attack Rating',
-    description: `Intelligence attack rating applies to tech attack rolls. It is calculated by Proficiency + [Intelligence Rating](content:characters/intelligence).`,
-  },
-})
+export const CharacterIntelligenceAttackRating = Content.linkEntity(CharacterAttackRating, IntelligenceAttackRating)
 
 export const CharacterPotency = Content.defineSection('characters/potency', {
   parent: AnatomyOfACharacter,
@@ -468,7 +368,7 @@ export const CharacterMovementSpeed = Content.defineSection('characters/movement
   parent: AnatomyOfACharacter,
   content: {
     name: 'Movement Speed',
-    description: `A player character’s [movement speed](content:creatures/movement-speed) will depend on their chosen [race](content:characters/race), but it is typically four squares.`,
+    description: `A player character’s [movement speed](characteristic:movement-speed) will depend on their chosen [race](content:characters/race), but it is typically four squares.`,
   },
 })
 
@@ -484,9 +384,23 @@ export const CharacterTraits = Content.defineSection('characters/traits', {
   parent: AnatomyOfACharacter,
   content: {
     name: 'Traits',
-    description: `Beyond [class selection](content:characters/class), traits are the primary mechanism by which a player can customize their character. As a character levels, they gain trait points which can be used to unlock new traits in Khydrian Drift’s trait trees. These traits can either be selected from the character’s class trait tree or from one of the many archetype trait trees. Some traits may have prerequisites that must be met before they can be selected.
+    description: `Beyond [class selection](character-option:select-class-option), traits are the primary mechanism by which a player can customize their character. As a character levels, they gain trait points which can be used to unlock new traits in Khydrian Drift’s trait trees. These traits can either be selected from the character’s class trait tree or from one of the many archetype trait trees. Some traits may have prerequisites that must be met before they can be selected.
 
 Typically, selecting a Trait will unlock Abilities that you can add to your Loadout or grant you passive [Effects](content:creatures/effects). Occasionally, Traits will also grant you [Actions](content:creatures/actions). Actions granted this way are always available and do not depend on which Abilities are in your Loadout.`,
+  },
+})
+
+export const CharacterAbilities = Content.defineSection('characters/abilities', {
+  parent: AnatomyOfACharacter,
+  content: {
+    name: 'Abilities',
+  },
+})
+
+export const CharacterLoadout = Content.defineSection('characters/loadout', {
+  parent: AnatomyOfACharacter,
+  content: {
+    name: 'Loadout',
   },
 })
 
@@ -530,13 +444,13 @@ export const CreaturesAndCharactersContent = [
   CreatureStaminaPoints,
   CreatureSoakRating,
   CreatureSoakPoints,
-  CreatureDefenseRating,
-  GuardDefense,
-  FortitudeDefense,
-  ReflexDefense,
-  WillDefense,
   CreatureMovementSpeed,
   CreatureInitiativeRating,
+  CreatureDefenseRating,
+  CreatureArmorClass,
+  CreatureFortitudeDefense,
+  CreatureReflexDefense,
+  CreatureWillDefense,
   CreatureSize,
   SizeTiny,
   SizeSmall,
@@ -561,23 +475,26 @@ export const CreaturesAndCharactersContent = [
   CharacterClass,
   CharacterRace,
   CharacterAttributes,
-  Brawn,
-  Agility,
-  Willpower,
-  Intelligence,
-  Presence,
+  CharacterBrawn,
+  CharacterAgility,
+  CharacterWillpower,
+  CharacterIntelligence,
+  CharacterPresence,
   CharacterVitalityPool,
   CharacterStaminaPool,
+  CharacterProficiencyBonus,
   CharacterSoakRating,
+  CharacterMovementSpeed,
   CharacterDefenseRating,
   CharacterAttackRating,
-  BrawnAttackRating,
-  AgilityAttackRating,
-  WillpowerAttackRating,
-  IntelligenceAttackRating,
+  CharacterBrawnAttackRating,
+  CharacterAgilityAttackRating,
+  CharacterWillpowerAttackRating,
+  CharacterIntelligenceAttackRating,
   CharacterPotency,
-  CharacterMovementSpeed,
   CharacterCreatureType,
   CharacterTraits,
+  CharacterAbilities,
+  CharacterLoadout,
   StandardProgression,
 ]

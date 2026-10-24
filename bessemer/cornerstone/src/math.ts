@@ -13,120 +13,94 @@ export const isOdd = (d: number) => d % 2 !== 0
 export const isWhole = (n: number) => n % 1 === 0
 
 export enum RoundingMode {
-  Nearest = 'Nearest',
-  Down = 'Down',
+  // Towards positive infinity
+  Ceiling = 'Ceiling',
+  // Towards negative infinity
+  Floor = 'Floor',
+  // Away from zero
   Up = 'Up',
+  // Towards zero
+  Down = 'Down',
+  // To the nearest neighbor, with ties towards positive infinity
+  Nearest = 'Nearest',
+  // To the nearest neighbor, with ties towards the even neighbor (banker's rounding)
   HalfEven = 'HalfEven',
 }
 
 export const round = (value: number, scale: number, roundingMode: RoundingMode = RoundingMode.Nearest): number => {
   switch (roundingMode) {
-    case RoundingMode.Nearest:
-      return roundNearest(value, scale)
-    case RoundingMode.Down:
-      return roundDown(value, scale)
+    case RoundingMode.Ceiling:
+      return roundCeiling(value, scale)
+    case RoundingMode.Floor:
+      return roundFloor(value, scale)
     case RoundingMode.Up:
       return roundUp(value, scale)
+    case RoundingMode.Down:
+      return roundDown(value, scale)
+    case RoundingMode.Nearest:
+      return roundNearest(value, scale)
     case RoundingMode.HalfEven:
       return roundHalfEven(value, scale)
   }
 }
 
+export const roundCeiling = (value: number, scale: number): number => {
+  return roundScaled(value, scale, Math.ceil)
+}
+
+export const roundFloor = (value: number, scale: number): number => {
+  return roundScaled(value, scale, Math.floor)
+}
+
+export const roundUp = (value: number, scale: number): number => {
+  return roundScaled(value, scale, (it) => (it < 0 ? Math.floor(it) : Math.ceil(it)))
+}
+
+export const roundDown = (value: number, scale: number): number => {
+  return roundScaled(value, scale, Math.trunc)
+}
+
 export const roundNearest = (value: number, scale: number): number => {
-  const factor = Math.pow(10, scale)
-  return Math.round((value + Number.EPSILON) * factor) / factor
+  return roundScaled(value, scale, Math.round)
 }
 
-export const roundDown = (value: number, scale: number) => {
-  const factor = Math.pow(10, scale)
-  return Math.floor((value + +Number.EPSILON) * factor) / factor
+export const roundHalfEven = (value: number, scale: number): number => {
+  return roundScaled(value, scale, (it) => {
+    const floor = Math.floor(it)
+    if (it - floor !== 0.5) {
+      return Math.round(it)
+    }
+
+    return isEven(floor) ? floor : floor + 1
+  })
 }
 
-export const roundUp = (value: number, scale: number) => {
-  const factor = Math.pow(10, scale)
-  return Math.ceil((value + +Number.EPSILON) * factor) / factor
+// Moves the decimal point through the value's decimal string rather than multiplying, which would introduce binary error
+const shiftDecimal = (value: number, places: number): number => {
+  const [mantissa, exponent = '0'] = value.toString().split('e')
+  return Number(`${mantissa}e${Number(exponent) + places}`)
+}
+
+const roundScaled = (value: number, scale: number, roundInteger: (value: number) => number): number => {
+  if (!Number.isFinite(value)) {
+    return value
+  }
+
+  const result = shiftDecimal(roundInteger(shiftDecimal(value, scale)), -scale)
+  // Normalizes -0 to 0
+  return result === 0 ? 0 : result
 }
 
 /**
- * Round Half-Even (Banker's Rounding) Utility
- * https://en.wikipedia.org/wiki/Rounding#Round_half_to_even
- *
- * Mostly copied from this Github: https://github.com/schowdhuri/round-half-even
+ * Whether two numbers are equal within a tolerance relative to their magnitude (absolute for magnitudes below 1).
+ * Use this to absorb error accumulated by floating point arithmetic, e.g. isClose(1.1 * 3, 3.3) is true.
  */
-export const roundHalfEven = (value: number, scale: number): number => {
-  if (value < 0) {
-    return -roundHalfEven(-value, scale)
-  }
-  if (scale === 0) {
-    return roundHalfEven(value / 10, 1) * 10
+export const isClose = (first: number, second: number, tolerance: number = 1e-9): boolean => {
+  if (first === second) {
+    return true
   }
 
-  const MAX_DECIMALS_ALLOWED = 20
-  if (scale > MAX_DECIMALS_ALLOWED) {
-    throw new Error(`Cannot handle more than ${MAX_DECIMALS_ALLOWED} decimals`)
-  }
-
-  // convert to string; remove trailing 0s
-  const isExponentialForm = value.toString().includes('e') || value.toString().includes('E')
-  const strNum = (isExponentialForm ? value.toFixed(MAX_DECIMALS_ALLOWED).toString() : value.toString()).replace(/0+$/, '')
-  const decimalIndex = strNum.indexOf('.')
-  if (decimalIndex < 0) {
-    // no fractional part
-    return value
-  }
-  let intPart: string = strNum.slice(0, decimalIndex)
-  if (intPart.length == 0) {
-    intPart = '0'
-  }
-  let fractPart = strNum.slice(decimalIndex + 1) // extract fractional part
-  if (fractPart.length < scale) {
-    return value
-  }
-  const followingDig = parseInt(fractPart[scale]!, 10)
-  if (followingDig < 5) {
-    // rounding not required
-    const newFractPart = fractPart.slice(0, scale)
-    return parseFloat(`${intPart}.${newFractPart}`)
-  }
-  if (followingDig === 5) {
-    const newFractPart = fractPart.slice(0, scale + 1)
-    if (parseInt(fractPart.slice(scale + 1), 10) > 0) {
-      fractPart = `${newFractPart}9`
-    } else {
-      fractPart = newFractPart
-    }
-  }
-
-  let nextDig = parseInt(fractPart[fractPart.length - 1]!, 10)
-  let carriedOver = 0
-  for (let ptr = fractPart.length - 1; ptr >= scale; ptr--) {
-    let dig = parseInt(fractPart[ptr - 1]!, 10) + carriedOver
-    if (nextDig > 5 || (nextDig == 5 && !isEven(dig))) {
-      ++dig
-    }
-    if (dig > 9) {
-      dig -= 10
-      carriedOver = 1
-    } else {
-      carriedOver = 0
-    }
-    nextDig = dig
-  }
-
-  let newFractPart = ''
-  for (let ptr = scale - 2; ptr >= 0; ptr--) {
-    let d = parseInt(fractPart[ptr]!, 10) + carriedOver
-    if (d > 9) {
-      d -= 10
-      carriedOver = 1
-    } else {
-      carriedOver = 0
-    }
-    newFractPart = `${d}${newFractPart}`
-  }
-
-  const resolvedIntPart = parseInt(intPart, 10) + carriedOver
-  return parseFloat(`${resolvedIntPart}.${newFractPart}${nextDig}`)
+  return Math.abs(first - second) <= tolerance * Math.max(1, Math.abs(first), Math.abs(second))
 }
 
 export const random = (min: number, max: number): number => {

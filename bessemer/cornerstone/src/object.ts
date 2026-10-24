@@ -1,5 +1,3 @@
-import { cloneDeep as _cloneDeep, mapValues as _mapValues, merge as unsafeMerge, mergeWith as unsafeMergeWith } from 'lodash-es'
-
 import { BasicType, Dictionary, TaggedType } from '@bessemer/cornerstone/types'
 import { Primitive, UnknownRecord } from 'type-fest'
 import { isNumber } from '@bessemer/cornerstone/math'
@@ -93,9 +91,32 @@ export const deepEqual = (value1: unknown, value2: unknown): boolean => {
   return false
 }
 
-export const mapValues = _mapValues
+export const mapValues = <T extends object, R>(object: T, iteratee: (value: T[keyof T], key: keyof T) => R): { [K in keyof T]: R } => {
+  const entries = Object.entries(object).map(([key, value]) => [key, iteratee(value, key as keyof T)])
+  return Object.fromEntries(entries)
+}
 
-export const cloneDeep = _cloneDeep
+export const cloneDeep = <T>(value: T): T => {
+  if (Array.isArray(value)) {
+    return value.map((it) => cloneDeep(it)) as T
+  }
+  if (isObject(value)) {
+    return mapValues(value, (it) => cloneDeep(it)) as T
+  }
+  if (value instanceof Map) {
+    return new Map(Array.from(value, ([key, it]) => [cloneDeep(key), cloneDeep(it)])) as T
+  }
+  if (value instanceof Set) {
+    return new Set(Array.from(value, (it) => cloneDeep(it))) as T
+  }
+  if (isDate(value)) {
+    return new Date(value.getTime()) as T
+  }
+
+  return value
+}
+
+export type DeepMergeCustomizer = (targetValue: any, sourceValue: any, key: string) => unknown
 
 export function deepMerge<TObject, TSource>(object: TObject, source: TSource): TObject & TSource
 export function deepMerge<TObject, TSource1, TSource2>(object: TObject, source1: TSource1, source2: TSource2): TObject & TSource1 & TSource2
@@ -113,7 +134,7 @@ export function deepMerge<TObject, TSource1, TSource2, TSource3, TSource4>(
   source4: TSource4
 ): TObject & TSource1 & TSource2 & TSource3 & TSource4
 export function deepMerge(object: any, ...otherArgs: any[]): any {
-  return unsafeMerge({}, object, ...otherArgs)
+  return [object, ...otherArgs].reduce((target, source) => mergeInto(target, source), {})
 }
 
 export const deepMergeAll = <T>(objects: Array<T>): T => {
@@ -121,12 +142,41 @@ export const deepMergeAll = <T>(objects: Array<T>): T => {
 }
 
 export function deepMergeInto<Source1, Source2>(source: Source1, values: Source2): asserts source is Source1 & Source2 {
-  unsafeMerge(source, values)
+  mergeInto(source, values)
 }
 
-export const deepMergeWith: typeof unsafeMergeWith = (...args: Array<any>) => {
-  const clone = cloneDeep(args[0])
-  return unsafeMergeWith.apply(null, [clone, ...args.slice(1)])
+export const deepMergeWith = <TObject, TSource>(object: TObject, source: TSource, customizer: DeepMergeCustomizer): TObject & TSource => {
+  return mergeInto(cloneDeep(object), source, customizer)
+}
+
+const mergeInto = (target: any, source: any, customizer?: DeepMergeCustomizer): any => {
+  if (isNil(source)) {
+    return target
+  }
+
+  Object.keys(source).forEach((key) => {
+    const merged = mergeValue(target[key], source[key], key, customizer)
+    if (merged !== undefined || !(key in target)) {
+      target[key] = merged
+    }
+  })
+
+  return target
+}
+
+const mergeValue = (targetValue: unknown, sourceValue: unknown, key: string, customizer?: DeepMergeCustomizer): unknown => {
+  const customized = customizer?.(targetValue, sourceValue, key)
+  if (customized !== undefined) {
+    return customized
+  }
+  if (Array.isArray(sourceValue)) {
+    return mergeInto(Array.isArray(targetValue) ? targetValue : [], sourceValue, customizer)
+  }
+  if (isObject(sourceValue)) {
+    return mergeInto(isObject(targetValue) ? targetValue : {}, sourceValue, customizer)
+  }
+
+  return sourceValue
 }
 
 export type ObjectDiffResult = {

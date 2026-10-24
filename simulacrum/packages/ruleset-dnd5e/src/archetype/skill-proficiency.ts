@@ -2,7 +2,7 @@ import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SkillProficiency = Archetypes.defineArchetype('skill-proficiency', { name: 'Skill Proficiency', description: '' })
+export const SkillProficiency = Archetypes.defineArchetype('skill-proficiency', { name: 'Skill Proficiency' })
 
 export const Acrobatics = Traits.defineTrait('skill-proficiency/acrobatics', {
   name: 'Acrobatics',

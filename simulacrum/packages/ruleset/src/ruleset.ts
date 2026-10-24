@@ -17,7 +17,7 @@ export type RulesetEntityTypes = {
   [RulesetEntityType.Archetype]: Archetype
   [RulesetEntityType.Trait]: Trait
   [RulesetEntityType.Ability]: Ability
-  [RulesetEntityType.Characteristic]: Characteristic<unknown>
+  [RulesetEntityType.Characteristic]: Characteristic
   [RulesetEntityType.CharacteristicGroup]: CharacteristicGroup
   [RulesetEntityType.CharacterOption]: CharacterOption
   [RulesetEntityType.ResourcePool]: ResourcePoolDefinition

@@ -25,7 +25,6 @@ export const DefaultCombinability: Combinability = {
 }
 
 export const combinations = <T extends Combinable>(combinables: Array<T>): Array<Array<T>> => {
-  // JOHN this is wrong
   const classMap = Maps.groupBy(combinables, (it) => it.combinability.class ?? '')
 
   const classCombinations: Array<Array<Array<T>>> = [...classMap.entries()].map(([_, values]) => {
@@ -39,5 +38,5 @@ export const combinations = <T extends Combinable>(combinables: Array<T>): Array
     return [stackableCombination, ...singletonCombinations]
   })
 
-  return Sets.cartesianProduct(...classCombinations).flatMap((it) => it)
+  return Sets.cartesianProduct(...classCombinations).map((it) => it.flat())
 }
