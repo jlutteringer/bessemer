@@ -4,9 +4,9 @@ import { Patches } from '@bessemer/cornerstone'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { AttributeCap, ArmorClass, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
-export const Armor = Archetypes.defineArchetype('armor', { name: 'Armor' })
+export const Armor = Archetypes.defineAbilityArchetype('armor', { name: 'Armor' })
 
-export const ArmorProficiency = Archetypes.defineArchetype('armor-proficiency', { name: 'Armor Proficiency' })
+export const ArmorProficiency = Archetypes.defineTraitArchetype('armor-proficiency', { name: 'Armor Proficiency' })
 
 export const LightArmorProficiency = Traits.defineTrait('armor-proficiency/light', {
   name: 'Light Armor Proficiency',

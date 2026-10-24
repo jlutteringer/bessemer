@@ -25,7 +25,7 @@ import { SelectTrainedSkill, TrainedNature, TrainedSurvival } from '@simulacrum/
 import { AllRangerFeatEntities } from '@simulacrum/ruleset-pf2e/class/ranger-feat'
 import { AllRangerFocusSpellEntities } from '@simulacrum/ruleset-pf2e/class/ranger-focus-spell'
 
-export const HuntersEdge = Archetypes.defineArchetype('ranger/hunters-edge', { name: "Hunter's Edge" })
+export const HuntersEdge = Archetypes.defineTraitArchetype('ranger/hunters-edge', { name: "Hunter's Edge" })
 
 export const SelectRangerKeyAttribute = CharacterOptions.selectTraitOption('ranger/select-key-attribute', {
   name: 'Ranger Key Attribute',

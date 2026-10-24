@@ -95,7 +95,7 @@ export const CunningAction = Abilities.defineAbility('rogue/cunning-action', {
   actions: [{ name: 'Use Cunning Action', action: ActionTypes.BonusAction }],
 })
 
-export const RogueSubclass = Archetypes.defineArchetype('rogue/subclass', { name: 'Rogue Subclass' })
+export const RogueSubclass = Archetypes.defineTraitArchetype('rogue/subclass', { name: 'Rogue Subclass' })
 export const SelectRogueSubclass = CharacterOptions.selectTraitOption('rogue/select-subclass', {
   name: 'Rogue Subclass',
   filter: { archetypes: [RogueSubclass] },

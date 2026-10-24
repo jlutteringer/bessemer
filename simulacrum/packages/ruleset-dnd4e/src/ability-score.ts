@@ -3,8 +3,8 @@ import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as Characteristics from '@simulacrum/ruleset-dnd4e/characteristic'
 
-export const RacialAbilityBonus = Archetypes.defineArchetype('ability-score/racial', { name: 'Racial Ability Bonus' })
-export const AbilityIncrease = Archetypes.defineArchetype('ability-score/increase', { name: 'Ability Increase' })
+export const RacialAbilityBonus = Archetypes.defineTraitArchetype('ability-score/racial', { name: 'Racial Ability Bonus' })
+export const AbilityIncrease = Archetypes.defineTraitArchetype('ability-score/increase', { name: 'Ability Increase' })
 
 // A human's +2 to one ability score of its choice
 

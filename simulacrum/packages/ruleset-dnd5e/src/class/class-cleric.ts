@@ -134,7 +134,7 @@ export const Level2 = Traits.defineTrait('cleric/level-2', {
   effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))), Effects.gainTrait(ChannelDivinity)],
 })
 
-export const ClericSubclass = Archetypes.defineArchetype('cleric/subclass', { name: 'Cleric Subclass' })
+export const ClericSubclass = Archetypes.defineTraitArchetype('cleric/subclass', { name: 'Cleric Subclass' })
 export const SelectClericSubclass = CharacterOptions.selectTraitOption('cleric/select-subclass', {
   name: 'Cleric Subclass',
   filter: { archetypes: [ClericSubclass] },

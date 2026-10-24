@@ -3,7 +3,7 @@ import { ClassFeat, ClericFeat, Feat, FeatLevel1 } from '@simulacrum/ruleset-pf2
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import * as FocusSpells from '@simulacrum/ruleset-pf2e/class/cleric-focus-spell'
 
-export const ClericDomain = Archetypes.defineArchetype('cleric/domain', { name: 'Domain' })
+export const ClericDomain = Archetypes.defineTraitArchetype('cleric/domain', { name: 'Domain' })
 
 export const AirDomain = Traits.defineTrait('cleric/domain/air', {
   name: 'Air Domain',

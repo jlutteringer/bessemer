@@ -12,11 +12,11 @@ import { Cleric } from '@simulacrum/ruleset-dnd5e/archetype'
 import { WeaponMasteryLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
 
 // FUTURE these are stubs: apart from ability score increases, feats' own choices and benefits aren't modelled yet
-export const Feat = Archetypes.defineArchetype('feat', { name: 'Feat' })
+export const Feat = Archetypes.defineTraitArchetype('feat', { name: 'Feat' })
 
 // Origin feats (gained from a Background, or a Human's Versatile trait) aren't tagged as Feat, so SelectOriginFeat offers only them.
 // A trait matches a filter when all its archetypes are in the filter, so SelectFeat lists both to offer every feat
-export const OriginFeat = Archetypes.defineArchetype('feat/origin', { name: 'Origin Feat' })
+export const OriginFeat = Archetypes.defineTraitArchetype('feat/origin', { name: 'Origin Feat' })
 
 export const SelectFeat = CharacterOptions.selectTraitOption('feat/select', {
   name: 'Feat',

@@ -2,7 +2,7 @@ import { Archetypes, CharacterOptions, Traits } from '@simulacrum/ruleset'
 
 // FUTURE only the plans available from Artificer level 2 are defined; the level 6+, 10+, and 14+ plans come with those levels
 
-export const MagicItemPlan = Archetypes.defineArchetype('artificer/magic-item-plan', { name: 'Magic Item Plan' })
+export const MagicItemPlan = Archetypes.defineTraitArchetype('artificer/magic-item-plan', { name: 'Magic Item Plan' })
 
 export const SelectMagicItemPlan = CharacterOptions.selectTraitOption('artificer/select-magic-item-plan', {
   name: 'Plans Known',

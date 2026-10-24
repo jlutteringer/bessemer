@@ -45,6 +45,7 @@ import { TraitsContent } from '@simulacrum/ruleset-pf2e/content/content-traits'
 export const Pf2e: Ruleset = {
   id: 'pf2e' as RulesetReference,
   name: 'Pathfinder 2e',
+  distanceUnit: { singular: 'foot', plural: 'feet' },
   entities: [
     ...AllCharacteristics,
     ...AllCharacteristicGroups,

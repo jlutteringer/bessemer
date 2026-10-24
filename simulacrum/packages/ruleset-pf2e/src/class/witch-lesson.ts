@@ -5,8 +5,8 @@ import * as Spells from '@simulacrum/ruleset-pf2e/spell'
 import * as WitchFocusSpells from '@simulacrum/ruleset-pf2e/class/witch-focus-spell'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
-export const WitchBasicLesson = Archetypes.defineArchetype('witch/lesson/basic', { name: 'Basic Lesson' })
-export const WitchGreaterLesson = Archetypes.defineArchetype('witch/lesson/greater', { name: 'Greater Lesson' })
+export const WitchBasicLesson = Archetypes.defineTraitArchetype('witch/lesson/basic', { name: 'Basic Lesson' })
+export const WitchGreaterLesson = Archetypes.defineTraitArchetype('witch/lesson/greater', { name: 'Greater Lesson' })
 
 export const SelectLessonOfTheElementsSpell = CharacterOptions.selectAbilityOption('witch/lesson/lesson-of-the-elements/select-spell', {
   name: 'Lesson of the Elements Spell',

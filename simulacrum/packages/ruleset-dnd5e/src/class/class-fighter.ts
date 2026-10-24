@@ -144,7 +144,7 @@ export const ActionSurge = Abilities.defineAbility('fighter/action-surge', {
   ],
 })
 
-export const FighterSubclass = Archetypes.defineArchetype('fighter/subclass', { name: 'Fighter Subclass' })
+export const FighterSubclass = Archetypes.defineTraitArchetype('fighter/subclass', { name: 'Fighter Subclass' })
 export const SelectFighterSubclass = CharacterOptions.selectTraitOption('fighter/select-subclass', {
   name: 'Fighter Subclass',
   filter: {

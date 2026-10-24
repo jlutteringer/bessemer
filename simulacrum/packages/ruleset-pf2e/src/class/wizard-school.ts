@@ -9,7 +9,7 @@ import { CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import { DrainBondedItem, SelectSpellbookRank1, SelectWizardFeat1 } from '@simulacrum/ruleset-pf2e/class/wizard-feature'
 
-export const ArcaneSchool = Archetypes.defineArchetype('wizard/arcane-school', { name: 'Arcane School' })
+export const ArcaneSchool = Archetypes.defineTraitArchetype('wizard/arcane-school', { name: 'Arcane School' })
 
 export const SelectArsGrammaticaCurriculumRank1 = CharacterOptions.selectAbilityOption(
   'wizard/arcane-school/ars-grammatica/select-curriculum-rank-1',

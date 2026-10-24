@@ -1,7 +1,7 @@
-import { Arrays, Assertions, Objects } from '@bessemer/cornerstone'
+import { Assertions, Objects } from '@bessemer/cornerstone'
 import { Effect } from '@simulacrum/ruleset/effect'
 import * as Archetypes from '@simulacrum/ruleset/archetype'
-import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
+import { ArchetypeFilter, ArchetypeFilterProps, TraitArchetype, TraitArchetypeReference } from '@simulacrum/ruleset/archetype'
 import * as CharacterValues from '@simulacrum/ruleset/character-value'
 import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import * as Tiptap from '@bessemer/core/tiptap'
@@ -12,7 +12,7 @@ export type TraitReference = RulesetEntityReference<typeof RulesetEntityType.Tra
 export type TraitProps = RulesetEntityProps & {
   effects: Array<Effect>
 
-  archetypes?: Array<ArchetypeReference | Archetype>
+  archetypes?: Array<TraitArchetype>
   prerequisites?: Array<Expression<boolean>>
   repeatable?: boolean
 }
@@ -21,7 +21,7 @@ export type Trait = RulesetEntity & {
   id: TraitReference
   effects: Array<Effect>
 
-  archetypes: Array<ArchetypeReference>
+  archetypes: Array<TraitArchetypeReference>
   prerequisites: Array<Expression<boolean>>
   repeatable: boolean
 }
@@ -46,12 +46,12 @@ export const traitPrerequisite = (trait: TraitReference | Trait): Expression<boo
 }
 
 export type TraitFilterProps = {
-  archetypes?: ArchetypeFilterProps
+  archetypes?: ArchetypeFilterProps<TraitArchetype>
   specificOptions?: Array<TraitReference | Trait>
 }
 
 export type TraitFilter = {
-  archetypes: ArchetypeFilter
+  archetypes: ArchetypeFilter<TraitArchetypeReference>
   specificOptions: Array<TraitReference>
 }
 

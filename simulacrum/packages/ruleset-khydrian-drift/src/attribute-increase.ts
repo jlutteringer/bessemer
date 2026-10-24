@@ -4,7 +4,7 @@ import { Agility, AttributeCap, Brawn, Intelligence, Presence, Willpower } from 
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-export const AttributeIncrease = Archetypes.defineArchetype('attribute-increase', { name: 'Attribute Increase' })
+export const AttributeIncrease = Archetypes.defineTraitArchetype('attribute-increase', { name: 'Attribute Increase' })
 
 const defineAttributeIncrease = (key: string, name: string, characteristic: Characteristic) => {
   return Traits.defineTrait(`attribute-increase/${key}`, {

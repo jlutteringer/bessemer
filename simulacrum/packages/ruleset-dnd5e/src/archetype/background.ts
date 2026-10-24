@@ -6,7 +6,7 @@ import * as Tools from '@simulacrum/ruleset-dnd5e/archetype/tool'
 import * as Feats from '@simulacrum/ruleset-dnd5e/archetype/feat'
 import * as AbilityScoreIncreases from '@simulacrum/ruleset-dnd5e/archetype/ability-score-increase'
 
-export const Background = Archetypes.defineArchetype('background', { name: 'Background' })
+export const Background = Archetypes.defineTraitArchetype('background', { name: 'Background' })
 
 export const SelectBackground = CharacterOptions.selectTraitOption('background/select', {
   name: 'Background',

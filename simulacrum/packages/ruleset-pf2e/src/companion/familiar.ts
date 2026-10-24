@@ -1,7 +1,7 @@
 import { Archetypes, CharacterOptions, CharacterValues, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 
-export const FamiliarAbility = Archetypes.defineArchetype('companion/familiar-ability', { name: 'Familiar Ability' })
+export const FamiliarAbility = Archetypes.defineTraitArchetype('companion/familiar-ability', { name: 'Familiar Ability' })
 
 export const SelectFamiliarAbility = CharacterOptions.selectTraitOption('companion/select-familiar-ability', {
   name: 'Familiar Ability',

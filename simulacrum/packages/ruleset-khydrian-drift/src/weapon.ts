@@ -2,7 +2,7 @@ import { Abilities, Archetypes, Effects } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 
-export const Weapon = Archetypes.defineArchetype('weapon', { name: 'Weapon' })
+export const Weapon = Archetypes.defineAbilityArchetype('weapon', { name: 'Weapon' })
 
 export const Handgun = Abilities.defineAbility('weapon/handgun', {
   name: 'Handgun',

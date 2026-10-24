@@ -1,6 +1,6 @@
 import { Archetypes, CharacterOptions, Traits } from '@simulacrum/ruleset'
 
-export const AnimalCompanion = Archetypes.defineArchetype('companion/animal-companion', { name: 'Animal Companion' })
+export const AnimalCompanion = Archetypes.defineTraitArchetype('companion/animal-companion', { name: 'Animal Companion' })
 
 export const SelectAnimalCompanion = CharacterOptions.selectTraitOption('companion/select-animal-companion', {
   name: 'Animal Companion',

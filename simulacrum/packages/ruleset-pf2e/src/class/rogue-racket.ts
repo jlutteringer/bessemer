@@ -16,7 +16,7 @@ import {
 } from '@simulacrum/ruleset-pf2e/skill'
 import { CharismaKeyAttribute, DexterityKeyAttribute, IntelligenceKeyAttribute, StrengthKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 
-export const RoguesRacket = Archetypes.defineArchetype('rogue/racket', { name: "Rogue's Racket" })
+export const RoguesRacket = Archetypes.defineTraitArchetype('rogue/racket', { name: "Rogue's Racket" })
 
 export const SelectMastermindSkill = CharacterOptions.selectTraitOption('rogue/racket/mastermind/select-skill', {
   name: 'Mastermind Skill',

@@ -15,14 +15,14 @@ export const LowLightVision = Traits.defineTrait('sense/low-light-vision', {
   effects: [],
 })
 
-export const DwarfHeritage = Archetypes.defineArchetype('heritage/dwarf', { name: 'Dwarf Heritage' })
-export const ElfHeritage = Archetypes.defineArchetype('heritage/elf', { name: 'Elf Heritage' })
-export const GnomeHeritage = Archetypes.defineArchetype('heritage/gnome', { name: 'Gnome Heritage' })
-export const GoblinHeritage = Archetypes.defineArchetype('heritage/goblin', { name: 'Goblin Heritage' })
-export const HalflingHeritage = Archetypes.defineArchetype('heritage/halfling', { name: 'Halfling Heritage' })
-export const HumanHeritage = Archetypes.defineArchetype('heritage/human', { name: 'Human Heritage' })
-export const LeshyHeritage = Archetypes.defineArchetype('heritage/leshy', { name: 'Leshy Heritage' })
-export const OrcHeritage = Archetypes.defineArchetype('heritage/orc', { name: 'Orc Heritage' })
+export const DwarfHeritage = Archetypes.defineTraitArchetype('heritage/dwarf', { name: 'Dwarf Heritage' })
+export const ElfHeritage = Archetypes.defineTraitArchetype('heritage/elf', { name: 'Elf Heritage' })
+export const GnomeHeritage = Archetypes.defineTraitArchetype('heritage/gnome', { name: 'Gnome Heritage' })
+export const GoblinHeritage = Archetypes.defineTraitArchetype('heritage/goblin', { name: 'Goblin Heritage' })
+export const HalflingHeritage = Archetypes.defineTraitArchetype('heritage/halfling', { name: 'Halfling Heritage' })
+export const HumanHeritage = Archetypes.defineTraitArchetype('heritage/human', { name: 'Human Heritage' })
+export const LeshyHeritage = Archetypes.defineTraitArchetype('heritage/leshy', { name: 'Leshy Heritage' })
+export const OrcHeritage = Archetypes.defineTraitArchetype('heritage/orc', { name: 'Orc Heritage' })
 
 export const SelectAncestryGeneralFeat1 = CharacterOptions.selectTraitOption('ancestry/select-general-feat-1', {
   name: 'General Feat (Level 1)',

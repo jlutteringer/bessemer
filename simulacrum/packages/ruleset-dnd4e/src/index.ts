@@ -43,6 +43,7 @@ export const SelectClass = CharacterOptions.selectTraitOption('class/select', {
 export const Dnd4e: Ruleset = {
   id: 'dnd-4e' as RulesetReference,
   name: 'Dungeons and Dragons 4e',
+  distanceUnit: { singular: 'square', plural: 'squares' },
   entities: [
     ...AllCharacteristics,
     ...AllCharacteristicGroups,

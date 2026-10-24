@@ -38,7 +38,7 @@ import { AllWizardSchoolEntities, ArcaneSchoolFeature } from '@simulacrum/rulese
 import { AllWizardFeatEntities, Familiar } from '@simulacrum/ruleset-pf2e/class/wizard-feat'
 import { AllWizardFocusSpells } from '@simulacrum/ruleset-pf2e/class/wizard-focus-spell'
 
-export const ArcaneThesis = Archetypes.defineArchetype('wizard/arcane-thesis', { name: 'Arcane Thesis' })
+export const ArcaneThesis = Archetypes.defineTraitArchetype('wizard/arcane-thesis', { name: 'Arcane Thesis' })
 
 export const SelectExperimentalSpellshapingFeat = CharacterOptions.selectTraitOption('wizard/arcane-thesis/experimental-spellshaping/select-feat', {
   name: 'Spellshape Wizard Feat (Level 1)',

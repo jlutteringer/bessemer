@@ -5,8 +5,8 @@ import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { ArmorClass, HalfLevel, Reflex } from '@simulacrum/ruleset-dnd4e/characteristic'
 import { ArmorBonus, ShieldBonus } from '@simulacrum/ruleset-dnd4e/bonus-type'
 
-export const ArmorProficiency = Archetypes.defineArchetype('armor-proficiency', { name: 'Armor Proficiency' })
-export const Armor = Archetypes.defineArchetype('armor', { name: 'Armor' })
+export const ArmorProficiency = Archetypes.defineTraitArchetype('armor-proficiency', { name: 'Armor Proficiency' })
+export const Armor = Archetypes.defineAbilityArchetype('armor', { name: 'Armor' })
 
 // Everyone is proficient with cloth armor
 

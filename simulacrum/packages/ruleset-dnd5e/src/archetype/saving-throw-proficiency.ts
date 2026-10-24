@@ -2,7 +2,7 @@ import { Archetypes, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SavingThrowProficiency = Archetypes.defineArchetype('saving-throw-proficiency', { name: 'Saving Throw Proficiency' })
+export const SavingThrowProficiency = Archetypes.defineTraitArchetype('saving-throw-proficiency', { name: 'Saving Throw Proficiency' })
 
 export const Strength = Traits.defineTrait('saving-throw-proficiency/strength', {
   name: 'Strength Saving Throw',

@@ -7,7 +7,7 @@ import { PlayerCharacteristics } from '@simulacrum/ruleset-dnd5e/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-export const AbilityScoreIncrease = Archetypes.defineArchetype('ability-score-increase', { name: 'Ability Score Increase' })
+export const AbilityScoreIncrease = Archetypes.defineTraitArchetype('ability-score-increase', { name: 'Ability Score Increase' })
 
 export type AbilityScore = {
   name: string

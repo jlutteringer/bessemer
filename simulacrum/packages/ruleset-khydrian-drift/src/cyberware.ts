@@ -2,7 +2,7 @@ import { Abilities, Archetypes, Traits } from '@simulacrum/ruleset'
 import { CyberwareLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { ModularCybernetics } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-cybernetics'
 
-export const Cyberware = Archetypes.defineArchetype('cyberware', { name: 'Cyberware' })
+export const Cyberware = Archetypes.defineAbilityArchetype('cyberware', { name: 'Cyberware' })
 
 export const OcularImplants = Abilities.defineAbility('cyberware/ocular-implants', {
   name: 'Ocular Implants',

@@ -2,19 +2,19 @@ import { Abilities, Archetypes, Effects } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
 import { Bard, Cleric, Wizard } from '@simulacrum/ruleset-dnd5e/archetype'
 
-export const Cantrip = Archetypes.defineArchetype('spell/cantrip', { name: 'Cantrip' })
-export const Rank1 = Archetypes.defineArchetype('spell/rank-1', { name: 'Rank 1' })
-export const Rank2 = Archetypes.defineArchetype('spell/rank-2', { name: 'Rank 2' })
-export const Rank3 = Archetypes.defineArchetype('spell/rank-3', { name: 'Rank 3' })
+export const Cantrip = Archetypes.defineAbilityArchetype('spell/cantrip', { name: 'Cantrip' })
+export const Rank1 = Archetypes.defineAbilityArchetype('spell/rank-1', { name: 'Rank 1' })
+export const Rank2 = Archetypes.defineAbilityArchetype('spell/rank-2', { name: 'Rank 2' })
+export const Rank3 = Archetypes.defineAbilityArchetype('spell/rank-3', { name: 'Rank 3' })
 
-export const Abjuration = Archetypes.defineArchetype('spell/abjuration', { name: 'Abjuration' })
-export const Conjuration = Archetypes.defineArchetype('spell/conjuration', { name: 'Conjuration' })
-export const Divination = Archetypes.defineArchetype('spell/divination', { name: 'Divination' })
-export const Enchantment = Archetypes.defineArchetype('spell/enchantment', { name: 'Enchantment' })
-export const Evocation = Archetypes.defineArchetype('spell/evocation', { name: 'Evocation' })
-export const Illusion = Archetypes.defineArchetype('spell/illusion', { name: 'Illusion' })
-export const Necromancy = Archetypes.defineArchetype('spell/necromancy', { name: 'Necromancy' })
-export const Transmutation = Archetypes.defineArchetype('spell/transmutation', { name: 'Transmutation' })
+export const Abjuration = Archetypes.defineAbilityArchetype('spell/abjuration', { name: 'Abjuration' })
+export const Conjuration = Archetypes.defineAbilityArchetype('spell/conjuration', { name: 'Conjuration' })
+export const Divination = Archetypes.defineAbilityArchetype('spell/divination', { name: 'Divination' })
+export const Enchantment = Archetypes.defineAbilityArchetype('spell/enchantment', { name: 'Enchantment' })
+export const Evocation = Archetypes.defineAbilityArchetype('spell/evocation', { name: 'Evocation' })
+export const Illusion = Archetypes.defineAbilityArchetype('spell/illusion', { name: 'Illusion' })
+export const Necromancy = Archetypes.defineAbilityArchetype('spell/necromancy', { name: 'Necromancy' })
+export const Transmutation = Archetypes.defineAbilityArchetype('spell/transmutation', { name: 'Transmutation' })
 
 export const Alarm = Abilities.defineAbility('spell/alarm', {
   name: 'Alarm',

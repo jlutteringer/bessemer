@@ -17,7 +17,7 @@ import {
 } from '@simulacrum/ruleset-pf2e/class/druid-feat'
 import * as DruidFocusSpells from '@simulacrum/ruleset-pf2e/class/druid-focus-spell'
 
-export const DruidicOrder = Archetypes.defineArchetype('druid/druidic-order', { name: 'Druidic Order' })
+export const DruidicOrder = Archetypes.defineTraitArchetype('druid/druidic-order', { name: 'Druidic Order' })
 
 export const AnimalOrder = Traits.defineTrait('druid/druidic-order/animal', {
   name: 'Animal Order',

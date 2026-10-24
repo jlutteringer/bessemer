@@ -6,7 +6,9 @@ import { NominalType } from '@bessemer/cornerstone/types'
 
 export const RulesetEntityType = {
   ActionType: 'action-type',
-  Archetype: 'archetype',
+  TraitArchetype: 'trait-archetype',
+  AbilityArchetype: 'ability-archetype',
+  CreatureArchetype: 'creature-archetype',
   Trait: 'trait',
   Ability: 'ability',
   Characteristic: 'characteristic',

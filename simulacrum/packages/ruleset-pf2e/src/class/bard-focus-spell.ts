@@ -13,8 +13,9 @@ export const CounterPerformance = Abilities.defineAbility('spell/counter-perform
     {
       name: 'Counter Performance',
       description:
-        '**Trigger** You or an ally within 60 feet rolls a saving throw against an auditory or visual effect\n\n**Area** 60-foot emanation\n\nYour performance protects you and your allies. Roll a [Performance](characteristic:skill/performance) check for a type you know—it must be an auditory performance if the trigger was auditory or a visual one for a visual trigger, and this action gains the traits for the type of performance. You and allies in the area can use the better result between your Performance check and the saving throw.',
+        '**Area** 60-foot emanation\n\nYour performance protects you and your allies. Roll a [Performance](characteristic:skill/performance) check for a type you know—it must be an auditory performance if the trigger was auditory or a visual one for a visual trigger, and this action gains the traits for the type of performance. You and allies in the area can use the better result between your Performance check and the saving throw.',
       action: ActionTypes.Reaction,
+      annotation: 'You or an ally within 60 feet rolls a saving throw against an auditory or visual effect',
       costs: [{ cost: 1, resource: FocusPoints }],
       targeting: { target: { range: 0, area: { type: AreaShape.Sphere, radius: 60 }, count: 1 } },
     },

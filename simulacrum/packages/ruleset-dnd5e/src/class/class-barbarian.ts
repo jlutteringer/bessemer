@@ -112,7 +112,7 @@ export const RecklessAttack = Abilities.defineAbility('barbarian/reckless-attack
   actions: [{ name: 'Attack Recklessly', action: ActionTypes.Free }],
 })
 
-export const BarbarianSubclass = Archetypes.defineArchetype('barbarian/subclass', { name: 'Barbarian Subclass' })
+export const BarbarianSubclass = Archetypes.defineTraitArchetype('barbarian/subclass', { name: 'Barbarian Subclass' })
 export const SelectBarbarianSubclass = CharacterOptions.selectTraitOption('barbarian/select-subclass', {
   name: 'Barbarian Subclass',
   filter: {

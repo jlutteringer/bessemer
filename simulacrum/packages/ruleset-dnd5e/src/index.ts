@@ -43,6 +43,7 @@ export const SelectClassLevel = CharacterOptions.selectTraitOption('select-class
 export const Dnd5e: Ruleset = {
   id: 'dnd-5e' as RulesetReference,
   name: 'Dungeons and Dragons 5e',
+  distanceUnit: { singular: 'foot', plural: 'feet' },
   entities: [
     ...Object.values(PlayerCharacteristics),
     ...Object.values(CharacteristicGroups),

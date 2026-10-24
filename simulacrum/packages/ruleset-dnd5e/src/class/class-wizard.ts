@@ -135,7 +135,7 @@ export const Level2 = Traits.defineTrait('wizard/level-2', {
   ],
 })
 
-export const WizardSubclass = Archetypes.defineArchetype('wizard/subclass', { name: 'Wizard Subclass' })
+export const WizardSubclass = Archetypes.defineTraitArchetype('wizard/subclass', { name: 'Wizard Subclass' })
 export const SelectWizardSubclass = CharacterOptions.selectTraitOption('wizard/select-subclass', {
   name: 'Wizard Subclass',
   filter: { archetypes: [WizardSubclass] },

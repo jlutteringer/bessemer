@@ -8,9 +8,10 @@ import { Expression } from '@bessemer/cornerstone/expression'
 import { Objects, Patches } from '@bessemer/cornerstone'
 import { Patch, Patchable } from '@bessemer/cornerstone/patch'
 import * as Archetypes from '@simulacrum/ruleset/archetype'
-import { Archetype, ArchetypeFilter, ArchetypeFilterProps, ArchetypeReference } from '@simulacrum/ruleset/archetype'
+import { AbilityArchetype, AbilityArchetypeReference, ArchetypeFilter, ArchetypeFilterProps } from '@simulacrum/ruleset/archetype'
 import * as Targetings from '@simulacrum/ruleset/targeting'
 import { Targeting, TargetingProps } from '@simulacrum/ruleset/targeting'
+import { Duration, DurationType } from '@simulacrum/ruleset/duration'
 import { ActionType, ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 
@@ -19,7 +20,7 @@ export type AbilityReference = RulesetEntityReference<typeof RulesetEntityType.A
 export type Ability = RulesetEntity & {
   id: AbilityReference
 
-  archetypes: Array<ArchetypeReference>
+  archetypes: Array<AbilityArchetypeReference>
   prerequisites: Array<Expression<boolean>>
   effects: Array<AbilityEffect>
   actions: Array<AbilityAction>
@@ -33,12 +34,14 @@ export type AbilityAction = {
   description: RichTextJson | null
 
   action: ActionTypeReference
+  annotation: string | null
   costs: Array<ResourceCost>
   targeting: Targeting
+  duration: Duration
 }
 
 export type AbilityProps = RulesetEntityProps & {
-  archetypes?: Array<Archetype>
+  archetypes?: Array<AbilityArchetype>
   prerequisites?: Array<Expression<boolean>>
   effects?: Array<AbilityEffect>
   actions?: Array<AbilityActionProps>
@@ -54,9 +57,11 @@ export type AbilityActionProps = {
   name?: string
   description?: string
   action: ActionType
+  annotation?: string
 
   costs?: Array<ResourceCostProps>
   targeting?: TargetingProps
+  duration?: Duration
 }
 
 const resolveCost = ({ cost, resource }: ResourceCostProps): ResourceCost => {
@@ -68,8 +73,10 @@ const resolveAction = (props: AbilityActionProps, defaultCosts: Array<ResourceCo
     name: props.name ?? null,
     description: Objects.isNil(props.description) ? null : Tiptap.markdownToJson(props.description),
     action: props.action.id,
+    annotation: props.annotation ?? null,
     costs: Objects.isNil(props.costs) ? defaultCosts : props.costs.map(resolveCost),
     targeting: Targetings.resolve(props.targeting ?? {}),
+    duration: props.duration ?? { type: DurationType.Instant },
   }
 }
 
@@ -117,12 +124,12 @@ const mapListPatch = <T, N>(patch: Patch<Array<T>> | Patchable<Array<T>>, mapper
 }
 
 export type AbilityFilterProps = {
-  archetypes?: ArchetypeFilterProps
+  archetypes?: ArchetypeFilterProps<AbilityArchetype>
   specificOptions?: Array<Ability>
 }
 
 export type AbilityFilter = {
-  archetypes: ArchetypeFilter
+  archetypes: ArchetypeFilter<AbilityArchetypeReference>
   specificOptions: Array<AbilityReference>
 }
 

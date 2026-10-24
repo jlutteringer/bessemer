@@ -1,11 +1,12 @@
 export * from '@simulacrum/ruleset/archetype'
-import { Archetype, ArchetypeReference } from '@simulacrum/ruleset/archetype'
+import { ArchetypeEntityType, ArchetypeReference } from '@simulacrum/ruleset/archetype'
+import { RulesetEntityTypes } from '@simulacrum/ruleset/ruleset'
 import { Ruleset } from '@simulacrum/engine/ruleset'
 import { ArchetypeFilter } from '@simulacrum/ruleset/archetype'
 import { Arrays } from '@bessemer/cornerstone'
 import * as Rulesets from '@simulacrum/engine/ruleset'
 
-export const getArchetypeById = (archetype: ArchetypeReference, ruleset: Ruleset): Archetype => {
+export const getArchetypeById = <T extends ArchetypeEntityType>(archetype: ArchetypeReference<T>, ruleset: Ruleset): RulesetEntityTypes[T] => {
   return Rulesets.getEntityById(archetype, ruleset)
 }
 

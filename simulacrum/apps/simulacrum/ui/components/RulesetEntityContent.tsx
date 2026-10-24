@@ -3,19 +3,24 @@
 import * as React from 'react'
 import { useContext } from 'react'
 import { Box, Divider, Stack, Typography } from '@mui/material'
+import { Bolt, HourglassBottom, TrackChanges } from '@mui/icons-material'
 import { Arrays, Objects } from '@bessemer/cornerstone'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { Ability } from '@simulacrum/engine/ability'
 import { Trait } from '@simulacrum/engine/trait'
-import { Effects, Rulesets } from '@simulacrum/engine'
+import { Characters, Effects, Rulesets } from '@simulacrum/engine'
+import { AbilityAction } from '@simulacrum/ruleset/ability'
+import { EvaluateExpression, Expressions } from '@bessemer/cornerstone/expression'
 import { SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import {
   getAbilityResourceLabels,
-  getActionLabel,
   getActionTypeLabel,
   getPassiveEffects,
+  getDurationLabel,
+  getRangeLabel,
+  getTargetLabel,
   hasDescribedActions,
 } from '@simulacrum/ui/components/ruleset-entity-model'
 
@@ -67,19 +72,10 @@ const AbilityContent = ({ ability: rulesetAbility }: { ability: Ability }) => {
   const sheet = useContext(CharacterSheetContext)
   const ability = sheet?.abilities.find((it) => it.ability.id === rulesetAbility.id)?.ability ?? rulesetAbility
   const resourceLabels = Objects.isNil(sheet) ? [] : getAbilityResourceLabels(ability, sheet, ruleset)
-  const actionLabel = hasDescribedActions(ability) ? null : getActionLabel(ability, ruleset)
-  const usageLabels = [...(Objects.isPresent(actionLabel) ? [actionLabel] : []), ...resourceLabels]
+  const evaluate = Objects.isNil(sheet) ? null : Expressions.evaluator(Characters.buildExpressionContext(sheet, ruleset))
 
   return (
     <>
-      {!Arrays.isEmpty(usageLabels) && (
-        <Typography
-          variant="caption"
-          component="p"
-        >
-          {usageLabels.join(' · ')}
-        </Typography>
-      )}
       {Objects.isPresent(ability.description) && <SimulacrumRichText text={ability.description} />}
       {Effects.filter(ability.effects, Effects.Descriptive).map((it, index) => (
         <SimulacrumRichText
@@ -87,27 +83,35 @@ const AbilityContent = ({ ability: rulesetAbility }: { ability: Ability }) => {
           text={it.description}
         />
       ))}
+      {!Arrays.isEmpty(resourceLabels) && (
+        <Typography
+          variant="caption"
+          component="p"
+        >
+          {resourceLabels.join(' · ')}
+        </Typography>
+      )}
       {hasDescribedActions(ability) ? (
-        <AbilityActions ability={ability} />
+        <AbilityActions
+          ability={ability}
+          evaluate={evaluate}
+        />
       ) : (
-        ability.actions.flatMap((it, index) =>
-          Objects.isPresent(it.description)
-            ? [
-                <SimulacrumRichText
-                  key={index}
-                  text={it.description}
-                />,
-              ]
-            : []
-        )
+        ability.actions.map((it, index) => (
+          <React.Fragment key={index}>
+            <ActionDetails
+              action={it}
+              evaluate={evaluate}
+            />
+            {Objects.isPresent(it.description) && <SimulacrumRichText text={it.description} />}
+          </React.Fragment>
+        ))
       )}
     </>
   )
 }
 
-const AbilityActions = ({ ability }: { ability: Ability }) => {
-  const ruleset = useRuleset()
-
+const AbilityActions = ({ ability, evaluate }: { ability: Ability; evaluate: EvaluateExpression | null }) => {
   return (
     <Stack
       spacing={1}
@@ -115,13 +119,53 @@ const AbilityActions = ({ ability }: { ability: Ability }) => {
     >
       {ability.actions.map((action, index) => (
         <Box key={index}>
-          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-            <Typography variant="subtitle2">{action.name ?? ability.name}</Typography>
-            <Typography variant="caption">{getActionTypeLabel(action.action, ruleset)}</Typography>
-          </Box>
+          <Typography variant="subtitle2">{action.name ?? ability.name}</Typography>
+          <ActionDetails
+            action={action}
+            evaluate={evaluate}
+          />
           {Objects.isPresent(action.description) && <SimulacrumRichText text={action.description} />}
         </Box>
       ))}
     </Stack>
+  )
+}
+
+const ActionDetails = ({ action, evaluate }: { action: AbilityAction; evaluate: EvaluateExpression | null }) => {
+  const ruleset = useRuleset()
+
+  return (
+    <Stack
+      spacing={0.25}
+      sx={{ my: 1 }}
+    >
+      <ActionDetail icon={Bolt}>
+        {getActionTypeLabel(action.action, ruleset)}
+        {Objects.isPresent(action.annotation) && ` · ${action.annotation}`}
+      </ActionDetail>
+      {Object.entries(action.targeting).map(([key, selection]) => {
+        const rangeLabel = getRangeLabel(selection, ruleset, evaluate)
+
+        return (
+          <ActionDetail
+            key={key}
+            icon={TrackChanges}
+          >
+            {getTargetLabel(selection, ruleset, evaluate)}
+            {Objects.isPresent(rangeLabel) && ` · ${rangeLabel}`}
+          </ActionDetail>
+        )
+      })}
+      <ActionDetail icon={HourglassBottom}>{getDurationLabel(action.duration, evaluate)}</ActionDetail>
+    </Stack>
+  )
+}
+
+const ActionDetail = ({ icon: Icon, children }: { icon: typeof Bolt; children: React.ReactNode }) => {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 0.75, color: 'text.secondary' }}>
+      <Icon sx={{ fontSize: 16, mt: '2px' }} />
+      <Typography variant="body2">{children}</Typography>
+    </Box>
   )
 }

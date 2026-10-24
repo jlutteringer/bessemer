@@ -3,9 +3,9 @@ import { CharacterOptions } from '@simulacrum/ruleset'
 import { ArtisansTools } from '@simulacrum/ruleset-dnd5e/archetype/artisans-tools'
 
 // Tools other than Artisan's Tools (which have their own module): kits and other single tools, Gaming Sets, and Musical Instruments
-export const Tool = Archetypes.defineArchetype('tool', { name: 'Tool' })
-export const GamingSet = Archetypes.defineArchetype('gaming-set', { name: 'Gaming Set' })
-export const MusicalInstrument = Archetypes.defineArchetype('musical-instrument', { name: 'Musical Instrument' })
+export const Tool = Archetypes.defineTraitArchetype('tool', { name: 'Tool' })
+export const GamingSet = Archetypes.defineTraitArchetype('gaming-set', { name: 'Gaming Set' })
+export const MusicalInstrument = Archetypes.defineTraitArchetype('musical-instrument', { name: 'Musical Instrument' })
 
 // Every kind of tool, for options that offer any tool (e.g. the Skilled feat)
 export const AllTools = [ArtisansTools, Tool, GamingSet, MusicalInstrument]

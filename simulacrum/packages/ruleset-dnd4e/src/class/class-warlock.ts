@@ -9,7 +9,7 @@ import * as Skills from '@simulacrum/ruleset-dnd4e/skill'
 import * as Powers from '@simulacrum/ruleset-dnd4e/power'
 import { Human } from '@simulacrum/ruleset-dnd4e/race'
 
-export const EldritchPact = Archetypes.defineArchetype('warlock/eldritch-pact', { name: 'Eldritch Pact' })
+export const EldritchPact = Archetypes.defineTraitArchetype('warlock/eldritch-pact', { name: 'Eldritch Pact' })
 
 export const SelectEldritchPact = CharacterOptions.selectTraitOption('warlock/select-eldritch-pact', {
   name: 'Eldritch Pact',

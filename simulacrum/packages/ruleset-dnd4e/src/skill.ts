@@ -3,8 +3,8 @@ import { Patches } from '@bessemer/cornerstone'
 import * as Characteristics from '@simulacrum/ruleset-dnd4e/characteristic'
 import { FeatBonus } from '@simulacrum/ruleset-dnd4e/bonus-type'
 
-export const TrainedSkill = Archetypes.defineArchetype('trained-skill', { name: 'Trained Skill' })
-export const SkillFocus = Archetypes.defineArchetype('skill-focus', { name: 'Skill Focus' })
+export const TrainedSkill = Archetypes.defineTraitArchetype('trained-skill', { name: 'Trained Skill' })
+export const SkillFocus = Archetypes.defineTraitArchetype('skill-focus', { name: 'Skill Focus' })
 
 export const TrainedAcrobatics = Traits.defineTrait('skill/acrobatics/trained', {
   name: 'Trained: Acrobatics',

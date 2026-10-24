@@ -51,6 +51,7 @@ import { AllAttributeIncreases, AttributeIncrease } from '@simulacrum/ruleset-kh
 export const KhydrianDrift: Ruleset = {
   id: 'khydrian-drift' as RulesetReference,
   name: 'Khydrian Drift',
+  distanceUnit: { singular: 'square', plural: 'squares' },
   entities: [
     SelectClassOption,
     SelectTraitOption,

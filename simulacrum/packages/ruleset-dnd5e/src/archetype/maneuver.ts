@@ -5,7 +5,7 @@ import { CharacterOptions } from '@simulacrum/ruleset'
 
 // Maneuvers are abilities that spend the Battle Master's Superiority Dice. A Battle Master learns them as it gains levels (and can swap
 // one each time it gains a Fighter level), so they're chosen rather than prepared in a loadout.
-export const Maneuver = Archetypes.defineArchetype('maneuver', { name: 'Maneuver' })
+export const Maneuver = Archetypes.defineAbilityArchetype('maneuver', { name: 'Maneuver' })
 
 export const SelectManeuver = CharacterOptions.selectAbilityOption('maneuver/select', {
   name: 'Maneuvers',

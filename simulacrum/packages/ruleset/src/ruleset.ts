@@ -1,5 +1,5 @@
 import { Trait } from '@simulacrum/ruleset/trait'
-import { Archetype } from '@simulacrum/ruleset/archetype'
+import { AbilityArchetype, CreatureArchetype, TraitArchetype } from '@simulacrum/ruleset/archetype'
 import { ResourcePoolDefinition } from '@simulacrum/ruleset/resource-pool'
 import { LoadoutType } from '@simulacrum/ruleset/loadout'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
@@ -11,10 +11,13 @@ import { ActionType } from '@simulacrum/ruleset/action-type'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
+import { DistanceUnit } from '@simulacrum/ruleset/targeting'
 
 export type RulesetEntityTypes = {
   [RulesetEntityType.ActionType]: ActionType
-  [RulesetEntityType.Archetype]: Archetype
+  [RulesetEntityType.TraitArchetype]: TraitArchetype
+  [RulesetEntityType.AbilityArchetype]: AbilityArchetype
+  [RulesetEntityType.CreatureArchetype]: CreatureArchetype
   [RulesetEntityType.Trait]: Trait
   [RulesetEntityType.Ability]: Ability
   [RulesetEntityType.Characteristic]: Characteristic
@@ -35,7 +38,7 @@ export type AbstractRuleset = {
   content: Array<ContentSection>
 }
 
-export type Ruleset = { id: RulesetReference } & AbstractRuleset
+export type Ruleset = { id: RulesetReference; distanceUnit: DistanceUnit } & AbstractRuleset
 
 export type RulesetExtension = { id: RulesetExtensionReference } & AbstractRuleset & {
     ruleset: RulesetReference

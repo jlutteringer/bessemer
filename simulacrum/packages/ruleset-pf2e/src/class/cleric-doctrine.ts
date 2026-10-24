@@ -10,11 +10,11 @@ import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { ShieldBlock } from '@simulacrum/ruleset-pf2e/feat/general-feat'
 import { DomainInitiate } from '@simulacrum/ruleset-pf2e/class/cleric-domain'
 
-export const ClericDoctrine = Archetypes.defineArchetype('cleric/doctrine', { name: 'Doctrine' })
+export const ClericDoctrine = Archetypes.defineTraitArchetype('cleric/doctrine', { name: 'Doctrine' })
 
-export const ClericDivineFont = Archetypes.defineArchetype('cleric/divine-font', { name: 'Divine Font' })
+export const ClericDivineFont = Archetypes.defineTraitArchetype('cleric/divine-font', { name: 'Divine Font' })
 
-export const ClericSanctification = Archetypes.defineArchetype('cleric/sanctification', { name: 'Sanctification' })
+export const ClericSanctification = Archetypes.defineTraitArchetype('cleric/sanctification', { name: 'Sanctification' })
 
 export const CloisteredCleric = Traits.defineTrait('cleric/doctrine/cloistered-cleric', {
   name: 'Cloistered Cleric',

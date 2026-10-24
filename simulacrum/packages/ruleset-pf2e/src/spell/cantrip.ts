@@ -1,7 +1,8 @@
 import { Abilities } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
+import { DurationType } from '@simulacrum/ruleset/duration'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Spell, Cantrip, Arcane, Divine, Occult, Primal } from '@simulacrum/ruleset-pf2e/archetype'
+import { Ally, Arcane, Cantrip, Divine, Enemy, Occult, Primal, Spell } from '@simulacrum/ruleset-pf2e/archetype'
 import { CantripLoadout } from '@simulacrum/ruleset-pf2e/loadout'
 
 export const Allegro = Abilities.defineAbility('spell/allegro', {
@@ -217,9 +218,13 @@ export const ForbiddingWard = Abilities.defineAbility('spell/forbidding-ward', {
     {
       name: 'Forbidding Ward',
       description:
-        "**Range** 30 feet\n\n**Target** 1 ally and 1 enemy\n\n**Duration** sustained up to 1 minute\n\nYou ward an ally against the attacks and hostile spells from the target enemy. The target ally gains a +1 status bonus to [Armor Class](characteristic:armor-class) and saving throws against the target enemy's attacks, spells, and other effects.\n\n**Heightened (6th)** The status bonus increases to +2.",
+        "You ward an ally against the attacks and hostile spells from the target enemy. The target ally gains a +1 status bonus to [Armor Class](characteristic:armor-class) and saving throws against the target enemy's attacks, spells, and other effects.\n\n**Heightened (6th)** The status bonus increases to +2.",
       action: ActionTypes.TwoActions,
-      targeting: { target: { range: 30, count: 1 } },
+      targeting: {
+        first: { range: 30, count: 1, filter: { archetypes: [Ally] } },
+        second: { range: 30, count: 1, filter: { archetypes: [Enemy] } },
+      },
+      duration: { type: DurationType.Sustained, rounds: 10 },
     },
   ],
 })

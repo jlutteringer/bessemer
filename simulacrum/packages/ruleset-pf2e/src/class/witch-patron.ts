@@ -5,7 +5,7 @@ import { Arcane, Cantrip, ClassFeature, Divine, Occult, Primal, Spell, SpellRank
 import { CantripLoadout, SpellRank1Loadout } from '@simulacrum/ruleset-pf2e/loadout'
 import { TrainedArcana, TrainedNature, TrainedOccultism, TrainedReligion } from '@simulacrum/ruleset-pf2e/skill'
 
-export const PatronTheme = Archetypes.defineArchetype('witch/patron-theme', { name: 'Patron Theme' })
+export const PatronTheme = Archetypes.defineTraitArchetype('witch/patron-theme', { name: 'Patron Theme' })
 
 export const SelectWitchArcaneCantrip = CharacterOptions.selectAbilityOption('witch/select-arcane-cantrip', {
   name: 'Familiar Cantrip (Arcane)',

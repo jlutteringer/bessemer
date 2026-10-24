@@ -7,7 +7,7 @@ import { SelectOriginFeat } from '@simulacrum/ruleset-dnd5e/archetype/feat'
 import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/archetype/skill-proficiency'
 import * as Spells from '@simulacrum/ruleset-dnd5e/archetype/spell'
 
-export const Species = Archetypes.defineArchetype('species', { name: 'Species' })
+export const Species = Archetypes.defineTraitArchetype('species', { name: 'Species' })
 
 export const SelectSpecies = CharacterOptions.selectTraitOption('species/select', {
   name: 'Species',

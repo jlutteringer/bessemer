@@ -25,7 +25,7 @@ import {
 } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Patches } from '@bessemer/cornerstone'
 
-export const SkillProficiency = Archetypes.defineArchetype('skill-proficiency', { name: 'Skill Proficiency' })
+export const SkillProficiency = Archetypes.defineTraitArchetype('skill-proficiency', { name: 'Skill Proficiency' })
 
 export const AthleticsProficiency = Traits.defineTrait('skill-proficiency/athletics', {
   name: 'Athletics',

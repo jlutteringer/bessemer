@@ -1,8 +1,10 @@
 import { CharacterSheet } from '@simulacrum/engine/character/character'
-import { Characters, Effects, ResourcePools, Rulesets } from '@simulacrum/engine'
+import { Archetypes, Characters, Effects, ResourcePools, Rulesets } from '@simulacrum/engine'
 import { Trait } from '@simulacrum/engine/trait'
 import { Ruleset } from '@simulacrum/engine/ruleset'
 import { Ability } from '@simulacrum/engine/ability'
+import { TargetSelection } from '@simulacrum/ruleset/targeting'
+import { Duration, DurationType } from '@simulacrum/ruleset/duration'
 import { ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { DescriptiveEffect } from '@simulacrum/engine/effect'
 import { CooldownRate } from '@simulacrum/engine/resource-pool'
@@ -21,14 +23,6 @@ export const getPassiveEffects = (trait: Trait): Array<DescriptiveEffect> => {
 
 export const getActionTypeLabel = (actionType: ActionTypeReference, ruleset: Ruleset): string => {
   return Rulesets.getEntityById(actionType, ruleset).name
-}
-
-/**
- * Labels what it takes to use an ability, e.g. "Bonus Action", or "Free or Reaction" when its actions differ. Null if it has no actions.
- */
-export const getActionLabel = (ability: Ability, ruleset: Ruleset): string | null => {
-  const actionTypes = Arrays.dedupe(ability.actions.map((it) => it.action))
-  return Arrays.isEmpty(actionTypes) ? null : actionTypes.map((it) => getActionTypeLabel(it, ruleset)).join(' or ')
 }
 
 // From shortest to longest
@@ -82,6 +76,33 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
       ...getRecoveryLabels(resource.refresh, evaluate),
     ].join(' · ')
   })
+}
+
+export const getRangeLabel = ({ range }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string | null => {
+  const distance = typeof range === 'number' ? range : evaluate?.(range) ?? null
+  if (Objects.isNil(distance)) {
+    return null
+  }
+
+  return distance === 0 ? 'Touch' : `${distance} ${distance === 1 ? ruleset.distanceUnit.singular : ruleset.distanceUnit.plural}`
+}
+
+export const getTargetLabel = ({ count, filter }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string => {
+  const amount = typeof count === 'number' ? count : evaluate?.(count) ?? null
+  const kinds = Arrays.isEmpty(filter.archetypes)
+    ? 'target'
+    : filter.archetypes.map((group) => group.map((it) => Archetypes.getArchetypeById(it, ruleset).name).join(' or ')).join(' ')
+
+  return Objects.isNil(amount) ? kinds : `${amount} ${kinds}`
+}
+
+export const getDurationLabel = (duration: Duration, evaluate: EvaluateExpression | null): string => {
+  if (duration.type === DurationType.Instant) {
+    return 'Instant'
+  }
+
+  const rounds = typeof duration.rounds === 'number' ? duration.rounds : evaluate?.(duration.rounds) ?? null
+  return Objects.isNil(rounds) ? 'Sustained' : `Sustained · ${rounds} ${rounds === 1 ? 'round' : 'rounds'}`
 }
 
 /**

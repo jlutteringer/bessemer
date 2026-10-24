@@ -1,7 +1,7 @@
 import { Archetypes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
 import * as Spells from '@simulacrum/ruleset-pf2e/spell'
 
-export const Muse = Archetypes.defineArchetype('bard/muse', { name: 'Muse' })
+export const Muse = Archetypes.defineTraitArchetype('bard/muse', { name: 'Muse' })
 
 export const EnigmaMuseType = Traits.defineTrait('bard/muse-type/enigma', {
   name: 'Enigma Muse',

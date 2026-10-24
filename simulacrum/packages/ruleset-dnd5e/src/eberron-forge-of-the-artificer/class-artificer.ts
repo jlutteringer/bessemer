@@ -187,7 +187,7 @@ export const ReplicateMagicItem = Abilities.defineAbility('artificer/replicate-m
   ],
 })
 
-export const ArtificerSubclass = Archetypes.defineArchetype('artificer/subclass', { name: 'Artificer Subclass' })
+export const ArtificerSubclass = Archetypes.defineTraitArchetype('artificer/subclass', { name: 'Artificer Subclass' })
 export const SelectArtificerSubclass = CharacterOptions.selectTraitOption('artificer/select-subclass', {
   name: 'Artificer Subclass',
   filter: {

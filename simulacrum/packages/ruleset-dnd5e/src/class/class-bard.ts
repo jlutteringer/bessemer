@@ -130,7 +130,7 @@ export const Level2 = Traits.defineTrait('bard/level-2', {
   ],
 })
 
-export const BardSubclass = Archetypes.defineArchetype('bard/subclass', { name: 'Bard Subclass' })
+export const BardSubclass = Archetypes.defineTraitArchetype('bard/subclass', { name: 'Bard Subclass' })
 export const SelectBardSubclass = CharacterOptions.selectTraitOption('bard/select-subclass', {
   name: 'Bard Subclass',
   filter: { archetypes: [BardSubclass] },
