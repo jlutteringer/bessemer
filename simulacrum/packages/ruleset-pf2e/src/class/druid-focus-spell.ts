@@ -84,4 +84,20 @@ export const UntamedShift = Abilities.defineAbility('spell/untamed-shift', {
   ],
 })
 
-export const AllDruidFocusSpellEntities = [Cornucopia, HealAnimal, TempestSurge, UntamedForm, UntamedShift]
+export const StormwindFlight = Abilities.defineAbility('spell/stormwind-flight', {
+  name: 'Stormwind Flight',
+  description: '*Uncommon, Air, Concentrate, Druid, Focus, Manipulate*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Stormwind Flight',
+      description:
+        "**Duration** 1 minute\n\nPowerful winds carry you through the air, giving you a fly [Speed](characteristic:speed) equal to your Speed. When this spell's duration would end, if you're still flying, you float to the ground, as [_gentle landing_](ability:spell/gentle-landing).\n\n**Heightened (6th)** When you fly using _stormwind flight_, you ignore difficult terrain from wind.",
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const AllDruidFocusSpellEntities = [Cornucopia, HealAnimal, TempestSurge, UntamedForm, UntamedShift, StormwindFlight]

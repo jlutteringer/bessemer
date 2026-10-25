@@ -4,6 +4,8 @@ import * as Cantrip from '@simulacrum/ruleset-pf2e/spell/cantrip'
 import * as Rank1 from '@simulacrum/ruleset-pf2e/spell/rank-1'
 import * as Rank2 from '@simulacrum/ruleset-pf2e/spell/rank-2'
 import * as Rank3 from '@simulacrum/ruleset-pf2e/spell/rank-3'
+import * as Rank4 from '@simulacrum/ruleset-pf2e/spell/rank-4'
+import * as Rank5 from '@simulacrum/ruleset-pf2e/spell/rank-5'
 
 export const SpellsSection = Content.defineSection('spells', {
   content: {
@@ -730,6 +732,160 @@ export const WallOfThornsSection = Content.linkEntity(Section3rdRankSpellsSectio
 
 export const WallOfWindSection = Content.linkEntity(Section3rdRankSpellsSection, Rank3.WallOfWind)
 
+export const Section4thRankSpellsSection = Content.defineSection('spells/4th-rank-spells', {
+  parent: SpellDescriptionsSection,
+  content: { name: '4th-Rank Spells' },
+})
+
+export const AerialFormSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.AerialForm)
+
+export const ClairvoyanceSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Clairvoyance)
+
+export const ConfusionSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Confusion)
+
+export const CreationSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Creation)
+
+export const DetectScryingSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.DetectScrying)
+
+export const DinosaurFormSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.DinosaurForm)
+
+export const DispellingGlobeSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.DispellingGlobe)
+
+export const DivineWrathSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.DivineWrath)
+
+export const FireShieldSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.FireShield)
+
+export const FlickerSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Flicker)
+
+export const FlySection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Fly)
+
+export const HoneyedWordsSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.HoneyedWords)
+
+export const HydraulicTorrentSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.HydraulicTorrent)
+
+export const LiminalDoorwaySection = Content.linkEntity(Section4thRankSpellsSection, Rank4.LiminalDoorway)
+
+export const MirageSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Mirage)
+
+export const MountainResilienceSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.MountainResilience)
+
+export const NightmareSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Nightmare)
+
+export const OutcastsCurseSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.OutcastsCurse)
+
+export const PeacefulBubbleSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.PeacefulBubble)
+
+export const PlanarTetherSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.PlanarTether)
+
+export const ReadOmensSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.ReadOmens)
+
+export const RewriteMemorySection = Content.linkEntity(Section4thRankSpellsSection, Rank4.RewriteMemory)
+
+export const ShapeStoneSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.ShapeStone)
+
+export const SuggestionSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Suggestion)
+
+export const TalkingCorpseSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.TalkingCorpse)
+
+export const TelepathySection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Telepathy)
+
+export const TranslocateSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.Translocate)
+
+export const UnfetteredMovementSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.UnfetteredMovement)
+
+export const VaporFormSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.VaporForm)
+
+export const VisionOfDeathSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.VisionOfDeath)
+
+export const VitalBeaconSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.VitalBeacon)
+
+export const WallOfFireSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.WallOfFire)
+
+export const WeaponStormSection = Content.linkEntity(Section4thRankSpellsSection, Rank4.WeaponStorm)
+
+export const Section5thRankSpellsSection = Content.defineSection('spells/5th-rank-spells', {
+  parent: SpellDescriptionsSection,
+  content: { name: '5th-Rank Spells' },
+})
+
+export const BanishmentSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.Banishment)
+
+export const BreathOfLifeSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.BreathOfLife)
+
+export const ControlWaterSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.ControlWater)
+
+export const DivineImmolationSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.DivineImmolation)
+
+export const DreamingPotentialSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.DreamingPotential)
+
+export const ElementalFormSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.ElementalForm)
+
+export const FalseVisionSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.FalseVision)
+
+export const HallucinationSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.Hallucination)
+
+export const HowlingBlizzardSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.HowlingBlizzard)
+
+export const IllusorySceneSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.IllusoryScene)
+
+export const ImpalingSpikeSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.ImpalingSpike)
+
+export const InvokeSpiritsSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.InvokeSpirits)
+
+export const MagicPassageSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.MagicPassage)
+
+export const MarinersCurseSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.MarinersCurse)
+
+export const MindProbeSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.MindProbe)
+
+export const MoonFrenzySection = Content.linkEntity(Section5thRankSpellsSection, Rank5.MoonFrenzy)
+
+export const NaturesPathwaySection = Content.linkEntity(Section5thRankSpellsSection, Rank5.NaturesPathway)
+
+export const PlantFormSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.PlantForm)
+
+export const ScoutingEyeSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.ScoutingEye)
+
+export const SendingSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.Sending)
+
+export const ShadowBlastSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.ShadowBlast)
+
+export const SlitherSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.Slither)
+
+export const SpeakWithStonesSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SpeakWithStones)
+
+export const SpiritualGuardianSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SpiritualGuardian)
+
+export const SubconsciousSuggestionSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SubconsciousSuggestion)
+
+export const SummonCelestialSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SummonCelestial)
+
+export const SummonDragonSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SummonDragon)
+
+export const SummonEntitySection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SummonEntity)
+
+export const SummonFiendSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SummonFiend)
+
+export const SummonGiantSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SummonGiant)
+
+export const SummonMonitorSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SummonMonitor)
+
+export const SynapticPulseSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.SynapticPulse)
+
+export const TelekineticHaulSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.TelekineticHaul)
+
+export const ToxicCloudSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.ToxicCloud)
+
+export const TruespeechSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.Truespeech)
+
+export const UmbralJourneySection = Content.linkEntity(Section5thRankSpellsSection, Rank5.UmbralJourney)
+
+export const WallOfIceSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.WallOfIce)
+
+export const WallOfStoneSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.WallOfStone)
+
+export const WaveOfDespairSection = Content.linkEntity(Section5thRankSpellsSection, Rank5.WaveOfDespair)
+
 export const RitualsSection = Content.defineSection('spells/rituals', {
   parent: SpellsSection,
   content: {
@@ -1041,6 +1197,80 @@ export const SpellsContent = [
   VeilOfPrivacySection,
   WallOfThornsSection,
   WallOfWindSection,
+  Section4thRankSpellsSection,
+  AerialFormSection,
+  ClairvoyanceSection,
+  ConfusionSection,
+  CreationSection,
+  DetectScryingSection,
+  DinosaurFormSection,
+  DispellingGlobeSection,
+  DivineWrathSection,
+  FireShieldSection,
+  FlickerSection,
+  FlySection,
+  HoneyedWordsSection,
+  HydraulicTorrentSection,
+  LiminalDoorwaySection,
+  MirageSection,
+  MountainResilienceSection,
+  NightmareSection,
+  OutcastsCurseSection,
+  PeacefulBubbleSection,
+  PlanarTetherSection,
+  ReadOmensSection,
+  RewriteMemorySection,
+  ShapeStoneSection,
+  SuggestionSection,
+  TalkingCorpseSection,
+  TelepathySection,
+  TranslocateSection,
+  UnfetteredMovementSection,
+  VaporFormSection,
+  VisionOfDeathSection,
+  VitalBeaconSection,
+  WallOfFireSection,
+  WeaponStormSection,
+  Section5thRankSpellsSection,
+  BanishmentSection,
+  BreathOfLifeSection,
+  ControlWaterSection,
+  DivineImmolationSection,
+  DreamingPotentialSection,
+  ElementalFormSection,
+  FalseVisionSection,
+  HallucinationSection,
+  HowlingBlizzardSection,
+  IllusorySceneSection,
+  ImpalingSpikeSection,
+  InvokeSpiritsSection,
+  MagicPassageSection,
+  MarinersCurseSection,
+  MindProbeSection,
+  MoonFrenzySection,
+  NaturesPathwaySection,
+  PlantFormSection,
+  ScoutingEyeSection,
+  SendingSection,
+  ShadowBlastSection,
+  SlitherSection,
+  SpeakWithStonesSection,
+  SpiritualGuardianSection,
+  SubconsciousSuggestionSection,
+  SummonCelestialSection,
+  SummonDragonSection,
+  SummonEntitySection,
+  SummonFiendSection,
+  SummonGiantSection,
+  SummonMonitorSection,
+  SynapticPulseSection,
+  TelekineticHaulSection,
+  ToxicCloudSection,
+  TruespeechSection,
+  UmbralJourneySection,
+  WallOfIceSection,
+  WallOfStoneSection,
+  WaveOfDespairSection,
   RitualsSection,
   CastingRitualsSection,
   LearningRitualsSection,

@@ -166,6 +166,46 @@ export const RuneOfPeaceSection = Content.linkEntity(Level5DailyPrayersSection, 
 export const SpiritualWeaponSection = Content.linkEntity(Level5DailyPrayersSection, ClericPowers.SpiritualWeapon)
 export const WeaponOfTheGodsSection = Content.linkEntity(Level5DailyPrayersSection, ClericPowers.WeaponOfTheGods)
 
+export const Level6UtilityPrayersSection = Content.defineSection('classes/cleric-level-6-utility-prayers', {
+  parent: ClericPowersSection,
+  content: { name: 'Level 6 Utility Prayers' },
+})
+
+export const BastionOfHealthSection = Content.linkEntity(Level6UtilityPrayersSection, ClericPowers.BastionOfHealth)
+export const CureSeriousWoundsSection = Content.linkEntity(Level6UtilityPrayersSection, ClericPowers.CureSeriousWounds)
+export const DivineVigorSection = Content.linkEntity(Level6UtilityPrayersSection, ClericPowers.DivineVigor)
+export const HolyLanternSection = Content.linkEntity(Level6UtilityPrayersSection, ClericPowers.HolyLantern)
+
+export const Level7EncounterPrayersSection = Content.defineSection('classes/cleric-level-7-encounter-prayers', {
+  parent: ClericPowersSection,
+  content: { name: 'Level 7 Encounter Prayers' },
+})
+
+export const AweStrikeSection = Content.linkEntity(Level7EncounterPrayersSection, ClericPowers.AweStrike)
+export const BreakTheSpiritSection = Content.linkEntity(Level7EncounterPrayersSection, ClericPowers.BreakTheSpirit)
+export const SearingLightSection = Content.linkEntity(Level7EncounterPrayersSection, ClericPowers.SearingLight)
+export const StrengthenTheFaithfulSection = Content.linkEntity(Level7EncounterPrayersSection, ClericPowers.StrengthenTheFaithful)
+
+export const Level9DailyPrayersSection = Content.defineSection('classes/cleric-level-9-daily-prayers', {
+  parent: ClericPowersSection,
+  content: { name: 'Level 9 Daily Prayers' },
+})
+
+export const AstralDefendersSection = Content.linkEntity(Level9DailyPrayersSection, ClericPowers.AstralDefenders)
+export const BladeBarrierSection = Content.linkEntity(Level9DailyPrayersSection, ClericPowers.BladeBarrier)
+export const DivinePowerSection = Content.linkEntity(Level9DailyPrayersSection, ClericPowers.DivinePower)
+export const FlameStrikeSection = Content.linkEntity(Level9DailyPrayersSection, ClericPowers.FlameStrike)
+
+export const Level10UtilityPrayersSection = Content.defineSection('classes/cleric-level-10-utility-prayers', {
+  parent: ClericPowersSection,
+  content: { name: 'Level 10 Utility Prayers' },
+})
+
+export const AstralRefugeSection = Content.linkEntity(Level10UtilityPrayersSection, ClericPowers.AstralRefuge)
+export const KnightsOfUnyieldingValorSection = Content.linkEntity(Level10UtilityPrayersSection, ClericPowers.KnightsOfUnyieldingValor)
+export const MassCureLightWoundsSection = Content.linkEntity(Level10UtilityPrayersSection, ClericPowers.MassCureLightWounds)
+export const ShieldingWordSection = Content.linkEntity(Level10UtilityPrayersSection, ClericPowers.ShieldingWord)
+
 export const ClericContent: Array<ContentSection> = [
   ClericSection,
   ClericClassTraitsSection,
@@ -216,4 +256,24 @@ export const ClericContent: Array<ContentSection> = [
   RuneOfPeaceSection,
   SpiritualWeaponSection,
   WeaponOfTheGodsSection,
+  Level6UtilityPrayersSection,
+  BastionOfHealthSection,
+  CureSeriousWoundsSection,
+  DivineVigorSection,
+  HolyLanternSection,
+  Level7EncounterPrayersSection,
+  AweStrikeSection,
+  BreakTheSpiritSection,
+  SearingLightSection,
+  StrengthenTheFaithfulSection,
+  Level9DailyPrayersSection,
+  AstralDefendersSection,
+  BladeBarrierSection,
+  DivinePowerSection,
+  FlameStrikeSection,
+  Level10UtilityPrayersSection,
+  AstralRefugeSection,
+  KnightsOfUnyieldingValorSection,
+  MassCureLightWoundsSection,
+  ShieldingWordSection,
 ]

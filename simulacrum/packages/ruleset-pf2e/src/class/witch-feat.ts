@@ -2,10 +2,30 @@ import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simul
 import { Patches } from '@bessemer/cornerstone'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { ClassFeat, Feat, FeatLevel1, FeatLevel2, FeatLevel4, WitchFeat, WizardFeat } from '@simulacrum/ruleset-pf2e/tag'
+import { Expressions } from '@bessemer/cornerstone/expression'
+import {
+  ClassFeat,
+  Feat,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel4,
+  FeatLevel6,
+  FeatLevel8,
+  FeatLevel10,
+  WitchFeat,
+  WizardFeat,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import * as WitchFocusSpells from '@simulacrum/ruleset-pf2e/class/witch-focus-spell'
-import { SelectWitchBasicLesson } from '@simulacrum/ruleset-pf2e/class/witch-lesson'
+import { SelectWitchBasicLesson, SelectWitchGreaterLesson, SelectWitchMajorLesson } from '@simulacrum/ruleset-pf2e/class/witch-lesson'
+import {
+  WitchArcaneSpellcasting,
+  WitchDivineSpellcasting,
+  WitchOccultSpellcasting,
+  WitchPrimalSpellcasting,
+} from '@simulacrum/ruleset-pf2e/class/witch-patron'
+import { SelectFamiliarAbility } from '@simulacrum/ruleset-pf2e/companion/familiar'
+import { EnhancedFamiliar } from '@simulacrum/ruleset-pf2e/class/druid-feat'
 
 export const Cackle = Traits.defineTrait('feat/cackle', {
   name: 'Cackle',
@@ -152,6 +172,100 @@ export const SympatheticStrikeAction = Abilities.defineAbility('feat/sympathetic
   ],
 })
 
+export const CeremonialKnife = Traits.defineTrait('feat/ceremonial-knife', {
+  name: 'Ceremonial Knife',
+  description:
+    '*Witch*\n\nYou have prepared a special knife to direct energies when spellcasting. During your daily preparations, you and your familiar can perform a short ritual over a weapon in the knife group—typically a dagger. This causes the knife to function as a magic wand, containing any one 1st-rank spell your familiar knows. You, and only you, can Activate the knife to Cast the Spell within it, as normal for a wand. You can attempt to overcharge the knife, and this can break or destroy the knife as normal. You can have only one ceremonial knife at a time.\n\nAt 8th level, and every 2 levels thereafter, the maximum rank of spell your ceremonial knife can hold increases by 1.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel6],
+  effects: [],
+})
+
+export const GreaterLesson = Traits.defineTrait('feat/greater-lesson', {
+  name: 'Greater Lesson',
+  description:
+    '*Witch*\n\nYour patron grants you greater knowledge. Choose a greater or basic lesson from the list here. You gain its associated hex, and your familiar learns the associated spell.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel6],
+  effects: [Effects.gainCharacterOption(SelectWitchGreaterLesson)],
+})
+
+export const WitchsCharge = Traits.defineTrait('feat/witchs-charge', {
+  name: "Witch's Charge",
+  description:
+    '*Detection, Witch*\n\nYou forge a magical link with another creature, granting you awareness of that creature’s condition and creating a conduit for spellcasting. During your daily preparations, you can designate one willing creature as your charge. You are always aware of your charge’s direction from you, its distance from you, and any conditions affecting it. In addition, you can cast spells with a range of touch on your charge from a range of 30 feet. These effects persist until your next daily preparations.\n\n**Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal).',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel6],
+  effects: [],
+})
+
+export const IncredibleFamiliar = Traits.defineTrait('feat/incredible-familiar', {
+  name: 'Incredible Familiar',
+  description:
+    '*Thaumaturge, Witch*\n\n**Prerequisites** [Enhanced Familiar](trait:feat/enhanced-familiar)\n\nYour familiar is imbued with even more magic than other familiars. You can select a base of six familiar or master abilities each day, instead of four.\n\n**Special** Add the bonus familiar abilities you gain for being a witch to this amount.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(EnhancedFamiliar)],
+  effects: [Effects.gainCharacterOption(SelectFamiliarAbility), Effects.gainCharacterOption(SelectFamiliarAbility)],
+})
+
+export const Murksight = Traits.defineTrait('feat/murksight', {
+  name: 'Murksight',
+  description:
+    '*Witch*\n\nYour vision pierces through non-magical fog, mist, rain, and snow. You don’t take circumstance penalties to ranged attacks or [Perception](characteristic:perception) checks caused by non-magical precipitation, and your targeted attacks don’t require a flat check to succeed against a target concealed only by such effects.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel8],
+  effects: [],
+})
+
+export const SpiritFamiliarWitch = Traits.defineTrait('feat/spirit-familiar-witch', {
+  name: 'Spirit Familiar (Witch)',
+  description:
+    '*Witch*\n\n**Prerequisites** divine or occult patron\n\nYour familiar can subsume its body to become pure spirit. Your familiar gains the Shed Spirit activity.\n\n**Shed Spirit** ◆◆ (spirit) **Frequency** once per 10 minutes; **Effect** Your familiar’s spirit exits its body, leaving its empty shell behind, before flying at an enemy within 20 feet and dealing 6d6 spirit damage, with a basic [Will save](characteristic:will) against your [spell DC](characteristic:spell-dc). If the familiar dealt damage, it then flies to an ally within 30 feet of the enemy, restoring [Hit Points](characteristic:hit-points) equal to half the damage dealt. Your familiar then re-forms in its original square. At 9th level, and every 2 levels thereafter, the attack deals an additional 2d6 damage.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel8],
+  prerequisites: [Expressions.or([Traits.traitPrerequisite(WitchDivineSpellcasting), Traits.traitPrerequisite(WitchOccultSpellcasting)])],
+  effects: [],
+})
+
+export const StitchedFamiliar = Traits.defineTrait('feat/stitched-familiar', {
+  name: 'Stitched Familiar',
+  description:
+    '*Witch*\n\n**Prerequisites** arcane or primal patron\n\nYour familiar can shed its material form, becoming a mass of animated magic. Your familiar gains the Stitching Strike activity.\n\n**Stitching Strike** ◆◆ **Frequency** once per 10 minutes; **Effect** Your familiar unravels into magical fibers that encompass an enemy within 30 feet and deal 6d6 slashing damage, with a basic [Reflex](characteristic:reflex) save against your [spell DC](characteristic:spell-dc). On a failure, the target is also [immobilized](content:conditions/immobilized) for 1 round or until it Escapes against your spell DC. Your familiar then re-forms in its original square. At 9th level, and every 2 levels thereafter, the attack deals an additional 2d6 damage.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel8],
+  prerequisites: [Expressions.or([Traits.traitPrerequisite(WitchArcaneSpellcasting), Traits.traitPrerequisite(WitchPrimalSpellcasting)])],
+  effects: [],
+})
+
+export const WitchsBottle = Traits.defineTrait('feat/witchs-bottle', {
+  name: "Witch's Bottle",
+  description:
+    "*Witch*\n\n**Prerequisites** [Cauldron](trait:feat/cauldron)\n\nYou spend 10 minutes and 1 Focus Point brewing a special potion containing the power of one of your hexes that targets a creature. A creature that consumes this potion is targeted by the hex. If the hex has a sustained duration and you have [_cackle_](ability:spell/cackle), you can cast cackle into the bottle just before you seal it. If you do, the hex's duration is extended as if you had cast cackle the round after the hex was cast (typically this extends the duration by 1 round). Your cackling laugh sounds out when the potion is unsealed.\n\nAny potion you create this way loses its power the next time you make your daily preparations. While the potion is in your possession, you can render it inert using a single action that has the concentrate trait. You can't regain the Focus Point you spent to create the potion (or the Focus Point you spent to cast cackle) until the potion is consumed or loses its magic.",
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(Cauldron)],
+  effects: [],
+})
+
+export const DoubleDouble = Traits.defineTrait('feat/double-double', {
+  name: 'Double, Double',
+  description:
+    '*Witch*\n\n**Prerequisites** [Cauldron](trait:feat/cauldron)\n\nFor each temporary oil or potion you brew during your daily preparations, you brew two copies of it. This allows you to brew two temporary oils or potions each day, four if you have master proficiency in [spell DC](characteristic:spell-dc), or six if you have legendary proficiency.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(Cauldron)],
+  effects: [],
+})
+
+export const MajorLesson = Traits.defineTrait('feat/major-lesson', {
+  name: 'Major Lesson',
+  description:
+    '*Witch*\n\nYour patron grants you even greater secrets. Choose a major, greater, or basic lesson from the list here. You gain its associated hex, and your familiar learns the associated spell.\n\n**Special** You can select this feat a second time if you’re 14th level or higher, and a third time if you’re 18th level or higher. Choose a different lesson each time.',
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel10],
+  effects: [Effects.gainCharacterOption(SelectWitchMajorLesson)],
+})
+
+export const WitchsCommunion = Traits.defineTrait('feat/witchs-communion', {
+  name: "Witch's Communion",
+  description:
+    "*Witch*\n\n**Prerequisites** [Witch's Charge](trait:feat/witchs-charge)\n\nYou can keep watch over multiple charges. Each day during your preparations, you can designate a number of charges equal to your [Intelligence modifier](characteristic:intelligence) instead of just one.",
+  tags: [Feat, ClassFeat, WitchFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(WitchsCharge)],
+  effects: [],
+})
+
 export const AllWitchFeatEntities = [
   Cackle,
   Cauldron,
@@ -168,4 +282,15 @@ export const AllWitchFeatEntities = [
   RitesOfConvocation,
   SympatheticStrike,
   SympatheticStrikeAction,
+  CeremonialKnife,
+  GreaterLesson,
+  WitchsCharge,
+  IncredibleFamiliar,
+  Murksight,
+  SpiritFamiliarWitch,
+  StitchedFamiliar,
+  WitchsBottle,
+  DoubleDouble,
+  MajorLesson,
+  WitchsCommunion,
 ]

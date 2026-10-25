@@ -3,7 +3,7 @@ import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
-import { Cantrip, ClassFeature, Occult, Spell, SpellRank1, SpellRank2, SpellRank3 } from '@simulacrum/ruleset-pf2e/tag'
+import { Cantrip, ClassFeature, Occult, Spell, SpellRank1, SpellRank2, SpellRank3, SpellRank4, SpellRank5 } from '@simulacrum/ruleset-pf2e/tag'
 import { Charisma, SpellAttack, SpellDC } from '@simulacrum/ruleset-pf2e/characteristic'
 import { Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
@@ -25,6 +25,20 @@ export const BardSpellSlotsRank2 = ResourcePools.defineResourcePool('bard/spell-
 export const BardSpellSlotsRank3 = ResourcePools.defineResourcePool('bard/spell-slots/rank-3', {
   name: 'Spell Slots (Rank 3)',
   description: 'The number of rank 3 occult spells you can cast each day from your spell repertoire.',
+  size: 2,
+  refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }],
+})
+
+export const BardSpellSlotsRank4 = ResourcePools.defineResourcePool('bard/spell-slots/rank-4', {
+  name: 'Spell Slots (Rank 4)',
+  description: 'The number of rank 4 occult spells you can cast each day from your spell repertoire.',
+  size: 2,
+  refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }],
+})
+
+export const BardSpellSlotsRank5 = ResourcePools.defineResourcePool('bard/spell-slots/rank-5', {
+  name: 'Spell Slots (Rank 5)',
+  description: 'The number of rank 5 occult spells you can cast each day from your spell repertoire.',
   size: 2,
   refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }],
 })
@@ -53,6 +67,18 @@ export const SelectBardSpellRank3 = CharacterOptions.selectAbilityOption('bard/s
   loadout: null,
 })
 
+export const SelectBardSpellRank4 = CharacterOptions.selectAbilityOption('bard/select-spell-rank-4', {
+  name: 'Bard Spell (Rank 4)',
+  filter: { tags: [Spell, SpellRank4, Occult] },
+  loadout: null,
+})
+
+export const SelectBardSpellRank5 = CharacterOptions.selectAbilityOption('bard/select-spell-rank-5', {
+  name: 'Bard Spell (Rank 5)',
+  filter: { tags: [Spell, SpellRank5, Occult] },
+  loadout: null,
+})
+
 export const BardSpellcasting = Traits.defineTrait('bard/spellcasting', {
   name: 'Bard Spellcasting',
   description:
@@ -72,6 +98,17 @@ export const BardSpellcasting = Traits.defineTrait('bard/spellcasting', {
       Effects.modifyResourcePool(BardSpellSlotsRank2, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainResourcePool(BardSpellSlotsRank3)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.modifyResourcePool(BardSpellSlotsRank3, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainResourcePool(BardSpellSlotsRank4)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.modifyResourcePool(BardSpellSlotsRank4, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainResourcePool(BardSpellSlotsRank5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.modifyResourcePool(BardSpellSlotsRank5, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    ]),
   ],
 })
 
@@ -98,7 +135,26 @@ export const SpellRepertoire = Traits.defineTrait('bard/spell-repertoire', {
       Effects.gainCharacterOption(SelectBardSpellRank3),
       Effects.gainCharacterOption(SelectBardSpellRank3),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectBardSpellRank3)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainCharacterOption(SelectBardSpellRank4),
+      Effects.gainCharacterOption(SelectBardSpellRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectBardSpellRank4)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainCharacterOption(SelectBardSpellRank5),
+      Effects.gainCharacterOption(SelectBardSpellRank5),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectBardSpellRank5)]),
   ],
 })
 
-export const AllBardSpellcastingEntities = [BardSpellSlotsRank1, BardSpellSlotsRank2, BardSpellSlotsRank3, BardSpellcasting, SpellRepertoire]
+export const AllBardSpellcastingEntities = [
+  BardSpellSlotsRank1,
+  BardSpellSlotsRank2,
+  BardSpellSlotsRank3,
+  BardSpellSlotsRank4,
+  BardSpellSlotsRank5,
+  BardSpellcasting,
+  SpellRepertoire,
+]

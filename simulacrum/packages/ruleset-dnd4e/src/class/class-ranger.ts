@@ -3,7 +3,7 @@ import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import { AtWillPower, Class, ClassFeature, Feat } from '@simulacrum/ruleset-dnd4e/tag'
-import { Dexterity, Fortitude, HealingSurges, HitPoints, Reflex } from '@simulacrum/ruleset-dnd4e/characteristic'
+import { Dexterity, Fortitude, HealingSurges, HitPoints, Reflex, Wisdom } from '@simulacrum/ruleset-dnd4e/characteristic'
 import * as Armor from '@simulacrum/ruleset-dnd4e/armor'
 import * as Skills from '@simulacrum/ruleset-dnd4e/skill'
 import * as Powers from '@simulacrum/ruleset-dnd4e/power'
@@ -112,6 +112,10 @@ export const Ranger = Traits.defineTrait('ranger', {
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [Effects.gainCharacterOption(Powers.SelectUtility2)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainCharacterOption(Powers.SelectEncounterAttack3)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(Powers.SelectDailyAttack5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(Powers.SelectUtility6)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainCharacterOption(Powers.SelectEncounterAttack7)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(Powers.SelectDailyAttack9)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(Powers.SelectUtility10)]),
   ],
 })
 
@@ -133,6 +137,15 @@ export const LethalHunter = Traits.defineTrait('feat/lethal-hunter', {
   effects: [],
 })
 
+export const PreciseHunter = Traits.defineTrait('feat/precise-hunter', {
+  name: 'Precise Hunter',
+  description:
+    "**Prerequisites:** Wis 15, ranger, Hunter's Quarry class feature\n\nWhen you score a critical hit against the target of your Hunter's Quarry with a ranged attack, your allies gain a +1 bonus to attack rolls against that target until the start of your next turn.",
+  tags: [Feat],
+  prerequisites: [Expressions.greaterThanOrEqual(Wisdom.variable, 15), Traits.traitPrerequisite(Ranger), Traits.traitPrerequisite(HuntersQuarry)],
+  effects: [],
+})
+
 export const AllRangerTraits = [
   Ranger,
   ArcherFightingStyle,
@@ -142,4 +155,5 @@ export const AllRangerTraits = [
   PrimeShot,
   AgileHunter,
   LethalHunter,
+  PreciseHunter,
 ]

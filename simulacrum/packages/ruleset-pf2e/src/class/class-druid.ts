@@ -1,7 +1,21 @@
 import { Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
-import { Class, ClassFeature, DruidFeat, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4 } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  Class,
+  ClassFeature,
+  DruidFeat,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { WisdomKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import {
@@ -22,7 +36,14 @@ import {
   Wisdom,
 } from '@simulacrum/ruleset-pf2e/characteristic'
 import { ShieldBlock } from '@simulacrum/ruleset-pf2e/feat/general-feat'
-import { CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout } from '@simulacrum/ruleset-pf2e/loadout'
+import {
+  CantripLoadout,
+  SpellRank1Loadout,
+  SpellRank2Loadout,
+  SpellRank3Loadout,
+  SpellRank4Loadout,
+  SpellRank5Loadout,
+} from '@simulacrum/ruleset-pf2e/loadout'
 import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { SelectTrainedSkill, TrainedNature } from '@simulacrum/ruleset-pf2e/skill'
 import { PrimalSpellList } from '@simulacrum/ruleset-pf2e/spellcasting'
@@ -38,6 +59,23 @@ export const SelectDruidFeat2 = CharacterOptions.selectTraitOption('druid/select
 export const SelectDruidFeat4 = CharacterOptions.selectTraitOption('druid/select-feat-4', {
   name: 'Druid Feat (Level 4)',
   filter: { tags: [DruidFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectDruidFeat6 = CharacterOptions.selectTraitOption('druid/select-feat-6', {
+  name: 'Druid Feat (Level 6)',
+  filter: { tags: [DruidFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectDruidFeat8 = CharacterOptions.selectTraitOption('druid/select-feat-8', {
+  name: 'Druid Feat (Level 8)',
+  filter: { tags: [DruidFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectDruidFeat10 = CharacterOptions.selectTraitOption('druid/select-feat-10', {
+  name: 'Druid Feat (Level 10)',
+  filter: {
+    tags: [DruidFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const SelectVoiceOfNature = CharacterOptions.selectTraitOption('druid/select-voice-of-nature', {
@@ -123,6 +161,17 @@ export const DruidReflexExpertise = Traits.defineTrait('druid/reflex-expertise',
   effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const DruidExpertSpellcaster = Traits.defineTrait('druid/expert-spellcaster', {
+  name: 'Expert Spellcaster',
+  description:
+    'Your command of primal forces has deepened, empowering your spells. Your proficiency ranks for [spell attack modifier](characteristic:spell-attack) and [spell DC](characteristic:spell-dc) increase to expert.',
+  tags: [ClassFeature],
+  effects: [
+    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+  ],
+})
+
 export const Druid = Traits.defineTrait('druid', {
   name: 'Druid',
   description:
@@ -176,6 +225,27 @@ export const Druid = Traits.defineTrait('druid', {
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainLoadoutSlot(SpellRank3Loadout),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainCharacterOption(SelectDruidFeat6),
+      Effects.gainLoadoutSlot(SpellRank3Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainTrait(DruidExpertSpellcaster),
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.gainCharacterOption(SelectDruidFeat8),
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainCharacterOption(SelectDruidFeat10),
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+    ]),
   ],
 })
 
@@ -185,6 +255,9 @@ export const AllDruidEntities = [
   ...AllDruidOrderEntities,
   SelectDruidFeat2,
   SelectDruidFeat4,
+  SelectDruidFeat6,
+  SelectDruidFeat8,
+  SelectDruidFeat10,
   SelectVoiceOfNature,
   DruidSpellcasting,
   DruidAnathema,
@@ -195,5 +268,6 @@ export const AllDruidEntities = [
   DruidPerceptionExpertise,
   DruidFortitudeExpertise,
   DruidReflexExpertise,
+  DruidExpertSpellcaster,
   Druid,
 ]

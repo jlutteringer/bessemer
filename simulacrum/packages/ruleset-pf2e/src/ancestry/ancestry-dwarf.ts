@@ -12,6 +12,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   Heritage,
   NephilimFeat,
   OrcFeat,
@@ -25,7 +26,7 @@ import {
   StrengthAncestryBoost,
 } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { ExpertCrafting, TrainedCrafting, TrainedReligion } from '@simulacrum/ruleset-pf2e/skill'
-import { Reaction, TwoActions } from '@simulacrum/ruleset-pf2e/action-type'
+import { Reaction, SingleAction, TwoActions } from '@simulacrum/ruleset-pf2e/action-type'
 import { Darkvision, DwarfHeritage } from '@simulacrum/ruleset-pf2e/ancestry/ancestry-common'
 import { AdditionalLore } from '@simulacrum/ruleset-pf2e/feat/skill-feat'
 
@@ -94,6 +95,17 @@ export const SelectDwarfFeat5 = CharacterOptions.selectTraitOption('ancestry/dwa
   },
 })
 
+export const SelectDwarfFeat9 = CharacterOptions.selectTraitOption('ancestry/dwarf/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: {
+    tags: [
+      AncestryFeat,
+      [DwarfFeat, ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat],
+      [FeatLevel1, FeatLevel5, FeatLevel9],
+    ],
+  },
+})
+
 export const SelectDwarfAncestryBoost = CharacterOptions.selectTraitOption('ancestry/dwarf/select-boost', {
   name: 'Ancestry Boost',
   filter: { specificOptions: [StrengthAncestryBoost, DexterityAncestryBoost, IntelligenceAncestryBoost, CharismaAncestryBoost] },
@@ -115,6 +127,7 @@ export const Dwarf = Traits.defineTrait('ancestry/dwarf', {
     Effects.gainCharacterOption(SelectDwarfHeritage),
     Effects.gainCharacterOption(SelectDwarfFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectDwarfFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectDwarfFeat9)]),
   ],
 })
 
@@ -215,6 +228,66 @@ export const BoulderRollAction = Abilities.defineAbility('ancestry/dwarf/boulder
   ],
 })
 
+export const EchoesInStone = Traits.defineTrait('ancestry/dwarf/echoes-in-stone', {
+  name: 'Echoes in Stone',
+  description:
+    '*Concentrate, Dwarf*\n\n**Requirements** You are standing on a stone or earthen surface\n\nYou pause a moment to attune your senses to the stone around you. Until the start of your next turn, you gain imprecise tremorsense with a range of 20 feet.',
+  tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel9],
+  effects: [],
+})
+
+export const MountainsStoutness = Traits.defineTrait('ancestry/dwarf/mountains-stoutness', {
+  name: "Mountain's Stoutness",
+  description:
+    '*Dwarf*\n\nYour hardiness lets you withstand more punishment than most. Increase your maximum [Hit Points](characteristic:hit-points) by your level. When you have the [dying](content:conditions/dying) condition, the DC of your recovery checks is equal to 9 + your dying value (instead of 10 + your dying value).\n\nIf you also have the [Toughness](trait:feat/toughness) feat, the Hit Points gained from it and this feat are cumulative, and the DC of your recovery checks is equal to 6 + your dying value.',
+  tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel9],
+  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(CharacterValues.Level)))],
+})
+
+export const StoneBones = Traits.defineTrait('ancestry/dwarf/stone-bones', {
+  name: 'Stone Bones',
+  description:
+    '*Dwarf*\n\n**Trigger** You are struck by a critical hit that deals physical damage\n\nYour intractable nature can help you shrug off even the most grievous injuries. Attempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.',
+  tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel9],
+  effects: [],
+})
+
+export const Stonewalker = Traits.defineTrait('ancestry/dwarf/stonewalker', {
+  name: 'Stonewalker',
+  description:
+    "*Dwarf*\n\nYou have a deep reverence for and connection to stone. You can cast [_one with stone_](ability:spell/one-with-stone) as a 3rd-rank divine innate spell once per day.\n\nIf you have the [Stonemason's Eye](trait:ancestry/dwarf/stonemasons-eye) feat, you can attempt to find unusual stonework and stonework traps that require legendary proficiency in [Perception](characteristic:perception).\n\nIf you have both Stonemason's Eye and legendary proficiency in Perception, when the GM rolls a secret check for you to notice unusual stonework, you keep your bonus from Stonemason's Eye.",
+  tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel9],
+  effects: [],
+})
+
+export const EchoesInStoneAction = Abilities.defineAbility('ancestry/dwarf/echoes-in-stone/action', {
+  name: 'Echoes in Stone',
+  description: '*Concentrate, Dwarf*',
+  prerequisites: [Traits.traitPrerequisite(EchoesInStone)],
+  actions: [
+    {
+      name: 'Echoes in Stone',
+      description:
+        '**Requirements** You are standing on a stone or earthen surface\n\nYou pause a moment to attune your senses to the stone around you. Until the start of your next turn, you gain imprecise tremorsense with a range of 20 feet.',
+      action: SingleAction,
+    },
+  ],
+})
+
+export const StoneBonesAction = Abilities.defineAbility('ancestry/dwarf/stone-bones/action', {
+  name: 'Stone Bones',
+  description: '*Dwarf*',
+  prerequisites: [Traits.traitPrerequisite(StoneBones)],
+  actions: [
+    {
+      name: 'Stone Bones',
+      description:
+        '**Trigger** You are struck by a critical hit that deals physical damage\n\nYour intractable nature can help you shrug off even the most grievous injuries. Attempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.',
+      action: Reaction,
+    },
+  ],
+})
+
 export const AllDwarfEntities = [
   DeathWardenDwarf,
   ForgeDwarf,
@@ -225,6 +298,7 @@ export const AllDwarfEntities = [
   SelectDwarfHeritage,
   SelectDwarfFeat1,
   SelectDwarfFeat5,
+  SelectDwarfFeat9,
   SelectDwarfAncestryBoost,
   Dwarf,
   DwarvenDoughtiness,
@@ -238,4 +312,10 @@ export const AllDwarfEntities = [
   BoulderRollAction,
   DefyTheDarkness,
   DwarvenReinforcement,
+  EchoesInStone,
+  MountainsStoutness,
+  StoneBones,
+  Stonewalker,
+  EchoesInStoneAction,
+  StoneBonesAction,
 ]

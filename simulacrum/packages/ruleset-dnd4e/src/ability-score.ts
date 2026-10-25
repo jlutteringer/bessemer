@@ -50,7 +50,7 @@ export const HumanCharisma = Traits.defineTrait('ability-score/human/charisma', 
   effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(2)))],
 })
 
-// The two +1s at 4th level go to different ability scores, so the second can't repeat the first
+// The two +1s at 4th and 8th level each go to different ability scores, so the second can't repeat the first
 
 export const FirstStrengthIncrease = Traits.defineTrait('ability-score/increase/strength-first', {
   name: 'Strength +1',
@@ -142,6 +142,96 @@ export const SecondCharismaIncrease = Traits.defineTrait('ability-score/increase
   effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
+export const ThirdStrengthIncrease = Traits.defineTrait('ability-score/increase/strength-third', {
+  name: 'Strength +1',
+  description: 'Increase your Strength score by 1.',
+  tags: [AbilityIncrease],
+  effects: [Effects.modifyCharacteristic(Characteristics.Strength, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const FourthStrengthIncrease = Traits.defineTrait('ability-score/increase/strength-fourth', {
+  name: 'Strength +1',
+  description: 'Increase your Strength score by 1.',
+  tags: [AbilityIncrease],
+  prerequisites: [Expressions.not(Traits.traitPrerequisite(ThirdStrengthIncrease))],
+  effects: [Effects.modifyCharacteristic(Characteristics.Strength, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const ThirdConstitutionIncrease = Traits.defineTrait('ability-score/increase/constitution-third', {
+  name: 'Constitution +1',
+  description: 'Increase your Constitution score by 1.',
+  tags: [AbilityIncrease],
+  effects: [Effects.modifyCharacteristic(Characteristics.Constitution, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const FourthConstitutionIncrease = Traits.defineTrait('ability-score/increase/constitution-fourth', {
+  name: 'Constitution +1',
+  description: 'Increase your Constitution score by 1.',
+  tags: [AbilityIncrease],
+  prerequisites: [Expressions.not(Traits.traitPrerequisite(ThirdConstitutionIncrease))],
+  effects: [Effects.modifyCharacteristic(Characteristics.Constitution, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const ThirdDexterityIncrease = Traits.defineTrait('ability-score/increase/dexterity-third', {
+  name: 'Dexterity +1',
+  description: 'Increase your Dexterity score by 1.',
+  tags: [AbilityIncrease],
+  effects: [Effects.modifyCharacteristic(Characteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const FourthDexterityIncrease = Traits.defineTrait('ability-score/increase/dexterity-fourth', {
+  name: 'Dexterity +1',
+  description: 'Increase your Dexterity score by 1.',
+  tags: [AbilityIncrease],
+  prerequisites: [Expressions.not(Traits.traitPrerequisite(ThirdDexterityIncrease))],
+  effects: [Effects.modifyCharacteristic(Characteristics.Dexterity, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const ThirdIntelligenceIncrease = Traits.defineTrait('ability-score/increase/intelligence-third', {
+  name: 'Intelligence +1',
+  description: 'Increase your Intelligence score by 1.',
+  tags: [AbilityIncrease],
+  effects: [Effects.modifyCharacteristic(Characteristics.Intelligence, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const FourthIntelligenceIncrease = Traits.defineTrait('ability-score/increase/intelligence-fourth', {
+  name: 'Intelligence +1',
+  description: 'Increase your Intelligence score by 1.',
+  tags: [AbilityIncrease],
+  prerequisites: [Expressions.not(Traits.traitPrerequisite(ThirdIntelligenceIncrease))],
+  effects: [Effects.modifyCharacteristic(Characteristics.Intelligence, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const ThirdWisdomIncrease = Traits.defineTrait('ability-score/increase/wisdom-third', {
+  name: 'Wisdom +1',
+  description: 'Increase your Wisdom score by 1.',
+  tags: [AbilityIncrease],
+  effects: [Effects.modifyCharacteristic(Characteristics.Wisdom, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const FourthWisdomIncrease = Traits.defineTrait('ability-score/increase/wisdom-fourth', {
+  name: 'Wisdom +1',
+  description: 'Increase your Wisdom score by 1.',
+  tags: [AbilityIncrease],
+  prerequisites: [Expressions.not(Traits.traitPrerequisite(ThirdWisdomIncrease))],
+  effects: [Effects.modifyCharacteristic(Characteristics.Wisdom, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const ThirdCharismaIncrease = Traits.defineTrait('ability-score/increase/charisma-third', {
+  name: 'Charisma +1',
+  description: 'Increase your Charisma score by 1.',
+  tags: [AbilityIncrease],
+  effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const FourthCharismaIncrease = Traits.defineTrait('ability-score/increase/charisma-fourth', {
+  name: 'Charisma +1',
+  description: 'Increase your Charisma score by 1.',
+  tags: [AbilityIncrease],
+  prerequisites: [Expressions.not(Traits.traitPrerequisite(ThirdCharismaIncrease))],
+  effects: [Effects.modifyCharacteristic(Characteristics.Charisma, Attributes.modifier(Patches.sum(1)))],
+})
+
 export const SelectHumanAbilityBonus = CharacterOptions.selectTraitOption('ability-score/select-human', {
   name: 'Ability Score +2',
   filter: { specificOptions: [HumanStrength, HumanConstitution, HumanDexterity, HumanIntelligence, HumanWisdom, HumanCharisma] },
@@ -175,6 +265,34 @@ export const SelectSecondAbilityIncrease = CharacterOptions.selectTraitOption('a
   },
 })
 
+export const SelectThirdAbilityIncrease = CharacterOptions.selectTraitOption('ability-score/select-third-increase', {
+  name: 'Ability Score +1',
+  filter: {
+    specificOptions: [
+      ThirdStrengthIncrease,
+      ThirdConstitutionIncrease,
+      ThirdDexterityIncrease,
+      ThirdIntelligenceIncrease,
+      ThirdWisdomIncrease,
+      ThirdCharismaIncrease,
+    ],
+  },
+})
+
+export const SelectFourthAbilityIncrease = CharacterOptions.selectTraitOption('ability-score/select-fourth-increase', {
+  name: 'Ability Score +1',
+  filter: {
+    specificOptions: [
+      FourthStrengthIncrease,
+      FourthConstitutionIncrease,
+      FourthDexterityIncrease,
+      FourthIntelligenceIncrease,
+      FourthWisdomIncrease,
+      FourthCharismaIncrease,
+    ],
+  },
+})
+
 export const AllAbilityScoreTraits = [
   HumanStrength,
   HumanConstitution,
@@ -194,4 +312,16 @@ export const AllAbilityScoreTraits = [
   SecondWisdomIncrease,
   FirstCharismaIncrease,
   SecondCharismaIncrease,
+  ThirdStrengthIncrease,
+  FourthStrengthIncrease,
+  ThirdConstitutionIncrease,
+  FourthConstitutionIncrease,
+  ThirdDexterityIncrease,
+  FourthDexterityIncrease,
+  ThirdIntelligenceIncrease,
+  FourthIntelligenceIncrease,
+  ThirdWisdomIncrease,
+  FourthWisdomIncrease,
+  ThirdCharismaIncrease,
+  FourthCharismaIncrease,
 ]

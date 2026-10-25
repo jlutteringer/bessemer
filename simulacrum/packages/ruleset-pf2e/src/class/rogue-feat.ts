@@ -1,7 +1,7 @@
 import { Abilities, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { ClassFeat, Feat, FeatLevel1, FeatLevel2, FeatLevel4, RogueFeat } from '@simulacrum/ruleset-pf2e/tag'
-import { TrainedDeception, TrainedIntimidation, TrainedStealth } from '@simulacrum/ruleset-pf2e/skill'
+import { ClassFeat, Feat, FeatLevel1, FeatLevel10, FeatLevel2, FeatLevel4, FeatLevel6, FeatLevel8, RogueFeat } from '@simulacrum/ruleset-pf2e/tag'
+import { ExpertStealth, MasterStealth, TrainedAthletics, TrainedDeception, TrainedIntimidation, TrainedStealth } from '@simulacrum/ruleset-pf2e/skill'
 import { Pickpocket } from '@simulacrum/ruleset-pf2e/feat/skill-feat'
 import { MastermindRacket, RuffianRacket, ScoundrelRacket, ThiefRacket } from '@simulacrum/ruleset-pf2e/class/rogue-racket'
 
@@ -401,6 +401,399 @@ export const TwinDistraction = Traits.defineTrait('feat/twin-distraction', {
   effects: [],
 })
 
+export const AnalyzeWeakness = Traits.defineTrait('feat/analyze-weakness', {
+  name: 'Analyze Weakness',
+  description:
+    '*Rogue*\n\n**Prerequisites** sneak attack 2d6\n\n**Requirements** You have identified a creature with [Recall Knowledge](content:skills/recall-knowledge)\n\nYour knowledge of a creature’s physiology helps you attack with pinpoint accuracy. You carefully study a creature that you’ve identified to scope out particularly weak points in its positioning or physical form. The next time you deal sneak attack damage to the chosen creature with a [Strike](content:playing-the-game/strike) before the end of your turn, add an additional 2d6 precision damage.\n\nAt 11th level, the additional damage becomes 3d6, and at 17th level it becomes 4d6.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const AnalyzeWeaknessAction = Abilities.defineAbility('feat/analyze-weakness/action', {
+  name: 'Analyze Weakness',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(AnalyzeWeakness)],
+  actions: [
+    {
+      name: 'Analyze Weakness',
+      description:
+        '**Prerequisites** sneak attack 2d6\n\n**Requirements** You have identified a creature with [Recall Knowledge](content:skills/recall-knowledge)\n\nYour knowledge of a creature’s physiology helps you attack with pinpoint accuracy. You carefully study a creature that you’ve identified to scope out particularly weak points in its positioning or physical form. The next time you deal sneak attack damage to the chosen creature with a [Strike](content:playing-the-game/strike) before the end of your turn, add an additional 2d6 precision damage.\n\nAt 11th level, the additional damage becomes 3d6, and at 17th level it becomes 4d6.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const AnticipateAmbush = Traits.defineTrait('feat/anticipate-ambush', {
+  name: 'Anticipate Ambush',
+  description:
+    '*Exploration, Rogue*\n\n**Prerequisites** Expert in [Stealth](characteristic:skill/stealth)\n\nYou keep watch for any hidden creatures or dangerous sites, moving at half your travel [Speed](characteristic:speed). If you’re Anticipating an Ambush at the start of an encounter, you roll a [Perception](characteristic:perception) check for initiative, and all enemies rolling Stealth for initiative take a –2 circumstance penalty to their Stealth checks.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(ExpertStealth)],
+  effects: [],
+})
+
+export const FarThrow = Traits.defineTrait('feat/far-throw', {
+  name: 'Far Throw',
+  description:
+    '*Rogue*\n\nWhen you [Strike](content:playing-the-game/strike) with a thrown weapon, you take only a –1 penalty for each additional range increment between you and the target, rather than a –2 penalty.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const GangUp = Traits.defineTrait('feat/gang-up', {
+  name: 'Gang Up',
+  description:
+    '*Rogue*\n\nYou and your allies harry an opponent in concert. You can flank an enemy if it’s within reach of both of you and an ally—you and your ally don’t have to be on opposite sides. This benefits your allies as well as you, but only if they’re flanking with you, not each other. The other requirements for flanking must still be met.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const LightStep = Traits.defineTrait('feat/light-step', {
+  name: 'Light Step',
+  description:
+    '*Rogue*\n\nYou aren’t bothered by tricky footing. When you [Stride](content:playing-the-game/stride) or [Step](content:playing-the-game/step), you can ignore difficult terrain.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const ShoveDown = Traits.defineTrait('feat/shove-down', {
+  name: 'Shove Down',
+  description:
+    '*Rogue*\n\n**Prerequisites** Trained in [Athletics](characteristic:skill/athletics)\n\n**Requirements** Your last action was a successful [Shove](content:skills/shove)\n\nYou leverage your weight to topple foes that you move. You attempt to [Trip](content:skills/trip) the target, even if the target is no longer in your reach.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(TrainedAthletics)],
+  effects: [],
+})
+
+export const ShoveDownAction = Abilities.defineAbility('feat/shove-down/action', {
+  name: 'Shove Down',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(ShoveDown)],
+  actions: [
+    {
+      name: 'Shove Down',
+      description:
+        '**Prerequisites** Trained in [Athletics](characteristic:skill/athletics)\n\n**Requirements** Your last action was a successful [Shove](content:skills/shove)\n\nYou leverage your weight to topple foes that you move. You attempt to [Trip](content:skills/trip) the target, even if the target is no longer in your reach.',
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const SlyDisarm = Traits.defineTrait('feat/sly-disarm', {
+  name: 'Sly Disarm',
+  description:
+    '*Rogue*\n\nYou can [Disarm](content:skills/disarm) a creature through sleight of hand rather than brute force. You can use [Thievery](characteristic:skill/thievery) instead of [Athletics](characteristic:skill/athletics) when you attempt a Disarm. When you use Thievery to attempt a Disarm and succeed, the target is [off-guard](content:conditions/off-guard) against the next attack you make before the end of your turn.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const TwistTheKnife = Traits.defineTrait('feat/twist-the-knife', {
+  name: 'Twist The Knife',
+  description:
+    '*Rogue*\n\n**Requirements** Your last action was a melee [Strike](content:playing-the-game/strike) that dealt sneak attack damage to an [off-guard](content:conditions/off-guard) target\n\nAfter stabbing your opponent in a weak spot, you tear the wound open. You deal persistent bleed damage to the target equal to your number of sneak attack damage dice.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const TwistTheKnifeAction = Abilities.defineAbility('feat/twist-the-knife/action', {
+  name: 'Twist The Knife',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(TwistTheKnife)],
+  actions: [
+    {
+      name: 'Twist The Knife',
+      description:
+        '**Requirements** Your last action was a melee [Strike](content:playing-the-game/strike) that dealt sneak attack damage to an [off-guard](content:conditions/off-guard) target\n\nAfter stabbing your opponent in a weak spot, you tear the wound open. You deal persistent bleed damage to the target equal to your number of sneak attack damage dice.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const WatchYourBack = Traits.defineTrait('feat/watch-your-back', {
+  name: 'Watch Your Back',
+  description:
+    '*Emotion, Fear, Mental, Rogue*\n\n**Prerequisites** Trained in [Intimidation](characteristic:skill/intimidation)\n\nYou menace the target, stoking their fears and drawing their attention. Attempt an Intimidation check against the [Will DC](characteristic:will) of a target within 30 feet. If you succeed, for 1 minute, that target gains a +2 status bonus to [Perception](characteristic:perception) checks against you, but it takes a –2 status penalty to Will saves against fear effects.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(TrainedIntimidation)],
+  effects: [],
+})
+
+export const WatchYourBackAction = Abilities.defineAbility('feat/watch-your-back/action', {
+  name: 'Watch Your Back',
+  description: '*Emotion, Fear, Mental, Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(WatchYourBack)],
+  actions: [
+    {
+      name: 'Watch Your Back',
+      description:
+        '**Prerequisites** Trained in [Intimidation](characteristic:skill/intimidation)\n\nYou menace the target, stoking their fears and drawing their attention. Attempt an Intimidation check against the [Will DC](characteristic:will) of a target within 30 feet. If you succeed, for 1 minute, that target gains a +2 status bonus to [Perception](characteristic:perception) checks against you, but it takes a –2 status penalty to Will saves against fear effects.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const Bullseye = Traits.defineTrait('feat/bullseye', {
+  name: 'Bullseye',
+  description:
+    '*Rogue*\n\nYou carefully take aim to avoid your foe’s concealment and cover. On your next [Strike](content:playing-the-game/strike) with a thrown weapon before the end of your turn, you gain a +1 circumstance bonus to your attack roll and ignore your target’s concealed condition, as well as the target’s lesser cover or standard cover; if the target had greater cover, they instead have only standard cover against the Strike.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const BullseyeAction = Abilities.defineAbility('feat/bullseye/action', {
+  name: 'Bullseye',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(Bullseye)],
+  actions: [
+    {
+      name: 'Bullseye',
+      description:
+        'You carefully take aim to avoid your foe’s concealment and cover. On your next [Strike](content:playing-the-game/strike) with a thrown weapon before the end of your turn, you gain a +1 circumstance bonus to your attack roll and ignore your target’s concealed condition, as well as the target’s lesser cover or standard cover; if the target had greater cover, they instead have only standard cover against the Strike.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const DelayTrap = Traits.defineTrait('feat/delay-trap', {
+  name: 'Delay Trap',
+  description:
+    "*Rogue*\n\n**Trigger** A trap within your reach is triggered\n\nYou try to jam the workings of a trap to delay its effects. Attempt a [Thievery](characteristic:skill/thievery) check to [Disable a Device](content:skills/disable-a-device) on the trap with the following results instead of the normal ones for the action.\n\n**Critical Success** You either prevent the trap from being triggered or delay the activation until the start or end of your next turn.\n\n**Success** As above, but the GM chooses whichever is worse for you.\n\n**Failure** No effect.\n\n**Critical Failure** You're [off-guard](content:conditions/off-guard) until the start of your next turn.",
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const DelayTrapAction = Abilities.defineAbility('feat/delay-trap/action', {
+  name: 'Delay Trap',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(DelayTrap)],
+  actions: [
+    {
+      name: 'Delay Trap',
+      description:
+        "**Trigger** A trap within your reach is triggered\n\nYou try to jam the workings of a trap to delay its effects. Attempt a [Thievery](characteristic:skill/thievery) check to [Disable a Device](content:skills/disable-a-device) on the trap with the following results instead of the normal ones for the action.\n\n**Critical Success** You either prevent the trap from being triggered or delay the activation until the start or end of your next turn.\n\n**Success** As above, but the GM chooses whichever is worse for you.\n\n**Failure** No effect.\n\n**Critical Failure** You're [off-guard](content:conditions/off-guard) until the start of your next turn.",
+      action: ActionTypes.Reaction,
+    },
+  ],
+})
+
+export const ImprovedPoisonWeapon = Traits.defineTrait('feat/improved-poison-weapon', {
+  name: 'Improved Poison Weapon',
+  description:
+    '*Rogue*\n\n**Prerequisites** [Poison Weapon](trait:feat/poison-weapon)\n\nYou deliver poisons in ways that maximize their harmful effects. When you apply a simple poison with Poison Weapon, the poison deals 2d4 poison damage instead of 1d4 poison damage. You don’t waste a poison you apply with Poison Weapon on a critically failed attack roll.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(PoisonWeapon)],
+  effects: [],
+})
+
+export const InspiredStratagem = Traits.defineTrait('feat/inspired-stratagem', {
+  name: 'Inspired Stratagem',
+  description:
+    '*Rogue*\n\nDuring your daily preparations, you can review stratagems for the day’s adventures with up to five allies. Later, you can quickly advise them on your schemes using the below reaction.\n\n**Inspired Stratagem** ⟲ (fortune, linguistic) **Trigger** An ally you reviewed stratagems with is about to attempt an attack roll or skill check; **Effect** The ally rolls the triggering check twice and takes the better of the two results. That ally then becomes temporarily immune to your Inspired Stratagem until your next daily preparations.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const NimbleRoll = Traits.defineTrait('feat/nimble-roll', {
+  name: 'Nimble Roll',
+  description:
+    '*Rogue*\n\n**Prerequisites** [Nimble Dodge](trait:feat/nimble-dodge)\n\nYou throw yourself into a roll to escape imminent danger. You can use Nimble Dodge before attempting a [Reflex](characteristic:reflex) save in addition to its original trigger. If you do, the circumstance bonus applies to your Reflex save against the triggering effect.\n\nWhen you use Nimble Dodge and the triggering attack fails or critically fails, or when you succeed or critically succeed at the saving throw, you can also [Stride](content:playing-the-game/stride) up to 10 feet as part of the reaction. If you do, the reaction gains the move trait. You can use Nimble Roll while Flying or Swimming instead of Striding if you have the corresponding movement type.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(NimbleDodge)],
+  effects: [],
+})
+
+export const OpportuneBackstab = Traits.defineTrait('feat/opportune-backstab', {
+  name: 'Opportune Backstab',
+  description:
+    '*Rogue*\n\n**Trigger** A creature within your melee reach is hit by a melee attack from one of your allies\n\nWhen your enemy is hit by your ally, you capitalize upon the distraction. Make a [Strike](content:playing-the-game/strike) against the triggering creature.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const OpportuneBackstabAction = Abilities.defineAbility('feat/opportune-backstab/action', {
+  name: 'Opportune Backstab',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(OpportuneBackstab)],
+  actions: [
+    {
+      name: 'Opportune Backstab',
+      description:
+        '**Trigger** A creature within your melee reach is hit by a melee attack from one of your allies\n\nWhen your enemy is hit by your ally, you capitalize upon the distraction. Make a [Strike](content:playing-the-game/strike) against the triggering creature.',
+      action: ActionTypes.Reaction,
+    },
+  ],
+})
+
+export const PredictivePurchaseRogue = Traits.defineTrait('feat/predictive-purchase-rogue', {
+  name: 'Predictive Purchase',
+  description:
+    '*Rogue*\n\nYou somehow manage to have just the thing for the situation. You gain the [Prescient Planner](trait:feat/prescient-planner) and Prescient Consumable feats . When using Prescient Planner, you can draw the item from your backpack (or a similar container) as a 2-action activity, instead of taking 1 minute to do so.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const RicochetStanceRogue = Traits.defineTrait('feat/ricochet-stance-rogue', {
+  name: 'Ricochet Stance',
+  description:
+    '*Rogue, Stance*\n\nYou adopt a stance to rebound your thrown weapons toward you. While you are in this stance, any thrown weapons you use as part of a ranged [Strike](content:playing-the-game/strike) to deal bludgeoning or slashing damage immediately return to your hand, enabling you to use them for additional Strikes. You must be within the weapon’s listed range increment and have a hand free to catch the weapon. If you make a ranged Strike with a thrown weapon outside of its listed range increment, it instead flies back toward you a number of feet equal to its listed range increment and then falls to the ground.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const RicochetStanceRogueAction = Abilities.defineAbility('feat/ricochet-stance-rogue/action', {
+  name: 'Ricochet Stance',
+  description: '*Rogue, Stance*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(RicochetStanceRogue)],
+  actions: [
+    {
+      name: 'Ricochet Stance',
+      description:
+        'You adopt a stance to rebound your thrown weapons toward you. While you are in this stance, any thrown weapons you use as part of a ranged [Strike](content:playing-the-game/strike) to deal bludgeoning or slashing damage immediately return to your hand, enabling you to use them for additional Strikes. You must be within the weapon’s listed range increment and have a hand free to catch the weapon. If you make a ranged Strike with a thrown weapon outside of its listed range increment, it instead flies back toward you a number of feet equal to its listed range increment and then falls to the ground.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const Sidestep = Traits.defineTrait('feat/sidestep', {
+  name: 'Sidestep',
+  description:
+    "*Rogue*\n\n**Trigger** The attack roll for a [Strike](content:playing-the-game/strike) targeting you fails or critically fails\n\nYou deftly step aside and gently redirect an attack. You redirect the triggering attack to a creature of your choice that is adjacent to you and within the attack's reach or maximum range. The attacker rerolls the Strike’s attack roll against the new target.",
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const SidestepAction = Abilities.defineAbility('feat/sidestep/action', {
+  name: 'Sidestep',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(Sidestep)],
+  actions: [
+    {
+      name: 'Sidestep',
+      description:
+        "**Trigger** The attack roll for a [Strike](content:playing-the-game/strike) targeting you fails or critically fails\n\nYou deftly step aside and gently redirect an attack. You redirect the triggering attack to a creature of your choice that is adjacent to you and within the attack's reach or maximum range. The attacker rerolls the Strike’s attack roll against the new target.",
+      action: ActionTypes.Reaction,
+    },
+  ],
+})
+
+export const SlyStriker = Traits.defineTrait('feat/sly-striker', {
+  name: 'Sly Striker',
+  description:
+    '*Rogue*\n\n**Prerequisites** sneak attack\n\nYour attacks deal more damage, even against creatures that aren’t [off-guard](content:conditions/off-guard). When you succeed or critically succeed at a [Strike](content:playing-the-game/strike) against a creature that isn’t off-guard, you also deal 1d6 precision damage. This applies only if you’re using a weapon or unarmed attack you could deal sneak attack damage with.\n\nAt 14th level, if you would normally deal 3d6 or more sneak attack damage to off-guard creatures, you deal 2d6 precision damage to creatures that aren’t off-guard.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const SwipeSouvenir = Traits.defineTrait('feat/swipe-souvenir', {
+  name: 'Swipe Souvenir',
+  description:
+    '*Rogue*\n\n**Requirements** You’re [grabbed](content:conditions/grabbed) or [restrained](content:conditions/restrained) by a creature\n\nWhen you wriggle free from an enemy’s grasp, you take something of theirs with you. You attempt to [Escape](content:playing-the-game/escape) from being grabbed or restrained by a creature. If you succeed, you can also attempt to [Steal](content:skills/steal) from the creature, even if the creature is in combat.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  effects: [],
+})
+
+export const SwipeSouvenirAction = Abilities.defineAbility('feat/swipe-souvenir/action', {
+  name: 'Swipe Souvenir',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(SwipeSouvenir)],
+  actions: [
+    {
+      name: 'Swipe Souvenir',
+      description:
+        '**Requirements** You’re [grabbed](content:conditions/grabbed) or [restrained](content:conditions/restrained) by a creature\n\nWhen you wriggle free from an enemy’s grasp, you take something of theirs with you. You attempt to [Escape](content:playing-the-game/escape) from being grabbed or restrained by a creature. If you succeed, you can also attempt to [Steal](content:skills/steal) from the creature, even if the creature is in combat.',
+      action: ActionTypes.TwoActions,
+    },
+  ],
+})
+
+export const TacticalEntry = Traits.defineTrait('feat/tactical-entry', {
+  name: 'Tactical Entry',
+  description:
+    '*Rogue*\n\n**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\n**Requirements** You rolled Stealth for initiative in this encounter, and neither you nor any enemies have acted yet\n\nYou [Stride](content:playing-the-game/stride). This movement doesn’t trigger any reactions.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(MasterStealth)],
+  effects: [],
+})
+
+export const TacticalEntryAction = Abilities.defineAbility('feat/tactical-entry/action', {
+  name: 'Tactical Entry',
+  description: '*Rogue*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(TacticalEntry)],
+  actions: [
+    {
+      name: 'Tactical Entry',
+      description:
+        '**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\n**Requirements** You rolled Stealth for initiative in this encounter, and neither you nor any enemies have acted yet\n\nYou [Stride](content:playing-the-game/stride). This movement doesn’t trigger any reactions.',
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const MethodicalDebilitations = Traits.defineTrait('feat/methodical-debilitations', {
+  name: 'Methodical Debilitations',
+  description:
+    '*Rogue*\n\n**Prerequisites** mastermind racket; Debilitating [Strike](content:playing-the-game/strike)\n\nYou strategically craft your debilitations to lessen or negate an enemy’s tactical advantages. Add the following debilitations to the list you can choose from when you use Debilitating Strike.\n\n- **Debilitation** The target can’t flank or contribute to allies’ flanking.\n\n- **Debilitation** The target doesn’t gain a circumstance bonus to [AC](characteristic:armor-class) from Raising a Shield, lesser cover, or standard cover; it gains a +2 circumstance bonus to AC only from greater cover or Taking Cover.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(MastermindRacket)],
+  effects: [],
+})
+
+export const NimbleStrike = Traits.defineTrait('feat/nimble-strike', {
+  name: 'Nimble Strike',
+  description:
+    '*Rogue*\n\n**Prerequisites** Nimble Roll\n\nYou’re cunning enough to find an opening in an opponent’s attack. When you use your Nimble Dodge reaction, you can make a melee [Strike](content:playing-the-game/strike) against the triggering creature. This Strike doesn’t count toward your multiple attack penalty, and your multiple attack penalty doesn’t apply to this Strike. If you use the Nimble Roll feat, you can make this Strike at any point during your roll.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(NimbleRoll)],
+  effects: [],
+})
+
+export const PreciseDebilitations = Traits.defineTrait('feat/precise-debilitations', {
+  name: 'Precise Debilitations',
+  description:
+    '*Rogue*\n\n**Prerequisites** thief racket; Debilitating [Strike](content:playing-the-game/strike)\n\nYou attack with great precision. Add the following debilitations to the list you can choose from when you use Debilitating Strike.\n\n- **Debilitation** The target takes an additional 2d6 precision damage from your attacks.\n\n- **Debilitation** The target becomes [off-guard](content:conditions/off-guard).',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(ThiefRacket)],
+  effects: [],
+})
+
+export const SneakAdept = Traits.defineTrait('feat/sneak-adept', {
+  name: 'Sneak Adept',
+  description:
+    '*Rogue*\n\n**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\nIt’s almost impossible to spot you. When you roll a failure on a [Sneak](content:skills/sneak) action, you get a success instead. You can still critically fail.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(MasterStealth)],
+  effects: [],
+})
+
+export const TacticalDebilitations = Traits.defineTrait('feat/tactical-debilitations', {
+  name: 'Tactical Debilitations',
+  description:
+    '*Rogue*\n\n**Prerequisites** scoundrel racket; Debilitating [Strike](content:playing-the-game/strike)\n\nYou learn new debilitations that grant you tactical advantages against your foes. Add the following debilitations to the list you can choose from when you use Debilitating Strike.\n\n- **Debilitation** The target can’t use reactions.\n\n- **Debilitation** The target can’t flank or contribute to allies’ flanking.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(ScoundrelRacket)],
+  effects: [],
+})
+
+export const ViciousDebilitations = Traits.defineTrait('feat/vicious-debilitations', {
+  name: 'Vicious Debilitations',
+  description:
+    '*Rogue*\n\n**Prerequisites** ruffian racket; Debilitating [Strike](content:playing-the-game/strike)\n\nThe debilitations you dish out seriously impair your foes. Add the following debilitations to the list you can choose from when you use Debilitating Strike.\n\n- **Debilitation** The target gains weakness 5 to your choice of bludgeoning, piercing, or slashing damage.\n\n- **Debilitation** The target becomes [clumsy](content:conditions/clumsy) 1.',
+  tags: [Feat, ClassFeat, RogueFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(RuffianRacket)],
+  effects: [],
+})
+
 export const AllRogueFeatEntities = [
   NimbleDodge,
   NimbleDodgeAction,
@@ -439,4 +832,42 @@ export const AllRogueFeatEntities = [
   ScoundrelsSurpriseAction,
   TheHarderTheyFallRogue,
   TwinDistraction,
+  AnalyzeWeakness,
+  AnalyzeWeaknessAction,
+  AnticipateAmbush,
+  FarThrow,
+  GangUp,
+  LightStep,
+  ShoveDown,
+  ShoveDownAction,
+  SlyDisarm,
+  TwistTheKnife,
+  TwistTheKnifeAction,
+  WatchYourBack,
+  WatchYourBackAction,
+  Bullseye,
+  BullseyeAction,
+  DelayTrap,
+  DelayTrapAction,
+  ImprovedPoisonWeapon,
+  InspiredStratagem,
+  NimbleRoll,
+  OpportuneBackstab,
+  OpportuneBackstabAction,
+  PredictivePurchaseRogue,
+  RicochetStanceRogue,
+  RicochetStanceRogueAction,
+  Sidestep,
+  SidestepAction,
+  SlyStriker,
+  SwipeSouvenir,
+  SwipeSouvenirAction,
+  TacticalEntry,
+  TacticalEntryAction,
+  MethodicalDebilitations,
+  NimbleStrike,
+  PreciseDebilitations,
+  SneakAdept,
+  TacticalDebilitations,
+  ViciousDebilitations,
 ]

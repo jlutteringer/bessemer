@@ -5,7 +5,14 @@ import { Class, ClassFeature, Feat } from '@simulacrum/ruleset-dnd4e/tag'
 import { HealingSurges, HitPoints, Will, Wisdom } from '@simulacrum/ruleset-dnd4e/characteristic'
 import * as Skills from '@simulacrum/ruleset-dnd4e/skill'
 import * as Powers from '@simulacrum/ruleset-dnd4e/power'
-import { PreparedDailySpell1Loadout, PreparedDailySpell5Loadout, PreparedUtilitySpell2Loadout } from '@simulacrum/ruleset-dnd4e/loadout'
+import {
+  PreparedDailySpell1Loadout,
+  PreparedDailySpell5Loadout,
+  PreparedDailySpell9Loadout,
+  PreparedUtilitySpell2Loadout,
+  PreparedUtilitySpell6Loadout,
+  PreparedUtilitySpell10Loadout,
+} from '@simulacrum/ruleset-dnd4e/loadout'
 import { RitualCaster } from '@simulacrum/ruleset-dnd4e/feat'
 import { Human } from '@simulacrum/ruleset-dnd4e/race'
 
@@ -120,6 +127,22 @@ export const Wizard = Traits.defineTrait('wizard', {
       Effects.gainCharacterOption(Powers.SelectSpellbookDaily5),
       Effects.gainLoadoutSlot(PreparedDailySpell5Loadout),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainCharacterOption(Powers.SelectSpellbookUtility6),
+      Effects.gainCharacterOption(Powers.SelectSpellbookUtility6),
+      Effects.gainLoadoutSlot(PreparedUtilitySpell6Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainCharacterOption(Powers.SelectEncounterAttack7)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainCharacterOption(Powers.SelectSpellbookDaily9),
+      Effects.gainCharacterOption(Powers.SelectSpellbookDaily9),
+      Effects.gainLoadoutSlot(PreparedDailySpell9Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainCharacterOption(Powers.SelectSpellbookUtility10),
+      Effects.gainCharacterOption(Powers.SelectSpellbookUtility10),
+      Effects.gainLoadoutSlot(PreparedUtilitySpell10Loadout),
+    ]),
   ],
 })
 
@@ -132,6 +155,7 @@ export const ExpandedSpellbook = Traits.defineTrait('feat/expanded-spellbook', {
   effects: [
     Effects.gainCharacterOption(Powers.SelectSpellbookDaily1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(Powers.SelectSpellbookDaily5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(Powers.SelectSpellbookDaily9)]),
   ],
 })
 

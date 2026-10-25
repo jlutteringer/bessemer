@@ -187,6 +187,48 @@ export const FireballSection = Content.linkEntity(WizardLevel5DailySpellsSection
 export const StinkingCloudSection = Content.linkEntity(WizardLevel5DailySpellsSection, WizardPowers.StinkingCloud)
 export const WebSection = Content.linkEntity(WizardLevel5DailySpellsSection, WizardPowers.Web)
 
+export const WizardLevel6UtilitySpellsSection = Content.defineSection('classes/wizard-level-6-utility-spells', {
+  parent: WizardPowersSection,
+  content: { name: 'Level 6 Utility Spells' },
+})
+
+export const DimensionDoorSection = Content.linkEntity(WizardLevel6UtilitySpellsSection, WizardPowers.DimensionDoor)
+export const DisguiseSelfSection = Content.linkEntity(WizardLevel6UtilitySpellsSection, WizardPowers.DisguiseSelf)
+export const DispelMagicSection = Content.linkEntity(WizardLevel6UtilitySpellsSection, WizardPowers.DispelMagic)
+export const InvisibilitySection = Content.linkEntity(WizardLevel6UtilitySpellsSection, WizardPowers.Invisibility)
+export const LevitateSection = Content.linkEntity(WizardLevel6UtilitySpellsSection, WizardPowers.Levitate)
+export const WallOfFogSection = Content.linkEntity(WizardLevel6UtilitySpellsSection, WizardPowers.WallOfFog)
+
+export const WizardLevel7EncounterSpellsSection = Content.defineSection('classes/wizard-level-7-encounter-spells', {
+  parent: WizardPowersSection,
+  content: { name: 'Level 7 Encounter Spells' },
+})
+
+export const FireBurstSection = Content.linkEntity(WizardLevel7EncounterSpellsSection, WizardPowers.FireBurst)
+export const LightningBoltSection = Content.linkEntity(WizardLevel7EncounterSpellsSection, WizardPowers.LightningBolt)
+export const SpectralRamSection = Content.linkEntity(WizardLevel7EncounterSpellsSection, WizardPowers.SpectralRam)
+export const WintersWrathSection = Content.linkEntity(WizardLevel7EncounterSpellsSection, WizardPowers.WintersWrath)
+
+export const WizardLevel9DailySpellsSection = Content.defineSection('classes/wizard-level-9-daily-spells', {
+  parent: WizardPowersSection,
+  content: { name: 'Level 9 Daily Spells' },
+})
+
+export const IceStormSection = Content.linkEntity(WizardLevel9DailySpellsSection, WizardPowers.IceStorm)
+export const LightningSerpentSection = Content.linkEntity(WizardLevel9DailySpellsSection, WizardPowers.LightningSerpent)
+export const MordenkainensSwordSection = Content.linkEntity(WizardLevel9DailySpellsSection, WizardPowers.MordenkainensSword)
+export const WallOfFireSection = Content.linkEntity(WizardLevel9DailySpellsSection, WizardPowers.WallOfFire)
+
+export const WizardLevel10UtilitySpellsSection = Content.defineSection('classes/wizard-level-10-utility-spells', {
+  parent: WizardPowersSection,
+  content: { name: 'Level 10 Utility Spells' },
+})
+
+export const ArcaneGateSection = Content.linkEntity(WizardLevel10UtilitySpellsSection, WizardPowers.ArcaneGate)
+export const BlurSection = Content.linkEntity(WizardLevel10UtilitySpellsSection, WizardPowers.Blur)
+export const MirrorImageSection = Content.linkEntity(WizardLevel10UtilitySpellsSection, WizardPowers.MirrorImage)
+export const ResistanceSection = Content.linkEntity(WizardLevel10UtilitySpellsSection, WizardPowers.Resistance)
+
 export const WizardContent: Array<ContentSection> = [
   WizardSection,
   WizardClassTraitsSection,
@@ -242,4 +284,26 @@ export const WizardContent: Array<ContentSection> = [
   FireballSection,
   StinkingCloudSection,
   WebSection,
+  WizardLevel6UtilitySpellsSection,
+  DimensionDoorSection,
+  DisguiseSelfSection,
+  DispelMagicSection,
+  InvisibilitySection,
+  LevitateSection,
+  WallOfFogSection,
+  WizardLevel7EncounterSpellsSection,
+  FireBurstSection,
+  LightningBoltSection,
+  SpectralRamSection,
+  WintersWrathSection,
+  WizardLevel9DailySpellsSection,
+  IceStormSection,
+  LightningSerpentSection,
+  MordenkainensSwordSection,
+  WallOfFireSection,
+  WizardLevel10UtilitySpellsSection,
+  ArcaneGateSection,
+  BlurSection,
+  MirrorImageSection,
+  ResistanceSection,
 ]

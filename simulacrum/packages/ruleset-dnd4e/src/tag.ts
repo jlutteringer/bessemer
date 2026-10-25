@@ -19,6 +19,10 @@ export const PowerLevel1 = Tags.defineAbilityTag('power/level-1', { name: 'Level
 export const PowerLevel2 = Tags.defineAbilityTag('power/level-2', { name: 'Level 2' })
 export const PowerLevel3 = Tags.defineAbilityTag('power/level-3', { name: 'Level 3' })
 export const PowerLevel5 = Tags.defineAbilityTag('power/level-5', { name: 'Level 5' })
+export const PowerLevel6 = Tags.defineAbilityTag('power/level-6', { name: 'Level 6' })
+export const PowerLevel7 = Tags.defineAbilityTag('power/level-7', { name: 'Level 7' })
+export const PowerLevel9 = Tags.defineAbilityTag('power/level-9', { name: 'Level 9' })
+export const PowerLevel10 = Tags.defineAbilityTag('power/level-10', { name: 'Level 10' })
 
 export const AllTags = [
   Class,
@@ -37,4 +41,8 @@ export const AllTags = [
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
 ]

@@ -11,6 +11,8 @@ import {
   RacialAbilityBonus,
   SelectFirstAbilityIncrease,
   SelectSecondAbilityIncrease,
+  SelectThirdAbilityIncrease,
+  SelectFourthAbilityIncrease,
 } from '@simulacrum/ruleset-dnd4e/ability-score'
 import { AllSkillTraits, SkillFocus, TrainedSkill } from '@simulacrum/ruleset-dnd4e/skill'
 import { AllRaceTraits, SelectRace } from '@simulacrum/ruleset-dnd4e/race'
@@ -120,6 +122,15 @@ export const Dnd4e: Ruleset = {
       Effects.gainCharacterOption(SelectSecondAbilityIncrease),
     ],
     5: [],
+    6: [Effects.gainCharacterOption(SelectFeat)],
+    7: [],
+    8: [
+      Effects.gainCharacterOption(SelectFeat),
+      Effects.gainCharacterOption(SelectThirdAbilityIncrease),
+      Effects.gainCharacterOption(SelectFourthAbilityIncrease),
+    ],
+    9: [],
+    10: [Effects.gainCharacterOption(SelectFeat)],
   },
   content: [
     ...HowToPlayContent,

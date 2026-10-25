@@ -7,6 +7,7 @@ import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 
 export const WitchBasicLesson = Tags.defineTraitTag('witch/lesson/basic', { name: 'Basic Lesson' })
 export const WitchGreaterLesson = Tags.defineTraitTag('witch/lesson/greater', { name: 'Greater Lesson' })
+export const WitchMajorLesson = Tags.defineTraitTag('witch/lesson/major', { name: 'Major Lesson' })
 
 export const SelectLessonOfTheElementsSpell = CharacterOptions.selectAbilityOption('witch/lesson/lesson-of-the-elements/select-spell', {
   name: 'Lesson of the Elements Spell',
@@ -109,6 +110,28 @@ export const LessonOfSnow = Traits.defineTrait('witch/lesson/lesson-of-snow', {
   ],
 })
 
+export const LessonOfDeath = Traits.defineTrait('witch/lesson/lesson-of-death', {
+  name: 'Lesson of Death',
+  description:
+    '**Lesson Type** Major\n\nDeath is final, yet not as inescapable as it may seem. You gain the [Curse of Death](ability:spell/curse-of-death) hex, and your familiar learns _raise dead_.',
+  tags: [WitchMajorLesson],
+  effects: [
+    Effects.gainAbility(WitchFocusSpells.CurseOfDeath),
+    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+  ],
+})
+
+export const LessonOfRenewal = Traits.defineTrait('witch/lesson/lesson-of-renewal', {
+  name: 'Lesson of Renewal',
+  description:
+    '**Lesson Type** Major\n\nEntropy comes for all, but it can be wound back through effort. You gain the [Restorative Moment](ability:spell/restorative-moment) hex, and your familiar learns _field of life_.',
+  tags: [WitchMajorLesson],
+  effects: [
+    Effects.gainAbility(WitchFocusSpells.RestorativeMoment),
+    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+  ],
+})
+
 export const SelectWitchBasicLesson = CharacterOptions.selectTraitOption('witch/lesson/select-basic', {
   name: 'Basic Lesson',
   filter: { tags: [WitchBasicLesson] },
@@ -116,12 +139,18 @@ export const SelectWitchBasicLesson = CharacterOptions.selectTraitOption('witch/
 
 export const SelectWitchGreaterLesson = CharacterOptions.selectTraitOption('witch/lesson/select-greater', {
   name: 'Greater Lesson',
-  filter: { tags: [WitchGreaterLesson] },
+  filter: { tags: [[WitchBasicLesson, WitchGreaterLesson]] },
+})
+
+export const SelectWitchMajorLesson = CharacterOptions.selectTraitOption('witch/lesson/select-major', {
+  name: 'Major Lesson',
+  filter: { tags: [[WitchBasicLesson, WitchGreaterLesson, WitchMajorLesson]] },
 })
 
 export const AllWitchLessonEntities = [
   WitchBasicLesson,
   WitchGreaterLesson,
+  WitchMajorLesson,
   LessonOfDreams,
   LessonOfLife,
   LessonOfProtection,
@@ -130,4 +159,6 @@ export const AllWitchLessonEntities = [
   LessonOfMischief,
   LessonOfShadow,
   LessonOfSnow,
+  LessonOfDeath,
+  LessonOfRenewal,
 ]

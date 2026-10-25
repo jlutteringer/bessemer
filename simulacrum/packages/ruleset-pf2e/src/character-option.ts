@@ -1,5 +1,21 @@
 import { CharacterOptions } from '@simulacrum/ruleset'
-import { Ancestry, Background, Class, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, GeneralFeat, SkillFeat } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  Ancestry,
+  Background,
+  Class,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+  GeneralFeat,
+  SkillFeat,
+} from '@simulacrum/ruleset-pf2e/tag'
 
 export const SelectAncestry = CharacterOptions.selectTraitOption('ancestry/select', { name: 'Ancestry', filter: { tags: [Ancestry] } })
 
@@ -37,4 +53,26 @@ export const SelectSkillFeat5 = CharacterOptions.selectTraitOption('feat/select-
 export const SelectGeneralFeat3 = CharacterOptions.selectTraitOption('feat/select-general-3', {
   name: 'General Feat (Level 3)',
   filter: { tags: [GeneralFeat, [FeatLevel1, FeatLevel2, FeatLevel3]] },
+})
+
+export const SelectSkillFeat6 = CharacterOptions.selectTraitOption('feat/select-skill-6', {
+  name: 'Skill Feat (Level 6)',
+  filter: { tags: [SkillFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectSkillFeat8 = CharacterOptions.selectTraitOption('feat/select-skill-8', {
+  name: 'Skill Feat (Level 8)',
+  filter: { tags: [SkillFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectSkillFeat10 = CharacterOptions.selectTraitOption('feat/select-skill-10', {
+  name: 'Skill Feat (Level 10)',
+  filter: {
+    tags: [SkillFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
+})
+
+export const SelectGeneralFeat7 = CharacterOptions.selectTraitOption('feat/select-general-7', {
+  name: 'General Feat (Level 7)',
+  filter: { tags: [GeneralFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7]] },
 })

@@ -1,10 +1,23 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Patches } from '@bessemer/cornerstone'
+import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { ClassFeat, Feat, FeatLevel1, FeatLevel2, FeatLevel4, WizardFeat } from '@simulacrum/ruleset-pf2e/tag'
-import { TrainedArcana } from '@simulacrum/ruleset-pf2e/skill'
+import { ClassFeat, Feat, FeatLevel1, FeatLevel2, FeatLevel4, FeatLevel6, FeatLevel8, FeatLevel10, WizardFeat } from '@simulacrum/ruleset-pf2e/tag'
+import { ExpertDeception, TrainedArcana } from '@simulacrum/ruleset-pf2e/skill'
+import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
+import * as WizardFocusSpells from '@simulacrum/ruleset-pf2e/class/wizard-focus-spell'
 import { SelectFamiliarAbility } from '@simulacrum/ruleset-pf2e/companion/familiar'
 import { ArcaneBond } from '@simulacrum/ruleset-pf2e/class/wizard-feature'
-import { ArcaneSchoolFeature } from '@simulacrum/ruleset-pf2e/class/wizard-school'
+import {
+  ArcaneSchoolFeature,
+  ArsGrammatica,
+  BattleMagic,
+  Boundary,
+  CivicWizardry,
+  Mentalism,
+  ProteanForm,
+  UnifiedMagicalTheory,
+} from '@simulacrum/ruleset-pf2e/class/wizard-school'
 
 export const Familiar = Traits.defineTrait('feat/familiar', {
   name: 'Familiar',
@@ -148,6 +161,135 @@ export const SpellProtectionArrayAction = Abilities.defineAbility('feat/spell-pr
   ],
 })
 
+export const ConvincingIllusion = Traits.defineTrait('feat/convincing-illusion', {
+  name: 'Convincing Illusion',
+  description:
+    '*Wizard*\n\n**Prerequisites** Expert in [Deception](characteristic:skill/deception)\n\n**Trigger** A creature succeeded, but didn’t critically succeed, at a [Perception](characteristic:perception) check or [Will save](characteristic:will) to disbelieve an illusion from a spell that you cast\n\n**Requirements** You are within 30 feet of the observer and the illusion\n\nYou use your deceptive skills to make your illusions seem even more real. Attempt a Deception check against the target’s Perception DC. If you succeed, the target fails to disbelieve the illusion.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(ExpertDeception)],
+  effects: [],
+})
+
+export const ConvincingIllusionAction = Abilities.defineAbility('feat/convincing-illusion/action', {
+  name: 'Convincing Illusion',
+  description: '*Wizard*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(ConvincingIllusion)],
+  actions: [
+    {
+      name: 'Convincing Illusion',
+      description:
+        '**Prerequisites** Expert in [Deception](characteristic:skill/deception)\n\n**Trigger** A creature succeeded, but didn’t critically succeed, at a [Perception](characteristic:perception) check or [Will save](characteristic:will) to disbelieve an illusion from a spell that you cast\n\n**Requirements** You are within 30 feet of the observer and the illusion\n\nYou use your deceptive skills to make your illusions seem even more real. Attempt a Deception check against the target’s Perception DC. If you succeed, the target fails to disbelieve the illusion.',
+      action: ActionTypes.Reaction,
+    },
+  ],
+})
+
+export const ExplosiveArrival = Traits.defineTrait('feat/explosive-arrival', {
+  name: 'Explosive Arrival',
+  description:
+    '*Concentrate, Manipulate, Spellshape, Wizard*\n\nYour summoned creature appears in a detonation of arcane runes. If your next action is to [Cast a Spell](content:spells/cast-a-spell) with the summon trait, all creatures in a 10-foot emanation around the creature you summoned take 1d4 fire damage per spell rank. If the creature summoned has the acid, cold, electricity, sonic, or spirit trait, you can deal damage of that type instead.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel6],
+  effects: [],
+})
+
+export const ExplosiveArrivalAction = Abilities.defineAbility('feat/explosive-arrival/action', {
+  name: 'Explosive Arrival',
+  description: '*Concentrate, Manipulate, Spellshape, Wizard*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(ExplosiveArrival)],
+  actions: [
+    {
+      name: 'Explosive Arrival',
+      description:
+        'Your summoned creature appears in a detonation of arcane runes. If your next action is to [Cast a Spell](content:spells/cast-a-spell) with the summon trait, all creatures in a 10-foot emanation around the creature you summoned take 1d4 fire damage per spell rank. If the creature summoned has the acid, cold, electricity, sonic, or spirit trait, you can deal damage of that type instead.',
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const IrresistibleMagic = Traits.defineTrait('feat/irresistible-magic', {
+  name: 'Irresistible Magic',
+  description:
+    '*Wizard*\n\nYou’ve studied ways of overcoming the innate defenses against magic that dragons, otherworldly beings, and certain other powerful creatures have. Any creature that has a status bonus to saving throws against magic reduces that bonus by 1 against your spells.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel6],
+  effects: [],
+})
+
+export const SplitSlot = Traits.defineTrait('feat/split-slot', {
+  name: 'Split Slot',
+  description:
+    '*Wizard*\n\nYou can prepare two spells in one slot, giving you the freedom to choose the spell when you cast it. When you prepare your spells for the day, you can choose one spell slot at least 1 rank lower than the highest-rank spell you can cast and prepare two spells in that slot. When you [Cast a Spell](content:spells/cast-a-spell) from that slot, choose which spell to cast. Once you’ve chosen, the unused spell dissipates as though you hadn’t prepared it at all—for example, it isn’t available for use with [Drain Bonded Item](ability:wizard/drain-bonded-item).',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel6],
+  effects: [],
+})
+
+export const AdvancedSchoolSpell = Traits.defineTrait('feat/advanced-school-spell', {
+  name: 'Advanced School Spell',
+  description:
+    '*Wizard*\n\nYou gain access to the advanced teachings of your arcane institution, learning a powerful new school spell. You gain the advanced school spell for your arcane school.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(ArcaneSchoolFeature)],
+  effects: [
+    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    Effects.conditional(Traits.traitPrerequisite(ArsGrammatica), [Effects.gainAbility(WizardFocusSpells.RuneOfObservation)]),
+    Effects.conditional(Traits.traitPrerequisite(BattleMagic), [Effects.gainAbility(WizardFocusSpells.EnergyAbsorption)]),
+    Effects.conditional(Traits.traitPrerequisite(CivicWizardry), [Effects.gainAbility(WizardFocusSpells.CommunityRestoration)]),
+    Effects.conditional(Traits.traitPrerequisite(Mentalism), [Effects.gainAbility(WizardFocusSpells.InvisibilityCloak)]),
+    Effects.conditional(Traits.traitPrerequisite(ProteanForm), [Effects.gainAbility(WizardFocusSpells.ShiftingForm)]),
+    Effects.conditional(Traits.traitPrerequisite(UnifiedMagicalTheory), [Effects.gainAbility(WizardFocusSpells.InterdisciplinaryIncantation)]),
+    Effects.conditional(Traits.traitPrerequisite(Boundary), [Effects.gainAbility(WizardFocusSpells.SpiralOfHorrors)]),
+  ],
+})
+
+export const BondConservation = Traits.defineTrait('feat/bond-conservation', {
+  name: 'Bond Conservation',
+  description:
+    '*Manipulate, Spellshape, Wizard*\n\n**Prerequisites** [arcane bond](trait:wizard/arcane-bond)\n\n**Requirements** The last action you used was to [Cast a Spell](content:spells/cast-a-spell) enabled by [Drain Bonded Item](ability:wizard/drain-bonded-item)\n\nBy efficiently and carefully manipulating the arcane energies unleashed by your bonded item, you can conserve just enough power to cast another spell, though this second spell is slightly weaker. You gain an extra use of Drain Bonded Item. You can use it to cast a spell 2 or more ranks lower than the previous spell, and must use it before the end of your next turn or you lose it.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(ArcaneBond)],
+  effects: [],
+})
+
+export const BondConservationAction = Abilities.defineAbility('feat/bond-conservation/action', {
+  name: 'Bond Conservation',
+  description: '*Manipulate, Spellshape, Wizard*',
+  universal: true,
+  prerequisites: [Traits.traitPrerequisite(BondConservation)],
+  actions: [
+    {
+      name: 'Bond Conservation',
+      description:
+        '**Prerequisites** [arcane bond](trait:wizard/arcane-bond)\n\n**Requirements** The last action you used was to [Cast a Spell](content:spells/cast-a-spell) enabled by [Drain Bonded Item](ability:wizard/drain-bonded-item)\n\nBy efficiently and carefully manipulating the arcane energies unleashed by your bonded item, you can conserve just enough power to cast another spell, though this second spell is slightly weaker. You gain an extra use of Drain Bonded Item. You can use it to cast a spell 2 or more ranks lower than the previous spell, and must use it before the end of your next turn or you lose it.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const FormRetention = Traits.defineTrait('feat/form-retention', {
+  name: 'Form Retention',
+  description:
+    '*Wizard*\n\nYou have trained your mind and body to tolerate polymorph magic for longer periods of time, so long as you prepare for the change appropriately. When preparing a polymorph spell that lasts 1 minute and grants a battle form, you can prepare the spell in a slot 2 ranks higher than normal. This doesn’t grant any of the normal benefits of heightening a spell, but the spell lasts up to 10 minutes. For example, if you prepared [_animal form_](ability:spell/animal-form) in a 4th-rank slot with Form Retention, you would cast a 2nd-rank animal form that lasts for up to 10 minutes. If the spell can be Dismissed, that doesn’t change.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel8],
+  effects: [],
+})
+
+export const KnowledgeIsPowerWizard = Traits.defineTrait('feat/knowledge-is-power-wizard', {
+  name: 'Knowledge is Power (Wizard)',
+  description:
+    '*Wizard*\n\nYour academic knowledge about a creature allows you to subtly alter your magic to defeat them. When you critically succeed at a [Recall Knowledge](content:skills/recall-knowledge) check about a creature, you can invoke your knowledge to make the creature take a –1 circumstance penalty to either [AC](characteristic:armor-class) and saves against the next attack you make against it, or the next spell you cast that it needs to defend against. The creature takes the same penalty to its attack or DC the next time it attacks against you or causes you to attempt a save against one of its effects.\n\nIf you share this information with your allies, they gain the benefits as well. If not used, the bonuses end after 1 minute.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel8],
+  effects: [],
+})
+
+export const ScrollAdept = Traits.defineTrait('feat/scroll-adept', {
+  name: 'Scroll Adept',
+  description:
+    '*Wizard*\n\nDuring your daily preparations, you can create two temporary scrolls containing arcane spells from your spellbook. Each scroll must be of a different spell rank, and both spell ranks must be 2 or more ranks lower than your highest-rank spell. Any scrolls you create this way become non-magical the next time you make your daily preparations. A temporary scroll has no value if sold. As normal for a scroll, these are consumable items of light Bulk, and someone holding the item in one hand can Cast the Spell from it if it’s on their spell list, using their [spell attack modifier](characteristic:spell-attack) and [spell DC](characteristic:spell-dc). Scrolls are detailed fully on page 262 of GM Core.\n\nIf you have master proficiency in spell DC, you can create three temporary scrolls during your daily preparations, and if you have legendary proficiency, you can create four temporary scrolls.',
+  tags: [Feat, ClassFeat, WizardFeat, FeatLevel10],
+  effects: [],
+})
+
 export const AllWizardFeatEntities = [
   Familiar,
   SpellbookProdigy,
@@ -162,4 +304,16 @@ export const AllWizardFeatEntities = [
   LinkedFocus,
   SpellProtectionArray,
   SpellProtectionArrayAction,
+  ConvincingIllusion,
+  ConvincingIllusionAction,
+  ExplosiveArrival,
+  ExplosiveArrivalAction,
+  IrresistibleMagic,
+  SplitSlot,
+  AdvancedSchoolSpell,
+  BondConservation,
+  BondConservationAction,
+  FormRetention,
+  KnowledgeIsPowerWizard,
+  ScrollAdept,
 ]

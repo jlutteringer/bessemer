@@ -10,11 +10,15 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Cleric } from '@simulacrum/ruleset-dnd4e/class/class-cleric'
 
-// Generated from the Player's Handbook Cleric powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Cleric powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal. Encounter powers come back after a short rest, daily powers after an extended rest.
 
 export const LanceOfFaith = Abilities.defineAbility('cleric/power/lance-of-faith', {
@@ -422,6 +426,266 @@ export const WeaponOfTheGods = Abilities.defineAbility('cleric/power/weapon-of-t
   costs: [{ cost: 1 }],
 })
 
+export const BastionOfHealth = Abilities.defineAbility('cleric/power/bastion-of-health', {
+  name: 'Bastion of Health',
+  description: '*You invoke a prayer that instantly fortifies one of your allies.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 6**\n\n**Encounter** ✦ Divine, Healing\n\n**Minor Action** · Ranged 10\n\n**Target:** You or one ally\n\n**Effect:** The target can spend a healing surge. Add your Charisma modifier to the hit points regained.'
+    ),
+  ],
+  actions: [{ name: 'Bastion of Health', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CureSeriousWounds = Abilities.defineAbility('cleric/power/cure-serious-wounds', {
+  name: 'Cure Serious Wounds',
+  description:
+    '*You utter a simple prayer and gain the power to instantly heal wounds, and your touch momentarily suffuses you or a wounded creature with bright silver light.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 6**\n\n**Daily** ✦ Divine, Healing\n\n**Standard Action** · Melee touch\n\n**Target:** You or one creature\n\n**Effect:** The target regains hit points as if it had spent two healing surges.'
+    ),
+  ],
+  actions: [{ name: 'Cure Serious Wounds', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DivineVigor = Abilities.defineAbility('cleric/power/divine-vigor', {
+  name: 'Divine Vigor',
+  description: '*You call upon your deity to invigorate you and your battle-weary allies.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 6**\n\n**Daily** ✦ Divine, Healing\n\n**Minor Action** · Close burst 5\n\n**Targets:** You and each ally in burst\n\n**Effect:** Each target regains the use of his or her second wind.'
+    ),
+  ],
+  actions: [{ name: 'Divine Vigor', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const HolyLantern = Abilities.defineAbility('cleric/power/holy-lantern', {
+  name: 'Holy Lantern',
+  description: '*A conjured beacon of divine light shines like a lantern, piercing shadows and deception.*',
+  universal: false,
+  tags: [AtWillPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 6**\n\n**At-Will** ✦ Conjuration, Divine\n\n**Standard Action** · Ranged 3\n\n**Effect:** You conjure a lantern that appears in 1 square within range and sheds light 5 squares in all directions. You and allies in the light gain a +2 power bonus to Perception and Insight checks. You can move the lantern up to your speed as a minor action. The lantern lasts for 10 hours, but you can have only a single holy lantern active at a time.'
+    ),
+  ],
+  actions: [{ name: 'Holy Lantern', action: ActionTypes.StandardAction }],
+})
+
+export const AweStrike = Abilities.defineAbility('cleric/power/awe-strike', {
+  name: 'Awe Strike',
+  description: '*The supernatural awe and dread that radiates from you as you swing your weapon leaves your foe momentarily frozen in terror.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Attack 7**\n\n**Encounter** ✦ Divine, Fear, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. Will\n\n**Hit:** 1[W] + Strength modifier damage, and the target is immobilized until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Awe Strike', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const BreakTheSpirit = Abilities.defineAbility('cleric/power/break-the-spirit', {
+  name: 'Break the Spirit',
+  description: '*Calling down the power of your god, you bathe your foe in agonizing radiance, driving strength out of its impending attacks.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Attack 7**\n\n**Encounter** ✦ Charm, Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** 2d8 + Wisdom modifier radiant damage, and the target takes a penalty to attack rolls equal to your Charisma modifier until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Break the Spirit', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SearingLight = Abilities.defineAbility('cleric/power/searing-light', {
+  name: 'Searing Light',
+  description:
+    '*You invoke the power of your deity. From your holy symbol a searing ray of light flashes forth, striking and blinding your enemy for a short time.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Attack 7**\n\n**Encounter** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 2d6 + Wisdom modifier radiant damage, and the target is blinded until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Searing Light', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const StrengthenTheFaithful = Abilities.defineAbility('cleric/power/strengthen-the-faithful', {
+  name: 'Strengthen the Faithful',
+  description:
+    '*You utter a solemn prayer as you bring your weapon down upon your foe, invoking the power of your deity to physically bolster you and nearby allies.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Attack 7**\n\n**Encounter** ✦ Divine, Healing, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you and each ally adjacent to the target can spend a healing surge. Add your Charisma modifier to the hit points regained.'
+    ),
+  ],
+  actions: [{ name: 'Strengthen the Faithful', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const AstralDefenders = Abilities.defineAbility('cleric/power/astral-defenders', {
+  name: 'Astral Defenders',
+  description:
+    '*You conjure two ghostly soldiers, indistinct except for glowing weapons. They lash out with divine radiance against enemies that pass.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      "**Cleric Attack 9**\n\n**Daily** ✦ Conjuration, Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Effect:** You conjure two soldiers, each occupying 1 square within range. The conjured soldiers don't attack normally, but whenever an opportunity attack would be provoked from a conjured soldier, the soldier makes a Wisdom vs. Reflex attack. On a hit, the attack deals 1d10 + Wisdom modifier radiant damage.\n\nYou can move one soldier or both a total of 3 squares as a move action. Creatures can move through the spaces occupied by the soldiers. The soldiers last until the end of the encounter."
+    ),
+  ],
+  actions: [{ name: 'Astral Defenders', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const BladeBarrier = Abilities.defineAbility('cleric/power/blade-barrier', {
+  name: 'Blade Barrier',
+  description: '*A barrier of whirling blades appears, slashing at those who come too close or try to pass through.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      "**Cleric Attack 9**\n\n**Daily** ✦ Conjuration, Divine, Implement\n\n**Standard Action** · Area wall 5 within 10 squares\n\n**Effect:** You conjure a wall of contiguous squares filled with spinning blades of astral energy that lasts until the end of your next turn. The wall can be up to 5 squares long and up to 2 squares high. The spaces occupied by the blade barrier are difficult terrain.\n\nIf a creature enters the barrier's space or starts its turn there, it takes 3d6 + Wisdom modifier damage plus ongoing 5 damage (save ends).\n\n**Sustain Minor:** The barrier persists."
+    ),
+  ],
+  actions: [{ name: 'Blade Barrier', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DivinePower = Abilities.defineAbility('cleric/power/divine-power', {
+  name: 'Divine Power',
+  description:
+    '*You swing your weapon in a wide arc around you, creating a halo of divine energy that drives foes back while fortifying you and your allies.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Attack 9**\n\n**Daily** ✦ Divine, Healing, Radiant, Weapon\n\n**Standard Action** · Close burst 2\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. Fortitude\n\n**Hit:** 2[W] + Strength modifier radiant damage, and you push the target 1 square.\n\n**Effect:** Until the end of the encounter, you gain regeneration 5, and you and each ally within the burst gain a +2 power bonus to AC.'
+    ),
+  ],
+  actions: [{ name: 'Divine Power', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const FlameStrike = Abilities.defineAbility('cleric/power/flame-strike', {
+  name: 'Flame Strike',
+  description: '*A column of flame roars downward to engulf your foes.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Attack 9**\n\n**Daily** ✦ Divine, Fire, Implement\n\n**Standard Action** · Area burst 2 within 10 squares\n\n**Target:** Each enemy in burst\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 2d10 + Wisdom modifier fire damage, and ongoing 5 + Wisdom modifier fire damage (save ends).\n\n**Miss:** Half damage, and no ongoing fire damage.'
+    ),
+  ],
+  actions: [{ name: 'Flame Strike', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const AstralRefuge = Abilities.defineAbility('cleric/power/astral-refuge', {
+  name: 'Astral Refuge',
+  description:
+    '*With a touch, you send one of your allies to a sequestered location in the Astral Sea, where he can recuperate for a brief time before rejoining the battle.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 10**\n\n**Daily** ✦ Divine, Healing, Teleportation\n\n**Standard Action** · Melee touch\n\n**Target:** One willing ally\n\n**Effect:** The target is whisked away to a place of safety in the Astral Sea for 3 rounds. While there, the target can spend a healing surge each round but cannot take any other actions. At the end of the effect, the target reappears in the space he or she left or, if the space is not vacant, in the nearest unoccupied space.'
+    ),
+  ],
+  actions: [{ name: 'Astral Refuge', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const KnightsOfUnyieldingValor = Abilities.defineAbility('cleric/power/knights-of-unyielding-valor', {
+  name: 'Knights of Unyielding Valor',
+  description: '*You conjure four ghostly knights that carry huge shields emblazoned with the symbol of your deity.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      "**Cleric Utility 10**\n\n**Daily** ✦ Conjuration, Divine\n\n**Standard Action** · Ranged 10\n\n**Effect:** You conjure four ghostly warriors, each occupying 1 square within range. As a move action, you can move any of the knights 2 squares. They can't attack or be attacked or damaged, and they last until the end of the encounter.\n\nEnemies can't enter a square occupied by a conjured knight, but allies can move through the knights' spaces as if the knights were allies. The conjured knights grant cover to allies but not enemies."
+    ),
+  ],
+  actions: [{ name: 'Knights of Unyielding Valor', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const MassCureLightWounds = Abilities.defineAbility('cleric/power/mass-cure-light-wounds', {
+  name: 'Mass Cure Light Wounds',
+  description: '*With a wave of your hand, healing motes of silver light engulf you and all nearby allies.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 10**\n\n**Daily** ✦ Divine, Healing\n\n**Standard Action** · Close burst 5\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets regain hit points as if they had spent a healing surge. Add your Charisma modifier to the hit points regained.'
+    ),
+  ],
+  actions: [{ name: 'Mass Cure Light Wounds', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ShieldingWord = Abilities.defineAbility('cleric/power/shielding-word', {
+  name: 'Shielding Word',
+  description: '*You invoke a prayer that instantly defends one of your allies.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Cleric)],
+  effects: [
+    Effects.descriptive(
+      '**Cleric Utility 10**\n\n**Encounter** ✦ Divine\n\n**Immediate Interrupt** · Ranged 5\n\n**Trigger:** An ally in range is hit by an attack\n\n**Effect:** The ally gains a +4 power bonus to AC until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Shielding Word', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
 export const AllClericPowers = [
   LanceOfFaith,
   PriestsShield,
@@ -448,4 +712,20 @@ export const AllClericPowers = [
   RuneOfPeace,
   SpiritualWeapon,
   WeaponOfTheGods,
+  BastionOfHealth,
+  CureSeriousWounds,
+  DivineVigor,
+  HolyLantern,
+  AweStrike,
+  BreakTheSpirit,
+  SearingLight,
+  StrengthenTheFaithful,
+  AstralDefenders,
+  BladeBarrier,
+  DivinePower,
+  FlameStrike,
+  AstralRefuge,
+  KnightsOfUnyieldingValor,
+  MassCureLightWounds,
+  ShieldingWord,
 ]

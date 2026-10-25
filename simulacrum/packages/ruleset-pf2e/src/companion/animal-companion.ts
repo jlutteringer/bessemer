@@ -135,6 +135,29 @@ export const Wolf = Traits.defineTrait('companion/animal-companion/wolf', {
   effects: [],
 })
 
+export const IncredibleAnimalCompanion = Tags.defineTraitTag('companion/incredible-animal-companion', { name: 'Incredible Animal Companion' })
+
+export const NimbleAnimalCompanion = Traits.defineTrait('companion/incredible-animal-companion/nimble', {
+  name: 'Nimble Animal Companion',
+  description:
+    'To advance a mature animal companion to a nimble animal companion:\n\n- Increase its [Dexterity modifier](characteristic:dexterity) by 2 and its Strength, Constitution, and Wisdom modifiers by 1.\n\n- Increase its proficiency ranks in [Acrobatics](characteristic:skill/acrobatics) to expert.\n\n- It deals 2 additional damage with its unarmed attacks. Its attacks become [magical](content:traits/magical) for the purpose of ignoring resistances.\n\n- It learns the advanced maneuver for its type.',
+  tags: [IncredibleAnimalCompanion],
+  effects: [],
+})
+
+export const SavageAnimalCompanion = Traits.defineTrait('companion/incredible-animal-companion/savage', {
+  name: 'Savage Animal Companion',
+  description:
+    'To advance a mature animal companion to a savage animal companion:\n\n- If your companion is Medium or smaller, it grows by one size.\n\n- Increase its [Strength modifier](characteristic:strength) by 2 and its Dexterity, Constitution, and Wisdom modifiers by 1.\n\n- Increase its proficiency rank in [Athletics](characteristic:skill/athletics) to expert.\n\n- It deals 3 additional damage with its unarmed attacks. Its attacks become [magical](content:traits/magical) for the purpose of ignoring resistances.\n\n- It learns the advanced maneuver for its type.',
+  tags: [IncredibleAnimalCompanion],
+  effects: [],
+})
+
+export const SelectIncredibleAnimalCompanion = CharacterOptions.selectTraitOption('companion/select-incredible-animal-companion', {
+  name: 'Nimble or Savage Animal Companion',
+  filter: { tags: [IncredibleAnimalCompanion] },
+})
+
 export const AllAnimalCompanionEntities = [
   AnimalCompanion,
   SelectAnimalCompanion,
@@ -154,4 +177,8 @@ export const AllAnimalCompanionEntities = [
   Shark,
   Snake,
   Wolf,
+  IncredibleAnimalCompanion,
+  NimbleAnimalCompanion,
+  SavageAnimalCompanion,
+  SelectIncredibleAnimalCompanion,
 ]

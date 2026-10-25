@@ -414,14 +414,7 @@ export const PowerfulChargeSection = Content.defineSection('feats/powerful-charg
   },
 })
 
-export const PreciseHunterSection = Content.defineSection('feats/precise-hunter', {
-  parent: HeroicTierFeatsSection,
-  content: {
-    name: 'Precise Hunter [Ranger]',
-    description:
-      '**Prerequisites:** [Wis](characteristic:wisdom) 15, [ranger](trait:ranger), [Hunter’s Quarry](trait:ranger/hunters-quarry) class feature\n\n**Benefit:** When you score a critical hit against the target of your Hunter’s Quarry with a ranged attack, your allies gain a +1 bonus to attack rolls against that target until the start of your next turn.',
-  },
-})
+export const LinkPreciseHunterSection = Content.linkEntity(HeroicTierFeatsSection, ClassRanger.PreciseHunter)
 
 export const LinkPressTheAdvantageSection = Content.linkEntity(HeroicTierFeatsSection, ClassRogue.PressTheAdvantage)
 
@@ -617,6 +610,24 @@ export const NovicePowerSection = Content.defineSection('feats/novice-power', {
   },
 })
 
+export const AcolytePowerSection = Content.defineSection('feats/acolyte-power', {
+  parent: PowerSwapFeatsSection,
+  content: {
+    name: 'Acolyte Power [Multiclass Utility]',
+    description:
+      '**Prerequisites:** Any class-specific multiclass feat, 8th level\n\n**Benefit:** You can swap one utility power you know for one utility power of the same level or lower from the class you multiclassed into.',
+  },
+})
+
+export const AdeptPowerSection = Content.defineSection('feats/adept-power', {
+  parent: PowerSwapFeatsSection,
+  content: {
+    name: 'Adept Power [Multiclass Daily]',
+    description:
+      '**Prerequisites:** Any class-specific multiclass feat, 10th level\n\n**Benefit:** You can swap one daily attack power you know for one daily attack power of the same level or lower from the class you multiclassed into.',
+  },
+})
+
 export const ParagonMulticlassingSection = Content.defineSection('feats/paragon-multiclassing', {
   parent: MulticlassFeatsSection,
   content: {
@@ -709,7 +720,7 @@ export const FeatsContent: Array<ContentSection> = [
   LinkPotentChallengeSection,
   LinkPowerAttackSection,
   PowerfulChargeSection,
-  PreciseHunterSection,
+  LinkPreciseHunterSection,
   LinkPressTheAdvantageSection,
   QuickDrawSection,
   RagingStormSection,
@@ -744,5 +755,7 @@ export const FeatsContent: Array<ContentSection> = [
   ArcaneInitiateSection,
   PowerSwapFeatsSection,
   NovicePowerSection,
+  AcolytePowerSection,
+  AdeptPowerSection,
   ParagonMulticlassingSection,
 ]

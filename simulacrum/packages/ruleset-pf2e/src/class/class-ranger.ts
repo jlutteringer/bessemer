@@ -2,7 +2,21 @@ import { Abilities, Tags, Attributes, CharacterOptions, CharacterValues, Effects
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Class, ClassFeature, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, RangerFeat } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  Class,
+  ClassFeature,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+  RangerFeat,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { DexterityKeyAttribute, StrengthKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import {
@@ -16,13 +30,15 @@ import {
   Perception,
   Reflex,
   SimpleWeapons,
+  SpellAttack,
+  SpellDC,
   UnarmedAttacks,
   UnarmoredDefense,
   Will,
 } from '@simulacrum/ruleset-pf2e/characteristic'
-import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
+import { Expert, Master, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { SelectTrainedSkill, TrainedNature, TrainedSurvival } from '@simulacrum/ruleset-pf2e/skill'
-import { AllRangerFeatEntities } from '@simulacrum/ruleset-pf2e/class/ranger-feat'
+import { AllRangerFeatEntities, InitiateWarden } from '@simulacrum/ruleset-pf2e/class/ranger-feat'
 import { AllRangerFocusSpellEntities } from '@simulacrum/ruleset-pf2e/class/ranger-focus-spell'
 
 export const HuntersEdge = Tags.defineTraitTag('ranger/hunters-edge', { name: "Hunter's Edge" })
@@ -45,6 +61,23 @@ export const SelectRangerFeat2 = CharacterOptions.selectTraitOption('ranger/sele
 export const SelectRangerFeat4 = CharacterOptions.selectTraitOption('ranger/select-feat-4', {
   name: 'Ranger Feat (Level 4)',
   filter: { tags: [RangerFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectRangerFeat6 = CharacterOptions.selectTraitOption('ranger/select-feat-6', {
+  name: 'Ranger Feat (Level 6)',
+  filter: { tags: [RangerFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectRangerFeat8 = CharacterOptions.selectTraitOption('ranger/select-feat-8', {
+  name: 'Ranger Feat (Level 8)',
+  filter: { tags: [RangerFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectRangerFeat10 = CharacterOptions.selectTraitOption('ranger/select-feat-10', {
+  name: 'Ranger Feat (Level 10)',
+  filter: {
+    tags: [RangerFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const FlurryEdge = Traits.defineTrait('ranger/hunters-edge/flurry', {
@@ -133,6 +166,52 @@ export const TracklessJourney = Traits.defineTrait('ranger/trackless-journey', {
   effects: [],
 })
 
+export const NaturalReflexes = Traits.defineTrait('ranger/natural-reflexes', {
+  name: 'Natural Reflexes',
+  description:
+    "You've honed your reflexes dodging falling trees and pounding hail. Your proficiency rank for [Reflex](characteristic:reflex) saves increases to master. When you roll a success on a Reflex save, you get a critical success instead.",
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
+export const RangerPerceptionMastery = Traits.defineTrait('ranger/perception-mastery', {
+  name: 'Perception Mastery',
+  description:
+    'You have highly developed acuity and attention to detail. Your proficiency rank for [Perception](characteristic:perception) increases to master.',
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
+export const RangerWeaponSpecialization = Traits.defineTrait('ranger/weapon-specialization', {
+  name: 'Weapon Specialization',
+  description:
+    "You inflict greater injuries with the weapons you know best. You deal 2 additional damage with weapons and unarmed attacks in which you're an expert. This damage increases to 3 if you're a master, and 4 if you're legendary.",
+  tags: [ClassFeature],
+  effects: [],
+})
+
+export const NaturesEdge = Traits.defineTrait('ranger/natures-edge', {
+  name: "Nature's Edge",
+  description:
+    "You always find the weak points in your foes' defenses when they're on unfavorable terrain. Enemies are [off-guard](content:conditions/off-guard) to you if they're in [difficult terrain](content:playing-the-game/difficult-terrain).",
+  tags: [ClassFeature],
+  effects: [],
+})
+
+export const RangerExpertise = Traits.defineTrait('ranger/ranger-expertise', {
+  name: 'Ranger Expertise',
+  description:
+    "You've gained techniques that improve your cunning and skill. Your proficiency rank for your ranger DC increases to expert. If you have warden spells, your proficiency rank for spell attacks and spell DCs increases to expert.",
+  tags: [ClassFeature],
+  effects: [
+    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    Effects.conditional(Traits.traitPrerequisite(InitiateWarden), [
+      Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    ]),
+  ],
+})
+
 export const Ranger = Traits.defineTrait('ranger', {
   name: 'Ranger',
   description:
@@ -171,6 +250,18 @@ export const Ranger = Traits.defineTrait('ranger', {
       Effects.gainTrait(RangerWeaponExpertise),
       Effects.gainTrait(TracklessJourney),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectRangerFeat6)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainTrait(NaturalReflexes),
+      Effects.gainTrait(RangerPerceptionMastery),
+      Effects.gainTrait(RangerWeaponSpecialization),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectRangerFeat8)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainTrait(NaturesEdge),
+      Effects.gainTrait(RangerExpertise),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectRangerFeat10)]),
   ],
 })
 
@@ -182,6 +273,9 @@ export const AllRangerEntities = [
   SelectRangerFeat1,
   SelectRangerFeat2,
   SelectRangerFeat4,
+  SelectRangerFeat6,
+  SelectRangerFeat8,
+  SelectRangerFeat10,
   FlurryEdge,
   OutwitEdge,
   PrecisionEdge,
@@ -192,5 +286,10 @@ export const AllRangerEntities = [
   RangerWillExpertise,
   RangerWeaponExpertise,
   TracklessJourney,
+  NaturalReflexes,
+  RangerPerceptionMastery,
+  RangerWeaponSpecialization,
+  NaturesEdge,
+  RangerExpertise,
   Ranger,
 ]

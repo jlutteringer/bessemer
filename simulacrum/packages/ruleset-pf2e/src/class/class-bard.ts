@@ -3,7 +3,21 @@ import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as Spells from '@simulacrum/ruleset-pf2e/spell'
 import * as BardFocusSpells from '@simulacrum/ruleset-pf2e/class/bard-focus-spell'
-import { BardFeat, Class, ClassFeature, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4 } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  BardFeat,
+  Class,
+  ClassFeature,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+} from '@simulacrum/ruleset-pf2e/tag'
 import {
   ClassDC,
   Constitution,
@@ -14,11 +28,13 @@ import {
   Perception,
   Reflex,
   SimpleWeapons,
+  SpellAttack,
+  SpellDC,
   UnarmedAttacks,
   UnarmoredDefense,
   Will,
 } from '@simulacrum/ruleset-pf2e/characteristic'
-import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
+import { Expert, Master, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { CharismaKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { SelectTrainedSkill, TrainedOccultism, TrainedPerformance } from '@simulacrum/ruleset-pf2e/skill'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
@@ -42,6 +58,23 @@ export const SelectBardFeat2 = CharacterOptions.selectTraitOption('feat/select-b
 export const SelectBardFeat4 = CharacterOptions.selectTraitOption('feat/select-bard-4', {
   name: 'Bard Feat (Level 4)',
   filter: { tags: [BardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectBardFeat6 = CharacterOptions.selectTraitOption('feat/select-bard-6', {
+  name: 'Bard Feat (Level 6)',
+  filter: { tags: [BardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectBardFeat8 = CharacterOptions.selectTraitOption('feat/select-bard-8', {
+  name: 'Bard Feat (Level 8)',
+  filter: { tags: [BardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectBardFeat10 = CharacterOptions.selectTraitOption('feat/select-bard-10', {
+  name: 'Bard Feat (Level 10)',
+  filter: {
+    tags: [BardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const CompositionSpells = Traits.defineTrait('bard/composition-spells', {
@@ -85,6 +118,33 @@ export const SignatureSpells = Traits.defineTrait('bard/signature-spells', {
   effects: [],
 })
 
+export const BardExpertSpellcaster = Traits.defineTrait('bard/expert-spellcaster', {
+  name: 'Expert Spellcaster',
+  description:
+    'Your magical techniques grow stronger. Your proficiency ranks for [spell attack modifiers](characteristic:spell-attack) and [spell DCs](characteristic:spell-dc) increase to expert.',
+  tags: [ClassFeature],
+  effects: [
+    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+  ],
+})
+
+export const BardFortitudeExpertise = Traits.defineTrait('bard/fortitude-expertise', {
+  name: 'Fortitude Expertise',
+  description:
+    'Your physique has grown hardy in your adventures. Your proficiency rank for [Fortitude](characteristic:fortitude) saves increases to expert.',
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const PerformersHeart = Traits.defineTrait('bard/performers-heart', {
+  name: "Performer's Heart",
+  description:
+    'The greatest performances require an understanding of your own mind and flawless concentration. Your proficiency rank for [Will saves](characteristic:will) increases to master. When you roll a success on a Will save, you get a critical success instead.',
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const Bard = Traits.defineTrait('bard', {
   name: 'Bard',
   description:
@@ -122,6 +182,14 @@ export const Bard = Traits.defineTrait('bard', {
       Effects.gainTrait(SignatureSpells),
     ]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [Effects.gainCharacterOption(SelectBardFeat4)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectBardFeat6)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainTrait(BardExpertSpellcaster)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectBardFeat8)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainTrait(BardFortitudeExpertise),
+      Effects.gainTrait(PerformersHeart),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectBardFeat10)]),
   ],
 })
 
@@ -130,6 +198,9 @@ export const AllBardEntities = [
   Muses,
   ReflexExpertise,
   SignatureSpells,
+  BardExpertSpellcaster,
+  BardFortitudeExpertise,
+  PerformersHeart,
   Bard,
   ...AllBardMuseEntities,
   ...AllBardSpellcastingEntities,

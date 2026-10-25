@@ -18,10 +18,17 @@ import {
   Wisdom,
 } from '@simulacrum/ruleset-pf2e/characteristic'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
-import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
+import { Expert, Master, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { WisdomKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { SelectTrainedSkill, TrainedReligion } from '@simulacrum/ruleset-pf2e/skill'
-import { CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout } from '@simulacrum/ruleset-pf2e/loadout'
+import {
+  CantripLoadout,
+  SpellRank1Loadout,
+  SpellRank2Loadout,
+  SpellRank3Loadout,
+  SpellRank4Loadout,
+  SpellRank5Loadout,
+} from '@simulacrum/ruleset-pf2e/loadout'
 import { DivineSpellList } from '@simulacrum/ruleset-pf2e/spellcasting'
 import { AllClericFocusSpellEntities } from '@simulacrum/ruleset-pf2e/class/cleric-focus-spell'
 import { AllClericDomainEntities } from '@simulacrum/ruleset-pf2e/class/cleric-domain'
@@ -31,7 +38,14 @@ import {
   SelectClericDoctrine,
   SelectClericSanctification,
 } from '@simulacrum/ruleset-pf2e/class/cleric-doctrine'
-import { AllClericFeatEntities, SelectClericFeat2, SelectClericFeat4 } from '@simulacrum/ruleset-pf2e/class/cleric-feat'
+import {
+  AllClericFeatEntities,
+  SelectClericFeat2,
+  SelectClericFeat4,
+  SelectClericFeat6,
+  SelectClericFeat8,
+  SelectClericFeat10,
+} from '@simulacrum/ruleset-pf2e/class/cleric-feat'
 
 export const Deity = Traits.defineTrait('cleric/deity', {
   name: 'Deity',
@@ -69,6 +83,17 @@ export const ClericSpellcasting = Traits.defineTrait('cleric/cleric-spellcasting
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainLoadoutSlot(SpellRank3Loadout),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainLoadoutSlot(SpellRank3Loadout)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainLoadoutSlot(SpellRank4Loadout)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainLoadoutSlot(SpellRank5Loadout)]),
   ],
 })
 
@@ -93,6 +118,14 @@ export const PerceptionExpertise = Traits.defineTrait('cleric/perception-experti
   description: 'You remain alert to threats around you. Your proficiency rank for [Perception](characteristic:perception) increases to expert.',
   tags: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const ResoluteFaith = Traits.defineTrait('cleric/resolute-faith', {
+  name: 'Resolute Faith',
+  description:
+    'Belief provides a bulwark against insidious thoughts. Your proficiency rank for [Will saves](characteristic:will) increases to master. When you roll a success at a Will save, you get a critical success instead.',
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const Cleric = Traits.defineTrait('cleric', {
@@ -124,6 +157,10 @@ export const Cleric = Traits.defineTrait('cleric', {
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [Effects.gainCharacterOption(SelectClericFeat2)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [Effects.gainCharacterOption(SelectClericFeat4)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainTrait(PerceptionExpertise)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectClericFeat6)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectClericFeat8)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainTrait(ResoluteFaith)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectClericFeat10)]),
   ],
 })
 
@@ -134,6 +171,7 @@ export const AllClericEntities = [
   DivineFont,
   Doctrine,
   PerceptionExpertise,
+  ResoluteFaith,
   ...AllClericDoctrineEntities,
   ...AllClericDomainEntities,
   ...AllClericFeatEntities,

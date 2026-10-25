@@ -11,6 +11,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   Heritage,
   NephilimFeat,
   OrcFeat,
@@ -103,6 +104,11 @@ export const SelectOrcFeat5 = CharacterOptions.selectTraitOption('ancestry/orc/s
   filter: { tags: [AncestryFeat, [OrcFeat, ElfFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat], [FeatLevel1, FeatLevel5]] },
 })
 
+export const SelectOrcFeat9 = CharacterOptions.selectTraitOption('ancestry/orc/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: { tags: [AncestryFeat, [OrcFeat, ElfFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat], [FeatLevel1, FeatLevel5, FeatLevel9]] },
+})
+
 export const Orc = Traits.defineTrait('ancestry/orc', {
   name: 'Orc',
   description:
@@ -117,6 +123,7 @@ export const Orc = Traits.defineTrait('ancestry/orc', {
     Effects.gainCharacterOption(SelectOrcHeritage),
     Effects.gainCharacterOption(SelectOrcFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectOrcFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectOrcFeat9)]),
   ],
 })
 
@@ -293,6 +300,27 @@ export const OrcSuperstitionAction = Abilities.defineAbility('ancestry/orc/orc-s
   ],
 })
 
+export const PervasiveSuperstition = Traits.defineTrait('ancestry/orc/pervasive-superstition', {
+  name: 'Pervasive Superstition',
+  description:
+    '*Orc*\n\n**Prerequisites** [Orc Superstition](trait:ancestry/orc/orc-superstition)\n\nYou steep yourself in superstition and practice ancient orc mental exercises for shrugging off the effects of magic. You gain a +1 circumstance bonus to saving throws against spells and magical effects at all times.',
+  tags: [Feat, AncestryFeat, OrcFeat, FeatLevel9],
+  prerequisites: [
+    Expressions.or([Traits.traitPrerequisite(Orc), Traits.traitPrerequisite(DromaarHeritage)]),
+    Traits.traitPrerequisite(OrcSuperstition),
+  ],
+  effects: [],
+})
+
+export const UndyingFerocity = Traits.defineTrait('ancestry/orc/undying-ferocity', {
+  name: 'Undying Ferocity',
+  description:
+    '*Orc*\n\n**Prerequisites** [Orc Ferocity](trait:ancestry/orc/orc-ferocity)\n\nYou resist death’s clutches with supernatural vigor, daring death to claim you while promising that any such attempt will surely fail. When you use [Orc Ferocity](trait:ancestry/orc/orc-ferocity), you gain temporary [Hit Points](characteristic:hit-points) equal to your level.',
+  tags: [Feat, AncestryFeat, OrcFeat, FeatLevel9],
+  prerequisites: [Expressions.or([Traits.traitPrerequisite(Orc), Traits.traitPrerequisite(DromaarHeritage)]), Traits.traitPrerequisite(OrcFerocity)],
+  effects: [],
+})
+
 export const AllOrcEntities = [
   BadlandsOrc,
   BattleReadyOrc,
@@ -304,6 +332,7 @@ export const AllOrcEntities = [
   SelectOrcHeritage,
   SelectOrcFeat1,
   SelectOrcFeat5,
+  SelectOrcFeat9,
   Orc,
   HoldMarkBurningSun,
   HoldMarkDeathsHead,
@@ -325,4 +354,6 @@ export const AllOrcEntities = [
   BloodyBlows,
   DefyDeath,
   ScarThickSkin,
+  PervasiveSuperstition,
+  UndyingFerocity,
 ]

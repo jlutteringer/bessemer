@@ -1,5 +1,7 @@
-import { Tags, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
-import { ClassFeat, ClericFeat, Feat, FeatLevel1 } from '@simulacrum/ruleset-pf2e/tag'
+import { Tags, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Patches } from '@bessemer/cornerstone'
+import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
+import { ClassFeat, ClericFeat, Feat, FeatLevel1, FeatLevel8 } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import * as FocusSpells from '@simulacrum/ruleset-pf2e/class/cleric-focus-spell'
 
@@ -293,6 +295,323 @@ export const DomainInitiate = Traits.defineTrait('feat/domain-initiate', {
   effects: [Effects.gainResourcePool(FocusPoints), Effects.gainCharacterOption(SelectClericDomain)],
 })
 
+export const AdvancedDomainAir = Traits.defineTrait('feat/advanced-domain/air', {
+  name: 'Advanced Domain (Air)',
+  description: "You gain the air domain's advanced domain spell, _disperse into air_.",
+  prerequisites: [Traits.traitPrerequisite(AirDomain)],
+  effects: [Effects.gainAbility(FocusSpells.DisperseIntoAir)],
+})
+
+export const AdvancedDomainAmbition = Traits.defineTrait('feat/advanced-domain/ambition', {
+  name: 'Advanced Domain (Ambition)',
+  description: "You gain the ambition domain's advanced domain spell, _competitive edge_.",
+  prerequisites: [Traits.traitPrerequisite(AmbitionDomain)],
+  effects: [Effects.gainAbility(FocusSpells.CompetitiveEdge)],
+})
+
+export const AdvancedDomainCities = Traits.defineTrait('feat/advanced-domain/cities', {
+  name: 'Advanced Domain (Cities)',
+  description: "You gain the cities domain's advanced domain spell, _pulse of civilization_.",
+  prerequisites: [Traits.traitPrerequisite(CitiesDomain)],
+  effects: [Effects.gainAbility(FocusSpells.PulseOfCivilization)],
+})
+
+export const AdvancedDomainConfidence = Traits.defineTrait('feat/advanced-domain/confidence', {
+  name: 'Advanced Domain (Confidence)',
+  description: "You gain the confidence domain's advanced domain spell, _delusional pride_.",
+  prerequisites: [Traits.traitPrerequisite(ConfidenceDomain)],
+  effects: [Effects.gainAbility(FocusSpells.DelusionalPride)],
+})
+
+export const AdvancedDomainCreation = Traits.defineTrait('feat/advanced-domain/creation', {
+  name: 'Advanced Domain (Creation)',
+  description: "You gain the creation domain's advanced domain spell, _artistic flourish_.",
+  prerequisites: [Traits.traitPrerequisite(CreationDomain)],
+  effects: [Effects.gainAbility(FocusSpells.ArtisticFlourish)],
+})
+
+export const AdvancedDomainDarkness = Traits.defineTrait('feat/advanced-domain/darkness', {
+  name: 'Advanced Domain (Darkness)',
+  description: "You gain the darkness domain's advanced domain spell, _darkened sight_.",
+  prerequisites: [Traits.traitPrerequisite(DarknessDomain)],
+  effects: [Effects.gainAbility(FocusSpells.DarkenedSight)],
+})
+
+export const AdvancedDomainDeath = Traits.defineTrait('feat/advanced-domain/death', {
+  name: 'Advanced Domain (Death)',
+  description: "You gain the death domain's advanced domain spell, _eradicate undeath_.",
+  prerequisites: [Traits.traitPrerequisite(DeathDomain)],
+  effects: [Effects.gainAbility(FocusSpells.EradicateUndeath)],
+})
+
+export const AdvancedDomainDestruction = Traits.defineTrait('feat/advanced-domain/destruction', {
+  name: 'Advanced Domain (Destruction)',
+  description: "You gain the destruction domain's advanced domain spell, _destructive aura_.",
+  prerequisites: [Traits.traitPrerequisite(DestructionDomain)],
+  effects: [Effects.gainAbility(FocusSpells.DestructiveAura)],
+})
+
+export const AdvancedDomainDreams = Traits.defineTrait('feat/advanced-domain/dreams', {
+  name: 'Advanced Domain (Dreams)',
+  description: "You gain the dreams domain's advanced domain spell, _dreamer's call_.",
+  prerequisites: [Traits.traitPrerequisite(DreamsDomain)],
+  effects: [Effects.gainAbility(FocusSpells.DreamersCall)],
+})
+
+export const AdvancedDomainEarth = Traits.defineTrait('feat/advanced-domain/earth', {
+  name: 'Advanced Domain (Earth)',
+  description: "You gain the earth domain's advanced domain spell, _localized quake_.",
+  prerequisites: [Traits.traitPrerequisite(EarthDomain)],
+  effects: [Effects.gainAbility(FocusSpells.LocalizedQuake)],
+})
+
+export const AdvancedDomainFamily = Traits.defineTrait('feat/advanced-domain/family', {
+  name: 'Advanced Domain (Family)',
+  description: "You gain the family domain's advanced domain spell, _unity_.",
+  prerequisites: [Traits.traitPrerequisite(FamilyDomain)],
+  effects: [Effects.gainAbility(FocusSpells.Unity)],
+})
+
+export const AdvancedDomainFate = Traits.defineTrait('feat/advanced-domain/fate', {
+  name: 'Advanced Domain (Fate)',
+  description: "You gain the fate domain's advanced domain spell, _tempt fate_.",
+  prerequisites: [Traits.traitPrerequisite(FateDomain)],
+  effects: [Effects.gainAbility(FocusSpells.TemptFate)],
+})
+
+export const AdvancedDomainFire = Traits.defineTrait('feat/advanced-domain/fire', {
+  name: 'Advanced Domain (Fire)',
+  description: "You gain the fire domain's advanced domain spell, _flame barrier_.",
+  prerequisites: [Traits.traitPrerequisite(FireDomain)],
+  effects: [Effects.gainAbility(FocusSpells.FlameBarrier)],
+})
+
+export const AdvancedDomainFreedom = Traits.defineTrait('feat/advanced-domain/freedom', {
+  name: 'Advanced Domain (Freedom)',
+  description: "You gain the freedom domain's advanced domain spell, _word of freedom_.",
+  prerequisites: [Traits.traitPrerequisite(FreedomDomain)],
+  effects: [Effects.gainAbility(FocusSpells.WordOfFreedom)],
+})
+
+export const AdvancedDomainHealing = Traits.defineTrait('feat/advanced-domain/healing', {
+  name: 'Advanced Domain (Healing)',
+  description: "You gain the healing domain's advanced domain spell, _rebuke death_.",
+  prerequisites: [Traits.traitPrerequisite(HealingDomain)],
+  effects: [Effects.gainAbility(FocusSpells.RebukeDeath)],
+})
+
+export const AdvancedDomainIndulgence = Traits.defineTrait('feat/advanced-domain/indulgence', {
+  name: 'Advanced Domain (Indulgence)',
+  description: "You gain the indulgence domain's advanced domain spell, _take its course_.",
+  prerequisites: [Traits.traitPrerequisite(IndulgenceDomain)],
+  effects: [Effects.gainAbility(FocusSpells.TakeItsCourse)],
+})
+
+export const AdvancedDomainKnowledge = Traits.defineTrait('feat/advanced-domain/knowledge', {
+  name: 'Advanced Domain (Knowledge)',
+  description: "You gain the knowledge domain's advanced domain spell, _know the enemy_.",
+  prerequisites: [Traits.traitPrerequisite(KnowledgeDomain)],
+  effects: [Effects.gainAbility(FocusSpells.KnowTheEnemy)],
+})
+
+export const AdvancedDomainLuck = Traits.defineTrait('feat/advanced-domain/luck', {
+  name: 'Advanced Domain (Luck)',
+  description: "You gain the luck domain's advanced domain spell, _lucky break_.",
+  prerequisites: [Traits.traitPrerequisite(LuckDomain)],
+  effects: [Effects.gainAbility(FocusSpells.LuckyBreak)],
+})
+
+export const AdvancedDomainMagic = Traits.defineTrait('feat/advanced-domain/magic', {
+  name: 'Advanced Domain (Magic)',
+  description: "You gain the magic domain's advanced domain spell, _mystic beacon_.",
+  prerequisites: [Traits.traitPrerequisite(MagicDomain)],
+  effects: [Effects.gainAbility(FocusSpells.MysticBeacon)],
+})
+
+export const AdvancedDomainMight = Traits.defineTrait('feat/advanced-domain/might', {
+  name: 'Advanced Domain (Might)',
+  description: "You gain the might domain's advanced domain spell, _enduring might_.",
+  prerequisites: [Traits.traitPrerequisite(MightDomain)],
+  effects: [Effects.gainAbility(FocusSpells.EnduringMight)],
+})
+
+export const AdvancedDomainMoon = Traits.defineTrait('feat/advanced-domain/moon', {
+  name: 'Advanced Domain (Moon)',
+  description: "You gain the moon domain's advanced domain spell, _touch of the moon_.",
+  prerequisites: [Traits.traitPrerequisite(MoonDomain)],
+  effects: [Effects.gainAbility(FocusSpells.TouchOfTheMoon)],
+})
+
+export const AdvancedDomainNature = Traits.defineTrait('feat/advanced-domain/nature', {
+  name: 'Advanced Domain (Nature)',
+  description: "You gain the nature domain's advanced domain spell, _nature's bounty_.",
+  prerequisites: [Traits.traitPrerequisite(NatureDomain)],
+  effects: [Effects.gainAbility(FocusSpells.NaturesBounty)],
+})
+
+export const AdvancedDomainNightmares = Traits.defineTrait('feat/advanced-domain/nightmares', {
+  name: 'Advanced Domain (Nightmares)',
+  description: "You gain the nightmares domain's advanced domain spell, _shared nightmare_.",
+  prerequisites: [Traits.traitPrerequisite(NightmaresDomain)],
+  effects: [Effects.gainAbility(FocusSpells.SharedNightmare)],
+})
+
+export const AdvancedDomainPain = Traits.defineTrait('feat/advanced-domain/pain', {
+  name: 'Advanced Domain (Pain)',
+  description: "You gain the pain domain's advanced domain spell, _retributive pain_.",
+  prerequisites: [Traits.traitPrerequisite(PainDomain)],
+  effects: [Effects.gainAbility(FocusSpells.RetributivePain)],
+})
+
+export const AdvancedDomainPassion = Traits.defineTrait('feat/advanced-domain/passion', {
+  name: 'Advanced Domain (Passion)',
+  description: "You gain the passion domain's advanced domain spell, _captivating adoration_.",
+  prerequisites: [Traits.traitPrerequisite(PassionDomain)],
+  effects: [Effects.gainAbility(FocusSpells.CaptivatingAdoration)],
+})
+
+export const AdvancedDomainPerfection = Traits.defineTrait('feat/advanced-domain/perfection', {
+  name: 'Advanced Domain (Perfection)',
+  description: "You gain the perfection domain's advanced domain spell, _perfected body_.",
+  prerequisites: [Traits.traitPrerequisite(PerfectionDomain)],
+  effects: [Effects.gainAbility(FocusSpells.PerfectedBody)],
+})
+
+export const AdvancedDomainProtection = Traits.defineTrait('feat/advanced-domain/protection', {
+  name: 'Advanced Domain (Protection)',
+  description: "You gain the protection domain's advanced domain spell, _protector's sphere_.",
+  prerequisites: [Traits.traitPrerequisite(ProtectionDomain)],
+  effects: [Effects.gainAbility(FocusSpells.ProtectorsSphere)],
+})
+
+export const AdvancedDomainSecrecy = Traits.defineTrait('feat/advanced-domain/secrecy', {
+  name: 'Advanced Domain (Secrecy)',
+  description: "You gain the secrecy domain's advanced domain spell, _safeguard secret_.",
+  prerequisites: [Traits.traitPrerequisite(SecrecyDomain)],
+  effects: [Effects.gainAbility(FocusSpells.SafeguardSecret)],
+})
+
+export const AdvancedDomainSun = Traits.defineTrait('feat/advanced-domain/sun', {
+  name: 'Advanced Domain (Sun)',
+  description: "You gain the sun domain's advanced domain spell, _vital luminance_.",
+  prerequisites: [Traits.traitPrerequisite(SunDomain)],
+  effects: [Effects.gainAbility(FocusSpells.VitalLuminance)],
+})
+
+export const AdvancedDomainTravel = Traits.defineTrait('feat/advanced-domain/travel', {
+  name: 'Advanced Domain (Travel)',
+  description: "You gain the travel domain's advanced domain spell, _traveler's transit_.",
+  prerequisites: [Traits.traitPrerequisite(TravelDomain)],
+  effects: [Effects.gainAbility(FocusSpells.TravelersTransit)],
+})
+
+export const AdvancedDomainTrickery = Traits.defineTrait('feat/advanced-domain/trickery', {
+  name: 'Advanced Domain (Trickery)',
+  description: "You gain the trickery domain's advanced domain spell, _trickster's twin_.",
+  prerequisites: [Traits.traitPrerequisite(TrickeryDomain)],
+  effects: [Effects.gainAbility(FocusSpells.TrickstersTwin)],
+})
+
+export const AdvancedDomainTruth = Traits.defineTrait('feat/advanced-domain/truth', {
+  name: 'Advanced Domain (Truth)',
+  description: "You gain the truth domain's advanced domain spell, _glimpse the truth_.",
+  prerequisites: [Traits.traitPrerequisite(TruthDomain)],
+  effects: [Effects.gainAbility(FocusSpells.GlimpseTheTruth)],
+})
+
+export const AdvancedDomainTyranny = Traits.defineTrait('feat/advanced-domain/tyranny', {
+  name: 'Advanced Domain (Tyranny)',
+  description: "You gain the tyranny domain's advanced domain spell, _commanding lash_.",
+  prerequisites: [Traits.traitPrerequisite(TyrannyDomain)],
+  effects: [Effects.gainAbility(FocusSpells.CommandingLash)],
+})
+
+export const AdvancedDomainUndeath = Traits.defineTrait('feat/advanced-domain/undeath', {
+  name: 'Advanced Domain (Undeath)',
+  description: "You gain the undeath domain's advanced domain spell, _malignant sustenance_.",
+  prerequisites: [Traits.traitPrerequisite(UndeathDomain)],
+  effects: [Effects.gainAbility(FocusSpells.MalignantSustenance)],
+})
+
+export const AdvancedDomainWater = Traits.defineTrait('feat/advanced-domain/water', {
+  name: 'Advanced Domain (Water)',
+  description: "You gain the water domain's advanced domain spell, _downpour_.",
+  prerequisites: [Traits.traitPrerequisite(WaterDomain)],
+  effects: [Effects.gainAbility(FocusSpells.Downpour)],
+})
+
+export const AdvancedDomainWealth = Traits.defineTrait('feat/advanced-domain/wealth', {
+  name: 'Advanced Domain (Wealth)',
+  description: "You gain the wealth domain's advanced domain spell, _precious metals_.",
+  prerequisites: [Traits.traitPrerequisite(WealthDomain)],
+  effects: [Effects.gainAbility(FocusSpells.PreciousMetals)],
+})
+
+export const AdvancedDomainZeal = Traits.defineTrait('feat/advanced-domain/zeal', {
+  name: 'Advanced Domain (Zeal)',
+  description: "You gain the zeal domain's advanced domain spell, _zeal for battle_.",
+  prerequisites: [Traits.traitPrerequisite(ZealDomain)],
+  effects: [Effects.gainAbility(FocusSpells.ZealForBattle)],
+})
+
+export const SelectAdvancedDomain = CharacterOptions.selectTraitOption('feat/advanced-domain/select', {
+  name: 'Advanced Domain',
+  filter: {
+    specificOptions: [
+      AdvancedDomainAir,
+      AdvancedDomainAmbition,
+      AdvancedDomainCities,
+      AdvancedDomainConfidence,
+      AdvancedDomainCreation,
+      AdvancedDomainDarkness,
+      AdvancedDomainDeath,
+      AdvancedDomainDestruction,
+      AdvancedDomainDreams,
+      AdvancedDomainEarth,
+      AdvancedDomainFamily,
+      AdvancedDomainFate,
+      AdvancedDomainFire,
+      AdvancedDomainFreedom,
+      AdvancedDomainHealing,
+      AdvancedDomainIndulgence,
+      AdvancedDomainKnowledge,
+      AdvancedDomainLuck,
+      AdvancedDomainMagic,
+      AdvancedDomainMight,
+      AdvancedDomainMoon,
+      AdvancedDomainNature,
+      AdvancedDomainNightmares,
+      AdvancedDomainPain,
+      AdvancedDomainPassion,
+      AdvancedDomainPerfection,
+      AdvancedDomainProtection,
+      AdvancedDomainSecrecy,
+      AdvancedDomainSun,
+      AdvancedDomainTravel,
+      AdvancedDomainTrickery,
+      AdvancedDomainTruth,
+      AdvancedDomainTyranny,
+      AdvancedDomainUndeath,
+      AdvancedDomainWater,
+      AdvancedDomainWealth,
+      AdvancedDomainZeal,
+    ],
+  },
+})
+
+export const AdvancedDomain = Traits.defineTrait('feat/advanced-domain', {
+  name: 'Advanced Domain',
+  description:
+    '*Cleric*\n\n**Prerequisites** [Domain Initiate](trait:feat/domain-initiate)\n\nYour prayers have unlocked deeper secrets of your deity’s domain. You gain an advanced domain spell from one of your domains for which you have an initial domain spell.\n\n**Special** You can select this feat multiple times. Each time, you must select a different advanced domain spell.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(DomainInitiate)],
+  repeatable: true,
+  effects: [
+    Effects.gainCharacterOption(SelectAdvancedDomain),
+    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+  ],
+})
+
 export const AllClericDomainEntities = [
   ClericDomain,
   AirDomain,
@@ -333,4 +652,43 @@ export const AllClericDomainEntities = [
   WealthDomain,
   ZealDomain,
   DomainInitiate,
+  AdvancedDomainAir,
+  AdvancedDomainAmbition,
+  AdvancedDomainCities,
+  AdvancedDomainConfidence,
+  AdvancedDomainCreation,
+  AdvancedDomainDarkness,
+  AdvancedDomainDeath,
+  AdvancedDomainDestruction,
+  AdvancedDomainDreams,
+  AdvancedDomainEarth,
+  AdvancedDomainFamily,
+  AdvancedDomainFate,
+  AdvancedDomainFire,
+  AdvancedDomainFreedom,
+  AdvancedDomainHealing,
+  AdvancedDomainIndulgence,
+  AdvancedDomainKnowledge,
+  AdvancedDomainLuck,
+  AdvancedDomainMagic,
+  AdvancedDomainMight,
+  AdvancedDomainMoon,
+  AdvancedDomainNature,
+  AdvancedDomainNightmares,
+  AdvancedDomainPain,
+  AdvancedDomainPassion,
+  AdvancedDomainPerfection,
+  AdvancedDomainProtection,
+  AdvancedDomainSecrecy,
+  AdvancedDomainSun,
+  AdvancedDomainTravel,
+  AdvancedDomainTrickery,
+  AdvancedDomainTruth,
+  AdvancedDomainTyranny,
+  AdvancedDomainUndeath,
+  AdvancedDomainWater,
+  AdvancedDomainWealth,
+  AdvancedDomainZeal,
+  SelectAdvancedDomain,
+  AdvancedDomain,
 ]

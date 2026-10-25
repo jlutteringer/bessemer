@@ -131,6 +131,46 @@ export const CleverRiposteSection = Content.linkEntity(RogueLevel5DailyExploitsS
 export const DeepCutSection = Content.linkEntity(RogueLevel5DailyExploitsSection, RoguePower.DeepCut)
 export const WalkingWoundedSection = Content.linkEntity(RogueLevel5DailyExploitsSection, RoguePower.WalkingWounded)
 
+export const RogueLevel6UtilityExploitsSection = Content.defineSection('classes/rogue-level-6-utility-exploits', {
+  parent: RoguePowersSection,
+  content: { name: 'Level 6 Utility Exploits' },
+})
+
+export const ChameleonSection = Content.linkEntity(RogueLevel6UtilityExploitsSection, RoguePower.Chameleon)
+export const IgnobleEscapeSection = Content.linkEntity(RogueLevel6UtilityExploitsSection, RoguePower.IgnobleEscape)
+export const MobMentalitySection = Content.linkEntity(RogueLevel6UtilityExploitsSection, RoguePower.MobMentality)
+export const NimbleClimbSection = Content.linkEntity(RogueLevel6UtilityExploitsSection, RoguePower.NimbleClimb)
+export const SlipperyMindSection = Content.linkEntity(RogueLevel6UtilityExploitsSection, RoguePower.SlipperyMind)
+
+export const RogueLevel7EncounterExploitsSection = Content.defineSection('classes/rogue-level-7-encounter-exploits', {
+  parent: RoguePowersSection,
+  content: { name: 'Level 7 Encounter Exploits' },
+})
+
+export const CloudOfSteelSection = Content.linkEntity(RogueLevel7EncounterExploitsSection, RoguePower.CloudOfSteel)
+export const ImperilingStrikeSection = Content.linkEntity(RogueLevel7EncounterExploitsSection, RoguePower.ImperilingStrike)
+export const RoguesLuckSection = Content.linkEntity(RogueLevel7EncounterExploitsSection, RoguePower.RoguesLuck)
+export const SandInTheEyesSection = Content.linkEntity(RogueLevel7EncounterExploitsSection, RoguePower.SandInTheEyes)
+
+export const RogueLevel9DailyExploitsSection = Content.defineSection('classes/rogue-level-9-daily-exploits', {
+  parent: RoguePowersSection,
+  content: { name: 'Level 9 Daily Exploits' },
+})
+
+export const CrimsonEdgeSection = Content.linkEntity(RogueLevel9DailyExploitsSection, RoguePower.CrimsonEdge)
+export const DeadlyPositioningSection = Content.linkEntity(RogueLevel9DailyExploitsSection, RoguePower.DeadlyPositioning)
+export const KnockoutSection = Content.linkEntity(RogueLevel9DailyExploitsSection, RoguePower.Knockout)
+
+export const RogueLevel10UtilityExploitsSection = Content.defineSection('classes/rogue-level-10-utility-exploits', {
+  parent: RoguePowersSection,
+  content: { name: 'Level 10 Utility Exploits' },
+})
+
+export const CertainFreedomSection = Content.linkEntity(RogueLevel10UtilityExploitsSection, RoguePower.CertainFreedom)
+export const CloseQuartersSection = Content.linkEntity(RogueLevel10UtilityExploitsSection, RoguePower.CloseQuarters)
+export const DangerousTheftSection = Content.linkEntity(RogueLevel10UtilityExploitsSection, RoguePower.DangerousTheft)
+export const ShadowStrideSection = Content.linkEntity(RogueLevel10UtilityExploitsSection, RoguePower.ShadowStride)
+
 export const RogueContent: Array<ContentSection> = [
   RogueSection,
   RogueOverviewSection,
@@ -175,4 +215,24 @@ export const RogueContent: Array<ContentSection> = [
   CleverRiposteSection,
   DeepCutSection,
   WalkingWoundedSection,
+  RogueLevel6UtilityExploitsSection,
+  ChameleonSection,
+  IgnobleEscapeSection,
+  MobMentalitySection,
+  NimbleClimbSection,
+  SlipperyMindSection,
+  RogueLevel7EncounterExploitsSection,
+  CloudOfSteelSection,
+  ImperilingStrikeSection,
+  RoguesLuckSection,
+  SandInTheEyesSection,
+  RogueLevel9DailyExploitsSection,
+  CrimsonEdgeSection,
+  DeadlyPositioningSection,
+  KnockoutSection,
+  RogueLevel10UtilityExploitsSection,
+  CertainFreedomSection,
+  CloseQuartersSection,
+  DangerousTheftSection,
+  ShadowStrideSection,
 ]

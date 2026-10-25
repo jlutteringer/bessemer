@@ -11,16 +11,31 @@ import {
   FeatLevel2,
   FeatLevel3,
   FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
   Spell,
   SpellRank1,
   SpellRank2,
   SpellRank3,
+  SpellRank4,
+  SpellRank5,
   WizardFeat,
 } from '@simulacrum/ruleset-pf2e/tag'
-import { Reflex } from '@simulacrum/ruleset-pf2e/characteristic'
+import { Fortitude, Reflex, SpellAttack, SpellDC } from '@simulacrum/ruleset-pf2e/characteristic'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import { Expert } from '@simulacrum/ruleset-pf2e/proficiency'
-import { CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout } from '@simulacrum/ruleset-pf2e/loadout'
+import {
+  CantripLoadout,
+  SpellRank1Loadout,
+  SpellRank2Loadout,
+  SpellRank3Loadout,
+  SpellRank4Loadout,
+  SpellRank5Loadout,
+} from '@simulacrum/ruleset-pf2e/loadout'
 
 export const SelectSpellbookCantrip = CharacterOptions.selectAbilityOption('wizard/spellbook/select-cantrip', {
   name: 'Spellbook Cantrip',
@@ -44,6 +59,16 @@ export const SelectSpellbookRank3OrLower = CharacterOptions.selectAbilityOption(
   filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3], Arcane] },
 })
 
+export const SelectSpellbookRank4OrLower = CharacterOptions.selectAbilityOption('wizard/spellbook/select-rank-4', {
+  name: 'Spellbook Spell (Rank 4 or Lower)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4], Arcane] },
+})
+
+export const SelectSpellbookRank5OrLower = CharacterOptions.selectAbilityOption('wizard/spellbook/select-rank-5', {
+  name: 'Spellbook Spell (Rank 5 or Lower)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4, SpellRank5], Arcane] },
+})
+
 export const SelectWizardFeat1 = CharacterOptions.selectTraitOption('feat/select-wizard-1', {
   name: 'Wizard Feat (Level 1)',
   filter: { tags: [WizardFeat, FeatLevel1] },
@@ -57,6 +82,23 @@ export const SelectWizardFeat2 = CharacterOptions.selectTraitOption('feat/select
 export const SelectWizardFeat4 = CharacterOptions.selectTraitOption('feat/select-wizard-4', {
   name: 'Wizard Feat (Level 4)',
   filter: { tags: [WizardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectWizardFeat6 = CharacterOptions.selectTraitOption('feat/select-wizard-6', {
+  name: 'Wizard Feat (Level 6)',
+  filter: { tags: [WizardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectWizardFeat8 = CharacterOptions.selectTraitOption('feat/select-wizard-8', {
+  name: 'Wizard Feat (Level 8)',
+  filter: { tags: [WizardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectWizardFeat10 = CharacterOptions.selectTraitOption('feat/select-wizard-10', {
+  name: 'Wizard Feat (Level 10)',
+  filter: {
+    tags: [WizardFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const WizardSpellcasting = Traits.defineTrait('wizard/wizard-spellcasting', {
@@ -109,6 +151,33 @@ export const WizardSpellcasting = Traits.defineTrait('wizard/wizard-spellcasting
       Effects.gainCharacterOption(SelectSpellbookRank3OrLower),
       Effects.gainCharacterOption(SelectSpellbookRank3OrLower),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainLoadoutSlot(SpellRank3Loadout),
+      Effects.gainCharacterOption(SelectSpellbookRank3OrLower),
+      Effects.gainCharacterOption(SelectSpellbookRank3OrLower),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectSpellbookRank4OrLower),
+      Effects.gainCharacterOption(SelectSpellbookRank4OrLower),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectSpellbookRank4OrLower),
+      Effects.gainCharacterOption(SelectSpellbookRank4OrLower),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectSpellbookRank5OrLower),
+      Effects.gainCharacterOption(SelectSpellbookRank5OrLower),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectSpellbookRank5OrLower),
+      Effects.gainCharacterOption(SelectSpellbookRank5OrLower),
+    ]),
   ],
 })
 
@@ -144,17 +213,43 @@ export const ReflexExpertise = Traits.defineTrait('wizard/reflex-expertise', {
   effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const ExpertSpellcaster = Traits.defineTrait('wizard/expert-spellcaster', {
+  name: 'Expert Spellcaster',
+  description:
+    'Extended practice of the arcane has improved your capabilities. Your proficiency ranks for [spell attack modifier](characteristic:spell-attack) and [spell DC](characteristic:spell-dc) increase to expert.',
+  tags: [ClassFeature],
+  effects: [
+    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+  ],
+})
+
+export const MagicalFortitude = Traits.defineTrait('wizard/magical-fortitude', {
+  name: 'Magical Fortitude',
+  description:
+    "Magical power has improved your body's resiliency. Your proficiency rank for [Fortitude](characteristic:fortitude) saves increases to expert.",
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
 export const AllWizardFeatureEntities = [
   SelectSpellbookCantrip,
   SelectSpellbookRank1,
   SelectSpellbookRank2OrLower,
   SelectSpellbookRank3OrLower,
+  SelectSpellbookRank4OrLower,
+  SelectSpellbookRank5OrLower,
   SelectWizardFeat1,
   SelectWizardFeat2,
   SelectWizardFeat4,
+  SelectWizardFeat6,
+  SelectWizardFeat8,
+  SelectWizardFeat10,
   WizardSpellcasting,
   ArcaneBond,
   DrainBondedItem,
   WizardFeats,
   ReflexExpertise,
+  ExpertSpellcaster,
+  MagicalFortitude,
 ]

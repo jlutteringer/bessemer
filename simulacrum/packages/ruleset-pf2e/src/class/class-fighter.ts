@@ -2,9 +2,23 @@ import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Trai
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Class, ClassFeature, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FighterFeat } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  Class,
+  ClassFeature,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+  FighterFeat,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { DexterityKeyAttribute, StrengthKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
-import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
+import { CircumstanceBonus, Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import {
   AdvancedWeapons,
   ClassDC,
@@ -15,6 +29,7 @@ import {
   LightArmor,
   MartialWeapons,
   MediumArmor,
+  Initiative,
   Perception,
   Reflex,
   SimpleWeapons,
@@ -23,9 +38,11 @@ import {
   Will,
 } from '@simulacrum/ruleset-pf2e/characteristic'
 import { ShieldBlock } from '@simulacrum/ruleset-pf2e/feat/general-feat'
-import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
+import { Expert, Master, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { SelectTrainedSkill, TrainedAcrobatics, TrainedAthletics } from '@simulacrum/ruleset-pf2e/skill'
 import { AllFighterFeatEntities } from '@simulacrum/ruleset-pf2e/class/fighter-feat'
+import * as FighterFeats from '@simulacrum/ruleset-pf2e/class/fighter-feat'
+import { CombatFlexibilityLoadout } from '@simulacrum/ruleset-pf2e/loadout'
 
 export const SelectFighterKeyAttribute = CharacterOptions.selectTraitOption('fighter/select-key-attribute', {
   name: 'Fighter Key Attribute',
@@ -50,6 +67,23 @@ export const SelectFighterFeat2 = CharacterOptions.selectTraitOption('fighter/se
 export const SelectFighterFeat4 = CharacterOptions.selectTraitOption('fighter/select-feat-4', {
   name: 'Fighter Feat (Level 4)',
   filter: { tags: [FighterFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectFighterFeat6 = CharacterOptions.selectTraitOption('fighter/select-feat-6', {
+  name: 'Fighter Feat (Level 6)',
+  filter: { tags: [FighterFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectFighterFeat8 = CharacterOptions.selectTraitOption('fighter/select-feat-8', {
+  name: 'Fighter Feat (Level 8)',
+  filter: { tags: [FighterFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectFighterFeat10 = CharacterOptions.selectTraitOption('fighter/select-feat-10', {
+  name: 'Fighter Feat (Level 10)',
+  filter: {
+    tags: [FighterFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const FighterWeaponMasteryAxe = Traits.defineTrait('fighter/fighter-weapon-mastery/axe', {
@@ -232,6 +266,83 @@ export const FighterWeaponMastery = Traits.defineTrait('fighter/fighter-weapon-m
   effects: [Effects.gainCharacterOption(SelectFighterWeaponMastery)],
 })
 
+export const BattlefieldSurveyor = Traits.defineTrait('fighter/battlefield-surveyor', {
+  name: 'Battlefield Surveyor',
+  description:
+    'Whether taking stock of an enemy army or simply standing guard, you excel at observing your foes. Your proficiency rank for [Perception](characteristic:perception) increases to master. In addition, you gain a +2 circumstance bonus to Perception checks for initiative, making you faster to react during combat.',
+  tags: [ClassFeature],
+  effects: [
+    Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency })),
+    Effects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(2), { combinability: CircumstanceBonus })),
+  ],
+})
+
+export const FighterWeaponSpecialization = Traits.defineTrait('fighter/weapon-specialization', {
+  name: 'Weapon Specialization',
+  description:
+    "You've learned how to inflict greater injuries with the weapons you know best. You deal 2 additional damage with weapons and unarmed attacks in which you're an expert. This damage increases to 3 if you're a master, and 4 if you're legendary.",
+  tags: [ClassFeature],
+  effects: [],
+})
+
+export const BattleHardened = Traits.defineTrait('fighter/battle-hardened', {
+  name: 'Battle Hardened',
+  description:
+    'Your experience in battle helps protect you against magic and toxins alike. Your proficiency rank for [Fortitude](characteristic:fortitude) saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead.',
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
+export const CombatFlexibility = Traits.defineTrait('fighter/combat-flexibility', {
+  name: 'Combat Flexibility',
+  description:
+    "You can prepare your tactics to suit different situations. When you make your daily preparations, you gain one fighter feat of 8th level or lower that you meet the prerequisites for and don't already have. You can use that feat until your next daily preparations.",
+  tags: [ClassFeature],
+  effects: [
+    Effects.gainLoadoutSlot(CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.CombatAssessmentAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DoubleSliceAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.ExactingStrikeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.PointBlankStanceAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.ReactiveShieldAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.SnaggingStrikeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.SuddenChargeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.ViciousSwingAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.AggressiveBlockAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.AssistingShotAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.BladeBrakeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.BrutishShoveAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.CombatGrabAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DuelingParryAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.IntimidatingStrikeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.LightningSwapAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.LungeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.ReboundingTossAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.SleekRepositionAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.BarrelingChargeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DoubleShotAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DualHandedAssaultAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.PartingShotAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.QuickReversalAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.SlamDownAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.SwipeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.TwinParryAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.AdvantageousAssaultAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DazingBlowAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DisarmingStanceAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.GuardiansDeflectionAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.RevealingStabAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.RicochetStanceAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.ShatterDefensesAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.DuelingRiposteAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.FellingStrikeAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.IncredibleAimAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.MobileShotStanceAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.PositioningAssaultAction, CombatFlexibilityLoadout),
+    Effects.gainAbility(FighterFeats.SuddenLeapAction, CombatFlexibilityLoadout),
+  ],
+})
+
 export const Fighter = Traits.defineTrait('fighter', {
   name: 'Fighter',
   description:
@@ -267,6 +378,17 @@ export const Fighter = Traits.defineTrait('fighter', {
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainTrait(Bravery)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [Effects.gainCharacterOption(SelectFighterFeat4)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainTrait(FighterWeaponMastery)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectFighterFeat6)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainTrait(BattlefieldSurveyor),
+      Effects.gainTrait(FighterWeaponSpecialization),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectFighterFeat8)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainTrait(BattleHardened),
+      Effects.gainTrait(CombatFlexibility),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectFighterFeat10)]),
   ],
 })
 
@@ -277,6 +399,9 @@ export const AllFighterEntities = [
   SelectFighterFeat1,
   SelectFighterFeat2,
   SelectFighterFeat4,
+  SelectFighterFeat6,
+  SelectFighterFeat8,
+  SelectFighterFeat10,
   FighterWeaponMasteryAxe,
   FighterWeaponMasteryBomb,
   FighterWeaponMasteryBow,
@@ -299,5 +424,9 @@ export const AllFighterEntities = [
   FighterShieldBlock,
   Bravery,
   FighterWeaponMastery,
+  BattlefieldSurveyor,
+  FighterWeaponSpecialization,
+  BattleHardened,
+  CombatFlexibility,
   Fighter,
 ]

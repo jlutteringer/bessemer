@@ -4,7 +4,16 @@ import { Expressions } from '@bessemer/cornerstone/expression'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Fortitude, LightArmor, MartialWeapons, MediumArmor } from '@simulacrum/ruleset-pf2e/characteristic'
+import {
+  Fortitude,
+  LightArmor,
+  MartialWeapons,
+  MediumArmor,
+  SimpleWeapons,
+  SpellAttack,
+  SpellDC,
+  UnarmedAttacks,
+} from '@simulacrum/ruleset-pf2e/characteristic'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { ShieldBlock } from '@simulacrum/ruleset-pf2e/feat/general-feat'
@@ -26,6 +35,10 @@ export const CloisteredCleric = Traits.defineTrait('cleric/doctrine/cloistered-c
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
       Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    ]),
   ],
 })
 
@@ -41,6 +54,11 @@ export const Warpriest = Traits.defineTrait('cleric/doctrine/warpriest', {
     Effects.gainTrait(ShieldBlock),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
       Effects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      Effects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      Effects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
     ]),
   ],
 })

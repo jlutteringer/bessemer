@@ -11,6 +11,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   GoblinFeat,
   Heritage,
   NephilimFeat,
@@ -87,6 +88,17 @@ export const SelectGoblinFeat5 = CharacterOptions.selectTraitOption('ancestry/go
   },
 })
 
+export const SelectGoblinFeat9 = CharacterOptions.selectTraitOption('ancestry/goblin/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: {
+    tags: [
+      AncestryFeat,
+      [GoblinFeat, ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat],
+      [FeatLevel1, FeatLevel5, FeatLevel9],
+    ],
+  },
+})
+
 export const SelectGoblinAncestryBoost = CharacterOptions.selectTraitOption('ancestry/goblin/select-boost', {
   name: 'Ancestry Boost',
   filter: { specificOptions: [StrengthAncestryBoost, ConstitutionAncestryBoost, IntelligenceAncestryBoost, WisdomAncestryBoost] },
@@ -108,6 +120,7 @@ export const Goblin = Traits.defineTrait('ancestry/goblin', {
     Effects.gainCharacterOption(SelectGoblinHeritage),
     Effects.gainCharacterOption(SelectGoblinFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectGoblinFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectGoblinFeat9)]),
   ],
 })
 
@@ -250,6 +263,45 @@ export const KneecapAction = Abilities.defineAbility('ancestry/goblin/kneecap/ac
   ],
 })
 
+export const CaveClimber = Traits.defineTrait('ancestry/goblin/cave-climber', {
+  name: 'Cave Climber',
+  description:
+    '*Goblin*\n\nAfter years of clambering through caverns, you can climb easily anywhere you go. You gain a climb [Speed](characteristic:speed) of 10 feet.',
+  tags: [Feat, AncestryFeat, GoblinFeat, FeatLevel9],
+  effects: [],
+})
+
+export const Cling = Traits.defineTrait('ancestry/goblin/cling', {
+  name: 'Cling',
+  description:
+    "*Goblin*\n\n**Requirements** Your last action was a successful [Strike](content:playing-the-game/strike) and you have a free hand\n\nYou hang onto a foe to harry them into submission. If your target moves while you're hanging onto it, you can choose to move with the target. The target is released if you choose not to move with it, at the start of your next turn, or if the target [Escapes](content:playing-the-game/escape). Attempts to Escape from a Cling are made against your [Acrobatics](characteristic:skill/acrobatics) DC and follow the rules on page 416, but they end the Cling instead of the conditions normally ended by the Escape action.\n\n**Special** You can use this action without a free hand if your preceding Strike was made with your jaws or a similar unarmed attack you could use to hang on. The GM determines which unarmed attacks apply. Hanging on in this way prevents you from using that unarmed attack.",
+  tags: [Feat, AncestryFeat, GoblinFeat, FeatLevel9],
+  effects: [],
+})
+
+export const SkitteringScuttle = Traits.defineTrait('ancestry/goblin/skittering-scuttle', {
+  name: 'Skittering Scuttle',
+  description:
+    '*Goblin*\n\n**Prerequisites** [Goblin Scuttle](trait:ancestry/goblin/goblin-scuttle)\n\nYou can scuttle farther and faster when maneuvering alongside allies. When you use Goblin Scuttle, you can [Stride](content:playing-the-game/stride) up to half your [Speed](characteristic:speed) instead of [Stepping](content:playing-the-game/step).',
+  tags: [Feat, AncestryFeat, GoblinFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(GoblinScuttle)],
+  effects: [],
+})
+
+export const ClingAction = Abilities.defineAbility('ancestry/goblin/cling/action', {
+  name: 'Cling',
+  description: '*Goblin*',
+  prerequisites: [Traits.traitPrerequisite(Cling)],
+  actions: [
+    {
+      name: 'Cling',
+      description:
+        "**Requirements** Your last action was a successful [Strike](content:playing-the-game/strike) and you have a free hand\n\nYou hang onto a foe to harry them into submission. If your target moves while you're hanging onto it, you can choose to move with the target. The target is released if you choose not to move with it, at the start of your next turn, or if the target [Escapes](content:playing-the-game/escape). Attempts to Escape from a Cling are made against your [Acrobatics](characteristic:skill/acrobatics) DC and follow the rules on page 416, but they end the Cling instead of the conditions normally ended by the Escape action.\n\n**Special** You can use this action without a free hand if your preceding Strike was made with your jaws or a similar unarmed attack you could use to hang on. The GM determines which unarmed attacks apply. Hanging on in this way prevents you from using that unarmed attack.",
+      action: SingleAction,
+    },
+  ],
+})
+
 export const AllGoblinEntities = [
   CharhideGoblin,
   IrongutGoblin,
@@ -259,6 +311,7 @@ export const AllGoblinEntities = [
   SelectGoblinHeritage,
   SelectGoblinFeat1,
   SelectGoblinFeat5,
+  SelectGoblinFeat9,
   SelectGoblinAncestryBoost,
   Goblin,
   BurnIt,
@@ -276,4 +329,8 @@ export const AllGoblinEntities = [
   KneecapAction,
   LoudSinger,
   Vandal,
+  CaveClimber,
+  Cling,
+  SkitteringScuttle,
+  ClingAction,
 ]

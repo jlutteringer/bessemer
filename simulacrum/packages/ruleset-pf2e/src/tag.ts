@@ -36,12 +36,19 @@ export const FeatLevel2 = Tags.defineTraitTag('feat/level-2', { name: 'Level 2' 
 export const FeatLevel3 = Tags.defineTraitTag('feat/level-3', { name: 'Level 3' })
 export const FeatLevel4 = Tags.defineTraitTag('feat/level-4', { name: 'Level 4' })
 export const FeatLevel5 = Tags.defineTraitTag('feat/level-5', { name: 'Level 5' })
+export const FeatLevel6 = Tags.defineTraitTag('feat/level-6', { name: 'Level 6' })
+export const FeatLevel7 = Tags.defineTraitTag('feat/level-7', { name: 'Level 7' })
+export const FeatLevel8 = Tags.defineTraitTag('feat/level-8', { name: 'Level 8' })
+export const FeatLevel9 = Tags.defineTraitTag('feat/level-9', { name: 'Level 9' })
+export const FeatLevel10 = Tags.defineTraitTag('feat/level-10', { name: 'Level 10' })
 export const Spell = Tags.defineAbilityTag('spell', { name: 'Spell' })
 export const Cantrip = Tags.defineAbilityTag('spell/cantrip', { name: 'Cantrip' })
 export const FocusSpell = Tags.defineAbilityTag('spell/focus', { name: 'Focus Spell' })
 export const SpellRank1 = Tags.defineAbilityTag('spell/rank-1', { name: 'Rank 1' })
 export const SpellRank2 = Tags.defineAbilityTag('spell/rank-2', { name: 'Rank 2' })
 export const SpellRank3 = Tags.defineAbilityTag('spell/rank-3', { name: 'Rank 3' })
+export const SpellRank4 = Tags.defineAbilityTag('spell/rank-4', { name: 'Rank 4' })
+export const SpellRank5 = Tags.defineAbilityTag('spell/rank-5', { name: 'Rank 5' })
 export const Arcane = Tags.defineAbilityTag('spell/tradition/arcane', { name: 'Arcane' })
 export const Divine = Tags.defineAbilityTag('spell/tradition/divine', { name: 'Divine' })
 export const Occult = Tags.defineAbilityTag('spell/tradition/occult', { name: 'Occult' })
@@ -53,6 +60,7 @@ export const Level1Boost = Tags.defineTraitTag('attribute/level-1-boost', { name
 export const Level5Boost = Tags.defineTraitTag('attribute/level-5-boost', { name: 'Level 5 Boost' })
 export const TrainedSkill = Tags.defineTraitTag('skill/trained', { name: 'Trained Skill' })
 export const ExpertSkill = Tags.defineTraitTag('skill/expert', { name: 'Expert Skill' })
+export const MasterSkill = Tags.defineTraitTag('skill/master', { name: 'Master Skill' })
 export const Lore = Tags.defineTraitTag('skill/lore', { name: 'Lore' })
 export const Armor = Tags.defineAbilityTag('armor', { name: 'Armor' })
 export const Shield = Tags.defineAbilityTag('shield', { name: 'Shield' })
@@ -96,12 +104,19 @@ export const AllTags = [
   FeatLevel3,
   FeatLevel4,
   FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
   Spell,
   Cantrip,
   FocusSpell,
   SpellRank1,
   SpellRank2,
   SpellRank3,
+  SpellRank4,
+  SpellRank5,
   Arcane,
   Divine,
   Occult,
@@ -113,6 +128,7 @@ export const AllTags = [
   Level5Boost,
   TrainedSkill,
   ExpertSkill,
+  MasterSkill,
   Lore,
   Armor,
   Shield,

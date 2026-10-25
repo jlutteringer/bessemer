@@ -278,7 +278,22 @@ export const RitualsByLevelSection = Content.defineSection('rituals/rituals-by-l
 | 4 | [Travelers’ Feast](content:rituals/travelers-feast) | Nature |
 | 5 | [Brew Potion](content:rituals/brew-potion) | Arcana or Religion |
 | 5 | [Hallucinatory Item](content:rituals/hallucinatory-item) | Arcana |
-| 5 | [Magic Circle](content:rituals/magic-circle) | Arcana |`,
+| 5 | [Magic Circle](content:rituals/magic-circle) | Arcana |
+| 6 | [Commune with Nature](content:rituals/commune-with-nature) | Nature |
+| 6 | [Cure Disease](content:rituals/cure-disease) | Heal |
+| 6 | [Discern Lies](content:rituals/discern-lies) | Religion |
+| 6 | [Disenchant Magic Item](content:rituals/disenchant-magic-item) | Arcana |
+| 6 | [Leomund’s Secret Chest](content:rituals/leomunds-secret-chest) | Arcana |
+| 6 | [Phantom Steed](content:rituals/phantom-steed) | Arcana |
+| 6 | [Sending](content:rituals/sending) | Arcana |
+| 6 | [Speak with Dead](content:rituals/speak-with-dead) | Religion |
+| 8 | [Linked Portal](content:rituals/linked-portal) | Arcana |
+| 8 | [Raise Dead](content:rituals/raise-dead) | Heal |
+| 8 | [Remove Affliction](content:rituals/remove-affliction) | Heal |
+| 8 | [Water Breathing](content:rituals/water-breathing) | Arcana or Nature |
+| 8 | [Wizard’s Sight](content:rituals/wizards-sight) | Arcana |
+| 10 | [Consult Mystic Sages](content:rituals/consult-mystic-sages) | Religion |
+| 10 | [Detect Object](content:rituals/detect-object) | Arcana |`,
   },
 })
 
@@ -375,6 +390,42 @@ You create a potion or an elixir (see [page 255](content:equipment/potions)) of 
   },
 })
 
+export const CommuneWithNatureSection = Content.defineSection('rituals/commune-with-nature', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Commune with Nature',
+    description: `_By communing with the spirits of the land, you know exactly where to find food, shelter, or a clue to the location of the thing you seek._
+
+**Level:** 6
+
+**Category:** Divination
+
+**Time:** 30 minutes
+
+**Duration:** 10 minutes
+
+**Component Cost:** 140 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Nature](characteristic:skill/nature)
+
+By communing with primal spirits of nature, you can learn a number of facts about your immediate environs (within 1 mile of you).
+
+You can ask a number of questions, based on the result of your Nature check, about the terrain features, plants, minerals, bodies of water, creatures, and other aspects of your surroundings.
+
+| Nature Check Result | Number of Questions |
+| :--- | :--- |
+| 9 or lower | One |
+| 10–19 | Two |
+| 20–29 | Three |
+| 30–39 | Four |
+| 40 or higher | Five |
+
+The primal spirits you communicate with are honest but sometimes can be elusive. Most questions are answered with a yes or a no. Rarely do the spirits elaborate further, and when they do, their response is cryptic.`,
+  },
+})
+
 export const ComprehendLanguageSection = Content.defineSection('rituals/comprehend-language', {
   parent: RitualDescriptionsSection,
   content: {
@@ -405,6 +456,108 @@ Using this ritual on a language you have both heard and seen as a piece of writi
   },
 })
 
+export const ConsultMysticSagesSection = Content.defineSection('rituals/consult-mystic-sages', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Consult Mystic Sages',
+    description: `_You enter a trance in which you commune with the spirits of long-dead sages and otherworldly loremasters, seeking answers to your esoteric questions._
+
+**Level:** 10
+
+**Category:** Divination
+
+**Time:** 30 minutes
+
+**Duration:** 10 minutes
+
+**Component Cost:** 400 gp
+
+**Market Price:** 1,000 gp
+
+**Key Skill:** [Religion](characteristic:skill/religion)
+
+You ask a single question of mysterious, extraplanar presences about matters beyond your ken. Make a Religion check with a +10 bonus instead of an [Arcana](characteristic:skill/arcana) or a [History](characteristic:skill/history) check to uncover a clue, remember a bit of lore, or otherwise gain information about the world around you.
+
+The ritual grants you a single piece of information. That information can take the form of a word, a name, a phrase, or even a brief story, depending on what exactly you’re looking for. You can learn the name of the usurper who ended the Katerran Dynasty a thousand years ago, the burial rites of the Crimson Wolf clan, or the weaknesses of the shadow assassins who have been dogging your steps.
+
+The ritual can’t uncover information beyond the ken of the most learned sages. It’s of no use if you’re trying to find the magic word that unlocks the vampire’s crypt, because only the vampire knows the word. Nor can the ritual tell you definitively where great stores of treasure are, but the mystic sages could tell you where a specific empress kept her treasury in ancient times or whether the treasure was looted when her empire fell.`,
+  },
+})
+
+export const CureDiseaseSection = Content.defineSection('rituals/cure-disease', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Cure Disease',
+    description: `_Even the most horrid affliction disappears in response to your healing touch._
+
+**Level:** 6
+
+**Category:** Restoration
+
+**Time:** 10 minutes
+
+**Duration:** Instantaneous
+
+**Component Cost:** 150 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Heal](characteristic:skill/heal)
+
+The Cure Disease ritual wipes away a single disease afflicting the subject, whether the disease is active or still incubating. The subject is completely cured and loses any negative side effects and symptoms of the disease.
+
+This ritual is physically taxing to the recipient; if used on an injured character, it can even kill him or her. Upon completing this ritual, make a Heal check, using the level of the disease as a penalty to this check. The result indicates the amount of damage the character takes. Assuming the character survives, this damage can be healed normally.
+
+| Heal Check Result | Effect on Target |
+| :--- | :--- |
+| 0 or lower | Death |
+| 1–9 | Damage equal to the target’s maximum [hit points](characteristic:hit-points) |
+| 10–19 | Damage equal to one-half of the target’s maximum hit points |
+| 20–29 | Damage equal to one-quarter of the target’s maximum hit points |
+| 30 or higher | No damage |
+
+If you know that your subject is suffering from multiple diseases, you must choose which one this ritual will cure. Otherwise, the ritual affects whichever single disease you knew about. You learn the disease level when you begin the ritual, and at that point you can choose not to continue, without expending any components.`,
+  },
+})
+
+export const DetectObjectSection = Content.defineSection('rituals/detect-object', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Detect Object',
+    description: `_Lifting your finger, you point confidently at a blank stone wall. Twenty feet past it, you can sense the prince’s stolen scepter._
+
+**Level:** 10
+
+**Category:** Exploration
+
+**Time:** 10 minutes
+
+**Duration:** 5 minutes
+
+**Component Cost:** 400 gp
+
+**Market Price:** 1,000 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana)
+
+Name an object. For the duration of the ritual’s effect, you can detect the direction and distance to the nearest example of that object, as long as one is within the range defined by your Arcana check result. When attempting to locate a specific object, apply the modifiers below.
+
+| Specific Object Is . . . | Modifier |
+| :--- | :--- |
+| Very familiar to you | 0 |
+| Seen once by you | –5 |
+| Described to you | –10 |
+
+| Arcana Check Result | Range |
+| :--- | :--- |
+| 9 or lower | 5 squares |
+| 10–19 | 10 squares |
+| 20–29 | 30 squares |
+| 30–39 | 60 squares |
+| 40 or higher | 100 squares |`,
+  },
+})
+
 export const DetectSecretDoorsSection = Content.defineSection('rituals/detect-secret-doors', {
   parent: RitualDescriptionsSection,
   content: {
@@ -426,6 +579,54 @@ export const DetectSecretDoorsSection = Content.defineSection('rituals/detect-se
 **Key Skill:** [Arcana](characteristic:skill/arcana)
 
 Make an Arcana check. Use the result as a bonus to a [Perception](characteristic:skill/perception) check you immediately make to find any secret or hidden doors in your line of sight. If anyone aided you while performing this ritual, they can’t help you make the resulting Perception check.`,
+  },
+})
+
+export const DiscernLiesSection = Content.defineSection('rituals/discern-lies', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Discern Lies',
+    description: `_His lies quiver through the ether like water thrown on a hot griddle. The suspect doesn’t even know he’s giving off this signal, but to you it’s clear as day._
+
+**Level:** 6
+
+**Category:** Divination
+
+**Time:** 10 minutes
+
+**Duration:** 5 minutes
+
+**Component Cost:** 140 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Religion](characteristic:skill/religion)
+
+Make a Religion check. Use the result as a bonus to your [Insight](characteristic:skill/insight) checks to discern any untruths spoken in your presence during the duration. If anyone aided you while performing this ritual, they can’t help you make the resulting Insight checks.`,
+  },
+})
+
+export const DisenchantMagicItemSection = Content.defineSection('rituals/disenchant-magic-item', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Disenchant Magic Item',
+    description: `_The item ignites in a brief flash of brilliant light, then crumbles to golden dust in your hands._
+
+**Level:** 6
+
+**Category:** Creation
+
+**Time:** 1 hour
+
+**Duration:** Instantaneous
+
+**Component Cost:** 25 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana) (no check)
+
+When you finish performing this ritual, you touch a magic item and destroy it, turning it into a quantity of residuum valued at one-fifth of the item’s price. The item must be your level or lower and must be something that can be created using the [Enchant Magic Item](content:rituals/enchant-magic-item) ritual.`,
   },
 })
 
@@ -646,6 +847,76 @@ If you use this ritual successfully against a portal protected by Arcane Lock, y
   },
 })
 
+export const LeomundsSecretChestSection = Content.defineSection('rituals/leomunds-secret-chest', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Leomund’s Secret Chest',
+    description: `_An ornate iron-and-silver chest fades into view in front of you._
+
+**Level:** 6
+
+**Category:** Exploration
+
+**Time:** 10 minutes
+
+**Duration:** Until dismissed
+
+**Component Cost:** 140 gp, plus a focus worth 200 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana) (no check)
+
+As part of mastering this ritual, you must create or commission a chest that bears arcane designs, and an object with personal meaning for you must be built into the chest’s frame. After the chest is ready, you can store it anywhere you like. Performing this ritual then summons the chest from wherever you left it to wherever you are, along with all its contents. You can remove or add objects to the chest (subject to its natural size limitations) when it is present. Any time after summoning it, you can dismiss it back to its previous location.
+
+Explorers use this ritual to ensure they have enough supplies or to cart treasure away from a dungeon more easily. If the chest is ever lost or destroyed, you must create a new one before you can perform this ritual again.
+
+**Focus:** A chest worth at least 200 gp.`,
+  },
+})
+
+export const LinkedPortalSection = Content.defineSection('rituals/linked-portal', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Linked Portal',
+    description: `_You create a glowing circle of sigils on the ground nearby, and you can see a hazy vision of a far-off city. You and your friends step into the circle, and you’re instantly whisked away to that place._
+
+**Level:** 8
+
+**Category:** Travel
+
+**Time:** 10 minutes
+
+**Duration:** Special
+
+**Component Cost:** 135 gp (see text)
+
+**Market Price:** 680 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana)
+
+You create a shortcut across the fabric of the world, linking your location with a permanent teleportation circle somewhere else on the same plane. With a step, you can move from one circle to the other. As part of performing the ritual, you must sketch out a 10-foot-diameter circle in various rare chalks and inks. This temporary teleportation circle must exactly match the permanent teleportation circle at your destination. It disappears at the end of the portal’s duration.
+
+At the completion of this ritual, make an Arcana check. The result determines the duration that the portal remains open.
+
+| Arcana Check Result | Portal Duration |
+| :--- | :--- |
+| 19 or lower | 1 round |
+| 20–39 | 3 rounds |
+| 40 or higher | 5 rounds |
+
+You can use a permanent teleportation circle as the origin point of this ritual, making minor temporary modifications as part of the ritual. Doing this reduces the cost to 50 gp of reagents and grants you a +5 bonus to your Arcana check.
+
+While the portal is open, any creature that enters the circle at the origin point instantly appears at the other location, along with anything the creature holds or carries. The creature can even finish the rest of its move. Any number of creatures of any size can use an open portal; the only limitation is the number that can reach the circle before it ends.
+
+Anyone standing in the vicinity of either end of the portal can see a haze-infused vision of the teleportation circle at the other end of the connection, as well as the environment 60 feet beyond it. Effectively, everything at the destination within this area of visibility has [concealment](content:combat/concealment), and the area beyond is completely fogged out (Naturally, portals that last longer give you a better opportunity to study the place you’re going to before you step into the circle.). Environmental effects at one end of the connection don’t affect the other end.
+
+Most major temples, important wizards’ guilds, and large cities have permanent teleportation circles, each of which has a unique set of magic sigils etched or inlaid into the ground. The exact sequence of sigils matters, because you’ve got to match it if you want to open a portal leading there. The sigils aren’t any more complex than remembering a string of letters and numbers. You can use Linked Portal to any permanent teleportation circle whose sequence of sigils you know. When you learn this ritual, your DM will tell you at least two such sequences. In your travels and research, you’ll undoubtedly learn more.
+
+This ritual can take you anywhere in the world, but it can’t take you to other planes. Sufficiently powerful warding magic, such as the Forbiddance ritual, can block a teleportation ritual. If the location is warded in such a manner, you learn that as soon as you begin the ritual, so you can interrupt the ritual and not expend any components.`,
+  },
+})
+
 export const MagicCircleSection = Content.defineSection('rituals/magic-circle', {
   parent: RitualDescriptionsSection,
   content: {
@@ -720,6 +991,109 @@ A single object that can fit in a 10-foot cube is completely repaired. The compo
   },
 })
 
+export const PhantomSteedSection = Content.defineSection('rituals/phantom-steed', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Phantom Steed',
+    description: `_You conjure black, ghostly horses. They sniff the air and stamp impatiently as if ready to ride like the wind. Their hooves, manes, and tails trail off into mist._
+
+**Level:** 6
+
+**Category:** Exploration
+
+**Time:** 10 minutes
+
+**Duration:** 12 hours
+
+**Component Cost:** 70 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana)
+
+This ritual conjures forth up to eight horselike creatures. Each one is Large and can be ridden by you or any other character you designate during the ritual.
+
+Your Arcana check determines the [speed](characteristic:speed) of the steeds you conjure and whether they have any special movement capabilities. The steeds have the special movement capabilities associated with your check result and all lower results.
+
+| Arcana Check Result | Speed | Special Movement |
+| :--- | :--- | :--- |
+| 19 or lower | 10 | None |
+| 20–29 | 12 | Ignore difficult terrain |
+| 30–39 | 15 | Move on water as if it were solid ground |
+| 40 or higher | 20 | Fly (up to 10 squares above ground) |
+
+The steeds cannot attack or affect other creatures in any way other than to serve as mounts. Each steed’s defense scores are equal to its rider’s (or yours, if the steed has no rider). A phantom steed is immune to any effect other than damage.
+
+A steed created by this ritual lasts for 12 hours or until it takes any damage. When the ritual ends, or when a steed is destroyed, the steed fades into nothingness and its rider lands on his or her feet in the steed’s space. If a steed is flying when it disappears, the rider descends safely to the ground, landing at the start of his or her next turn.`,
+  },
+})
+
+export const RaiseDeadSection = Content.defineSection('rituals/raise-dead', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Raise Dead',
+    description: `_You bend over the body of your slain comrade, applying sacramental unguents. Finally his eyes flutter open as he is restored to life._
+
+**Level:** 8
+
+**Category:** Restoration
+
+**Time:** 8 hours
+
+**Duration:** Instantaneous
+
+**Component Cost:** 500 gp
+
+**Market Price:** 680 gp
+
+**Key Skill:** [Heal](characteristic:skill/heal) (no check)
+
+To perform the Raise Dead ritual, you must have a part of the corpse of a creature that died no more than 30 days ago. You apply mystic salves, then pray to the gods to restore the dead creature’s life. The subject returns to life as if he or she had taken an [extended rest](content:adventuring/extended-rest). The subject is freed of any temporary conditions suffered at death, but permanent conditions remain.
+
+The subject returns with a death penalty: –1 to all attack rolls, skill checks, [saving throws](content:combat/saving-throws), and ability checks. This death penalty fades after the subject reaches three [milestones](content:adventuring/milestones).
+
+You can’t restore life to a creature that has been [petrified](content:combat/petrified) or to a creature that died of old age.
+
+The subject’s soul must be free and willing to return to life. Some magical effects trap the soul and thus prevent Raise Dead from working, and the gods can intervene to prevent a soul from journeying back to the realm of the living. In all cases, death is less inclined to return paragon and epic heroes; the component cost is 5,000 gp for paragon tier characters and 50,000 gp for epic tier characters.`,
+  },
+})
+
+export const RemoveAfflictionSection = Content.defineSection('rituals/remove-affliction', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Remove Affliction',
+    description: `_You undo a curse, enchantment, or madness that afflicts your subject._
+
+**Level:** 8
+
+**Category:** Restoration
+
+**Time:** 1 hour
+
+**Duration:** Instantaneous
+
+**Component Cost:** 250 gp
+
+**Market Price:** 680 gp
+
+**Key Skill:** [Heal](characteristic:skill/heal)
+
+Remove Affliction wipes away a single enduring effect afflicting the subject. The ritual can remove curses, effects such as charm or domination, and fear, confusion, insanity, polymorph, and petrification effects. All effects of the curse or other effect end.
+
+This ritual is physically taxing to the recipient; if used on an injured character, it can even kill him or her. Upon completing this ritual, make a Heal check, using the level of the effect you are trying to remove (or the level of the creature that caused the effect) as a penalty to this check. The result indicates the amount of damage the character takes. Assuming the character survives, this damage can be healed normally.
+
+| Heal Check Result | Effect on Target |
+| :--- | :--- |
+| 0 or lower | Death |
+| 1–9 | Damage equal to the target’s maximum [hit points](characteristic:hit-points) |
+| 10–19 | Damage equal to one-half of the target’s maximum hit points |
+| 20–29 | Damage equal to one-quarter of the target’s maximum hit points |
+| 30 or higher | No damage |
+
+You can use this ritual on an unwilling subject (usually, a former ally who is under some enemy’s influence), but you will have to restrain someone unwilling to undergo the ritual. If you know that your subject is suffering from multiple enduring effects, you must choose which one this ritual will remove. Otherwise, it affects whichever one affliction you knew about. You learn the affliction level when you begin the ritual, and you can choose not to continue, without expending any components (for example, if you determine the affliction is too powerful for you to remove).`,
+  },
+})
+
 export const SecretPageSection = Content.defineSection('rituals/secret-page', {
   parent: RitualDescriptionsSection,
   content: {
@@ -746,6 +1120,38 @@ When you perform the ritual, make an Arcana check, with a +5 bonus. The result i
   },
 })
 
+export const SendingSection = Content.defineSection('rituals/sending', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Sending',
+    description: `_You can see him in your mind’s eye, clear as the first time you met him. Your magic lets him know that you’re safe, despite encountering the followers of Thoon, and he reassures you that the red dragon caused him no harm._
+
+**Level:** 6
+
+**Category:** Exploration
+
+**Time:** 10 minutes
+
+**Duration:** Instantaneous
+
+**Component Cost:** 50 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana)
+
+You convey a mental message of up to 25 words to a person you know. If the target is within range, he or she receives the message mentally and can respond likewise. The ritual’s maximum range is determined by your Arcana check result.
+
+| Arcana Check Result | Maximum Range |
+| :--- | :--- |
+| 9 or lower | 10 miles |
+| 10–19 | 100 miles |
+| 20–29 | 500 miles |
+| 30–39 | 1,000 miles |
+| 40 or higher | Anywhere on the same plane |`,
+  },
+})
+
 export const SilenceSection = Content.defineSection('rituals/silence', {
   parent: RitualDescriptionsSection,
   content: {
@@ -767,6 +1173,41 @@ export const SilenceSection = Content.defineSection('rituals/silence', {
 **Key Skill:** [Arcana](characteristic:skill/arcana) (no check)
 
 You ward a single room (or a burst 4 area), against eavesdropping. Creatures attempting to listen to something in the warded area from outside the area take a –10 penalty to their [Perception](characteristic:skill/perception) checks.`,
+  },
+})
+
+export const SpeakWithDeadSection = Content.defineSection('rituals/speak-with-dead', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Speak with Dead',
+    description: `_At your prompt, the corpse reveals its secrets to you._
+
+**Level:** 6
+
+**Category:** Exploration
+
+**Time:** 10 minutes
+
+**Duration:** 10 minutes
+
+**Component Cost:** 140 gp
+
+**Market Price:** 360 gp
+
+**Key Skill:** [Religion](characteristic:skill/religion)
+
+You ask the corpse of an intelligent creature questions and receive answers. The corpse knows what the creature knew in life, what has occurred near the corpse, and no more; the spirit has (usually) moved on to another plane and is not present in the body.
+
+Your Religion check result determines the number of questions you can ask.
+
+| Religion Check Result | Number of Questions |
+| :--- | :--- |
+| 9 or lower | Zero |
+| 10–19 | One |
+| 20–29 | Two |
+| 30 or higher | Three |
+
+At the DM’s option, questioning the departed spirit might require a [skill challenge](content:skills/skill-challenges) using [Diplomacy](characteristic:skill/diplomacy).`,
   },
 })
 
@@ -829,6 +1270,42 @@ Any food or water created but uneaten disappears at the end of the duration.`,
   },
 })
 
+export const WaterBreathingSection = Content.defineSection('rituals/water-breathing', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Water Breathing',
+    description: `_The cool water fills your lungs, yet you find yourself able to breathe and speak as well as you can on land._
+
+**Level:** 8
+
+**Category:** Exploration
+
+**Time:** 10 minutes
+
+**Duration:** Special
+
+**Component Cost:** 135 gp
+
+**Market Price:** 680 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana) or [Nature](characteristic:skill/nature)
+
+When you perform this ritual, you can designate up to eight participants (including yourself if you wish) who breathe water as easily as they breathe air. Furthermore, they can speak normally underwater.
+
+Water Breathing doesn’t change your ability to breathe air. It doesn’t confer a greater swim speed or the ability to fight underwater unhindered. It does protect any gear you and the participants carry, such as books and scrolls, from water damage.
+
+Your check result determines the duration of the effect.
+
+| Arcana Check Result | Duration |
+| :--- | :--- |
+| 14 or lower | 1 hour |
+| 15–19 | 2 hours |
+| 20–24 | 4 hours |
+| 25–29 | 8 hours |
+| 30 or higher | 24 hours |`,
+  },
+})
+
 export const WaterWalkSection = Content.defineSection('rituals/water-walk', {
   parent: RitualDescriptionsSection,
   content: {
@@ -850,6 +1327,46 @@ export const WaterWalkSection = Content.defineSection('rituals/water-walk', {
 **Key Skill:** [Nature](characteristic:skill/nature) (no check)
 
 You or an ally can move on water as if it were solid ground. Rapids or choppy seas are considered difficult terrain. The target of this ritual can end its benefits as a [free action](action-type:free-action). The target can immerse itself in water or swim underwater if desired without needing to end the ritual.`,
+  },
+})
+
+export const WizardsSightSection = Content.defineSection('rituals/wizards-sight', {
+  parent: RitualDescriptionsSection,
+  content: {
+    name: 'Wizard’s Sight',
+    description: `_You extend your senses beyond the door, looking and listening inside as if you were there._
+
+**Level:** 8
+
+**Category:** Scrying
+
+**Time:** 10 minutes
+
+**Duration:** Special
+
+**Component Cost:** 270 gp, plus a focus worth 200 gp
+
+**Market Price:** 680 gp
+
+**Key Skill:** [Arcana](characteristic:skill/arcana)
+
+When you perform a Wizard’s Sight ritual, choose a square within 20 squares of you, even a square that you can’t see or don’t have line of effect to. You create a magical sensor in that square. You can see and hear as if you were standing there, and you have darkvision through the sensor. Use the [Perception](characteristic:skill/perception) skill to determine whether you hear quiet sounds or notice unobtrusive things while observing an area through the sensor.
+
+Your Arcana check determines how long the sensor lasts.
+
+| Arcana Check Result | Duration |
+| :--- | :--- |
+| 19 or lower | 1 round |
+| 20–24 | 2 rounds |
+| 25–29 | 3 rounds |
+| 30–39 | 4 rounds |
+| 40 or higher | 5 rounds |
+
+The ritual creates a scrying sensor—a shimmer in the air—that watchful creatures might notice. Creatures must succeed on a Perception check with a DC equal to 10 + your level to notice the sensor. They can’t disrupt or interact with the sensor in any way.
+
+Sufficiently powerful warding magic, such as the Forbiddance ritual, can block Wizard’s Sight. If the location is warded in such a manner, you learn that as soon as you begin the ritual, so you can interrupt the ritual and not expend any components.
+
+**Focus:** A mirror or a crystal ball worth at least 200 gp. The focus conveys what you see and hear.`,
   },
 })
 
@@ -879,8 +1396,14 @@ export const RitualsContent: Array<ContentSection> = [
   AnimalMessengerSection,
   ArcaneLockSection,
   BrewPotionSection,
+  CommuneWithNatureSection,
   ComprehendLanguageSection,
+  ConsultMysticSagesSection,
+  CureDiseaseSection,
+  DetectObjectSection,
   DetectSecretDoorsSection,
+  DiscernLiesSection,
+  DisenchantMagicItemSection,
   EnchantMagicItemSection,
   EndureElementsSection,
   EyeOfAlarmSection,
@@ -888,12 +1411,21 @@ export const RitualsContent: Array<ContentSection> = [
   HallucinatoryItemSection,
   HandOfFateSection,
   KnockSection,
+  LeomundsSecretChestSection,
+  LinkedPortalSection,
   MagicCircleSection,
   MagicMouthSection,
   MakeWholeSection,
+  PhantomSteedSection,
+  RaiseDeadSection,
+  RemoveAfflictionSection,
   SecretPageSection,
+  SendingSection,
   SilenceSection,
+  SpeakWithDeadSection,
   TensersFloatingDiskSection,
   TravelersFeastSection,
+  WaterBreathingSection,
   WaterWalkSection,
+  WizardsSightSection,
 ]

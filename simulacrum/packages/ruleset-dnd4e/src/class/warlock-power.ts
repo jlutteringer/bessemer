@@ -9,11 +9,15 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Warlock } from '@simulacrum/ruleset-dnd4e/class/class-warlock'
 
-// Generated from the Player's Handbook Warlock powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Warlock powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal. Encounter powers come back after a short rest, daily powers after an extended rest.
 
 export const DiabolicGrasp = Abilities.defineAbility('warlock/power/diabolic-grasp', {
@@ -350,6 +354,272 @@ export const HungerOfHadar = Abilities.defineAbility('warlock/power/hunger-of-ha
   costs: [{ cost: 1 }],
 })
 
+export const DarkOnesOwnLuck = Abilities.defineAbility('warlock/power/dark-ones-own-luck', {
+  name: "Dark One's Own Luck",
+  description: '*Refusing the result that fate has decreed for you, you invoke stars of uncertainty and try to rewrite what has been written.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Star) Utility 6**\n\n**Daily** ✦ Arcane\n\n**Free Action** · Personal\n\n**Trigger:** You make a roll you dislike\n\n**Effect:** Reroll the attack roll, skill check, ability check, or saving throw, using the higher of the two results.'
+    ),
+  ],
+  actions: [{ name: "Dark One's Own Luck", action: ActionTypes.FreeAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const FeySwitch = Abilities.defineAbility('warlock/power/fey-switch', {
+  name: 'Fey Switch',
+  description:
+    '*You step through the veils of the Feywild to the place where an ally stands and return to the world in that spot. Your ally is instantly whisked back to the place you started from.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Fey) Utility 6**\n\n**Encounter** ✦ Arcane, Teleportation\n\n**Move Action** · Ranged 10\n\n**Targets:** You and one willing ally\n\n**Effect:** You and your ally trade spaces.'
+    ),
+  ],
+  actions: [{ name: 'Fey Switch', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ShroudOfBlackSteel = Abilities.defineAbility('warlock/power/shroud-of-black-steel', {
+  name: 'Shroud of Black Steel',
+  description:
+    '*Invoking the power of your dark patrons, you transform your skin into living steel, blackened and hard yet still supple enough to move. Your quickness suffers a bit, but you are much tougher and more resilient.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Infernal) Utility 6**\n\n**Daily** ✦ Arcane, Polymorph\n\n**Minor Action** · Personal\n\n**Effect:** You change your skin into living steel. You gain a +2 power bonus to AC and Fortitude defense but take a –2 penalty to speed until the end of the encounter. You can end this effect as a minor action.'
+    ),
+  ],
+  actions: [{ name: 'Shroud of Black Steel', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SpiderClimb = Abilities.defineAbility('warlock/power/spider-climb', {
+  name: 'Spider Climb',
+  description: '*You bestow on yourself the ability to cling to almost any surface and climb as easily as an insect.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Infernal) Utility 6**\n\n**Encounter** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** On this move action, you move with a climb speed equal to your speed.'
+    ),
+  ],
+  actions: [{ name: 'Spider Climb', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const HowlOfDoom = Abilities.defineAbility('warlock/power/howl-of-doom', {
+  name: 'Howl of Doom',
+  description:
+    '*You unleash a devastating shout that cracks stone and pulps flesh. Supernatural terror goes with your mighty blast, and your foes are driven back in fright.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Infernal) Attack 7**\n\n**Encounter** ✦ Arcane, Fear, Implement, Thunder\n\n**Standard Action** · Close blast 3\n\n**Target:** Each creature in blast\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 2d6 + Constitution modifier thunder damage, and you push the target 2 squares.\n\n**Infernal Pact:** You push the target a number of squares equal to 1 + your Intelligence modifier.'
+    ),
+  ],
+  actions: [{ name: 'Howl of Doom', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const InfernalMoonCurse = Abilities.defineAbility('warlock/power/infernal-moon-curse', {
+  name: 'Infernal Moon Curse',
+  description:
+    '*The shimmer of pale, ghostly silver envelops your foe and lifts him up into the air. Its sinister radiance seeps into his body, a strange and deadly poison.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Infernal) Attack 7**\n\n**Encounter** ✦ Arcane, Implement, Poison\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 2d8 + Constitution modifier poison damage, and the target is held immobilized 5 feet off the ground until the end of your next turn.\n\n**Infernal Pact:** You gain a bonus to the damage roll equal to your Intelligence modifier.'
+    ),
+  ],
+  actions: [{ name: 'Infernal Moon Curse', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const MireTheMind = Abilities.defineAbility('warlock/power/mire-the-mind', {
+  name: 'Mire the Mind',
+  description: "*You assail your foe's mind with unreal images until he can see nothing else.*",
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Fey) Attack 7**\n\n**Encounter** ✦ Arcane, Illusion, Implement, Psychic\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 1d10 + Charisma modifier psychic damage, and you and all of your allies in range are invisible to the target until the end of your next turn.\n\n**Fey Pact:** You gain a power bonus to Stealth checks equal to your Intelligence modifier until the end of the encounter.'
+    ),
+  ],
+  actions: [{ name: 'Mire the Mind', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SignOfIllOmen = Abilities.defineAbility('warlock/power/sign-of-ill-omen', {
+  name: 'Sign of Ill Omen',
+  description:
+    '*You sketch a glowing rune in the air with your fingertip, invoking misfortune upon your enemy. Lines of eldritch power slash across his body as you draw your sign, and fate itself turns against him for a short time.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Star) Attack 7**\n\n**Encounter** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d6 + Charisma modifier damage, and the target must roll twice for its next attack and use the lower of the two rolls.\n\n**Star Pact:** When the target rolls twice, it takes a penalty to both rolls equal to your Intelligence modifier.'
+    ),
+  ],
+  actions: [{ name: 'Sign of Ill Omen', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CurseOfTheBlackFrost = Abilities.defineAbility('warlock/power/curse-of-the-black-frost', {
+  name: 'Curse of the Black Frost',
+  description:
+    '*You create a fence of sharp frost-needles around your foe. They slowly freeze him, and if he moves or touches them, they grow longer and sharper.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Fey) Attack 9**\n\n**Daily** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Reflex\n\n**Hit:** 2d8 + Charisma modifier cold damage.\n\n**Effect:** If the target moves for any reason, it takes 1d8 cold damage (save ends). If the target saves, you cannot sustain this power.\n\n**Sustain Minor:** The target takes 2d8 cold damage.'
+    ),
+  ],
+  actions: [{ name: 'Curse of the Black Frost', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const IronSpikeOfDis = Abilities.defineAbility('warlock/power/iron-spike-of-dis', {
+  name: 'Iron Spike of Dis',
+  description:
+    '*You call up a spear of red iron from the infernal regions and hurl it at your foe. Transfixing clothing, armor, flesh, or skin, it nails him to the spot where he stands.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Infernal) Attack 9**\n\n**Daily** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Reflex\n\n**Hit:** 3d10 + Constitution modifier damage, and the target is immobilized (save ends).\n\n**Miss:** Half damage, and the target is not immobilized.'
+    ),
+  ],
+  actions: [{ name: 'Iron Spike of Dis', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SummonsOfKhirad = Abilities.defineAbility('warlock/power/summons-of-khirad', {
+  name: 'Summons of Khirad',
+  description:
+    "*A pale blue flame springs up from your brow as you invoke Khirad, a star of dire portent. Your enemy's mind burns with Khirad's flame, and you teleport him where you wish.*",
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Star) Attack 9**\n\n**Daily** ✦ Arcane, Implement, Psychic, Teleportation\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Will\n\n**Hit:** 2d10 + Constitution modifier psychic damage, and you teleport the target to an unoccupied square within 3 squares of you.\n\n**Sustain Minor:** Make a Constitution vs. Will attack against the target. On a hit, you teleport the target to an unoccupied square within 3 squares of you. On a miss, the effect ends.'
+    ),
+  ],
+  actions: [{ name: 'Summons of Khirad', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ThiefOfFiveFates = Abilities.defineAbility('warlock/power/thief-of-five-fates', {
+  name: 'Thief of Five Fates',
+  description:
+    "*You bind your target's fortunes to five ill-omened stars. Under their dire influence, all sorts of mischance and bad luck befall your enemy.*",
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      "**Warlock (Star) Attack 9**\n\n**Daily** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** Until the end of your next turn, whenever the target makes a saving throw or an attack roll, you roll a d20 without modifiers. If your result is higher than the target's unmodified die roll, the target's attack misses or the target's saving throw fails.\n\n**Sustain Minor:** Make a Charisma vs. Will attack against the target. On a hit, the effect continues. On a miss, the effect ends."
+    ),
+  ],
+  actions: [{ name: 'Thief of Five Fates', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const AmbassadorImp = Abilities.defineAbility('warlock/power/ambassador-imp', {
+  name: 'Ambassador Imp',
+  description: '*You conjure forth an implike presence from the netherworld and give it a message to deliver to a far-off creature.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      '**Warlock (Infernal) Utility 10**\n\n**Daily** ✦ Arcane, Conjuration\n\n**Standard Action** · Ranged 100 miles\n\n**Effect:** You whisper a message into the air, and an implike presence appears next to the creature you wish to speak to and delivers your message. If the creature has a reply, the imp appears adjacent to you at the end of your next turn to utter it. If the creature has no reply or is not within range, the imp appears adjacent to you at the end of your next turn to tell you so. The imp then disappears.'
+    ),
+  ],
+  actions: [{ name: 'Ambassador Imp', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ShadowForm = Abilities.defineAbility('warlock/power/shadow-form', {
+  name: 'Shadow Form',
+  description: '*You fly apart into a swarm of batlike shadows.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      "**Warlock (Star) Utility 10**\n\n**Daily** ✦ Arcane, Polymorph\n\n**Minor Action** · Personal\n\n**Effect:** You assume a shadowy form until the end of the encounter or for 5 minutes. In this form you are insubstantial, gain fly 6, and can't take standard actions. Reverting to your normal form is a minor action."
+    ),
+  ],
+  actions: [{ name: 'Shadow Form', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ShieldingShades = Abilities.defineAbility('warlock/power/shielding-shades', {
+  name: 'Shielding Shades',
+  description: '*You call up a swirling shield of darkness from some far domain, interposing it between yourself and dire peril.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      "**Warlock (Star) Utility 10**\n\n**Daily** ✦ Arcane\n\n**Immediate Reaction** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** Reduce the attack's damage to 0. If the attack targets other creatures, they take damage as normal."
+    ),
+  ],
+  actions: [{ name: 'Shielding Shades', action: ActionTypes.ImmediateReaction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const WarlocksLeap = Abilities.defineAbility('warlock/power/warlocks-leap', {
+  name: "Warlock's Leap",
+  description:
+    '*You leap through the mystic veil into the Feywild. An instant later, you return a short distance away and alight without traveling through the intervening air.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlock)],
+  effects: [
+    Effects.descriptive(
+      "**Warlock (Fey) Utility 10**\n\n**Daily** ✦ Arcane, Teleportation\n\n**Move Action** · Personal\n\n**Effect:** You teleport 6 squares. You do not need line of sight to the destination, but if you attempt to teleport to a space you can't occupy, you don't move."
+    ),
+  ],
+  actions: [{ name: "Warlock's Leap", action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
 export const AllWarlockPowers = [
   DiabolicGrasp,
   DreadfulWord,
@@ -371,4 +641,20 @@ export const AllWarlockPowers = [
   CrownOfMadness,
   CurseOfTheBloodyFangs,
   HungerOfHadar,
+  DarkOnesOwnLuck,
+  FeySwitch,
+  ShroudOfBlackSteel,
+  SpiderClimb,
+  HowlOfDoom,
+  InfernalMoonCurse,
+  MireTheMind,
+  SignOfIllOmen,
+  CurseOfTheBlackFrost,
+  IronSpikeOfDis,
+  SummonsOfKhirad,
+  ThiefOfFiveFates,
+  AmbassadorImp,
+  ShadowForm,
+  ShieldingShades,
+  WarlocksLeap,
 ]

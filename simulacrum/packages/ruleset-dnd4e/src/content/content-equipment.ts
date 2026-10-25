@@ -866,7 +866,27 @@ You can resize magic armor with the [Enchant Magic Item](content:rituals/enchant
 | 5 | Battleforged +1 | 1,000 | Plate |
 | 5 | Bloodthread +1 | 1,000 | Cloth |
 | 5 | Deathcut +1 | 1,000 | Leather, Hide |
-| 5 | Exalted +1 | 1,000 | Chain |`,
+| 5 | Exalted +1 | 1,000 | Chain |
+| 6 | Magic +2 | 1,800 | Any |
+| 7 | Dwarven +2 | 2,600 | Chain, Scale, Plate |
+| 7 | Razor +2 | 2,600 | Scale |
+| 7 | Sunleaf +2 | 2,600 | Cloth, Leather, Hide |
+| 8 | Curseforged +2 | 3,400 | Chain, Scale |
+| 8 | Delver’s +2 | 3,400 | Any |
+| 8 | Eladrin +2 | 3,400 | Chain |
+| 8 | Elven battle +2 | 3,400 | Leather, Hide |
+| 8 | Fireburst +2 | 3,400 | Cloth |
+| 8 | Mountain +2 | 3,400 | Plate |
+| 8 | Sylvan +2 | 3,400 | Cloth, Leather, Hide |
+| 9 | Black Iron +2 | 4,200 | Scale, Plate |
+| 9 | Bloodcut +2 | 4,200 | Leather, Hide |
+| 9 | Darkleaf +2 | 4,200 | Cloth, Leather, Hide |
+| 9 | Ghostphase +2 | 4,200 | Cloth |
+| 10 | Barkskin +2 | 5,000 | Hide, Scale |
+| 10 | Battleforged +2 | 5,000 | Plate |
+| 10 | Bloodthread +2 | 5,000 | Cloth |
+| 10 | Deathcut +2 | 5,000 | Leather, Hide |
+| 10 | Exalted +2 | 5,000 | Chain |`,
   },
 })
 
@@ -879,6 +899,8 @@ export const BarkskinArmorSection = Content.defineSection('equipment/barkskin-ar
 _The enchantment placed upon this armor toughens the material and provides it with a rough texture like tree bark._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Armor:** Hide, Scale
 
@@ -902,6 +924,8 @@ _The dwarves and the dragonborn argue over which race invented this enchanted ar
 
 Lvl 5 +1 1,000 gp
 
+Lvl 10 +2 5,000 gp
+
 **Armor:** Plate
 
 **Enhancement:** AC
@@ -923,6 +947,8 @@ export const BlackIronArmorSection = Content.defineSection('equipment/black-iron
 _The black metal of this armor glows red when violence flares._
 
 Lvl 4 +1 840 gp
+
+Lvl 9 +2 4,200 gp
 
 **Armor:** Scale, Plate
 
@@ -946,6 +972,8 @@ _This armor has a crimson tinge that flares blood red when its power is activate
 
 Lvl 4 +1 840 gp
 
+Lvl 9 +2 4,200 gp
+
 **Armor:** Leather, Hide
 
 **Enhancement:** AC
@@ -968,6 +996,8 @@ _Eladrin master tailors magically weave threads of enchanted blood into the supp
 
 Lvl 5 +1 1,000 gp
 
+Lvl 10 +2 5,000 gp
+
 **Armor:** Cloth
 
 **Enhancement:** AC
@@ -985,6 +1015,8 @@ export const CurseforgedArmorSection = Content.defineSection('equipment/cursefor
 _In ancient days, the tieflings poured their bitterness into their forges as a lesson to those who would betray them._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Armor:** Chain, Scale
 
@@ -1008,6 +1040,8 @@ _Darkleaves from the gravetrees of the Shadowfell give this armor its protective
 
 Lvl 4 +1 840 gp
 
+Lvl 9 +2 4,200 gp
+
 **Armor:** Cloth, Leather, Hide
 
 **Enhancement:** AC
@@ -1025,6 +1059,8 @@ export const DeathcutArmorSection = Content.defineSection('equipment/deathcut-ar
 _Crafted from the hides of creatures slain by necromantic magic, this armor radiates unease and offers protection against similar magic._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Armor:** Leather, Hide
 
@@ -1050,6 +1086,8 @@ _Crafted by the finest dwarf armorsmiths, this armor was once only available to 
 
 Lvl 2 +1 520 gp
 
+Lvl 7 +2 2,600 gp
+
 **Armor:** Chain, Scale, Plate
 
 **Enhancement:** AC
@@ -1070,6 +1108,8 @@ _A popular armor among adventurers, it is relatively easy to make._
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Armor:** Any
 
 **Enhancement:** AC
@@ -1088,6 +1128,8 @@ _Crafted by master eladrin armorsmiths, the fine links of this chainmail sparkle
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Armor:** Chain
 
 **Enhancement:** AC
@@ -1102,6 +1144,26 @@ Level 23 or 28: +3 squares to teleport distance.`,
   },
 })
 
+export const ElvenBattleArmorSection = Content.defineSection('equipment/elven-battle-armor', {
+  parent: MagicArmorSection,
+  content: {
+    name: 'Elven Battle Armor',
+    description: `**Level 8+**
+
+_There’s no mistaking the forest motif woven into elven battle armor._
+
+Lvl 8 +2 3,400 gp
+
+**Armor:** Leather, Hide
+
+**Enhancement:** AC
+
+**Property:** Gain a +5 item bonus to [saving throws](content:combat/saving-throws) against being [slowed](content:combat/slowed) or [immobilized](content:combat/immobilized).
+
+**Power (Encounter):** [Minor Action](action-type:minor-action). Gain a +2 power bonus to [speed](characteristic:speed) until the end of your next turn.`,
+  },
+})
+
 export const ExaltedArmorSection = Content.defineSection('equipment/exalted-armor', {
   parent: MagicArmorSection,
   content: {
@@ -1111,6 +1173,8 @@ export const ExaltedArmorSection = Content.defineSection('equipment/exalted-armo
 _Clerics and warlords often seek out exalted armor because of its properties that improve their healing powers._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Armor:** Chain
 
@@ -1130,6 +1194,8 @@ _Eladrin master tailors magically weave threads of arcane fire into the supple c
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Armor:** Cloth
 
 **Enhancement:** AC
@@ -1144,6 +1210,34 @@ Level 23 or 28: 3d8 + Charisma modifier fire damage.`,
   },
 })
 
+export const GhostphaseArmorSection = Content.defineSection('equipment/ghostphase-armor', {
+  parent: MagicArmorSection,
+  content: {
+    name: 'Ghostphase Armor',
+    description: `**Level 9+**
+
+_This thin white-and-gray mantle fades away near the bottom._
+
+Lvl 9 +2 4,200 gp
+
+**Armor:** Cloth
+
+**Enhancement:** AC
+
+**Property:** None.
+
+Level 14: Resist 5 necrotic.
+
+Level 19 or 24: Resist 10 necrotic.
+
+Level 29: Resist 15 necrotic.
+
+**Power (Daily):** [Minor Action](action-type:minor-action). Become [insubstantial](content:combat/insubstantial) until the end of your next turn.
+
+Level 24 or 29: Become insubstantial and gain [phasing](content:combat/phasing) until the end of your next turn.`,
+  },
+})
+
 export const MagicArmorItemSection = Content.defineSection('equipment/magic-armor', {
   parent: MagicArmorSection,
   content: {
@@ -1154,9 +1248,33 @@ _A set of basic yet effective enchanted armor._
 
 Lvl 1 +1 360 gp
 
+Lvl 6 +2 1,800 gp
+
 **Armor:** Any
 
 **Enhancement:** AC`,
+  },
+})
+
+export const MountainArmorSection = Content.defineSection('equipment/mountain-armor', {
+  parent: MagicArmorSection,
+  content: {
+    name: 'Mountain Armor',
+    description: `**Level 8+**
+
+_Dwarf armorsmiths combine the elemental earth of their mountain homes with other metals to craft this heavy armor._
+
+Lvl 8 +2 3,400 gp
+
+**Armor:** Plate
+
+**Enhancement:** AC
+
+**Power (Encounter):** [Immediate Interrupt](action-type:immediate-interrupt). You can use this power when you are subjected to a pull, a push, or a slide effect. Reduce the forced movement by 1 square.
+
+Level 18 or 23: Reduce the forced movement by 2 squares.
+
+Level 28: Reduce the forced movement by 3 squares.`,
   },
 })
 
@@ -1170,6 +1288,8 @@ _Jutting spikes and sharp edges cover each scale set into this armor._
 
 Lvl 2 +1 520 gp
 
+Lvl 7 +2 2,600 gp
+
 **Armor:** Scale
 
 **Enhancement:** AC
@@ -1182,6 +1302,34 @@ Level 22 or 27: 3d10 + Dexterity modifier damage.`,
   },
 })
 
+export const SunleafArmorSection = Content.defineSection('equipment/sunleaf-armor', {
+  parent: MagicArmorSection,
+  content: {
+    name: 'Sunleaf Armor',
+    description: `**Level 7+**
+
+_Elf master crafters use the leaves of the sun tree to create radiant armor of cloth, leather, or hide._
+
+Lvl 7 +2 2,600 gp
+
+**Armor:** Cloth, Leather, Hide
+
+**Enhancement:** AC
+
+**Property:** Resist 5 radiant.
+
+Level 17 or 22: Resist 10 radiant.
+
+Level 27: Resist 15 radiant.
+
+**Power (Daily ✦ Radiant):** [Free Action](action-type:free-action). You can use this power when an enemy hits you with an opportunity attack. Deal 1d10 + [Dexterity modifier](characteristic:dexterity-modifier) radiant damage to that enemy.
+
+Level 12 or 17: 2d10 + Dexterity modifier radiant damage.
+
+Level 22 or 27: 3d10 + Dexterity modifier radiant damage.`,
+  },
+})
+
 export const SylvanArmorSection = Content.defineSection('equipment/sylvan-armor', {
   parent: MagicArmorSection,
   content: {
@@ -1191,6 +1339,8 @@ export const SylvanArmorSection = Content.defineSection('equipment/sylvan-armor'
 _This brown and gray armor is favored by those who want to move like a leaf carried along on a forest breeze._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Armor:** Cloth, Leather, Hide
 
@@ -1232,7 +1382,74 @@ Catching a returning thrown weapon is a free action; if you do not wish (or are 
 | 4 | Thunderburst +1 | 840 | Any ranged |
 | 5 | Flaming +1 | 1,000 | Any |
 | 5 | Lifedrinker +1 | 1,000 | Any melee |
-| 5 | Lightning +1 | 1,000 | Any |`,
+| 5 | Lightning +1 | 1,000 | Any |
+| 6 | Magic +2 | 1,800 | Any |
+| 7 | Resounding +2 | 2,600 | Hammer, Flail, Mace, Sling, Staff |
+| 7 | Vicious +2 | 2,600 | Any |
+| 8 | Duelist’s +2 | 3,400 | Light Blade |
+| 8 | Flameburst +2 | 3,400 | Any ranged |
+| 8 | Frost +2 | 3,400 | Any |
+| 8 | Pact Blade +2 | 3,400 | Light Blade |
+| 8 | Thundering +2 | 3,400 | Any |
+| 9 | Dragonslayer +2 | 4,200 | Any |
+| 9 | Terror +2 | 4,200 | Axe, Hammer, Heavy Blade |
+| 9 | Thunderburst +2 | 4,200 | Any ranged |
+| 10 | Berserker +2 | 5,000 | Axe, Heavy Blade |
+| 10 | Flaming +2 | 5,000 | Any |
+| 10 | Lifedrinker +2 | 5,000 | Any melee |
+| 10 | Lightning +2 | 5,000 | Any |`,
+  },
+})
+
+export const BerserkerWeaponSection = Content.defineSection('equipment/berserker-weapon', {
+  parent: MagicWeaponsSection,
+  content: {
+    name: 'Berserker Weapon',
+    description: `**Level 10+**
+
+_A weapon of pure rage._
+
+Lvl 10 +2 5,000 gp
+
+**Weapon:** Axe, Heavy Blade
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d10 damage per plus
+
+**Power (Daily):** [Minor Action](action-type:minor-action). Gain a +2 power bonus to attack rolls and damage rolls with this weapon and take a –5 penalty to all defenses. You also gain resist 5 to all damage. The effects last until the end of the encounter or until you fall [unconscious](content:combat/unconscious).
+
+Level 20 or 25: Resist 10 to all damage.
+
+Level 30: Resist 15 to all damage.`,
+  },
+})
+
+export const DragonslayerWeaponSection = Content.defineSection('equipment/dragonslayer-weapon', {
+  parent: MagicWeaponsSection,
+  content: {
+    name: 'Dragonslayer Weapon',
+    description: `**Level 9+**
+
+_The bane of dragonkind._
+
+Lvl 9 +2 4,200 gp
+
+**Weapon:** Any
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d8 damage per plus, or +1d12 damage per plus against dragons
+
+**Property:** This weapon provides resistance against dragon breath attacks, as shown below.
+
+Level 9: Resist 5
+
+Level 14 or 19: Resist 10
+
+Level 24 or 29: Resist 15
+
+**Power (Daily):** [Minor Action](action-type:minor-action). Your next attack with this weapon against a dragon, if made before the end of your turn, gains a +5 power bonus to the attack roll and automatically ignores any resistance the dragon has.`,
   },
 })
 
@@ -1245,6 +1462,8 @@ export const DuelistsWeaponSection = Content.defineSection('equipment/duelists-w
 _The favorite weapon of a rogue._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Weapon:** Light Blade
 
@@ -1265,6 +1484,8 @@ export const FlameburstWeaponSection = Content.defineSection('equipment/flamebur
 _This ranged weapon packs a fiery surprise._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Weapon:** Any ranged
 
@@ -1289,6 +1510,8 @@ export const FlamingWeaponSection = Content.defineSection('equipment/flaming-wea
 _You can will this weapon to burst into flame._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Weapon:** Any
 
@@ -1316,6 +1539,8 @@ _A thin layer of frost coats the business end of this weapon._
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Weapon:** Any
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1342,6 +1567,8 @@ _This weapon transfers an enemy’s vitality to you._
 
 Lvl 5 +1 1,000 gp
 
+Lvl 10 +2 5,000 gp
+
 **Weapon:** Any melee
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1365,6 +1592,8 @@ export const LightningWeaponSection = Content.defineSection('equipment/lightning
 _This weapon crackles with dancing lightning._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Weapon:** Any
 
@@ -1392,6 +1621,8 @@ _A basic enchanted weapon._
 
 Lvl 1 +1 360 gp
 
+Lvl 6 +2 1,800 gp
+
 **Weapon:** Any
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1409,6 +1640,8 @@ export const PactBladeSection = Content.defineSection('equipment/pact-blade', {
 _Warlocks favor this wickedly sharp blade._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Weapon:** Light Blade (usually daggers and sickles)
 
@@ -1434,6 +1667,8 @@ _A thundering peal sounds when this weapon hits, dazing its target._
 
 Lvl 2 +1 520 gp
 
+Lvl 7 +2 2,600 gp
+
 **Weapon:** Hammer, Flail, Mace, Sling, Staff
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1454,6 +1689,8 @@ _The bite of this weapon sends waves of fear through its target._
 
 Lvl 4 +1 840 gp
 
+Lvl 9 +2 4,200 gp
+
 **Weapon:** Axe, Hammer, Heavy Blade
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1473,6 +1710,8 @@ export const ThunderburstWeaponSection = Content.defineSection('equipment/thunde
 _Suddenly, the projectile explodes in a burst of violent sound._
 
 Lvl 4 +1 840 gp
+
+Lvl 9 +2 4,200 gp
 
 **Weapon:** Any ranged
 
@@ -1498,6 +1737,8 @@ _You can unleash a clap of thunder when this weapon hits, carrying your foe away
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Weapon:** Any
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1521,6 +1762,8 @@ export const ViciousWeaponSection = Content.defineSection('equipment/vicious-wea
 _Some wielders claim this weapon takes pleasure in dealing pain._
 
 Lvl 2 +1 520 gp
+
+Lvl 7 +2 2,600 gp
 
 **Weapon:** Any
 
@@ -1547,7 +1790,13 @@ Unlike other implements, you need only to wear a holy symbol for its property or
 | 1 | Magic holy symbol +1 | 360 |
 | 2 | Symbol of life +1 | 520 |
 | 3 | Symbol of hope +1 | 680 |
-| 5 | Symbol of battle +1 | 1,000 |`,
+| 5 | Symbol of battle +1 | 1,000 |
+| 6 | Magic holy symbol +2 | 1,800 |
+| 7 | Symbol of power +2 | 2,600 |
+| 7 | Symbol of life +2 | 2,600 |
+| 8 | Symbol of hope +2 | 3,400 |
+| 9 | Symbol of victory +2 | 4,200 |
+| 10 | Symbol of battle +2 | 5,000 |`,
   },
 })
 
@@ -1560,6 +1809,8 @@ export const MagicHolySymbolSection = Content.defineSection('equipment/magic-hol
 _A holy symbol of your god, enchanted with magical power._
 
 Lvl 1 +1 360 gp
+
+Lvl 6 +2 1,800 gp
 
 **Implement (Holy Symbol)**
 
@@ -1578,6 +1829,8 @@ export const SymbolOfBattleSection = Content.defineSection('equipment/symbol-of-
 _This holy symbol is favored by battle clerics and warpriests._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Implement (Holy Symbol)**
 
@@ -1603,6 +1856,8 @@ _The power of your faith makes it easier for allies to recover from debilitating
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Implement (Holy Symbol)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1623,6 +1878,8 @@ _The power of your faith adds energy to your healing prayers._
 
 Lvl 2 +1 520 gp
 
+Lvl 7 +2 2,600 gp
+
 **Implement (Holy Symbol)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1634,6 +1891,46 @@ Lvl 2 +1 520 gp
 Level 12 or 17: Regains an additional 2d6 hit points.
 
 Level 22 or 27: Regains an additional 3d6 hit points.`,
+  },
+})
+
+export const SymbolOfPowerSection = Content.defineSection('equipment/symbol-of-power', {
+  parent: HolySymbolsSection,
+  content: {
+    name: 'Symbol of Power',
+    description: `**Level 7+**
+
+_The power of your faith makes it harder for enemies to recover from debilitating effects._
+
+Lvl 7 +2 2,600 gp
+
+**Implement (Holy Symbol)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Property:** When you use this symbol to deliver an effect that a save can end, the target takes a –2 penalty to [saving throws](content:combat/saving-throws) against the effect.`,
+  },
+})
+
+export const SymbolOfVictorySection = Content.defineSection('equipment/symbol-of-victory', {
+  parent: HolySymbolsSection,
+  content: {
+    name: 'Symbol of Victory',
+    description: `**Level 9+**
+
+_Your god helps those who help themselves._
+
+Lvl 9 +2 4,200 gp
+
+**Implement (Holy Symbol)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d8 damage per plus
+
+**Power (Daily):** [Free Action](action-type:free-action). You can use this power when you or an ally within 5 squares of you scores a [critical hit](content:combat/critical-hits). That character gains an [action point](content:combat/action-points).`,
   },
 })
 
@@ -1651,7 +1948,12 @@ An orb is a heavy, round object, usually made of glass or crystal, of a size to 
 | :--- | :--- | :--- |
 | 1 | Magic orb +1 | 360 |
 | 3 | Orb of inevitable continuance +1 | 680 |
-| 5 | Orb of sanguinary repercussions +1 | 1,000 |`,
+| 5 | Orb of sanguinary repercussions +1 | 1,000 |
+| 6 | Magic orb +2 | 1,800 |
+| 7 | Orb of indisputable gravity +2 | 2,600 |
+| 8 | Orb of inevitable continuance +2 | 3,400 |
+| 9 | Orb of reversed polarities +2 | 4,200 |
+| 10 | Orb of sanguinary repercussions +2 | 5,000 |`,
   },
 })
 
@@ -1665,11 +1967,33 @@ _A standard crystal orb, enchanted to channel arcane energy._
 
 Lvl 1 +1 360 gp
 
+Lvl 6 +2 1,800 gp
+
 **Implement (Orb)**
 
 **Enhancement:** Attack rolls and damage rolls
 
 **Critical:** +1d6 damage per plus`,
+  },
+})
+
+export const OrbOfIndisputableGravitySection = Content.defineSection('equipment/orb-of-indisputable-gravity', {
+  parent: OrbsSection,
+  content: {
+    name: 'Orb of Indisputable Gravity',
+    description: `**Level 7+**
+
+_A sphere of sky blue crystal._
+
+Lvl 7 +2 2,600 gp
+
+**Implement (Orb)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Power (Daily):** [Minor Action](action-type:minor-action). Until the end of your next turn, any attack that hits a flying creature within 10 squares of you also forces that creature to gently fall 10 squares. If a descent of that distance would bring the creature to ground, it lands [prone](content:combat/prone) but takes no damage from the fall.`,
   },
 })
 
@@ -1683,6 +2007,8 @@ _A sphere of gray crystal that appears as a ball of solid mist._
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Implement (Orb)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1690,6 +2016,30 @@ Lvl 3 +1 680 gp
 **Critical:** +1d6 damage per plus
 
 **Power (Daily):** [Minor Action](action-type:minor-action). One of your powers that is due to end at the end of this turn instead lasts until the end of your next turn.`,
+  },
+})
+
+export const OrbOfReversedPolaritiesSection = Content.defineSection('equipment/orb-of-reversed-polarities', {
+  parent: OrbsSection,
+  content: {
+    name: 'Orb of Reversed Polarities',
+    description: `**Level 9+**
+
+_A sphere of polished crystal that appears as a ball of stormy sky._
+
+Lvl 9 +2 4,200 gp
+
+**Implement (Orb)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Power (Daily):** [Minor Action](action-type:minor-action). Until the end of your next turn, your attacks treat any resistance possessed by a target as vulnerable 5 to the same damage type.
+
+Level 14 or 19: Vulnerable 10.
+
+Level 24 or 29: Vulnerable 15.`,
   },
 })
 
@@ -1702,6 +2052,8 @@ export const OrbOfSanguinaryRepercussionsSection = Content.defineSection('equipm
 _A sphere of brilliant crimson._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Implement (Orb)**
 
@@ -1732,7 +2084,13 @@ A rod is a short, heavy cylinder, typically covered in mystic runes or inscribed
 | 1 | Magic rod +1 | 360 |
 | 2 | Rod of dark reward +1 | 520 |
 | 3 | Rod of corruption +1 | 680 |
-| 5 | Rod of reaving +1 | 1,000 |`,
+| 5 | Rod of reaving +1 | 1,000 |
+| 6 | Magic rod +2 | 1,800 |
+| 7 | Rod of dark reward +2 | 2,600 |
+| 8 | Rod of corruption +2 | 3,400 |
+| 8 | Rod of first blood +2 | 3,400 |
+| 10 | Rod of reaving +2 | 5,000 |
+| 10 | Rod of the pyre +2 | 5,000 |`,
   },
 })
 
@@ -1745,6 +2103,8 @@ export const MagicRodSection = Content.defineSection('equipment/magic-rod', {
 _A standard rod, enchanted so as to channel arcane energy._
 
 Lvl 1 +1 360 gp
+
+Lvl 6 +2 1,800 gp
 
 **Implement (Rod)**
 
@@ -1763,6 +2123,8 @@ export const RodOfCorruptionSection = Content.defineSection('equipment/rod-of-co
 _This rod magnifies and multiplies your Warlock’s Curse._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Implement (Rod)**
 
@@ -1784,6 +2146,8 @@ _This rod channels your Warlock’s Curse while adding to your defenses._
 
 Lvl 2 +1 520 gp
 
+Lvl 7 +2 2,600 gp
+
 **Implement (Rod)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1791,6 +2155,30 @@ Lvl 2 +1 520 gp
 **Critical:** +1d6 damage per plus
 
 **Property:** Whenever you place a [Warlock’s Curse](trait:warlock/warlocks-curse) on an enemy, you gain a +1 power bonus to AC until the start of your next turn.`,
+  },
+})
+
+export const RodOfFirstBloodSection = Content.defineSection('equipment/rod-of-first-blood', {
+  parent: RodsSection,
+  content: {
+    name: 'Rod of First Blood',
+    description: `**Level 8+**
+
+_This rod demands to strike first in any battle._
+
+Lvl 8 +2 3,400 gp
+
+**Implement (Rod)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus, or +1d8 damage per plus against creatures that have maximum hit points
+
+**Property:** When you hit a creature that has maximum [hit points](characteristic:hit-points) with an attack using this rod, deal 1d8 extra damage.
+
+Level 13 or 18: 2d8 extra damage.
+
+Level 23 or 28: 3d8 extra damage.`,
   },
 })
 
@@ -1804,6 +2192,8 @@ _This rod enhances the damage dealt to those suffering your Warlock’s Curse._
 
 Lvl 5 +1 1,000 gp
 
+Lvl 10 +2 5,000 gp
+
 **Implement (Rod)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1811,6 +2201,34 @@ Lvl 5 +1 1,000 gp
 **Critical:** +1d8 damage per plus
 
 **Property:** When you place your [Warlock’s Curse](trait:warlock/warlocks-curse) on a target, the creature takes damage equal to the rod’s enhancement bonus.`,
+  },
+})
+
+export const RodOfThePyreSection = Content.defineSection('equipment/rod-of-the-pyre', {
+  parent: RodsSection,
+  content: {
+    name: 'Rod of the Pyre',
+    description: `**Level 10+**
+
+_This rod crackles with arcane fire._
+
+Lvl 10 +2 5,000 gp
+
+**Implement (Rod)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 fire damage per plus
+
+**Power (Daily):** [Free Action](action-type:free-action). When you place your [Warlock’s Curse](trait:warlock/warlocks-curse) on a target, the creature gains vulnerability 2 fire until the end of your next turn.
+
+Level 15: Vulnerability 3 fire.
+
+Level 20: Vulnerability 4 fire.
+
+Level 25: Vulnerability 5 fire.
+
+Level 30: Vulnerability 6 fire.`,
   },
 })
 
@@ -1832,7 +2250,13 @@ For example, a cleric could pick up and use a +3 _staff of fiery might_ as a mel
 | 2 | Staff of fiery might +1 | 520 |
 | 3 | Staff of the war mage +1 | 680 |
 | 4 | Staff of winter +1 | 840 |
-| 5 | Staff of storms +1 | 1,000 |`,
+| 5 | Staff of storms +1 | 1,000 |
+| 6 | Magic staff +2 | 1,800 |
+| 7 | Staff of fiery might +2 | 2,600 |
+| 8 | Staff of the war mage +2 | 3,400 |
+| 8 | Thunderwave staff +2 | 3,400 |
+| 9 | Staff of winter +2 | 4,200 |
+| 10 | Staff of storms +2 | 5,000 |`,
   },
 })
 
@@ -1845,6 +2269,8 @@ export const MagicStaffSection = Content.defineSection('equipment/magic-staff', 
 _A basic staff, enchanted to channel arcane energy._
 
 Lvl 1 +1 360 gp
+
+Lvl 6 +2 1,800 gp
 
 **Implement (Staff)**
 
@@ -1863,6 +2289,8 @@ export const StaffOfFieryMightSection = Content.defineSection('equipment/staff-o
 _This staff is engraved with fire symbols and is warm to the touch. It makes fire spells more potent._
 
 Lvl 2 +1 520 gp
+
+Lvl 7 +2 2,600 gp
 
 **Implement (Staff)**
 
@@ -1883,6 +2311,8 @@ export const StaffOfStormsSection = Content.defineSection('equipment/staff-of-st
 _This staff, covered in lightning runes, enhances the power of lightning and thunder spells._
 
 Lvl 5 +1 1,000 gp
+
+Lvl 10 +2 5,000 gp
 
 **Implement (Staff)**
 
@@ -1908,6 +2338,8 @@ _This staff, topped with a red crystal, enhances the size of your blast and burs
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Implement (Staff)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1928,6 +2360,8 @@ _This staff is engraved with winter symbols and is cold to the touch. It adds to
 
 Lvl 4 +1 840 gp
 
+Lvl 9 +2 4,200 gp
+
 **Implement (Staff)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1935,6 +2369,30 @@ Lvl 4 +1 840 gp
 **Critical:** +1d6 cold damage per plus
 
 **Power (Daily):** [Free Action](action-type:free-action). Use this power when using a power that has the cold keyword. After you resolve the power, all enemies within 3 squares of you are immobilized (save ends).`,
+  },
+})
+
+export const ThunderwaveStaffSection = Content.defineSection('equipment/thunderwave-staff', {
+  parent: StaffsSection,
+  content: {
+    name: 'Thunderwave Staff',
+    description: `**Level 8+**
+
+_This rune-covered staff emits waves of thunder that deal damage and knock enemies prone._
+
+Lvl 8 +2 3,400 gp
+
+**Implement (Staff)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d8 thunder damage per plus
+
+**Power (Daily ✦ Thunder):** [Free Action](action-type:free-action). Use this power when you would push one or more creatures with one of your powers. Instead of pushing those creatures, knock them [prone](content:combat/prone) and deal xd6 thunder damage to each one, where x equals the number of squares you would normally push each one.
+
+Level 13 or 18: xd8 thunder damage.
+
+Level 23 or 28: xd10 thunder damage.`,
   },
 })
 
@@ -1951,6 +2409,9 @@ A wand can contain an encounter power of any class capable of using wands. When 
 | Wand Level | Power Level |
 | :--- | :--- |
 | 3 | 1 |
+| 8 | 2* or 3 |
+
+\\*Indicates utility power.
 
 **Wands**
 
@@ -1959,7 +2420,15 @@ A wand can contain an encounter power of any class capable of using wands. When 
 | 1 | Magic wand +1 | 360 |
 | 3 | Wand of (power level 1) +1 | 680 |
 | 3 | Wand of ray of enfeeblement +1 | 680 |
-| 3 | Wand of witchfire +1 | 680 |`,
+| 3 | Wand of witchfire +1 | 680 |
+| 6 | Magic wand +2 | 1,800 |
+| 8 | Wand of (power level 3 or lower) +2 | 3,400 |
+| 8 | Wand of eldritch rain +2 | 3,400 |
+| 8 | Wand of fiery bolt +2 | 3,400 |
+| 8 | Wand of icy rays +2 | 3,400 |
+| 8 | Wand of ray of enfeeblement +2 | 3,400 |
+| 8 | Wand of shield +2 | 3,400 |
+| 8 | Wand of witchfire +2 | 3,400 |`,
   },
 })
 
@@ -1973,11 +2442,73 @@ _A basic wand, enchanted so as to channel arcane energy._
 
 Lvl 1 +1 360 gp
 
+Lvl 6 +2 1,800 gp
+
 **Implement (Wand)**
 
 **Enhancement:** Attack rolls and damage rolls
 
 **Critical:** +1d6 damage per plus`,
+  },
+})
+
+export const WandOfEldritchRainSection = Content.defineSection('equipment/wand-of-eldritch-rain', {
+  parent: WandsSection,
+  content: {
+    name: 'Wand of Eldritch Rain',
+    description: `**Level 8+**
+
+_This wand carries the warlock spell eldritch rain._
+
+Lvl 8 +2 3,400 gp
+
+**Implement (Wand)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Power (Daily ✦ Arcane, Implement):** [Standard Action](action-type:standard-action). As the warlock’s _[eldritch rain](ability:warlock/power/eldritch-rain)_ power.`,
+  },
+})
+
+export const WandOfFieryBoltSection = Content.defineSection('equipment/wand-of-fiery-bolt', {
+  parent: WandsSection,
+  content: {
+    name: 'Wand of Fiery Bolt',
+    description: `**Level 8+**
+
+_This wand carries the warlock spell fiery bolt._
+
+Lvl 8 +2 3,400 gp
+
+**Implement (Wand)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Power (Daily ✦ Arcane, Fire, Implement):** [Standard Action](action-type:standard-action). As the warlock’s _[fiery bolt](ability:warlock/power/fiery-bolt)_ power.`,
+  },
+})
+
+export const WandOfIcyRaysSection = Content.defineSection('equipment/wand-of-icy-rays', {
+  parent: WandsSection,
+  content: {
+    name: 'Wand of Icy Rays',
+    description: `**Level 8+**
+
+_This wand carries the wizard spell icy rays._
+
+Lvl 8 +2 3,400 gp
+
+**Implement (Wand)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Power (Daily ✦ Arcane, Cold, Implement):** [Standard Action](action-type:standard-action). As the wizard’s _[icy rays](ability:wizard/power/icy-rays)_ power.`,
   },
 })
 
@@ -1991,6 +2522,8 @@ _This wand carries the wizard spell ray of enfeeblement._
 
 Lvl 3 +1 680 gp
 
+Lvl 8 +2 3,400 gp
+
 **Implement (Wand)**
 
 **Enhancement:** Attack rolls and damage rolls
@@ -1998,6 +2531,26 @@ Lvl 3 +1 680 gp
 **Critical:** +1d6 damage per plus
 
 **Power (Daily ✦ Arcane, Implement, Necrotic):** [Standard Action](action-type:standard-action). As the wizard’s _[ray of enfeeblement](ability:wizard/power/ray-of-enfeeblement)_ power.`,
+  },
+})
+
+export const WandOfShieldSection = Content.defineSection('equipment/wand-of-shield', {
+  parent: WandsSection,
+  content: {
+    name: 'Wand of Shield',
+    description: `**Level 8+**
+
+_This wand carries the wizard spell shield._
+
+Lvl 8 +2 3,400 gp
+
+**Implement (Wand)**
+
+**Enhancement:** Attack rolls and damage rolls
+
+**Critical:** +1d6 damage per plus
+
+**Power (Daily ✦ Arcane, Force):** [Immediate Interrupt](action-type:immediate-interrupt). As the wizard’s _[shield](ability:wizard/power/shield)_ power.`,
   },
 })
 
@@ -2010,6 +2563,8 @@ export const WandOfWitchfireSection = Content.defineSection('equipment/wand-of-w
 _This wand carries the warlock spell witchfire._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Implement (Wand)**
 
@@ -2034,7 +2589,10 @@ export const ArmsSlotItemsSection = Content.defineSection('equipment/arms-slot-i
 | 2 | Bracers of mighty striking (heroic tier) | 520 |
 | 3 | Bracers of the perfect shot (heroic tier) | 680 |
 | 3 | Shield of protection (heroic tier) | 680 |
-| 5 | Bashing shield (heroic tier) | 1,000 |`,
+| 5 | Bashing shield (heroic tier) | 1,000 |
+| 7 | Bracers of defense (heroic tier) | 2,600 |
+| 8 | Shield of defiance (heroic tier) | 3,400 |
+| 10 | Guardian shield (heroic tier) | 5,000 |`,
   },
 })
 
@@ -2055,6 +2613,26 @@ Lvl 5 1,000 gp
 Level 15: Push 2d4 squares.
 
 Level 25: Push 3d4 squares.`,
+  },
+})
+
+export const BracersOfDefenseSection = Content.defineSection('equipment/bracers-of-defense', {
+  parent: ArmsSlotItemsSection,
+  content: {
+    name: 'Bracers of Defense',
+    description: `**Level 7+**
+
+_These enchanted armbands can be activated to reduce the damage you take from a single attack._
+
+Lvl 7 2,600 gp
+
+**Item Slot:** Arms
+
+**Power (Daily):** [Immediate Interrupt](action-type:immediate-interrupt). You can use this power when you are hit by a melee attack. Reduce the damage dealt to you by the attack by 10.
+
+Level 17: Reduce the damage dealt by 20.
+
+Level 27: Reduce the damage dealt by 30.`,
   },
 })
 
@@ -2098,6 +2676,46 @@ Level 23: +6 item bonus.`,
   },
 })
 
+export const GuardianShieldSection = Content.defineSection('equipment/guardian-shield', {
+  parent: ArmsSlotItemsSection,
+  content: {
+    name: 'Guardian Shield',
+    description: `**Level 10+**
+
+_Activate the power of this shield to defend an ally from attack._
+
+Lvl 10 5,000 gp
+
+**Item Slot:** Arms
+
+**Power (Daily):** [Immediate Interrupt](action-type:immediate-interrupt). You can use this power when an adjacent ally is hit by an attack. You are hit by the attack instead. You then gain resistance to all damage equal to half the damage dealt by the attack (if any) until the start of your next turn.
+
+Level 20: Protect an ally within 5 squares of you.
+
+Level 30: Protect an ally within 10 squares of you.`,
+  },
+})
+
+export const ShieldOfDefianceSection = Content.defineSection('equipment/shield-of-defiance', {
+  parent: ArmsSlotItemsSection,
+  content: {
+    name: 'Shield of Defiance',
+    description: `**Level 8+**
+
+_This enchanted shield provides immediate healing after you receive a critical hit._
+
+Lvl 8 3,400 gp
+
+**Item Slot:** Arms
+
+**Power (Daily ✦ Healing):** [Immediate Reaction](action-type:immediate-reaction). You can use this power when a [critical hit](content:combat/critical-hits) is scored on you. You can spend a [healing surge](characteristic:healing-surges).
+
+Level 18: Regain an additional 2d6 hit points.
+
+Level 28: Regain an additional 4d6 hit points.`,
+  },
+})
+
 export const ShieldOfProtectionSection = Content.defineSection('equipment/shield-of-protection', {
   parent: ArmsSlotItemsSection,
   content: {
@@ -2131,7 +2749,9 @@ export const FeetSlotItemsSection = Content.defineSection('equipment/feet-slot-i
 | 2 | Acrobat boots | 520 |
 | 3 | Catstep boots | 680 |
 | 4 | Wavestrider boots | 840 |
-| 5 | Boots of spider climbing | 1,000 |`,
+| 5 | Boots of spider climbing | 1,000 |
+| 7 | Dwarven greaves | 2,600 |
+| 9 | Boots of striding | 4,200 |`,
   },
 })
 
@@ -2167,6 +2787,20 @@ _These enchanted boots enhance your ability to climb._
   },
 })
 
+export const BootsOfStridingSection = Content.defineSection('equipment/boots-of-striding', {
+  parent: FeetSlotItemsSection,
+  content: {
+    name: 'Boots of Striding',
+    description: `**Level 9**
+
+_These enchanted boots increase your speed if you wear light armor or no armor._
+
+**Item Slot:** Feet · 4,200 gp
+
+**Property:** Gain a +1 item bonus to [speed](characteristic:speed) when wearing light or no armor.`,
+  },
+})
+
 export const CatstepBootsSection = Content.defineSection('equipment/catstep-boots', {
   parent: FeetSlotItemsSection,
   content: {
@@ -2180,6 +2814,20 @@ _These enchanted boots reduce falling damage and enhance your acrobatics and ath
 **Property:** When you fall or jump down, you take only half normal falling damage and always land on your feet.
 
 **Power (Daily):** [Free Action](action-type:free-action). Gain a +5 power bonus to your next [Acrobatics](characteristic:skill/acrobatics) check or [Athletics](characteristic:skill/athletics) check.`,
+  },
+})
+
+export const DwarvenGreavesSection = Content.defineSection('equipment/dwarven-greaves', {
+  parent: FeetSlotItemsSection,
+  content: {
+    name: 'Dwarven Greaves',
+    description: `**Level 7**
+
+_This enchanted leg armor, crafted in the dwarven tradition, can be activated to negate a pull, a push, or a slide effect._
+
+**Item Slot:** Feet · 2,600 gp
+
+**Power (Daily):** [Immediate Interrupt](action-type:immediate-interrupt). You can use this power when you are hit by a power that has a pull, a push, or a slide effect. You negate the forced movement.`,
   },
 })
 
@@ -2211,7 +2859,9 @@ export const HandsSlotItemsSection = Content.defineSection('equipment/hands-slot
 | :--- | :--- | :--- |
 | 1 | Burglar’s gloves | 360 |
 | 3 | Gloves of piercing | 680 |
-| 5 | Gauntlets of ogre power | 1,000 |`,
+| 5 | Gauntlets of ogre power | 1,000 |
+| 6 | Shadowfell gloves (heroic tier) | 1,800 |
+| 8 | Gauntlets of the ram | 3,400 |`,
   },
 })
 
@@ -2245,6 +2895,20 @@ _These oversized armored gloves increase your strength and can be activated to i
   },
 })
 
+export const GauntletsOfTheRamSection = Content.defineSection('equipment/gauntlets-of-the-ram', {
+  parent: HandsSlotItemsSection,
+  content: {
+    name: 'Gauntlets of the Ram',
+    description: `**Level 8**
+
+_These armored gloves bear the symbol of a ram’s head._
+
+**Item Slot:** Hands · 3,400 gp
+
+**Property:** Add 1 square to the distance of any push effect you create.`,
+  },
+})
+
 export const GlovesOfPiercingSection = Content.defineSection('equipment/gloves-of-piercing', {
   parent: HandsSlotItemsSection,
   content: {
@@ -2259,11 +2923,133 @@ _These enchanted gloves can be activated to ignore an opponent’s resistances f
   },
 })
 
+export const ShadowfellGlovesSection = Content.defineSection('equipment/shadowfell-gloves', {
+  parent: HandsSlotItemsSection,
+  content: {
+    name: 'Shadowfell Gloves',
+    description: `**Level 6+**
+
+_These supple black gloves, woven with Shadowfell thread, are highly prized by wizards and warlocks._
+
+Lvl 6 1,800 gp
+
+**Item Slot:** Hands
+
+**Power (Daily ✦ Necrotic):** [Minor Action](action-type:minor-action). Change the damage type dealt by the next arcane power you use to necrotic. Add 1d6 to the damage dealt by that power (if any).
+
+Level 16: Add 2d6 to the damage dealt.
+
+Level 26: Add 3d6 to the damage dealt.`,
+  },
+})
+
 export const HeadSlotItemsSection = Content.defineSection('equipment/head-slot-items', {
   parent: MagicItemsSection,
   content: {
     name: 'Head Slot Items',
-    description: `These items contain powers that enhance [Intelligence](characteristic:intelligence)-based and [Wisdom](characteristic:wisdom)-based skills, increase damage, and enhance senses.`,
+    description: `These items contain powers that enhance [Intelligence](characteristic:intelligence)-based and [Wisdom](characteristic:wisdom)-based skills, increase damage, and enhance senses.
+
+**Head Slot Items**
+
+| Lvl | Name | Price (gp) |
+| :--- | :--- | :--- |
+| 6 | Horned helm (heroic tier) | 1,800 |
+| 7 | Circlet of authority | 2,600 |
+| 8 | Diadem of acuity | 3,400 |
+| 9 | Helm of battle (heroic tier) | 4,200 |
+| 10 | Helm of heroes (heroic tier) | 5,000 |`,
+  },
+})
+
+export const CircletOfAuthoritySection = Content.defineSection('equipment/circlet-of-authority', {
+  parent: HeadSlotItemsSection,
+  content: {
+    name: 'Circlet of Authority',
+    description: `**Level 7**
+
+_This simple metal headband improves your diplomatic and intimidation skills._
+
+**Item Slot:** Head · 2,600 gp
+
+**Property:** You gain a +2 item bonus to [Diplomacy](characteristic:skill/diplomacy) checks and [Intimidate](characteristic:skill/intimidate) checks.`,
+  },
+})
+
+export const DiademOfAcuitySection = Content.defineSection('equipment/diadem-of-acuity', {
+  parent: HeadSlotItemsSection,
+  content: {
+    name: 'Diadem of Acuity',
+    description: `**Level 8**
+
+_This metal headband enhances your insight and perception skills._
+
+**Item Slot:** Head · 3,400 gp
+
+**Property:** Gain a +2 item bonus to [Insight](characteristic:skill/insight) checks and [Perception](characteristic:skill/perception) checks.`,
+  },
+})
+
+export const HelmOfBattleSection = Content.defineSection('equipment/helm-of-battle', {
+  parent: HeadSlotItemsSection,
+  content: {
+    name: 'Helm of Battle',
+    description: `**Level 9+**
+
+_This simple helmet enhances the initiative of you and your allies._
+
+Lvl 9 4,200 gp
+
+**Item Slot:** Head
+
+**Property:** You and each ally within 5 squares of you gain a +1 item bonus to [initiative](characteristic:initiative) checks.
+
+Level 19: +2 item bonus.
+
+Level 29: +3 item bonus.`,
+  },
+})
+
+export const HelmOfHeroesSection = Content.defineSection('equipment/helm-of-heroes', {
+  parent: HeadSlotItemsSection,
+  content: {
+    name: 'Helm of Heroes',
+    description: `**Level 10+**
+
+_This ornate helmet makes you and your allies less susceptible to fear effects and can be activated to improve an ally’s attack._
+
+Lvl 10 5,000 gp
+
+**Item Slot:** Head
+
+**Property:** You and each ally within 10 squares of you gain a +2 item bonus to [saving throws](content:combat/saving-throws) against fear effects.
+
+Level 30: +5 item bonus.
+
+**Power (Daily):** [Free Action](action-type:free-action). Use this power when you grant an ally a [basic attack](content:combat/basic-attack). That ally can take a standard action instead. The ally gains a +2 power bonus to any damage rolls made during that standard action.
+
+Level 20: +5 power bonus to damage rolls.
+
+Level 30: +10 power bonus to damage rolls.`,
+  },
+})
+
+export const HornedHelmSection = Content.defineSection('equipment/horned-helm', {
+  parent: HeadSlotItemsSection,
+  content: {
+    name: 'Horned Helm',
+    description: `**Level 6+**
+
+_This horned helmet increases the damage you deal when making a charge attack._
+
+Lvl 6 1,800 gp
+
+**Item Slot:** Head
+
+**Property:** Your [charge](content:combat/charge) attacks deal an extra 1d6 damage.
+
+Level 16: 2d6 extra damage.
+
+Level 26: 3d6 extra damage.`,
   },
 })
 
@@ -2280,7 +3066,32 @@ export const NeckSlotItemsSection = Content.defineSection('equipment/neck-slot-i
 | 1 | Amulet of protection +1 | 360 |
 | 2 | Cloak of resistance +1 | 520 |
 | 3 | Amulet of health +1 | 680 |
-| 3 | Safewing amulet +1 | 680 |`,
+| 3 | Safewing amulet +1 | 680 |
+| 6 | Amulet of protection +2 | 1,800 |
+| 7 | Cloak of resistance +2 | 2,600 |
+| 7 | Elven cloak +2 | 2,600 |
+| 8 | Amulet of health +2 | 3,400 |
+| 8 | Safewing amulet +2 | 3,400 |
+| 9 | Amulet of false life +2 | 4,200 |
+| 9 | Cloak of survival +2 | 4,200 |`,
+  },
+})
+
+export const AmuletOfFalseLifeSection = Content.defineSection('equipment/amulet-of-false-life', {
+  parent: NeckSlotItemsSection,
+  content: {
+    name: 'Amulet of False Life',
+    description: `**Level 9+**
+
+_This dark blue amulet with a crimson center increases your defenses and can be activated to grant you temporary hit points._
+
+Lvl 9 +2 4,200 gp
+
+**Item Slot:** Neck
+
+**Enhancement:** Fortitude, Reflex, and Will
+
+**Power (Daily):** [Minor Action](action-type:minor-action). Use this power when you are [bloodied](characteristic:bloodied) to gain [temporary hit points](content:combat/temporary-hit-points) equal to your [healing surge value](characteristic:surge-value).`,
   },
 })
 
@@ -2293,6 +3104,8 @@ export const AmuletOfHealthSection = Content.defineSection('equipment/amulet-of-
 _This golden amulet increases your defenses and resists poison._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Item Slot:** Neck
 
@@ -2316,6 +3129,8 @@ _This light blue amulet increases your defenses._
 
 Lvl 1 +1 360 gp
 
+Lvl 6 +2 1,800 gp
+
 **Item Slot:** Neck
 
 **Enhancement:** Fortitude, Reflex, and Will`,
@@ -2332,6 +3147,8 @@ _This crimson-hemmed cloak can be activated to provide minor resistance to all a
 
 Lvl 2 +1 520 gp
 
+Lvl 7 +2 2,600 gp
+
 **Item Slot:** Neck
 
 **Enhancement:** Fortitude, Reflex, and Will
@@ -2344,6 +3161,46 @@ Level 22 or 27: Resist 15 to all damage.`,
   },
 })
 
+export const CloakOfSurvivalSection = Content.defineSection('equipment/cloak-of-survival', {
+  parent: NeckSlotItemsSection,
+  content: {
+    name: 'Cloak of Survival',
+    description: `**Level 9+**
+
+_This brown cloak can be activated to increase your endurance and provide resistance to cold and fire._
+
+Lvl 9 +2 4,200 gp
+
+**Item Slot:** Neck
+
+**Enhancement:** Fortitude, Reflex, and Will
+
+**Property:** Gain an item bonus to [Endurance](characteristic:skill/endurance) checks equal to the cloak’s enhancement bonus. Gain resist 5 cold and resist 5 fire.
+
+Level 19 or 24: Resist 10 cold and resist 10 fire.
+
+Level 29: Resist 15 cold and resist 15 fire.`,
+  },
+})
+
+export const ElvenCloakSection = Content.defineSection('equipment/elven-cloak', {
+  parent: NeckSlotItemsSection,
+  content: {
+    name: 'Elven Cloak',
+    description: `**Level 7+**
+
+_This cloak of swirling leaves, crafted in the elven tradition, increases your stealth._
+
+Lvl 7 +2 2,600 gp
+
+**Item Slot:** Neck
+
+**Enhancement:** Fortitude, Reflex, and Will
+
+**Property:** Gain an item bonus to [Stealth](characteristic:skill/stealth) checks equal to the cloak’s enhancement bonus.`,
+  },
+})
+
 export const SafewingAmuletSection = Content.defineSection('equipment/safewing-amulet', {
   parent: NeckSlotItemsSection,
   content: {
@@ -2353,6 +3210,8 @@ export const SafewingAmuletSection = Content.defineSection('equipment/safewing-a
 _This orange amulet reduces the damage you suffer when falling._
 
 Lvl 3 +1 680 gp
+
+Lvl 8 +2 3,400 gp
 
 **Item Slot:** Neck
 
@@ -2381,7 +3240,31 @@ export const WaistSlotItemsSection = Content.defineSection('equipment/waist-slot
 | Lvl | Name | Price (gp) |
 | :--- | :--- | :--- |
 | 2 | Belt of vigor (heroic tier) | 520 |
-| 5 | Ironskin belt (heroic tier) | 1,000 |`,
+| 5 | Ironskin belt (heroic tier) | 1,000 |
+| 7 | Belt of sacrifice (heroic tier) | 2,600 |
+| 9 | Dynamic belt (heroic tier) | 4,200 |`,
+  },
+})
+
+export const BeltOfSacrificeSection = Content.defineSection('equipment/belt-of-sacrifice', {
+  parent: WaistSlotItemsSection,
+  content: {
+    name: 'Belt of Sacrifice',
+    description: `**Level 7+**
+
+_This belt of leather allows you to help others heal._
+
+Lvl 7 2,600 gp
+
+**Item Slot:** Waist
+
+**Property:** Each ally within 5 squares of you gains a +1 item bonus to his or her [healing surge value](characteristic:surge-value).
+
+Level 17: +2 item bonus.
+
+Level 27: +3 item bonus.
+
+**Power (Daily ✦ Healing):** [Minor Action](action-type:minor-action). Lose two [healing surges](characteristic:healing-surges). An ally within 5 squares of you regains one healing surge.`,
   },
 })
 
@@ -2402,6 +3285,28 @@ Lvl 2 520 gp
 Level 12: +2 item bonus.
 
 Level 22: +3 item bonus.`,
+  },
+})
+
+export const DynamicBeltSection = Content.defineSection('equipment/dynamic-belt', {
+  parent: WaistSlotItemsSection,
+  content: {
+    name: 'Dynamic Belt',
+    description: `**Level 9+**
+
+_This intricately woven mesh belt improves your acrobatics and athletics skills._
+
+Lvl 9 4,200 gp
+
+**Item Slot:** Waist
+
+**Property:** Gain a +2 item bonus to [Acrobatics](characteristic:skill/acrobatics) checks and [Athletics](characteristic:skill/athletics) checks.
+
+Level 19: +4 item bonus.
+
+Level 29: +6 item bonus.
+
+**Power (Daily):** [Free Action](action-type:free-action). Reroll an Acrobatics check or an Athletics check you just rolled. Use the new result.`,
   },
 })
 
@@ -2436,7 +3341,9 @@ export const WondrousItemsSection = Content.defineSection('equipment/wondrous-it
 | Lvl | Name | Price (gp) |
 | :--- | :--- | :--- |
 | 4 | Everlasting provisions | 840 |
-| 5 | Bag of holding | 1,000 |`,
+| 5 | Bag of holding | 1,000 |
+| 10 | Handy haversack | 5,000 |
+| 10 | Rope of climbing | 5,000 |`,
   },
 })
 
@@ -2467,6 +3374,40 @@ _This plain basket radiates delicious smells._
 **Wondrous Item** · 840 gp
 
 **Property:** After an extended rest, you open the basket, creating enough food and water to feed five Medium or Small creatures (or one Large creature) for 24 hours.`,
+  },
+})
+
+export const HandyHaversackSection = Content.defineSection('equipment/handy-haversack', {
+  parent: WondrousItemsSection,
+  content: {
+    name: 'Handy Haversack',
+    description: `**Level 10**
+
+_This ordinary-looking backpack is surprisingly light._
+
+**Wondrous Item** · 5,000 gp
+
+**Property:** This backpack can hold up to 1,000 pounds in weight or 100 cubic feet in volume, but it always weighs only 1 pound.
+
+Drawing an item from a _handy haversack_ is a minor action.`,
+  },
+})
+
+export const RopeOfClimbingSection = Content.defineSection('equipment/rope-of-climbing', {
+  parent: WondrousItemsSection,
+  content: {
+    name: 'Rope of Climbing',
+    description: `**Level 10**
+
+_A coil of golden rope._
+
+**Wondrous Item** · 5,000 gp
+
+**Property:** This 100-foot-long rope has 100 hit points and can hold up to 2,500 pounds (roughly 10 Medium creatures and their gear).
+
+**Power (At-Will):** [Minor Action](action-type:minor-action). The rope moves up to 10 squares along a horizontal or a vertical surface. As part of the same action, it can tie itself around an object to create a secure point for climbing. It can’t tie itself to or otherwise affect a creature.
+
+Anyone holding the rope can activate its power. On command, the rope unties itself as a minor action.`,
   },
 })
 
@@ -2566,12 +3507,18 @@ export const EquipmentContent: Array<ContentSection> = [
   DwarvenArmorSection,
   DelversArmorSection,
   EladrinArmorSection,
+  ElvenBattleArmorSection,
   ExaltedArmorSection,
   FireburstArmorSection,
+  GhostphaseArmorSection,
   MagicArmorItemSection,
+  MountainArmorSection,
   RazorArmorSection,
+  SunleafArmorSection,
   SylvanArmorSection,
   MagicWeaponsSection,
+  BerserkerWeaponSection,
+  DragonslayerWeaponSection,
   DuelistsWeaponSection,
   FlameburstWeaponSection,
   FlamingWeaponSection,
@@ -2590,52 +3537,82 @@ export const EquipmentContent: Array<ContentSection> = [
   SymbolOfBattleSection,
   SymbolOfHopeSection,
   SymbolOfLifeSection,
+  SymbolOfPowerSection,
+  SymbolOfVictorySection,
   OrbsSection,
   MagicOrbSection,
+  OrbOfIndisputableGravitySection,
   OrbOfInevitableContinuanceSection,
+  OrbOfReversedPolaritiesSection,
   OrbOfSanguinaryRepercussionsSection,
   RodsSection,
   MagicRodSection,
   RodOfCorruptionSection,
   RodOfDarkRewardSection,
+  RodOfFirstBloodSection,
   RodOfReavingSection,
+  RodOfThePyreSection,
   StaffsSection,
   MagicStaffSection,
   StaffOfFieryMightSection,
   StaffOfStormsSection,
   StaffOfTheWarMageSection,
   StaffOfWinterSection,
+  ThunderwaveStaffSection,
   WandsSection,
   MagicWandSection,
+  WandOfEldritchRainSection,
+  WandOfFieryBoltSection,
+  WandOfIcyRaysSection,
   WandOfRayOfEnfeeblementSection,
+  WandOfShieldSection,
   WandOfWitchfireSection,
   ArmsSlotItemsSection,
   BashingShieldSection,
+  BracersOfDefenseSection,
   BracersOfMightyStrikingSection,
   BracersOfThePerfectShotSection,
+  GuardianShieldSection,
+  ShieldOfDefianceSection,
   ShieldOfProtectionSection,
   FeetSlotItemsSection,
   AcrobatBootsSection,
   BootsOfSpiderClimbingSection,
+  BootsOfStridingSection,
   CatstepBootsSection,
+  DwarvenGreavesSection,
   WavestriderBootsSection,
   HandsSlotItemsSection,
   BurglarsGlovesSection,
   GauntletsOfOgrePowerSection,
+  GauntletsOfTheRamSection,
   GlovesOfPiercingSection,
+  ShadowfellGlovesSection,
   HeadSlotItemsSection,
+  CircletOfAuthoritySection,
+  DiademOfAcuitySection,
+  HelmOfBattleSection,
+  HelmOfHeroesSection,
+  HornedHelmSection,
   NeckSlotItemsSection,
+  AmuletOfFalseLifeSection,
   AmuletOfHealthSection,
   AmuletOfProtectionSection,
   CloakOfResistanceSection,
+  CloakOfSurvivalSection,
+  ElvenCloakSection,
   SafewingAmuletSection,
   RingsSection,
   WaistSlotItemsSection,
+  BeltOfSacrificeSection,
   BeltOfVigorSection,
+  DynamicBeltSection,
   IronskinBeltSection,
   WondrousItemsSection,
   BagOfHoldingSection,
   EverlastingProvisionsSection,
+  HandyHaversackSection,
+  RopeOfClimbingSection,
   PotionsSection,
   PotionOfHealingSection,
 ]

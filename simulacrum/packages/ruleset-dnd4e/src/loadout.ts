@@ -17,4 +17,25 @@ export const PreparedDailySpell5Loadout = Loadout.defineLoadoutType('prepared-da
   name: 'Prepared Daily Spell (Level 5)',
 })
 
-export const AllLoadouts = [ArmorLoadout, ShieldLoadout, PreparedDailySpell1Loadout, PreparedUtilitySpell2Loadout, PreparedDailySpell5Loadout]
+export const PreparedUtilitySpell6Loadout = Loadout.defineLoadoutType('prepared-utility-spell-6', {
+  name: 'Prepared Utility Spell (Level 6)',
+})
+
+export const PreparedDailySpell9Loadout = Loadout.defineLoadoutType('prepared-daily-spell-9', {
+  name: 'Prepared Daily Spell (Level 9)',
+})
+
+export const PreparedUtilitySpell10Loadout = Loadout.defineLoadoutType('prepared-utility-spell-10', {
+  name: 'Prepared Utility Spell (Level 10)',
+})
+
+export const AllLoadouts = [
+  ArmorLoadout,
+  ShieldLoadout,
+  PreparedDailySpell1Loadout,
+  PreparedUtilitySpell2Loadout,
+  PreparedDailySpell5Loadout,
+  PreparedUtilitySpell6Loadout,
+  PreparedDailySpell9Loadout,
+  PreparedUtilitySpell10Loadout,
+]

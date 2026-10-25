@@ -11,6 +11,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   HalflingFeat,
   Heritage,
   NephilimFeat,
@@ -103,6 +104,17 @@ export const SelectHalflingFeat5 = CharacterOptions.selectTraitOption('ancestry/
   },
 })
 
+export const SelectHalflingFeat9 = CharacterOptions.selectTraitOption('ancestry/halfling/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: {
+    tags: [
+      AncestryFeat,
+      [HalflingFeat, ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat],
+      [FeatLevel1, FeatLevel5, FeatLevel9],
+    ],
+  },
+})
+
 export const SelectHalflingAncestryBoost = CharacterOptions.selectTraitOption('ancestry/halfling/select-boost', {
   name: 'Ancestry Boost',
   filter: { specificOptions: [StrengthAncestryBoost, ConstitutionAncestryBoost, IntelligenceAncestryBoost, CharismaAncestryBoost] },
@@ -123,6 +135,7 @@ export const Halfling = Traits.defineTrait('ancestry/halfling', {
     Effects.gainCharacterOption(SelectHalflingHeritage),
     Effects.gainCharacterOption(SelectHalflingFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectHalflingFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectHalflingFeat9)]),
   ],
 })
 
@@ -251,6 +264,40 @@ export const StepLivelyAction = Abilities.defineAbility('ancestry/halfling/step-
   ],
 })
 
+export const DanceUnderfoot = Traits.defineTrait('ancestry/halfling/dance-underfoot', {
+  name: 'Dance Underfoot',
+  description:
+    "*Halfling*\n\n**Prerequisites** [Step Lively](trait:ancestry/halfling/step-lively)\n\nYou dart under the legs of your enemies in combat. You can end a successful [Tumble Through](content:skills/tumble-through) action in a Large or larger enemy's space. Also, when using the [Step Lively](trait:ancestry/halfling/step-lively) feat, you can [Step](content:playing-the-game/step) into the triggering enemy's space. The enemy must have limbs or otherwise leave you enough room for this maneuver, as determined by the GM. For instance, you could share space with a giant or dragon, but not an ooze.",
+  tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(StepLively)],
+  effects: [],
+})
+
+export const GuidingLuck = Traits.defineTrait('ancestry/halfling/guiding-luck', {
+  name: 'Guiding Luck',
+  description:
+    '*Halfling*\n\n**Prerequisites** [Halfling Luck](trait:ancestry/halfling/halfling-luck)\n\nYour luck guides you to look the right way and aim your blows unerringly. You can use [Halfling Luck](trait:ancestry/halfling/halfling-luck) twice per day: once in response to its normal trigger, and once when you fail a [Perception](characteristic:perception) check or attack roll instead of the normal trigger.',
+  tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(HalflingLuck)],
+  effects: [],
+})
+
+export const Irrepressible = Traits.defineTrait('ancestry/halfling/irrepressible', {
+  name: 'Irrepressible',
+  description:
+    '*Halfling*\n\nYou are easily able to ward off attempts to play on your fears and emotions. When you roll a success on a saving throw against an [emotion](content:traits/emotion) effect, you get a critical success instead. If your heritage is [gutsy halfling](trait:heritage/gutsy-halfling), when you roll a critical failure on a saving throw against an emotion effect, you get a failure instead.',
+  tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel9],
+  effects: [],
+})
+
+export const UnhamperedPassage = Traits.defineTrait('ancestry/halfling/unhampered-passage', {
+  name: 'Unhampered Passage',
+  description:
+    "*Halfling*\n\nYou won't allow others to restrain you. You can cast _unfettered movement_ on yourself as a primal innate spell once per day.",
+  tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel9],
+  effects: [],
+})
+
 export const AllHalflingEntities = [
   GutsyHalfling,
   HillockHalfling,
@@ -262,6 +309,7 @@ export const AllHalflingEntities = [
   SelectHalflingHeritage,
   SelectHalflingFeat1,
   SelectHalflingFeat5,
+  SelectHalflingFeat9,
   SelectHalflingAncestryBoost,
   Halfling,
   DistractingShadows,
@@ -278,4 +326,8 @@ export const AllHalflingEntities = [
   CulturalAdaptability,
   StepLively,
   StepLivelyAction,
+  DanceUnderfoot,
+  GuidingLuck,
+  Irrepressible,
+  UnhamperedPassage,
 ]

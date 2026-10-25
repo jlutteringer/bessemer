@@ -10,11 +10,15 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Ranger } from '@simulacrum/ruleset-dnd4e/class/class-ranger'
 
-// Generated from the Player's Handbook Ranger powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Ranger powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal. Encounter powers come back after a short rest, daily powers after an extended rest.
 
 export const CarefulAttack = Abilities.defineAbility('ranger/power/careful-attack', {
@@ -380,6 +384,231 @@ export const TwoWolfPounce = Abilities.defineAbility('ranger/power/two-wolf-poun
   costs: [{ cost: 1 }],
 })
 
+export const EvadeAmbush = Abilities.defineAbility('ranger/power/evade-ambush', {
+  name: 'Evade Ambush',
+  description: '*You are the eyes and ears of the group, always alert for the telltale signs of an ambush.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Utility 6**\n\n**Daily** ✦ Martial\n\n**No Action** · Ranged sight\n\n**Effect:** At the start of a surprise round in which any allies are surprised, use this power to allow a number of allies equal to your Wisdom modifier to avoid being surprised.'
+    ),
+  ],
+  actions: [{ name: 'Evade Ambush', action: ActionTypes.NoAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SkilledCompanion = Abilities.defineAbility('ranger/power/skilled-companion', {
+  name: 'Skilled Companion',
+  description: '*Your allies benefit from the things that you have learned.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Utility 6**\n\n**Daily** ✦ Martial\n\n**Minor Action** · Ranged 10\n\n**Target:** One ally\n\n**Effect:** Any ally within 10 squares of you who attempts an untrained check with a skill in which you are trained gains a power bonus to checks with a single skill of your choice equal to your Wisdom modifier. The ally must be able to see or hear you to gain this bonus. The benefit lasts until the end of the encounter or for 5 minutes.'
+    ),
+  ],
+  actions: [{ name: 'Skilled Companion', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const WeaveThroughTheFray = Abilities.defineAbility('ranger/power/weave-through-the-fray', {
+  name: 'Weave through the Fray',
+  description: '*You dodge through the thick of the fight, denying your foes a chance to pin you down in one spot.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** An enemy moves adjacent to you\n\n**Effect:** You can shift a number of squares equal to your Wisdom modifier.'
+    ),
+  ],
+  actions: [{ name: 'Weave through the Fray', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ClawsOfTheGriffon = Abilities.defineAbility('ranger/power/claws-of-the-griffon', {
+  name: 'Claws of the Griffon',
+  description: '*Your steel blades flash menacingly as you taunt your foes with parries and cut deep wounds into their flesh.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** One or two creatures\n\n**Attack:** Strength vs. AC (main weapon and off-hand weapon), two attacks\n\n**Hit:** 2[W] + Strength modifier damage (main weapon) and 1[W] + Strength modifier damage (off-hand weapon).'
+    ),
+  ],
+  actions: [{ name: 'Claws of the Griffon', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const HawksTalon = Abilities.defineAbility('ranger/power/hawks-talon', {
+  name: "Hawk's Talon",
+  description: '*Like the hawk, you strike with calculated precision.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (melee) or Dexterity vs. AC (ranged). Gain a power bonus to this attack equal to your Wisdom modifier. Ignore any penalties from cover or concealment (but not superior cover or total concealment).\n\n**Hit:** 2[W] + Strength modifier damage (melee) or 2[W] + Dexterity modifier damage (ranged).'
+    ),
+  ],
+  actions: [{ name: "Hawk's Talon", action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SpikesOfTheManticore = Abilities.defineAbility('ranger/power/spikes-of-the-manticore', {
+  name: 'Spikes of the Manticore',
+  description: '*You unleash two arrows in rapid succession.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One or two creatures\n\n**Attack:** Dexterity vs. AC, one attack per target\n\n**Hit:** 2[W] + Dexterity modifier damage (first shot) and 1[W] + Dexterity modifier damage (second shot).'
+    ),
+  ],
+  actions: [{ name: 'Spikes of the Manticore', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SweepingWhirlwind = Abilities.defineAbility('ranger/power/sweeping-whirlwind', {
+  name: 'Sweeping Whirlwind',
+  description: '*You slash and stab at surrounding foes with unbound fury, knocking them off balance with thrusts and leg sweeps.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** Each enemy in burst\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and you push the target a number of squares equal to your Wisdom modifier and it is knocked prone.'
+    ),
+  ],
+  actions: [{ name: 'Sweeping Whirlwind', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const AttacksOnTheRun = Abilities.defineAbility('ranger/power/attacks-on-the-run', {
+  name: 'Attacks on the Run',
+  description: '*Without breaking stride, you make two attacks against a single foe or two different targets.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One or two creatures\n\n**Attack:** You can move your speed. At any point during your move, you can make two Strength vs. AC attacks with a melee weapon or two Dexterity vs. AC attacks with a ranged weapon.\n\n**Hit:** 3[W] + Strength modifier damage (melee) or 3[W] + Dexterity modifier damage (ranged) per attack.\n\n**Miss:** Half damage per attack.'
+    ),
+  ],
+  actions: [{ name: 'Attacks on the Run', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CloseQuartersShot = Abilities.defineAbility('ranger/power/close-quarters-shot', {
+  name: 'Close Quarters Shot',
+  description:
+    "*Though menaced by fangs and claws, you calmly unload an arrow into the creature's gaping maw—mere inches from your outstretched arm.*",
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Ranged 1\n\n**Target:** One adjacent enemy\n\n**Attack:** Dexterity vs. AC. This attack does not provoke opportunity attacks.\n\n**Hit:** 4[W] + Dexterity modifier damage.\n\n**Miss:** Half damage.'
+    ),
+  ],
+  actions: [{ name: 'Close Quarters Shot', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SprayOfArrows = Abilities.defineAbility('ranger/power/spray-of-arrows', {
+  name: 'Spray of Arrows',
+  description: '*You fire repeatedly with a short draw, showering arrows at each enemy in front of you.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close blast 3\n\n**Requirement:** You must be wielding a ranged weapon.\n\n**Target:** Each enemy in blast you can see\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Miss:** Half damage.'
+    ),
+  ],
+  actions: [{ name: 'Spray of Arrows', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SwirlingLeavesOfSteel = Abilities.defineAbility('ranger/power/swirling-leaves-of-steel', {
+  name: 'Swirling Leaves of Steel',
+  description: '*You spin around with blades outstretched, using momentum and skill to slice through enemy defenses.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC, one attack per target\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Miss:** Half damage.'
+    ),
+  ],
+  actions: [{ name: 'Swirling Leaves of Steel', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ExpeditiousStride = Abilities.defineAbility('ranger/power/expeditious-stride', {
+  name: 'Expeditious Stride',
+  description: '*Like a gazelle, you startle allies and enemies alike with your sudden swiftness.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Utility 10**\n\n**Encounter** ✦ Martial\n\n**Minor Action** · Personal\n\n**Effect:** Until the end of your next turn, your speed increases by 4, and when you shift, you can shift 1 additional square.'
+    ),
+  ],
+  actions: [{ name: 'Expeditious Stride', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const OpenTheRange = Abilities.defineAbility('ranger/power/open-the-range', {
+  name: 'Open the Range',
+  description: '*You keep your distance from an approaching adversary, backpedaling easily away from him.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      "**Ranger Utility 10**\n\n**Daily** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** An enemy moves adjacent to you\n\n**Effect:** You can shift 1 square and then move a number of squares equal to 1 + your Wisdom modifier. You can't end your move adjacent to the triggering enemy."
+    ),
+  ],
+  actions: [{ name: 'Open the Range', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const UndauntedStride = Abilities.defineAbility('ranger/power/undaunted-stride', {
+  name: 'Undaunted Stride',
+  description: '*You expertly navigate through difficult terrain.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Ranger)],
+  effects: [
+    Effects.descriptive(
+      '**Ranger Utility 10**\n\n**Daily** ✦ Martial, Stance\n\n**Minor Action** · Personal\n\n**Effect:** Your movement is not hindered by difficult terrain.'
+    ),
+  ],
+  actions: [{ name: 'Undaunted Stride', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
 export const AllRangerPowers = [
   CarefulAttack,
   HitAndRun,
@@ -404,4 +633,18 @@ export const AllRangerPowers = [
   FrenziedSkirmish,
   SplinteringShot,
   TwoWolfPounce,
+  EvadeAmbush,
+  SkilledCompanion,
+  WeaveThroughTheFray,
+  ClawsOfTheGriffon,
+  HawksTalon,
+  SpikesOfTheManticore,
+  SweepingWhirlwind,
+  AttacksOnTheRun,
+  CloseQuartersShot,
+  SprayOfArrows,
+  SwirlingLeavesOfSteel,
+  ExpeditiousStride,
+  OpenTheRange,
+  UndauntedStride,
 ]

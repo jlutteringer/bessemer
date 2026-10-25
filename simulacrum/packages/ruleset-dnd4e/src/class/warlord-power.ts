@@ -10,11 +10,15 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Warlord } from '@simulacrum/ruleset-dnd4e/class/class-warlord'
 
-// Generated from the Player's Handbook Warlord powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Warlord powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal. Encounter powers come back after a short rest, daily powers after an extended rest.
 
 export const CommandersStrike = Abilities.defineAbility('warlord/power/commanders-strike', {
@@ -383,6 +387,232 @@ export const VillainsNightmare = Abilities.defineAbility('warlord/power/villains
   costs: [{ cost: 1 }],
 })
 
+export const GuideTheCharge = Abilities.defineAbility('warlord/power/guide-the-charge', {
+  name: 'Guide the Charge',
+  description: "*You direct your ally's charge, allowing him to strike a deadlier blow and push his foe backward.*",
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      "**Warlord Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Interrupt** · Ranged 10\n\n**Trigger:** An ally charges\n\n**Effect:** If the ally hits, he or she adds your Intelligence modifier to the damage roll and pushes the attack's target 2 squares. The ally can shift 2 squares to remain adjacent to the target."
+    ),
+  ],
+  actions: [{ name: 'Guide the Charge', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const InspiringReaction = Abilities.defineAbility('warlord/power/inspiring-reaction', {
+  name: 'Inspiring Reaction',
+  description: '*As soon as an ally is wounded, you spring forward with help and healing.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Utility 6**\n\n**Encounter** ✦ Healing, Martial\n\n**Immediate Reaction** · Melee touch\n\n**Trigger:** You or an adjacent ally takes damage\n\n**Effect:** You or the ally can spend a healing surge and regain additional hit points equal to your Charisma modifier.'
+    ),
+  ],
+  actions: [{ name: 'Inspiring Reaction', action: ActionTypes.ImmediateReaction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const QuickStep = Abilities.defineAbility('warlord/power/quick-step', {
+  name: 'Quick Step',
+  description: '*You spur an ally to move faster.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      "**Warlord Utility 6**\n\n**Daily** ✦ Martial\n\n**Minor Action** · Ranged 10\n\n**Target:** One ally\n\n**Effect:** Increase the ally's speed by 2 until the end of the encounter."
+    ),
+  ],
+  actions: [{ name: 'Quick Step', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const StandTough = Abilities.defineAbility('warlord/power/stand-tough', {
+  name: 'Stand Tough',
+  description: '*You fortify your allies with a few words of encouragement.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Utility 6**\n\n**Daily** ✦ Healing, Martial\n\n**Minor Action** · Close burst 5\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets regain hit points equal to 10 + your Charisma modifier.'
+    ),
+  ],
+  actions: [{ name: 'Stand Tough', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const LionsRoar = Abilities.defineAbility('warlord/power/lions-roar', {
+  name: "Lion's Roar",
+  description:
+    "*With a bloodcurdling roar, you swing your weapon in a wide, sweeping arc that breaks through your enemy's defenses. The blow reinvigorates you or one of your allies in need.*",
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Attack 7**\n\n**Encounter** ✦ Healing, Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Effect:** You or one ally within 5 squares of you can spend a healing surge.\n\n**Inspiring Presence:** Your ally (but not you) gains additional hit points equal to your Charisma modifier.'
+    ),
+  ],
+  actions: [{ name: "Lion's Roar", action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SunderArmor = Abilities.defineAbility('warlord/power/sunder-armor', {
+  name: 'Sunder Armor',
+  description: "*You probe your opponent's defenses and eventually land a blow that creates a momentary chink in his armor.*",
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage. Until the end of your next turn, any attack roll against the target can score a critical hit on a roll of 18–20.'
+    ),
+  ],
+  actions: [{ name: 'Sunder Armor', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SurpriseAttack = Abilities.defineAbility('warlord/power/surprise-attack', {
+  name: 'Surprise Attack',
+  description: '*Despite the chaos of battle, you see a golden opportunity for an ally to make a surprising attack.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage. An ally within 5 squares of you makes a basic attack with combat advantage as a free action against a target of his or her choice.\n\n**Tactical Presence:** The ally gains a bonus to the attack roll equal to your Intelligence modifier.'
+    ),
+  ],
+  actions: [{ name: 'Surprise Attack', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SurroundFoe = Abilities.defineAbility('warlord/power/surround-foe', {
+  name: 'Surround Foe',
+  description: '*You contain your foe, enabling one of your allies to move around behind him.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      "**Warlord Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Effect:** You slide one willing ally who is adjacent to the target to any other square adjacent to the target. The ally can move through the target's square."
+    ),
+  ],
+  actions: [{ name: 'Surround Foe', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const IronDragonCharge = Abilities.defineAbility('warlord/power/iron-dragon-charge', {
+  name: 'Iron Dragon Charge',
+  description:
+    '*Like a rampaging iron dragon, you hurl yourself at your adversary, landing a terrific blow that inspires your allies to charge as well.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Special:** You must charge as part of this attack.\n\n**Hit:** 3[W] + Strength modifier damage.\n\n**Effect:** Until the end of the encounter, as an immediate reaction, an ally of your choice within 5 squares of you can charge a target that you charge.'
+    ),
+  ],
+  actions: [{ name: 'Iron Dragon Charge', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const KnockThemDown = Abilities.defineAbility('warlord/power/knock-them-down', {
+  name: 'Knock Them Down',
+  description: '*The rhythm of your enemies hitting the ground is music to your ears.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and the target is knocked prone. Every ally within 10 squares of you can move 3 squares and make a melee basic attack against one target of his or her choice as a free action. These attacks deal no damage but knock a target prone on a hit.\n\n**Miss:** Half damage, and the target is knocked prone.'
+    ),
+  ],
+  actions: [{ name: 'Knock Them Down', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const WhiteRavenStrike = Abilities.defineAbility('warlord/power/white-raven-strike', {
+  name: 'White Raven Strike',
+  description: '*You land a punishing blow that ignites the fire within your allies and keeps them alive on the battlefield.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage.\n\n**Effect:** One or two allies within 10 squares gain 15 temporary hit points. If you dropped the target to 0 hit points or fewer with this attack, add your Charisma modifier to the temporary hit points your allies gain.'
+    ),
+  ],
+  actions: [{ name: 'White Raven Strike', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DefensiveRally = Abilities.defineAbility('warlord/power/defensive-rally', {
+  name: 'Defensive Rally',
+  description: '*You marshal your comrades and provide instructions to help them prevail.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Utility 10**\n\n**Daily** ✦ Healing, Martial\n\n**Standard Action** · Close burst 5\n\n**Target:** Each ally in burst\n\n**Effect:** Each target can spend a healing surge and make a saving throw against any single effect that a save can end. In addition, all targets gain a +2 power bonus to all defenses until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Defensive Rally', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const EaseSuffering = Abilities.defineAbility('warlord/power/ease-suffering', {
+  name: 'Ease Suffering',
+  description: '*Your nearby presence is enough to ease the suffering of your allies.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Utility 10**\n\n**Daily** ✦ Martial\n\n**Minor Action** · Personal\n\n**Effect:** Allies ignore ongoing damage on any turn they start adjacent to you, neither taking ongoing damage nor making saving throws to end it. This effect persists until the end of the encounter or for 5 minutes.'
+    ),
+  ],
+  actions: [{ name: 'Ease Suffering', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const TacticalShift = Abilities.defineAbility('warlord/power/tactical-shift', {
+  name: 'Tactical Shift',
+  description: "*Your mastery of battle tactics and stern commands allow you to move an allyout of harm's way.*",
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Warlord)],
+  effects: [
+    Effects.descriptive(
+      '**Warlord Utility 10**\n\n**Daily** ✦ Martial\n\n**Immediate Interrupt** · Ranged 10\n\n**Trigger:** A creature hits your ally with a melee or a ranged attack\n\n**Effect:** The ally can shift a number of squares equal to 1 + your Intelligence modifier.'
+    ),
+  ],
+  actions: [{ name: 'Tactical Shift', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
 export const AllWarlordPowers = [
   CommandersStrike,
   FuriousSmash,
@@ -407,4 +637,18 @@ export const AllWarlordPowers = [
   StandTheFallen,
   TurningPoint,
   VillainsNightmare,
+  GuideTheCharge,
+  InspiringReaction,
+  QuickStep,
+  StandTough,
+  LionsRoar,
+  SunderArmor,
+  SurpriseAttack,
+  SurroundFoe,
+  IronDragonCharge,
+  KnockThemDown,
+  WhiteRavenStrike,
+  DefensiveRally,
+  EaseSuffering,
+  TacticalShift,
 ]

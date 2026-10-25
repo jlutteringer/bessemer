@@ -1,7 +1,21 @@
 import { Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
-import { Class, ClassFeature, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, WitchFeat } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  Class,
+  ClassFeature,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+  WitchFeat,
+} from '@simulacrum/ruleset-pf2e/tag'
 import {
   ClassDC,
   Constitution,
@@ -21,7 +35,14 @@ import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { IntelligenceKeyAttribute } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { SelectTrainedSkill } from '@simulacrum/ruleset-pf2e/skill'
-import { CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout } from '@simulacrum/ruleset-pf2e/loadout'
+import {
+  CantripLoadout,
+  SpellRank1Loadout,
+  SpellRank2Loadout,
+  SpellRank3Loadout,
+  SpellRank4Loadout,
+  SpellRank5Loadout,
+} from '@simulacrum/ruleset-pf2e/loadout'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import { SelectFamiliarAbility } from '@simulacrum/ruleset-pf2e/companion/familiar'
 import * as WitchFocusSpells from '@simulacrum/ruleset-pf2e/class/witch-focus-spell'
@@ -43,6 +64,23 @@ export const SelectWitchFeat2 = CharacterOptions.selectTraitOption('witch/select
 export const SelectWitchFeat4 = CharacterOptions.selectTraitOption('witch/select-feat-4', {
   name: 'Witch Feat (Level 4)',
   filter: { tags: [WitchFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectWitchFeat6 = CharacterOptions.selectTraitOption('witch/select-feat-6', {
+  name: 'Witch Feat (Level 6)',
+  filter: { tags: [WitchFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectWitchFeat8 = CharacterOptions.selectTraitOption('witch/select-feat-8', {
+  name: 'Witch Feat (Level 8)',
+  filter: { tags: [WitchFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectWitchFeat10 = CharacterOptions.selectTraitOption('witch/select-feat-10', {
+  name: 'Witch Feat (Level 10)',
+  filter: {
+    tags: [WitchFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const WitchPatron = Traits.defineTrait('witch/patron', {
@@ -76,6 +114,17 @@ export const WitchSpellcasting = Traits.defineTrait('witch/spellcasting', {
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainLoadoutSlot(SpellRank3Loadout),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainLoadoutSlot(SpellRank3Loadout)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainLoadoutSlot(SpellRank4Loadout)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainLoadoutSlot(SpellRank5Loadout)]),
   ],
 })
 
@@ -88,6 +137,9 @@ export const WitchFamiliar = Traits.defineTrait('witch/familiar', {
     Effects.gainCharacterOption(SelectFamiliarAbility),
     Effects.gainCharacterOption(SelectFamiliarAbility),
     Effects.gainCharacterOption(SelectFamiliarAbility),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectFamiliarAbility)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 12), [Effects.gainCharacterOption(SelectFamiliarAbility)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 18), [Effects.gainCharacterOption(SelectFamiliarAbility)]),
   ],
 })
 
@@ -105,6 +157,25 @@ export const WitchMagicalFortitude = Traits.defineTrait('witch/magical-fortitude
     "Your patron's power boosts your physical resiliency. Your proficiency rank for [Fortitude](characteristic:fortitude) saves increases to expert.",
   tags: [ClassFeature],
   effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const WitchExpertSpellcaster = Traits.defineTrait('witch/expert-spellcaster', {
+  name: 'Expert Spellcaster',
+  description:
+    "You've learned to better control the power your patron has granted you. Your proficiency ranks for [spell attack modifier](characteristic:spell-attack) and [spell DC](characteristic:spell-dc) increase to expert.",
+  tags: [ClassFeature],
+  effects: [
+    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+  ],
+})
+
+export const WitchReflexExpertise = Traits.defineTrait('witch/reflex-expertise', {
+  name: 'Reflex Expertise',
+  description:
+    'Your reflexes are lightning fast, helping you avoid danger. Your proficiency rank for [Reflex](characteristic:reflex) saves increases to expert.',
+  tags: [ClassFeature],
+  effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const Witch = Traits.defineTrait('witch', {
@@ -140,6 +211,11 @@ export const Witch = Traits.defineTrait('witch', {
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [Effects.gainCharacterOption(SelectWitchFeat2)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [Effects.gainCharacterOption(SelectWitchFeat4)]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainTrait(WitchMagicalFortitude)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectWitchFeat6)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainTrait(WitchExpertSpellcaster)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectWitchFeat8)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainTrait(WitchReflexExpertise)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectWitchFeat10)]),
   ],
 })
 
@@ -149,6 +225,8 @@ export const AllWitchEntities = [
   WitchFamiliar,
   WitchHexSpells,
   WitchMagicalFortitude,
+  WitchExpertSpellcaster,
+  WitchReflexExpertise,
   Witch,
   ...AllWitchFocusSpells,
   ...AllWitchLessonEntities,

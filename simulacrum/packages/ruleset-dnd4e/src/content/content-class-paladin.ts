@@ -162,6 +162,43 @@ export const HallowedCircleSection = Content.linkEntity(Level5DailyPrayersSectio
 export const MartyrsRetributionSection = Content.linkEntity(Level5DailyPrayersSection, PaladinPowers.MartyrsRetribution)
 export const SignOfVulnerabilitySection = Content.linkEntity(Level5DailyPrayersSection, PaladinPowers.SignOfVulnerability)
 
+export const Level6UtilityPrayersSection = Content.defineSection('classes/paladin-level-6-utility-prayers', {
+  parent: PaladinPowersSection,
+  content: { name: 'Level 6 Utility Prayers' },
+})
+
+export const DivineBodyguardSection = Content.linkEntity(Level6UtilityPrayersSection, PaladinPowers.DivineBodyguard)
+export const OneHeartOneMindSection = Content.linkEntity(Level6UtilityPrayersSection, PaladinPowers.OneHeartOneMind)
+export const WrathOfTheGodsSection = Content.linkEntity(Level6UtilityPrayersSection, PaladinPowers.WrathOfTheGods)
+
+export const Level7EncounterPrayersSection = Content.defineSection('classes/paladin-level-7-encounter-prayers', {
+  parent: PaladinPowersSection,
+  content: { name: 'Level 7 Encounter Prayers' },
+})
+
+export const BeckonFoeSection = Content.linkEntity(Level7EncounterPrayersSection, PaladinPowers.BeckonFoe)
+export const BenignTranspositionSection = Content.linkEntity(Level7EncounterPrayersSection, PaladinPowers.BenignTransposition)
+export const DivineReverenceSection = Content.linkEntity(Level7EncounterPrayersSection, PaladinPowers.DivineReverence)
+export const ThunderSmiteSection = Content.linkEntity(Level7EncounterPrayersSection, PaladinPowers.ThunderSmite)
+
+export const Level9DailyPrayersSection = Content.defineSection('classes/paladin-level-9-daily-prayers', {
+  parent: PaladinPowersSection,
+  content: { name: 'Level 9 Daily Prayers' },
+})
+
+export const CrownOfGlorySection = Content.linkEntity(Level9DailyPrayersSection, PaladinPowers.CrownOfGlory)
+export const OneStandsAloneSection = Content.linkEntity(Level9DailyPrayersSection, PaladinPowers.OneStandsAlone)
+export const RadiantPulseSection = Content.linkEntity(Level9DailyPrayersSection, PaladinPowers.RadiantPulse)
+
+export const Level10UtilityPrayersSection = Content.defineSection('classes/paladin-level-10-utility-prayers', {
+  parent: PaladinPowersSection,
+  content: { name: 'Level 10 Utility Prayers' },
+})
+
+export const CleansingSpiritSection = Content.linkEntity(Level10UtilityPrayersSection, PaladinPowers.CleansingSpirit)
+export const NobleShieldSection = Content.linkEntity(Level10UtilityPrayersSection, PaladinPowers.NobleShield)
+export const TurnTheTideSection = Content.linkEntity(Level10UtilityPrayersSection, PaladinPowers.TurnTheTide)
+
 export const PaladinContent: Array<ContentSection> = [
   PaladinSection,
   PaladinClassTraitsSection,
@@ -208,4 +245,21 @@ export const PaladinContent: Array<ContentSection> = [
   HallowedCircleSection,
   MartyrsRetributionSection,
   SignOfVulnerabilitySection,
+  Level6UtilityPrayersSection,
+  DivineBodyguardSection,
+  OneHeartOneMindSection,
+  WrathOfTheGodsSection,
+  Level7EncounterPrayersSection,
+  BeckonFoeSection,
+  BenignTranspositionSection,
+  DivineReverenceSection,
+  ThunderSmiteSection,
+  Level9DailyPrayersSection,
+  CrownOfGlorySection,
+  OneStandsAloneSection,
+  RadiantPulseSection,
+  Level10UtilityPrayersSection,
+  CleansingSpiritSection,
+  NobleShieldSection,
+  TurnTheTideSection,
 ]

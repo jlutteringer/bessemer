@@ -60,6 +60,10 @@ export const PrescientPlannerSection = Content.linkEntity(GeneralFeatsSection, G
 
 export const UntrainedImprovisationSection = Content.linkEntity(GeneralFeatsSection, GeneralFeat.UntrainedImprovisation)
 
+export const ExpeditiousSearchSection = Content.linkEntity(GeneralFeatsSection, GeneralFeat.ExpeditiousSearch)
+
+export const PrescientConsumableSection = Content.linkEntity(GeneralFeatsSection, GeneralFeat.PrescientConsumable)
+
 export const SkillFeatsSection = Content.defineSection('feats/skill-feats', { parent: FeatsSection, content: { name: 'Skill Feats' } })
 
 export const AdditionalLoreSection = Content.linkEntity(SkillFeatsSection, SkillFeat.AdditionalLore)
@@ -210,6 +214,42 @@ export const WardMedicSection = Content.linkEntity(SkillFeatsSection, SkillFeat.
 
 export const WaryDisarmamentSection = Content.linkEntity(SkillFeatsSection, SkillFeat.WaryDisarmament)
 
+export const AdvancedFirstAidSection = Content.linkEntity(SkillFeatsSection, SkillFeat.AdvancedFirstAid)
+
+export const BattleCrySection = Content.linkEntity(SkillFeatsSection, SkillFeat.BattleCry)
+
+export const BizarreMagicSection = Content.linkEntity(SkillFeatsSection, SkillFeat.BizarreMagic)
+
+export const BreakCurseSection = Content.linkEntity(SkillFeatsSection, SkillFeat.BreakCurse)
+
+export const FoilSensesSection = Content.linkEntity(SkillFeatsSection, SkillFeat.FoilSenses)
+
+export const ImpeccableCraftingSection = Content.linkEntity(SkillFeatsSection, SkillFeat.ImpeccableCrafting)
+
+export const KipUpSection = Content.linkEntity(SkillFeatsSection, SkillFeat.KipUp)
+
+export const MonsterCraftingSection = Content.linkEntity(SkillFeatsSection, SkillFeat.MonsterCrafting)
+
+export const PlanarSurvivalSection = Content.linkEntity(SkillFeatsSection, SkillFeat.PlanarSurvival)
+
+export const QuickClimbSection = Content.linkEntity(SkillFeatsSection, SkillFeat.QuickClimb)
+
+export const QuickRecognitionSection = Content.linkEntity(SkillFeatsSection, SkillFeat.QuickRecognition)
+
+export const QuickSwimSection = Content.linkEntity(SkillFeatsSection, SkillFeat.QuickSwim)
+
+export const QuickUnlockSection = Content.linkEntity(SkillFeatsSection, SkillFeat.QuickUnlock)
+
+export const ShamelessRequestSection = Content.linkEntity(SkillFeatsSection, SkillFeat.ShamelessRequest)
+
+export const SlipperySecretsSection = Content.linkEntity(SkillFeatsSection, SkillFeat.SlipperySecrets)
+
+export const SwiftSneakSection = Content.linkEntity(SkillFeatsSection, SkillFeat.SwiftSneak)
+
+export const TerrifiedRetreatSection = Content.linkEntity(SkillFeatsSection, SkillFeat.TerrifiedRetreat)
+
+export const WallJumpSection = Content.linkEntity(SkillFeatsSection, SkillFeat.WallJump)
+
 export const FeatsContent = [
   FeatsSection,
   GeneralFeatsSection,
@@ -237,6 +277,8 @@ export const FeatsContent = [
   AncestralParagonSection,
   PrescientPlannerSection,
   UntrainedImprovisationSection,
+  ExpeditiousSearchSection,
+  PrescientConsumableSection,
   SkillFeatsSection,
   AdditionalLoreSection,
   AlchemicalCraftingSection,
@@ -312,4 +354,22 @@ export const FeatsContent = [
   UnusualTreatmentSection,
   WardMedicSection,
   WaryDisarmamentSection,
+  AdvancedFirstAidSection,
+  BattleCrySection,
+  BizarreMagicSection,
+  BreakCurseSection,
+  FoilSensesSection,
+  ImpeccableCraftingSection,
+  KipUpSection,
+  MonsterCraftingSection,
+  PlanarSurvivalSection,
+  QuickClimbSection,
+  QuickRecognitionSection,
+  QuickSwimSection,
+  QuickUnlockSection,
+  ShamelessRequestSection,
+  SlipperySecretsSection,
+  SwiftSneakSection,
+  TerrifiedRetreatSection,
+  WallJumpSection,
 ]

@@ -1,8 +1,10 @@
-import { Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterOptions, Effects, Tags, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { AncestryBoost, BackgroundBoost, KeyAttribute, Level1Boost, Level5Boost } from '@simulacrum/ruleset-pf2e/tag'
 import { ClassDC, Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma } from '@simulacrum/ruleset-pf2e/characteristic'
+
+export const Level10Boost = Tags.defineTraitTag('attribute/level-10-boost', { name: 'Level 10 Boost' })
 
 // Each source of boosts has its own traits, so the boosts from one source always go to different attributes
 
@@ -135,7 +137,7 @@ export const CharismaLevel1Boost = Traits.defineTrait('level-1-boost/charisma', 
 export const StrengthLevel5Boost = Traits.defineTrait('level-5-boost/strength', {
   name: 'Strength (Level 5 Boost)',
   description:
-    'Increase your Strength modifier by 1. A boost to an attribute that is already +4 or higher is a partial boost, which only takes effect with a second partial boost at 10th level, so it is not offered here.',
+    'Increase your Strength modifier by 1. This boost is only available while your Strength modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Strength.variable, 4)],
   effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
@@ -144,7 +146,7 @@ export const StrengthLevel5Boost = Traits.defineTrait('level-5-boost/strength', 
 export const DexterityLevel5Boost = Traits.defineTrait('level-5-boost/dexterity', {
   name: 'Dexterity (Level 5 Boost)',
   description:
-    'Increase your Dexterity modifier by 1. A boost to an attribute that is already +4 or higher is a partial boost, which only takes effect with a second partial boost at 10th level, so it is not offered here.',
+    'Increase your Dexterity modifier by 1. This boost is only available while your Dexterity modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Dexterity.variable, 4)],
   effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
@@ -153,7 +155,7 @@ export const DexterityLevel5Boost = Traits.defineTrait('level-5-boost/dexterity'
 export const ConstitutionLevel5Boost = Traits.defineTrait('level-5-boost/constitution', {
   name: 'Constitution (Level 5 Boost)',
   description:
-    'Increase your Constitution modifier by 1. A boost to an attribute that is already +4 or higher is a partial boost, which only takes effect with a second partial boost at 10th level, so it is not offered here.',
+    'Increase your Constitution modifier by 1. This boost is only available while your Constitution modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Constitution.variable, 4)],
   effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
@@ -162,7 +164,7 @@ export const ConstitutionLevel5Boost = Traits.defineTrait('level-5-boost/constit
 export const IntelligenceLevel5Boost = Traits.defineTrait('level-5-boost/intelligence', {
   name: 'Intelligence (Level 5 Boost)',
   description:
-    'Increase your Intelligence modifier by 1. A boost to an attribute that is already +4 or higher is a partial boost, which only takes effect with a second partial boost at 10th level, so it is not offered here.',
+    'Increase your Intelligence modifier by 1. This boost is only available while your Intelligence modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Intelligence.variable, 4)],
   effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
@@ -171,7 +173,7 @@ export const IntelligenceLevel5Boost = Traits.defineTrait('level-5-boost/intelli
 export const WisdomLevel5Boost = Traits.defineTrait('level-5-boost/wisdom', {
   name: 'Wisdom (Level 5 Boost)',
   description:
-    'Increase your Wisdom modifier by 1. A boost to an attribute that is already +4 or higher is a partial boost, which only takes effect with a second partial boost at 10th level, so it is not offered here.',
+    'Increase your Wisdom modifier by 1. This boost is only available while your Wisdom modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Wisdom.variable, 4)],
   effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
@@ -180,10 +182,196 @@ export const WisdomLevel5Boost = Traits.defineTrait('level-5-boost/wisdom', {
 export const CharismaLevel5Boost = Traits.defineTrait('level-5-boost/charisma', {
   name: 'Charisma (Level 5 Boost)',
   description:
-    'Increase your Charisma modifier by 1. A boost to an attribute that is already +4 or higher is a partial boost, which only takes effect with a second partial boost at 10th level, so it is not offered here.',
+    'Increase your Charisma modifier by 1. This boost is only available while your Charisma modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Charisma.variable, 4)],
   effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const StrengthLevel5PartialBoost = Traits.defineTrait('level-5-boost/strength-partial', {
+  name: 'Strength (Level 5 Partial Boost)',
+  description:
+    'Your Strength modifier is already +4 or higher, so this boost is a partial boost: it doesn’t change your modifier yet. A second partial boost to Strength at 10th level increases your Strength modifier by 1.',
+  tags: [Level5Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Strength.variable, 4), Expressions.not(Traits.traitPrerequisite(StrengthLevel5Boost))],
+  effects: [],
+})
+
+export const DexterityLevel5PartialBoost = Traits.defineTrait('level-5-boost/dexterity-partial', {
+  name: 'Dexterity (Level 5 Partial Boost)',
+  description:
+    'Your Dexterity modifier is already +4 or higher, so this boost is a partial boost: it doesn’t change your modifier yet. A second partial boost to Dexterity at 10th level increases your Dexterity modifier by 1.',
+  tags: [Level5Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Dexterity.variable, 4), Expressions.not(Traits.traitPrerequisite(DexterityLevel5Boost))],
+  effects: [],
+})
+
+export const ConstitutionLevel5PartialBoost = Traits.defineTrait('level-5-boost/constitution-partial', {
+  name: 'Constitution (Level 5 Partial Boost)',
+  description:
+    'Your Constitution modifier is already +4 or higher, so this boost is a partial boost: it doesn’t change your modifier yet. A second partial boost to Constitution at 10th level increases your Constitution modifier by 1.',
+  tags: [Level5Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Constitution.variable, 4), Expressions.not(Traits.traitPrerequisite(ConstitutionLevel5Boost))],
+  effects: [],
+})
+
+export const IntelligenceLevel5PartialBoost = Traits.defineTrait('level-5-boost/intelligence-partial', {
+  name: 'Intelligence (Level 5 Partial Boost)',
+  description:
+    'Your Intelligence modifier is already +4 or higher, so this boost is a partial boost: it doesn’t change your modifier yet. A second partial boost to Intelligence at 10th level increases your Intelligence modifier by 1.',
+  tags: [Level5Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Intelligence.variable, 4), Expressions.not(Traits.traitPrerequisite(IntelligenceLevel5Boost))],
+  effects: [],
+})
+
+export const WisdomLevel5PartialBoost = Traits.defineTrait('level-5-boost/wisdom-partial', {
+  name: 'Wisdom (Level 5 Partial Boost)',
+  description:
+    'Your Wisdom modifier is already +4 or higher, so this boost is a partial boost: it doesn’t change your modifier yet. A second partial boost to Wisdom at 10th level increases your Wisdom modifier by 1.',
+  tags: [Level5Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Wisdom.variable, 4), Expressions.not(Traits.traitPrerequisite(WisdomLevel5Boost))],
+  effects: [],
+})
+
+export const CharismaLevel5PartialBoost = Traits.defineTrait('level-5-boost/charisma-partial', {
+  name: 'Charisma (Level 5 Partial Boost)',
+  description:
+    'Your Charisma modifier is already +4 or higher, so this boost is a partial boost: it doesn’t change your modifier yet. A second partial boost to Charisma at 10th level increases your Charisma modifier by 1.',
+  tags: [Level5Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Charisma.variable, 4), Expressions.not(Traits.traitPrerequisite(CharismaLevel5Boost))],
+  effects: [],
+})
+
+export const StrengthLevel10Boost = Traits.defineTrait('level-10-boost/strength', {
+  name: 'Strength (Level 10 Boost)',
+  description:
+    'Increase your Strength modifier by 1. This boost is only available while your Strength modifier is below +4; otherwise, take the partial boost instead.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.lessThan(Strength.variable, 4)],
+  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const StrengthLevel10PartialBoost = Traits.defineTrait('level-10-boost/strength-partial', {
+  name: 'Strength (Level 10 Partial Boost)',
+  description:
+    'Your Strength modifier is already +4 or higher, so this boost is a partial boost. Two partial boosts to the same attribute increase its modifier by 1: if you also took the partial boost to Strength at 5th level, your Strength modifier increases by 1.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Strength.variable, 4), Expressions.not(Traits.traitPrerequisite(StrengthLevel10Boost))],
+  effects: [
+    Effects.conditional(Traits.traitPrerequisite(StrengthLevel5PartialBoost), [
+      Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1))),
+    ]),
+  ],
+})
+
+export const DexterityLevel10Boost = Traits.defineTrait('level-10-boost/dexterity', {
+  name: 'Dexterity (Level 10 Boost)',
+  description:
+    'Increase your Dexterity modifier by 1. This boost is only available while your Dexterity modifier is below +4; otherwise, take the partial boost instead.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.lessThan(Dexterity.variable, 4)],
+  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const DexterityLevel10PartialBoost = Traits.defineTrait('level-10-boost/dexterity-partial', {
+  name: 'Dexterity (Level 10 Partial Boost)',
+  description:
+    'Your Dexterity modifier is already +4 or higher, so this boost is a partial boost. Two partial boosts to the same attribute increase its modifier by 1: if you also took the partial boost to Dexterity at 5th level, your Dexterity modifier increases by 1.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Dexterity.variable, 4), Expressions.not(Traits.traitPrerequisite(DexterityLevel10Boost))],
+  effects: [
+    Effects.conditional(Traits.traitPrerequisite(DexterityLevel5PartialBoost), [
+      Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
+    ]),
+  ],
+})
+
+export const ConstitutionLevel10Boost = Traits.defineTrait('level-10-boost/constitution', {
+  name: 'Constitution (Level 10 Boost)',
+  description:
+    'Increase your Constitution modifier by 1. This boost is only available while your Constitution modifier is below +4; otherwise, take the partial boost instead.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.lessThan(Constitution.variable, 4)],
+  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const ConstitutionLevel10PartialBoost = Traits.defineTrait('level-10-boost/constitution-partial', {
+  name: 'Constitution (Level 10 Partial Boost)',
+  description:
+    'Your Constitution modifier is already +4 or higher, so this boost is a partial boost. Two partial boosts to the same attribute increase its modifier by 1: if you also took the partial boost to Constitution at 5th level, your Constitution modifier increases by 1.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Constitution.variable, 4), Expressions.not(Traits.traitPrerequisite(ConstitutionLevel10Boost))],
+  effects: [
+    Effects.conditional(Traits.traitPrerequisite(ConstitutionLevel5PartialBoost), [
+      Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
+    ]),
+  ],
+})
+
+export const IntelligenceLevel10Boost = Traits.defineTrait('level-10-boost/intelligence', {
+  name: 'Intelligence (Level 10 Boost)',
+  description:
+    'Increase your Intelligence modifier by 1. This boost is only available while your Intelligence modifier is below +4; otherwise, take the partial boost instead.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.lessThan(Intelligence.variable, 4)],
+  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const IntelligenceLevel10PartialBoost = Traits.defineTrait('level-10-boost/intelligence-partial', {
+  name: 'Intelligence (Level 10 Partial Boost)',
+  description:
+    'Your Intelligence modifier is already +4 or higher, so this boost is a partial boost. Two partial boosts to the same attribute increase its modifier by 1: if you also took the partial boost to Intelligence at 5th level, your Intelligence modifier increases by 1.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Intelligence.variable, 4), Expressions.not(Traits.traitPrerequisite(IntelligenceLevel10Boost))],
+  effects: [
+    Effects.conditional(Traits.traitPrerequisite(IntelligenceLevel5PartialBoost), [
+      Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
+    ]),
+  ],
+})
+
+export const WisdomLevel10Boost = Traits.defineTrait('level-10-boost/wisdom', {
+  name: 'Wisdom (Level 10 Boost)',
+  description:
+    'Increase your Wisdom modifier by 1. This boost is only available while your Wisdom modifier is below +4; otherwise, take the partial boost instead.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.lessThan(Wisdom.variable, 4)],
+  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const WisdomLevel10PartialBoost = Traits.defineTrait('level-10-boost/wisdom-partial', {
+  name: 'Wisdom (Level 10 Partial Boost)',
+  description:
+    'Your Wisdom modifier is already +4 or higher, so this boost is a partial boost. Two partial boosts to the same attribute increase its modifier by 1: if you also took the partial boost to Wisdom at 5th level, your Wisdom modifier increases by 1.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Wisdom.variable, 4), Expressions.not(Traits.traitPrerequisite(WisdomLevel10Boost))],
+  effects: [
+    Effects.conditional(Traits.traitPrerequisite(WisdomLevel5PartialBoost), [
+      Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
+    ]),
+  ],
+})
+
+export const CharismaLevel10Boost = Traits.defineTrait('level-10-boost/charisma', {
+  name: 'Charisma (Level 10 Boost)',
+  description:
+    'Increase your Charisma modifier by 1. This boost is only available while your Charisma modifier is below +4; otherwise, take the partial boost instead.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.lessThan(Charisma.variable, 4)],
+  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+})
+
+export const CharismaLevel10PartialBoost = Traits.defineTrait('level-10-boost/charisma-partial', {
+  name: 'Charisma (Level 10 Partial Boost)',
+  description:
+    'Your Charisma modifier is already +4 or higher, so this boost is a partial boost. Two partial boosts to the same attribute increase its modifier by 1: if you also took the partial boost to Charisma at 5th level, your Charisma modifier increases by 1.',
+  tags: [Level10Boost],
+  prerequisites: [Expressions.greaterThanOrEqual(Charisma.variable, 4), Expressions.not(Traits.traitPrerequisite(CharismaLevel10Boost))],
+  effects: [
+    Effects.conditional(Traits.traitPrerequisite(CharismaLevel5PartialBoost), [
+      Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
+    ]),
+  ],
 })
 
 export const StrengthKeyAttribute = Traits.defineTrait('key-attribute/strength', {
@@ -271,7 +459,13 @@ export const SelectLevel5Boost = CharacterOptions.selectTraitOption('attribute/s
   filter: { tags: [Level5Boost] },
 })
 
+export const SelectLevel10Boost = CharacterOptions.selectTraitOption('attribute/select-level-10-boost', {
+  name: 'Level 10 Boost',
+  filter: { tags: [Level10Boost] },
+})
+
 export const AllAttributeBoosts = [
+  Level10Boost,
   StrengthAncestryBoost,
   DexterityAncestryBoost,
   ConstitutionAncestryBoost,
@@ -296,6 +490,24 @@ export const AllAttributeBoosts = [
   IntelligenceLevel5Boost,
   WisdomLevel5Boost,
   CharismaLevel5Boost,
+  StrengthLevel5PartialBoost,
+  DexterityLevel5PartialBoost,
+  ConstitutionLevel5PartialBoost,
+  IntelligenceLevel5PartialBoost,
+  WisdomLevel5PartialBoost,
+  CharismaLevel5PartialBoost,
+  StrengthLevel10Boost,
+  StrengthLevel10PartialBoost,
+  DexterityLevel10Boost,
+  DexterityLevel10PartialBoost,
+  ConstitutionLevel10Boost,
+  ConstitutionLevel10PartialBoost,
+  IntelligenceLevel10Boost,
+  IntelligenceLevel10PartialBoost,
+  WisdomLevel10Boost,
+  WisdomLevel10PartialBoost,
+  CharismaLevel10Boost,
+  CharismaLevel10PartialBoost,
   StrengthKeyAttribute,
   DexterityKeyAttribute,
   ConstitutionKeyAttribute,

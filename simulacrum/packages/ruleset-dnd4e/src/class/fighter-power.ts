@@ -10,11 +10,15 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Fighter } from '@simulacrum/ruleset-dnd4e/class/class-fighter'
 
-// Generated from the Player's Handbook Fighter powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Fighter powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal (except cantrips, which every wizard has). Encounter powers come back after a short rest, daily powers after an
 // extended rest.
 
@@ -397,6 +401,232 @@ export const RainOfSteel = Abilities.defineAbility('fighter/power/rain-of-steel'
   costs: [{ cost: 1 }],
 })
 
+export const BattleAwareness = Abilities.defineAbility('fighter/power/battle-awareness', {
+  name: 'Battle Awareness',
+  description: '*No villain or monster can get the drop on you!*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Utility 6**\n\n**Daily** ✦ Martial\n\n**No Action** · Personal\n\n**Effect:** You gain a +10 bonus to your initiative check. Use this power after rolling your initiative.'
+    ),
+  ],
+  actions: [{ name: 'Battle Awareness', action: ActionTypes.NoAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DefensiveTraining = Abilities.defineAbility('fighter/power/defensive-training', {
+  name: 'Defensive Training',
+  description: "*With a soldier's discipline, you fend off attacks that would overcome a lesser person.*",
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Utility 6**\n\n**Daily** ✦ Martial, Stance\n\n**Minor Action** · Personal\n\n**Effect:** Gain a +2 power bonus to your Fortitude, Reflex, or Will defense.'
+    ),
+  ],
+  actions: [{ name: 'Defensive Training', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const Unbreakable = Abilities.defineAbility('fighter/power/unbreakable', {
+  name: 'Unbreakable',
+  description: '*You steel yourself against a brutal attack.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Reaction** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** Reduce the damage from the attack by 5 + your Constitution modifier.'
+    ),
+  ],
+  actions: [{ name: 'Unbreakable', action: ActionTypes.ImmediateReaction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ComeAndGetIt = Abilities.defineAbility('fighter/power/come-and-get-it', {
+  name: 'Come and Get It',
+  description: '*You call your opponents toward you and deliver a blow they will never forget.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      "**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 3\n\n**Target:** Each enemy in burst you can see\n\n**Effect:** Each target must shift 2 and end adjacent to you, if possible. A target that can't end adjacent to you doesn't move. You can then attack any targets that are adjacent to you (close burst 1).\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage."
+    ),
+  ],
+  actions: [{ name: 'Come and Get It', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const GriffonsWrath = Abilities.defineAbility('fighter/power/griffons-wrath', {
+  name: "Griffon's Wrath",
+  description:
+    '*You rain several heavy overhand blows down on your foe. They force him to raise his guard high to meet your attack, exposing a vulnerable spot for your next attack—the underarm, side, or belly.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and the target takes a –2 penalty to AC until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: "Griffon's Wrath", action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const IronBulwark = Abilities.defineAbility('fighter/power/iron-bulwark', {
+  name: 'Iron Bulwark',
+  description:
+    '*You use your weapon or shield to parry one blow after another, denying your foes the satisfaction of getting in a solid hit against you.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      "**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Effect:** You gain a +1 power bonus to AC (or a +2 bonus if you're using a shield) until the end of your next turn."
+    ),
+  ],
+  actions: [{ name: 'Iron Bulwark', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const RecklessStrike = Abilities.defineAbility('fighter/power/reckless-strike', {
+  name: 'Reckless Strike',
+  description: '*You trade precision for power.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength –2 vs. AC\n\n**Hit:** 3[W] + Strength modifier damage.'
+    ),
+  ],
+  actions: [{ name: 'Reckless Strike', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SuddenSurge = Abilities.defineAbility('fighter/power/sudden-surge', {
+  name: 'Sudden Surge',
+  description: '*You throw your weight into a strike, using the momentum of the swing to surge forward.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Effect:** Move a number of squares equal to your Dexterity modifier (minimum 1).'
+    ),
+  ],
+  actions: [{ name: 'Sudden Surge', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ShiftTheBattlefield = Abilities.defineAbility('fighter/power/shift-the-battlefield', {
+  name: 'Shift the Battlefield',
+  description: '*With supreme skill and great resolve, you beat your enemies back.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you slide the target 1 square.\n\n**Miss:** Half damage.'
+    ),
+  ],
+  actions: [{ name: 'Shift the Battlefield', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ThicketOfBlades = Abilities.defineAbility('fighter/power/thicket-of-blades', {
+  name: 'Thicket of Blades',
+  description: '*You sting and hinder nearby foes with a savage flurry of strikes aimed at their legs.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Attack 9**\n\n**Daily** ✦ Martial, Reliable, Weapon\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and the target is slowed (save ends).'
+    ),
+  ],
+  actions: [{ name: 'Thicket of Blades', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const VictoriousSurge = Abilities.defineAbility('fighter/power/victorious-surge', {
+  name: 'Victorious Surge',
+  description: "*You strike true, and your enemy's howl of pain is like music to your ears, making you forget about your own wounds.*",
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Attack 9**\n\n**Daily** ✦ Healing, Martial, Reliable, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and you regain hit points as if you had spent a healing surge.'
+    ),
+  ],
+  actions: [{ name: 'Victorious Surge', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const IntoTheFray = Abilities.defineAbility('fighter/power/into-the-fray', {
+  name: 'Into the Fray',
+  description: '*You unleash a fierce battle cry as you leap boldly into the fray.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Utility 10**\n\n**Encounter** ✦ Martial\n\n**Minor Action** · Personal\n\n**Effect:** You can move 3 squares, as long as you can end your move adjacent to an enemy.'
+    ),
+  ],
+  actions: [{ name: 'Into the Fray', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const LastDitchEvasion = Abilities.defineAbility('fighter/power/last-ditch-evasion', {
+  name: 'Last Ditch Evasion',
+  description: '*Thanks to a combination of skill and luck, you narrowly avoid an attack but leave yourself perilously exposed.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      '**Fighter Utility 10**\n\n**Daily** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** You take no damage from the attack that just hit you. However, you are stunned and take a –2 penalty to all defenses until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Last Ditch Evasion', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const StalwartGuard = Abilities.defineAbility('fighter/power/stalwart-guard', {
+  name: 'Stalwart Guard',
+  description: '*Your thoughts turn to defense as you begin using your weapon or shield to protect nearby allies.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Fighter)],
+  effects: [
+    Effects.descriptive(
+      "**Fighter Utility 10**\n\n**Daily** ✦ Martial\n\n**Minor Action** · Close burst 1\n\n**Target:** Each ally in burst\n\n**Effect:** The targets gain a +1 shield bonus to AC until the end of the encounter. If you are using a shield, increase the bonus to +2 and apply it to your allies' Reflex defense as well."
+    ),
+  ],
+  actions: [{ name: 'Stalwart Guard', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
 export const AllFighterPowers = [
   Cleave,
   ReapingStrike,
@@ -422,4 +652,18 @@ export const AllFighterPowers = [
   CrackTheShell,
   DizzyingBlow,
   RainOfSteel,
+  BattleAwareness,
+  DefensiveTraining,
+  Unbreakable,
+  ComeAndGetIt,
+  GriffonsWrath,
+  IronBulwark,
+  RecklessStrike,
+  SuddenSurge,
+  ShiftTheBattlefield,
+  ThicketOfBlades,
+  VictoriousSurge,
+  IntoTheFray,
+  LastDitchEvasion,
+  StalwartGuard,
 ]

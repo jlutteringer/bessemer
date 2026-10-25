@@ -4,8 +4,8 @@ import { Expressions } from '@bessemer/cornerstone/expression'
 import { AllActionTypes } from '@simulacrum/ruleset-pf2e/action-type'
 import { AllTags } from '@simulacrum/ruleset-pf2e/tag'
 import { AllCharacteristicGroups, AllCharacteristics, Intelligence } from '@simulacrum/ruleset-pf2e/characteristic'
-import { AllAttributeBoosts, SelectLevel1Boost, SelectLevel5Boost } from '@simulacrum/ruleset-pf2e/attribute-boost'
-import { AllSkillTraits, SelectSkillIncrease, SelectTrainedSkill } from '@simulacrum/ruleset-pf2e/skill'
+import { AllAttributeBoosts, SelectLevel1Boost, SelectLevel5Boost, SelectLevel10Boost } from '@simulacrum/ruleset-pf2e/attribute-boost'
+import { AllSkillTraits, SelectSkillIncrease, SelectSkillIncrease7, SelectTrainedSkill } from '@simulacrum/ruleset-pf2e/skill'
 import { AllLoadouts, ArmorLoadout, ShieldLoadout } from '@simulacrum/ruleset-pf2e/loadout'
 import { AllArmor } from '@simulacrum/ruleset-pf2e/armor'
 import { AllSpellcasting } from '@simulacrum/ruleset-pf2e/spellcasting'
@@ -14,8 +14,12 @@ import {
   SelectBackground,
   SelectClass,
   SelectGeneralFeat3,
+  SelectGeneralFeat7,
   SelectSkillFeat2,
   SelectSkillFeat4,
+  SelectSkillFeat6,
+  SelectSkillFeat8,
+  SelectSkillFeat10,
 } from '@simulacrum/ruleset-pf2e/character-option'
 import { AllAncestryEntities } from '@simulacrum/ruleset-pf2e/ancestry'
 import { AllBackgroundEntities } from '@simulacrum/ruleset-pf2e/background'
@@ -97,6 +101,17 @@ export const Pf2e: Ruleset = {
       Effects.gainCharacterOption(SelectLevel5Boost),
       Effects.gainCharacterOption(SelectLevel5Boost),
       Effects.gainCharacterOption(SelectSkillIncrease),
+    ],
+    6: [Effects.gainCharacterOption(SelectSkillFeat6)],
+    7: [Effects.gainCharacterOption(SelectGeneralFeat7), Effects.gainCharacterOption(SelectSkillIncrease7)],
+    8: [Effects.gainCharacterOption(SelectSkillFeat8)],
+    9: [Effects.gainCharacterOption(SelectSkillIncrease7)],
+    10: [
+      Effects.gainCharacterOption(SelectLevel10Boost),
+      Effects.gainCharacterOption(SelectLevel10Boost),
+      Effects.gainCharacterOption(SelectLevel10Boost),
+      Effects.gainCharacterOption(SelectLevel10Boost),
+      Effects.gainCharacterOption(SelectSkillFeat10),
     ],
   },
   content: [

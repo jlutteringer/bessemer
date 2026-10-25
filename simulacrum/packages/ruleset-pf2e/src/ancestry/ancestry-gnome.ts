@@ -11,6 +11,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   GnomeFeat,
   Heritage,
   NephilimFeat,
@@ -85,6 +86,17 @@ export const SelectGnomeFeat5 = CharacterOptions.selectTraitOption('ancestry/gno
   },
 })
 
+export const SelectGnomeFeat9 = CharacterOptions.selectTraitOption('ancestry/gnome/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: {
+    tags: [
+      AncestryFeat,
+      [GnomeFeat, ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat],
+      [FeatLevel1, FeatLevel5, FeatLevel9],
+    ],
+  },
+})
+
 export const SelectGnomeAncestryBoost = CharacterOptions.selectTraitOption('ancestry/gnome/select-boost', {
   name: 'Ancestry Boost',
   filter: { specificOptions: [StrengthAncestryBoost, DexterityAncestryBoost, IntelligenceAncestryBoost, WisdomAncestryBoost] },
@@ -106,6 +118,7 @@ export const Gnome = Traits.defineTrait('ancestry/gnome', {
     Effects.gainCharacterOption(SelectGnomeHeritage),
     Effects.gainCharacterOption(SelectGnomeFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectGnomeFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectGnomeFeat9)]),
   ],
 })
 
@@ -231,6 +244,52 @@ export const ProjectPersonaAction = Abilities.defineAbility('ancestry/gnome/proj
   ],
 })
 
+export const CautiousCuriosity = Traits.defineTrait('ancestry/gnome/cautious-curiosity', {
+  name: 'Cautious Curiosity',
+  description:
+    "*Gnome*\n\n**Prerequisites** at least one arcane or occult innate spell gained from a gnome heritage or gnome ancestry feat\n\nYou've learned a few magical techniques for getting yourself both into and out of trouble unnoticed. You gain [_disguise magic_](ability:spell/disguise-magic) and [_silence_](ability:spell/silence) as 2nd-rank arcane or occult innate spells. The tradition of these spells must match the tradition you use for your gnome ancestry options. You can cast each spell once per day and can target only yourself.",
+  tags: [Feat, AncestryFeat, GnomeFeat, FeatLevel9],
+  effects: [],
+})
+
+export const FirstWorldAdept = Traits.defineTrait('ancestry/gnome/first-world-adept', {
+  name: 'First World Adept',
+  description:
+    '*Gnome*\n\n**Prerequisites** at least one primal innate spell\n\nOver time your fey magic has grown stronger. You gain [_invisibility_](ability:spell/invisibility) and [_revealing light_](ability:spell/revealing-light) as 2nd-rank primal innate spells. You can cast each of these primal innate spells once per day.',
+  tags: [Feat, AncestryFeat, GnomeFeat, FeatLevel9],
+  effects: [],
+})
+
+export const LifeLeap = Traits.defineTrait('ancestry/gnome/life-leap', {
+  name: 'Life Leap',
+  description:
+    "*Gnome, Move, Teleportation*\n\n**Requirements** You must be adjacent to a living creature\n\nYou phase through a space that a living creature occupies in a flash, spontaneously appearing on the opposite side of it in a vibrant display of colorful light. You move from your current location to another location that's still adjacent to the same living creature, but on the opposite side or corner of the creature's space. To determine whether a position is valid, use the same rules as for flanking: a line through the center of the two spaces must pass through opposite sides or corners of the creature's space.\n\nYou pass through the creature's life force, appearing in the selected location; this doesn't trigger reactions based on movement. You must be able to see your destination, and you can't move farther than your [Speed](characteristic:speed) would allow.",
+  tags: [Feat, AncestryFeat, GnomeFeat, FeatLevel9],
+  effects: [],
+})
+
+export const VivaciousConduit = Traits.defineTrait('ancestry/gnome/vivacious-conduit', {
+  name: 'Vivacious Conduit',
+  description:
+    '*Gnome*\n\nYour connection to the First World has grown, and its vital energy flows into you rapidly. If you rest for 10 minutes, you regain [Hit Points](characteristic:hit-points) equal to your [Constitution modifier](characteristic:constitution) × half your level. This is a healing [vitality](content:traits/vitality) effect and is cumulative with any healing you receive from [Treat Wounds](content:skills/treat-wounds).',
+  tags: [Feat, AncestryFeat, GnomeFeat, FeatLevel9],
+  effects: [],
+})
+
+export const LifeLeapAction = Abilities.defineAbility('ancestry/gnome/life-leap/action', {
+  name: 'Life Leap',
+  description: '*Gnome, Move, Teleportation*',
+  prerequisites: [Traits.traitPrerequisite(LifeLeap)],
+  actions: [
+    {
+      name: 'Life Leap',
+      description:
+        "**Requirements** You must be adjacent to a living creature\n\nYou phase through a space that a living creature occupies in a flash, spontaneously appearing on the opposite side of it in a vibrant display of colorful light. You move from your current location to another location that's still adjacent to the same living creature, but on the opposite side or corner of the creature's space. To determine whether a position is valid, use the same rules as for flanking: a line through the center of the two spaces must pass through opposite sides or corners of the creature's space.\n\nYou pass through the creature's life force, appearing in the selected location; this doesn't trigger reactions based on movement. You must be able to see your destination, and you can't move farther than your [Speed](characteristic:speed) would allow.",
+      action: SingleAction,
+    },
+  ],
+})
+
 export const AllGnomeEntities = [
   ChameleonGnome,
   FeyTouchedGnome,
@@ -240,6 +299,7 @@ export const AllGnomeEntities = [
   SelectGnomeHeritage,
   SelectGnomeFeat1,
   SelectGnomeFeat5,
+  SelectGnomeFeat9,
   SelectGnomeAncestryBoost,
   Gnome,
   AnimalAccomplice,
@@ -255,4 +315,9 @@ export const AllGnomeEntities = [
   EnergizedFontAction,
   ProjectPersona,
   ProjectPersonaAction,
+  CautiousCuriosity,
+  FirstWorldAdept,
+  LifeLeap,
+  VivaciousConduit,
+  LifeLeapAction,
 ]

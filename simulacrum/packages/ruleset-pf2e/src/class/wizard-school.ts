@@ -5,7 +5,14 @@ import { Expressions } from '@bessemer/cornerstone/expression'
 import * as Spells from '@simulacrum/ruleset-pf2e/spell'
 import * as WizardFocusSpells from '@simulacrum/ruleset-pf2e/class/wizard-focus-spell'
 import { ClassFeature } from '@simulacrum/ruleset-pf2e/tag'
-import { CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout } from '@simulacrum/ruleset-pf2e/loadout'
+import {
+  CantripLoadout,
+  SpellRank1Loadout,
+  SpellRank2Loadout,
+  SpellRank3Loadout,
+  SpellRank4Loadout,
+  SpellRank5Loadout,
+} from '@simulacrum/ruleset-pf2e/loadout'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import { DrainBondedItem, SelectSpellbookRank1, SelectWizardFeat1 } from '@simulacrum/ruleset-pf2e/class/wizard-feature'
 
@@ -38,6 +45,24 @@ export const SelectArsGrammaticaCurriculumRank3 = CharacterOptions.selectAbility
   }
 )
 
+export const SelectArsGrammaticaCurriculumRank4 = CharacterOptions.selectAbilityOption(
+  'wizard/arcane-school/ars-grammatica/select-curriculum-rank-4',
+  {
+    name: 'Curriculum Spell (Rank 4)',
+    filter: { specificOptions: [Spells.DispellingGlobe, Spells.Suggestion] },
+    loadout: SpellRank4Loadout,
+  }
+)
+
+export const SelectArsGrammaticaCurriculumRank5 = CharacterOptions.selectAbilityOption(
+  'wizard/arcane-school/ars-grammatica/select-curriculum-rank-5',
+  {
+    name: 'Curriculum Spell (Rank 5)',
+    filter: { specificOptions: [Spells.Sending, Spells.Truespeech] },
+    loadout: SpellRank5Loadout,
+  }
+)
+
 export const ArsGrammatica = Traits.defineTrait('wizard/arcane-school/ars-grammatica', {
   name: 'School of Ars Grammatica',
   description:
@@ -57,6 +82,14 @@ export const ArsGrammatica = Traits.defineTrait('wizard/arcane-school/ars-gramma
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank5),
     ]),
   ],
 })
@@ -79,6 +112,18 @@ export const SelectBattleMagicCurriculumRank3 = CharacterOptions.selectAbilityOp
   loadout: SpellRank3Loadout,
 })
 
+export const SelectBattleMagicCurriculumRank4 = CharacterOptions.selectAbilityOption('wizard/arcane-school/battle-magic/select-curriculum-rank-4', {
+  name: 'Curriculum Spell (Rank 4)',
+  filter: { specificOptions: [Spells.WallOfFire, Spells.WeaponStorm] },
+  loadout: SpellRank4Loadout,
+})
+
+export const SelectBattleMagicCurriculumRank5 = CharacterOptions.selectAbilityOption('wizard/arcane-school/battle-magic/select-curriculum-rank-5', {
+  name: 'Curriculum Spell (Rank 5)',
+  filter: { specificOptions: [Spells.HowlingBlizzard, Spells.ImpalingSpike] },
+  loadout: SpellRank5Loadout,
+})
+
 export const BattleMagic = Traits.defineTrait('wizard/arcane-school/battle-magic', {
   name: 'School of Battle Magic',
   description:
@@ -98,6 +143,14 @@ export const BattleMagic = Traits.defineTrait('wizard/arcane-school/battle-magic
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainCharacterOption(SelectBattleMagicCurriculumRank3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectBattleMagicCurriculumRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectBattleMagicCurriculumRank5),
     ]),
   ],
 })
@@ -129,6 +182,24 @@ export const SelectCivicWizardryCurriculumRank3 = CharacterOptions.selectAbility
   }
 )
 
+export const SelectCivicWizardryCurriculumRank4 = CharacterOptions.selectAbilityOption(
+  'wizard/arcane-school/civic-wizardry/select-curriculum-rank-4',
+  {
+    name: 'Curriculum Spell (Rank 4)',
+    filter: { specificOptions: [Spells.Creation, Spells.UnfetteredMovement] },
+    loadout: SpellRank4Loadout,
+  }
+)
+
+export const SelectCivicWizardryCurriculumRank5 = CharacterOptions.selectAbilityOption(
+  'wizard/arcane-school/civic-wizardry/select-curriculum-rank-5',
+  {
+    name: 'Curriculum Spell (Rank 5)',
+    filter: { specificOptions: [Spells.ControlWater, Spells.WallOfStone] },
+    loadout: SpellRank5Loadout,
+  }
+)
+
 export const CivicWizardry = Traits.defineTrait('wizard/arcane-school/civic-wizardry', {
   name: 'School of Civic Wizardry',
   description:
@@ -148,6 +219,14 @@ export const CivicWizardry = Traits.defineTrait('wizard/arcane-school/civic-wiza
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank5),
     ]),
   ],
 })
@@ -170,6 +249,18 @@ export const SelectMentalismCurriculumRank3 = CharacterOptions.selectAbilityOpti
   loadout: SpellRank3Loadout,
 })
 
+export const SelectMentalismCurriculumRank4 = CharacterOptions.selectAbilityOption('wizard/arcane-school/mentalism/select-curriculum-rank-4', {
+  name: 'Curriculum Spell (Rank 4)',
+  filter: { specificOptions: [Spells.Nightmare, Spells.VisionOfDeath] },
+  loadout: SpellRank4Loadout,
+})
+
+export const SelectMentalismCurriculumRank5 = CharacterOptions.selectAbilityOption('wizard/arcane-school/mentalism/select-curriculum-rank-5', {
+  name: 'Curriculum Spell (Rank 5)',
+  filter: { specificOptions: [Spells.Hallucination, Spells.IllusoryScene] },
+  loadout: SpellRank5Loadout,
+})
+
 export const Mentalism = Traits.defineTrait('wizard/arcane-school/mentalism', {
   name: 'School of Mentalism',
   description:
@@ -189,6 +280,14 @@ export const Mentalism = Traits.defineTrait('wizard/arcane-school/mentalism', {
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainCharacterOption(SelectMentalismCurriculumRank3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectMentalismCurriculumRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectMentalismCurriculumRank5),
     ]),
   ],
 })
@@ -211,6 +310,18 @@ export const SelectProteanFormCurriculumRank3 = CharacterOptions.selectAbilityOp
   loadout: SpellRank3Loadout,
 })
 
+export const SelectProteanFormCurriculumRank4 = CharacterOptions.selectAbilityOption('wizard/arcane-school/protean-form/select-curriculum-rank-4', {
+  name: 'Curriculum Spell (Rank 4)',
+  filter: { specificOptions: [Spells.MountainResilience, Spells.VaporForm] },
+  loadout: SpellRank4Loadout,
+})
+
+export const SelectProteanFormCurriculumRank5 = CharacterOptions.selectAbilityOption('wizard/arcane-school/protean-form/select-curriculum-rank-5', {
+  name: 'Curriculum Spell (Rank 5)',
+  filter: { specificOptions: [Spells.ElementalForm, Spells.ToxicCloud] },
+  loadout: SpellRank5Loadout,
+})
+
 export const ProteanForm = Traits.defineTrait('wizard/arcane-school/protean-form', {
   name: 'School of Protean Form',
   description:
@@ -231,6 +342,14 @@ export const ProteanForm = Traits.defineTrait('wizard/arcane-school/protean-form
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainCharacterOption(SelectProteanFormCurriculumRank3),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectProteanFormCurriculumRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectProteanFormCurriculumRank5),
+    ]),
   ],
 })
 
@@ -248,6 +367,12 @@ export const UnifiedMagicalTheory = Traits.defineTrait('wizard/arcane-school/uni
       Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
       Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
   ],
@@ -271,6 +396,18 @@ export const SelectBoundaryCurriculumRank3 = CharacterOptions.selectAbilityOptio
   loadout: SpellRank3Loadout,
 })
 
+export const SelectBoundaryCurriculumRank4 = CharacterOptions.selectAbilityOption('wizard/arcane-school/boundary/select-curriculum-rank-4', {
+  name: 'Curriculum Spell (Rank 4)',
+  filter: { specificOptions: [Spells.Flicker, Spells.Translocate] },
+  loadout: SpellRank4Loadout,
+})
+
+export const SelectBoundaryCurriculumRank5 = CharacterOptions.selectAbilityOption('wizard/arcane-school/boundary/select-curriculum-rank-5', {
+  name: 'Curriculum Spell (Rank 5)',
+  filter: { specificOptions: [Spells.Banishment, Spells.InvokeSpirits] },
+  loadout: SpellRank5Loadout,
+})
+
 export const Boundary = Traits.defineTrait('wizard/arcane-school/boundary', {
   name: 'School of the Boundary',
   description:
@@ -290,6 +427,14 @@ export const Boundary = Traits.defineTrait('wizard/arcane-school/boundary', {
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
       Effects.gainLoadoutSlot(SpellRank3Loadout),
       Effects.gainCharacterOption(SelectBoundaryCurriculumRank3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainLoadoutSlot(SpellRank4Loadout),
+      Effects.gainCharacterOption(SelectBoundaryCurriculumRank4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainLoadoutSlot(SpellRank5Loadout),
+      Effects.gainCharacterOption(SelectBoundaryCurriculumRank5),
     ]),
   ],
 })
@@ -312,27 +457,39 @@ export const AllWizardSchoolEntities = [
   SelectArsGrammaticaCurriculumRank1,
   SelectArsGrammaticaCurriculumRank2,
   SelectArsGrammaticaCurriculumRank3,
+  SelectArsGrammaticaCurriculumRank4,
+  SelectArsGrammaticaCurriculumRank5,
   ArsGrammatica,
   SelectBattleMagicCurriculumRank1,
   SelectBattleMagicCurriculumRank2,
   SelectBattleMagicCurriculumRank3,
+  SelectBattleMagicCurriculumRank4,
+  SelectBattleMagicCurriculumRank5,
   BattleMagic,
   SelectCivicWizardryCurriculumRank1,
   SelectCivicWizardryCurriculumRank2,
   SelectCivicWizardryCurriculumRank3,
+  SelectCivicWizardryCurriculumRank4,
+  SelectCivicWizardryCurriculumRank5,
   CivicWizardry,
   SelectMentalismCurriculumRank1,
   SelectMentalismCurriculumRank2,
   SelectMentalismCurriculumRank3,
+  SelectMentalismCurriculumRank4,
+  SelectMentalismCurriculumRank5,
   Mentalism,
   SelectProteanFormCurriculumRank1,
   SelectProteanFormCurriculumRank2,
   SelectProteanFormCurriculumRank3,
+  SelectProteanFormCurriculumRank4,
+  SelectProteanFormCurriculumRank5,
   ProteanForm,
   UnifiedMagicalTheory,
   SelectBoundaryCurriculumRank1,
   SelectBoundaryCurriculumRank2,
   SelectBoundaryCurriculumRank3,
+  SelectBoundaryCurriculumRank4,
+  SelectBoundaryCurriculumRank5,
   Boundary,
   SelectArcaneSchool,
   ArcaneSchoolFeature,

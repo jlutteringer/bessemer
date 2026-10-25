@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -12,6 +12,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   Heritage,
   HumanFeat,
   NephilimFeat,
@@ -21,6 +22,7 @@ import {
 import { HitPoints, Speed } from '@simulacrum/ruleset-pf2e/characteristic'
 import { SelectAncestryBoost } from '@simulacrum/ruleset-pf2e/attribute-boost'
 import { SelectTrainedSkill } from '@simulacrum/ruleset-pf2e/skill'
+import { FreeAction } from '@simulacrum/ruleset-pf2e/action-type'
 import { HumanHeritage, SelectAncestryClassFeat1, SelectAncestryGeneralFeat1 } from '@simulacrum/ruleset-pf2e/ancestry/ancestry-common'
 import { UntrainedImprovisation } from '@simulacrum/ruleset-pf2e/feat/general-feat'
 
@@ -65,6 +67,17 @@ export const SelectHumanFeat5 = CharacterOptions.selectTraitOption('ancestry/hum
   },
 })
 
+export const SelectHumanFeat9 = CharacterOptions.selectTraitOption('ancestry/human/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: {
+    tags: [
+      AncestryFeat,
+      [HumanFeat, ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat],
+      [FeatLevel1, FeatLevel5, FeatLevel9],
+    ],
+  },
+})
+
 export const Human = Traits.defineTrait('ancestry/human', {
   name: 'Human',
   description:
@@ -78,6 +91,7 @@ export const Human = Traits.defineTrait('ancestry/human', {
     Effects.gainCharacterOption(SelectHumanHeritage),
     Effects.gainCharacterOption(SelectHumanFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectHumanFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectHumanFeat9)]),
   ],
 })
 
@@ -163,6 +177,60 @@ export const SenseAllies = Traits.defineTrait('ancestry/human/sense-allies', {
   effects: [],
 })
 
+export const CooperativeSoul = Traits.defineTrait('ancestry/human/cooperative-soul', {
+  name: 'Cooperative Soul',
+  description:
+    '*Human*\n\nYou have developed a soul-deep bond with your comrades and maintain an even greater degree of cooperation with them. If you are at least an expert in the skill you are [Aiding](content:playing-the-game/aid), when you roll a failure or critical failure to Aid a skill check, you get a success instead.',
+  tags: [Feat, AncestryFeat, HumanFeat, FeatLevel9],
+  effects: [],
+})
+
+export const GroupAid = Traits.defineTrait('ancestry/human/group-aid', {
+  name: 'Group Aid',
+  description:
+    '*Human*\n\nYour upbringing emphasized teamwork, and helping your allies comes naturally to you. After you [Aid](content:playing-the-game/aid) an ally at a skill check that doesn’t have the attack trait, you can also Aid any other ally who attempts the same skill check for the same purpose that round. You do so as a free action rather than a reaction.\n\nThe preparation you did to help must still apply to the other allies, and you can Aid each ally only once. For example, if you helped lift up an ally to Aid them on an [Athletics](characteristic:skill/athletics) check to scale a wall, you could keep the same posture to give a boost to other allies attempting to scale the wall in the same round.',
+  tags: [Feat, AncestryFeat, HumanFeat, FeatLevel9],
+  effects: [],
+})
+
+export const HardyTraveler = Traits.defineTrait('ancestry/human/hardy-traveler', {
+  name: 'Hardy Traveler',
+  description:
+    '*Human*\n\nThere’s no journey too far or burden too heavy when you have friends at your side or hope within your heart. Increase your maximum and [encumbered](content:conditions/encumbered) [Bulk limits](content:equipment/bulk-limits) by 1. In addition, you gain a +10-foot circumstance bonus to your [Speed](characteristic:speed) during overland travel.',
+  tags: [Feat, AncestryFeat, HumanFeat, FeatLevel9],
+  effects: [],
+})
+
+export const IncredibleImprovisation = Traits.defineTrait('ancestry/human/incredible-improvisation', {
+  name: 'Incredible Improvisation',
+  description:
+    '*Human*\n\n**Frequency** once per day\n\n**Trigger** You attempt a check using a skill you’re untrained in\n\nA stroke of brilliance gives you a major advantage with a skill despite your inexperience. Gain a +4 circumstance bonus to the triggering skill check.',
+  tags: [Feat, AncestryFeat, HumanFeat, FeatLevel9],
+  effects: [],
+})
+
+export const Multitalented = Traits.defineTrait('ancestry/human/multitalented', {
+  name: 'Multitalented',
+  description:
+    '*Human*\n\nYou’ve learned to split your focus between multiple classes with ease. You gain a 2nd-level multiclass dedication feat, even if you normally couldn’t take another dedication feat until you take more feats from your current archetype.\n\nIf you have the aiuvarin versatile heritage, you don’t need to meet the feat’s attribute modifier prerequisites.',
+  tags: [Feat, AncestryFeat, HumanFeat, FeatLevel9],
+  effects: [],
+})
+
+export const IncredibleImprovisationAction = Abilities.defineAbility('ancestry/human/incredible-improvisation/action', {
+  name: 'Incredible Improvisation',
+  description: '*Human*',
+  prerequisites: [Traits.traitPrerequisite(IncredibleImprovisation)],
+  actions: [
+    {
+      name: 'Incredible Improvisation',
+      description:
+        '**Frequency** once per day\n\n**Trigger** You attempt a check using a skill you’re untrained in\n\nA stroke of brilliance gives you a major advantage with a skill despite your inexperience. Gain a +4 circumstance bonus to the triggering skill check.',
+      action: FreeAction,
+    },
+  ],
+})
+
 export const AllHumanEntities = [
   SelectSkilledHumanExpertSkill,
   SkilledHuman,
@@ -170,6 +238,7 @@ export const AllHumanEntities = [
   SelectHumanHeritage,
   SelectHumanFeat1,
   SelectHumanFeat5,
+  SelectHumanFeat9,
   Human,
   AdaptedCantrip,
   CooperativeNature,
@@ -181,4 +250,10 @@ export const AllHumanEntities = [
   AdaptiveAdept,
   CleverImproviser,
   SenseAllies,
+  CooperativeSoul,
+  GroupAid,
+  HardyTraveler,
+  IncredibleImprovisation,
+  Multitalented,
+  IncredibleImprovisationAction,
 ]

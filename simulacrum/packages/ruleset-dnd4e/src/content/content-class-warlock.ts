@@ -146,6 +146,46 @@ export const CrownOfMadnessSection = Content.linkEntity(WarlockLevel5DailySpells
 export const CurseOfTheBloodyFangsSection = Content.linkEntity(WarlockLevel5DailySpellsSection, WarlockPower.CurseOfTheBloodyFangs)
 export const HungerOfHadarSection = Content.linkEntity(WarlockLevel5DailySpellsSection, WarlockPower.HungerOfHadar)
 
+export const WarlockLevel6UtilitySpellsSection = Content.defineSection('classes/warlock-level-6-utility-spells', {
+  parent: WarlockPowersSection,
+  content: { name: 'Level 6 Utility Spells' },
+})
+
+export const DarkOnesOwnLuckSection = Content.linkEntity(WarlockLevel6UtilitySpellsSection, WarlockPower.DarkOnesOwnLuck)
+export const FeySwitchSection = Content.linkEntity(WarlockLevel6UtilitySpellsSection, WarlockPower.FeySwitch)
+export const ShroudOfBlackSteelSection = Content.linkEntity(WarlockLevel6UtilitySpellsSection, WarlockPower.ShroudOfBlackSteel)
+export const SpiderClimbSection = Content.linkEntity(WarlockLevel6UtilitySpellsSection, WarlockPower.SpiderClimb)
+
+export const WarlockLevel7EncounterSpellsSection = Content.defineSection('classes/warlock-level-7-encounter-spells', {
+  parent: WarlockPowersSection,
+  content: { name: 'Level 7 Encounter Spells' },
+})
+
+export const HowlOfDoomSection = Content.linkEntity(WarlockLevel7EncounterSpellsSection, WarlockPower.HowlOfDoom)
+export const InfernalMoonCurseSection = Content.linkEntity(WarlockLevel7EncounterSpellsSection, WarlockPower.InfernalMoonCurse)
+export const MireTheMindSection = Content.linkEntity(WarlockLevel7EncounterSpellsSection, WarlockPower.MireTheMind)
+export const SignOfIllOmenSection = Content.linkEntity(WarlockLevel7EncounterSpellsSection, WarlockPower.SignOfIllOmen)
+
+export const WarlockLevel9DailySpellsSection = Content.defineSection('classes/warlock-level-9-daily-spells', {
+  parent: WarlockPowersSection,
+  content: { name: 'Level 9 Daily Spells' },
+})
+
+export const CurseOfTheBlackFrostSection = Content.linkEntity(WarlockLevel9DailySpellsSection, WarlockPower.CurseOfTheBlackFrost)
+export const IronSpikeOfDisSection = Content.linkEntity(WarlockLevel9DailySpellsSection, WarlockPower.IronSpikeOfDis)
+export const SummonsOfKhiradSection = Content.linkEntity(WarlockLevel9DailySpellsSection, WarlockPower.SummonsOfKhirad)
+export const ThiefOfFiveFatesSection = Content.linkEntity(WarlockLevel9DailySpellsSection, WarlockPower.ThiefOfFiveFates)
+
+export const WarlockLevel10UtilitySpellsSection = Content.defineSection('classes/warlock-level-10-utility-spells', {
+  parent: WarlockPowersSection,
+  content: { name: 'Level 10 Utility Spells' },
+})
+
+export const AmbassadorImpSection = Content.linkEntity(WarlockLevel10UtilitySpellsSection, WarlockPower.AmbassadorImp)
+export const ShadowFormSection = Content.linkEntity(WarlockLevel10UtilitySpellsSection, WarlockPower.ShadowForm)
+export const ShieldingShadesSection = Content.linkEntity(WarlockLevel10UtilitySpellsSection, WarlockPower.ShieldingShades)
+export const WarlocksLeapSection = Content.linkEntity(WarlockLevel10UtilitySpellsSection, WarlockPower.WarlocksLeap)
+
 export const WarlockContent: Array<ContentSection> = [
   WarlockSection,
   WarlockOverviewSection,
@@ -197,4 +237,24 @@ export const WarlockContent: Array<ContentSection> = [
   CrownOfMadnessSection,
   CurseOfTheBloodyFangsSection,
   HungerOfHadarSection,
+  WarlockLevel6UtilitySpellsSection,
+  DarkOnesOwnLuckSection,
+  FeySwitchSection,
+  ShroudOfBlackSteelSection,
+  SpiderClimbSection,
+  WarlockLevel7EncounterSpellsSection,
+  HowlOfDoomSection,
+  InfernalMoonCurseSection,
+  MireTheMindSection,
+  SignOfIllOmenSection,
+  WarlockLevel9DailySpellsSection,
+  CurseOfTheBlackFrostSection,
+  IronSpikeOfDisSection,
+  SummonsOfKhiradSection,
+  ThiefOfFiveFatesSection,
+  WarlockLevel10UtilitySpellsSection,
+  AmbassadorImpSection,
+  ShadowFormSection,
+  ShieldingShadesSection,
+  WarlocksLeapSection,
 ]

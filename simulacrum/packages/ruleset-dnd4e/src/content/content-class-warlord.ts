@@ -155,6 +155,44 @@ export const StandTheFallenSection = Content.linkEntity(WarlordLevel5DailyExploi
 export const TurningPointSection = Content.linkEntity(WarlordLevel5DailyExploitsSection, WarlordPowers.TurningPoint)
 export const VillainsNightmareSection = Content.linkEntity(WarlordLevel5DailyExploitsSection, WarlordPowers.VillainsNightmare)
 
+export const WarlordLevel6UtilityExploitsSection = Content.defineSection('classes/warlord-level-6-utility-exploits', {
+  parent: WarlordPowersSection,
+  content: { name: 'Level 6 Utility Exploits' },
+})
+
+export const GuideTheChargeSection = Content.linkEntity(WarlordLevel6UtilityExploitsSection, WarlordPowers.GuideTheCharge)
+export const InspiringReactionSection = Content.linkEntity(WarlordLevel6UtilityExploitsSection, WarlordPowers.InspiringReaction)
+export const QuickStepSection = Content.linkEntity(WarlordLevel6UtilityExploitsSection, WarlordPowers.QuickStep)
+export const StandToughSection = Content.linkEntity(WarlordLevel6UtilityExploitsSection, WarlordPowers.StandTough)
+
+export const WarlordLevel7EncounterExploitsSection = Content.defineSection('classes/warlord-level-7-encounter-exploits', {
+  parent: WarlordPowersSection,
+  content: { name: 'Level 7 Encounter Exploits' },
+})
+
+export const LionsRoarSection = Content.linkEntity(WarlordLevel7EncounterExploitsSection, WarlordPowers.LionsRoar)
+export const SunderArmorSection = Content.linkEntity(WarlordLevel7EncounterExploitsSection, WarlordPowers.SunderArmor)
+export const SurpriseAttackSection = Content.linkEntity(WarlordLevel7EncounterExploitsSection, WarlordPowers.SurpriseAttack)
+export const SurroundFoeSection = Content.linkEntity(WarlordLevel7EncounterExploitsSection, WarlordPowers.SurroundFoe)
+
+export const WarlordLevel9DailyExploitsSection = Content.defineSection('classes/warlord-level-9-daily-exploits', {
+  parent: WarlordPowersSection,
+  content: { name: 'Level 9 Daily Exploits' },
+})
+
+export const IronDragonChargeSection = Content.linkEntity(WarlordLevel9DailyExploitsSection, WarlordPowers.IronDragonCharge)
+export const KnockThemDownSection = Content.linkEntity(WarlordLevel9DailyExploitsSection, WarlordPowers.KnockThemDown)
+export const WhiteRavenStrikeSection = Content.linkEntity(WarlordLevel9DailyExploitsSection, WarlordPowers.WhiteRavenStrike)
+
+export const WarlordLevel10UtilityExploitsSection = Content.defineSection('classes/warlord-level-10-utility-exploits', {
+  parent: WarlordPowersSection,
+  content: { name: 'Level 10 Utility Exploits' },
+})
+
+export const DefensiveRallySection = Content.linkEntity(WarlordLevel10UtilityExploitsSection, WarlordPowers.DefensiveRally)
+export const EaseSufferingSection = Content.linkEntity(WarlordLevel10UtilityExploitsSection, WarlordPowers.EaseSuffering)
+export const TacticalShiftSection = Content.linkEntity(WarlordLevel10UtilityExploitsSection, WarlordPowers.TacticalShift)
+
 export const WarlordContent: Array<ContentSection> = [
   WarlordSection,
   WarlordClassTraitsSection,
@@ -198,4 +236,22 @@ export const WarlordContent: Array<ContentSection> = [
   StandTheFallenSection,
   TurningPointSection,
   VillainsNightmareSection,
+  WarlordLevel6UtilityExploitsSection,
+  GuideTheChargeSection,
+  InspiringReactionSection,
+  QuickStepSection,
+  StandToughSection,
+  WarlordLevel7EncounterExploitsSection,
+  LionsRoarSection,
+  SunderArmorSection,
+  SurpriseAttackSection,
+  SurroundFoeSection,
+  WarlordLevel9DailyExploitsSection,
+  IronDragonChargeSection,
+  KnockThemDownSection,
+  WhiteRavenStrikeSection,
+  WarlordLevel10UtilityExploitsSection,
+  DefensiveRallySection,
+  EaseSufferingSection,
+  TacticalShiftSection,
 ]

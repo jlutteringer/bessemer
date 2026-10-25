@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, CharacterValues, Effects, RulesetEntities, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, RulesetEntities, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -9,12 +9,14 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   Heritage,
   NephilimFeat,
   VersatileHeritage,
 } from '@simulacrum/ruleset-pf2e/tag'
 import { Speed } from '@simulacrum/ruleset-pf2e/characteristic'
 import {
+  ExpertOccultism,
   TrainedAthletics,
   TrainedDeception,
   TrainedDiplomacy,
@@ -24,6 +26,7 @@ import {
   TrainedReligion,
   TrainedSociety,
 } from '@simulacrum/ruleset-pf2e/skill'
+import { TwoActions } from '@simulacrum/ruleset-pf2e/action-type'
 import { Darkvision, ElfHeritage, LowLightVision } from '@simulacrum/ruleset-pf2e/ancestry/ancestry-common'
 import { Diehard } from '@simulacrum/ruleset-pf2e/feat/general-feat'
 import { AdditionalLore, CharmingLiar, ImpressivePerformance, LieToMe, Multilingual } from '@simulacrum/ruleset-pf2e/feat/skill-feat'
@@ -507,6 +510,83 @@ export const SupernaturalCharm = Traits.defineTrait('ancestry/aiuvarin/supernatu
   effects: [],
 })
 
+export const AccursedClaws = Traits.defineTrait('ancestry/changeling/accursed-claws', {
+  name: 'Accursed Claws',
+  description:
+    '*Changeling*\n\n**Prerequisites** claw unarmed attack\n\nYour claws carry your mother’s hag magic. When you critically hit with a claw [Strike](content:playing-the-game/strike), the target takes an additional 1d4 [persistent mental damage](content:conditions/persistent-damage).',
+  tags: [Feat, AncestryFeat, ChangelingFeat, FeatLevel9],
+  prerequisites: [
+    Traits.traitPrerequisite(ChangelingHeritage),
+    Expressions.or([Traits.traitPrerequisite(HagClaws), Traits.traitPrerequisite(SlagMay)]),
+  ],
+  effects: [],
+})
+
+export const OccultResistance = Traits.defineTrait('ancestry/changeling/occult-resistance', {
+  name: 'Occult Resistance',
+  description:
+    '*Changeling*\n\n**Prerequisites** Expert in [Occultism](characteristic:skill/occultism)\n\nYour study of occult practices has shown you how to best defend against them. You gain a +1 circumstance bonus to all saving throws against [occult](content:traits/occult) effects.',
+  tags: [Feat, AncestryFeat, ChangelingFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(ChangelingHeritage), Traits.traitPrerequisite(ExpertOccultism)],
+  effects: [],
+})
+
+export const CelestialMagic = Traits.defineTrait('ancestry/nephilim/celestial-magic', {
+  name: 'Celestial Magic',
+  description:
+    '*Nephilim*\n\n**Prerequisites** [Angelkin](trait:ancestry/nephilim/angelkin), [Lawbringer](trait:ancestry/nephilim/lawbringer), [Musetouched](trait:ancestry/nephilim/musetouched), or or another lineage feat associated with [celestials](content:traits/celestial)\n\nYou possess celestial magic. Choose two of the following spells: [_clear mind_](ability:spell/clear-mind), [_everlight_](ability:spell/everlight), [_humanoid form_](ability:spell/humanoid-form), [_revealing light_](ability:spell/revealing-light), [_share life_](ability:spell/share-life), or [_sure footing_](ability:spell/sure-footing). You can use each of the chosen spells once per day as 2nd-rank divine [innate spells](content:spells/innate-spells). [Angelkin](trait:ancestry/nephilim/angelkin) typically take _clear mind_ and _humanoid form_, [lawbringers](trait:ancestry/nephilim/lawbringer) typically have _everlight_ and _share life_, and [musetouched](trait:ancestry/nephilim/musetouched) typically have _revealing light_ and _sure footing_.',
+  tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel9],
+  prerequisites: [
+    Traits.traitPrerequisite(NephilimHeritage),
+    Expressions.or([Traits.traitPrerequisite(Angelkin), Traits.traitPrerequisite(Lawbringer), Traits.traitPrerequisite(Musetouched)]),
+  ],
+  effects: [],
+})
+
+export const DivineCountermeasures = Traits.defineTrait('ancestry/nephilim/divine-countermeasures', {
+  name: 'Divine Countermeasures',
+  description:
+    '*Nephilim*\n\nYou’ve studied your extraplanar heritage with the intent of better defending yourself, whether against creatures aligned with or opposed to your extraplanar lineage, and you’ve found that your techniques are equally powerful against [celestials](content:traits/celestial), [fiends](content:traits/fiend), and other divine entities. You gain a +1 circumstance bonus to all saving throws against [divine](content:traits/divine) effects.',
+  tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(NephilimHeritage)],
+  effects: [],
+})
+
+export const DivineWings = Traits.defineTrait('ancestry/nephilim/divine-wings', {
+  name: 'Divine Wings',
+  description:
+    '*Divine, Morph, Nephilim*\n\n**Frequency** once per day\n\nWith effort, you can call forth magical wings from your back, similar in appearance to those of your extraplanar forebear, whether they be elegantly feathered wings or ominous bat wings. These wings remain for 10 minutes. You gain a [fly Speed](content:playing-the-game/fly-speed) equal to your [Speed](characteristic:speed) while you’ve manifested your wings.',
+  tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(NephilimHeritage)],
+  effects: [],
+})
+
+export const FiendishMagic = Traits.defineTrait('ancestry/nephilim/fiendish-magic', {
+  name: 'Fiendish Magic',
+  description:
+    '*Nephilim*\n\n**Prerequisites** [Grimspawn](trait:ancestry/nephilim/grimspawn), [Pitborn](trait:ancestry/nephilim/pitborn), or [Hellspawn](trait:ancestry/nephilim/hellspawn), or another lineage feat associated with fiends\n\nYou possess fiendish magic. Choose two of the following spells: [_disguise magic_](ability:spell/disguise-magic), [_false vitality_](ability:spell/false-vitality), [_invisibility_](ability:spell/invisibility), [_see the unseen_](ability:spell/see-the-unseen), [_shatter_](ability:spell/shatter), or [_paranoia_](ability:spell/paranoia). You can use each of the chosen spells once per day as 2nd-rank divine [innate spells](content:spells/innate-spells). [Grimspawn](trait:ancestry/nephilim/grimspawn) typically take _false vitality_ and _see the unseen_, [pitborn](trait:ancestry/nephilim/pitborn) typically take _paranoia_ and _shatter_, and [hellspawn](trait:ancestry/nephilim/hellspawn) typically take _invisibility_ and _disguise_.',
+  tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel9],
+  prerequisites: [
+    Traits.traitPrerequisite(NephilimHeritage),
+    Expressions.or([Traits.traitPrerequisite(Grimspawn), Traits.traitPrerequisite(Pitborn), Traits.traitPrerequisite(Hellspawn)]),
+  ],
+  effects: [],
+})
+
+export const DivineWingsAction = Abilities.defineAbility('ancestry/nephilim/divine-wings/action', {
+  name: 'Divine Wings',
+  description: '*Divine, Morph, Nephilim*',
+  prerequisites: [Traits.traitPrerequisite(DivineWings)],
+  actions: [
+    {
+      name: 'Divine Wings',
+      description:
+        '**Frequency** once per day\n\nWith effort, you can call forth magical wings from your back, similar in appearance to those of your extraplanar forebear, whether they be elegantly feathered wings or ominous bat wings. These wings remain for 10 minutes. You gain a [fly Speed](content:playing-the-game/fly-speed) equal to your [Speed](characteristic:speed) while you’ve manifested your wings.',
+      action: TwoActions,
+    },
+  ],
+})
+
 export const AllVersatileHeritageEntities = [
   ChangelingHeritage,
   NephilimHeritage,
@@ -545,4 +625,11 @@ export const AllVersatileHeritageEntities = [
   SkillfulTail,
   InspireImitation,
   SupernaturalCharm,
+  AccursedClaws,
+  OccultResistance,
+  CelestialMagic,
+  DivineCountermeasures,
+  DivineWings,
+  FiendishMagic,
+  DivineWingsAction,
 ]

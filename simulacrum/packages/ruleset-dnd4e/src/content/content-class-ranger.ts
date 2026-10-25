@@ -140,6 +140,44 @@ export const FrenziedSkirmishSection = Content.linkEntity(Level5DailyExploitsSec
 export const SplinteringShotSection = Content.linkEntity(Level5DailyExploitsSection, RangerPowers.SplinteringShot)
 export const TwoWolfPounceSection = Content.linkEntity(Level5DailyExploitsSection, RangerPowers.TwoWolfPounce)
 
+export const Level6UtilityExploitsSection = Content.defineSection('classes/ranger-level-6-utility-exploits', {
+  parent: RangerPowersSection,
+  content: { name: 'Level 6 Utility Exploits' },
+})
+
+export const EvadeAmbushSection = Content.linkEntity(Level6UtilityExploitsSection, RangerPowers.EvadeAmbush)
+export const SkilledCompanionSection = Content.linkEntity(Level6UtilityExploitsSection, RangerPowers.SkilledCompanion)
+export const WeaveThroughTheFraySection = Content.linkEntity(Level6UtilityExploitsSection, RangerPowers.WeaveThroughTheFray)
+
+export const Level7EncounterExploitsSection = Content.defineSection('classes/ranger-level-7-encounter-exploits', {
+  parent: RangerPowersSection,
+  content: { name: 'Level 7 Encounter Exploits' },
+})
+
+export const ClawsOfTheGriffonSection = Content.linkEntity(Level7EncounterExploitsSection, RangerPowers.ClawsOfTheGriffon)
+export const HawksTalonSection = Content.linkEntity(Level7EncounterExploitsSection, RangerPowers.HawksTalon)
+export const SpikesOfTheManticoreSection = Content.linkEntity(Level7EncounterExploitsSection, RangerPowers.SpikesOfTheManticore)
+export const SweepingWhirlwindSection = Content.linkEntity(Level7EncounterExploitsSection, RangerPowers.SweepingWhirlwind)
+
+export const Level9DailyExploitsSection = Content.defineSection('classes/ranger-level-9-daily-exploits', {
+  parent: RangerPowersSection,
+  content: { name: 'Level 9 Daily Exploits' },
+})
+
+export const AttacksOnTheRunSection = Content.linkEntity(Level9DailyExploitsSection, RangerPowers.AttacksOnTheRun)
+export const CloseQuartersShotSection = Content.linkEntity(Level9DailyExploitsSection, RangerPowers.CloseQuartersShot)
+export const SprayOfArrowsSection = Content.linkEntity(Level9DailyExploitsSection, RangerPowers.SprayOfArrows)
+export const SwirlingLeavesOfSteelSection = Content.linkEntity(Level9DailyExploitsSection, RangerPowers.SwirlingLeavesOfSteel)
+
+export const Level10UtilityExploitsSection = Content.defineSection('classes/ranger-level-10-utility-exploits', {
+  parent: RangerPowersSection,
+  content: { name: 'Level 10 Utility Exploits' },
+})
+
+export const ExpeditiousStrideSection = Content.linkEntity(Level10UtilityExploitsSection, RangerPowers.ExpeditiousStride)
+export const OpenTheRangeSection = Content.linkEntity(Level10UtilityExploitsSection, RangerPowers.OpenTheRange)
+export const UndauntedStrideSection = Content.linkEntity(Level10UtilityExploitsSection, RangerPowers.UndauntedStride)
+
 export const RangerContent: Array<ContentSection> = [
   RangerSection,
   RangerClassTraitsSection,
@@ -183,4 +221,22 @@ export const RangerContent: Array<ContentSection> = [
   FrenziedSkirmishSection,
   SplinteringShotSection,
   TwoWolfPounceSection,
+  Level6UtilityExploitsSection,
+  EvadeAmbushSection,
+  SkilledCompanionSection,
+  WeaveThroughTheFraySection,
+  Level7EncounterExploitsSection,
+  ClawsOfTheGriffonSection,
+  HawksTalonSection,
+  SpikesOfTheManticoreSection,
+  SweepingWhirlwindSection,
+  Level9DailyExploitsSection,
+  AttacksOnTheRunSection,
+  CloseQuartersShotSection,
+  SprayOfArrowsSection,
+  SwirlingLeavesOfSteelSection,
+  Level10UtilityExploitsSection,
+  ExpeditiousStrideSection,
+  OpenTheRangeSection,
+  UndauntedStrideSection,
 ]

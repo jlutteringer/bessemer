@@ -158,6 +158,14 @@ export const DefyTheDarknessSection = Content.linkEntity(DwarfAncestryFeatsSecti
 
 export const DwarvenReinforcementSection = Content.linkEntity(DwarfAncestryFeatsSection, AncestryDwarf.DwarvenReinforcement)
 
+export const EchoesInStoneSection = Content.linkEntity(DwarfAncestryFeatsSection, AncestryDwarf.EchoesInStone)
+
+export const MountainsStoutnessSection = Content.linkEntity(DwarfAncestryFeatsSection, AncestryDwarf.MountainsStoutness)
+
+export const StoneBonesSection = Content.linkEntity(DwarfAncestryFeatsSection, AncestryDwarf.StoneBones)
+
+export const StonewalkerSection = Content.linkEntity(DwarfAncestryFeatsSection, AncestryDwarf.Stonewalker)
+
 export const ElvesSection = Content.defineSection('ancestries-and-backgrounds/elves', {
   parent: AncestriesBackgroundsSection,
   content: {
@@ -211,6 +219,14 @@ export const AncestralSuspicionSection = Content.linkEntity(ElfAncestryFeatsSect
 
 export const MartialExperienceSection = Content.linkEntity(ElfAncestryFeatsSection, AncestryElf.MartialExperience)
 
+export const ElfStepSection = Content.linkEntity(ElfAncestryFeatsSection, AncestryElf.ElfStep)
+
+export const ExpertLongevitySection = Content.linkEntity(ElfAncestryFeatsSection, AncestryElf.ExpertLongevity)
+
+export const OtherworldlyAcumenSection = Content.linkEntity(ElfAncestryFeatsSection, AncestryElf.OtherworldlyAcumen)
+
+export const TreeClimberSection = Content.linkEntity(ElfAncestryFeatsSection, AncestryElf.TreeClimber)
+
 export const GnomesSection = Content.defineSection('ancestries-and-backgrounds/gnomes', {
   parent: AncestriesBackgroundsSection,
   content: {
@@ -261,6 +277,14 @@ export const RazzleDazzleSection = Content.linkEntity(GnomeAncestryFeatsSection,
 export const EnergizedFontSection = Content.linkEntity(GnomeAncestryFeatsSection, AncestryGnome.EnergizedFont)
 
 export const ProjectPersonaSection = Content.linkEntity(GnomeAncestryFeatsSection, AncestryGnome.ProjectPersona)
+
+export const CautiousCuriositySection = Content.linkEntity(GnomeAncestryFeatsSection, AncestryGnome.CautiousCuriosity)
+
+export const FirstWorldAdeptSection = Content.linkEntity(GnomeAncestryFeatsSection, AncestryGnome.FirstWorldAdept)
+
+export const LifeLeapSection = Content.linkEntity(GnomeAncestryFeatsSection, AncestryGnome.LifeLeap)
+
+export const VivaciousConduitSection = Content.linkEntity(GnomeAncestryFeatsSection, AncestryGnome.VivaciousConduit)
 
 export const GoblinsSection = Content.defineSection('ancestries-and-backgrounds/goblins', {
   parent: AncestriesBackgroundsSection,
@@ -316,6 +340,12 @@ export const KneecapSection = Content.linkEntity(GoblinAncestryFeatsSection, Anc
 export const LoudSingerSection = Content.linkEntity(GoblinAncestryFeatsSection, AncestryGoblin.LoudSinger)
 
 export const VandalSection = Content.linkEntity(GoblinAncestryFeatsSection, AncestryGoblin.Vandal)
+
+export const CaveClimberSection = Content.linkEntity(GoblinAncestryFeatsSection, AncestryGoblin.CaveClimber)
+
+export const ClingSection = Content.linkEntity(GoblinAncestryFeatsSection, AncestryGoblin.Cling)
+
+export const SkitteringScuttleSection = Content.linkEntity(GoblinAncestryFeatsSection, AncestryGoblin.SkitteringScuttle)
 
 export const HalflingsSection = Content.defineSection('ancestries-and-backgrounds/halflings', {
   parent: AncestriesBackgroundsSection,
@@ -374,6 +404,14 @@ export const CulturalAdaptabilitySection = Content.linkEntity(HalflingAncestryFe
 
 export const StepLivelySection = Content.linkEntity(HalflingAncestryFeatsSection, AncestryHalfling.StepLively)
 
+export const DanceUnderfootSection = Content.linkEntity(HalflingAncestryFeatsSection, AncestryHalfling.DanceUnderfoot)
+
+export const GuidingLuckSection = Content.linkEntity(HalflingAncestryFeatsSection, AncestryHalfling.GuidingLuck)
+
+export const IrrepressibleSection = Content.linkEntity(HalflingAncestryFeatsSection, AncestryHalfling.Irrepressible)
+
+export const UnhamperedPassageSection = Content.linkEntity(HalflingAncestryFeatsSection, AncestryHalfling.UnhamperedPassage)
+
 export const HumansSection = Content.defineSection('ancestries-and-backgrounds/humans', {
   parent: AncestriesBackgroundsSection,
   content: {
@@ -418,6 +456,16 @@ export const AdaptiveAdeptSection = Content.linkEntity(HumanAncestryFeatsSection
 export const CleverImproviserSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.CleverImproviser)
 
 export const SenseAlliesSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.SenseAllies)
+
+export const CooperativeSoulSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.CooperativeSoul)
+
+export const GroupAidSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.GroupAid)
+
+export const HardyTravelerSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.HardyTraveler)
+
+export const IncredibleImprovisationSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.IncredibleImprovisation)
+
+export const MultitalentedSection = Content.linkEntity(HumanAncestryFeatsSection, AncestryHuman.Multitalented)
 
 export const LeshiesSection = Content.defineSection('ancestries-and-backgrounds/leshies', {
   parent: AncestriesBackgroundsSection,
@@ -479,6 +527,14 @@ export const LeshyGlideSection = Content.linkEntity(LeshyAncestryFeatsSection, A
 export const RitualReversionSection = Content.linkEntity(LeshyAncestryFeatsSection, AncestryLeshy.RitualReversion)
 
 export const SpeakWithKindredSection = Content.linkEntity(LeshyAncestryFeatsSection, AncestryLeshy.SpeakWithKindred)
+
+export const BarkAndTendrilSection = Content.linkEntity(LeshyAncestryFeatsSection, AncestryLeshy.BarkAndTendril)
+
+export const LuckyKeepsakeSection = Content.linkEntity(LeshyAncestryFeatsSection, AncestryLeshy.LuckyKeepsake)
+
+export const SolarRejuvenationSection = Content.linkEntity(LeshyAncestryFeatsSection, AncestryLeshy.SolarRejuvenation)
+
+export const ThornedSeedpodSection = Content.linkEntity(LeshyAncestryFeatsSection, AncestryLeshy.ThornedSeedpod)
 
 export const OrcsSection = Content.defineSection('ancestries-and-backgrounds/orcs', {
   parent: AncestriesBackgroundsSection,
@@ -546,6 +602,10 @@ export const BloodyBlowsSection = Content.linkEntity(OrcAncestryFeatsSection, An
 export const DefyDeathSection = Content.linkEntity(OrcAncestryFeatsSection, AncestryOrc.DefyDeath)
 
 export const ScarThickSkinSection = Content.linkEntity(OrcAncestryFeatsSection, AncestryOrc.ScarThickSkin)
+
+export const PervasiveSuperstitionSection = Content.linkEntity(OrcAncestryFeatsSection, AncestryOrc.PervasiveSuperstition)
+
+export const UndyingFerocitySection = Content.linkEntity(OrcAncestryFeatsSection, AncestryOrc.UndyingFerocity)
 
 export const VersatileHeritagesSection = Content.defineSection('ancestries-and-backgrounds/versatile-heritages', {
   parent: AncestriesBackgroundsSection,
@@ -631,6 +691,10 @@ export const CalledSection = Content.linkEntity(ChangelingFeatsSection, Versatil
 
 export const MistChildSection = Content.linkEntity(ChangelingFeatsSection, VersatileHeritage.MistChild)
 
+export const AccursedClawsSection = Content.linkEntity(ChangelingFeatsSection, VersatileHeritage.AccursedClaws)
+
+export const OccultResistanceSection = Content.linkEntity(ChangelingFeatsSection, VersatileHeritage.OccultResistance)
+
 export const PlanarScionsNephilimSection = Content.defineSection('ancestries-and-backgrounds/planar-scions-nephilim', {
   parent: InThisBookSection,
   content: {
@@ -687,6 +751,14 @@ export const NephilimResistanceSection = Content.linkEntity(NephilimFeatsSection
 export const ScionOfManyPlanesSection = Content.linkEntity(NephilimFeatsSection, VersatileHeritage.ScionOfManyPlanes)
 
 export const SkillfulTailSection = Content.linkEntity(NephilimFeatsSection, VersatileHeritage.SkillfulTail)
+
+export const CelestialMagicSection = Content.linkEntity(NephilimFeatsSection, VersatileHeritage.CelestialMagic)
+
+export const DivineCountermeasuresSection = Content.linkEntity(NephilimFeatsSection, VersatileHeritage.DivineCountermeasures)
+
+export const DivineWingsSection = Content.linkEntity(NephilimFeatsSection, VersatileHeritage.DivineWings)
+
+export const FiendishMagicSection = Content.linkEntity(NephilimFeatsSection, VersatileHeritage.FiendishMagic)
 
 export const MixedAncestryHeritagesSection = Content.defineSection('ancestries-and-backgrounds/mixed-ancestry-heritages', {
   parent: InThisBookSection,
@@ -901,6 +973,10 @@ export const AncestriesAndBackgroundsContent = [
   BoulderRollSection,
   DefyTheDarknessSection,
   DwarvenReinforcementSection,
+  EchoesInStoneSection,
+  MountainsStoutnessSection,
+  StoneBonesSection,
+  StonewalkerSection,
   ElvesSection,
   ElfSection,
   ElfHeritagesSection,
@@ -921,6 +997,10 @@ export const AncestriesAndBackgroundsContent = [
   AgelessPatienceSection,
   AncestralSuspicionSection,
   MartialExperienceSection,
+  ElfStepSection,
+  ExpertLongevitySection,
+  OtherworldlyAcumenSection,
+  TreeClimberSection,
   GnomesSection,
   GnomeSection,
   GnomeHeritagesSection,
@@ -940,6 +1020,10 @@ export const AncestriesAndBackgroundsContent = [
   RazzleDazzleSection,
   EnergizedFontSection,
   ProjectPersonaSection,
+  CautiousCuriositySection,
+  FirstWorldAdeptSection,
+  LifeLeapSection,
+  VivaciousConduitSection,
   GoblinsSection,
   GoblinSection,
   GoblinHeritagesSection,
@@ -961,6 +1045,9 @@ export const AncestriesAndBackgroundsContent = [
   KneecapSection,
   LoudSingerSection,
   VandalSection,
+  CaveClimberSection,
+  ClingSection,
+  SkitteringScuttleSection,
   HalflingsSection,
   HalflingSection,
   HalflingHeritagesSection,
@@ -983,6 +1070,10 @@ export const AncestriesAndBackgroundsContent = [
   WatchfulHalflingSection,
   CulturalAdaptabilitySection,
   StepLivelySection,
+  DanceUnderfootSection,
+  GuidingLuckSection,
+  IrrepressibleSection,
+  UnhamperedPassageSection,
   HumansSection,
   HumanSection,
   HumanHeritagesSection,
@@ -999,6 +1090,11 @@ export const AncestriesAndBackgroundsContent = [
   AdaptiveAdeptSection,
   CleverImproviserSection,
   SenseAlliesSection,
+  CooperativeSoulSection,
+  GroupAidSection,
+  HardyTravelerSection,
+  IncredibleImprovisationSection,
+  MultitalentedSection,
   LeshiesSection,
   LeshySection,
   LeshyHeritagesSection,
@@ -1023,6 +1119,10 @@ export const AncestriesAndBackgroundsContent = [
   LeshyGlideSection,
   RitualReversionSection,
   SpeakWithKindredSection,
+  BarkAndTendrilSection,
+  LuckyKeepsakeSection,
+  SolarRejuvenationSection,
+  ThornedSeedpodSection,
   OrcsSection,
   OrcSection,
   OrcHeritagesSection,
@@ -1050,6 +1150,8 @@ export const AncestriesAndBackgroundsContent = [
   BloodyBlowsSection,
   DefyDeathSection,
   ScarThickSkinSection,
+  PervasiveSuperstitionSection,
+  UndyingFerocitySection,
   VersatileHeritagesSection,
   UnlimitedPossibilitiesSection,
   PlayingAVersatileHeritageSection,
@@ -1068,6 +1170,8 @@ export const AncestriesAndBackgroundsContent = [
   HagsSightSection,
   CalledSection,
   MistChildSection,
+  AccursedClawsSection,
+  OccultResistanceSection,
   PlanarScionsNephilimSection,
   NephilimSection,
   NephilimNephilimSection,
@@ -1088,6 +1192,10 @@ export const AncestriesAndBackgroundsContent = [
   NephilimResistanceSection,
   ScionOfManyPlanesSection,
   SkillfulTailSection,
+  CelestialMagicSection,
+  DivineCountermeasuresSection,
+  DivineWingsSection,
+  FiendishMagicSection,
   MixedAncestryHeritagesSection,
   AiuvarinsSection,
   AiuvarinSection,

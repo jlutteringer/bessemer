@@ -11,11 +11,15 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Wizard, WizardCantrips } from '@simulacrum/ruleset-dnd4e/class/class-wizard'
 
-// Generated from the Player's Handbook Wizard powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Wizard powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal (except cantrips, which every wizard has). Encounter powers come back after a short rest, daily powers after an
 // extended rest.
 
@@ -480,6 +484,295 @@ export const Web = Abilities.defineAbility('wizard/power/web', {
   costs: [{ cost: 1 }],
 })
 
+export const DimensionDoor = Abilities.defineAbility('wizard/power/dimension-door', {
+  name: 'Dimension Door',
+  description: '*You trace the outline of a doorway in front of you, step through the portal, and reappear somewhere else nearby.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      "**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Teleportation\n\n**Move Action** · Personal\n\n**Effect:** Teleport 10 squares. You can't take other creatures with you."
+    ),
+  ],
+  actions: [{ name: 'Dimension Door', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DisguiseSelf = Abilities.defineAbility('wizard/power/disguise-self', {
+  name: 'Disguise Self',
+  description: '*With a snap of your fingers, you suddenly look like someone else.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      "**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** You make yourself, your clothing, and your equipment look different. You can take on the appearance of any creature of similar build and size, including a specific individual whom you've seen. You gain neither the abilities or mannerisms of the chosen form, nor the tactile or audible properties of your form or gear. For example, if you took on the illusion of a dwarf fighter in plate armor, anyone touching you would realize you weren't wearing plate armor, and you would not clank, creak, or jingle as you walked. The illusion lasts for 1 hour, although you can end it as a minor action. You must keep the same appearance for the entire duration.\n\nAnyone who attempts to see through your ruse makes an Insight check opposed by your Bluff check, and you gain a +5 power bonus to your check."
+    ),
+  ],
+  actions: [{ name: 'Disguise Self', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DispelMagic = Abilities.defineAbility('wizard/power/dispel-magic', {
+  name: 'Dispel Magic',
+  description: '*You unleash a ray of crackling arcane energy that destroys a magical effect created by an opponent.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 6**\n\n**Daily** ✦ Arcane\n\n**Standard Action** · Ranged 10\n\n**Target:** One conjuration or zone\n\n**Attack:** Intelligence vs. the Will defense of the creator of the conjuration or the zone\n\n**Hit:** The conjuration or the zone is destroyed. All its effects end, including those that normally last until a target saves.'
+    ),
+  ],
+  actions: [{ name: 'Dispel Magic', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const Invisibility = Abilities.defineAbility('wizard/power/invisibility', {
+  name: 'Invisibility',
+  description: '*A creature you choose vanishes from sight.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Illusion\n\n**Standard Action** · Ranged 5\n\n**Target:** You or one creature\n\n**Effect:** The target is invisible until the end of your next turn. If the target attacks, the target becomes visible.\n\n**Sustain Standard:** If the target is within range, you can sustain the effect.'
+    ),
+  ],
+  actions: [{ name: 'Invisibility', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const Levitate = Abilities.defineAbility('wizard/power/levitate', {
+  name: 'Levitate',
+  description: '*You hold out your hands, and suddenly you feel air beneath your feet.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      "**Wizard Utility 6**\n\n**Daily** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** You can move 4 squares vertically and remain there, hovering above the ground. While aloft, you are unsteady, taking a –2 penalty to AC and Reflex defense. If some effect, such as a pit opening below you, causes you to be more than 4 squares above the ground, you drop down to 4 squares above the ground. You do not take damage from such a fall.\n\n**Sustain Move:** You can sustain this power until the end of the encounter or for 5 minutes. When you sustain this power, you can move 3 squares up or down or 1 square horizontally. You cannot go higher than 4 squares above the ground. If you don't sustain the power, you descend to the ground without taking falling damage."
+    ),
+  ],
+  actions: [{ name: 'Levitate', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const WallOfFog = Abilities.defineAbility('wizard/power/wall-of-fog', {
+  name: 'Wall of Fog',
+  description: '*You create a billowing wall of gray fog that obscures vision.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Conjuration\n\n**Standard Action** · Area wall 8 within 10\n\n**Effect:** You conjure a wall that consists of contiguous squares filled with arcane fog. The wall lasts until the end of your next turn. It can be up to 8 squares long and up to 4 squares high. The fog grants concealment to creatures in its space and blocks line of sight.\n\n**Sustain Minor:** The wall persists.'
+    ),
+  ],
+  actions: [{ name: 'Wall of Fog', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const FireBurst = Abilities.defineAbility('wizard/power/fire-burst', {
+  name: 'Fire Burst',
+  description: '*A fiery red bead streaks from your finger to the spot you indicate, where it bursts into a great ball of magical flame.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Area burst 2 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 3d6 + Intelligence modifier fire damage.'
+    ),
+  ],
+  actions: [{ name: 'Fire Burst', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const LightningBolt = Abilities.defineAbility('wizard/power/lightning-bolt', {
+  name: 'Lightning Bolt',
+  description: '*From your outstretched hand erupt brilliant strokes of blue-white lightning.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Implement, Lightning\n\n**Standard Action** · Ranged 10\n\n**Primary Target:** One creature\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d6 + Intelligence modifier lightning damage.\n\n**Secondary Targets:** Two creatures within 10 squares of the primary target\n\n**Secondary Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d6 + Intelligence modifier lightning damage.'
+    ),
+  ],
+  actions: [{ name: 'Lightning Bolt', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SpectralRam = Abilities.defineAbility('wizard/power/spectral-ram', {
+  name: 'Spectral Ram',
+  description:
+    '*You seize your foe with unseen magical force and bash him against the ceiling and walls before dropping him to the ground and hurling him back.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Force, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d10 + Intelligence modifier force damage, and you push the target 3 squares and it is knocked prone.'
+    ),
+  ],
+  actions: [{ name: 'Spectral Ram', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const WintersWrath = Abilities.defineAbility('wizard/power/winters-wrath', {
+  name: "Winter's Wrath",
+  description: '*You raise your hand, and an icy blizzard rains down mercilessly upon an area you designate.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Area burst 2 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d8 + Intelligence modifier cold damage.\n\n**Effect:** A blizzard erupts in the designated area and continues until the end of your next turn. It grants concealment, and any creature that starts its turn in the storm takes cold damage equal to your Intelligence modifier. You can end this effect as a minor action.'
+    ),
+  ],
+  actions: [{ name: "Winter's Wrath", action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const IceStorm = Abilities.defineAbility('wizard/power/ice-storm', {
+  name: 'Ice Storm',
+  description: '*A shower of bitterly cold hailstones pummels a wide swath of ground and covers the area in ice.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Cold, Implement, Zone\n\n**Standard Action** · Area burst 3 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d8 + Intelligence modifier cold damage, and the target is immobilized (save ends).\n\n**Miss:** Half damage, and the target is slowed (save ends).\n\n**Effect:** The burst creates a zone of ice. The zone is difficult terrain until the end of the encounter or for 5 minutes.'
+    ),
+  ],
+  actions: [{ name: 'Ice Storm', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const LightningSerpent = Abilities.defineAbility('wizard/power/lightning-serpent', {
+  name: 'Lightning Serpent',
+  description: '*A crackling bolt of lightning springs from your hand and leaps at a foe, taking serpentine form as it strikes.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Implement, Lightning, Poison\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d12 + Intelligence modifier lightning damage, and the target takes ongoing 5 poison damage and is slowed (save ends both).\n\n**Miss:** Half damage, and the target is slowed (save ends).'
+    ),
+  ],
+  actions: [{ name: 'Lightning Serpent', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const MordenkainensSword = Abilities.defineAbility('wizard/power/mordenkainens-sword', {
+  name: "Mordenkainen's Sword",
+  description: '*You invoke a sword of crackling golden force that slashes and stabs furiously at the creature you indicate.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Conjuration, Force, Implement\n\n**Standard Action** · Ranged 10\n\n**Effect:** You conjure a sword of force in an unoccupied square within range, and it attacks. As a move action, you can move the sword to a new target within range. The sword lasts until the end of your next turn.\n\n**Target:** One creature adjacent to the sword\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d10 + Intelligence modifier force damage.\n\n**Sustain Minor:** When you sustain the sword, it attacks again.'
+    ),
+  ],
+  actions: [{ name: "Mordenkainen's Sword", action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const WallOfFire = Abilities.defineAbility('wizard/power/wall-of-fire', {
+  name: 'Wall of Fire',
+  description: '*A blazing wall of flame erupts from the ground at your command.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      "**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Conjuration, Fire, Implement\n\n**Standard Action** · Area wall 8 within 10 squares\n\n**Effect:** You conjure a wall that consists of contiguous squares filled with arcane fire. It can be up to 8 squares long and up to 4 squares high. The wall lasts until the end of your next turn. Any creature that starts its turn adjacent to the wall takes 1d6 + Intelligence modifier fire damage. If a creature moves into the wall's space or starts its turn there, the creature takes 3d6 + Intelligence modifier fire damage. Entering a square occupied by the wall costs 3 extra squares of movement. The wall blocks line of sight.\n\n**Sustain Minor:** The wall persists."
+    ),
+  ],
+  actions: [{ name: 'Wall of Fire', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ArcaneGate = Abilities.defineAbility('wizard/power/arcane-gate', {
+  name: 'Arcane Gate',
+  description: '*You open a dimensional rift connecting two nearby locations.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 10**\n\n**Daily** ✦ Arcane, Teleportation\n\n**Minor Action** · Ranged 20\n\n**Target:** Two unoccupied squares\n\n**Effect:** You create a dimensional rift between the two target squares that lasts until the end of your next turn. Any creature that enters one of the target squares can move to the other target square as if it were adjacent to that square.\n\nA creature cannot pass through the rift if either square is occupied by another creature.\n\n**Sustain Minor:** The rift persists.'
+    ),
+  ],
+  actions: [{ name: 'Arcane Gate', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const Blur = Abilities.defineAbility('wizard/power/blur', {
+  name: 'Blur',
+  description: '*You cloak yourself with a shimmering aura, making your outline almost impossible to discern.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 10**\n\n**Daily** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** Until the end of the encounter, you gain a +2 power bonus to all defenses, and enemies 5 or more squares away from you cannot see you.'
+    ),
+  ],
+  actions: [{ name: 'Blur', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const MirrorImage = Abilities.defineAbility('wizard/power/mirror-image', {
+  name: 'Mirror Image',
+  description: '*Three duplicate images of you appear, imitating your actions perfectly and confusing your enemies.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 10**\n\n**Daily** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** Three duplicate images of yourself appear in your space, and you gain a +6 power bonus to AC. Each time an attack misses you, one of your duplicate images disappears and the bonus granted by this power decreases by 2. When the bonus reaches 0, all your images are gone and the power ends. Otherwise, the effect lasts for 1 hour.'
+    ),
+  ],
+  actions: [{ name: 'Mirror Image', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const Resistance = Abilities.defineAbility('wizard/power/resistance', {
+  name: 'Resistance',
+  description: '*You make yourself or another creature in range resistant to a particular kind of damage.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Wizard)],
+  effects: [
+    Effects.descriptive(
+      '**Wizard Utility 10**\n\n**Daily** ✦ Arcane\n\n**Minor Action** · Ranged 10\n\n**Target:** You or one creature\n\n**Effect:** Against a particular damage type chosen by you, the target gains resistance equal to your level + your Intelligence modifier until the end of the encounter or for 5 minutes. Choose the damage type from the following list: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder.'
+    ),
+  ],
+  actions: [{ name: 'Resistance', action: ActionTypes.MinorAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
 export const AllWizardPowers = [
   GhostSound,
   Light,
@@ -511,4 +804,22 @@ export const AllWizardPowers = [
   Fireball,
   StinkingCloud,
   Web,
+  DimensionDoor,
+  DisguiseSelf,
+  DispelMagic,
+  Invisibility,
+  Levitate,
+  WallOfFog,
+  FireBurst,
+  LightningBolt,
+  SpectralRam,
+  WintersWrath,
+  IceStorm,
+  LightningSerpent,
+  MordenkainensSword,
+  WallOfFire,
+  ArcaneGate,
+  Blur,
+  MirrorImage,
+  Resistance,
 ]

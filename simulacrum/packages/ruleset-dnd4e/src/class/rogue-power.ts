@@ -10,12 +10,16 @@ import {
   PowerLevel2,
   PowerLevel3,
   PowerLevel5,
+  PowerLevel6,
+  PowerLevel7,
+  PowerLevel9,
+  PowerLevel10,
   UtilityPower,
 } from '@simulacrum/ruleset-dnd4e/tag'
 import { Rogue } from '@simulacrum/ruleset-dnd4e/class/class-rogue'
 import * as Skills from '@simulacrum/ruleset-dnd4e/skill'
 
-// Generated from the Player's Handbook Rogue powers, levels 1-5. Powers are learned through character options, so they
+// Generated from the Player's Handbook Rogue powers, levels 1-10. Powers are learned through character options, so they
 // aren't universal. Encounter powers come back after a short rest, daily powers after an extended rest.
 
 export const DeftStrike = Abilities.defineAbility('rogue/power/deft-strike', {
@@ -374,6 +378,256 @@ export const WalkingWounded = Abilities.defineAbility('rogue/power/walking-wound
   costs: [{ cost: 1 }],
 })
 
+export const Chameleon = Abilities.defineAbility('rogue/power/chameleon', {
+  name: 'Chameleon',
+  description: '*You blend into your surroundings.*',
+  universal: false,
+  tags: [AtWillPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedStealth)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 6**\n\n**At-Will** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hidden and lose cover or concealment against an opponent\n\n**Prerequisite:** You must be trained in Stealth.\n\n**Effect:** Make a Stealth check. Until the end of your next turn, you remain hidden if a creature that has a clear line of sight to you does not beat your check result with its Perception check. If at the end of your turn you do not have cover or concealment against a creature, that creature automatically notices you.'
+    ),
+  ],
+  actions: [{ name: 'Chameleon', action: ActionTypes.ImmediateInterrupt }],
+})
+
+export const IgnobleEscape = Abilities.defineAbility('rogue/power/ignoble-escape', {
+  name: 'Ignoble Escape',
+  description: '*With nimble ease, you sidestep one perilous situation after another.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 6**\n\n**Encounter** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** If you are marked, end that condition. You can shift a number of squares equal to your speed.'
+    ),
+  ],
+  actions: [{ name: 'Ignoble Escape', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const MobMentality = Abilities.defineAbility('rogue/power/mob-mentality', {
+  name: 'Mob Mentality',
+  description: '*When it comes to lying, cajoling, or persuading others, your allies follow your lead.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedIntimidate)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 6**\n\n**Encounter** ✦ Martial\n\n**Standard Action** · Close burst 10\n\n**Prerequisite:** You must be trained in Intimidate.\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets gain a +2 power bonus to Charisma-based skill and ability checks until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Mob Mentality', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const NimbleClimb = Abilities.defineAbility('rogue/power/nimble-climb', {
+  name: 'Nimble Climb',
+  description: '*You climb surfaces with astounding ease.*',
+  universal: false,
+  tags: [AtWillPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAthletics)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 6**\n\n**At-Will** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Athletics.\n\n**Effect:** Make an Athletics check to climb a surface. You can move at your full speed during this climb.'
+    ),
+  ],
+  actions: [{ name: 'Nimble Climb', action: ActionTypes.MoveAction }],
+})
+
+export const SlipperyMind = Abilities.defineAbility('rogue/power/slippery-mind', {
+  name: 'Slippery Mind',
+  description: '*You cloud your mind with vague thoughts that shield you against a sudden mental attack.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel6],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedBluff)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hit by an attack against your Will defense\n\n**Prerequisite:** You must be trained in Bluff.\n\n**Effect:** Gain a +2 power bonus to your Will defense against the triggering attack.'
+    ),
+  ],
+  actions: [{ name: 'Slippery Mind', action: ActionTypes.ImmediateInterrupt }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CloudOfSteel = Abilities.defineAbility('rogue/power/cloud-of-steel', {
+  name: 'Cloud of Steel',
+  description: '*You shower your enemies in sharp metal.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close blast 5\n\n**Requirement:** You must be wielding a crossbow, a light thrown weapon, or a sling.\n\n**Target:** Each enemy in blast you can see\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.'
+    ),
+  ],
+  actions: [{ name: 'Cloud of Steel', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ImperilingStrike = Abilities.defineAbility('rogue/power/imperiling-strike', {
+  name: 'Imperiling Strike',
+  description: "*You deal a staggering blow, opening a hole in your enemy's defenses.*",
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 1[W] + Dexterity modifier damage, and the target takes a –1 penalty to AC and Reflex defense until the end of your next turn.\n\n**Brutal Scoundrel:** The penalty to AC and Reflex defense is equal to your Strength modifier.'
+    ),
+  ],
+  actions: [{ name: 'Imperiling Strike', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const RoguesLuck = Abilities.defineAbility('rogue/power/rogues-luck', {
+  name: "Rogue's Luck",
+  description: '*A gifted rogue can turn failure into fortune.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Miss:** Make a secondary attack against the target.\n\n**Secondary Attack:** Dexterity vs. AC\n\n**Artful Dodger:** You gain a bonus to the attack roll for the secondary attack equal to your Charisma modifier.\n\n**Hit:** 1[W] + Dexterity modifier damage.'
+    ),
+  ],
+  actions: [{ name: "Rogue's Luck", action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const SandInTheEyes = Abilities.defineAbility('rogue/power/sand-in-the-eyes', {
+  name: 'Sand in the Eyes',
+  description: '*You scoop up a handful of sand or dirt or pebbles, strike your foe, and throw the grit in his face to blind him.*',
+  universal: false,
+  tags: [EncounterPower, AttackPower, PowerLevel7],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Reflex\n\n**Hit:** 1[W] + Dexterity modifier damage, and the target is blinded until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Sand in the Eyes', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CrimsonEdge = Abilities.defineAbility('rogue/power/crimson-edge', {
+  name: 'Crimson Edge',
+  description: '*You deal your enemy a vicious wound that continues to bleed, and like a shark, you circle in for the kill.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target takes ongoing damage equal to 5 + your Strength modifier and grants combat advantage to you (save ends both).\n\n**Miss:** Half damage, and no ongoing damage.'
+    ),
+  ],
+  actions: [{ name: 'Crimson Edge', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DeadlyPositioning = Abilities.defineAbility('rogue/power/deadly-positioning', {
+  name: 'Deadly Positioning',
+  description: '*You adroitlyoutmaneuver your enemy, pushing and baiting him with every stride and strike.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee 1\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** You slide the target to any other square adjacent to you, and then make a Dexterity vs. AC attack.\n\n**Hit:** 3[W] + Dexterity modifier damage.\n\n**Effect:** Until the end of the encounter, as long as you are adjacent to the target, you slide the target 1 square before making a melee attack against it.'
+    ),
+  ],
+  actions: [{ name: 'Deadly Positioning', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const Knockout = Abilities.defineAbility('rogue/power/knockout', {
+  name: 'Knockout',
+  description: '*A well-placed blow takes your foe out of the fight.*',
+  universal: false,
+  tags: [DailyPower, AttackPower, PowerLevel9],
+  prerequisites: [Traits.traitPrerequisite(Rogue)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target is knocked unconscious (save ends). If the unconscious target takes any damage, it is no longer unconscious.\n\n**Miss:** Half damage, and the target is dazed until the end of your next turn.'
+    ),
+  ],
+  actions: [{ name: 'Knockout', action: ActionTypes.StandardAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CertainFreedom = Abilities.defineAbility('rogue/power/certain-freedom', {
+  name: 'Certain Freedom',
+  description: '*You are as slippery as an eel.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 10**\n\n**Daily** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** You automatically succeed on an Acrobatics check to escape from a grab or to escape from restraints.'
+    ),
+  ],
+  actions: [{ name: 'Certain Freedom', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const CloseQuarters = Abilities.defineAbility('rogue/power/close-quarters', {
+  name: 'Close Quarters',
+  description: '*You take cover beneath a much larger creature, making it harder for the creature to hit you.*',
+  universal: false,
+  tags: [DailyPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
+  effects: [
+    Effects.descriptive(
+      "**Rogue Utility 10**\n\n**Daily** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** Move into the space of an adjacent creature larger than you and at least Large in size. (It gets its usual opportunity attack against you as you leave an adjacent square.) You gain combat advantage against the creature, and it takes a –4 penalty to attack rolls against you. When the creature moves, you move along with it, staying in the same portion of the creature's space. The creature can make a Strength or Dexterity vs. Reflex attack (as a standard action with no penalty) to slide you into an adjacent square and end this effect.\n\n**Special:** Allies of the target creature can attack you without penalty."
+    ),
+  ],
+  actions: [{ name: 'Close Quarters', action: ActionTypes.MoveAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const DangerousTheft = Abilities.defineAbility('rogue/power/dangerous-theft', {
+  name: 'Dangerous Theft',
+  description: '*You snatch an item from an enemy during combat.*',
+  universal: false,
+  tags: [EncounterPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedThievery)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 10**\n\n**Encounter** ✦ Martial\n\n**Free Action** · Personal\n\n**Prerequisite:** You must be trained in Thievery.\n\n**Effect:** On your next action, ignore the –10 penalty when you make a Thievery check to pick a pocket during combat.'
+    ),
+  ],
+  actions: [{ name: 'Dangerous Theft', action: ActionTypes.FreeAction }],
+  resource: { size: 1, refresh: [{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }] },
+  costs: [{ cost: 1 }],
+})
+
+export const ShadowStride = Abilities.defineAbility('rogue/power/shadow-stride', {
+  name: 'Shadow Stride',
+  description: '*You silently step from shadow to shadow, slipping past your foes unseen and unheard.*',
+  universal: false,
+  tags: [AtWillPower, UtilityPower, PowerLevel10],
+  prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedStealth)],
+  effects: [
+    Effects.descriptive(
+      '**Rogue Utility 10**\n\n**At-Will** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Stealth.\n\n**Effect:** You must be hiding to use this power. You can move your speed. At the end of that movement, if you have cover, you can make a Stealth check with no penalty for moving. If you make the Stealth check, you stay hidden during your movement.'
+    ),
+  ],
+  actions: [{ name: 'Shadow Stride', action: ActionTypes.MoveAction }],
+})
+
 export const AllRoguePowers = [
   DeftStrike,
   PiercingStrike,
@@ -398,4 +652,20 @@ export const AllRoguePowers = [
   CleverRiposte,
   DeepCut,
   WalkingWounded,
+  Chameleon,
+  IgnobleEscape,
+  MobMentality,
+  NimbleClimb,
+  SlipperyMind,
+  CloudOfSteel,
+  ImperilingStrike,
+  RoguesLuck,
+  SandInTheEyes,
+  CrimsonEdge,
+  DeadlyPositioning,
+  Knockout,
+  CertainFreedom,
+  CloseQuarters,
+  DangerousTheft,
+  ShadowStride,
 ]

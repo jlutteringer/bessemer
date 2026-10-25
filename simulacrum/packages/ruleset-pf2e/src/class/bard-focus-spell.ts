@@ -71,4 +71,62 @@ export const LoremastersEtude = Abilities.defineAbility('spell/loremasters-etude
   ],
 })
 
-export const AllBardFocusSpells = [CounterPerformance, HymnOfHealing, LingeringComposition, LoremastersEtude]
+export const FortissimoComposition = Abilities.defineAbility('spell/fortissimo-composition', {
+  name: 'Fortissimo Composition',
+  description: '*Uncommon, Bard, Concentrate, Focus, Spellshape*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Fortissimo Composition',
+      description:
+        "You call upon your muse to greatly increase the benefits you provide with your courageous anthem, rallying anthem, or song of strength composition. If your next action is to cast one of these compositions, attempt a [Performance](characteristic:skill/performance) check. The DC is usually the highest [Will DC](characteristic:will) of the composition's targets, but the GM can assign a different DC based on the circumstances. The effect of your composition depends on the result of your check.\n\n**Critical Success** The status bonus from your composition increases to +3.\n\n**Success** The status bonus from your composition increases to +2.\n\n**Failure** Your composition provides only its normal bonus of +1, but you don't spend the Focus Point for casting this spell.",
+      action: ActionTypes.FreeAction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const OdeToOuroboros = Abilities.defineAbility('spell/ode-to-ouroboros', {
+  name: 'Ode to Ouroboros',
+  description: '*Uncommon, Bard, Composition, Concentrate, Focus*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Ode to Ouroboros',
+      description:
+        "**Trigger** A creature’s dying condition would reach the value at which they would die\n\n**Range** 60 feet\n\n**Target** the triggering creature\n\nYour ode staves off death. The target's [dying](content:conditions/dying) condition remains 1 below the value at which it dies. This doesn't help prevent death from effects that kill the target without increasing its dying condition, such as _disintegrate_ and [death](content:traits/death) effects.",
+      action: ActionTypes.Reaction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+      targeting: { target: { range: 60, count: 1 } },
+    },
+  ],
+})
+
+export const SymphonyOfTheUnfetteredHeart = Abilities.defineAbility('spell/symphony-of-the-unfettered-heart', {
+  name: 'Symphony of the Unfettered Heart',
+  description: '*Uncommon, Bard, Composition, Concentrate, Focus*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Symphony of the Unfettered Heart',
+      description:
+        "**Range** 30 feet\n\n**Target** you or 1 ally\n\nYour symphony lifts listeners from their worldly concerns. Attempt a [Performance](characteristic:skill/performance) check to [counteract](content:spells/counteracting) an effect applying one of the following conditions to the target: [grabbed](content:conditions/grabbed), [immobilized](content:conditions/immobilized), [paralyzed](content:conditions/paralyzed), [restrained](content:conditions/restrained), [slowed](content:conditions/slowed), or [stunned](content:conditions/stunned). If you fail, you can't target the same effect on the target for 1 day. Use the condition's source to determine the counteract DC (for example, the [Escape](content:playing-the-game/escape) DC for grabbed).\n\n**Heightened (9th)** You can target up to four creatures.",
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+      targeting: { target: { range: 30, count: 1 } },
+    },
+  ],
+})
+
+export const AllBardFocusSpells = [
+  CounterPerformance,
+  HymnOfHealing,
+  LingeringComposition,
+  LoremastersEtude,
+  FortissimoComposition,
+  OdeToOuroboros,
+  SymphonyOfTheUnfetteredHeart,
+]

@@ -7,5 +7,19 @@ export const CantripLoadout = Loadout.defineLoadoutType('prepared-cantrip', { na
 export const SpellRank1Loadout = Loadout.defineLoadoutType('spell-slot/rank-1', { name: 'Spell Slot (Rank 1)' })
 export const SpellRank2Loadout = Loadout.defineLoadoutType('spell-slot/rank-2', { name: 'Spell Slot (Rank 2)' })
 export const SpellRank3Loadout = Loadout.defineLoadoutType('spell-slot/rank-3', { name: 'Spell Slot (Rank 3)' })
+export const SpellRank4Loadout = Loadout.defineLoadoutType('spell-slot/rank-4', { name: 'Spell Slot (Rank 4)' })
+export const SpellRank5Loadout = Loadout.defineLoadoutType('spell-slot/rank-5', { name: 'Spell Slot (Rank 5)' })
 
-export const AllLoadouts = [ArmorLoadout, ShieldLoadout, CantripLoadout, SpellRank1Loadout, SpellRank2Loadout, SpellRank3Loadout]
+export const CombatFlexibilityLoadout = Loadout.defineLoadoutType('combat-flexibility', { name: 'Combat Flexibility' })
+
+export const AllLoadouts = [
+  ArmorLoadout,
+  ShieldLoadout,
+  CantripLoadout,
+  SpellRank1Loadout,
+  SpellRank2Loadout,
+  SpellRank3Loadout,
+  SpellRank4Loadout,
+  SpellRank5Loadout,
+  CombatFlexibilityLoadout,
+]

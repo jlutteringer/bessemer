@@ -2,13 +2,14 @@ import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Trai
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Feat, FeatLevel1, FeatLevel3, GeneralFeat } from '@simulacrum/ruleset-pf2e/tag'
+import { Feat, FeatLevel1, FeatLevel3, FeatLevel7, GeneralFeat } from '@simulacrum/ruleset-pf2e/tag'
 import {
   Constitution,
   Dexterity,
   Fortitude,
   HeavyArmor,
   HitPoints,
+  Initiative,
   LightArmor,
   MartialWeapons,
   MediumArmor,
@@ -17,7 +18,7 @@ import {
   Speed,
   Will,
 } from '@simulacrum/ruleset-pf2e/characteristic'
-import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
+import { CircumstanceBonus, Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { AllSkillFeatEntities } from '@simulacrum/ruleset-pf2e/feat/skill-feat'
 
@@ -146,7 +147,7 @@ export const IncredibleInitiative = Traits.defineTrait('feat/incredible-initiati
   name: 'Incredible Initiative',
   description: '*General*\n\nYou react more quickly than others can. You gain a +2 circumstance bonus to initiative rolls.',
   tags: [Feat, GeneralFeat, FeatLevel1],
-  effects: [],
+  effects: [Effects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(2), { combinability: CircumstanceBonus }))],
 })
 
 export const Pet = Traits.defineTrait('feat/pet', {
@@ -228,6 +229,23 @@ export const UntrainedImprovisation = Traits.defineTrait('feat/untrained-improvi
   effects: [],
 })
 
+export const ExpeditiousSearch = Traits.defineTrait('feat/expeditious-search', {
+  name: 'Expeditious Search',
+  description:
+    "*General*\n\n**Prerequisites** master in [Perception](characteristic:perception)\n\nYou have a system that lets you search at great speed, finding details and secrets twice as quickly as others can. When [Searching](content:playing-the-game/search), you take half as long as usual to Search a given area. This means that while exploring, you double the [Speed](characteristic:speed) you can move while ensuring you've Searched an area before walking into it (up to half your Speed). If you're legendary in Perception, you instead Search areas four times as quickly.",
+  tags: [Feat, GeneralFeat, FeatLevel7],
+  effects: [],
+})
+
+export const PrescientConsumable = Traits.defineTrait('feat/prescient-consumable', {
+  name: 'Prescient Consumable',
+  description:
+    "*General*\n\n**Prerequisites** [Prescient Planner](trait:feat/prescient-planner)\n\nYou can predict which consumables you might need in advance. When using [Prescient Planner](trait:feat/prescient-planner), you can procure a consumable item from your backpack, instead of a piece of adventuring gear. The consumable item must still be common with a level no higher than half your level, and its Bulk must be low enough that carrying it wouldn't have made you [encumbered](content:conditions/encumbered).",
+  tags: [Feat, GeneralFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(PrescientPlanner)],
+  effects: [],
+})
+
 export const AllGeneralFeatEntities = [
   AdoptedAncestry,
   ArmorProficiencyLightArmor,
@@ -254,5 +272,7 @@ export const AllGeneralFeatEntities = [
   AncestralParagon,
   PrescientPlanner,
   UntrainedImprovisation,
+  ExpeditiousSearch,
+  PrescientConsumable,
   ...AllSkillFeatEntities,
 ]

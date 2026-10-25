@@ -1,7 +1,20 @@
 import { Tags, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as Spells from '@simulacrum/ruleset-pf2e/spell'
-import { Arcane, Cantrip, ClassFeature, Divine, Occult, Primal, Spell, SpellRank1, SpellRank2, SpellRank3 } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  Arcane,
+  Cantrip,
+  ClassFeature,
+  Divine,
+  Occult,
+  Primal,
+  Spell,
+  SpellRank1,
+  SpellRank2,
+  SpellRank3,
+  SpellRank4,
+  SpellRank5,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { CantripLoadout, SpellRank1Loadout } from '@simulacrum/ruleset-pf2e/loadout'
 import { TrainedArcana, TrainedNature, TrainedOccultism, TrainedReligion } from '@simulacrum/ruleset-pf2e/skill'
 
@@ -27,6 +40,16 @@ export const SelectWitchArcaneSpell2 = CharacterOptions.selectAbilityOption('wit
 export const SelectWitchArcaneSpell3 = CharacterOptions.selectAbilityOption('witch/select-arcane-spell-3', {
   name: 'Familiar Spell (Arcane, Rank 1–3)',
   filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3], Arcane] },
+})
+
+export const SelectWitchArcaneSpell4 = CharacterOptions.selectAbilityOption('witch/select-arcane-spell-4', {
+  name: 'Familiar Spell (Arcane, Rank 1–4)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4], Arcane] },
+})
+
+export const SelectWitchArcaneSpell5 = CharacterOptions.selectAbilityOption('witch/select-arcane-spell-5', {
+  name: 'Familiar Spell (Arcane, Rank 1–5)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4, SpellRank5], Arcane] },
 })
 
 export const WitchArcaneSpellcasting = Traits.defineTrait('witch/spellcasting/arcane', {
@@ -66,6 +89,26 @@ export const WitchArcaneSpellcasting = Traits.defineTrait('witch/spellcasting/ar
       Effects.gainCharacterOption(SelectWitchArcaneSpell3),
       Effects.gainCharacterOption(SelectWitchArcaneSpell3),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainCharacterOption(SelectWitchArcaneSpell3),
+      Effects.gainCharacterOption(SelectWitchArcaneSpell3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainCharacterOption(SelectWitchArcaneSpell4),
+      Effects.gainCharacterOption(SelectWitchArcaneSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.gainCharacterOption(SelectWitchArcaneSpell4),
+      Effects.gainCharacterOption(SelectWitchArcaneSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainCharacterOption(SelectWitchArcaneSpell5),
+      Effects.gainCharacterOption(SelectWitchArcaneSpell5),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainCharacterOption(SelectWitchArcaneSpell5),
+      Effects.gainCharacterOption(SelectWitchArcaneSpell5),
+    ]),
   ],
 })
 
@@ -89,6 +132,16 @@ export const SelectWitchDivineSpell2 = CharacterOptions.selectAbilityOption('wit
 export const SelectWitchDivineSpell3 = CharacterOptions.selectAbilityOption('witch/select-divine-spell-3', {
   name: 'Familiar Spell (Divine, Rank 1–3)',
   filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3], Divine] },
+})
+
+export const SelectWitchDivineSpell4 = CharacterOptions.selectAbilityOption('witch/select-divine-spell-4', {
+  name: 'Familiar Spell (Divine, Rank 1–4)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4], Divine] },
+})
+
+export const SelectWitchDivineSpell5 = CharacterOptions.selectAbilityOption('witch/select-divine-spell-5', {
+  name: 'Familiar Spell (Divine, Rank 1–5)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4, SpellRank5], Divine] },
 })
 
 export const WitchDivineSpellcasting = Traits.defineTrait('witch/spellcasting/divine', {
@@ -128,6 +181,26 @@ export const WitchDivineSpellcasting = Traits.defineTrait('witch/spellcasting/di
       Effects.gainCharacterOption(SelectWitchDivineSpell3),
       Effects.gainCharacterOption(SelectWitchDivineSpell3),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainCharacterOption(SelectWitchDivineSpell3),
+      Effects.gainCharacterOption(SelectWitchDivineSpell3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainCharacterOption(SelectWitchDivineSpell4),
+      Effects.gainCharacterOption(SelectWitchDivineSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.gainCharacterOption(SelectWitchDivineSpell4),
+      Effects.gainCharacterOption(SelectWitchDivineSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainCharacterOption(SelectWitchDivineSpell5),
+      Effects.gainCharacterOption(SelectWitchDivineSpell5),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainCharacterOption(SelectWitchDivineSpell5),
+      Effects.gainCharacterOption(SelectWitchDivineSpell5),
+    ]),
   ],
 })
 
@@ -151,6 +224,16 @@ export const SelectWitchOccultSpell2 = CharacterOptions.selectAbilityOption('wit
 export const SelectWitchOccultSpell3 = CharacterOptions.selectAbilityOption('witch/select-occult-spell-3', {
   name: 'Familiar Spell (Occult, Rank 1–3)',
   filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3], Occult] },
+})
+
+export const SelectWitchOccultSpell4 = CharacterOptions.selectAbilityOption('witch/select-occult-spell-4', {
+  name: 'Familiar Spell (Occult, Rank 1–4)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4], Occult] },
+})
+
+export const SelectWitchOccultSpell5 = CharacterOptions.selectAbilityOption('witch/select-occult-spell-5', {
+  name: 'Familiar Spell (Occult, Rank 1–5)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4, SpellRank5], Occult] },
 })
 
 export const WitchOccultSpellcasting = Traits.defineTrait('witch/spellcasting/occult', {
@@ -190,6 +273,26 @@ export const WitchOccultSpellcasting = Traits.defineTrait('witch/spellcasting/oc
       Effects.gainCharacterOption(SelectWitchOccultSpell3),
       Effects.gainCharacterOption(SelectWitchOccultSpell3),
     ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainCharacterOption(SelectWitchOccultSpell3),
+      Effects.gainCharacterOption(SelectWitchOccultSpell3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainCharacterOption(SelectWitchOccultSpell4),
+      Effects.gainCharacterOption(SelectWitchOccultSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.gainCharacterOption(SelectWitchOccultSpell4),
+      Effects.gainCharacterOption(SelectWitchOccultSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainCharacterOption(SelectWitchOccultSpell5),
+      Effects.gainCharacterOption(SelectWitchOccultSpell5),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainCharacterOption(SelectWitchOccultSpell5),
+      Effects.gainCharacterOption(SelectWitchOccultSpell5),
+    ]),
   ],
 })
 
@@ -213,6 +316,16 @@ export const SelectWitchPrimalSpell2 = CharacterOptions.selectAbilityOption('wit
 export const SelectWitchPrimalSpell3 = CharacterOptions.selectAbilityOption('witch/select-primal-spell-3', {
   name: 'Familiar Spell (Primal, Rank 1–3)',
   filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3], Primal] },
+})
+
+export const SelectWitchPrimalSpell4 = CharacterOptions.selectAbilityOption('witch/select-primal-spell-4', {
+  name: 'Familiar Spell (Primal, Rank 1–4)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4], Primal] },
+})
+
+export const SelectWitchPrimalSpell5 = CharacterOptions.selectAbilityOption('witch/select-primal-spell-5', {
+  name: 'Familiar Spell (Primal, Rank 1–5)',
+  filter: { tags: [Spell, [SpellRank1, SpellRank2, SpellRank3, SpellRank4, SpellRank5], Primal] },
 })
 
 export const WitchPrimalSpellcasting = Traits.defineTrait('witch/spellcasting/primal', {
@@ -251,6 +364,26 @@ export const WitchPrimalSpellcasting = Traits.defineTrait('witch/spellcasting/pr
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
       Effects.gainCharacterOption(SelectWitchPrimalSpell3),
       Effects.gainCharacterOption(SelectWitchPrimalSpell3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      Effects.gainCharacterOption(SelectWitchPrimalSpell3),
+      Effects.gainCharacterOption(SelectWitchPrimalSpell3),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      Effects.gainCharacterOption(SelectWitchPrimalSpell4),
+      Effects.gainCharacterOption(SelectWitchPrimalSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      Effects.gainCharacterOption(SelectWitchPrimalSpell4),
+      Effects.gainCharacterOption(SelectWitchPrimalSpell4),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      Effects.gainCharacterOption(SelectWitchPrimalSpell5),
+      Effects.gainCharacterOption(SelectWitchPrimalSpell5),
+    ]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      Effects.gainCharacterOption(SelectWitchPrimalSpell5),
+      Effects.gainCharacterOption(SelectWitchPrimalSpell5),
     ]),
   ],
 })

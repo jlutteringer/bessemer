@@ -11,6 +11,7 @@ import {
   Feat,
   FeatLevel1,
   FeatLevel5,
+  FeatLevel9,
   Heritage,
   LeshyFeat,
   NephilimFeat,
@@ -118,6 +119,17 @@ export const SelectLeshyFeat5 = CharacterOptions.selectTraitOption('ancestry/les
   },
 })
 
+export const SelectLeshyFeat9 = CharacterOptions.selectTraitOption('ancestry/leshy/select-feat-9', {
+  name: 'Ancestry Feat (Level 9)',
+  filter: {
+    tags: [
+      AncestryFeat,
+      [LeshyFeat, ElfFeat, OrcFeat, ChangelingFeat, NephilimFeat, AiuvarinFeat, DromaarFeat],
+      [FeatLevel1, FeatLevel5, FeatLevel9],
+    ],
+  },
+})
+
 export const SelectLeshyAncestryBoost = CharacterOptions.selectTraitOption('ancestry/leshy/select-boost', {
   name: 'Ancestry Boost',
   filter: { specificOptions: [StrengthAncestryBoost, DexterityAncestryBoost, IntelligenceAncestryBoost, CharismaAncestryBoost] },
@@ -139,6 +151,7 @@ export const Leshy = Traits.defineTrait('ancestry/leshy', {
     Effects.gainCharacterOption(SelectLeshyHeritage),
     Effects.gainCharacterOption(SelectLeshyFeat1),
     Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectLeshyFeat5)]),
+    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectLeshyFeat9)]),
   ],
 })
 
@@ -281,6 +294,40 @@ export const RitualReversionAction = Abilities.defineAbility('ancestry/leshy/rit
   ],
 })
 
+export const BarkAndTendril = Traits.defineTrait('ancestry/leshy/bark-and-tendril', {
+  name: 'Bark and Tendril',
+  description:
+    '*Leshy*\n\nYou wield primal magic. You can cast [entangling flora](ability:spell/entangling-flora) and [oaken resilience](ability:spell/oaken-resilience) as 2nd-rank primal [innate spells](content:spells/innate-spells) once per day each.',
+  tags: [Feat, AncestryFeat, LeshyFeat, FeatLevel9],
+  effects: [],
+})
+
+export const LuckyKeepsake = Traits.defineTrait('ancestry/leshy/lucky-keepsake', {
+  name: 'Lucky Keepsake',
+  description:
+    '*Leshy*\n\n**Prerequisites** [Leshy Superstition](trait:ancestry/leshy/leshy-superstition)\n\nYou have a keepsake that grants you luck. You gain a +1 circumstance bonus to saves against spells and magical effects at all times, not just when you use [Leshy Superstition](trait:ancestry/leshy/leshy-superstition). If you lose the keepsake, you lose the bonus until you designate a new keepsake, typically over the course of a week.',
+  tags: [Feat, AncestryFeat, LeshyFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(LeshySuperstition)],
+  effects: [],
+})
+
+export const SolarRejuvenation = Traits.defineTrait('ancestry/leshy/solar-rejuvenation', {
+  name: 'Solar Rejuvenation',
+  description:
+    '*Leshy*\n\nIf you rest outdoors for 10 minutes during the day, you regain [Hit Points](characteristic:hit-points) equal to your [Constitution modifier](characteristic:constitution) × half your level. You gain this benefit in addition to any healing from [Treat Wounds](content:skills/treat-wounds). Leshies whose plant nourishment does not rely on photosynthesis require a similarly suitable environment. For example, fungus leshies need dark, damp environments and a pile of decaying plant matter.',
+  tags: [Feat, AncestryFeat, LeshyFeat, FeatLevel9],
+  effects: [],
+})
+
+export const ThornedSeedpod = Traits.defineTrait('ancestry/leshy/thorned-seedpod', {
+  name: 'Thorned Seedpod',
+  description:
+    '*Leshy*\n\n**Prerequisites** [Seedpod](trait:ancestry/leshy/seedpod)\n\nWhen your seedpods [strike](content:playing-the-game/strike) a felling blow, they burst into viciously thorny vines. When you critically succeed at a seedpod Strike, vines twist and stab your foe, dealing 1d4 [persistent](content:conditions/persistent-damage) piercing damage.',
+  tags: [Feat, AncestryFeat, LeshyFeat, FeatLevel9],
+  prerequisites: [Traits.traitPrerequisite(Seedpod)],
+  effects: [],
+})
+
 export const AllLeshyEntities = [
   CactusLeshy,
   FruitLeshy,
@@ -294,6 +341,7 @@ export const AllLeshyEntities = [
   SelectLeshyHeritage,
   SelectLeshyFeat1,
   SelectLeshyFeat5,
+  SelectLeshyFeat9,
   SelectLeshyAncestryBoost,
   Leshy,
   GraspingReach,
@@ -311,4 +359,8 @@ export const AllLeshyEntities = [
   RitualReversion,
   RitualReversionAction,
   SpeakWithKindred,
+  BarkAndTendril,
+  LuckyKeepsake,
+  SolarRejuvenation,
+  ThornedSeedpod,
 ]

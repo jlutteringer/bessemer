@@ -1,4 +1,5 @@
 import { Abilities } from '@simulacrum/ruleset'
+import { AreaShape } from '@simulacrum/ruleset/targeting'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
 import { FocusSpell, Spell } from '@simulacrum/ruleset-pf2e/tag'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
@@ -120,4 +121,132 @@ export const ScrambleBody = Abilities.defineAbility('spell/scramble-body', {
   ],
 })
 
-export const AllWizardFocusSpells = [CharmingPush, Earthworks, ForceBolt, FortifySummoning, HandOfTheApprentice, ProtectiveWards, ScrambleBody]
+export const CommunityRestoration = Abilities.defineAbility('spell/community-restoration', {
+  name: 'Community Restoration',
+  description: '*Uncommon, Concentrate, Focus, Healing, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Community Restoration',
+      description:
+        '**Trigger** You [Cast a Spell](content:spells/cast-a-spell) from a wizard spell slot, and the spell affects one or more willing allies without damaging them\n\nWhen you use your magic to support your allies, shared strength bolsters you all. You gain 2 temporary [Hit Points](characteristic:hit-points) per rank of the triggering spell, and can grant an equal number divided as you choose among allies affected by the triggering spell. These temporary Hit Points last for 1 minute.',
+      action: ActionTypes.Reaction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const EnergyAbsorption = Abilities.defineAbility('spell/energy-absorption', {
+  name: 'Energy Absorption',
+  description: '*Uncommon, Focus, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Energy Absorption',
+      description:
+        "**Trigger** An effect would deal acid, cold, electricity, or fire damage to you\n\nYou're used to mitigating the damage done by bombs, siege engines, and magical artillery. You gain resistance 15 to your choice of acid, cold, electricity, or fire damage from the triggering effect. The resistance applies only to the triggering effect's initial damage.\n\n**Heightened (+1)** The resistance increases by 5.",
+      action: ActionTypes.Reaction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const InterdisciplinaryIncantation = Abilities.defineAbility('spell/interdisciplinary-incantation', {
+  name: 'Interdisciplinary Incantation',
+  description: '*Uncommon, Concentrate, Focus, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Interdisciplinary Incantation',
+      description:
+        "**Trigger** A creature within 30 feet casts an arcane spell\n\nYou gather the embers of another caster's spell, using your understanding of unified magic to pick apart their formulas and incantations well enough to imitate the spell yourself, if only for a short time. Until the end of your next turn, you can Cast the triggering Spell by expending a wizard spell slot of the same rank. That caster's spells can't trigger your _interdisciplinary incantation_ again for 24 hours.",
+      action: ActionTypes.Reaction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const InvisibilityCloak = Abilities.defineAbility('spell/invisibility-cloak', {
+  name: 'Invisibility Cloak',
+  description: '*Uncommon, Focus, Illusion, Manipulate, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Invisibility Cloak',
+      description:
+        '**Duration** 1 minute\n\nYou become invisible, with the same restrictions as the 2nd-rank [_invisibility_](ability:spell/invisibility) spell.\n\n**Heightened (6th)** The duration increases to 10 minutes.\n\n**Heightened (8th)** The duration increases to 1 hour.',
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const RuneOfObservation = Abilities.defineAbility('spell/rune-of-observation', {
+  name: 'Rune of Observation',
+  description: '*Uncommon, Concentrate, Focus, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Rune of Observation',
+      description:
+        "**Duration** 1 hour\n\nYou inscribe an invisible eye-shaped rune in the air, creating a sensor as [_clairvoyance_](ability:spell/clairvoyance). When created, this eye must be in your line of sight.\n\nEach time the spell's duration ends, you can spend 1 Focus Point as a free action to extend the duration for another hour, though as normal, it ends immediately during your next daily preparations.",
+      action: ActionTypes.SingleAction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const ShiftingForm = Abilities.defineAbility('spell/shifting-form', {
+  name: 'Shifting Form',
+  description: '*Uncommon, Concentrate, Focus, Morph, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Shifting Form',
+      description:
+        '**Duration** 1 minute\n\nYou change your body to better suit the moment. You gain one of the following abilities of your choice. You can Dismiss this spell.\n\n- You gain a 20-foot status bonus to your [Speed](characteristic:speed).\n\n- You gain a climb or swim Speed equal to half your Speed.\n\n- You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision).\n\n- You gain a pair of claws. These are [agile](content:traits/agile) [finesse](content:traits/finesse) [unarmed](content:traits/unarmed) attacks that deal 1d8 slashing damage.\n\n- You gain [scent](content:playing-the-game/scent) 60 feet ([imprecise](content:playing-the-game/imprecise-senses)).',
+      action: ActionTypes.SingleAction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
+export const SpiralOfHorrors = Abilities.defineAbility('spell/spiral-of-horrors', {
+  name: 'Spiral of Horrors',
+  description: '*Uncommon, Aura, Concentrate, Emotion, Fear, Focus, Manipulate, Mental, Wizard*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Spiral of Horrors',
+      description:
+        "**Area** 30-foot emanation\n\n**Duration** sustained up to 1 minute\n\nShades and spirits howl and whirl around you in a display that strikes fear into the hearts of all who witness it. Enemies in the area are [frightened 1](content:conditions/frightened) and can't reduce their frightened value below 1 for the spell's duration.",
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+      targeting: { target: { range: 0, area: { type: AreaShape.Sphere, radius: 30 }, count: 1 } },
+    },
+  ],
+})
+
+export const AllWizardFocusSpells = [
+  CharmingPush,
+  Earthworks,
+  ForceBolt,
+  FortifySummoning,
+  HandOfTheApprentice,
+  ProtectiveWards,
+  ScrambleBody,
+  CommunityRestoration,
+  EnergyAbsorption,
+  InterdisciplinaryIncantation,
+  InvisibilityCloak,
+  RuneOfObservation,
+  ShiftingForm,
+  SpiralOfHorrors,
+]

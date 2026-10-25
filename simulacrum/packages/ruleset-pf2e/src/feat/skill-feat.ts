@@ -1,7 +1,7 @@
 import { Abilities, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { ExpertSkill, Feat, FeatLevel1, FeatLevel2, GeneralFeat, Lore, SkillFeat, TrainedSkill } from '@simulacrum/ruleset-pf2e/tag'
+import { ExpertSkill, Feat, FeatLevel1, FeatLevel2, FeatLevel7, GeneralFeat, Lore, SkillFeat, TrainedSkill } from '@simulacrum/ruleset-pf2e/tag'
 import { Intelligence, Strength } from '@simulacrum/ruleset-pf2e/characteristic'
 import {
   ExpertAcrobatics,
@@ -18,6 +18,20 @@ import {
   ExpertSociety,
   ExpertStealth,
   ExpertThievery,
+  MasterAcrobatics,
+  MasterArcana,
+  MasterAthletics,
+  MasterCrafting,
+  MasterDeception,
+  MasterDiplomacy,
+  MasterIntimidation,
+  MasterMedicine,
+  MasterNature,
+  MasterOccultism,
+  MasterReligion,
+  MasterStealth,
+  MasterSurvival,
+  MasterThievery,
   SelectTrainedSkill,
   TrainedAcrobatics,
   TrainedArcana,
@@ -995,6 +1009,190 @@ export const WaryDisarmament = Traits.defineTrait('feat/wary-disarmament', {
   effects: [],
 })
 
+export const AdvancedFirstAid = Traits.defineTrait('feat/advanced-first-aid', {
+  name: 'Advanced First Aid',
+  description:
+    "*General, Healing, Manipulate, Skill*\n\n**Prerequisites** Master in [Medicine](characteristic:skill/medicine)\n\nYou use your medical training to ameliorate sickness or assuage fears. When you use [Medicine](characteristic:skill/medicine) to [Administer First Aid](content:skills/administer-first-aid), instead of Stabilizing a character or Stopping Bleeding, you can reduce an ally's [frightened](content:conditions/frightened) or [sickened](content:conditions/sickened) condition by 2, or remove either of those conditions entirely on a critical success. You can remove only one condition at a time. The DC for the Medicine check is usually the DC of the effect that caused the condition.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterMedicine)],
+  effects: [],
+})
+
+export const BattleCry = Traits.defineTrait('feat/battle-cry', {
+  name: 'Battle Cry',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Intimidation](characteristic:skill/intimidation)\n\nWhen you roll initiative, you can yell a mighty battle cry and [Demoralize](content:skills/demoralize) an observed foe as a free action. If you're legendary in Intimidation, you can use a reaction to Demoralize your foe when you critically succeed at an attack roll.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterIntimidation)],
+  effects: [],
+})
+
+export const BizarreMagic = Traits.defineTrait('feat/bizarre-magic', {
+  name: 'Bizarre Magic',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Occultism](characteristic:skill/occultism)\n\nYou can draw upon strange variations in your spellcasting, whether or not you can cast occult spells. The DCs to [Recognize Spells](trait:feat/recognize-spell) you cast and [Identify Magic](content:skills/identify-magic) you use increase by 5.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterOccultism)],
+  effects: [],
+})
+
+export const BreakCurse = Traits.defineTrait('feat/break-curse', {
+  name: 'Break Curse',
+  description:
+    "*Concentrate, Exploration, General, Healing, Skill*\n\n**Prerequisites** Master in [Occultism](characteristic:skill/occultism) or Master in [Religion](characteristic:skill/religion)\n\nYou spend 8 hours praying or performing occult rites over the target, weakening a curse's power over them. Attempt to [counteract](content:playing-the-game/counteracting) the curse, using Occultism or Religion for your counteract check and half your level rounded up for the counteract rank. Break Curse only takes 10 minutes of prayer and rites if you are legendary in Occultism or Religion.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Expressions.or([Traits.traitPrerequisite(MasterOccultism), Traits.traitPrerequisite(MasterReligion)])],
+  effects: [],
+})
+
+export const FoilSenses = Traits.defineTrait('feat/foil-senses', {
+  name: 'Foil Senses',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\nYou are adept at foiling creatures' special senses and cautious enough to safeguard against them at all times. Whenever you use the [Avoid Notice](content:playing-the-game/avoid-notice), [Hide](content:skills/hide), or [Sneak](content:skills/sneak) actions, you are always considered to be taking [precautions against special senses](content:playing-the-game/senses).",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterStealth)],
+  effects: [],
+})
+
+export const ImpeccableCrafting = Traits.defineTrait('feat/impeccable-crafting', {
+  name: 'Impeccable Crafting',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Crafting](characteristic:skill/crafting); [Specialty Crafting](trait:feat/specialty-crafting)\n\nYou craft flawless creations with great efficiency. Whenever you roll a success at a [Crafting](characteristic:skill/crafting) check to make an item of the type you chose with Specialty Crafting, you get a critical success instead.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterCrafting), Traits.traitPrerequisite(SpecialtyCrafting)],
+  effects: [],
+})
+
+export const KipUp = Traits.defineTrait('feat/kip-up', {
+  name: 'Kip Up',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Acrobatics](characteristic:skill/acrobatics)\n\nYou [stand](content:playing-the-game/stand) up. This movement doesn't trigger reactions.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterAcrobatics)],
+  effects: [],
+})
+
+export const KipUpAction = Abilities.defineAbility('feat/kip-up/action', {
+  name: 'Kip Up',
+  description: '*General, Skill*',
+  prerequisites: [Traits.traitPrerequisite(KipUp)],
+  actions: [
+    {
+      name: 'Kip Up',
+      description:
+        "**Prerequisites** Master in [Acrobatics](characteristic:skill/acrobatics)\n\nYou [stand](content:playing-the-game/stand) up. This movement doesn't trigger reactions.",
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const MonsterCrafting = Traits.defineTrait('feat/monster-crafting', {
+  name: 'Monster Crafting',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Survival](characteristic:skill/survival)\n\nYou can use the parts of monsters to aid in crafting. You can use the body of a monster to help [Craft](content:skills/craft) items, using [Survival](characteristic:skill/survival) instead of [Crafting](characteristic:skill/crafting) for the Craft activity when you do so. If parts of the monster's body are valuable, you can expend them toward the item's raw material cost as well. (The GM makes the determination if the monster's entry doesn't list any valuable materials from its body.)\n\nIf you spend additional days working on the item, reduce the Price using the monster's level instead of your own. Certain items may require specific creatures in their Craft requirement.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterSurvival)],
+  effects: [],
+})
+
+export const PlanarSurvival = Traits.defineTrait('feat/planar-survival', {
+  name: 'Planar Survival',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Survival](characteristic:skill/survival)\n\nYou can [Subsist](content:skills/subsist) using [Survival](characteristic:skill/survival) on different planes, even those without resources or natural phenomena you normally need. For instance, you can forage for food without penalty even if the plane lacks food that could normally sustain you. A success on your check to Subsist also prevents damage done by the plane to you and anyone else you support with Subsist. This applies only to damage dealt by the general conditions of the plane, not smaller hazards.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterSurvival)],
+  effects: [],
+})
+
+export const QuickClimb = Traits.defineTrait('feat/quick-climb', {
+  name: 'Quick Climb',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Athletics](characteristic:skill/athletics)\n\nWhen [Climbing](content:skills/climb), you move 5 more feet on a success and 10 more feet on a critical success, up to your [Speed](characteristic:speed). If you're legendary in Athletics, you gain a climb Speed equal to your Speed.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterAthletics)],
+  effects: [],
+})
+
+export const QuickRecognition = Traits.defineTrait('feat/quick-recognition', {
+  name: 'Quick Recognition',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Arcana](characteristic:skill/arcana), Master in [Nature](characteristic:skill/nature), Master in [Occultism](characteristic:skill/occultism), or Master in [Religion](characteristic:skill/religion); [Recognize Spell](trait:feat/recognize-spell)\n\nYou Recognize Spells swiftly. Once per round, you can Recognize a Spell using a skill in which you’re a master as a free action.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [
+    Expressions.or([
+      Traits.traitPrerequisite(MasterArcana),
+      Traits.traitPrerequisite(MasterNature),
+      Traits.traitPrerequisite(MasterOccultism),
+      Traits.traitPrerequisite(MasterReligion),
+    ]),
+    Traits.traitPrerequisite(RecognizeSpell),
+  ],
+  effects: [],
+})
+
+export const QuickSwim = Traits.defineTrait('feat/quick-swim', {
+  name: 'Quick Swim',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Athletics](characteristic:skill/athletics)\n\nYou [Swim](content:skills/swim) 5 feet farther on a success and 10 feet farther on a critical success, to a maximum of your [Speed](characteristic:speed). If you’re legendary in Athletics, you gain a swim Speed equal to your Speed.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterAthletics)],
+  effects: [],
+})
+
+export const QuickUnlock = Traits.defineTrait('feat/quick-unlock', {
+  name: 'Quick Unlock',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Thievery](characteristic:skill/thievery)\n\nYou can [Pick a Lock](content:skills/pick-a-lock) using 1 action instead of 2.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterThievery)],
+  effects: [],
+})
+
+export const ShamelessRequest = Traits.defineTrait('feat/shameless-request', {
+  name: 'Shameless Request',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Diplomacy](characteristic:skill/diplomacy)\n\nYou can downplay the consequences or outrageousness of your requests using sheer brazenness and charm. When you [Request](content:skills/request) something, you reduce any DC increases for making an outrageous request by 2, and if you roll a critical failure for your Request, you get a failure instead. While this means you can never cause your target to reduce their attitude toward you by making a Request, they eventually tire of requests, even though they still have a positive attitude toward you.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterDiplomacy)],
+  effects: [],
+})
+
+export const SlipperySecrets = Traits.defineTrait('feat/slippery-secrets', {
+  name: 'Slippery Secrets',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Deception](characteristic:skill/deception)\n\nYou elude and evade attempts to uncover your true nature or intentions. When a spell or magical effect tries to read your mind, detect whether you are lying, or reveal your identity, you can attempt a [Deception](characteristic:skill/deception) check against the spell or effect's DC. If you succeed, the effect reveals nothing.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterDeception)],
+  effects: [],
+})
+
+export const SwiftSneak = Traits.defineTrait('feat/swift-sneak', {
+  name: 'Swift Sneak',
+  description:
+    '*General, Skill*\n\n**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\nYou can move your full [Speed](characteristic:speed) when you [Sneak](content:skills/sneak). You can use Swift Sneak while [Burrowing](content:playing-the-game/burrow), [Climbing](content:skills/climb), [Flying](content:playing-the-game/fly), or [Swimming](content:skills/swim) instead of Striding if you have the corresponding movement type.',
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterStealth)],
+  effects: [],
+})
+
+export const TerrifiedRetreat = Traits.defineTrait('feat/terrified-retreat', {
+  name: 'Terrified Retreat',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Intimidation](characteristic:skill/intimidation)\n\nWhen you critically succeed at the [Demoralize](content:skills/demoralize) action, if the target's level is lower than yours, the target is [fleeing](content:conditions/fleeing) for 1 round.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterIntimidation)],
+  effects: [],
+})
+
+export const WallJump = Traits.defineTrait('feat/wall-jump', {
+  name: 'Wall Jump',
+  description:
+    "*General, Skill*\n\n**Prerequisites** Master in [Athletics](characteristic:skill/athletics)\n\nYou can use your momentum from a jump to propel yourself off a wall. If you're adjacent to a wall at the end of a jump (whether performing a [High Jump](content:skills/high-jump), [Long Jump](content:skills/long-jump), or [Leap](content:playing-the-game/leap)), you don't fall as long as your next action is another jump. Your previous jump gives you momentum, letting you use High Jump or Long Jump as a single action, but you don't get to [Stride](content:playing-the-game/stride) as part of the activity.\n\nYou can use Wall Jump only once in a turn, unless you're legendary in Athletics, in which case you can use it as many times as you can use consecutive jump actions in that turn.",
+  tags: [Feat, GeneralFeat, SkillFeat, FeatLevel7],
+  prerequisites: [Traits.traitPrerequisite(MasterAthletics)],
+  effects: [],
+})
+
 export const AllSkillFeatEntities = [
   AdditionalLore,
   AlchemicalCrafting,
@@ -1074,4 +1272,23 @@ export const AllSkillFeatEntities = [
   UnusualTreatment,
   WardMedic,
   WaryDisarmament,
+  AdvancedFirstAid,
+  BattleCry,
+  BizarreMagic,
+  BreakCurse,
+  FoilSenses,
+  ImpeccableCrafting,
+  KipUp,
+  KipUpAction,
+  MonsterCrafting,
+  PlanarSurvival,
+  QuickClimb,
+  QuickRecognition,
+  QuickSwim,
+  QuickUnlock,
+  ShamelessRequest,
+  SlipperySecrets,
+  SwiftSneak,
+  TerrifiedRetreat,
+  WallJump,
 ]

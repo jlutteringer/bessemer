@@ -187,6 +187,40 @@ export const PersonalBlizzard = Abilities.defineAbility('spell/personal-blizzard
   ],
 })
 
+export const CurseOfDeath = Abilities.defineAbility('spell/curse-of-death', {
+  name: 'Curse of Death',
+  description: '*Uncommon, Concentrate, Curse, Death, Focus, Hex, Manipulate, Void, Witch*\n\n**Lesson** Lesson of Death',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Curse of Death',
+      description:
+        "**Range** 30 feet\n\n**Target** 1 creature\n\n**Defense** [Fortitude](characteristic:fortitude)\n\n**Duration** sustained up to 1 minute\n\nYour patron wraps a hand around your target's heart. The target must attempt a Fortitude saving throw. Regardless of the result, the target is temporarily immune to all _curses of death_ for 1 day.\n\n**Critical Success** The target is unaffected.\n\n**Success** The target is afflicted with the curse of death at stage 1, and the stage of the curse can't increase beyond stage 1.\n\n**Failure** The target is afflicted with the curse of death at stage 1.\n\n**Critical Failure** The target is afflicted with the curse of death at stage 2. **Curse of Death** ([curse](content:traits/curse), [death](content:traits/death), [void](content:traits/void)) This curse ends when the spell ends; **Stage 1** 4d6 void damage and [fatigued](content:conditions/fatigued) (1 round); **Stage 2** 8d6 void damage and fatigued (1 round); **Stage 3** 12d6 void damage and fatigued (1 round); **Stage 4** death\n\n**Heightened (+1)** Increase the void damage taken on a success and during the first three stages of the curse by 1d6.",
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+      targeting: { target: { range: 30, count: 1 } },
+    },
+  ],
+})
+
+export const RestorativeMoment = Abilities.defineAbility('spell/restorative-moment', {
+  name: 'Restorative Moment',
+  description: '*Uncommon, Concentrate, Focus, Hex, Manipulate, Witch*\n\n**Lesson** Lesson of Renewal',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Restorative Moment',
+      description:
+        "**Range** 30 feet\n\n**Target** 1 creature\n\nYour patron weaves the threads of time around the target, giving them some of the benefits of a day's passage. The target decreases the values of any [doomed](content:conditions/doomed) and [drained](content:conditions/drained) conditions it has by 1 and can immediately attempt one saving throw against each affliction it has with a stage length of 1 day or less. The target is then temporarily immune for 1 day.",
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+      targeting: { target: { range: 30, count: 1 } },
+    },
+  ],
+})
+
 export const AllWitchFocusSpells = [
   BloodWard,
   Cackle,
@@ -199,4 +233,6 @@ export const AllWitchFocusSpells = [
   DeceiversCloak,
   MaliciousShadow,
   PersonalBlizzard,
+  CurseOfDeath,
+  RestorativeMoment,
 ]

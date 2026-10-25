@@ -2,7 +2,18 @@ import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simul
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { Feat, ClassFeat, RangerFeat, RogueFeat, FeatLevel1, FeatLevel2, FeatLevel4 } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  ClassFeat,
+  Feat,
+  FeatLevel1,
+  FeatLevel10,
+  FeatLevel2,
+  FeatLevel4,
+  FeatLevel6,
+  FeatLevel8,
+  RangerFeat,
+  RogueFeat,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import { SpellAttack, SpellDC, Wisdom } from '@simulacrum/ruleset-pf2e/characteristic'
 import { Trained } from '@simulacrum/ruleset-pf2e/proficiency'
@@ -10,12 +21,20 @@ import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import {
   AnimalFeature,
   EnlargeCompanion,
+  EphemeralTracking,
   GravityWeapon,
   HealCompanion,
   HuntersLuck,
+  HuntersVision,
   MagicHide,
+  RangersBramble,
   SoothingMist,
+  TerrainTransposition,
 } from '@simulacrum/ruleset-pf2e/class/ranger-focus-spell'
+import { SelectIncredibleAnimalCompanion } from '@simulacrum/ruleset-pf2e/companion/animal-companion'
+import { AnimalCompanion } from '@simulacrum/ruleset-pf2e/class/druid-feat'
+import { ExpertSurvival, MasterNature, MasterStealth, MasterSurvival } from '@simulacrum/ruleset-pf2e/skill'
+import { ExperiencedTracker } from '@simulacrum/ruleset-pf2e/feat/skill-feat'
 
 export const SelectInitiateWardenSpell = CharacterOptions.selectAbilityOption('ranger/select-initiate-warden-spell', {
   name: 'Initiate Warden Spell',
@@ -25,6 +44,16 @@ export const SelectInitiateWardenSpell = CharacterOptions.selectAbilityOption('r
 export const SelectAdvancedWardenSpell = CharacterOptions.selectAbilityOption('ranger/select-advanced-warden-spell', {
   name: 'Advanced Warden Spell',
   filter: { specificOptions: [AnimalFeature, EnlargeCompanion, HuntersLuck, SoothingMist] },
+})
+
+export const SelectMasterfulWardenSpell = CharacterOptions.selectAbilityOption('ranger/select-masterful-warden-spell', {
+  name: 'Master Warden Spell',
+  filter: { specificOptions: [EphemeralTracking, RangersBramble] },
+})
+
+export const SelectPeerlessWardenSpell = CharacterOptions.selectAbilityOption('ranger/select-peerless-warden-spell', {
+  name: 'Peerless Warden Spell',
+  filter: { specificOptions: [HuntersVision, TerrainTransposition] },
 })
 
 export const CrossbowAce = Traits.defineTrait('feat/crossbow-ace', {
@@ -301,9 +330,226 @@ export const ScoutsWarningAction = Abilities.defineAbility('feat/scouts-warning/
   ],
 })
 
+export const AdditionalRecollection = Traits.defineTrait('feat/additional-recollection', {
+  name: 'Additional Recollection',
+  description:
+    '*Ranger*\n\n**Trigger** You succeed or critically succeed at a check to [Recall Knowledge](content:skills/recall-knowledge) on your hunted prey\n\nYou scan the battlefield quickly, remembering critical details about multiple opponents you face. You immediately attempt a check to Recall Knowledge about a different creature you can perceive.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel6],
+  effects: [],
+})
+
+export const AdditionalRecollectionAction = Abilities.defineAbility('feat/additional-recollection/action', {
+  name: 'Additional Recollection',
+  description: '*Ranger*',
+  prerequisites: [Traits.traitPrerequisite(AdditionalRecollection)],
+  actions: [
+    {
+      name: 'Additional Recollection',
+      description:
+        '**Trigger** You succeed or critically succeed at a check to [Recall Knowledge](content:skills/recall-knowledge) on your hunted prey\n\nYou scan the battlefield quickly, remembering critical details about multiple opponents you face. You immediately attempt a check to Recall Knowledge about a different creature you can perceive.',
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const MasterfulWarden = Traits.defineTrait('feat/masterful-warden', {
+  name: 'Masterful Warden',
+  description:
+    '*Ranger*\n\n**Prerequisites** [Initiate Warden](trait:feat/initiate-warden)\n\nYour mastery of warden magic increases. You gain your choice of one warden spell from the master warden spells(or another you have access to).\n\n**Special** You can take this feat multiple times, choosing a different master warden spell each time.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(InitiateWarden)],
+  repeatable: true,
+  effects: [
+    Effects.gainCharacterOption(SelectMasterfulWardenSpell),
+    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+  ],
+})
+
+export const MatureAnimalCompanionRanger = Traits.defineTrait('feat/mature-animal-companion-ranger', {
+  name: 'Mature Animal Companion (Ranger)',
+  description:
+    "*Ranger*\n\n**Prerequisites** [Animal Companion](trait:feat/animal-companion)\n\nYour animal companion becomes a mature animal companion and gains [additional capabilities](content:classes/mature-animal-companions).\n\nYour animal companion has greater independence. During an encounter, even if you don't use the [Command an Animal](content:skills/command-an-animal) action, your animal companion can still use 1 action that round on your turn to [Strike](content:playing-the-game/strike) or [Stride](content:playing-the-game/stride) (or Burrow, [Climb](content:skills/climb), Fly, or [Swim](content:skills/swim) if it has that [Speed](characteristic:speed)). It can do this at any point during your turn, as long as you aren’t currently taking an action. If it does, that’s all the actions it gets that round—you can’t Command it later.",
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(AnimalCompanion)],
+  effects: [],
+})
+
+export const SkirmishStrike = Traits.defineTrait('feat/skirmish-strike', {
+  name: 'Skirmish Strike',
+  description:
+    '*Flourish, Ranger, Rogue*\n\nYour feet and weapon move in tandem. Either [Step](content:playing-the-game/step) and then [Strike](content:playing-the-game/strike), or Strike and then Step.',
+  tags: [Feat, ClassFeat, RangerFeat, RogueFeat, FeatLevel6],
+  effects: [],
+})
+
+export const SkirmishStrikeAction = Abilities.defineAbility('feat/skirmish-strike/action', {
+  name: 'Skirmish Strike',
+  description: '*Flourish, Ranger, Rogue*',
+  prerequisites: [Traits.traitPrerequisite(SkirmishStrike)],
+  actions: [
+    {
+      name: 'Skirmish Strike',
+      description:
+        'Your feet and weapon move in tandem. Either [Step](content:playing-the-game/step) and then [Strike](content:playing-the-game/strike), or Strike and then Step.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const SnapShot = Traits.defineTrait('feat/snap-shot', {
+  name: 'Snap Shot',
+  description:
+    '*Ranger*\n\nYou can react with ranged weapons when a creature is in close quarters. You can use a reaction that normally allows you to make a melee weapon [Strike](content:playing-the-game/strike) to instead make a ranged weapon Strike. You must be Striking an adjacent target. If necessary for the reaction’s trigger, you treat your ranged weapon as if it had a reach of 5 feet. If the reaction has other requirements, such as wielding a specific kind of weapon, Snap Shot doesn’t allow you to ignore them; it allows you only to replace a melee weapon Strike with a ranged weapon Strike.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel6],
+  effects: [],
+})
+
+export const SwiftTracker = Traits.defineTrait('feat/swift-tracker', {
+  name: 'Swift Tracker',
+  description:
+    '*Ranger*\n\n**Prerequisites** Expert in [Survival](characteristic:skill/survival); [Experienced Tracker](trait:feat/experienced-tracker)\n\nYour keen eyes catch signs of passage even when you’re moving. You can move at your full [Speed](characteristic:speed) while you [Track](content:skills/track). If you have master proficiency in Survival, you don’t need to attempt a new Survival check every hour while Tracking. If you have legendary proficiency in Survival, you can use another exploration activity while Tracking.\n\nIf you roll Survival for initiative while tracking your hunted prey, when you start your first turn of the encounter, you can [Stride](content:playing-the-game/stride) toward your hunted prey as a free action.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(ExpertSurvival), Traits.traitPrerequisite(ExperiencedTracker)],
+  effects: [],
+})
+
+export const DeadlyAim = Traits.defineTrait('feat/deadly-aim', {
+  name: 'Deadly Aim',
+  description:
+    '*Flourish, Ranger*\n\n**Prerequisites** weapon specialization\n\nYou aim for your prey’s weak spots, making your shot more challenging but dealing more damage if you hit. Make a ranged [Strike](content:playing-the-game/strike) against your hunted prey at a –2 penalty. You gain a +4 circumstance bonus to damage on that Strike. This bonus increases to +6 at 11th level and +8 at 15th level.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel8],
+  effects: [],
+})
+
+export const DeadlyAimAction = Abilities.defineAbility('feat/deadly-aim/action', {
+  name: 'Deadly Aim',
+  description: '*Flourish, Ranger*',
+  prerequisites: [Traits.traitPrerequisite(DeadlyAim)],
+  actions: [
+    {
+      name: 'Deadly Aim',
+      description:
+        '**Prerequisites** weapon specialization\n\nYou aim for your prey’s weak spots, making your shot more challenging but dealing more damage if you hit. Make a ranged [Strike](content:playing-the-game/strike) against your hunted prey at a –2 penalty. You gain a +4 circumstance bonus to damage on that Strike. This bonus increases to +6 at 11th level and +8 at 15th level.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const HazardFinder = Traits.defineTrait('feat/hazard-finder', {
+  name: 'Hazard Finder',
+  description:
+    '*Ranger*\n\nYou have an intuitive ability to sense hazards. You gain a +1 circumstance bonus to [Perception](characteristic:perception) checks to find traps and hazards, to [AC](characteristic:armor-class) against their attacks, and to saves against their effects. You can find hazards that would normally require you to Search even if you aren’t Searching.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel8],
+  effects: [],
+})
+
+export const TerrainMaster = Traits.defineTrait('feat/terrain-master', {
+  name: 'Terrain Master',
+  description:
+    '*Ranger*\n\n**Prerequisites** Master in [Survival](characteristic:skill/survival); [Favored Terrain](trait:feat/favored-terrain)\n\nYou are able to adapt to your surroundings in any natural terrain. You can spend 1 hour practicing in your current terrain in order to make it your favored terrain, replacing your current favored terrain temporarily. If you spend a full day out of the new favored terrain, your favored terrain reverts back to your original choice when you took the Favored Terrain feat.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(MasterSurvival), Traits.traitPrerequisite(FavoredTerrain)],
+  effects: [],
+})
+
+export const WardensBoon = Traits.defineTrait('feat/wardens-boon', {
+  name: "Warden's Boon",
+  description:
+    '*Ranger*\n\nYou point out vulnerabilities present in your hunted prey, granting the benefits listed in Hunt Prey and your hunter’s edge to an ally until the end of their next turn. Depending on whether you call out or use gestures, this action gains either the auditory or visual trait.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel8],
+  effects: [],
+})
+
+export const WardensBoonAction = Abilities.defineAbility('feat/wardens-boon/action', {
+  name: "Warden's Boon",
+  description: '*Ranger*',
+  prerequisites: [Traits.traitPrerequisite(WardensBoon)],
+  actions: [
+    {
+      name: "Warden's Boon",
+      description:
+        'You point out vulnerabilities present in your hunted prey, granting the benefits listed in Hunt Prey and your hunter’s edge to an ally until the end of their next turn. Depending on whether you call out or use gestures, this action gains either the auditory or visual trait.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const Camouflage = Traits.defineTrait('feat/camouflage', {
+  name: 'Camouflage',
+  description:
+    '*Ranger*\n\n**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\nYou alter your appearance to blend in to the wilderness. In natural terrain, you can Hide and [Sneak](content:skills/sneak) even without cover or being concealed.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(MasterStealth)],
+  effects: [],
+})
+
+export const IncredibleCompanionRanger = Traits.defineTrait('feat/incredible-companion-ranger', {
+  name: 'Incredible Companion (Ranger)',
+  description:
+    '*Ranger*\n\n**Prerequisites** Mature Animal Companion (Ranger)\n\nYour animal companion continues to grow and develop. It becomes a nimble or savage animal companion (your choice), gaining additional capabilities determined by the type of companion.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(MatureAnimalCompanionRanger)],
+  effects: [Effects.gainCharacterOption(SelectIncredibleAnimalCompanion)],
+})
+
+export const MasterMonsterHunter = Traits.defineTrait('feat/master-monster-hunter', {
+  name: 'Master Monster Hunter',
+  description:
+    '*Ranger*\n\n**Prerequisites** Master in [Nature](characteristic:skill/nature); [Monster Hunter](trait:feat/monster-hunter)\n\nYou have a nearly encyclopedic knowledge of all creatures of the world. You can use Nature to [Recall Knowledge](content:skills/recall-knowledge) to identify any creature. In addition, you gain the benefits of Monster Hunter (and Monster Warden, if you have it) on a success as well as a critical success.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(MasterNature), Traits.traitPrerequisite(MonsterHunter)],
+  effects: [],
+})
+
+export const PeerlessWarden = Traits.defineTrait('feat/peerless-warden', {
+  name: 'Peerless Warden',
+  description:
+    '*Ranger*\n\n**Prerequisites** [Initiate Warden](trait:feat/initiate-warden)\n\nYour mastery of primal magic has given you access to the greatest secrets of warden magic. You gain your choice of one warden spell from the peerless warden spells (or another you have access to).\n\n**Special** You can take this feat multiple times, choosing a different peerless warden spell each time.',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(InitiateWarden)],
+  repeatable: true,
+  effects: [
+    Effects.gainCharacterOption(SelectPeerlessWardenSpell),
+    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+  ],
+})
+
+export const PenetratingShot = Traits.defineTrait('feat/penetrating-shot', {
+  name: 'Penetrating Shot',
+  description:
+    '*Ranger*\n\n**Requirements** You are wielding a ranged weapon\n\nYou shoot clear through an intervening creature to hit your prey. Choose a target that is giving lesser cover to your hunted prey. Make a single ranged [Strike](content:playing-the-game/strike) with the required weapon against the chosen target and your hunted prey. This attack ignores any lesser cover the chosen target provides your hunted prey. Roll damage only once, and apply it to each creature you hit. A Penetrating Shot counts as two attacks for your multiple attack penalty',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
+  effects: [],
+})
+
+export const PenetratingShotAction = Abilities.defineAbility('feat/penetrating-shot/action', {
+  name: 'Penetrating Shot',
+  description: '*Ranger*',
+  prerequisites: [Traits.traitPrerequisite(PenetratingShot)],
+  actions: [
+    {
+      name: 'Penetrating Shot',
+      description:
+        '**Requirements** You are wielding a ranged weapon\n\nYou shoot clear through an intervening creature to hit your prey. Choose a target that is giving lesser cover to your hunted prey. Make a single ranged [Strike](content:playing-the-game/strike) with the required weapon against the chosen target and your hunted prey. This attack ignores any lesser cover the chosen target provides your hunted prey. Roll damage only once, and apply it to each creature you hit. A Penetrating Shot counts as two attacks for your multiple attack penalty',
+      action: ActionTypes.TwoActions,
+    },
+  ],
+})
+
+export const WardensStep = Traits.defineTrait('feat/wardens-step', {
+  name: "Warden's Step",
+  description:
+    '*Ranger*\n\n**Prerequisites** Master in [Stealth](characteristic:skill/stealth)\n\nYou can guide your allies to move quietly through the wilderness. When you [Avoid Notice](content:playing-the-game/avoid-notice) during exploration in natural terrain, you can designate any number of your allies to gain the benefits as if they were using that activity during that exploration. This requires no action on their part',
+  tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(MasterStealth)],
+  effects: [],
+})
+
 export const AllRangerFeatEntities = [
   SelectInitiateWardenSpell,
   SelectAdvancedWardenSpell,
+  SelectMasterfulWardenSpell,
+  SelectPeerlessWardenSpell,
   CrossbowAce,
   CrossbowAceAction,
   HuntedShot,
@@ -330,4 +576,25 @@ export const AllRangerFeatEntities = [
   RunningReloadAction,
   ScoutsWarning,
   ScoutsWarningAction,
+  AdditionalRecollection,
+  AdditionalRecollectionAction,
+  MasterfulWarden,
+  MatureAnimalCompanionRanger,
+  SkirmishStrike,
+  SkirmishStrikeAction,
+  SnapShot,
+  SwiftTracker,
+  DeadlyAim,
+  DeadlyAimAction,
+  HazardFinder,
+  TerrainMaster,
+  WardensBoon,
+  WardensBoonAction,
+  Camouflage,
+  IncredibleCompanionRanger,
+  MasterMonsterHunter,
+  PeerlessWarden,
+  PenetratingShot,
+  PenetratingShotAction,
+  WardensStep,
 ]

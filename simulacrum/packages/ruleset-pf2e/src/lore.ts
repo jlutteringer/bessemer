@@ -1,10 +1,11 @@
-import { Attributes, Characteristics, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterValues, Characteristics, Effects, Traits } from '@simulacrum/ruleset'
+import { Expressions } from '@bessemer/cornerstone/expression'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
 import { ObjectPaths, Patches } from '@bessemer/cornerstone'
-import { ExpertSkill, Lore, TrainedSkill } from '@simulacrum/ruleset-pf2e/tag'
+import { ExpertSkill, Lore, MasterSkill, TrainedSkill } from '@simulacrum/ruleset-pf2e/tag'
 import { Intelligence } from '@simulacrum/ruleset-pf2e/characteristic'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
-import { Expert, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
+import { Expert, Master, Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 
 export const LoreGroup = Characteristics.defineGroup('lore', { name: 'Lore' })
 
@@ -34,6 +35,15 @@ export const ExpertAcademiaLore = Traits.defineTrait('lore/academia/expert', {
   effects: [Effects.modifyCharacteristic(AcademiaLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterAcademiaLore = Traits.defineTrait('lore/academia/master', {
+  name: 'Master in Academia Lore',
+  description:
+    'You are a master in Academia Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertAcademiaLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(AcademiaLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const AlcoholLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/alcohol', {
@@ -58,6 +68,14 @@ export const ExpertAlcoholLore = Traits.defineTrait('lore/alcohol/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedAlcoholLore)],
   effects: [Effects.modifyCharacteristic(AlcoholLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterAlcoholLore = Traits.defineTrait('lore/alcohol/master', {
+  name: 'Master in Alcohol Lore',
+  description: 'You are a master in Alcohol Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertAlcoholLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(AlcoholLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const ArtLore: Characteristic = Characteristics.defineCharacteristic({
@@ -86,6 +104,14 @@ export const ExpertArtLore = Traits.defineTrait('lore/art/expert', {
   effects: [Effects.modifyCharacteristic(ArtLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterArtLore = Traits.defineTrait('lore/art/master', {
+  name: 'Master in Art Lore',
+  description: 'You are a master in Art Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertArtLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(ArtLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const CircusLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/circus', {
@@ -110,6 +136,14 @@ export const ExpertCircusLore = Traits.defineTrait('lore/circus/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedCircusLore)],
   effects: [Effects.modifyCharacteristic(CircusLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterCircusLore = Traits.defineTrait('lore/circus/master', {
+  name: 'Master in Circus Lore',
+  description: 'You are a master in Circus Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertCircusLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(CircusLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const CookingLore: Characteristic = Characteristics.defineCharacteristic({
@@ -138,6 +172,14 @@ export const ExpertCookingLore = Traits.defineTrait('lore/cooking/expert', {
   effects: [Effects.modifyCharacteristic(CookingLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterCookingLore = Traits.defineTrait('lore/cooking/master', {
+  name: 'Master in Cooking Lore',
+  description: 'You are a master in Cooking Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertCookingLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(CookingLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const EngineeringLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/engineering', {
@@ -162,6 +204,15 @@ export const ExpertEngineeringLore = Traits.defineTrait('lore/engineering/expert
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedEngineeringLore)],
   effects: [Effects.modifyCharacteristic(EngineeringLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterEngineeringLore = Traits.defineTrait('lore/engineering/master', {
+  name: 'Master in Engineering Lore',
+  description:
+    'You are a master in Engineering Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertEngineeringLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(EngineeringLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const FarmingLore: Characteristic = Characteristics.defineCharacteristic({
@@ -190,6 +241,14 @@ export const ExpertFarmingLore = Traits.defineTrait('lore/farming/expert', {
   effects: [Effects.modifyCharacteristic(FarmingLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterFarmingLore = Traits.defineTrait('lore/farming/master', {
+  name: 'Master in Farming Lore',
+  description: 'You are a master in Farming Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertFarmingLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(FarmingLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const FortuneTellingLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/fortune-telling', {
@@ -214,6 +273,15 @@ export const ExpertFortuneTellingLore = Traits.defineTrait('lore/fortune-telling
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedFortuneTellingLore)],
   effects: [Effects.modifyCharacteristic(FortuneTellingLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterFortuneTellingLore = Traits.defineTrait('lore/fortune-telling/master', {
+  name: 'Master in Fortune-Telling Lore',
+  description:
+    'You are a master in Fortune-Telling Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertFortuneTellingLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(FortuneTellingLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const GamesLore: Characteristic = Characteristics.defineCharacteristic({
@@ -242,6 +310,14 @@ export const ExpertGamesLore = Traits.defineTrait('lore/games/expert', {
   effects: [Effects.modifyCharacteristic(GamesLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterGamesLore = Traits.defineTrait('lore/games/master', {
+  name: 'Master in Games Lore',
+  description: 'You are a master in Games Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertGamesLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(GamesLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const GenealogyLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/genealogy', {
@@ -266,6 +342,15 @@ export const ExpertGenealogyLore = Traits.defineTrait('lore/genealogy/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedGenealogyLore)],
   effects: [Effects.modifyCharacteristic(GenealogyLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterGenealogyLore = Traits.defineTrait('lore/genealogy/master', {
+  name: 'Master in Genealogy Lore',
+  description:
+    'You are a master in Genealogy Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertGenealogyLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(GenealogyLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const GladiatorialLore: Characteristic = Characteristics.defineCharacteristic({
@@ -294,6 +379,15 @@ export const ExpertGladiatorialLore = Traits.defineTrait('lore/gladiatorial/expe
   effects: [Effects.modifyCharacteristic(GladiatorialLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterGladiatorialLore = Traits.defineTrait('lore/gladiatorial/master', {
+  name: 'Master in Gladiatorial Lore',
+  description:
+    'You are a master in Gladiatorial Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertGladiatorialLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(GladiatorialLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const GuildLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/guild', {
@@ -318,6 +412,14 @@ export const ExpertGuildLore = Traits.defineTrait('lore/guild/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedGuildLore)],
   effects: [Effects.modifyCharacteristic(GuildLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterGuildLore = Traits.defineTrait('lore/guild/master', {
+  name: 'Master in Guild Lore',
+  description: 'You are a master in Guild Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertGuildLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(GuildLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const HeraldryLore: Characteristic = Characteristics.defineCharacteristic({
@@ -346,6 +448,15 @@ export const ExpertHeraldryLore = Traits.defineTrait('lore/heraldry/expert', {
   effects: [Effects.modifyCharacteristic(HeraldryLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterHeraldryLore = Traits.defineTrait('lore/heraldry/master', {
+  name: 'Master in Heraldry Lore',
+  description:
+    'You are a master in Heraldry Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertHeraldryLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(HeraldryLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const HerbalismLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/herbalism', {
@@ -370,6 +481,15 @@ export const ExpertHerbalismLore = Traits.defineTrait('lore/herbalism/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedHerbalismLore)],
   effects: [Effects.modifyCharacteristic(HerbalismLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterHerbalismLore = Traits.defineTrait('lore/herbalism/master', {
+  name: 'Master in Herbalism Lore',
+  description:
+    'You are a master in Herbalism Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertHerbalismLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(HerbalismLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const LaborLore: Characteristic = Characteristics.defineCharacteristic({
@@ -398,6 +518,14 @@ export const ExpertLaborLore = Traits.defineTrait('lore/labor/expert', {
   effects: [Effects.modifyCharacteristic(LaborLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterLaborLore = Traits.defineTrait('lore/labor/master', {
+  name: 'Master in Labor Lore',
+  description: 'You are a master in Labor Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertLaborLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(LaborLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const LegalLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/legal', {
@@ -422,6 +550,14 @@ export const ExpertLegalLore = Traits.defineTrait('lore/legal/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedLegalLore)],
   effects: [Effects.modifyCharacteristic(LegalLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterLegalLore = Traits.defineTrait('lore/legal/master', {
+  name: 'Master in Legal Lore',
+  description: 'You are a master in Legal Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertLegalLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(LegalLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const MercantileLore: Characteristic = Characteristics.defineCharacteristic({
@@ -450,6 +586,15 @@ export const ExpertMercantileLore = Traits.defineTrait('lore/mercantile/expert',
   effects: [Effects.modifyCharacteristic(MercantileLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterMercantileLore = Traits.defineTrait('lore/mercantile/master', {
+  name: 'Master in Mercantile Lore',
+  description:
+    'You are a master in Mercantile Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertMercantileLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(MercantileLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const MiningLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/mining', {
@@ -474,6 +619,14 @@ export const ExpertMiningLore = Traits.defineTrait('lore/mining/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedMiningLore)],
   effects: [Effects.modifyCharacteristic(MiningLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterMiningLore = Traits.defineTrait('lore/mining/master', {
+  name: 'Master in Mining Lore',
+  description: 'You are a master in Mining Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertMiningLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(MiningLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const SailingLore: Characteristic = Characteristics.defineCharacteristic({
@@ -502,6 +655,14 @@ export const ExpertSailingLore = Traits.defineTrait('lore/sailing/expert', {
   effects: [Effects.modifyCharacteristic(SailingLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterSailingLore = Traits.defineTrait('lore/sailing/master', {
+  name: 'Master in Sailing Lore',
+  description: 'You are a master in Sailing Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertSailingLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(SailingLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const ScribingLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/scribing', {
@@ -526,6 +687,15 @@ export const ExpertScribingLore = Traits.defineTrait('lore/scribing/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedScribingLore)],
   effects: [Effects.modifyCharacteristic(ScribingLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterScribingLore = Traits.defineTrait('lore/scribing/master', {
+  name: 'Master in Scribing Lore',
+  description:
+    'You are a master in Scribing Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertScribingLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(ScribingLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const TanningLore: Characteristic = Characteristics.defineCharacteristic({
@@ -554,6 +724,14 @@ export const ExpertTanningLore = Traits.defineTrait('lore/tanning/expert', {
   effects: [Effects.modifyCharacteristic(TanningLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterTanningLore = Traits.defineTrait('lore/tanning/master', {
+  name: 'Master in Tanning Lore',
+  description: 'You are a master in Tanning Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertTanningLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(TanningLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const TheaterLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/theater', {
@@ -578,6 +756,14 @@ export const ExpertTheaterLore = Traits.defineTrait('lore/theater/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedTheaterLore)],
   effects: [Effects.modifyCharacteristic(TheaterLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterTheaterLore = Traits.defineTrait('lore/theater/master', {
+  name: 'Master in Theater Lore',
+  description: 'You are a master in Theater Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertTheaterLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(TheaterLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const UnderworldLore: Characteristic = Characteristics.defineCharacteristic({
@@ -606,6 +792,15 @@ export const ExpertUnderworldLore = Traits.defineTrait('lore/underworld/expert',
   effects: [Effects.modifyCharacteristic(UnderworldLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterUnderworldLore = Traits.defineTrait('lore/underworld/master', {
+  name: 'Master in Underworld Lore',
+  description:
+    'You are a master in Underworld Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertUnderworldLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(UnderworldLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const WarfareLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/warfare', {
@@ -630,6 +825,14 @@ export const ExpertWarfareLore = Traits.defineTrait('lore/warfare/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedWarfareLore)],
   effects: [Effects.modifyCharacteristic(WarfareLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterWarfareLore = Traits.defineTrait('lore/warfare/master', {
+  name: 'Master in Warfare Lore',
+  description: 'You are a master in Warfare Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertWarfareLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(WarfareLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const TerrainLore: Characteristic = Characteristics.defineCharacteristic({
@@ -660,6 +863,14 @@ export const ExpertTerrainLore = Traits.defineTrait('lore/terrain/expert', {
   effects: [Effects.modifyCharacteristic(TerrainLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterTerrainLore = Traits.defineTrait('lore/terrain/master', {
+  name: 'Master in Terrain Lore',
+  description: 'You are a master in Terrain Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertTerrainLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(TerrainLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const DeityLore: Characteristic = Characteristics.defineCharacteristic({
   group: LoreGroup,
   template: Characteristics.defineTemplate('skill/lore/deity', {
@@ -684,6 +895,14 @@ export const ExpertDeityLore = Traits.defineTrait('lore/deity/expert', {
   tags: [Lore, ExpertSkill],
   prerequisites: [Traits.traitPrerequisite(TrainedDeityLore)],
   effects: [Effects.modifyCharacteristic(DeityLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+})
+
+export const MasterDeityLore = Traits.defineTrait('lore/deity/master', {
+  name: 'Master in Deity Lore',
+  description: 'You are a master in Deity Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertDeityLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(DeityLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const CityLore: Characteristic = Characteristics.defineCharacteristic({
@@ -712,87 +931,122 @@ export const ExpertCityLore = Traits.defineTrait('lore/city/expert', {
   effects: [Effects.modifyCharacteristic(CityLore, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
+export const MasterCityLore = Traits.defineTrait('lore/city/master', {
+  name: 'Master in City Lore',
+  description: 'You are a master in City Lore, adding your level + 6 to its checks. You must be at least 7th level to become a master in a skill.',
+  tags: [Lore, MasterSkill],
+  prerequisites: [Traits.traitPrerequisite(ExpertCityLore), Expressions.greaterThanOrEqual(CharacterValues.Level, 7)],
+  effects: [Effects.modifyCharacteristic(CityLore, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+})
+
 export const AllLoreEntities = [
   LoreGroup,
   AcademiaLore,
   TrainedAcademiaLore,
   ExpertAcademiaLore,
+  MasterAcademiaLore,
   AlcoholLore,
   TrainedAlcoholLore,
   ExpertAlcoholLore,
+  MasterAlcoholLore,
   ArtLore,
   TrainedArtLore,
   ExpertArtLore,
+  MasterArtLore,
   CircusLore,
   TrainedCircusLore,
   ExpertCircusLore,
+  MasterCircusLore,
   CookingLore,
   TrainedCookingLore,
   ExpertCookingLore,
+  MasterCookingLore,
   EngineeringLore,
   TrainedEngineeringLore,
   ExpertEngineeringLore,
+  MasterEngineeringLore,
   FarmingLore,
   TrainedFarmingLore,
   ExpertFarmingLore,
+  MasterFarmingLore,
   FortuneTellingLore,
   TrainedFortuneTellingLore,
   ExpertFortuneTellingLore,
+  MasterFortuneTellingLore,
   GamesLore,
   TrainedGamesLore,
   ExpertGamesLore,
+  MasterGamesLore,
   GenealogyLore,
   TrainedGenealogyLore,
   ExpertGenealogyLore,
+  MasterGenealogyLore,
   GladiatorialLore,
   TrainedGladiatorialLore,
   ExpertGladiatorialLore,
+  MasterGladiatorialLore,
   GuildLore,
   TrainedGuildLore,
   ExpertGuildLore,
+  MasterGuildLore,
   HeraldryLore,
   TrainedHeraldryLore,
   ExpertHeraldryLore,
+  MasterHeraldryLore,
   HerbalismLore,
   TrainedHerbalismLore,
   ExpertHerbalismLore,
+  MasterHerbalismLore,
   LaborLore,
   TrainedLaborLore,
   ExpertLaborLore,
+  MasterLaborLore,
   LegalLore,
   TrainedLegalLore,
   ExpertLegalLore,
+  MasterLegalLore,
   MercantileLore,
   TrainedMercantileLore,
   ExpertMercantileLore,
+  MasterMercantileLore,
   MiningLore,
   TrainedMiningLore,
   ExpertMiningLore,
+  MasterMiningLore,
   SailingLore,
   TrainedSailingLore,
   ExpertSailingLore,
+  MasterSailingLore,
   ScribingLore,
   TrainedScribingLore,
   ExpertScribingLore,
+  MasterScribingLore,
   TanningLore,
   TrainedTanningLore,
   ExpertTanningLore,
+  MasterTanningLore,
   TheaterLore,
   TrainedTheaterLore,
   ExpertTheaterLore,
+  MasterTheaterLore,
   UnderworldLore,
   TrainedUnderworldLore,
   ExpertUnderworldLore,
+  MasterUnderworldLore,
   WarfareLore,
   TrainedWarfareLore,
   ExpertWarfareLore,
+  MasterWarfareLore,
   TerrainLore,
   TrainedTerrainLore,
   ExpertTerrainLore,
+  MasterTerrainLore,
   DeityLore,
   TrainedDeityLore,
   ExpertDeityLore,
+  MasterDeityLore,
   CityLore,
   TrainedCityLore,
   ExpertCityLore,
+  MasterCityLore,
 ]

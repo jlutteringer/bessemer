@@ -142,6 +142,44 @@ export const CrackTheShellSection = Content.linkEntity(Level5DailyExploitsSectio
 export const DizzyingBlowSection = Content.linkEntity(Level5DailyExploitsSection, FighterPowers.DizzyingBlow)
 export const RainOfSteelSection = Content.linkEntity(Level5DailyExploitsSection, FighterPowers.RainOfSteel)
 
+export const Level6UtilityExploitsSection = Content.defineSection('classes/fighter-level-6-utility-exploits', {
+  parent: FighterPowersSection,
+  content: { name: 'Level 6 Utility Exploits' },
+})
+
+export const BattleAwarenessSection = Content.linkEntity(Level6UtilityExploitsSection, FighterPowers.BattleAwareness)
+export const DefensiveTrainingSection = Content.linkEntity(Level6UtilityExploitsSection, FighterPowers.DefensiveTraining)
+export const UnbreakableSection = Content.linkEntity(Level6UtilityExploitsSection, FighterPowers.Unbreakable)
+
+export const Level7EncounterExploitsSection = Content.defineSection('classes/fighter-level-7-encounter-exploits', {
+  parent: FighterPowersSection,
+  content: { name: 'Level 7 Encounter Exploits' },
+})
+
+export const ComeAndGetItSection = Content.linkEntity(Level7EncounterExploitsSection, FighterPowers.ComeAndGetIt)
+export const GriffonsWrathSection = Content.linkEntity(Level7EncounterExploitsSection, FighterPowers.GriffonsWrath)
+export const IronBulwarkSection = Content.linkEntity(Level7EncounterExploitsSection, FighterPowers.IronBulwark)
+export const RecklessStrikeSection = Content.linkEntity(Level7EncounterExploitsSection, FighterPowers.RecklessStrike)
+export const SuddenSurgeSection = Content.linkEntity(Level7EncounterExploitsSection, FighterPowers.SuddenSurge)
+
+export const Level9DailyExploitsSection = Content.defineSection('classes/fighter-level-9-daily-exploits', {
+  parent: FighterPowersSection,
+  content: { name: 'Level 9 Daily Exploits' },
+})
+
+export const ShiftTheBattlefieldSection = Content.linkEntity(Level9DailyExploitsSection, FighterPowers.ShiftTheBattlefield)
+export const ThicketOfBladesSection = Content.linkEntity(Level9DailyExploitsSection, FighterPowers.ThicketOfBlades)
+export const VictoriousSurgeSection = Content.linkEntity(Level9DailyExploitsSection, FighterPowers.VictoriousSurge)
+
+export const Level10UtilityExploitsSection = Content.defineSection('classes/fighter-level-10-utility-exploits', {
+  parent: FighterPowersSection,
+  content: { name: 'Level 10 Utility Exploits' },
+})
+
+export const IntoTheFraySection = Content.linkEntity(Level10UtilityExploitsSection, FighterPowers.IntoTheFray)
+export const LastDitchEvasionSection = Content.linkEntity(Level10UtilityExploitsSection, FighterPowers.LastDitchEvasion)
+export const StalwartGuardSection = Content.linkEntity(Level10UtilityExploitsSection, FighterPowers.StalwartGuard)
+
 export const FighterContent: Array<ContentSection> = [
   FighterSection,
   FighterClassTraitsSection,
@@ -185,4 +223,22 @@ export const FighterContent: Array<ContentSection> = [
   CrackTheShellSection,
   DizzyingBlowSection,
   RainOfSteelSection,
+  Level6UtilityExploitsSection,
+  BattleAwarenessSection,
+  DefensiveTrainingSection,
+  UnbreakableSection,
+  Level7EncounterExploitsSection,
+  ComeAndGetItSection,
+  GriffonsWrathSection,
+  IronBulwarkSection,
+  RecklessStrikeSection,
+  SuddenSurgeSection,
+  Level9DailyExploitsSection,
+  ShiftTheBattlefieldSection,
+  ThicketOfBladesSection,
+  VictoriousSurgeSection,
+  Level10UtilityExploitsSection,
+  IntoTheFraySection,
+  LastDitchEvasionSection,
+  StalwartGuardSection,
 ]

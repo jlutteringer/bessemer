@@ -150,6 +150,39 @@ export const RangersBramble = Abilities.defineAbility('spell/rangers-bramble', {
   ],
 })
 
+export const HuntersVision = Abilities.defineAbility('spell/hunters-vision', {
+  name: "Hunter's Vision",
+  description: '*Uncommon, Concentrate, Focus, Ranger*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: "Hunter's Vision",
+      description:
+        "**Range** 30 feet\n\n**Target** 1 hunted prey\n\n**Duration** 10 minutes\n\nYour target glows with a magical aura visible only to you and those who follow your lead. Your target is visible to you and others sharing your Hunt Prey benefits even if it wouldn't normally be due to lighting or the [concealed](content:conditions/concealed) or [invisible](content:conditions/invisible) conditions, though cover from opaque objects still blocks your sight. You ignore the flat check against the target due to the concealed condition, and the target isn't automatically hidden from you due to [darkness](content:playing-the-game/darkness) or being invisible.",
+      action: ActionTypes.SingleAction,
+      costs: [{ cost: 1, resource: FocusPoints }],
+      targeting: { target: { range: 30, count: 1 } },
+    },
+  ],
+})
+
+export const TerrainTransposition = Abilities.defineAbility('spell/terrain-transposition', {
+  name: 'Terrain Transposition',
+  description: '*Uncommon, Concentrate, Focus, Manipulate, Ranger, Teleportation*',
+  tags: [Spell, FocusSpell],
+  universal: false,
+  actions: [
+    {
+      name: 'Terrain Transposition',
+      description:
+        "**Range** 90 feet\n\nYou mystically transpose your current location with another. While in a wilderness environment, you transport yourself and items you're holding to a clear space you can see within range. If you have [Favored Terrain](trait:feat/favored-terrain) and both your starting and ending position are in your favored terrain, the range increases to 180 feet. If you have an animal companion and it is adjacent to you, you can transport it along with you to an adjacent open space, but if this spell would bring any other creature with you, even in an [extradimensional](content:traits/extradimensional) container, the spell is lost.",
+      action: ActionTypes.TwoActions,
+      costs: [{ cost: 1, resource: FocusPoints }],
+    },
+  ],
+})
+
 export const AllRangerFocusSpellEntities = [
   GravityWeapon,
   HealCompanion,
@@ -160,4 +193,6 @@ export const AllRangerFocusSpellEntities = [
   SoothingMist,
   EphemeralTracking,
   RangersBramble,
+  HuntersVision,
+  TerrainTransposition,
 ]

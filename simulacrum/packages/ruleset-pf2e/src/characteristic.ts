@@ -199,6 +199,17 @@ export const Perception: Characteristic = Characteristics.defineCharacteristic({
   baseValue: Wisdom.variable,
 })
 
+export const Initiative: Characteristic = Characteristics.defineCharacteristic({
+  group: StatisticsGroup,
+  template: Characteristics.defineTemplate('initiative', {
+    name: 'Initiative',
+    description:
+      'Often, you’ll roll a [Perception](characteristic:perception) check to determine your order in initiative. Sometimes you may be called on to roll a skill check for initiative instead.\n\nSee [Perception for Initiative](content:playing-the-game/perception-for-initiative).',
+    path: ObjectPaths.from('initiative'),
+  }),
+  baseValue: Perception.variable,
+})
+
 // A class's key attribute adds to its class DC; spellcasting classes add their spellcasting attribute and proficiency
 export const ClassDC: Characteristic = Characteristics.defineCharacteristic({
   group: StatisticsGroup,
@@ -470,6 +481,7 @@ export const AllCharacteristics = [
   HitPoints,
   Speed,
   Perception,
+  Initiative,
   ClassDC,
   SpellAttack,
   SpellDC,

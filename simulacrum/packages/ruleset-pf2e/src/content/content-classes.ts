@@ -177,6 +177,12 @@ export const ReflexExpertiseSection = Content.linkEntity(BardSection, ClassBard.
 
 export const SignatureSpellsSection = Content.linkEntity(BardSection, ClassBard.SignatureSpells)
 
+export const BardExpertSpellcasterSection = Content.linkEntity(BardSection, ClassBard.BardExpertSpellcaster)
+
+export const BardFortitudeExpertiseSection = Content.linkEntity(BardSection, ClassBard.BardFortitudeExpertise)
+
+export const PerformersHeartSection = Content.linkEntity(BardSection, ClassBard.PerformersHeart)
+
 export const BardSpellcastingSection = Content.linkEntity(BardSection, BardSpellcasting.BardSpellcasting)
 
 export const SpellRepertoireSection = Content.linkEntity(BardSection, BardSpellcasting.SpellRepertoire)
@@ -237,6 +243,48 @@ export const TripleTimeSection = Content.linkEntity(BardFeatsSection, BardFeat.T
 
 export const VersatileSignatureSection = Content.linkEntity(BardFeatsSection, BardFeat.VersatileSignature)
 
+export const AssuredKnowledgeSection = Content.linkEntity(BardFeatsSection, BardFeat.AssuredKnowledge)
+
+export const DefensiveCoordinationSection = Content.linkEntity(BardFeatsSection, BardFeat.DefensiveCoordination)
+
+export const DirgeOfDoomSection = Content.linkEntity(BardFeatsSection, BardFeat.DirgeOfDoom)
+
+export const EducateAlliesSection = Content.linkEntity(BardFeatsSection, BardFeat.EducateAllies)
+
+export const HarmonizeSection = Content.linkEntity(BardFeatsSection, BardFeat.Harmonize)
+
+export const SongOfMarchingSection = Content.linkEntity(BardFeatsSection, BardFeat.SongOfMarching)
+
+export const SteadySpellcastingSection = Content.linkEntity(BardFeatsSection, BardFeat.SteadySpellcasting)
+
+export const AccompanySection = Content.linkEntity(BardFeatsSection, BardFeat.Accompany)
+
+export const CallAndResponseSection = Content.linkEntity(BardFeatsSection, BardFeat.CallAndResponse)
+
+export const EclecticSkillSection = Content.linkEntity(BardFeatsSection, BardFeat.EclecticSkill)
+
+export const FortissimoCompositionSection = Content.linkEntity(BardFeatsSection, BardFeat.FortissimoComposition)
+
+export const KnowItAllSection = Content.linkEntity(BardFeatsSection, BardFeat.KnowItAll)
+
+export const ReflexiveCourageSection = Content.linkEntity(BardFeatsSection, BardFeat.ReflexiveCourage)
+
+export const SoulsightSection = Content.linkEntity(BardFeatsSection, BardFeat.Soulsight)
+
+export const AnnotateCompositionSection = Content.linkEntity(BardFeatsSection, BardFeat.AnnotateComposition)
+
+export const CourageousAssaultSection = Content.linkEntity(BardFeatsSection, BardFeat.CourageousAssault)
+
+export const HouseOfImaginaryWallsSection = Content.linkEntity(BardFeatsSection, BardFeat.HouseOfImaginaryWalls)
+
+export const OdeToOuroborosSection = Content.linkEntity(BardFeatsSection, BardFeat.OdeToOuroboros)
+
+export const QuickenedCastingSection = Content.linkEntity(BardFeatsSection, BardFeat.QuickenedCasting)
+
+export const SymphonyOfTheUnfetteredHeartSection = Content.linkEntity(BardFeatsSection, BardFeat.SymphonyOfTheUnfetteredHeart)
+
+export const UnusualCompositionSection = Content.linkEntity(BardFeatsSection, BardFeat.UnusualComposition)
+
 export const BardFocusSpellsSection = Content.defineSection('classes/bard-focus-spells', {
   parent: BardSection,
   content: { name: 'Bard Focus Spells' },
@@ -249,6 +297,15 @@ export const BardFocusSpellsHymnOfHealingSection = Content.linkEntity(BardFocusS
 export const BardFocusSpellsLingeringCompositionSection = Content.linkEntity(BardFocusSpellsSection, BardFocusSpell.LingeringComposition)
 
 export const BardFocusSpellsLoremastersEtudeSection = Content.linkEntity(BardFocusSpellsSection, BardFocusSpell.LoremastersEtude)
+
+export const BardFocusSpellsFortissimoCompositionSection = Content.linkEntity(BardFocusSpellsSection, BardFocusSpell.FortissimoComposition)
+
+export const BardFocusSpellsOdeToOuroborosSection = Content.linkEntity(BardFocusSpellsSection, BardFocusSpell.OdeToOuroboros)
+
+export const BardFocusSpellsSymphonyOfTheUnfetteredHeartSection = Content.linkEntity(
+  BardFocusSpellsSection,
+  BardFocusSpell.SymphonyOfTheUnfetteredHeart
+)
 
 export const ClericSection = Content.linkEntity(ClassesSection, ClassCleric.Cleric)
 
@@ -275,6 +332,8 @@ export const CloisteredClericSection = Content.linkEntity(DoctrineSection, Cleri
 export const WarpriestSection = Content.linkEntity(DoctrineSection, ClericDoctrine.Warpriest)
 
 export const PerceptionExpertiseSection = Content.linkEntity(ClericSection, ClassCleric.PerceptionExpertise)
+
+export const ResoluteFaithSection = Content.linkEntity(ClericSection, ClassCleric.ResoluteFaith)
 
 export const ClericDomainsSection = Content.defineSection('classes/cleric-domains', { parent: ClericSection, content: { name: 'Cleric Domains' } })
 
@@ -392,6 +451,118 @@ export const RestorativeStrikeSection = Content.linkEntity(ClericFeatsSection, C
 
 export const SacredGroundSection = Content.linkEntity(ClericFeatsSection, ClericFeat.SacredGround)
 
+export const AdvancedDomainSection = Content.linkEntity(ClericFeatsSection, ClericDomain.AdvancedDomain)
+
+export const AdvancedDomainAirSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainAir)
+
+export const AdvancedDomainAmbitionSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainAmbition)
+
+export const AdvancedDomainCitiesSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainCities)
+
+export const AdvancedDomainConfidenceSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainConfidence)
+
+export const AdvancedDomainCreationSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainCreation)
+
+export const AdvancedDomainDarknessSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainDarkness)
+
+export const AdvancedDomainDeathSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainDeath)
+
+export const AdvancedDomainDestructionSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainDestruction)
+
+export const AdvancedDomainDreamsSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainDreams)
+
+export const AdvancedDomainEarthSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainEarth)
+
+export const AdvancedDomainFamilySection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainFamily)
+
+export const AdvancedDomainFateSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainFate)
+
+export const AdvancedDomainFireSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainFire)
+
+export const AdvancedDomainFreedomSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainFreedom)
+
+export const AdvancedDomainHealingSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainHealing)
+
+export const AdvancedDomainIndulgenceSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainIndulgence)
+
+export const AdvancedDomainKnowledgeSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainKnowledge)
+
+export const AdvancedDomainLuckSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainLuck)
+
+export const AdvancedDomainMagicSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainMagic)
+
+export const AdvancedDomainMightSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainMight)
+
+export const AdvancedDomainMoonSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainMoon)
+
+export const AdvancedDomainNatureSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainNature)
+
+export const AdvancedDomainNightmaresSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainNightmares)
+
+export const AdvancedDomainPainSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainPain)
+
+export const AdvancedDomainPassionSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainPassion)
+
+export const AdvancedDomainPerfectionSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainPerfection)
+
+export const AdvancedDomainProtectionSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainProtection)
+
+export const AdvancedDomainSecrecySection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainSecrecy)
+
+export const AdvancedDomainSunSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainSun)
+
+export const AdvancedDomainTravelSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainTravel)
+
+export const AdvancedDomainTrickerySection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainTrickery)
+
+export const AdvancedDomainTruthSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainTruth)
+
+export const AdvancedDomainTyrannySection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainTyranny)
+
+export const AdvancedDomainUndeathSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainUndeath)
+
+export const AdvancedDomainWaterSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainWater)
+
+export const AdvancedDomainWealthSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainWealth)
+
+export const AdvancedDomainZealSection = Content.linkEntity(AdvancedDomainSection, ClericDomain.AdvancedDomainZeal)
+
+export const CastDownSection = Content.linkEntity(ClericFeatsSection, ClericFeat.CastDown)
+
+export const DivineRebuttalSection = Content.linkEntity(ClericFeatsSection, ClericFeat.DivineRebuttal)
+
+export const DivineWeaponSection = Content.linkEntity(ClericFeatsSection, ClericFeat.DivineWeapon)
+
+export const MagicHandsSection = Content.linkEntity(ClericFeatsSection, ClericFeat.MagicHands)
+
+export const SelectiveEnergySection = Content.linkEntity(ClericFeatsSection, ClericFeat.SelectiveEnergy)
+
+export const CremateUndeadSection = Content.linkEntity(ClericFeatsSection, ClericFeat.CremateUndead)
+
+export const EmblazonEnergySection = Content.linkEntity(ClericFeatsSection, ClericFeat.EmblazonEnergy)
+
+export const MartyrSection = Content.linkEntity(ClericFeatsSection, ClericFeat.Martyr)
+
+export const RestorativeChannelSection = Content.linkEntity(ClericFeatsSection, ClericFeat.RestorativeChannel)
+
+export const SanctifyArmamentSection = Content.linkEntity(ClericFeatsSection, ClericFeat.SanctifyArmament)
+
+export const SurgingFocusSection = Content.linkEntity(ClericFeatsSection, ClericFeat.SurgingFocus)
+
+export const VoidSiphonClericSection = Content.linkEntity(ClericFeatsSection, ClericFeat.VoidSiphonCleric)
+
+export const ZealousRushSection = Content.linkEntity(ClericFeatsSection, ClericFeat.ZealousRush)
+
+export const CastigatingWeaponSection = Content.linkEntity(ClericFeatsSection, ClericFeat.CastigatingWeapon)
+
+export const HeroicRecoverySection = Content.linkEntity(ClericFeatsSection, ClericFeat.HeroicRecovery)
+
+export const ReplenishmentOfWarSection = Content.linkEntity(ClericFeatsSection, ClericFeat.ReplenishmentOfWar)
+
+export const SharedAvoidanceSection = Content.linkEntity(ClericFeatsSection, ClericFeat.SharedAvoidance)
+
+export const ShieldOfFaithSection = Content.linkEntity(ClericFeatsSection, ClericFeat.ShieldOfFaith)
+
 export const ClericFocusSpellsSection = Content.defineSection('classes/cleric-focus-spells', {
   parent: ClericSection,
   content: { name: 'Cleric Focus Spells' },
@@ -471,6 +642,80 @@ export const WhisperingQuietSection = Content.linkEntity(ClericFocusSpellsSectio
 
 export const WordOfTruthSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.WordOfTruth)
 
+export const ArtisticFlourishSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.ArtisticFlourish)
+
+export const CaptivatingAdorationSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.CaptivatingAdoration)
+
+export const CommandingLashSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.CommandingLash)
+
+export const CompetitiveEdgeSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.CompetitiveEdge)
+
+export const DarkenedSightSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.DarkenedSight)
+
+export const DelusionalPrideSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.DelusionalPride)
+
+export const DestructiveAuraSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.DestructiveAura)
+
+export const DisperseIntoAirSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.DisperseIntoAir)
+
+export const DownpourSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.Downpour)
+
+export const DreamersCallSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.DreamersCall)
+
+export const EnduringMightSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.EnduringMight)
+
+export const EradicateUndeathSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.EradicateUndeath)
+
+export const FlameBarrierSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.FlameBarrier)
+
+export const GlimpseTheTruthSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.GlimpseTheTruth)
+
+export const KnowTheEnemySection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.KnowTheEnemy)
+
+export const LocalizedQuakeSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.LocalizedQuake)
+
+export const LuckyBreakSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.LuckyBreak)
+
+export const MalignantSustenanceSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.MalignantSustenance)
+
+export const MysticBeaconSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.MysticBeacon)
+
+export const NaturesBountySection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.NaturesBounty)
+
+export const PerfectedBodySection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.PerfectedBody)
+
+export const PreciousMetalsSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.PreciousMetals)
+
+export const ProtectorsSphereSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.ProtectorsSphere)
+
+export const PulseOfCivilizationSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.PulseOfCivilization)
+
+export const RebukeDeathSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.RebukeDeath)
+
+export const RetributivePainSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.RetributivePain)
+
+export const SafeguardSecretSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.SafeguardSecret)
+
+export const SharedNightmareSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.SharedNightmare)
+
+export const TakeItsCourseSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.TakeItsCourse)
+
+export const TemptFateSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.TemptFate)
+
+export const TouchOfTheMoonSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.TouchOfTheMoon)
+
+export const TravelersTransitSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.TravelersTransit)
+
+export const TrickstersTwinSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.TrickstersTwin)
+
+export const UnitySection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.Unity)
+
+export const VitalLuminanceSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.VitalLuminance)
+
+export const WordOfFreedomSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.WordOfFreedom)
+
+export const ZealForBattleSection = Content.linkEntity(ClericFocusSpellsSection, ClericFocusSpell.ZealForBattle)
+
 export const DruidSection = Content.linkEntity(ClassesSection, ClassDruid.Druid)
 
 export const DruidSpellcastingSection = Content.linkEntity(DruidSection, ClassDruid.DruidSpellcasting)
@@ -498,6 +743,8 @@ export const DruidPerceptionExpertiseSection = Content.linkEntity(DruidSection, 
 export const FortitudeExpertiseSection = Content.linkEntity(DruidSection, ClassDruid.DruidFortitudeExpertise)
 
 export const DruidReflexExpertiseSection = Content.linkEntity(DruidSection, ClassDruid.DruidReflexExpertise)
+
+export const DruidExpertSpellcasterSection = Content.linkEntity(DruidSection, ClassDruid.DruidExpertSpellcaster)
 
 export const DruidFeatsSection = Content.defineSection('classes/druid-feats', { parent: DruidSection, content: { name: 'Druid Feats' } })
 
@@ -537,6 +784,48 @@ export const MatureAnimalCompanionDruidSection = Content.linkEntity(DruidFeatsSe
 
 export const SnowdriftSpellSection = Content.linkEntity(DruidFeatsSection, DruidFeat.SnowdriftSpell)
 
+export const CurrentSpellSection = Content.linkEntity(DruidFeatsSection, DruidFeat.CurrentSpell)
+
+export const GrownOfOakSection = Content.linkEntity(DruidFeatsSection, DruidFeat.GrownOfOak)
+
+export const InsectShapeSection = Content.linkEntity(DruidFeatsSection, DruidFeat.InsectShape)
+
+export const InstinctiveSupportSection = Content.linkEntity(DruidFeatsSection, DruidFeat.InstinctiveSupport)
+
+export const StormRetributionSection = Content.linkEntity(DruidFeatsSection, DruidFeat.StormRetribution)
+
+export const DeimaticDisplaySection = Content.linkEntity(DruidFeatsSection, DruidFeat.DeimaticDisplay)
+
+export const FerociousShapeSection = Content.linkEntity(DruidFeatsSection, DruidFeat.FerociousShape)
+
+export const FeyCallerSection = Content.linkEntity(DruidFeatsSection, DruidFeat.FeyCaller)
+
+export const FloralRestorationSection = Content.linkEntity(DruidFeatsSection, DruidFeat.FloralRestoration)
+
+export const IncredibleCompanionDruidSection = Content.linkEntity(DruidFeatsSection, DruidFeat.IncredibleCompanionDruid)
+
+export const RaiseMenhirSection = Content.linkEntity(DruidFeatsSection, DruidFeat.RaiseMenhir)
+
+export const SoaringShapeSection = Content.linkEntity(DruidFeatsSection, DruidFeat.SoaringShape)
+
+export const WindCallerSection = Content.linkEntity(DruidFeatsSection, DruidFeat.WindCaller)
+
+export const ElementalShapeSection = Content.linkEntity(DruidFeatsSection, DruidFeat.ElementalShape)
+
+export const HealingTransformationSection = Content.linkEntity(DruidFeatsSection, DruidFeat.HealingTransformation)
+
+export const OverwhelmingEnergySection = Content.linkEntity(DruidFeatsSection, DruidFeat.OverwhelmingEnergy)
+
+export const PlantShapeSection = Content.linkEntity(DruidFeatsSection, DruidFeat.PlantShape)
+
+export const PrimalHowlSection = Content.linkEntity(DruidFeatsSection, DruidFeat.PrimalHowl)
+
+export const PristineWeaponSection = Content.linkEntity(DruidFeatsSection, DruidFeat.PristineWeapon)
+
+export const SideBySideDruidSection = Content.linkEntity(DruidFeatsSection, DruidFeat.SideBySideDruid)
+
+export const ThunderclapSpellSection = Content.linkEntity(DruidFeatsSection, DruidFeat.ThunderclapSpell)
+
 export const OrderExplorerSection = Content.linkEntity(DruidFeatsSection, DruidOrder.OrderExplorer)
 
 export const OrderExplorerAnimalSection = Content.linkEntity(OrderExplorerSection, DruidOrder.OrderExplorerAnimal)
@@ -572,6 +861,8 @@ export const DruidFocusSpellsUntamedFormSection = Content.linkEntity(DruidFocusS
 
 export const UntamedShiftSection = Content.linkEntity(DruidFocusSpellsSection, DruidFocusSpell.UntamedShift)
 
+export const StormwindFlightSection = Content.linkEntity(DruidFocusSpellsSection, DruidFocusSpell.StormwindFlight)
+
 export const FighterSection = Content.linkEntity(ClassesSection, ClassFighter.Fighter)
 
 export const ReactiveStrikeSection = Content.linkEntity(FighterSection, ClassFighter.ReactiveStrike)
@@ -581,6 +872,14 @@ export const FighterShieldBlockSection = Content.linkEntity(FighterSection, Clas
 export const BraverySection = Content.linkEntity(FighterSection, ClassFighter.Bravery)
 
 export const FighterWeaponMasterySection = Content.linkEntity(FighterSection, ClassFighter.FighterWeaponMastery)
+
+export const BattlefieldSurveyorSection = Content.linkEntity(FighterSection, ClassFighter.BattlefieldSurveyor)
+
+export const FighterWeaponSpecializationSection = Content.linkEntity(FighterSection, ClassFighter.FighterWeaponSpecialization)
+
+export const BattleHardenedSection = Content.linkEntity(FighterSection, ClassFighter.BattleHardened)
+
+export const CombatFlexibilitySection = Content.linkEntity(FighterSection, ClassFighter.CombatFlexibility)
 
 export const FighterFeatsSection = Content.defineSection('classes/fighter-feats', { parent: FighterSection, content: { name: 'Fighter Feats' } })
 
@@ -642,6 +941,76 @@ export const SwipeSection = Content.linkEntity(FighterFeatsSection, FighterFeat.
 
 export const TwinParrySection = Content.linkEntity(FighterFeatsSection, FighterFeat.TwinParry)
 
+export const AdvancedWeaponTrainingSection = Content.linkEntity(FighterFeatsSection, FighterFeat.AdvancedWeaponTraining)
+
+export const AdvantageousAssaultSection = Content.linkEntity(FighterFeatsSection, FighterFeat.AdvantageousAssault)
+
+export const DazingBlowSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DazingBlow)
+
+export const DisarmingStanceSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DisarmingStance)
+
+export const FuriousFocusSection = Content.linkEntity(FighterFeatsSection, FighterFeat.FuriousFocus)
+
+export const GuardiansDeflectionSection = Content.linkEntity(FighterFeatsSection, FighterFeat.GuardiansDeflection)
+
+export const ReflexiveShieldSection = Content.linkEntity(FighterFeatsSection, FighterFeat.ReflexiveShield)
+
+export const RevealingStabSection = Content.linkEntity(FighterFeatsSection, FighterFeat.RevealingStab)
+
+export const RicochetStanceSection = Content.linkEntity(FighterFeatsSection, FighterFeat.RicochetStance)
+
+export const ShatterDefensesSection = Content.linkEntity(FighterFeatsSection, FighterFeat.ShatterDefenses)
+
+export const ShieldWardenSection = Content.linkEntity(FighterFeatsSection, FighterFeat.ShieldWarden)
+
+export const TripleShotSection = Content.linkEntity(FighterFeatsSection, FighterFeat.TripleShot)
+
+export const BlindFightSection = Content.linkEntity(FighterFeatsSection, FighterFeat.BlindFight)
+
+export const DisorientingOpeningSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DisorientingOpening)
+
+export const DuelingRiposteSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DuelingRiposte)
+
+export const FellingStrikeSection = Content.linkEntity(FighterFeatsSection, FighterFeat.FellingStrike)
+
+export const IncredibleAimSection = Content.linkEntity(FighterFeatsSection, FighterFeat.IncredibleAim)
+
+export const MobileShotStanceSection = Content.linkEntity(FighterFeatsSection, FighterFeat.MobileShotStance)
+
+export const PositioningAssaultSection = Content.linkEntity(FighterFeatsSection, FighterFeat.PositioningAssault)
+
+export const QuickShieldBlockSection = Content.linkEntity(FighterFeatsSection, FighterFeat.QuickShieldBlock)
+
+export const ResoundingBraverySection = Content.linkEntity(FighterFeatsSection, FighterFeat.ResoundingBravery)
+
+export const SuddenLeapSection = Content.linkEntity(FighterFeatsSection, FighterFeat.SuddenLeap)
+
+export const AgileGraceSection = Content.linkEntity(FighterFeatsSection, FighterFeat.AgileGrace)
+
+export const CertainStrikeSection = Content.linkEntity(FighterFeatsSection, FighterFeat.CertainStrike)
+
+export const CrashingSlamSection = Content.linkEntity(FighterFeatsSection, FighterFeat.CrashingSlam)
+
+export const CutFromTheAirSection = Content.linkEntity(FighterFeatsSection, FighterFeat.CutFromTheAir)
+
+export const DebilitatingShotSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DebilitatingShot)
+
+export const DisarmingTwistSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DisarmingTwist)
+
+export const DisruptiveStanceSection = Content.linkEntity(FighterFeatsSection, FighterFeat.DisruptiveStance)
+
+export const FearsomeBruteSection = Content.linkEntity(FighterFeatsSection, FighterFeat.FearsomeBrute)
+
+export const FlingingChargeSection = Content.linkEntity(FighterFeatsSection, FighterFeat.FlingingCharge)
+
+export const MirrorShieldSection = Content.linkEntity(FighterFeatsSection, FighterFeat.MirrorShield)
+
+export const OverpoweringChargeSection = Content.linkEntity(FighterFeatsSection, FighterFeat.OverpoweringCharge)
+
+export const TacticalReflexesSection = Content.linkEntity(FighterFeatsSection, FighterFeat.TacticalReflexes)
+
+export const TwinRiposteSection = Content.linkEntity(FighterFeatsSection, FighterFeat.TwinRiposte)
+
 export const RangerSection = Content.linkEntity(ClassesSection, ClassRanger.Ranger)
 
 export const HuntPreySection = Content.linkEntity(RangerSection, ClassRanger.HuntPrey)
@@ -659,6 +1028,16 @@ export const WillExpertiseSection = Content.linkEntity(RangerSection, ClassRange
 export const RangerWeaponExpertiseSection = Content.linkEntity(RangerSection, ClassRanger.RangerWeaponExpertise)
 
 export const TracklessJourneySection = Content.linkEntity(RangerSection, ClassRanger.TracklessJourney)
+
+export const NaturalReflexesSection = Content.linkEntity(RangerSection, ClassRanger.NaturalReflexes)
+
+export const RangerPerceptionMasterySection = Content.linkEntity(RangerSection, ClassRanger.RangerPerceptionMastery)
+
+export const RangerWeaponSpecializationSection = Content.linkEntity(RangerSection, ClassRanger.RangerWeaponSpecialization)
+
+export const NaturesEdgeSection = Content.linkEntity(RangerSection, ClassRanger.NaturesEdge)
+
+export const RangerExpertiseSection = Content.linkEntity(RangerSection, ClassRanger.RangerExpertise)
 
 export const RangerFeatsSection = Content.defineSection('classes/ranger-feats', { parent: RangerSection, content: { name: 'Ranger Feats' } })
 
@@ -698,6 +1077,38 @@ export const RunningReloadSection = Content.linkEntity(RangerFeatsSection, Range
 
 export const ScoutsWarningSection = Content.linkEntity(RangerFeatsSection, RangerFeat.ScoutsWarning)
 
+export const AdditionalRecollectionSection = Content.linkEntity(RangerFeatsSection, RangerFeat.AdditionalRecollection)
+
+export const MasterfulWardenSection = Content.linkEntity(RangerFeatsSection, RangerFeat.MasterfulWarden)
+
+export const MatureAnimalCompanionRangerSection = Content.linkEntity(RangerFeatsSection, RangerFeat.MatureAnimalCompanionRanger)
+
+export const SkirmishStrikeSection = Content.linkEntity(RangerFeatsSection, RangerFeat.SkirmishStrike)
+
+export const SnapShotSection = Content.linkEntity(RangerFeatsSection, RangerFeat.SnapShot)
+
+export const SwiftTrackerSection = Content.linkEntity(RangerFeatsSection, RangerFeat.SwiftTracker)
+
+export const DeadlyAimSection = Content.linkEntity(RangerFeatsSection, RangerFeat.DeadlyAim)
+
+export const HazardFinderSection = Content.linkEntity(RangerFeatsSection, RangerFeat.HazardFinder)
+
+export const TerrainMasterSection = Content.linkEntity(RangerFeatsSection, RangerFeat.TerrainMaster)
+
+export const WardensBoonSection = Content.linkEntity(RangerFeatsSection, RangerFeat.WardensBoon)
+
+export const CamouflageSection = Content.linkEntity(RangerFeatsSection, RangerFeat.Camouflage)
+
+export const IncredibleCompanionRangerSection = Content.linkEntity(RangerFeatsSection, RangerFeat.IncredibleCompanionRanger)
+
+export const MasterMonsterHunterSection = Content.linkEntity(RangerFeatsSection, RangerFeat.MasterMonsterHunter)
+
+export const PeerlessWardenSection = Content.linkEntity(RangerFeatsSection, RangerFeat.PeerlessWarden)
+
+export const PenetratingShotSection = Content.linkEntity(RangerFeatsSection, RangerFeat.PenetratingShot)
+
+export const WardensStepSection = Content.linkEntity(RangerFeatsSection, RangerFeat.WardensStep)
+
 export const RangerFocusSpellsSection = Content.defineSection('classes/ranger-focus-spells', {
   parent: RangerSection,
   content: { name: 'Ranger Focus Spells' },
@@ -721,6 +1132,10 @@ export const EphemeralTrackingSection = Content.linkEntity(RangerFocusSpellsSect
 
 export const RangersBrambleSection = Content.linkEntity(RangerFocusSpellsSection, RangerFocusSpell.RangersBramble)
 
+export const HuntersVisionSection = Content.linkEntity(RangerFocusSpellsSection, RangerFocusSpell.HuntersVision)
+
+export const TerrainTranspositionSection = Content.linkEntity(RangerFocusSpellsSection, RangerFocusSpell.TerrainTransposition)
+
 export const RogueSection = Content.linkEntity(ClassesSection, ClassRogue.Rogue)
 
 export const RoguesRacketSection = Content.linkEntity(RogueSection, ClassRogue.RoguesRacketFeature)
@@ -740,6 +1155,16 @@ export const SurpriseAttackSection = Content.linkEntity(RogueSection, ClassRogue
 export const DenyAdvantageSection = Content.linkEntity(RogueSection, ClassRogue.DenyAdvantage)
 
 export const WeaponTricksSection = Content.linkEntity(RogueSection, ClassRogue.WeaponTricks)
+
+export const EvasiveReflexesSection = Content.linkEntity(RogueSection, ClassRogue.EvasiveReflexes)
+
+export const RoguePerceptionMasterySection = Content.linkEntity(RogueSection, ClassRogue.RoguePerceptionMastery)
+
+export const RogueWeaponSpecializationSection = Content.linkEntity(RogueSection, ClassRogue.RogueWeaponSpecialization)
+
+export const DebilitatingStrikeSection = Content.linkEntity(RogueSection, ClassRogue.DebilitatingStrike)
+
+export const RogueResilienceSection = Content.linkEntity(RogueSection, ClassRogue.RogueResilience)
 
 export const RogueFeatsSection = Content.defineSection('classes/rogue-feats', { parent: RogueSection, content: { name: 'Rogue Feats' } })
 
@@ -791,6 +1216,60 @@ export const TheHarderTheyFallSection = Content.linkEntity(RogueFeatsSection, Ro
 
 export const TwinDistractionSection = Content.linkEntity(RogueFeatsSection, RogueFeat.TwinDistraction)
 
+export const AnalyzeWeaknessSection = Content.linkEntity(RogueFeatsSection, RogueFeat.AnalyzeWeakness)
+
+export const AnticipateAmbushSection = Content.linkEntity(RogueFeatsSection, RogueFeat.AnticipateAmbush)
+
+export const FarThrowSection = Content.linkEntity(RogueFeatsSection, RogueFeat.FarThrow)
+
+export const GangUpSection = Content.linkEntity(RogueFeatsSection, RogueFeat.GangUp)
+
+export const LightStepSection = Content.linkEntity(RogueFeatsSection, RogueFeat.LightStep)
+
+export const ShoveDownSection = Content.linkEntity(RogueFeatsSection, RogueFeat.ShoveDown)
+
+export const SlyDisarmSection = Content.linkEntity(RogueFeatsSection, RogueFeat.SlyDisarm)
+
+export const TwistTheKnifeSection = Content.linkEntity(RogueFeatsSection, RogueFeat.TwistTheKnife)
+
+export const WatchYourBackSection = Content.linkEntity(RogueFeatsSection, RogueFeat.WatchYourBack)
+
+export const BullseyeSection = Content.linkEntity(RogueFeatsSection, RogueFeat.Bullseye)
+
+export const DelayTrapSection = Content.linkEntity(RogueFeatsSection, RogueFeat.DelayTrap)
+
+export const ImprovedPoisonWeaponSection = Content.linkEntity(RogueFeatsSection, RogueFeat.ImprovedPoisonWeapon)
+
+export const InspiredStratagemSection = Content.linkEntity(RogueFeatsSection, RogueFeat.InspiredStratagem)
+
+export const NimbleRollSection = Content.linkEntity(RogueFeatsSection, RogueFeat.NimbleRoll)
+
+export const OpportuneBackstabSection = Content.linkEntity(RogueFeatsSection, RogueFeat.OpportuneBackstab)
+
+export const PredictivePurchaseSection = Content.linkEntity(RogueFeatsSection, RogueFeat.PredictivePurchaseRogue)
+
+export const RicochetStanceRogueSection = Content.linkEntity(RogueFeatsSection, RogueFeat.RicochetStanceRogue)
+
+export const SidestepSection = Content.linkEntity(RogueFeatsSection, RogueFeat.Sidestep)
+
+export const SlyStrikerSection = Content.linkEntity(RogueFeatsSection, RogueFeat.SlyStriker)
+
+export const SwipeSouvenirSection = Content.linkEntity(RogueFeatsSection, RogueFeat.SwipeSouvenir)
+
+export const TacticalEntrySection = Content.linkEntity(RogueFeatsSection, RogueFeat.TacticalEntry)
+
+export const MethodicalDebilitationsSection = Content.linkEntity(RogueFeatsSection, RogueFeat.MethodicalDebilitations)
+
+export const NimbleStrikeSection = Content.linkEntity(RogueFeatsSection, RogueFeat.NimbleStrike)
+
+export const PreciseDebilitationsSection = Content.linkEntity(RogueFeatsSection, RogueFeat.PreciseDebilitations)
+
+export const SneakAdeptSection = Content.linkEntity(RogueFeatsSection, RogueFeat.SneakAdept)
+
+export const TacticalDebilitationsSection = Content.linkEntity(RogueFeatsSection, RogueFeat.TacticalDebilitations)
+
+export const ViciousDebilitationsSection = Content.linkEntity(RogueFeatsSection, RogueFeat.ViciousDebilitations)
+
 export const WitchSection = Content.linkEntity(ClassesSection, ClassWitch.Witch)
 
 export const PatronSection = Content.linkEntity(WitchSection, ClassWitch.WitchPatron)
@@ -816,6 +1295,10 @@ export const FamiliarSection = Content.linkEntity(WitchSection, ClassWitch.Witch
 export const HexSpellsSection = Content.linkEntity(WitchSection, ClassWitch.WitchHexSpells)
 
 export const MagicalFortitudeSection = Content.linkEntity(WitchSection, ClassWitch.WitchMagicalFortitude)
+
+export const WitchExpertSpellcasterSection = Content.linkEntity(WitchSection, ClassWitch.WitchExpertSpellcaster)
+
+export const WitchReflexExpertiseSection = Content.linkEntity(WitchSection, ClassWitch.WitchReflexExpertise)
 
 export const WitchSpellcastingArcaneSection = Content.linkEntity(WitchSection, WitchPatron.WitchArcaneSpellcasting)
 
@@ -843,6 +1326,10 @@ export const LessonOfShadowSection = Content.linkEntity(WitchLessonsSection, Wit
 
 export const LessonOfSnowSection = Content.linkEntity(WitchLessonsSection, WitchLesson.LessonOfSnow)
 
+export const LessonOfDeathSection = Content.linkEntity(WitchLessonsSection, WitchLesson.LessonOfDeath)
+
+export const LessonOfRenewalSection = Content.linkEntity(WitchLessonsSection, WitchLesson.LessonOfRenewal)
+
 export const WitchFeatsSection = Content.defineSection('classes/witch-feats', { parent: WitchSection, content: { name: 'Witch Feats' } })
 
 export const CackleSection = Content.linkEntity(WitchFeatsSection, WitchFeat.Cackle)
@@ -868,6 +1355,28 @@ export const FamiliarsLanguageSection = Content.linkEntity(WitchFeatsSection, Wi
 export const RitesOfConvocationSection = Content.linkEntity(WitchFeatsSection, WitchFeat.RitesOfConvocation)
 
 export const SympatheticStrikeSection = Content.linkEntity(WitchFeatsSection, WitchFeat.SympatheticStrike)
+
+export const CeremonialKnifeSection = Content.linkEntity(WitchFeatsSection, WitchFeat.CeremonialKnife)
+
+export const GreaterLessonSection = Content.linkEntity(WitchFeatsSection, WitchFeat.GreaterLesson)
+
+export const WitchsChargeSection = Content.linkEntity(WitchFeatsSection, WitchFeat.WitchsCharge)
+
+export const IncredibleFamiliarSection = Content.linkEntity(WitchFeatsSection, WitchFeat.IncredibleFamiliar)
+
+export const MurksightSection = Content.linkEntity(WitchFeatsSection, WitchFeat.Murksight)
+
+export const SpiritFamiliarWitchSection = Content.linkEntity(WitchFeatsSection, WitchFeat.SpiritFamiliarWitch)
+
+export const StitchedFamiliarSection = Content.linkEntity(WitchFeatsSection, WitchFeat.StitchedFamiliar)
+
+export const WitchsBottleSection = Content.linkEntity(WitchFeatsSection, WitchFeat.WitchsBottle)
+
+export const DoubleDoubleSection = Content.linkEntity(WitchFeatsSection, WitchFeat.DoubleDouble)
+
+export const MajorLessonSection = Content.linkEntity(WitchFeatsSection, WitchFeat.MajorLesson)
+
+export const WitchsCommunionSection = Content.linkEntity(WitchFeatsSection, WitchFeat.WitchsCommunion)
 
 export const WitchFocusSpellsSection = Content.defineSection('classes/witch-focus-spells', {
   parent: WitchSection,
@@ -896,6 +1405,10 @@ export const MaliciousShadowSection = Content.linkEntity(WitchFocusSpellsSection
 
 export const PersonalBlizzardSection = Content.linkEntity(WitchFocusSpellsSection, WitchFocusSpell.PersonalBlizzard)
 
+export const CurseOfDeathSection = Content.linkEntity(WitchFocusSpellsSection, WitchFocusSpell.CurseOfDeath)
+
+export const RestorativeMomentSection = Content.linkEntity(WitchFocusSpellsSection, WitchFocusSpell.RestorativeMoment)
+
 export const WizardSection = Content.linkEntity(ClassesSection, ClassWizard.Wizard)
 
 export const ArcaneThesisSection = Content.linkEntity(WizardSection, ClassWizard.ArcaneThesisFeature)
@@ -917,6 +1430,10 @@ export const ArcaneBondSection = Content.linkEntity(WizardSection, WizardFeature
 export const WizardFeatsSection = Content.linkEntity(WizardSection, WizardFeature.WizardFeats)
 
 export const WizardReflexExpertiseSection = Content.linkEntity(WizardSection, WizardFeature.ReflexExpertise)
+
+export const WizardExpertSpellcasterSection = Content.linkEntity(WizardSection, WizardFeature.ExpertSpellcaster)
+
+export const WizardMagicalFortitudeSection = Content.linkEntity(WizardSection, WizardFeature.MagicalFortitude)
 
 export const ArcaneSchoolSection = Content.linkEntity(WizardSection, WizardSchool.ArcaneSchoolFeature)
 
@@ -952,6 +1469,24 @@ export const LinkedFocusSection = Content.linkEntity(WizardWizardFeatsSection, W
 
 export const SpellProtectionArraySection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.SpellProtectionArray)
 
+export const ConvincingIllusionSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.ConvincingIllusion)
+
+export const ExplosiveArrivalSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.ExplosiveArrival)
+
+export const IrresistibleMagicSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.IrresistibleMagic)
+
+export const SplitSlotSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.SplitSlot)
+
+export const AdvancedSchoolSpellSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.AdvancedSchoolSpell)
+
+export const BondConservationSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.BondConservation)
+
+export const FormRetentionSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.FormRetention)
+
+export const KnowledgeIsPowerWizardSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.KnowledgeIsPowerWizard)
+
+export const ScrollAdeptSection = Content.linkEntity(WizardWizardFeatsSection, WizardFeat.ScrollAdept)
+
 export const WizardFocusSpellsSection = Content.defineSection('classes/wizard-focus-spells', {
   parent: WizardSection,
   content: { name: 'Wizard Focus Spells' },
@@ -970,6 +1505,20 @@ export const HandOfTheApprenticeSection = Content.linkEntity(WizardFocusSpellsSe
 export const ProtectiveWardsSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.ProtectiveWards)
 
 export const ScrambleBodySection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.ScrambleBody)
+
+export const CommunityRestorationSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.CommunityRestoration)
+
+export const EnergyAbsorptionSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.EnergyAbsorption)
+
+export const InterdisciplinaryIncantationSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.InterdisciplinaryIncantation)
+
+export const InvisibilityCloakSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.InvisibilityCloak)
+
+export const RuneOfObservationSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.RuneOfObservation)
+
+export const ShiftingFormSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.ShiftingForm)
+
+export const SpiralOfHorrorsSection = Content.linkEntity(WizardFocusSpellsSection, WizardFocusSpell.SpiralOfHorrors)
 
 export const CompanionsSection = Content.defineSection('classes/companions', {
   parent: ClassesSection,
@@ -1312,6 +1861,9 @@ export const ClassesContent = [
   WarriorSection,
   ReflexExpertiseSection,
   SignatureSpellsSection,
+  BardExpertSpellcasterSection,
+  BardFortitudeExpertiseSection,
+  PerformersHeartSection,
   BardSpellcastingSection,
   SpellRepertoireSection,
   BardFeatsSection,
@@ -1342,11 +1894,35 @@ export const ClassesContent = [
   RitualResearcherSection,
   TripleTimeSection,
   VersatileSignatureSection,
+  AssuredKnowledgeSection,
+  DefensiveCoordinationSection,
+  DirgeOfDoomSection,
+  EducateAlliesSection,
+  HarmonizeSection,
+  SongOfMarchingSection,
+  SteadySpellcastingSection,
+  AccompanySection,
+  CallAndResponseSection,
+  EclecticSkillSection,
+  FortissimoCompositionSection,
+  KnowItAllSection,
+  ReflexiveCourageSection,
+  SoulsightSection,
+  AnnotateCompositionSection,
+  CourageousAssaultSection,
+  HouseOfImaginaryWallsSection,
+  OdeToOuroborosSection,
+  QuickenedCastingSection,
+  SymphonyOfTheUnfetteredHeartSection,
+  UnusualCompositionSection,
   BardFocusSpellsSection,
   CounterPerformanceSection,
   BardFocusSpellsHymnOfHealingSection,
   BardFocusSpellsLingeringCompositionSection,
   BardFocusSpellsLoremastersEtudeSection,
+  BardFocusSpellsFortissimoCompositionSection,
+  BardFocusSpellsOdeToOuroborosSection,
+  BardFocusSpellsSymphonyOfTheUnfetteredHeartSection,
   ClericSection,
   DeitySection,
   HolySection,
@@ -1360,6 +1936,7 @@ export const ClassesContent = [
   CloisteredClericSection,
   WarpriestSection,
   PerceptionExpertiseSection,
+  ResoluteFaithSection,
   ClericDomainsSection,
   AirDomainSection,
   AmbitionDomainSection,
@@ -1418,6 +1995,62 @@ export const ClassesContent = [
   RaiseSymbolSection,
   RestorativeStrikeSection,
   SacredGroundSection,
+  AdvancedDomainSection,
+  AdvancedDomainAirSection,
+  AdvancedDomainAmbitionSection,
+  AdvancedDomainCitiesSection,
+  AdvancedDomainConfidenceSection,
+  AdvancedDomainCreationSection,
+  AdvancedDomainDarknessSection,
+  AdvancedDomainDeathSection,
+  AdvancedDomainDestructionSection,
+  AdvancedDomainDreamsSection,
+  AdvancedDomainEarthSection,
+  AdvancedDomainFamilySection,
+  AdvancedDomainFateSection,
+  AdvancedDomainFireSection,
+  AdvancedDomainFreedomSection,
+  AdvancedDomainHealingSection,
+  AdvancedDomainIndulgenceSection,
+  AdvancedDomainKnowledgeSection,
+  AdvancedDomainLuckSection,
+  AdvancedDomainMagicSection,
+  AdvancedDomainMightSection,
+  AdvancedDomainMoonSection,
+  AdvancedDomainNatureSection,
+  AdvancedDomainNightmaresSection,
+  AdvancedDomainPainSection,
+  AdvancedDomainPassionSection,
+  AdvancedDomainPerfectionSection,
+  AdvancedDomainProtectionSection,
+  AdvancedDomainSecrecySection,
+  AdvancedDomainSunSection,
+  AdvancedDomainTravelSection,
+  AdvancedDomainTrickerySection,
+  AdvancedDomainTruthSection,
+  AdvancedDomainTyrannySection,
+  AdvancedDomainUndeathSection,
+  AdvancedDomainWaterSection,
+  AdvancedDomainWealthSection,
+  AdvancedDomainZealSection,
+  CastDownSection,
+  DivineRebuttalSection,
+  DivineWeaponSection,
+  MagicHandsSection,
+  SelectiveEnergySection,
+  CremateUndeadSection,
+  EmblazonEnergySection,
+  MartyrSection,
+  RestorativeChannelSection,
+  SanctifyArmamentSection,
+  SurgingFocusSection,
+  VoidSiphonClericSection,
+  ZealousRushSection,
+  CastigatingWeaponSection,
+  HeroicRecoverySection,
+  ReplenishmentOfWarSection,
+  SharedAvoidanceSection,
+  ShieldOfFaithSection,
   ClericFocusSpellsSection,
   AgileFeetSection,
   AppearanceOfWealthSection,
@@ -1456,6 +2089,43 @@ export const ClassesContent = [
   WeaponSurgeSection,
   WhisperingQuietSection,
   WordOfTruthSection,
+  ArtisticFlourishSection,
+  CaptivatingAdorationSection,
+  CommandingLashSection,
+  CompetitiveEdgeSection,
+  DarkenedSightSection,
+  DelusionalPrideSection,
+  DestructiveAuraSection,
+  DisperseIntoAirSection,
+  DownpourSection,
+  DreamersCallSection,
+  EnduringMightSection,
+  EradicateUndeathSection,
+  FlameBarrierSection,
+  GlimpseTheTruthSection,
+  KnowTheEnemySection,
+  LocalizedQuakeSection,
+  LuckyBreakSection,
+  MalignantSustenanceSection,
+  MysticBeaconSection,
+  NaturesBountySection,
+  PerfectedBodySection,
+  PreciousMetalsSection,
+  ProtectorsSphereSection,
+  PulseOfCivilizationSection,
+  RebukeDeathSection,
+  RetributivePainSection,
+  SafeguardSecretSection,
+  SharedNightmareSection,
+  TakeItsCourseSection,
+  TemptFateSection,
+  TouchOfTheMoonSection,
+  TravelersTransitSection,
+  TrickstersTwinSection,
+  UnitySection,
+  VitalLuminanceSection,
+  WordOfFreedomSection,
+  ZealForBattleSection,
   DruidSection,
   DruidSpellcastingSection,
   AnathemaSection,
@@ -1470,6 +2140,7 @@ export const ClassesContent = [
   DruidPerceptionExpertiseSection,
   FortitudeExpertiseSection,
   DruidReflexExpertiseSection,
+  DruidExpertSpellcasterSection,
   DruidFeatsSection,
   AnimalCompanionSection,
   AnimalEmpathyDruidSection,
@@ -1489,6 +2160,27 @@ export const ClassesContent = [
   LeshyFamiliarSecretsSection,
   MatureAnimalCompanionDruidSection,
   SnowdriftSpellSection,
+  CurrentSpellSection,
+  GrownOfOakSection,
+  InsectShapeSection,
+  InstinctiveSupportSection,
+  StormRetributionSection,
+  DeimaticDisplaySection,
+  FerociousShapeSection,
+  FeyCallerSection,
+  FloralRestorationSection,
+  IncredibleCompanionDruidSection,
+  RaiseMenhirSection,
+  SoaringShapeSection,
+  WindCallerSection,
+  ElementalShapeSection,
+  HealingTransformationSection,
+  OverwhelmingEnergySection,
+  PlantShapeSection,
+  PrimalHowlSection,
+  PristineWeaponSection,
+  SideBySideDruidSection,
+  ThunderclapSpellSection,
   OrderExplorerSection,
   OrderExplorerAnimalSection,
   OrderExplorerLeafSection,
@@ -1505,11 +2197,16 @@ export const ClassesContent = [
   TempestSurgeSection,
   DruidFocusSpellsUntamedFormSection,
   UntamedShiftSection,
+  StormwindFlightSection,
   FighterSection,
   ReactiveStrikeSection,
   FighterShieldBlockSection,
   BraverySection,
   FighterWeaponMasterySection,
+  BattlefieldSurveyorSection,
+  FighterWeaponSpecializationSection,
+  BattleHardenedSection,
+  CombatFlexibilitySection,
   FighterFeatsSection,
   CombatAssessmentSection,
   DoubleSliceSection,
@@ -1540,6 +2237,41 @@ export const ClassesContent = [
   SlamDownSection,
   SwipeSection,
   TwinParrySection,
+  AdvancedWeaponTrainingSection,
+  AdvantageousAssaultSection,
+  DazingBlowSection,
+  DisarmingStanceSection,
+  FuriousFocusSection,
+  GuardiansDeflectionSection,
+  ReflexiveShieldSection,
+  RevealingStabSection,
+  RicochetStanceSection,
+  ShatterDefensesSection,
+  ShieldWardenSection,
+  TripleShotSection,
+  BlindFightSection,
+  DisorientingOpeningSection,
+  DuelingRiposteSection,
+  FellingStrikeSection,
+  IncredibleAimSection,
+  MobileShotStanceSection,
+  PositioningAssaultSection,
+  QuickShieldBlockSection,
+  ResoundingBraverySection,
+  SuddenLeapSection,
+  AgileGraceSection,
+  CertainStrikeSection,
+  CrashingSlamSection,
+  CutFromTheAirSection,
+  DebilitatingShotSection,
+  DisarmingTwistSection,
+  DisruptiveStanceSection,
+  FearsomeBruteSection,
+  FlingingChargeSection,
+  MirrorShieldSection,
+  OverpoweringChargeSection,
+  TacticalReflexesSection,
+  TwinRiposteSection,
   RangerSection,
   HuntPreySection,
   HuntersEdgeSection,
@@ -1549,6 +2281,11 @@ export const ClassesContent = [
   WillExpertiseSection,
   RangerWeaponExpertiseSection,
   TracklessJourneySection,
+  NaturalReflexesSection,
+  RangerPerceptionMasterySection,
+  RangerWeaponSpecializationSection,
+  NaturesEdgeSection,
+  RangerExpertiseSection,
   RangerFeatsSection,
   CrossbowAceSection,
   HuntedShotSection,
@@ -1568,6 +2305,22 @@ export const ClassesContent = [
   FavoredPreySection,
   RunningReloadSection,
   ScoutsWarningSection,
+  AdditionalRecollectionSection,
+  MasterfulWardenSection,
+  MatureAnimalCompanionRangerSection,
+  SkirmishStrikeSection,
+  SnapShotSection,
+  SwiftTrackerSection,
+  DeadlyAimSection,
+  HazardFinderSection,
+  TerrainMasterSection,
+  WardensBoonSection,
+  CamouflageSection,
+  IncredibleCompanionRangerSection,
+  MasterMonsterHunterSection,
+  PeerlessWardenSection,
+  PenetratingShotSection,
+  WardensStepSection,
   RangerFocusSpellsSection,
   GravityWeaponSection,
   HealCompanionSection,
@@ -1578,6 +2331,8 @@ export const ClassesContent = [
   SoothingMistSection,
   EphemeralTrackingSection,
   RangersBrambleSection,
+  HuntersVisionSection,
+  TerrainTranspositionSection,
   RogueSection,
   RoguesRacketSection,
   MastermindSection,
@@ -1588,6 +2343,11 @@ export const ClassesContent = [
   SurpriseAttackSection,
   DenyAdvantageSection,
   WeaponTricksSection,
+  EvasiveReflexesSection,
+  RoguePerceptionMasterySection,
+  RogueWeaponSpecializationSection,
+  DebilitatingStrikeSection,
+  RogueResilienceSection,
   RogueFeatsSection,
   NimbleDodgeSection,
   OverextendingFeintSection,
@@ -1613,6 +2373,33 @@ export const ClassesContent = [
   ScoundrelsSurpriseSection,
   TheHarderTheyFallSection,
   TwinDistractionSection,
+  AnalyzeWeaknessSection,
+  AnticipateAmbushSection,
+  FarThrowSection,
+  GangUpSection,
+  LightStepSection,
+  ShoveDownSection,
+  SlyDisarmSection,
+  TwistTheKnifeSection,
+  WatchYourBackSection,
+  BullseyeSection,
+  DelayTrapSection,
+  ImprovedPoisonWeaponSection,
+  InspiredStratagemSection,
+  NimbleRollSection,
+  OpportuneBackstabSection,
+  PredictivePurchaseSection,
+  RicochetStanceRogueSection,
+  SidestepSection,
+  SlyStrikerSection,
+  SwipeSouvenirSection,
+  TacticalEntrySection,
+  MethodicalDebilitationsSection,
+  NimbleStrikeSection,
+  PreciseDebilitationsSection,
+  SneakAdeptSection,
+  TacticalDebilitationsSection,
+  ViciousDebilitationsSection,
   WitchSection,
   PatronSection,
   FaithsFlamekeeperSection,
@@ -1626,6 +2413,8 @@ export const ClassesContent = [
   FamiliarSection,
   HexSpellsSection,
   MagicalFortitudeSection,
+  WitchExpertSpellcasterSection,
+  WitchReflexExpertiseSection,
   WitchSpellcastingArcaneSection,
   WitchSpellcastingDivineSection,
   WitchSpellcastingOccultSection,
@@ -1639,6 +2428,8 @@ export const ClassesContent = [
   LessonOfMischiefSection,
   LessonOfShadowSection,
   LessonOfSnowSection,
+  LessonOfDeathSection,
+  LessonOfRenewalSection,
   WitchFeatsSection,
   CackleSection,
   CauldronSection,
@@ -1652,6 +2443,17 @@ export const ClassesContent = [
   FamiliarsLanguageSection,
   RitesOfConvocationSection,
   SympatheticStrikeSection,
+  CeremonialKnifeSection,
+  GreaterLessonSection,
+  WitchsChargeSection,
+  IncredibleFamiliarSection,
+  MurksightSection,
+  SpiritFamiliarWitchSection,
+  StitchedFamiliarSection,
+  WitchsBottleSection,
+  DoubleDoubleSection,
+  MajorLessonSection,
+  WitchsCommunionSection,
   WitchFocusSpellsSection,
   BloodWardSection,
   WitchFocusSpellsCackleSection,
@@ -1664,6 +2466,8 @@ export const ClassesContent = [
   DeceiversCloakSection,
   MaliciousShadowSection,
   PersonalBlizzardSection,
+  CurseOfDeathSection,
+  RestorativeMomentSection,
   WizardSection,
   ArcaneThesisSection,
   ExperimentalSpellshapingSection,
@@ -1675,6 +2479,8 @@ export const ClassesContent = [
   ArcaneBondSection,
   WizardFeatsSection,
   WizardReflexExpertiseSection,
+  WizardExpertSpellcasterSection,
+  WizardMagicalFortitudeSection,
   ArcaneSchoolSection,
   SchoolOfArsGrammaticaSection,
   SchoolOfBattleMagicSection,
@@ -1692,6 +2498,15 @@ export const ClassesContent = [
   CallWizardlyToolsSection,
   LinkedFocusSection,
   SpellProtectionArraySection,
+  ConvincingIllusionSection,
+  ExplosiveArrivalSection,
+  IrresistibleMagicSection,
+  SplitSlotSection,
+  AdvancedSchoolSpellSection,
+  BondConservationSection,
+  FormRetentionSection,
+  KnowledgeIsPowerWizardSection,
+  ScrollAdeptSection,
   WizardFocusSpellsSection,
   CharmingPushSection,
   EarthworksSection,
@@ -1700,6 +2515,13 @@ export const ClassesContent = [
   HandOfTheApprenticeSection,
   ProtectiveWardsSection,
   ScrambleBodySection,
+  CommunityRestorationSection,
+  EnergyAbsorptionSection,
+  InterdisciplinaryIncantationSection,
+  InvisibilityCloakSection,
+  RuneOfObservationSection,
+  ShiftingFormSection,
+  SpiralOfHorrorsSection,
   CompanionsSection,
   AnimalCompanionsSection,
   YoungAnimalCompanionsSection,

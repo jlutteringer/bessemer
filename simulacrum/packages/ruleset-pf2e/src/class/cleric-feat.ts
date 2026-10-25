@@ -2,11 +2,26 @@ import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simul
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import { ClassFeat, ClericFeat, Feat, FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4 } from '@simulacrum/ruleset-pf2e/tag'
+import {
+  ClassFeat,
+  ClericFeat,
+  Feat,
+  FeatLevel1,
+  FeatLevel2,
+  FeatLevel3,
+  FeatLevel4,
+  FeatLevel5,
+  FeatLevel6,
+  FeatLevel7,
+  FeatLevel8,
+  FeatLevel9,
+  FeatLevel10,
+} from '@simulacrum/ruleset-pf2e/tag'
 import { HeavyArmor } from '@simulacrum/ruleset-pf2e/characteristic'
 import { Proficiency } from '@simulacrum/ruleset-pf2e/bonus-type'
 import { Trained } from '@simulacrum/ruleset-pf2e/proficiency'
 import { HarmfulFont, HealingFont, Holy, Unholy, Warpriest } from '@simulacrum/ruleset-pf2e/class/cleric-doctrine'
+import { DomainInitiate } from '@simulacrum/ruleset-pf2e/class/cleric-domain'
 
 export const DeadlySimplicity = Traits.defineTrait('feat/deadly-simplicity', {
   name: 'Deadly Simplicity',
@@ -242,6 +257,270 @@ export const SacredGround = Traits.defineTrait('feat/sacred-ground', {
   effects: [],
 })
 
+export const CastDown = Traits.defineTrait('feat/cast-down', {
+  name: 'Cast Down',
+  description:
+    '*Cleric, Concentrate, Spellshape*\n\nThe sheer force of your faith can bring a foe crashing down. If the next action you use is to cast [_harm_](ability:spell/harm) or [_heal_](ability:spell/heal) to damage one creature, the target is knocked [prone](content:conditions/prone) if it takes any damage from the spell. If the target critically fails its save against the spell, it also takes a –10-foot status penalty to its [Speed](characteristic:speed) for 1 minute.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel6],
+  effects: [],
+})
+
+export const CastDownAction = Abilities.defineAbility('feat/cast-down/action', {
+  name: 'Cast Down',
+  description: '*Cleric, Concentrate, Spellshape*',
+  prerequisites: [Traits.traitPrerequisite(CastDown)],
+  actions: [
+    {
+      name: 'Cast Down',
+      description:
+        'The sheer force of your faith can bring a foe crashing down. If the next action you use is to cast [_harm_](ability:spell/harm) or [_heal_](ability:spell/heal) to damage one creature, the target is knocked [prone](content:conditions/prone) if it takes any damage from the spell. If the target critically fails its save against the spell, it also takes a –10-foot status penalty to its [Speed](characteristic:speed) for 1 minute.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const DivineRebuttal = Traits.defineTrait('feat/divine-rebuttal', {
+  name: 'Divine Rebuttal',
+  description:
+    '*Cleric, Divine*\n\n**Trigger** Your ally is about to roll a saving throw against a magical ability of a creature you’re adjacent to\n\n**Requirements** You are wielding your deity’s favored weapon\n\nYou strive against magical threats physically and spiritually. You can [Strike](content:playing-the-game/strike) the adjacent creature with your deity’s favored weapon. If you are holy or unholy, the Strike gains that trait. If your Strike hits, all your allies gain a +2 circumstance bonus to the triggering saving throw (or a +3 circumstance bonus on a critical hit).',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel6],
+  effects: [],
+})
+
+export const DivineRebuttalAction = Abilities.defineAbility('feat/divine-rebuttal/action', {
+  name: 'Divine Rebuttal',
+  description: '*Cleric, Divine*',
+  prerequisites: [Traits.traitPrerequisite(DivineRebuttal)],
+  actions: [
+    {
+      name: 'Divine Rebuttal',
+      description:
+        '**Trigger** Your ally is about to roll a saving throw against a magical ability of a creature you’re adjacent to\n\n**Requirements** You are wielding your deity’s favored weapon\n\nYou strive against magical threats physically and spiritually. You can [Strike](content:playing-the-game/strike) the adjacent creature with your deity’s favored weapon. If you are holy or unholy, the Strike gains that trait. If your Strike hits, all your allies gain a +2 circumstance bonus to the triggering saving throw (or a +3 circumstance bonus on a critical hit).',
+      action: ActionTypes.Reaction,
+    },
+  ],
+})
+
+export const DivineWeapon = Traits.defineTrait('feat/divine-weapon', {
+  name: 'Divine Weapon',
+  description:
+    '*Cleric*\n\n**Frequency** once per turn\n\n**Trigger** You finish Casting a Spell using one of your divine spell slots on your turn\n\nYou siphon residual spell energy into a weapon you’re wielding. Until the end of your turn, the weapon deals an additional 1d4 spirit damage. If you are holy or unholy, Strikes with the weapon also gain that trait, and the additional damage increases to 2d4 against creatures of the opposing trait.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel6],
+  effects: [],
+})
+
+export const DivineWeaponAction = Abilities.defineAbility('feat/divine-weapon/action', {
+  name: 'Divine Weapon',
+  description: '*Cleric*',
+  prerequisites: [Traits.traitPrerequisite(DivineWeapon)],
+  actions: [
+    {
+      name: 'Divine Weapon',
+      description:
+        '**Frequency** once per turn\n\n**Trigger** You finish Casting a Spell using one of your divine spell slots on your turn\n\nYou siphon residual spell energy into a weapon you’re wielding. Until the end of your turn, the weapon deals an additional 1d4 spirit damage. If you are holy or unholy, Strikes with the weapon also gain that trait, and the additional damage increases to 2d4 against creatures of the opposing trait.',
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const MagicHands = Traits.defineTrait('feat/magic-hands', {
+  name: 'Magic Hands',
+  description:
+    '*Cleric*\n\n**Prerequisites** [Healing Hands](trait:feat/healing-hands)\n\nThe blessing of your deity heightens your healing ability, integrating magical healing with the mundane. When you succeed at a [Medicine](characteristic:skill/medicine) check to [Treat Wounds](content:skills/treat-wounds), you can roll d10s instead of d8s for the healing and add a status bonus to the healing equal to your level.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel6],
+  prerequisites: [Traits.traitPrerequisite(HealingHands)],
+  effects: [],
+})
+
+export const SelectiveEnergy = Traits.defineTrait('feat/selective-energy', {
+  name: 'Selective Energy',
+  description:
+    '*Cleric*\n\nAs you call down divine power, you can prevent some enemies from benefiting or some allies from being hurt. When you cast a version of harm or heal that has an area, you can designate up to 5 creatures in the area. They are not targeted by the spell.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel6],
+  effects: [],
+})
+
+export const CremateUndead = Traits.defineTrait('feat/cremate-undead', {
+  name: 'Cremate Undead',
+  description:
+    '*Cleric*\n\nYour overwhelming vitality sets undead alight. When you use a heal spell to damage undead, each undead that takes damage also takes persistent fire damage equal to the spell’s rank.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  effects: [],
+})
+
+export const EmblazonEnergy = Traits.defineTrait('feat/emblazon-energy', {
+  name: 'Emblazon Energy',
+  description:
+    '*Cleric*\n\n**Prerequisites** [Emblazon Armament](trait:feat/emblazon-armament)\n\nWith elemental forces, you make your emblazoned symbols more potent. When you Emblazon an Armament, you can choose from the following effects instead of the effects listed in that feat. These effects have the same restrictions as the base options.\n\n- **Shield** Choose acid, cold, electricity, fire, or sonic. The wielder gains the shield’s circumstance bonus to saving throws against that damage type and can use Shield Block against damage of that type. The shield also gains resistance to that damage type equal to half your level if you have a domain spell with a trait matching that type (such as fire ray).\n\n- **Weapon** Choose acid, cold, electricity, fire, or sonic. The weapon deals an extra 1d4 damage of that type. Increase this extra damage to 1d6 if you have a domain spell with a trait matching that type (such as fire ray).',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(EmblazonArmament)],
+  effects: [],
+})
+
+export const Martyr = Traits.defineTrait('feat/martyr', {
+  name: 'Martyr',
+  description:
+    '*Cleric, Spellshape*\n\nYou go to extreme lengths to support your allies, even when it means bringing harm to yourself. If your next action is to cast harm or heal to restore [Hit Points](characteristic:hit-points) to a single ally, you can channel your own vitality along with the spell. You lose 1d8 Hit Points per rank of the spell, which can’t be reduced or mitigated in any way, and your ally regains an equal number of Hit Points',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  effects: [],
+})
+
+export const MartyrAction = Abilities.defineAbility('feat/martyr/action', {
+  name: 'Martyr',
+  description: '*Cleric, Spellshape*',
+  prerequisites: [Traits.traitPrerequisite(Martyr)],
+  actions: [
+    {
+      name: 'Martyr',
+      description:
+        'You go to extreme lengths to support your allies, even when it means bringing harm to yourself. If your next action is to cast harm or heal to restore [Hit Points](characteristic:hit-points) to a single ally, you can channel your own vitality along with the spell. You lose 1d8 Hit Points per rank of the spell, which can’t be reduced or mitigated in any way, and your ally regains an equal number of Hit Points',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const RestorativeChannel = Traits.defineTrait('feat/restorative-channel', {
+  name: 'Restorative Channel',
+  description:
+    "*Cleric*\n\n**Prerequisites** [healing font](trait:cleric)\n\nYou can remove conditions with divine grace. You can sacrifice one heal spell you've prepared in your extra slots from your healing font to cast one of the following spells instead: [_cleanse affliction_](ability:spell/cleanse-affliction), [_clear mind_](ability:spell/clear-mind), [_sound body_](ability:spell/sound-body), or [_sure footing_](ability:spell/sure-footing). The spell is heightened to the same rank as the spell you sacrificed.",
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  prerequisites: [Traits.traitPrerequisite(HealingFont)],
+  effects: [],
+})
+
+export const SanctifyArmament = Traits.defineTrait('feat/sanctify-armament', {
+  name: 'Sanctify Armament',
+  description:
+    '*Cleric, Divine*\n\n**Prerequisites** holy or unholy trait\n\nYou touch a weapon and bring it into concordance with your deity. For 1 round, that weapon gains your holy or unholy trait. It also deals an additional 2d6 spirit damage to creatures of the opposed trait. For example, if you are holy, the weapon would deal an extra 2d6 spirit damage to unholy creatures.\n\nIf you use Sanctify Armament again, any previous use of it expires.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  prerequisites: [Expressions.or([Traits.traitPrerequisite(Holy), Traits.traitPrerequisite(Unholy)])],
+  effects: [],
+})
+
+export const SanctifyArmamentAction = Abilities.defineAbility('feat/sanctify-armament/action', {
+  name: 'Sanctify Armament',
+  description: '*Cleric, Divine*',
+  prerequisites: [Traits.traitPrerequisite(SanctifyArmament)],
+  actions: [
+    {
+      name: 'Sanctify Armament',
+      description:
+        '**Prerequisites** holy or unholy trait\n\nYou touch a weapon and bring it into concordance with your deity. For 1 round, that weapon gains your holy or unholy trait. It also deals an additional 2d6 spirit damage to creatures of the opposed trait. For example, if you are holy, the weapon would deal an extra 2d6 spirit damage to unholy creatures.\n\nIf you use Sanctify Armament again, any previous use of it expires.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const SurgingFocus = Traits.defineTrait('feat/surging-focus', {
+  name: 'Surging Focus',
+  description:
+    '*Cleric*\n\n**Frequency** once per day\n\n**Trigger** An ally you can see falls to 0 [Hit Points](characteristic:hit-points)\n\nWhen an ally you can see falls in battle, your surge of righteous indignation allows you to draw upon untapped reserves of divine power. You instantly regain 1 Focus Point.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  effects: [],
+})
+
+export const SurgingFocusAction = Abilities.defineAbility('feat/surging-focus/action', {
+  name: 'Surging Focus',
+  description: '*Cleric*',
+  prerequisites: [Traits.traitPrerequisite(SurgingFocus)],
+  actions: [
+    {
+      name: 'Surging Focus',
+      description:
+        '**Frequency** once per day\n\n**Trigger** An ally you can see falls to 0 [Hit Points](characteristic:hit-points)\n\nWhen an ally you can see falls in battle, your surge of righteous indignation allows you to draw upon untapped reserves of divine power. You instantly regain 1 Focus Point.',
+      action: ActionTypes.FreeAction,
+    },
+  ],
+})
+
+export const VoidSiphonCleric = Traits.defineTrait('feat/void-siphon-cleric', {
+  name: 'Void Siphon (Cleric)',
+  description:
+    '*Cleric*\n\nThe raw energy of the Void saps the essence of the living. Any living creature that critically fails its save against a harm spell you cast is [drained](content:conditions/drained) 1.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  effects: [],
+})
+
+export const ZealousRush = Traits.defineTrait('feat/zealous-rush', {
+  name: 'Zealous Rush',
+  description:
+    '*Cleric*\n\n**Trigger** You cast a divine spell that takes 1 action or more to cast and that affects only you or your equipment\n\nYou bless yourself on the move. Stride up to 10 feet. If the spell took 2 or more actions, you can [Stride](content:playing-the-game/stride) up to your full [Speed](characteristic:speed) instead.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel8],
+  effects: [],
+})
+
+export const ZealousRushAction = Abilities.defineAbility('feat/zealous-rush/action', {
+  name: 'Zealous Rush',
+  description: '*Cleric*',
+  prerequisites: [Traits.traitPrerequisite(ZealousRush)],
+  actions: [
+    {
+      name: 'Zealous Rush',
+      description:
+        '**Trigger** You cast a divine spell that takes 1 action or more to cast and that affects only you or your equipment\n\nYou bless yourself on the move. Stride up to 10 feet. If the spell took 2 or more actions, you can [Stride](content:playing-the-game/stride) up to your full [Speed](characteristic:speed) instead.',
+      action: ActionTypes.Reaction,
+    },
+  ],
+})
+
+export const CastigatingWeapon = Traits.defineTrait('feat/castigating-weapon', {
+  name: 'Castigating Weapon',
+  description:
+    '*Cleric*\n\n**Prerequisites** [Divine Castigation](trait:feat/divine-castigation)\n\nThe force of your deity’s castigation strengthens your body so you can strike down the enemy and its allies. After you deal spirit damage due to Divine Castigation, your weapon or unarmed Strikes gain your holy or unholy trait and deal additional spirit damage until the end of your turn. The spirit damage is equal to the rank of harm or heal you dealt spirit damage with, and is in addition to any spirit damage the weapon already deals (such as from a holy rune).',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(DivineCastigation)],
+  effects: [],
+})
+
+export const HeroicRecovery = Traits.defineTrait('feat/heroic-recovery', {
+  name: 'Heroic Recovery',
+  description:
+    '*Cleric, Concentrate, Spellshape*\n\n**Prerequisites** [healing font](trait:cleric)\n\nThe restorative power of your healing invigorates the recipient. If the next action you use is to cast [_heal_](ability:spell/heal) targeting a single living creature and the target regains [Hit Points](characteristic:hit-points) from the spell, the target also gains three bonuses until the end of its next turn: a +5-foot status bonus to its [Speed](characteristic:speed), a +1 status bonus to attack rolls, and a +1 status bonus to damage rolls. In addition, if the target is [prone](content:conditions/prone), it can immediately Stand as a free action that doesn’t trigger reactions.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(HealingFont)],
+  effects: [],
+})
+
+export const HeroicRecoveryAction = Abilities.defineAbility('feat/heroic-recovery/action', {
+  name: 'Heroic Recovery',
+  description: '*Cleric, Concentrate, Spellshape*',
+  prerequisites: [Traits.traitPrerequisite(HeroicRecovery)],
+  actions: [
+    {
+      name: 'Heroic Recovery',
+      description:
+        '**Prerequisites** [healing font](trait:cleric)\n\nThe restorative power of your healing invigorates the recipient. If the next action you use is to cast [_heal_](ability:spell/heal) targeting a single living creature and the target regains [Hit Points](characteristic:hit-points) from the spell, the target also gains three bonuses until the end of its next turn: a +5-foot status bonus to its [Speed](characteristic:speed), a +1 status bonus to attack rolls, and a +1 status bonus to damage rolls. In addition, if the target is [prone](content:conditions/prone), it can immediately Stand as a free action that doesn’t trigger reactions.',
+      action: ActionTypes.SingleAction,
+    },
+  ],
+})
+
+export const ReplenishmentOfWar = Traits.defineTrait('feat/replenishment-of-war', {
+  name: 'Replenishment of War',
+  description:
+    '*Cleric*\n\n**Prerequisites** expert in your deity’s favored weapon\n\nStriking out against your enemies draws praise and protection from your deity. When you damage a creature with a [Strike](content:playing-the-game/strike) using your deity’s favored weapon, you gain a number of temporary [Hit Points](characteristic:hit-points) equal to half your level, or equal to your level if the Strike was a critical hit. These temporary Hit Points last until the start of your next turn.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel10],
+  effects: [],
+})
+
+export const SharedAvoidance = Traits.defineTrait('feat/shared-avoidance', {
+  name: 'Shared Avoidance',
+  description:
+    '*Cleric*\n\n**Prerequisites** [Premonition of Avoidance](trait:feat/premonition-of-avoidance)\n\nYou can project your premonitions of danger to your allies. When you use Premonition of Avoidance, allies within 20 feet of you who are rolling the same saving throw against the same hazard also gain a +2 circumstance bonus to their saving throws.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(PremonitionOfAvoidance)],
+  effects: [],
+})
+
+export const ShieldOfFaith = Traits.defineTrait('feat/shield-of-faith', {
+  name: 'Shield of Faith',
+  description:
+    '*Cleric*\n\n**Prerequisites** [Domain Initiate](trait:feat/domain-initiate)\n\nResidual energy from your domain spells bolsters your defenses. When you spend a Focus Point to cast a domain spell, you gain a +1 status bonus to your [AC](characteristic:armor-class) until the start of your next turn.',
+  tags: [Feat, ClassFeat, ClericFeat, FeatLevel10],
+  prerequisites: [Traits.traitPrerequisite(DomainInitiate)],
+  effects: [],
+})
+
 export const SelectClericFeat2 = CharacterOptions.selectTraitOption('cleric/select-feat-2', {
   name: 'Cleric Feat (Level 2)',
   filter: { tags: [ClericFeat, [FeatLevel1, FeatLevel2]] },
@@ -250,6 +529,23 @@ export const SelectClericFeat2 = CharacterOptions.selectTraitOption('cleric/sele
 export const SelectClericFeat4 = CharacterOptions.selectTraitOption('cleric/select-feat-4', {
   name: 'Cleric Feat (Level 4)',
   filter: { tags: [ClericFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4]] },
+})
+
+export const SelectClericFeat6 = CharacterOptions.selectTraitOption('cleric/select-feat-6', {
+  name: 'Cleric Feat (Level 6)',
+  filter: { tags: [ClericFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6]] },
+})
+
+export const SelectClericFeat8 = CharacterOptions.selectTraitOption('cleric/select-feat-8', {
+  name: 'Cleric Feat (Level 8)',
+  filter: { tags: [ClericFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8]] },
+})
+
+export const SelectClericFeat10 = CharacterOptions.selectTraitOption('cleric/select-feat-10', {
+  name: 'Cleric Feat (Level 10)',
+  filter: {
+    tags: [ClericFeat, [FeatLevel1, FeatLevel2, FeatLevel3, FeatLevel4, FeatLevel5, FeatLevel6, FeatLevel7, FeatLevel8, FeatLevel9, FeatLevel10]],
+  },
 })
 
 export const AllClericFeatEntities = [
@@ -277,4 +573,30 @@ export const AllClericFeatEntities = [
   RestorativeStrike,
   RestorativeStrikeAction,
   SacredGround,
+  CastDown,
+  CastDownAction,
+  DivineRebuttal,
+  DivineRebuttalAction,
+  DivineWeapon,
+  DivineWeaponAction,
+  MagicHands,
+  SelectiveEnergy,
+  CremateUndead,
+  EmblazonEnergy,
+  Martyr,
+  MartyrAction,
+  RestorativeChannel,
+  SanctifyArmament,
+  SanctifyArmamentAction,
+  SurgingFocus,
+  SurgingFocusAction,
+  VoidSiphonCleric,
+  ZealousRush,
+  ZealousRushAction,
+  CastigatingWeapon,
+  HeroicRecovery,
+  HeroicRecoveryAction,
+  ReplenishmentOfWar,
+  SharedAvoidance,
+  ShieldOfFaith,
 ]
