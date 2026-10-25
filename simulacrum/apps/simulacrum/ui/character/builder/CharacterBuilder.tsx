@@ -34,7 +34,7 @@ import { Trait, TraitReference } from '@simulacrum/engine/trait'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Abilities, Characteristics, Characters, Effects, Loadout, Rulesets } from '@simulacrum/engine'
+import { Abilities, Characteristics, Characters, Effects, Loadout, ProgressionTables, Rulesets } from '@simulacrum/engine'
 import { Ability } from '@simulacrum/engine/ability'
 import { CharacterOptionValue } from '@simulacrum/engine/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
@@ -58,7 +58,6 @@ import {
   getPassiveTraits,
   getValueCaption,
   isTrait,
-  MaxLevel,
   newCharacter,
   selectLoadoutAbilities,
   selectValue,
@@ -422,7 +421,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                     value={characterRecord.level}
                     onChange={(event) => applyCharacter(setLevel(getValues(), Number(event.target.value), ruleset))}
                   >
-                    {Arrays.range([1, MaxLevel]).map((level) => (
+                    {Arrays.range([1, ProgressionTables.getMaxLevel(ruleset.progressionTable)]).map((level) => (
                       <MenuItem
                         key={level}
                         value={level}

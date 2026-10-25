@@ -18,7 +18,7 @@ import { AllFeats, SelectFeat } from '@simulacrum/ruleset-dnd4e/feat'
 import { AllDivinityFeats } from '@simulacrum/ruleset-dnd4e/divinity-feat'
 import { AllDeities } from '@simulacrum/ruleset-dnd4e/deity'
 import { AllCommonPowers, ChannelDivinity } from '@simulacrum/ruleset-dnd4e/common'
-import { AllFighterTraits } from '@simulacrum/ruleset-dnd4e/class/class-fighter'
+import { AllFighterTraits, SelectWeaponTalent } from '@simulacrum/ruleset-dnd4e/class/class-fighter'
 import { AllFighterPowers } from '@simulacrum/ruleset-dnd4e/class/fighter-power'
 import { AllWizardTraits } from '@simulacrum/ruleset-dnd4e/class/class-wizard'
 import { AllWizardPowers } from '@simulacrum/ruleset-dnd4e/class/wizard-power'
@@ -28,12 +28,30 @@ import { AllPaladinTraits } from '@simulacrum/ruleset-dnd4e/class/class-paladin'
 import { AllPaladinPowers } from '@simulacrum/ruleset-dnd4e/class/paladin-power'
 import { AllRangerTraits } from '@simulacrum/ruleset-dnd4e/class/class-ranger'
 import { AllRangerPowers } from '@simulacrum/ruleset-dnd4e/class/ranger-power'
-import { AllRogueTraits } from '@simulacrum/ruleset-dnd4e/class/class-rogue'
+import { AllRogueTraits, SelectRogueTactics } from '@simulacrum/ruleset-dnd4e/class/class-rogue'
 import { AllRoguePowers } from '@simulacrum/ruleset-dnd4e/class/rogue-power'
-import { AllWarlockTraits } from '@simulacrum/ruleset-dnd4e/class/class-warlock'
+import { AllWarlockTraits, SelectEldritchPact } from '@simulacrum/ruleset-dnd4e/class/class-warlock'
 import { AllWarlockPowers } from '@simulacrum/ruleset-dnd4e/class/warlock-power'
-import { AllWarlordTraits } from '@simulacrum/ruleset-dnd4e/class/class-warlord'
+import { AllWarlordTraits, SelectCommandingPresence } from '@simulacrum/ruleset-dnd4e/class/class-warlord'
 import { AllWarlordPowers } from '@simulacrum/ruleset-dnd4e/class/warlord-power'
+import { HowToPlayContent } from '@simulacrum/ruleset-dnd4e/content/content-how-to-play'
+import { MakingCharactersContent } from '@simulacrum/ruleset-dnd4e/content/content-making-characters'
+import { RacesContent } from '@simulacrum/ruleset-dnd4e/content/content-races'
+import { ClassesContent } from '@simulacrum/ruleset-dnd4e/content/content-classes'
+import { ClericContent } from '@simulacrum/ruleset-dnd4e/content/content-class-cleric'
+import { FighterContent } from '@simulacrum/ruleset-dnd4e/content/content-class-fighter'
+import { PaladinContent } from '@simulacrum/ruleset-dnd4e/content/content-class-paladin'
+import { RangerContent } from '@simulacrum/ruleset-dnd4e/content/content-class-ranger'
+import { RogueContent } from '@simulacrum/ruleset-dnd4e/content/content-class-rogue'
+import { WarlockContent } from '@simulacrum/ruleset-dnd4e/content/content-class-warlock'
+import { WarlordContent } from '@simulacrum/ruleset-dnd4e/content/content-class-warlord'
+import { WizardContent } from '@simulacrum/ruleset-dnd4e/content/content-class-wizard'
+import { SkillsContent } from '@simulacrum/ruleset-dnd4e/content/content-skills'
+import { FeatsContent } from '@simulacrum/ruleset-dnd4e/content/content-feats'
+import { EquipmentContent } from '@simulacrum/ruleset-dnd4e/content/content-equipment'
+import { AdventuringContent } from '@simulacrum/ruleset-dnd4e/content/content-adventuring'
+import { CombatContent } from '@simulacrum/ruleset-dnd4e/content/content-combat'
+import { RitualsContent } from '@simulacrum/ruleset-dnd4e/content/content-rituals'
 
 export const SelectClass = CharacterOptions.selectTraitOption('class/select', {
   name: 'Class',
@@ -67,6 +85,7 @@ export const Dnd4e: Ruleset = {
     ...AllCommonPowers,
     ChannelDivinity,
     ...AllFighterTraits,
+    SelectWeaponTalent,
     ...AllFighterPowers,
     ...AllWizardTraits,
     ...AllWizardPowers,
@@ -77,10 +96,13 @@ export const Dnd4e: Ruleset = {
     ...AllRangerTraits,
     ...AllRangerPowers,
     ...AllRogueTraits,
+    SelectRogueTactics,
     ...AllRoguePowers,
     ...AllWarlockTraits,
+    SelectEldritchPact,
     ...AllWarlockPowers,
     ...AllWarlordTraits,
+    SelectCommandingPresence,
     ...AllWarlordPowers,
   ],
   progressionTable: {
@@ -97,6 +119,26 @@ export const Dnd4e: Ruleset = {
       Effects.gainCharacterOption(SelectFirstAbilityIncrease),
       Effects.gainCharacterOption(SelectSecondAbilityIncrease),
     ],
+    5: [],
   },
-  content: [],
+  content: [
+    ...HowToPlayContent,
+    ...MakingCharactersContent,
+    ...RacesContent,
+    ...ClassesContent,
+    ...ClericContent,
+    ...FighterContent,
+    ...PaladinContent,
+    ...RangerContent,
+    ...RogueContent,
+    ...WarlockContent,
+    ...WarlordContent,
+    ...WizardContent,
+    ...SkillsContent,
+    ...FeatsContent,
+    ...EquipmentContent,
+    ...AdventuringContent,
+    ...CombatContent,
+    ...RitualsContent,
+  ],
 }

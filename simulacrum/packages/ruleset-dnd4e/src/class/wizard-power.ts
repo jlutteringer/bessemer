@@ -177,7 +177,8 @@ export const ChillStrike = Abilities.defineAbility('wizard/power/chill-strike', 
 
 export const ForceOrb = Abilities.defineAbility('wizard/power/force-orb', {
   name: 'Force Orb',
-  description: '*You hurl an orb of magical force at an enemy.*',
+  description:
+    '*You hurl an orb of magical force at an enemy. It bursts against the target and throws off razor-sharp shards of force that cut nearby enemies to ribbons.*',
   universal: false,
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
@@ -209,7 +210,8 @@ export const IcyTerrain = Abilities.defineAbility('wizard/power/icy-terrain', {
 
 export const RayOfEnfeeblement = Abilities.defineAbility('wizard/power/ray-of-enfeeblement', {
   name: 'Ray of Enfeeblement',
-  description: '*You point three fingers at your foe, curling them like talons.*',
+  description:
+    "*You point three fingers at your foe, curling them like talons. Weird green mist streams from your enemy's flesh, carrying away its strength.*",
   universal: false,
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
@@ -383,7 +385,7 @@ export const FireShroud = Abilities.defineAbility('wizard/power/fire-shroud', {
 
 export const IcyRays = Abilities.defineAbility('wizard/power/icy-rays', {
   name: 'Icy Rays',
-  description: '*You fire two bolts of brilliant blue-white energy.*',
+  description: '*You fire two bolts of brilliant blue-white energy. A thin path of frost appears on the ground below each one before fading away.*',
   universal: false,
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
@@ -432,7 +434,7 @@ export const BigbysIcyGrasp = Abilities.defineAbility('wizard/power/bigbys-icy-g
 
 export const Fireball = Abilities.defineAbility('wizard/power/fireball', {
   name: 'Fireball',
-  description: '*A globe of orange flame coalesces in your hand.*',
+  description: '*A globe of orange flame coalesces in your hand. You hurl it at your enemies, and it explodes on impact.*',
   universal: false,
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
@@ -448,7 +450,7 @@ export const Fireball = Abilities.defineAbility('wizard/power/fireball', {
 
 export const StinkingCloud = Abilities.defineAbility('wizard/power/stinking-cloud', {
   name: 'Stinking Cloud',
-  description: '*You call forth a thick cloud of bilious yellow vapors.*',
+  description: '*You call forth a thick cloud of bilious yellow vapors. The foul fumes overwhelm any creature within.*',
   universal: false,
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],

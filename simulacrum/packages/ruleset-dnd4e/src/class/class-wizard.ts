@@ -12,7 +12,7 @@ import { Human } from '@simulacrum/ruleset-dnd4e/race'
 export const OrbOfImposition = Traits.defineTrait('wizard/implement-mastery/orb-of-imposition', {
   name: 'Orb of Imposition',
   description:
-    'Once per encounter as a free action, you can use your orb to gain one of the following two effects.\n\nYou can designate one creature you have cast a wizard spell upon that has an effect that lasts until the subject succeeds on a saving throw. That creature takes a penalty to its saving throws against that effect equal to your Wisdom modifier.\n\nAlternatively, you can choose to extend the duration of an effect created by a wizard at-will spell (such as *cloud of daggers* or *ray of frost*) that would otherwise end at the end of your current turn. The effect instead ends at the end of your next turn.\n\nYou must wield an orb to use this ability.',
+    'Once per encounter as a free action, you can use your orb to gain one of the following two effects.\n\nYou can designate one creature you have cast a wizard spell upon that has an effect that lasts until the subject succeeds on a saving throw. That creature takes a penalty to its saving throws against that effect equal to your [Wisdom](characteristic:wisdom) modifier.\n\nAlternatively, you can choose to extend the duration of an effect created by a wizard at-will spell (such as *[cloud of daggers](ability:wizard/power/cloud-of-daggers)* or *[ray of frost](ability:wizard/power/ray-of-frost)*) that would otherwise end at the end of your current turn. The effect instead ends at the end of your next turn.\n\nYou must wield an orb to use this ability. Control wizards select this form of mastery because it helps extend the duration of their control effects.',
   tags: [ClassFeature],
   effects: [],
 })
@@ -20,7 +20,7 @@ export const OrbOfImposition = Traits.defineTrait('wizard/implement-mastery/orb-
 export const StaffOfDefense = Traits.defineTrait('wizard/implement-mastery/staff-of-defense', {
   name: 'Staff of Defense',
   description:
-    'A staff of defense grants you a +1 bonus to AC. In addition, once per encounter as an immediate interrupt, you gain a bonus to defense against one attack equal to your Constitution modifier. You can declare the bonus after the Dungeon Master has already told you the damage total. You must wield your staff to benefit from these features.',
+    'A staff of defense grants you a +1 bonus to AC. In addition, once per encounter as an immediate interrupt, you gain a bonus to defense against one attack equal to your [Constitution](characteristic:constitution) modifier. You can declare the bonus after the Dungeon Master has already told you the damage total. You must wield your staff to benefit from these features. This form of mastery is useful for all wizards, particularly if you dabble in both control and damage-dealing spells.',
   tags: [ClassFeature],
   effects: [],
 })
@@ -28,14 +28,15 @@ export const StaffOfDefense = Traits.defineTrait('wizard/implement-mastery/staff
 export const WandOfAccuracy = Traits.defineTrait('wizard/implement-mastery/wand-of-accuracy', {
   name: 'Wand of Accuracy',
   description:
-    'Once per encounter as a free action, you gain a bonus to a single attack roll equal to your Dexterity modifier. You must wield your wand to benefit from this feature.',
+    'Once per encounter as a free action, you gain a bonus to a single attack roll equal to your [Dexterity](characteristic:dexterity) modifier. You must wield your wand to benefit from this feature. This form of mastery is good for war wizards because it helps increase their accuracy with damaging powers.',
   tags: [ClassFeature],
   effects: [],
 })
 
 export const SelectImplementMastery = CharacterOptions.selectTraitOption('wizard/select-implement-mastery', {
   name: 'Arcane Implement Mastery',
-  description: 'You specialize in the use of one kind of implement to gain additional abilities when you wield it.',
+  description:
+    'You specialize in the use of one kind of implement to gain additional abilities when you wield it. Choose one of the following forms of implement mastery.',
   filter: { specificOptions: [OrbOfImposition, StaffOfDefense, WandOfAccuracy] },
 })
 
@@ -43,14 +44,15 @@ export const SelectImplementMastery = CharacterOptions.selectTraitOption('wizard
 export const WizardCantrips = Traits.defineTrait('wizard/cantrips', {
   name: 'Cantrips',
   description:
-    'Cantrips are minor spells you gain at 1st level. You can use the *ghost sound*, *light*, *mage hand*, and *prestidigitation* cantrips as at-will powers.',
+    'Cantrips are minor spells you gain at 1st level. You can use the *[ghost sound](ability:wizard/power/ghost-sound)*, *[light](ability:wizard/power/light)*, *[mage hand](ability:wizard/power/mage-hand)*, and *[prestidigitation](ability:wizard/power/prestidigitation)* cantrips as at-will powers.',
   tags: [ClassFeature],
   effects: [],
 })
 
 export const RitualCasting = Traits.defineTrait('wizard/ritual-casting', {
   name: 'Ritual Casting',
-  description: 'You gain the Ritual Caster feat as a bonus feat, allowing you to use magical rituals.',
+  description:
+    'You gain the [Ritual Caster](trait:feat/ritual-caster) feat (page 200) as a bonus feat, allowing you to use magical rituals (see [Chapter 10](content:rituals)).',
   tags: [ClassFeature],
   effects: [Effects.gainTrait(RitualCaster)],
 })
@@ -58,7 +60,7 @@ export const RitualCasting = Traits.defineTrait('wizard/ritual-casting', {
 export const Spellbook = Traits.defineTrait('wizard/spellbook', {
   name: 'Spellbook',
   description:
-    "You possess a spellbook, a book full of mystic lore in which you store your rituals and your daily and utility spells.\n\n**Daily and Utility Spells:** You begin knowing two daily spells, one of which you can use on any given day. Each time you gain a level that lets you select a daily spell or a utility spell, choose two different daily spells or utility spells of that level to add to your book. After an extended rest, you can prepare a number of daily and utility spells according to what you can cast per day for your level. You can't prepare the same spell twice.",
+    "You possess a spellbook, a book full of mystic lore in which you store your rituals and your daily and utility spells.\n\n**Rituals:** Your book contains three 1st-level rituals of your choice that you have mastered.\n\nAt 5th level, and again at 11th, 15th, 21st, and 25th level, you master two more rituals of your choice and add them to your spellbook. Any ritual you add must be your level or lower.\n\n**Daily and Utility Spells:** Your spellbook also holds your daily and utility spells. You begin knowing two daily spells, one of which you can use on any given day. Each time you gain a level that lets you select a daily spell or a utility spell, choose two different daily spells or utility spells of that level to add to your book. After an extended rest, you can prepare a number of daily and utility spells according to what you can cast per day for your level. You can't prepare the same spell twice.\n\nIf you replace a spell because of gaining a level or through retraining, the previous spell vanishes from your spellbook and is replaced by the new spell.\n\n**Capacity:** A typical spellbook has 128 pages. Each spell takes up 1 page. A ritual takes up a number of pages equal to its level.",
   tags: [ClassFeature],
   effects: [],
 })
@@ -81,7 +83,7 @@ export const SelectSkill = CharacterOptions.selectTraitOption('wizard/select-ski
 export const Wizard = Traits.defineTrait('wizard', {
   name: 'Wizard',
   description:
-    '**Controller.** You exert control through magical effects that cover large areas—sometimes hindering foes, sometimes consuming them with fire.\n\n**Power Source:** Arcane · **Key Abilities:** Intelligence, Wisdom, Dexterity\n\n**Armor Proficiencies:** Cloth · **Weapon Proficiencies:** Dagger, quarterstaff · **Implements:** Orbs, staffs, wands\n\n**Bonus to Defense:** +2 Will · **Hit Points:** 10 + Constitution score at 1st level, 4 per level gained · **Healing Surges:** 6 + Constitution modifier',
+    '**Role:** Controller. You exert control through magical effects that cover large areas—sometimes hindering foes, sometimes consuming them with fire.\n\n**Power Source:** Arcane. You channel arcane forces through extensive study, hidden knowledge, and intricate preparation. To you, magic is an art form, an expressive and powerful method by which you seek to control the world around you.\n\n**Key Abilities:** [Intelligence](characteristic:intelligence), [Wisdom](characteristic:wisdom), [Dexterity](characteristic:dexterity)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth)\n\n**Weapon Proficiencies:** Dagger, quarterstaff\n\n**Implements:** Orbs, staffs, wands\n\n**Bonus to Defense:** +2 [Will](characteristic:will)\n\n**Hit Points at 1st Level:** 10 + [Constitution](characteristic:constitution) score\n\n**Hit Points per Level Gained:** 4\n\n**Healing Surges per Day:** 6 + Constitution modifier\n\n**Trained Skills:** [Arcana](characteristic:skill/arcana). From the class skills list below, choose three more trained skills at 1st level.\n\n**Class Skills:** Arcana (Int), [Diplomacy](characteristic:skill/diplomacy) (Cha), [Dungeoneering](characteristic:skill/dungeoneering) (Wis), [History](characteristic:skill/history) (Int), [Insight](characteristic:skill/insight) (Wis), [Nature](characteristic:skill/nature) (Int), [Religion](characteristic:skill/religion) (Int)\n\n**Build Options:** [Control wizard](content:classes/control-wizard), [war wizard](content:classes/war-wizard)\n\n**Class Features:** [Arcane Implement Mastery](content:classes/arcane-implement-mastery), [cantrips](trait:wizard/cantrips), [Ritual Casting](trait:wizard/ritual-casting), [spellbook](trait:wizard/spellbook)',
   tags: [Class],
   effects: [
     // 10 at 1st level and 4 per level after: 6 + 4 per level

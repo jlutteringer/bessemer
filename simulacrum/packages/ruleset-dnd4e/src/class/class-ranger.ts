@@ -12,7 +12,7 @@ import { Human } from '@simulacrum/ruleset-dnd4e/race'
 
 export const ArcherFightingStyle = Traits.defineTrait('ranger/fighting-style/archer', {
   name: 'Archer Fighting Style',
-  description: 'Because of your focus on ranged attacks, you gain Defensive Mobility as a bonus feat.',
+  description: 'Because of your focus on ranged attacks, you gain [Defensive Mobility](trait:feat/defensive-mobility) as a bonus feat.',
   tags: [ClassFeature],
   effects: [Effects.gainTrait(DefensiveMobility)],
 })
@@ -20,7 +20,7 @@ export const ArcherFightingStyle = Traits.defineTrait('ranger/fighting-style/arc
 export const TwoBladeFightingStyle = Traits.defineTrait('ranger/fighting-style/two-blade', {
   name: 'Two-Blade Fighting Style',
   description:
-    'Because of your focus on two-weapon melee attacks, you can wield a one-handed weapon in your off hand as if it were an off-hand weapon. (Make sure to designate on your character sheet which weapon is main and which is off-hand.) In addition, you gain Toughness as a bonus feat.',
+    'Because of your focus on two-weapon melee attacks, you can wield a one-handed weapon in your off hand as if it were an off-hand weapon. (Make sure to designate on your character sheet which weapon is main and which is off-hand.) In addition, you gain [Toughness](trait:feat/toughness) as a bonus feat.',
   tags: [ClassFeature],
   effects: [Effects.gainTrait(Toughness)],
 })
@@ -60,11 +60,13 @@ export const PrimeShot = Traits.defineTrait('ranger/prime-shot', {
 
 export const SelectDungeoneeringOrNature = CharacterOptions.selectTraitOption('ranger/select-dungeoneering-or-nature', {
   name: 'Trained Skill: Dungeoneering or Nature',
+  description: 'Dungeoneering or Nature (your choice).',
   filter: { specificOptions: [Skills.TrainedDungeoneering, Skills.TrainedNature] },
 })
 
 export const SelectSkill = CharacterOptions.selectTraitOption('ranger/select-skill', {
   name: 'Trained Skill',
+  description: 'From the class skills list, choose four more trained skills at 1st level.',
   filter: {
     specificOptions: [
       Skills.TrainedAcrobatics,
@@ -82,7 +84,7 @@ export const SelectSkill = CharacterOptions.selectTraitOption('ranger/select-ski
 export const Ranger = Traits.defineTrait('ranger', {
   name: 'Ranger',
   description:
-    '**Striker.** You concentrate on either ranged attacks or two-weapon melee fighting to deal a lot of damage to one enemy at a time. Your attacks rely on speed and mobility, since you prefer to use hit-and-run tactics whenever possible.\n\n**Power Source:** Martial · **Key Abilities:** Strength, Dexterity, Wisdom\n\n**Armor Proficiencies:** Cloth, leather, hide\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged, military ranged\n\n**Bonus to Defense:** +1 Fortitude, +1 Reflex · **Hit Points:** 12 + Constitution score at 1st level, 5 per level gained · **Healing Surges:** 6 + Constitution modifier',
+    "**Role:** Striker. You concentrate on either ranged attacks or two-weapon melee fighting to deal a lot of damage to one enemy at a time. Your attacks rely on speed and mobility, since you prefer to use hit-and-run tactics whenever possible.\n\n**Power Source:** Martial. Your talents depend on extensive training and practice, inner confidence, and natural proficiency.\n\n**Key Abilities:** [Strength](characteristic:strength), [Dexterity](characteristic:dexterity), [Wisdom](characteristic:wisdom)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth), [leather](ability:armor/leather), [hide](ability:armor/hide)\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged, military ranged\n\n**Bonus to Defense:** +1 [Fortitude](characteristic:fortitude), +1 [Reflex](characteristic:reflex)\n\n**Hit Points at 1st Level:** 12 + [Constitution](characteristic:constitution) score\n\n**Hit Points per Level Gained:** 5\n\n**Healing Surges per Day:** 6 + Constitution modifier\n\n**Trained Skills:** [Dungeoneering](characteristic:skill/dungeoneering) or [Nature](characteristic:skill/nature) (your choice). From the class skills list below, choose four more trained skills at 1st level.\n\n**Class Skills:** [Acrobatics](characteristic:skill/acrobatics) (Dex), [Athletics](characteristic:skill/athletics) (Str), Dungeoneering (Wis), [Endurance](characteristic:skill/endurance) (Con), [Heal](characteristic:skill/heal) (Wis), Nature (Wis), [Perception](characteristic:skill/perception) (Wis), [Stealth](characteristic:skill/stealth) (Dex)\n\n**Build Options:** [Archer ranger](content:classes/archer-ranger), [two-blade ranger](content:classes/two-blade-ranger)\n\n**Class Features:** [Fighting Style](content:classes/ranger-fighting-style), [Hunter's Quarry](trait:ranger/hunters-quarry), [Prime Shot](trait:ranger/prime-shot)",
   tags: [Class],
   effects: [
     Effects.modifyCharacteristic(

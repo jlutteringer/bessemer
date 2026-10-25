@@ -76,7 +76,8 @@ export const TideOfIron = Abilities.defineAbility('fighter/power/tide-of-iron', 
 
 export const CoveringAttack = Abilities.defineAbility('fighter/power/covering-attack', {
   name: 'Covering Attack',
-  description: '*You launch a dizzying barrage of thrusts at your enemy, compelling him to give you all his attention.*',
+  description:
+    '*You launch a dizzying barrage of thrusts at your enemy, compelling him to give you all his attention. Under the cover of your ferocious attack, one of your allies can safely retreat from that same foe.*',
   universal: false,
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
@@ -125,7 +126,8 @@ export const SpinningSweep = Abilities.defineAbility('fighter/power/spinning-swe
 
 export const SteelSerpentStrike = Abilities.defineAbility('fighter/power/steel-serpent-strike', {
   name: 'Steel Serpent Strike',
-  description: "*You stab viciously at your foe's knee or foot to slow him down.*",
+  description:
+    "*You stab viciously at your foe's knee or foot to slow him down. No matter how tough he is, he's going to favor that leg for a time.*",
   universal: false,
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],

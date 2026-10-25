@@ -63,6 +63,8 @@ export const HeavyShieldProficiency = Traits.defineTrait('armor-proficiency/heav
 
 export const ClothArmor = Abilities.defineAbility('armor/cloth', {
   name: 'Cloth Armor',
+  description:
+    'Jackets, mantles, woven robes, and padded vests don’t, by themselves, provide any significant protection. However, you can imbue them with protective magic. Cloth armor doesn’t slow you down or hinder your movement at all. All characters are proficient with cloth armor. Feyweave armor is woven with techniques perfected by the eladrin. Starweave armor is fashioned after patterns created in the divine dominions of the Astral Sea.',
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [Effects.descriptive('**Light armor** · Armor bonus +0 · Check — · Speed —')],
@@ -70,6 +72,8 @@ export const ClothArmor = Abilities.defineAbility('armor/cloth', {
 
 export const LeatherArmor = Abilities.defineAbility('armor/leather', {
   name: 'Leather Armor',
+  description:
+    'Leather armor is sturdier than cloth armor. It protects vital areas with multiple layers of boiled-leather plates, while covering the limbs with supple leather that provides a small amount of protection. Feyleather armor is cured by an elven method that leaves the armor supple but tougher than normal leather. Starleather armor is infused with the raw spiritual matter of the Astral Sea, making it light and strong.',
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LeatherProficiency)],
@@ -81,6 +85,8 @@ export const LeatherArmor = Abilities.defineAbility('armor/leather', {
 
 export const HideArmor = Abilities.defineAbility('armor/hide', {
   name: 'Hide Armor',
+  description:
+    'Thicker and heavier than leather, hide armor is composed of skin from any creature that has a tough hide, such as a bear, a griffon, or a dragon. Hide armor can bind and slightly hinder your precision, but it’s light enough that it doesn’t affect your speed. Darkhide armor is a superior tiefling armor cured in fire and infused with shadow. Elderhide armor involves scouring with elemental forces.',
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(HideProficiency)],
@@ -94,6 +100,8 @@ export const HideArmor = Abilities.defineAbility('armor/hide', {
 
 export const Chainmail = Abilities.defineAbility('armor/chainmail', {
   name: 'Chainmail',
+  description:
+    'Metal rings woven together into a shirt, leggings, and a hood make up a suit of chainmail. Chainmail grants good protection, but it’s cumbersome, so it reduces your mobility and agility. Forgemail armor is made with superior metallurgy and a chainmaking technique mastered by dwarves. Spiritmail armor is made with techniques from the divine dominions of the Astral Sea.',
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(ChainmailProficiency)],
@@ -105,6 +113,8 @@ export const Chainmail = Abilities.defineAbility('armor/chainmail', {
 
 export const ScaleArmor = Abilities.defineAbility('armor/scale', {
   name: 'Scale Armor',
+  description:
+    'Overlapping pieces of highly durable material, such as steel or even dragon scales, make up scale armor. Despite its heaviness, scale is surprisingly easy to wear; its straps and buckles make it adjustable and able to fit snugly on the body, allowing flexibility and agility. Mundane scale armor uses metal plates. Wyrmscale is made using ancient techniques the dragonborn invented to mimic the strength of overlapping dragon scales, and elderscale is a similar armor scoured with elemental forces.',
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(ScaleProficiency)],
@@ -116,6 +126,8 @@ export const ScaleArmor = Abilities.defineAbility('armor/scale', {
 
 export const PlateArmor = Abilities.defineAbility('armor/plate', {
   name: 'Plate Armor',
+  description:
+    'The heaviest type of armor, made up of shaped plates of metal or similarly resilient material, plate provides the most armor protection. The cost for its superior fortification is mobility and agility. Legend holds that Moradin made the first godplate armor, and ancient dwarf smiths copied his patterns imperfectly to make warplate armor.',
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(PlateProficiency)],
@@ -129,6 +141,8 @@ export const PlateArmor = Abilities.defineAbility('armor/plate', {
 
 export const LightShield = Abilities.defineAbility('shield/light', {
   name: 'Light Shield',
+  description:
+    'You need to use your shield hand to wield a light shield properly. You can still use that hand to hold another item, to climb, or the like. However, you can’t use your shield hand to make attacks.',
   tags: [Armor],
   loadout: ShieldLoadout,
   prerequisites: [Traits.traitPrerequisite(LightShieldProficiency)],
@@ -141,6 +155,8 @@ export const LightShield = Abilities.defineAbility('shield/light', {
 
 export const HeavyShield = Abilities.defineAbility('shield/heavy', {
   name: 'Heavy Shield',
+  description:
+    'When you use a heavy shield, you gain a greater bonus to your [AC](characteristic:armor-class) and [Reflex](characteristic:reflex) defense, but you can’t use your shield hand for any other task.',
   tags: [Armor],
   loadout: ShieldLoadout,
   prerequisites: [Traits.traitPrerequisite(HeavyShieldProficiency)],

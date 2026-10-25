@@ -10,7 +10,6 @@ import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
 import { Arrays, ObjectPaths, Objects } from '@bessemer/cornerstone'
 import { getPassiveEffects } from '@simulacrum/ui/components/ruleset-entity-model'
 
-export const MaxLevel = 20
 const DefaultInitialValue = 0
 
 /**

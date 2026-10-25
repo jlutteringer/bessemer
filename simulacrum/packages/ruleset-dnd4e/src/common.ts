@@ -11,7 +11,7 @@ export const MeleeBasicAttack = Abilities.defineAbility('common/melee-basic-atta
   tags: [AtWillPower, AttackPower],
   effects: [
     Effects.descriptive(
-      '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
+      '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.\n\n**Special:** You can use an unarmed attack as a weapon to make a melee basic attack.'
     ),
   ],
   actions: [{ name: 'Melee Basic Attack', action: ActionTypes.StandardAction }],
@@ -23,7 +23,7 @@ export const RangedBasicAttack = Abilities.defineAbility('common/ranged-basic-at
   tags: [AtWillPower, AttackPower],
   effects: [
     Effects.descriptive(
-      '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.'
+      '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.\n\n**Special:** Weapons with the heavy thrown property (see [page 216](content:equipment/weapon-properties)) use Strength instead of Dexterity for attack rolls and damage rolls.\n\n**Special:** Warlocks can use *[eldritch blast](ability:warlock/power/eldritch-blast)* as a ranged basic attack, and wizards can use *[magic missile](ability:wizard/power/magic-missile)* as a ranged basic attack.'
     ),
   ],
   actions: [{ name: 'Ranged Basic Attack', action: ActionTypes.StandardAction }],

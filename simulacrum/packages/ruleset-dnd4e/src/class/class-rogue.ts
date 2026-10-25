@@ -18,7 +18,7 @@ export const FirstStrike = Traits.defineTrait('rogue/first-strike', {
 export const ArtfulDodger = Traits.defineTrait('rogue/tactics/artful-dodger', {
   name: 'Artful Dodger',
   description:
-    'You gain a bonus to AC equal to your Charisma modifier against opportunity attacks.\n\nThis choice also provides bonuses to certain rogue powers. Individual powers detail the effects (if any) your Rogue Tactics selection has on them.',
+    'You gain a bonus to AC equal to your Charisma modifier against opportunity attacks.\n\nThe choice you make also provides bonuses to certain rogue powers. Individual powers detail the effects (if any) your Rogue Tactics selection has on them.',
   tags: [ClassFeature],
   effects: [],
 })
@@ -26,7 +26,7 @@ export const ArtfulDodger = Traits.defineTrait('rogue/tactics/artful-dodger', {
 export const BrutalScoundrel = Traits.defineTrait('rogue/tactics/brutal-scoundrel', {
   name: 'Brutal Scoundrel',
   description:
-    'You gain a bonus to Sneak Attack damage equal to your Strength modifier.\n\nThis choice also provides bonuses to certain rogue powers. Individual powers detail the effects (if any) your Rogue Tactics selection has on them.',
+    'You gain a bonus to Sneak Attack damage equal to your Strength modifier.\n\nThe choice you make also provides bonuses to certain rogue powers. Individual powers detail the effects (if any) your Rogue Tactics selection has on them.',
   tags: [ClassFeature],
   effects: [],
 })
@@ -75,7 +75,7 @@ export const SelectSkill = CharacterOptions.selectTraitOption('rogue/select-skil
 export const Rogue = Traits.defineTrait('rogue', {
   name: 'Rogue',
   description:
-    '**Striker.** You dart in to attack, do massive damage, and then retreat to safety. You do best when teamed with a defender to flank enemies.\n\n**Power Source:** Martial · **Key Abilities:** Dexterity, Strength, Charisma\n\n**Armor Proficiencies:** Cloth, leather\n\n**Weapon Proficiencies:** Dagger, hand crossbow, shuriken, sling, short sword\n\n**Bonus to Defense:** +2 Reflex · **Hit Points:** 12 + Constitution score at 1st level, 5 per level gained · **Healing Surges:** 6 + Constitution modifier',
+    '**Role:** Striker. You dart in to attack, do massive damage, and then retreat to safety. You do best when teamed with a defender to flank enemies.\n\n**Power Source:** Martial. Your talents depend on extensive training and constant practice, innate skill, and natural coordination.\n\n**Key Abilities:** [Dexterity](characteristic:dexterity), [Strength](characteristic:strength), [Charisma](characteristic:charisma)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth), [leather](ability:armor/leather)\n\n**Weapon Proficiencies:** Dagger, hand crossbow, shuriken, sling, short sword\n\n**Bonus to Defense:** +2 [Reflex](characteristic:reflex)\n\n**Hit Points at 1st Level:** 12 + [Constitution](characteristic:constitution) score\n\n**Hit Points per Level Gained:** 5\n\n**Healing Surges per Day:** 6 + Constitution modifier\n\n**Trained Skills:** [Stealth](characteristic:skill/stealth) and [Thievery](characteristic:skill/thievery). From the class skills list below, choose four more trained skills at 1st level.\n\n**Class Skills:** [Acrobatics](characteristic:skill/acrobatics) (Dex), [Athletics](characteristic:skill/athletics) (Str), [Bluff](characteristic:skill/bluff) (Cha), [Dungeoneering](characteristic:skill/dungeoneering) (Wis), [Insight](characteristic:skill/insight) (Wis), [Intimidate](characteristic:skill/intimidate) (Cha), [Perception](characteristic:skill/perception) (Wis), Stealth (Dex), [Streetwise](characteristic:skill/streetwise) (Cha), Thievery (Dex)\n\n**Build Options:** [Brawny rogue](content:classes/brawny-rogue), [trickster rogue](content:classes/trickster-rogue)\n\n**Class Features:** [First Strike](trait:rogue/first-strike), [Rogue Tactics](character-option:rogue/select-tactics), [Rogue Weapon Talent](trait:rogue/weapon-talent), [Sneak Attack](trait:rogue/sneak-attack)',
   tags: [Class],
   effects: [
     Effects.modifyCharacteristic(

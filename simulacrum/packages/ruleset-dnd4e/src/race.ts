@@ -17,7 +17,7 @@ export const SelectRace = CharacterOptions.selectTraitOption('race/select', {
 export const Human = Traits.defineTrait('race/human', {
   name: 'Human',
   description:
-    '**Average Height:** 5´ 6˝–6´ 2˝ · **Average Weight:** 135–220 lb.\n\n**Ability Scores:** +2 to one ability score of your choice\n\n**Size:** Medium · **Speed:** 6 squares · **Vision:** Normal\n\n**Languages:** Common, choice of one other\n\n**Bonus At-Will Power:** You know one extra at-will power from your class.\n\n**Bonus Feat:** You gain a bonus feat at 1st level. You must meet the feat’s prerequisites.\n\n**Bonus Skill:** You gain training in one additional skill from your class skill list.\n\n**Human Defense Bonuses:** +1 to Fortitude, Reflex, and Will defenses.',
+    '**Average Height:** 5´ 6˝–6´ 2˝\n\n**Average Weight:** 135–220 lb.\n\n**Ability Scores:** +2 to one ability score of your choice\n\n**Size:** Medium\n\n**Speed:** 6 squares\n\n**Vision:** Normal\n\n**Languages:** Common, choice of one other\n\n**Bonus At-Will Power:** You know one extra at-will power from your class.\n\n**Bonus Feat:** You gain a bonus feat at 1st level. You must meet the feat’s prerequisites.\n\n**Bonus Skill:** You gain training in one additional skill from your class skill list.\n\n**Human Defense Bonuses:** +1 to [Fortitude](characteristic:fortitude), [Reflex](characteristic:reflex), and [Will](characteristic:will) defenses.',
   tags: [Race],
   effects: [
     Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(6))),
@@ -32,14 +32,15 @@ export const Human = Traits.defineTrait('race/human', {
 
 export const CastIronStomach = Traits.defineTrait('race/dwarf/cast-iron-stomach', {
   name: 'Cast-Iron Stomach',
-  description: '+5 racial bonus to saving throws against poison.',
+  description: '+5 racial bonus to [saving throws](content:combat/saving-throws) against poison.',
   tags: [RacialTrait],
   effects: [],
 })
 
 export const DwarvenResilience = Traits.defineTrait('race/dwarf/dwarven-resilience', {
   name: 'Dwarven Resilience',
-  description: 'You can use your second wind as a minor action instead of a standard action.',
+  description:
+    'You can use your [second wind](ability:common/second-wind) as a [minor action](action-type:minor-action) instead of a [standard action](action-type:standard-action).',
   tags: [RacialTrait],
   effects: [],
 })
@@ -70,7 +71,7 @@ export const StandYourGround = Traits.defineTrait('race/dwarf/stand-your-ground'
 export const Dwarf = Traits.defineTrait('race/dwarf', {
   name: 'Dwarf',
   description:
-    '**Average Height:** 4´ 3˝–4´ 9˝ · **Average Weight:** 160–220 lb.\n\n**Ability Scores:** +2 Constitution, +2 Wisdom\n\n**Size:** Medium · **Speed:** 5 squares · **Vision:** Low-light\n\n**Languages:** Common, Dwarven\n\n**Skill Bonuses:** +2 Dungeoneering, +2 Endurance',
+    '**Average Height:** 4´ 3˝–4´ 9˝\n\n**Average Weight:** 160–220 lb.\n\n**Ability Scores:** +2 [Constitution](characteristic:constitution), +2 [Wisdom](characteristic:wisdom)\n\n**Size:** Medium\n\n**Speed:** 5 squares\n\n**Vision:** Low-light\n\n**Languages:** Common, Dwarven\n\n**Skill Bonuses:** +2 [Dungeoneering](characteristic:skill/dungeoneering), +2 [Endurance](characteristic:skill/endurance)',
   tags: [Race],
   effects: [
     Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(2))),
@@ -90,7 +91,7 @@ export const Dwarf = Traits.defineTrait('race/dwarf', {
 
 export const HumanPerseverance = Traits.defineTrait('feat/human-perseverance', {
   name: 'Human Perseverance',
-  description: '**Prerequisite:** Human\n\nYou gain a +1 feat bonus to saving throws.',
+  description: '**Prerequisite:** [Human](trait:race/human)\n\nYou gain a +1 feat bonus to [saving throws](content:combat/saving-throws).',
   tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Human)],
   effects: [],
@@ -98,7 +99,8 @@ export const HumanPerseverance = Traits.defineTrait('feat/human-perseverance', {
 
 export const ActionSurge = Traits.defineTrait('feat/action-surge', {
   name: 'Action Surge',
-  description: '**Prerequisite:** Human\n\nYou gain a +3 bonus to attack rolls you make during any action you gained by spending an action point.',
+  description:
+    '**Prerequisite:** [Human](trait:race/human)\n\nYou gain a +3 bonus to attack rolls you make during any action you gained by spending an action point.',
   tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Human)],
   effects: [],
@@ -106,7 +108,7 @@ export const ActionSurge = Traits.defineTrait('feat/action-surge', {
 
 export const DwarvenWeaponTraining = Traits.defineTrait('feat/dwarven-weapon-training', {
   name: 'Dwarven Weapon Training',
-  description: '**Prerequisite:** Dwarf\n\nYou gain proficiency and a +2 feat bonus to damage rolls with axes and hammers.',
+  description: '**Prerequisite:** [Dwarf](trait:race/dwarf)\n\nYou gain proficiency and a +2 feat bonus to damage rolls with axes and hammers.',
   tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Dwarf)],
   effects: [],
@@ -114,7 +116,8 @@ export const DwarvenWeaponTraining = Traits.defineTrait('feat/dwarven-weapon-tra
 
 export const DodgeGiants = Traits.defineTrait('feat/dodge-giants', {
   name: 'Dodge Giants',
-  description: '**Prerequisite:** Dwarf\n\nYou gain a +1 bonus to AC and Reflex defense against the attacks of Large or larger foes.',
+  description:
+    '**Prerequisite:** [Dwarf](trait:race/dwarf)\n\nYou gain a +1 bonus to [AC](characteristic:armor-class) and [Reflex](characteristic:reflex) defense against the attacks of Large or larger foes.',
   tags: [Feat],
   prerequisites: [Traits.traitPrerequisite(Dwarf)],
   effects: [],

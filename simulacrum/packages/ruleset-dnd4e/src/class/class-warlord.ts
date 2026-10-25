@@ -37,7 +37,7 @@ export const TacticalPresence = Traits.defineTrait('warlord/commanding-presence/
 export const SelectCommandingPresence = CharacterOptions.selectTraitOption('warlord/select-commanding-presence', {
   name: 'Commanding Presence',
   description:
-    'Choose one of the following two benefits.\n\nThe choice you make also provides bonuses to certain warlord powers. Individual powers detail the effects (if any) your Commanding Presence selection has on them.',
+    'Choose one of the following two benefits.\n\n**Inspiring Presence:** When an ally who can see you spends an action point to take an extra action, that ally also regains lost hit points equal to one-half your level + your Charisma modifier.\n\n**Tactical Presence:** When an ally you can see spends an action point to make an extra attack, the ally gains a bonus to the attack roll equal to one-half your Intelligence modifier.\n\nThe choice you make also provides bonuses to certain warlord powers. Individual powers detail the effects (if any) your Commanding Presence selection has on them.',
   filter: { specificOptions: [InspiringPresence, TacticalPresence] },
 })
 
@@ -56,7 +56,7 @@ export const InspiringWord = Abilities.defineAbility('warlord/power/inspiring-wo
   prerequisites: [Traits.traitPrerequisite(InspiringWordFeature)],
   effects: [
     Effects.descriptive(
-      '**Warlord Feature**\n\n**Encounter (Special)** ✦ Martial, Healing\n\n**Minor Action** · Close burst 5 (10 at 11th level, 15 at 21st level)\n\n**Special:** You can use this power twice per encounter, but only once per round. At 16th level, you can use inspiring word three times per encounter.\n\n**Target:** You or one ally in burst\n\n**Effect:** The target can spend a healing surge and regain an additional 1d6 hit points.\n\nThe amount of additional hit points regained is 2d6 at 6th level, 3d6 at 11th level, 4d6 at 16th level, 5d6 at 21st level, and 6d6 at 26th level.'
+      '**Warlord Feature**\n\n**Encounter (Special)** ✦ Martial, Healing\n\n**Special:** You can use this power twice per encounter, but only once per round. At 16th level, you can use *inspiring word* three times per encounter.\n\n**Minor Action** · Close burst 5 (10 at 11th level, 15 at 21st level)\n\n**Target:** You or one ally in burst\n\n**Effect:** The target can spend a healing surge and regain an additional 1d6 hit points.\n\nThe amount of additional hit points regained is 2d6 at 6th level, 3d6 at 11th level, 4d6 at 16th level, 5d6 at 21st level, and 6d6 at 26th level.'
     ),
   ],
   actions: [{ name: 'Inspiring Word', action: ActionTypes.MinorAction }],
@@ -81,7 +81,7 @@ export const SelectSkill = CharacterOptions.selectTraitOption('warlord/select-sk
 export const Warlord = Traits.defineTrait('warlord', {
   name: 'Warlord',
   description:
-    '**Leader.** You are an inspiring commander and a master of battle tactics.\n\n**Power Source:** Martial · **Key Abilities:** Strength, Intelligence, Charisma\n\n**Armor Proficiencies:** Cloth, leather, hide, chainmail; light shield\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged\n\n**Bonus to Defense:** +1 Fortitude, +1 Will · **Hit Points:** 12 + Constitution score at 1st level, 5 per level gained · **Healing Surges:** 7 + Constitution modifier',
+    '**Role:** Leader. You are an inspiring commander and a master of battle tactics.\n\n**Power Source:** Martial. You have become an expert in tactics through endless hours of training and practice, personal determination, and your own sheer physical toughness.\n\n**Key Abilities:** [Strength](characteristic:strength), [Intelligence](characteristic:intelligence), [Charisma](characteristic:charisma)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth), [leather](ability:armor/leather), [hide](ability:armor/hide), [chainmail](ability:armor/chainmail); [light shield](ability:shield/light)\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged\n\n**Bonus to Defense:** +1 [Fortitude](characteristic:fortitude), +1 [Will](characteristic:will)\n\n**Hit Points at 1st Level:** 12 + [Constitution](characteristic:constitution) score\n\n**Hit Points per Level Gained:** 5\n\n**Healing Surges per Day:** 7 + Constitution modifier\n\n**Trained Skills:** From the class skills list below, choose four trained skills at 1st level.\n\n**Class Skills:** [Athletics](characteristic:skill/athletics) (Str), [Diplomacy](characteristic:skill/diplomacy) (Cha), [Endurance](characteristic:skill/endurance) (Con), [Heal](characteristic:skill/heal) (Wis), [History](characteristic:skill/history) (Int), [Intimidate](characteristic:skill/intimidate) (Cha)\n\n**Build Options:** [Inspiring warlord](content:classes/inspiring-warlord), [tactical warlord](content:classes/tactical-warlord)\n\n**Class Features:** [Combat Leader](trait:warlord/combat-leader), [Commanding Presence](character-option:warlord/select-commanding-presence), [inspiring word](trait:warlord/inspiring-word)',
   tags: [Class],
   effects: [
     Effects.modifyCharacteristic(
