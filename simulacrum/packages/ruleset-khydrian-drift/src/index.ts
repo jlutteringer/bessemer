@@ -8,7 +8,7 @@ import {
   SentinelTrait,
   SoldiersStamina,
 } from '@simulacrum/ruleset-khydrian-drift/class/class-commando'
-import { Warblade } from '@simulacrum/ruleset-khydrian-drift/class/class-warblade'
+import { AllWarbladeEntities } from '@simulacrum/ruleset-khydrian-drift/class/class-warblade'
 import { Operator } from '@simulacrum/ruleset-khydrian-drift/class/class-operator'
 import { Scoundrel } from '@simulacrum/ruleset-khydrian-drift/class/class-scoundrel'
 import { Immortal } from '@simulacrum/ruleset-khydrian-drift/class/class-immortal'
@@ -69,7 +69,7 @@ export const KhydrianDrift: Ruleset = {
     ...AllArmorProficiencies,
     Cyberware.Cyberware,
     Commando,
-    Warblade,
+    ...AllWarbladeEntities,
     Operator,
     Scoundrel,
     Immortal,
@@ -121,7 +121,6 @@ export const KhydrianDrift: Ruleset = {
   progressionTable: {
     1: [
       Effects.gainCharacterOption(SelectClassOption),
-      Effects.gainCharacterOption(SelectTraitOption),
       Effects.gainCharacterOption(SelectAttributeIncrease),
       Effects.gainCharacterOption(SelectAttributeIncrease),
       Effects.gainCharacterOption(SelectAttributeIncrease),
