@@ -1,6 +1,6 @@
 import NextLink from 'next/link'
 import { createTheme } from '@mui/material/styles'
-import { Objects, Strings, Urls } from '@bessemer/cornerstone'
+import { Objects, Results, Strings, Urls } from '@bessemer/cornerstone'
 
 export type MuiTheme = Parameters<typeof createTheme>[0]
 
@@ -10,7 +10,11 @@ const requiresDocumentNavigation = (href: unknown): boolean => {
     return false
   }
 
-  const url = Urls.from(href)
+  const url = Urls.parseString(href)
+  if (Results.isFailure(url)) {
+    return false
+  }
+
   if (Objects.isPresent(url.scheme) || Objects.isPresent(url.host)) {
     return true
   }
