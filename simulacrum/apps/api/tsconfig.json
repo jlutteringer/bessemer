@@ -1,9 +1,27 @@
 {
-  "extends": "../../../tsconfig.lib.json",
   "compilerOptions": {
-    "rootDir": "src"
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "paths": {
+      "@simulacrum/api/*": ["./src/*"],
+      "@simulacrum/common": ["../../packages/common/src"],
+      "@simulacrum/common/*": ["../../packages/common/src/*"],
+      "@bessemer/cornerstone": ["../../../bessemer/cornerstone/src"],
+      "@bessemer/cornerstone/*": ["../../../bessemer/cornerstone/src/*"],
+      "@bessemer/zotch": ["../../../bessemer/zotch/src"],
+      "@bessemer/zotch/*": ["../../../bessemer/zotch/src/*"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

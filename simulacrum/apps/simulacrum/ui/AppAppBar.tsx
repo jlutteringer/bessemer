@@ -109,6 +109,7 @@ export default function AppAppBar() {
               color="primary"
               variant="text"
               size="small"
+              href="/api/auth/sign-in"
             >
               Sign in
             </Button>
@@ -116,6 +117,7 @@ export default function AppAppBar() {
               color="primary"
               variant="contained"
               size="small"
+              href="/api/auth/sign-up"
             >
               Sign up
             </Button>
@@ -163,6 +165,7 @@ export default function AppAppBar() {
                     color="primary"
                     variant="contained"
                     fullWidth
+                    href="/api/auth/sign-up"
                   >
                     Sign up
                   </Button>
@@ -172,6 +175,7 @@ export default function AppAppBar() {
                     color="primary"
                     variant="outlined"
                     fullWidth
+                    href="/api/auth/sign-in"
                   >
                     Sign in
                   </Button>

@@ -1,0 +1,49 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  status    String   @default("active") @db.VarChar
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  authentication UserAuthentication?
+  profile        Profile?
+
+  @@index([status], map: "idx_users_status")
+  @@map("users")
+}
+
+model UserAuthentication {
+  id         String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  userId     String   @unique @map("user_id") @db.Uuid
+  externalId String   @unique @map("external_id") @db.VarChar
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_authentications")
+}
+
+model Profile {
+  id        String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  userId    String   @unique @map("user_id") @db.Uuid
+  email     String   @unique @db.VarChar
+  firstName String   @map("first_name") @db.VarChar
+  lastName  String   @map("last_name") @db.VarChar
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}

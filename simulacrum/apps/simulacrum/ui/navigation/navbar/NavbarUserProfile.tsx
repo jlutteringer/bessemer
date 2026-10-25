@@ -1,12 +1,14 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Avatar, Box, Divider, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material'
+import { Avatar, Box, Button, Divider, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material'
 import Logout from '@mui/icons-material/Logout'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Link from 'next/link'
+import { useSessionUser } from '@simulacrum/ui/auth/use-session'
 
 export const NavbarUserProfile = () => {
+  const { user, isPending } = useSessionUser()
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -18,6 +20,23 @@ export const NavbarUserProfile = () => {
     setAnchorEl(null)
   }
 
+  if (isPending) {
+    return null
+  }
+
+  if (!user) {
+    return (
+      <Button
+        color="inherit"
+        href="/api/auth/sign-in"
+      >
+        Sign in
+      </Button>
+    )
+  }
+
+  const displayName = user.name ?? user.email
+
   return (
     <>
       {/* Trigger for the Dropdown */}
@@ -25,7 +44,7 @@ export const NavbarUserProfile = () => {
         sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }}
         onClick={handleMenuOpen}
       >
-        <Avatar sx={{ bgcolor: 'grey.600', width: 32, height: 32 }}>J</Avatar>
+        <Avatar sx={{ bgcolor: 'grey.600', width: 32, height: 32 }}>{displayName.charAt(0).toUpperCase()}</Avatar>
         <Typography
           variant="body2"
           sx={{
@@ -34,7 +53,7 @@ export const NavbarUserProfile = () => {
             display: { xs: 'none', md: 'block' },
           }}
         >
-          John Lutteringer
+          {displayName}
         </Typography>
       </Box>
 
@@ -98,7 +117,10 @@ export const NavbarUserProfile = () => {
 
         <Divider sx={{ borderColor: 'grey.700' }} />
 
-        <MenuItem>
+        <MenuItem
+          component="a"
+          href="/api/auth/sign-out"
+        >
           <ListItemIcon
             sx={{
               color: 'inherit',

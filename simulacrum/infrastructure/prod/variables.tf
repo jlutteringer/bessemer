@@ -4,3 +4,9 @@ variable "github_token" {
   sensitive   = true
   default     = null
 }
+
+variable "local_auth_origins" {
+  description = "Local dev origins allowed as Cognito callback and sign-out URLs"
+  type        = list(string)
+  default     = ["http://localhost:4000"]
+}

@@ -4,7 +4,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 4000",
     "build": "next build",
     "start": "next start",
     "prettier-fix": "prettier --write .",
@@ -12,6 +12,7 @@
     "clean": "rm -rf .next && rm -rf .turbo"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "1.8.1",
     "@bessemer/foundry": "workspace:*",
     "@bessemer/redis": "workspace:*",
     "@simulacrum/common": "workspace:*",
@@ -20,6 +21,7 @@
     "@simulacrum/ruleset-dnd5e": "workspace:*",
     "@simulacrum/ruleset-khydrian-drift": "workspace:*",
     "@simulacrum/ruleset-pf2e": "workspace:*",
+    "aws-amplify": "6.22.2",
     "minisearch": "7.2.0",
     "next": "16.3.7",
     "react": "19.3.0",

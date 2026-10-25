@@ -12,6 +12,8 @@ applications:
             - (cd ../../.. && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 yarn install --immutable)
         build:
           commands:
+            # Amplify only exposes app environment variables to the build, so write the ones SSR needs for runtime
+            - env | grep -e '^AMPLIFY_APP_ORIGIN=' -e '^COGNITO_' -e '^SIMULACRUM_API_URL=' >> .env.production || true
             - (cd ../../.. && yarn turbo run build --filter=simulacrum)
       artifacts:
         baseDirectory: .next

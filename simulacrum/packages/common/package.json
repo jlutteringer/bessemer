@@ -19,5 +19,10 @@
     "build": "rm -rf dist && tsc --project tsconfig.build.json",
     "prettier-fix": "prettier --write .",
     "clean": "rm -rf dist && rm -rf .turbo"
+  },
+  "dependencies": {
+    "@bessemer/cornerstone": "workspace:*",
+    "@bessemer/zotch": "workspace:*",
+    "zod": "4.4.3"
   }
 }

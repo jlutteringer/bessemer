@@ -37,6 +37,7 @@
       "@simulacrum/application": ["./simulacrum/apps/simulacrum/application"],
       "@simulacrum/application/*": ["./simulacrum/apps/simulacrum/application/*"],
       "@simulacrum/test/*": ["./simulacrum/apps/simulacrum/test/*"],
+      "@simulacrum/api/*": ["./simulacrum/apps/api/src/*"],
       "@simulacrum/common": ["./simulacrum/packages/common/src"],
       "@simulacrum/common/*": ["./simulacrum/packages/common/src/*"],
       "@simulacrum/ruleset": ["./simulacrum/packages/ruleset/src"],

@@ -12,6 +12,9 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
+    "db:up": "docker compose -f simulacrum/docker-compose.yml up -d --wait",
+    "db:down": "docker compose -f simulacrum/docker-compose.yml down",
+    "db:deploy": "yarn workspace @simulacrum/api db:deploy",
     "build": "turbo run build",
     "test": "turbo run test",
     "docgen": "yarn workspaces foreach --all --exclude bessemer run docgen && node scripts/docs.mjs",
