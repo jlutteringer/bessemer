@@ -30,6 +30,9 @@ jobs:
 
       - name: Build API bundle
         working-directory: .
+        env:
+          # .yarnrc.yml isn't committed, so set the linker the repo expects
+          YARN_NODE_LINKER: node-modules
         run: |
           corepack enable
           yarn install --immutable
@@ -65,7 +68,7 @@ jobs:
           DATABASE_URL=$(terraform output -raw database_url)
           echo "::add-mask::$DATABASE_URL"
           cd ../../apps/api
-          DATABASE_URL="$DATABASE_URL" yarn prisma migrate deploy
+          DATABASE_URL="$DATABASE_URL" YARN_NODE_LINKER=node-modules yarn prisma migrate deploy
 
       - name: Start Amplify release
         id: start

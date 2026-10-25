@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs'
-import { defineConfig, env } from 'prisma/config'
+import { defineConfig } from 'prisma/config'
 
 if (existsSync('.env')) {
   process.loadEnvFile('.env')
@@ -10,7 +10,8 @@ export default defineConfig({
   migrations: {
     path: 'prisma/migrations',
   },
+  // Optional so `prisma generate` works without a database (e.g. in CI builds); commands that connect fail without it
   datasource: {
-    url: env('DATABASE_URL'),
+    url: process.env.DATABASE_URL,
   },
 })
