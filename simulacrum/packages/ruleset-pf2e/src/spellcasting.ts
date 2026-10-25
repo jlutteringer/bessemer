@@ -1,7 +1,7 @@
 import { Effects, ResourcePools, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { ClassFeature } from '@simulacrum/ruleset-pf2e/tag'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 
 // Focus spells are cast with Focus Points. Refocusing for 10 minutes restores 1; your daily preparations restore them all.
 export const FocusPoints = ResourcePools.defineResourcePool('focus-points', {

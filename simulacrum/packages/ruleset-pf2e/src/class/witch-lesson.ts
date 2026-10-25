@@ -1,7 +1,7 @@
 import { Tags, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 import * as WitchFocusSpells from '@simulacrum/ruleset-pf2e/class/witch-focus-spell'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 

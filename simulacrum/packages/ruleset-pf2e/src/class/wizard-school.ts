@@ -2,7 +2,7 @@ import { Tags, Attributes, CharacterOptions, CharacterValues, Effects, Traits } 
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 import * as WizardFocusSpells from '@simulacrum/ruleset-pf2e/class/wizard-focus-spell'
 import { ClassFeature } from '@simulacrum/ruleset-pf2e/tag'
 import {

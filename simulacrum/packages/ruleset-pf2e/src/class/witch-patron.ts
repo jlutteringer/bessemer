@@ -1,6 +1,6 @@
 import { Tags, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 import {
   Arcane,
   Cantrip,

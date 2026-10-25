@@ -18,7 +18,7 @@ import {
   WizardFeat,
 } from '@simulacrum/ruleset-pf2e/tag'
 import { TrainedIntimidation } from '@simulacrum/ruleset-pf2e/skill'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 import { FocusPoints } from '@simulacrum/ruleset-pf2e/spellcasting'
 import { SelectAnimalCompanion, SelectIncredibleAnimalCompanion } from '@simulacrum/ruleset-pf2e/companion/animal-companion'
 import { SelectFamiliarAbility } from '@simulacrum/ruleset-pf2e/companion/familiar'

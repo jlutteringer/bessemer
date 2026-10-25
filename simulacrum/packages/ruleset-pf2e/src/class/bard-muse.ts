@@ -1,5 +1,5 @@
 import { Tags, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 
 export const Muse = Tags.defineTraitTag('bard/muse', { name: 'Muse' })
 

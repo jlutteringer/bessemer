@@ -1,7 +1,7 @@
 import { Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 import * as BardFocusSpells from '@simulacrum/ruleset-pf2e/class/bard-focus-spell'
 import {
   BardFeat,

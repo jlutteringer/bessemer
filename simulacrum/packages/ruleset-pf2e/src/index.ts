@@ -21,10 +21,10 @@ import {
   SelectSkillFeat8,
   SelectSkillFeat10,
 } from '@simulacrum/ruleset-pf2e/character-option'
-import { AllAncestryEntities } from '@simulacrum/ruleset-pf2e/ancestry'
+import { AllAncestryEntities } from '@simulacrum/ruleset-pf2e/ancestry/ancestry'
 import { AllBackgroundEntities } from '@simulacrum/ruleset-pf2e/background'
 import { AllGeneralFeatEntities } from '@simulacrum/ruleset-pf2e/feat/general-feat'
-import { AllSpellEntities } from '@simulacrum/ruleset-pf2e/spell'
+import { AllSpellEntities } from '@simulacrum/ruleset-pf2e/spell/spell'
 import { AllAnimalCompanionEntities } from '@simulacrum/ruleset-pf2e/companion/animal-companion'
 import { AllFamiliarEntities } from '@simulacrum/ruleset-pf2e/companion/familiar'
 import { AllBardEntities } from '@simulacrum/ruleset-pf2e/class/class-bard'

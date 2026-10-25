@@ -3,7 +3,7 @@ import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
-import * as Spells from '@simulacrum/ruleset-pf2e/spell'
+import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
 import * as BardFocusSpells from '@simulacrum/ruleset-pf2e/class/bard-focus-spell'
 import {
   BardFeat,
