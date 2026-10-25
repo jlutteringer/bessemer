@@ -33,7 +33,7 @@ output "api_url" {
 
 output "database_url" {
   description = "Connection string for running migrations"
-  value       = "${local.database_url}?sslmode=require"
+  value       = "${local.database_url}?sslmode=require&connect_timeout=30"
   sensitive   = true
 }
 
