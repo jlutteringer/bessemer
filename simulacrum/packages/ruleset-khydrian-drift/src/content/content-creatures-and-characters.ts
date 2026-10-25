@@ -333,7 +333,7 @@ export const CharacterDefenseRating = Content.defineSection('characters/defense-
     name: 'Defense Rating',
     description: `Player defense rating is calculated differently according to the type and is based off of the attributes of the character. There are also some effects which modify defense rating, changing it from the base calculations described below.
 
-- [Armor Class](characteristic:armor-class) is calculated by 4 + Proficiency + Agility Rating + half of Proficiency (rounded up). Light armor adds 2 and medium armor adds 5. Heavy armor instead sets it to 11 + Proficiency + Proficiency + half of Proficiency (rounded up), ignoring Agility
+- [Armor Class](characteristic:armor-class) is calculated by 6 + Proficiency + Agility Rating. Light armor adds 3 and medium armor adds 6. Heavy armor instead sets it to 12 + Proficiency + Proficiency, ignoring Agility
 - [Fortitude](characteristic:fortitude) is calculated by 6 + Proficiency + Brawn Rating + half of Proficiency (rounded up)
 - [Reflex](characteristic:reflex) is calculated by 6 + Proficiency + Agility Rating + half of Proficiency (rounded up)
 - [Will](characteristic:will) is calculated by 6 + Proficiency + Willpower Rating + half of Proficiency (rounded up)`,

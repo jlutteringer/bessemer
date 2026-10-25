@@ -1,7 +1,8 @@
 import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { ArmorLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Patches } from '@bessemer/cornerstone'
-import { ArmorClass, defenseRating, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { NumericExpressions } from '@bessemer/cornerstone/expression'
+import { ArmorClass, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
 export const Armor = Tags.defineAbilityTag('armor', { name: 'Armor' })
 
@@ -39,7 +40,7 @@ export const LightArmor = Abilities.defineAbility('armor/light', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LightArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(2)))],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3)))],
 })
 
 export const MediumArmor = Abilities.defineAbility('armor/medium', {
@@ -47,7 +48,7 @@ export const MediumArmor = Abilities.defineAbility('armor/medium', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(MediumArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(5)))],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(6)))],
 })
 
 export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
@@ -55,7 +56,12 @@ export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(HeavyArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(defenseRating(11, ProficiencyBonus.variable))))],
+  effects: [
+    Effects.modifyCharacteristic(
+      ArmorClass,
+      Attributes.modifier(Patches.set(NumericExpressions.sum([12, NumericExpressions.multiply([2, ProficiencyBonus.variable])])))
+    ),
+  ],
 })
 
 export const AllArmorProficiencies = [LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency]

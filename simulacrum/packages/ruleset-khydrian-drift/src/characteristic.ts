@@ -205,7 +205,7 @@ export const DefenseBonus = {
 export const ArmorClass: Characteristic = Characteristics.defineCharacteristic({
   group: DefensesGroup,
   template: ArmorClassTemplate,
-  baseValue: defenseRating(4, Agility.variable),
+  baseValue: NumericExpressions.sum([6, ProficiencyBonus.variable, Agility.variable]),
 })
 
 export const FortitudeDefense: Characteristic = Characteristics.defineCharacteristic({
