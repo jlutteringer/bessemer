@@ -1,6 +1,6 @@
-import * as RulesetApi from '@simulacrum/common/ruleset/ruleset-api'
 import { getApiContext } from '@simulacrum/application/api'
 import { RulebookIndex } from '@simulacrum/ui/rulebook/Rulebook'
+import { RulesetApi } from '@simulacrum/common'
 
 const RulebookPage = async () => {
   const rulesets = await RulesetApi.listRulesets(await getApiContext())

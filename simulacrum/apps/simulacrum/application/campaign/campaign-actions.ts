@@ -3,8 +3,8 @@
 import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import { revalidatePath } from 'next/cache'
 import { CampaignDto, CreateCampaignRequest, UpdateCampaignRequest } from '@simulacrum/common/campaign/campaign'
-import * as CampaignApi from '@simulacrum/common/campaign/campaign-api'
 import { getApiContext } from '@simulacrum/application/api'
+import { CampaignApi } from '@simulacrum/common'
 
 const revalidate = () => {
   revalidatePath('/campaigns', 'layout')

@@ -3,8 +3,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { Objects } from '@bessemer/cornerstone'
 import { RulesetConfiguration } from '@simulacrum/common/engine/ruleset'
-import * as RulesetApi from '@simulacrum/common/ruleset/ruleset-api'
 import { getClientApiContext } from '@simulacrum/ui/api/api'
+import { RulesetApi } from '@simulacrum/common'
 
 export const useFetchRuleset = (configuration: RulesetConfiguration | null) => {
   return useQuery({

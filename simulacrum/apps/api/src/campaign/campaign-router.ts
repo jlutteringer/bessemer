@@ -1,14 +1,13 @@
 import { Uuid7 } from '@bessemer/cornerstone'
 import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import { Router, type Response } from 'express'
-import { CreateCampaignRequestSchema, UpdateCampaignRequestSchema } from '@simulacrum/common/campaign/campaign'
-import { isSameConfiguration } from '@simulacrum/common/engine/ruleset'
-import { toConfiguration } from '@simulacrum/common/ruleset/ruleset'
 import { requireAuth } from '@simulacrum/api/auth'
 import { createApplicationContext } from '@simulacrum/api/context'
 import { UserService } from '@simulacrum/api/user/user-service'
 import { CharacterService } from '@simulacrum/api/character/character-service'
 import { CampaignService } from '@simulacrum/api/campaign/campaign-service'
+import { Rulesets } from '@simulacrum/common'
+import { CreateCampaignRequestSchema, UpdateCampaignRequestSchema } from '@simulacrum/common/campaign/campaign'
 
 export const CampaignRouter = Router()
 
@@ -183,7 +182,7 @@ CampaignRouter.put('/campaigns/:campaignId/characters/:characterId', async (requ
     return
   }
 
-  if (!isSameConfiguration(toConfiguration(character.ruleset), toConfiguration(campaign.ruleset))) {
+  if (!Rulesets.isSameConfiguration(Rulesets.toConfiguration(character.ruleset), Rulesets.toConfiguration(campaign.ruleset))) {
     sendError(response, 400, 'ruleset_mismatch')
     return
   }

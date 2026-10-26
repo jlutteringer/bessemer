@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation'
 import { Objects } from '@bessemer/cornerstone'
 import { RulesetReference } from '@simulacrum/common/engine/ruleset'
-import * as RulesetApi from '@simulacrum/common/ruleset/ruleset-api'
 import { getApiContext } from '@simulacrum/application/api'
 import { RulebookReader } from '@simulacrum/ui/rulebook/Rulebook'
+import { RulesetApi } from '@simulacrum/common'
 
 const RulebookRulesetPage = async ({ params }: { params: Promise<{ rulesetId: string }> }) => {
   const { rulesetId } = await params

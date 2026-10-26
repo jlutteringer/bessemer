@@ -3,8 +3,8 @@
 import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import { revalidatePath } from 'next/cache'
 import { CharacterDto, CreateCharacterRequest, UpdateCharacterRequest } from '@simulacrum/common/character/character'
-import * as CharacterApi from '@simulacrum/common/character/character-api'
 import { getApiContext } from '@simulacrum/application/api'
+import { CharacterApi } from '@simulacrum/common'
 
 export const createCharacter = async (request: CreateCharacterRequest): Promise<CharacterDto> => {
   const created = await CharacterApi.createCharacter(request, await getApiContext())

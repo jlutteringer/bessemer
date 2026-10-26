@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
-import * as CharacterApi from '@simulacrum/common/character/character-api'
 import { getSession } from '@simulacrum/application/auth/session'
 import { getApiContext } from '@simulacrum/application/api'
 import { CharacterSection } from '@simulacrum/ui/character/CharacterSection'
+import { CharacterApi } from '@simulacrum/common'
 
 const CharactersPage = async () => {
   const session = await getSession()

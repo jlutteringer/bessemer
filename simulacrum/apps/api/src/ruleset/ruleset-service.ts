@@ -1,8 +1,8 @@
 import { Ruleset, RulesetExtension, RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
-import * as Rulesets from '@simulacrum/common/engine/ruleset'
 import { RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
 import { RulesetProjections } from '@simulacrum/api/ruleset/ruleset-projections'
 import { RulesetRegistry } from '@simulacrum/api/ruleset/ruleset-registry'
+import { Rulesets } from '@simulacrum/common/engine/engine'
 
 export namespace RulesetService {
   const { rulesets, extensions } = RulesetRegistry

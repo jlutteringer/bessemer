@@ -50,3 +50,9 @@ export const RulesetConfigurationSchema: Zod.ZodType<RulesetConfiguration> = Zod
   id: RulesetReferenceSchema,
   extensions: Zod.array(RulesetExtensionReferenceSchema),
 })
+
+export const isSameConfiguration = (first: RulesetConfiguration, second: RulesetConfiguration): boolean => {
+  return (
+    first.id === second.id && first.extensions.length === second.extensions.length && first.extensions.every((it) => second.extensions.includes(it))
+  )
+}

@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
-import * as RulesetApi from '@simulacrum/common/ruleset/ruleset-api'
 import { getSession } from '@simulacrum/application/auth/session'
 import { getApiContext } from '@simulacrum/application/api'
 import { CharacterBuilder } from '@simulacrum/ui/character/builder/CharacterBuilder'
+import { RulesetApi } from '@simulacrum/common'
 
 const NewCharacterPage = async () => {
   const session = await getSession()

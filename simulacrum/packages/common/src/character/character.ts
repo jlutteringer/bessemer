@@ -46,11 +46,3 @@ export const CreateCharacterRequestSchema: Zod.ZodType<CreateCharacterRequest> =
 export type UpdateCharacterRequest = CharacterRecord
 
 export const UpdateCharacterRequestSchema: Zod.ZodType<UpdateCharacterRequest> = Zod.custom<UpdateCharacterRequest>()
-
-export const toCharacterRecord = (character: CharacterRecord): CharacterRecord => ({
-  name: character.name,
-  level: character.level,
-  initialValues: character.initialValues,
-  selections: character.selections,
-  selectedAbilities: character.selectedAbilities,
-})

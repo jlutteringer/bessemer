@@ -1,10 +1,9 @@
 import { Uuid7 } from '@bessemer/cornerstone'
 import { notFound, redirect } from 'next/navigation'
-import * as CharacterApi from '@simulacrum/common/character/character-api'
-import * as RulesetApi from '@simulacrum/common/ruleset/ruleset-api'
 import { getSession } from '@simulacrum/application/auth/session'
 import { getApiContext } from '@simulacrum/application/api'
 import { CharacterBuilder } from '@simulacrum/ui/character/builder/CharacterBuilder'
+import { CharacterApi, RulesetApi } from '@simulacrum/common'
 
 const CharacterBuilderPage = async ({ params }: { params: Promise<{ characterId: string }> }) => {
   const { characterId } = await params

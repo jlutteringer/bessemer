@@ -28,9 +28,9 @@ import { ContentLabel } from '@bessemer/core/codex/component/ContentLabel'
 import { ProgressionTables, CharacterOptions, Characters } from '@simulacrum/common/engine/engine'
 import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
 import { getRulesetLabel } from '@simulacrum/ui/ruleset/ruleset-label'
-import { CharacterDto, toCharacterRecord } from '@simulacrum/common/character/character'
-import { toConfiguration } from '@simulacrum/common/ruleset/ruleset'
+import { CharacterDto } from '@simulacrum/common/character/character'
 import { createCharacter, deleteCharacter } from '@simulacrum/application/character/character-actions'
+import { Rulesets } from '@simulacrum/common'
 
 enum SortOrder {
   CreatedOldest = 'CreatedOldest',
@@ -172,7 +172,7 @@ const getDisplayName = (character: CharacterDto): string => {
 }
 
 const CharacterCard = ({ character, onDelete }: { character: CharacterDto; onDelete: () => void }) => {
-  const { data: ruleset } = useFetchRuleset(toConfiguration(character.ruleset))
+  const { data: ruleset } = useFetchRuleset(Rulesets.toConfiguration(character.ruleset))
   const traitNames = useMemo(() => {
     if (Objects.isNil(ruleset)) {
       return []
@@ -210,7 +210,11 @@ const CharacterCard = ({ character, onDelete }: { character: CharacterDto; onDel
         <Button
           size="small"
           onClick={() =>
-            createCharacter({ ...toCharacterRecord(character), name: `${character.name} (Copy)`, ruleset: toConfiguration(character.ruleset) })
+            createCharacter({
+              ...character,
+              name: `${character.name} (Copy)`,
+              ruleset: Rulesets.toConfiguration(character.ruleset),
+            })
           }
         >
           Copy

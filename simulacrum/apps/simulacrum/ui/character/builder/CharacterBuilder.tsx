@@ -37,9 +37,9 @@ import { Ability } from '@simulacrum/common/engine/ability'
 import { CharacterOptionValue } from '@simulacrum/common/engine/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
 import { Ruleset, RulesetConfiguration } from '@simulacrum/common/engine/ruleset'
-import { RulesetSummary, toConfiguration } from '@simulacrum/common/ruleset/ruleset'
+import { RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
-import { CharacterDto, toCharacterRecord } from '@simulacrum/common/character/character'
+import { CharacterDto } from '@simulacrum/common/character/character'
 import { createCharacter, updateCharacter } from '@simulacrum/application/character/character-actions'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 import { RulesetEntityContent, TraitPassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
@@ -47,6 +47,7 @@ import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
 import { RulesetPicker } from '@simulacrum/ui/ruleset/RulesetPicker'
+import { Rulesets } from '@simulacrum/common'
 import {
   CharacterOptionChoice,
   getCharacteristicSections,
@@ -66,7 +67,7 @@ import {
 
 export const CharacterBuilder = ({ character, rulesets }: { character: CharacterDto | null; rulesets: Array<RulesetSummary> }) => {
   const [newCharacterConfiguration, setNewCharacterConfiguration] = useState<RulesetConfiguration | null>(null)
-  const configuration = Objects.isPresent(character) ? toConfiguration(character.ruleset) : newCharacterConfiguration
+  const configuration = Objects.isPresent(character) ? Rulesets.toConfiguration(character.ruleset) : newCharacterConfiguration
 
   const { data: ruleset, isPending: isRulesetPending } = useFetchRuleset(configuration ?? null)
 
@@ -97,7 +98,7 @@ export const CharacterBuilder = ({ character, rulesets }: { character: Character
         key={character?.id ?? ruleset.id}
         characterId={character?.id ?? null}
         configuration={configuration}
-        initialCharacter={Objects.isPresent(character) ? toCharacterRecord(character) : newCharacter(ruleset)}
+        initialCharacter={character ?? newCharacter(ruleset)}
       />
     </RulesetContext.Provider>
   )

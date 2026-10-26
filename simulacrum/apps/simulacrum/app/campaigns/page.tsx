@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
-import * as CampaignApi from '@simulacrum/common/campaign/campaign-api'
 import { getSession } from '@simulacrum/application/auth/session'
 import { getApiContext } from '@simulacrum/application/api'
 import { CampaignList } from '@simulacrum/ui/campaign/CampaignList'
+import { CampaignApi } from '@simulacrum/common'
 
 const CampaignsPage = async () => {
   const session = await getSession()

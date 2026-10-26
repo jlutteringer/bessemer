@@ -32,12 +32,11 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { Arrays } from '@bessemer/cornerstone'
 import { CampaignDto } from '@simulacrum/common/campaign/campaign'
 import { CharacterDto } from '@simulacrum/common/character/character'
-import { isSameConfiguration } from '@simulacrum/common/engine/ruleset'
-import { toConfiguration } from '@simulacrum/common/ruleset/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { getRulesetLabel } from '@simulacrum/ui/ruleset/ruleset-label'
 import { getUserName } from '@simulacrum/ui/user/user-name'
 import { addCharacter, deleteCampaign, removeCharacter, removeMember, resetInviteCode } from '@simulacrum/application/campaign/campaign-actions'
+import { Rulesets } from '@simulacrum/common'
 
 type PendingConfirmation = {
   title: string
@@ -65,7 +64,7 @@ export const CampaignDetail = ({
   const isOwner = campaign.owner.id === currentUserId
 
   const eligibleCharacters = characters.filter(
-    (it) => it.campaignId === null && isSameConfiguration(toConfiguration(it.ruleset), toConfiguration(campaign.ruleset))
+    (it) => it.campaignId === null && Rulesets.isSameConfiguration(Rulesets.toConfiguration(it.ruleset), Rulesets.toConfiguration(campaign.ruleset))
   )
 
   const run = (action: () => Promise<void>) => {

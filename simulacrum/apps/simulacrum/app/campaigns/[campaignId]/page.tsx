@@ -1,11 +1,9 @@
 import { Uuid7 } from '@bessemer/cornerstone'
 import { notFound, redirect } from 'next/navigation'
-import * as CampaignApi from '@simulacrum/common/campaign/campaign-api'
-import * as CharacterApi from '@simulacrum/common/character/character-api'
-import * as UserApi from '@simulacrum/common/user/user-api'
 import { getSession } from '@simulacrum/application/auth/session'
 import { getApiContext } from '@simulacrum/application/api'
 import { CampaignDetail } from '@simulacrum/ui/campaign/CampaignDetail'
+import { CampaignApi, CharacterApi, UserApi } from '@simulacrum/common'
 
 const CampaignPage = async ({ params }: { params: Promise<{ campaignId: string }> }) => {
   const { campaignId } = await params

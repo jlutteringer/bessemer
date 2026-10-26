@@ -1,11 +1,11 @@
 import { Uuid7 } from '@bessemer/cornerstone'
 import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import { Router } from 'express'
-import { CreateCharacterRequestSchema, UpdateCharacterRequestSchema } from '@simulacrum/common/character/character'
 import { requireAuth } from '@simulacrum/api/auth'
 import { createApplicationContext } from '@simulacrum/api/context'
 import { UserService } from '@simulacrum/api/user/user-service'
 import { CharacterService } from '@simulacrum/api/character/character-service'
+import { CreateCharacterRequestSchema, UpdateCharacterRequestSchema } from '@simulacrum/common/character/character'
 
 export const CharacterRouter = Router()
 

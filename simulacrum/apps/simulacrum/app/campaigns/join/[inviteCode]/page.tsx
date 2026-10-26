@@ -1,8 +1,8 @@
 import { notFound, redirect } from 'next/navigation'
-import * as CampaignApi from '@simulacrum/common/campaign/campaign-api'
 import { getSession } from '@simulacrum/application/auth/session'
 import { getApiContext } from '@simulacrum/application/api'
 import { CampaignJoin } from '@simulacrum/ui/campaign/CampaignJoin'
+import { CampaignApi } from '@simulacrum/common'
 
 const JoinCampaignPage = async ({ params }: { params: Promise<{ inviteCode: string }> }) => {
   const { inviteCode } = await params
