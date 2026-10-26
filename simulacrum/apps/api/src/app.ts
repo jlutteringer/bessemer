@@ -4,6 +4,8 @@ import cors from 'cors'
 import { prisma } from '@simulacrum/api/db'
 import { UserRouter } from '@simulacrum/api/user/user-router'
 import { RulesetRouter } from '@simulacrum/api/ruleset/ruleset-router'
+import { CharacterRouter } from '@simulacrum/api/character/character-router'
+import { CampaignRouter } from '@simulacrum/api/campaign/campaign-router'
 
 const errorHandler: ErrorRequestHandler = (error, _request, response, _next) => {
   console.error(error)
@@ -24,6 +26,8 @@ export const createApp = () => {
 
   app.use(UserRouter)
   app.use(RulesetRouter)
+  app.use(CharacterRouter)
+  app.use(CampaignRouter)
   app.use(errorHandler)
   return app
 }

@@ -8,7 +8,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -28,21 +27,23 @@ import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { ContentLabel } from '@bessemer/core/codex/component/ContentLabel'
 import { ProgressionTables, CharacterOptions, Characters } from '@simulacrum/common/engine/engine'
 import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
-import { copyCharacter, deleteCharacter, StoredCharacter, useStoredCharacters } from '@simulacrum/ui/character/character-storage'
+import { getRulesetLabel } from '@simulacrum/ui/ruleset/ruleset-label'
+import { CharacterDto, toCharacterRecord } from '@simulacrum/common/character/character'
+import { toConfiguration } from '@simulacrum/common/ruleset/ruleset'
+import { createCharacter, deleteCharacter } from '@simulacrum/application/character/character-actions'
 
 enum SortOrder {
   CreatedOldest = 'CreatedOldest',
   CreatedNewest = 'CreatedNewest',
 }
 
-export const CharacterSection = () => {
-  const characters = useStoredCharacters()
+export const CharacterSection = ({ characters }: { characters: Array<CharacterDto> }) => {
   const [search, setSearch] = useState('')
   const [sortOrder, setSortOrder] = useState(SortOrder.CreatedOldest)
-  const [characterToDelete, setCharacterToDelete] = useState<StoredCharacter | null>(null)
+  const [characterToDelete, setCharacterToDelete] = useState<CharacterDto | null>(null)
 
   const visibleCharacters = useMemo(() => {
-    const matching = (characters ?? []).filter((it) => it.character.name.toLowerCase().includes(search.trim().toLowerCase()))
+    const matching = characters.filter((it) => it.name.toLowerCase().includes(search.trim().toLowerCase()))
     const sorted = Arrays.sortBy(matching, (it) => it.createdAt)
     return sortOrder === SortOrder.CreatedNewest ? Arrays.reverse(sorted) : sorted
   }, [characters, search, sortOrder])
@@ -108,12 +109,7 @@ export const CharacterSection = () => {
         </TextField>
       </Box>
 
-      {Objects.isNil(characters) ? (
-        // Local storage is only readable once the client has hydrated
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-          <CircularProgress />
-        </Box>
-      ) : Arrays.isEmpty(characters) ? (
+      {Arrays.isEmpty(characters) ? (
         <Paper
           variant="outlined"
           sx={{ p: 4, textAlign: 'center' }}
@@ -158,8 +154,8 @@ export const CharacterSection = () => {
           <Button onClick={() => setCharacterToDelete(null)}>Cancel</Button>
           <Button
             color="error"
-            onClick={() => {
-              deleteCharacter(characterToDelete!.id)
+            onClick={async () => {
+              await deleteCharacter(characterToDelete!.id)
               setCharacterToDelete(null)
             }}
           >
@@ -171,19 +167,18 @@ export const CharacterSection = () => {
   )
 }
 
-const getDisplayName = (character: StoredCharacter): string => {
-  return character.character.name.trim() || 'Unnamed Character'
+const getDisplayName = (character: CharacterDto): string => {
+  return character.name.trim() || 'Unnamed Character'
 }
 
-const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; onDelete: () => void }) => {
-  const { data: ruleset } = useFetchRuleset(character.character.ruleset)
-  // The names of the traits and abilities selected for the character's choices
+const CharacterCard = ({ character, onDelete }: { character: CharacterDto; onDelete: () => void }) => {
+  const { data: ruleset } = useFetchRuleset(toConfiguration(character.ruleset))
   const traitNames = useMemo(() => {
     if (Objects.isNil(ruleset)) {
       return []
     }
 
-    const sheet = Characters.buildCharacterDefinition(character.character, ruleset)
+    const sheet = Characters.buildCharacterDefinition(character, ruleset)
     return ProgressionTables.getValues(sheet.choices).flatMap((it) => CharacterOptions.getSelectedValue(it)?.name ?? [])
   }, [character, ruleset])
 
@@ -200,7 +195,7 @@ const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; on
           variant="body2"
           noWrap
         >
-          {Objects.isPresent(ruleset) && `${ruleset.name} · `}Level {character.character.level}
+          {getRulesetLabel(character.ruleset)} · Level {character.level}
           {!Arrays.isEmpty(traitNames) && ` | ${traitNames.join(', ')}`}
         </Typography>
       </CardContent>
@@ -214,7 +209,9 @@ const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; on
         </Button>
         <Button
           size="small"
-          onClick={() => copyCharacter(character.id)}
+          onClick={() =>
+            createCharacter({ ...toCharacterRecord(character), name: `${character.name} (Copy)`, ruleset: toConfiguration(character.ruleset) })
+          }
         >
           Copy
         </Button>

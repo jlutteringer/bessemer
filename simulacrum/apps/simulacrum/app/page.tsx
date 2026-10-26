@@ -15,7 +15,6 @@ import { BessemerNext } from '@bessemer/framework-next'
 export default function Home() {
   const application = use(BessemerNext.getApplication<ApplicationContext>())
   let character: CharacterRecord = {
-    ruleset: { id: Dnd5e.id, extensions: [] },
     name: 'Bob the Fighter',
     level: 3,
     initialValues: {

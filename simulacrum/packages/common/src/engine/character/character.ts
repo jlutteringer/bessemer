@@ -12,14 +12,13 @@ import { EvaluateExpression, ExpressionContext, Expressions } from '@bessemer/co
 import { Abilities, Characteristics, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/common/engine/engine'
 import { Arrays, Assertions, Misc, ObjectPaths, Objects } from '@bessemer/cornerstone'
 import * as Rulesets from '@simulacrum/common/engine/ruleset'
-import { Ruleset, RulesetConfiguration } from '@simulacrum/common/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { UnknownRecord } from 'type-fest'
 import { CharacterValues, RulesetEntities } from '@simulacrum/ruleset'
 
 export type CharacterInitialValues = UnknownRecord
 
 export type CharacterRecord = {
-  ruleset: RulesetConfiguration
   name: string
   level: number
   initialValues: CharacterInitialValues

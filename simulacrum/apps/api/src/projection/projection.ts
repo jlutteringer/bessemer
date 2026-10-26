@@ -1,5 +1,5 @@
+import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import { Arrays, Assertions, Maps } from '@bessemer/cornerstone'
-import { EntityId } from '@simulacrum/common/entity/entity'
 import { ApplicationContext } from '@simulacrum/api/context'
 
 export type ProjectionEntity = {
@@ -7,7 +7,7 @@ export type ProjectionEntity = {
 }
 
 export type ProjectionTarget = {
-  id: EntityId
+  id: UuidV7
 }
 
 export type Projector<EntityType extends ProjectionEntity, ProjectionType extends ProjectionTarget> = (

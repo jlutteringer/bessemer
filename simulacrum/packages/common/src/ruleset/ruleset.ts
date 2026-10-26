@@ -1,5 +1,5 @@
 import Zod from 'zod'
-import { Ruleset, RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
+import { Ruleset, RulesetConfiguration, RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
 
 export type { Ruleset }
 
@@ -19,18 +19,34 @@ export const RulesetExtensionSummarySchema: Zod.ZodType<RulesetExtensionSummary>
   name: Zod.string(),
 })
 
-export type RulesetSummary = {
+export type RulesetConfigurationSummary = {
   id: RulesetReference
   name: string
-  hasRulebook: boolean
   extensions: Array<RulesetExtensionSummary>
 }
 
-export const RulesetSummarySchema: Zod.ZodType<RulesetSummary> = Zod.object({
+export const RulesetConfigurationSummarySchema = Zod.object({
   id: RulesetReferenceSchema,
   name: Zod.string(),
-  hasRulebook: Zod.boolean(),
   extensions: Zod.array(RulesetExtensionSummarySchema),
+}) satisfies Zod.ZodType<RulesetConfigurationSummary>
+
+export const toConfiguration = (summary: RulesetConfigurationSummary): RulesetConfiguration => ({
+  id: summary.id,
+  extensions: summary.extensions.map((it) => it.id),
+})
+
+export type RulesetSummary = RulesetConfigurationSummary & {
+  hasRulebook: boolean
+}
+
+export const RulesetSummarySchema: Zod.ZodType<RulesetSummary> = RulesetConfigurationSummarySchema.extend({
+  hasRulebook: Zod.boolean(),
 })
 
 export const RulesetSchema: Zod.ZodType<Ruleset> = Zod.custom<Ruleset>()
+
+export const RulesetConfigurationSchema: Zod.ZodType<RulesetConfiguration> = Zod.object({
+  id: RulesetReferenceSchema,
+  extensions: Zod.array(RulesetExtensionReferenceSchema),
+})

@@ -1,17 +1,14 @@
-import { Dnd4e } from '@simulacrum/ruleset-dnd4e'
-import { Dnd5e } from '@simulacrum/ruleset-dnd5e'
-import { ForgeOfTheArtificer } from '@simulacrum/ruleset-dnd5e/eberron-forge-of-the-artificer'
-import { KhydrianDrift } from '@simulacrum/ruleset-khydrian-drift'
-import { Pf2e } from '@simulacrum/ruleset-pf2e'
 import { Ruleset, RulesetExtension, RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import * as Rulesets from '@simulacrum/common/engine/ruleset'
+import { RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
+import { RulesetProjections } from '@simulacrum/api/ruleset/ruleset-projections'
+import { RulesetRegistry } from '@simulacrum/api/ruleset/ruleset-registry'
 
 export namespace RulesetService {
-  const rulesets: Array<Ruleset> = [Dnd5e, Dnd4e, Pf2e, KhydrianDrift]
-  const extensions: Array<RulesetExtension> = [ForgeOfTheArtificer]
+  const { rulesets, extensions } = RulesetRegistry
 
-  export const listRulesets = (): Array<Ruleset> => {
-    return rulesets
+  export const listRulesets = (): Array<RulesetSummary> => {
+    return rulesets.map((it) => RulesetProjections.projectRulesetSummary(it, getAvailableExtensions(it)))
   }
 
   export const findRuleset = (rulesetId: RulesetReference): Ruleset | null => {

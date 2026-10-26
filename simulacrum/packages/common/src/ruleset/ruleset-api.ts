@@ -1,7 +1,5 @@
 import Zod from 'zod'
 import { Zotch } from '@bessemer/zotch'
-import { Results } from '@bessemer/cornerstone'
-import { ZotchErrorType } from '@bessemer/zotch/zotch-error'
 import { RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import {
   Ruleset,
@@ -11,7 +9,7 @@ import {
   RulesetSummary,
   RulesetSummarySchema,
 } from '@simulacrum/common/ruleset/ruleset'
-import { ApiContext, AuthorizationHeadersSchema, getAuthorizationHeaders, unwrapResult } from '@simulacrum/common/api/api'
+import { ApiContext, AuthorizationHeadersSchema, getAuthorizationHeaders, isNotFound, unwrapResult } from '@simulacrum/common/api/api'
 
 export const RulesetApi = Zotch.api({
   listRulesets: {
@@ -53,7 +51,7 @@ export const fetchRuleset = async (
     baseUrl: context.baseUrl,
   })
 
-  if (Results.isFailure(response) && response.value.type === ZotchErrorType.Unstructured && response.value.response.status === 404) {
+  if (isNotFound(response)) {
     return null
   }
 

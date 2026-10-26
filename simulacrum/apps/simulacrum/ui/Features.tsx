@@ -63,7 +63,7 @@ const Chip = styled(MuiChip, { shouldForwardProp: (prop) => prop !== 'selected' 
 interface MobileLayoutProps {
   selectedItemIndex: number
   handleItemClick: (index: number) => void
-  selectedFeature: typeof items[0]
+  selectedFeature: (typeof items)[0]
 }
 
 export function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }: MobileLayoutProps) {

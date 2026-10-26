@@ -1,7 +1,7 @@
 import Zod from 'zod'
 import { Objects, Results } from '@bessemer/cornerstone'
 import { Result } from '@bessemer/cornerstone/result'
-import { ZotchError } from '@bessemer/zotch/zotch-error'
+import { ZotchError, ZotchErrorType } from '@bessemer/zotch/zotch-error'
 
 export type ApiContext = {
   baseUrl: string
@@ -21,4 +21,8 @@ export const unwrapResult = <T>(result: Result<T, ZotchError>): T => {
   }
 
   return result
+}
+
+export const isNotFound = <T>(result: Result<T, ZotchError>): boolean => {
+  return Results.isFailure(result) && result.value.type === ZotchErrorType.Unstructured && result.value.response.status === 404
 }

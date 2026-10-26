@@ -1,13 +1,15 @@
 import { z } from 'zod'
 import { Config } from '@simulacrum/api/config'
 import { ApplicationContext } from '@simulacrum/api/context'
-import { UserEntity } from '@simulacrum/api/user/user-projections'
+import { UserDto } from '@simulacrum/common/user/user'
+import * as Projections from '@simulacrum/api/projection/projection'
+import { UserProjections } from '@simulacrum/api/user/user-projections'
+import { UserEntity, UserInclude } from '@simulacrum/api/user/user-entity'
 import type { Auth } from '@simulacrum/api/auth'
 
 export namespace UserService {
   const UserInfoSchema = z.object({ email: z.string(), given_name: z.string(), family_name: z.string() })
 
-  // Access tokens don't carry the email or name, so the first request from a new user reads them from Cognito's userInfo endpoint
   const fetchUserInfo = async (accessToken: string) => {
     const response = await fetch(`${Config.COGNITO_DOMAIN}/oauth2/userInfo`, {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -18,9 +20,12 @@ export namespace UserService {
     return UserInfoSchema.parse(await response.json())
   }
 
-  const UserInclude = { profile: true } as const
+  export const resolveUser = async (auth: Auth, context: ApplicationContext): Promise<UserDto> => {
+    const user = await findOrCreateUser(auth, context)
+    return Projections.projectOne(user, UserProjections.projectUser, context)
+  }
 
-  export const resolveUser = async (auth: Auth, context: ApplicationContext): Promise<UserEntity> => {
+  const findOrCreateUser = async (auth: Auth, context: ApplicationContext): Promise<UserEntity> => {
     const existing = await context.prisma.userAuthentication.findUnique({
       where: { externalId: auth.sub },
       include: { user: { include: UserInclude } },

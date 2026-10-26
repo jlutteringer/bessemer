@@ -4,7 +4,7 @@ import { Abilities, Tags, Characteristics, Effects, ProgressionTables, Traits, C
 import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Characteristic, CharacteristicGroup } from '@simulacrum/common/engine/characteristic'
-import { Ruleset, RulesetConfiguration } from '@simulacrum/common/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { Ability } from '@simulacrum/common/engine/ability'
 import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
 import { Arrays, ObjectPaths, Objects } from '@bessemer/cornerstone'
@@ -63,9 +63,8 @@ export const setInitialValue = (character: CharacterRecord, characteristic: Char
   return { ...character, initialValues }
 }
 
-export const newCharacter = (configuration: RulesetConfiguration, ruleset: Ruleset): CharacterRecord => {
+export const newCharacter = (ruleset: Ruleset): CharacterRecord => {
   const character: CharacterRecord = {
-    ruleset: configuration,
     name: '',
     level: 1,
     initialValues: {},

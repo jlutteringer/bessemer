@@ -1,18 +1,21 @@
-import { Instants } from '@bessemer/cornerstone'
-import * as UuidV7 from '@bessemer/cornerstone/uuid/uuid-v7'
-import { UserDto, UserProfileDto, UserStatusSchema } from '@simulacrum/common/user/user'
-import { Profile, User } from '@simulacrum/api/generated/prisma/client'
+import { Instants, Uuid7 } from '@bessemer/cornerstone'
+import { UserDto, UserProfileDto, UserStatusSchema, UserSummaryDto } from '@simulacrum/common/user/user'
+import { Profile } from '@simulacrum/api/generated/prisma/client'
+import { UserEntity } from '@simulacrum/api/user/user-entity'
 import * as Projections from '@simulacrum/api/projection/projection'
 import { ApplicationContext } from '@simulacrum/api/context'
 
-export type UserEntity = User & {
-  profile: Profile | null
-}
-
 export namespace UserProjections {
+  export const projectUserSummary = Projections.mappingProjector(
+    (user: UserEntity): UserSummaryDto => ({
+      id: Uuid7.from(user.id),
+      profile: user.profile === null ? null : { firstName: user.profile.firstName, lastName: user.profile.lastName },
+    })
+  )
+
   export const projectUserProfile = Projections.mappingProjector(
     (profile: Profile): UserProfileDto => ({
-      id: UuidV7.from(profile.id),
+      id: Uuid7.from(profile.id),
       createdAt: Instants.toLiteral(profile.createdAt),
       updatedAt: Instants.toLiteral(profile.updatedAt),
       email: profile.email,
@@ -29,7 +32,7 @@ export namespace UserProjections {
     )
 
     return users.map((user) => ({
-      id: UuidV7.from(user.id),
+      id: Uuid7.from(user.id),
       createdAt: Instants.toLiteral(user.createdAt),
       updatedAt: Instants.toLiteral(user.updatedAt),
       status: UserStatusSchema.parse(user.status),

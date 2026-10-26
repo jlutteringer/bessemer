@@ -123,3 +123,9 @@ const applyExtension = (ruleset: Ruleset, extension: RulesetExtension): Ruleset 
     content: merge(ruleset.content, extension.content, (it) => it.id),
   }
 }
+
+export const isSameConfiguration = (first: RulesetConfiguration, second: RulesetConfiguration): boolean => {
+  return (
+    first.id === second.id && first.extensions.length === second.extensions.length && first.extensions.every((it) => second.extensions.includes(it))
+  )
+}

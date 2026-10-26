@@ -15,8 +15,11 @@ model User {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
-  authentication UserAuthentication?
-  profile        Profile?
+  authentication  UserAuthentication?
+  profile         Profile?
+  ownedCharacters Character[]         @relation("CharacterOwner")
+  ownedCampaigns  Campaign[]          @relation("CampaignOwner")
+  memberships     CampaignMember[]
 
   @@index([status], map: "idx_users_status")
   @@map("users")
@@ -46,4 +49,57 @@ model Profile {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("profiles")
+}
+
+model Character {
+  id                  String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  ownerId             String   @map("owner_id") @db.Uuid
+  campaignId          String?  @map("campaign_id") @db.Uuid
+  name                String   @db.VarChar
+  level               Int
+  rulesetId           String   @map("ruleset_id") @db.VarChar
+  rulesetExtensionIds String[] @default([]) @map("ruleset_extension_ids") @db.VarChar
+  record              Json     @db.JsonB
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  owner    User      @relation("CharacterOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  campaign Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  @@index([ownerId], map: "idx_characters_owner_id")
+  @@index([campaignId], map: "idx_characters_campaign_id")
+  @@map("characters")
+}
+
+model Campaign {
+  id                  String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  ownerId             String   @map("owner_id") @db.Uuid
+  name                String   @db.VarChar
+  rulesetId           String   @map("ruleset_id") @db.VarChar
+  rulesetExtensionIds String[] @default([]) @map("ruleset_extension_ids") @db.VarChar
+  inviteCode          String   @unique @map("invite_code") @db.VarChar
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  owner      User             @relation("CampaignOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members    CampaignMember[]
+  characters Character[]
+
+  @@index([ownerId], map: "idx_campaigns_owner_id")
+  @@map("campaigns")
+}
+
+model CampaignMember {
+  id         String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  campaignId String   @map("campaign_id") @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, userId])
+  @@index([userId], map: "idx_campaign_members_user_id")
+  @@map("campaign_members")
 }

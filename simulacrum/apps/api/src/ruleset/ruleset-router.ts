@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { Objects } from '@bessemer/cornerstone'
 import { RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { RulesetService } from '@simulacrum/api/ruleset/ruleset-service'
-import { RulesetProjections } from '@simulacrum/api/ruleset/ruleset-projections'
 
 export const RulesetRouter = Router()
 
@@ -19,7 +18,7 @@ const parseExtensionIds = (value: unknown): Array<RulesetExtensionReference> | n
 }
 
 RulesetRouter.get('/rulesets', (_request, response) => {
-  response.json(RulesetService.listRulesets().map((it) => RulesetProjections.projectRulesetSummary(it, RulesetService.getAvailableExtensions(it))))
+  response.json(RulesetService.listRulesets())
 })
 
 RulesetRouter.get('/rulesets/:rulesetId', (request, response) => {

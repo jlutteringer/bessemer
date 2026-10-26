@@ -276,7 +276,7 @@ const TestDataConst = [
 
 // JOHN the parsing voodoo doesn't work with readonly types :(
 type TestDataConstType = WritableDeep<typeof TestDataConst>
-const TestObjectConst = TestDataConst[0] as WritableDeep<typeof TestDataConst[0]>
+const TestObjectConst = TestDataConst[0] as WritableDeep<(typeof TestDataConst)[0]>
 type TestObjectConstType = WritableDeep<typeof TestObjectConst>
 
 describe('TypePaths.from', () => {

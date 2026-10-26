@@ -21,7 +21,7 @@ export const defineExpression = <ReturnType, ArgumentType extends Array<unknown>
 export const isType = <ReturnValue, ArgumentType extends Array<any>, ExpressionType extends Expression<ReturnValue>>(
   expression: Expression<ReturnValue>,
   expressionDefinition: ExpressionDefinition<ReturnValue, ArgumentType, ExpressionType>
-): expression is ReturnType<typeof expressionDefinition['builder']> => {
+): expression is ReturnType<(typeof expressionDefinition)['builder']> => {
   if (!isExpression(expression)) {
     return false
   }

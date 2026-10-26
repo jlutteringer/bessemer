@@ -1,5 +1,6 @@
 'use client'
 
+import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import * as React from 'react'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
@@ -12,10 +13,8 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
-import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
 import CircularProgress from '@mui/material/CircularProgress'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -27,7 +26,6 @@ import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import SaveIcon from '@mui/icons-material/Save'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import MenuBookIcon from '@mui/icons-material/MenuBook'
 import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
 import { CharacterRecord, CharacterSheet } from '@simulacrum/common/engine/character/character'
 import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
@@ -39,15 +37,16 @@ import { Ability } from '@simulacrum/common/engine/ability'
 import { CharacterOptionValue } from '@simulacrum/common/engine/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
 import { Ruleset, RulesetConfiguration } from '@simulacrum/common/engine/ruleset'
-import { RulesetExtensionSummary, RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
+import { RulesetSummary, toConfiguration } from '@simulacrum/common/ruleset/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
-import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
+import { CharacterDto, toCharacterRecord } from '@simulacrum/common/character/character'
+import { createCharacter, updateCharacter } from '@simulacrum/application/character/character-actions'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 import { RulesetEntityContent, TraitPassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
-import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
+import { RulesetPicker } from '@simulacrum/ui/ruleset/RulesetPicker'
 import {
   CharacterOptionChoice,
   getCharacteristicSections,
@@ -65,42 +64,17 @@ import {
   setLevel,
 } from '@simulacrum/ui/character/builder/character-builder-model'
 
-/**
- * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
- */
-export const CharacterBuilder = ({ characterId, rulesets }: { characterId: Ulid | null; rulesets: Array<RulesetSummary> }) => {
-  const stored = useStoredCharacter(characterId)
+export const CharacterBuilder = ({ character, rulesets }: { character: CharacterDto | null; rulesets: Array<RulesetSummary> }) => {
   const [newCharacterConfiguration, setNewCharacterConfiguration] = useState<RulesetConfiguration | null>(null)
-  const configuration = stored?.character.ruleset ?? newCharacterConfiguration
+  const configuration = Objects.isPresent(character) ? toConfiguration(character.ruleset) : newCharacterConfiguration
 
   const { data: ruleset, isPending: isRulesetPending } = useFetchRuleset(configuration ?? null)
 
-  // Local storage is only readable once the client has hydrated
-  if (stored === null || (Objects.isPresent(configuration) && isRulesetPending)) {
+  if (Objects.isPresent(configuration) && isRulesetPending) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
         <CircularProgress />
       </Box>
-    )
-  }
-
-  if (characterId !== null && stored === undefined) {
-    return (
-      <Alert
-        severity="warning"
-        action={
-          <Button
-            component={Link}
-            href="/characters"
-            color="inherit"
-            size="small"
-          >
-            Back to characters
-          </Button>
-        }
-      >
-        This character could not be found.
-      </Alert>
     )
   }
 
@@ -120,9 +94,10 @@ export const CharacterBuilder = ({ characterId, rulesets }: { characterId: Ulid 
   return (
     <RulesetContext.Provider value={ruleset}>
       <CharacterEditor
-        key={characterId ?? ruleset.id}
-        characterId={characterId}
-        initialCharacter={stored?.character ?? newCharacter(configuration, ruleset)}
+        key={character?.id ?? ruleset.id}
+        characterId={character?.id ?? null}
+        configuration={configuration}
+        initialCharacter={Objects.isPresent(character) ? toCharacterRecord(character) : newCharacter(ruleset)}
       />
     </RulesetContext.Provider>
   )
@@ -130,22 +105,6 @@ export const CharacterBuilder = ({ characterId, rulesets }: { characterId: Ulid 
 
 const RulesetSelection = ({ rulesets, onSelect }: { rulesets: Array<RulesetSummary>; onSelect: (configuration: RulesetConfiguration) => void }) => {
   const [configuration, setConfiguration] = useState<RulesetConfiguration | null>(null)
-
-  const selectRuleset = (ruleset: RulesetSummary) => {
-    if (configuration?.id !== ruleset.id) {
-      setConfiguration({ id: ruleset.id, extensions: ruleset.extensions.map((it) => it.id) })
-    }
-  }
-
-  const toggleExtension = (extension: RulesetExtensionSummary) => {
-    if (Objects.isPresent(configuration)) {
-      const { extensions } = configuration
-      setConfiguration({
-        ...configuration,
-        extensions: extensions.includes(extension.id) ? extensions.filter((it) => it !== extension.id) : [...extensions, extension.id],
-      })
-    }
-  }
 
   return (
     <Box>
@@ -156,91 +115,11 @@ const RulesetSelection = ({ rulesets, onSelect }: { rulesets: Array<RulesetSumma
           subheader="The rules your character is built with, and any optional extensions to include. These can't be changed later."
         />
         <CardContent>
-          <Grid
-            container
-            spacing={2}
-          >
-            {rulesets.map((ruleset) => {
-              const selected = configuration?.id === ruleset.id
-              const { extensions } = ruleset
-
-              return (
-                <Grid
-                  key={ruleset.id}
-                  size={{ xs: 12, sm: 6 }}
-                >
-                  {/* The whole card selects the ruleset; a CardActionArea can't wrap it, since the extension checkboxes can't be nested in a button */}
-                  <Card
-                    variant="outlined"
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => selectRuleset(ruleset)}
-                    onKeyDown={(event) => {
-                      if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
-                        event.preventDefault()
-                        selectRuleset(ruleset)
-                      }
-                    }}
-                    sx={{
-                      height: '100%',
-                      cursor: 'pointer',
-                      borderColor: selected ? 'primary.main' : undefined,
-                      // An inset shadow thickens the selected border without changing the card's size
-                      boxShadow: selected ? (theme) => `inset 0 0 0 1px ${theme.palette.primary.main}` : undefined,
-                      '&:hover': { bgcolor: 'action.hover' },
-                    }}
-                  >
-                    <CardContent>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        <Typography variant="h6">{ruleset.name}</Typography>
-                        {ruleset.hasRulebook && (
-                          <IconButton
-                            component="a"
-                            href={`/rulebook/${ruleset.id}`}
-                            target="_blank"
-                            rel="noopener"
-                            size="small"
-                            color="primary"
-                            aria-label={`${ruleset.name} rulebook`}
-                            onClick={(event) => event.stopPropagation()}
-                            // Centred on the heading's capitals rather than its line, which leaves room for descenders
-                            sx={{ transform: 'translateY(-1px)' }}
-                          >
-                            <MenuBookIcon fontSize="small" />
-                          </IconButton>
-                        )}
-                      </Box>
-                    </CardContent>
-                    {!Arrays.isEmpty(extensions) && (
-                      <CardContent sx={{ pt: 0 }}>
-                        <Typography
-                          variant="overline"
-                          color="text.secondary"
-                        >
-                          Extensions
-                        </Typography>
-                        <Stack sx={{ alignItems: 'flex-start' }}>
-                          {extensions.map((extension) => (
-                            <FormControlLabel
-                              key={extension.id}
-                              control={
-                                <Checkbox
-                                  checked={selected && configuration.extensions.includes(extension.id)}
-                                  disabled={!selected}
-                                  onChange={() => toggleExtension(extension)}
-                                />
-                              }
-                              label={extension.name}
-                            />
-                          ))}
-                        </Stack>
-                      </CardContent>
-                    )}
-                  </Card>
-                </Grid>
-              )
-            })}
-          </Grid>
+          <RulesetPicker
+            rulesets={rulesets}
+            value={configuration}
+            onChange={setConfiguration}
+          />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
             <Button
               variant="contained"
@@ -276,9 +155,6 @@ const RulesetEntityInfo = ({ entity }: { entity: RulesetEntity }) => {
   )
 }
 
-/**
- * A number input that can be left blank while typing. A blank field is stored as 0, and shows 0 once the field loses focus.
- */
 const NumberField = ({
   value,
   onChange,
@@ -286,7 +162,6 @@ const NumberField = ({
   ...props
 }: Omit<TextFieldProps, 'value' | 'onChange' | 'onBlur' | 'type'> & { value: number; onChange: (value: number) => void; onBlur: () => void }) => {
   const [text, setText] = useState(String(value))
-  // Follow changes made outside the field (e.g. a reset), but keep what's typed while it still means the same number
   const displayed = Number(text) === value ? text : String(value)
 
   return (
@@ -306,10 +181,19 @@ const NumberField = ({
   )
 }
 
-const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid | null; initialCharacter: CharacterRecord }) => {
+const CharacterEditor = ({
+  characterId,
+  configuration,
+  initialCharacter,
+}: {
+  characterId: UuidV7 | null
+  configuration: RulesetConfiguration
+  initialCharacter: CharacterRecord
+}) => {
   const ruleset = useRuleset()
   const router = useRouter()
   const [showSaved, setShowSaved] = useState(false)
+  const [saveFailed, setSaveFailed] = useState(false)
   const { control, handleSubmit, reset, getValues, setValue, formState } = useForm<CharacterRecord>({
     defaultValues: initialCharacter,
     mode: 'onChange',
@@ -322,24 +206,28 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
     [character, ruleset]
   )
   const optionChoices = useMemo(() => getCharacterOptionChoices(character), [character])
-  // A new character has nothing saved yet, so it's always unsaved
   const hasUnsavedChanges = characterId === null || formState.isDirty
 
-  // Level and trait changes go through the builder model, which can also drop selections that are no longer valid
   const applyCharacter = (updated: CharacterRecord) => {
     setValue('level', updated.level, { shouldDirty: true })
     setValue('selections', updated.selections, { shouldDirty: true })
     setValue('selectedAbilities', updated.selectedAbilities, { shouldDirty: true })
   }
 
-  const handleSave = handleSubmit((values) => {
-    const saved = saveCharacter(characterId, values)
-    reset(values)
-    setShowSaved(true)
+  const handleSave = handleSubmit(async (values) => {
+    try {
+      if (characterId === null) {
+        const created = await createCharacter({ ...values, ruleset: configuration })
+        reset(values)
+        router.replace(`/characters/${created.id}/builder`)
+      } else {
+        await updateCharacter(characterId, values)
+        reset(values)
+      }
 
-    if (characterId === null) {
-      // Move to the saved character's URL so further saves update it rather than creating another copy
-      router.replace(`/characters/${saved.id}/builder`)
+      setShowSaved(true)
+    } catch {
+      setSaveFailed(true)
     }
   })
 
@@ -371,6 +259,7 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                 variant="contained"
                 startIcon={<SaveIcon />}
                 onClick={handleSave}
+                loading={formState.isSubmitting}
               >
                 Save
               </Button>
@@ -439,7 +328,6 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
                           name={getInitialValueFieldName(characteristic)}
                           control={control}
                           render={({ field, fieldState }) => {
-                            // Show the score after increases from traits (e.g. a Background), when they change it
                             const total = Characteristics.getCharacteristicValue(character, characteristic).value
                             const increase = typeof field.value === 'number' ? total - field.value : 0
 
@@ -509,6 +397,18 @@ const CharacterEditor = ({ characterId, initialCharacter }: { characterId: Ulid 
           onClose={() => setShowSaved(false)}
           message="Character saved"
         />
+        <Snackbar
+          open={saveFailed}
+          autoHideDuration={5000}
+          onClose={() => setSaveFailed(false)}
+        >
+          <Alert
+            severity="error"
+            onClose={() => setSaveFailed(false)}
+          >
+            The character couldn&apos;t be saved. Try again.
+          </Alert>
+        </Snackbar>
       </Box>
     </CharacterSheetContext.Provider>
   )
@@ -522,7 +422,6 @@ const LevelTraits = ({
   onSelectMany,
 }: {
   level: number
-  // Every trait the character has, by level
   heldTraits: ProgressionTable<TraitReference>
   choices: Array<CharacterOptionChoice>
   onSelect: (choice: CharacterOptionChoice, value: CharacterOptionValue | null) => void
@@ -540,7 +439,6 @@ const LevelTraits = ({
         ) : (
           <Stack spacing={3}>
             {choiceGroups.map((group) => {
-              // An option granted more than once at this level (e.g. three weapon masteries) is chosen with a single multi-select
               if (group.length > 1) {
                 return (
                   <Box key={group[0]!.key}>
@@ -580,8 +478,6 @@ const LevelTraits = ({
   )
 }
 
-// Groups choices for the same option together, in the order each option first appears
-// (Arrays.groupBy only groups adjacent elements, and choices for the same option aren't always adjacent)
 const groupChoicesByOption = (choices: Array<CharacterOptionChoice>): Array<Array<CharacterOptionChoice>> => {
   return [...Maps.groupBy(choices, (it) => it.option.id).values()]
 }
@@ -596,7 +492,6 @@ const MultiValueSelect = ({
   onSelect: (values: Array<CharacterOptionValue>) => void
 }) => {
   const selected = Arrays.fromNilable(choices.map((it) => it.selection))
-  // Each choice's values exclude the other choices' selections, so combining them gives every value available to the group
   const options = Arrays.dedupeBy(
     choices.flatMap((it) => it.values),
     (it) => it.id
@@ -810,7 +705,6 @@ const AbilityCard = ({ ability }: { ability: Ability }) => {
   )
 }
 
-// A trait in the Abilities section, which summarizes what it does in play rather than describing it
 const PassiveTraitCard = ({ trait }: { trait: Trait }) => {
   return (
     <Card sx={{ height: '100%' }}>
