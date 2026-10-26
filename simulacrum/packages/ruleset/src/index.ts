@@ -12,6 +12,8 @@ import * as Content from '@simulacrum/ruleset/content'
 import * as ActionTypes from '@simulacrum/ruleset/action-type'
 import * as RulesetEntities from '@simulacrum/ruleset/ruleset-entity'
 import * as CharacterValues from '@simulacrum/ruleset/character-value'
+import * as ActionTests from '@simulacrum/ruleset/action-test'
+import * as ActionEffects from '@simulacrum/ruleset/action-effect'
 
 export {
   Attributes,
@@ -28,4 +30,6 @@ export {
   ActionTypes,
   RulesetEntities,
   CharacterValues,
+  ActionTests,
+  ActionEffects,
 }

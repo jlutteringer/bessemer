@@ -1,4 +1,4 @@
-import { Abilities } from '@simulacrum/ruleset'
+import { Abilities, ActionEffects } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
 import { Ally, Arcane, Cantrip, Divine, Enemy, Occult, Primal, Spell } from '@simulacrum/ruleset-pf2e/tag'
@@ -80,11 +80,15 @@ export const Daze = Abilities.defineAbility('spell/daze', {
   actions: [
     {
       name: 'Daze',
-      description:
-        "**Defense** Will\n\nYou push into the target's mind and daze it with a mental jolt. The jolt deals 1d6 mental damage, with a basic [Will save](characteristic:will). If the target critically fails the save, it is also [stunned 1](content:conditions/stunned).\n\n**Heightened (+2)** The damage increases by 1d6.",
+      description: '**Defense** Will\n\n**Heightened (+2)** The damage increases by 1d6.',
       action: ActionTypes.TwoActions,
       targeting: { target: { range: 60, count: 1 } },
-      duration: { rounds: 1 },
+      effects: [
+        ActionEffects.descriptive(
+          "You push into the target's mind and daze it with a mental jolt. The jolt deals 1d6 mental damage, with a basic [Will save](characteristic:will). If the target critically fails the save, it is also [stunned 1](content:conditions/stunned).",
+          { duration: { rounds: 1 } }
+        ),
+      ],
     },
   ],
 })
@@ -217,14 +221,18 @@ export const ForbiddingWard = Abilities.defineAbility('spell/forbidding-ward', {
   actions: [
     {
       name: 'Forbidding Ward',
-      description:
-        "You ward an ally against the attacks and hostile spells from the target enemy. The target ally gains a +1 status bonus to [Armor Class](characteristic:armor-class) and saving throws against the target enemy's attacks, spells, and other effects.\n\n**Heightened (6th)** The status bonus increases to +2.",
+      description: '**Heightened (6th)** The status bonus increases to +2.',
       action: ActionTypes.TwoActions,
       targeting: {
         first: { range: 30, count: 1, filter: { tags: [Ally] } },
         second: { range: 30, count: 1, filter: { tags: [Enemy] } },
       },
-      duration: { rounds: 10 },
+      effects: [
+        ActionEffects.descriptive(
+          "You ward an ally against the attacks and hostile spells from the target enemy. The target ally gains a +1 status bonus to [Armor Class](characteristic:armor-class) and saving throws against the target enemy's attacks, spells, and other effects.",
+          { duration: { rounds: 10 } }
+        ),
+      ],
     },
   ],
 })

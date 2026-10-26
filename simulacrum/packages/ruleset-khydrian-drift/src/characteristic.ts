@@ -238,7 +238,7 @@ export const WillDefense: Characteristic = Characteristics.defineCharacteristic(
 export const BrawnAttackRating: Characteristic = Characteristics.defineCharacteristic({
   group: AttackRatingsGroup,
   template: Characteristics.defineTemplate('brawn-attack-rating', {
-    name: 'Brawn Attack Rating',
+    name: 'Brawn',
     description: `Brawn attack rating applies to [melee weapon attack rolls](content:combat/melee-attacks) and melee physical attack rolls. It is calculated by Proficiency + [Brawn Rating](characteristic:brawn).`,
     path: ObjectPaths.from('brawnAttackRating'),
   }),
@@ -248,7 +248,7 @@ export const BrawnAttackRating: Characteristic = Characteristics.defineCharacter
 export const AgilityAttackRating: Characteristic = Characteristics.defineCharacteristic({
   group: AttackRatingsGroup,
   template: Characteristics.defineTemplate('agility-attack-rating', {
-    name: 'Agility Attack Rating',
+    name: 'Agility',
     description: `Agility attack rating applies to [ranged weapon attack rolls](content:combat/ranged-attacks) and ranged physical attack rolls. It is calculated by Proficiency + [Agility Rating](characteristic:agility).`,
     path: ObjectPaths.from('agilityAttackRating'),
   }),
@@ -258,7 +258,7 @@ export const AgilityAttackRating: Characteristic = Characteristics.defineCharact
 export const WillpowerAttackRating: Characteristic = Characteristics.defineCharacteristic({
   group: AttackRatingsGroup,
   template: Characteristics.defineTemplate('willpower-attack-rating', {
-    name: 'Willpower Attack Rating',
+    name: 'Willpower',
     description: `Willpower attack rating applies to Khydrian attack rolls. It is calculated by Proficiency + [Willpower Rating](characteristic:willpower).`,
     path: ObjectPaths.from('willpowerAttackRating'),
   }),
@@ -268,7 +268,7 @@ export const WillpowerAttackRating: Characteristic = Characteristics.defineChara
 export const IntelligenceAttackRating: Characteristic = Characteristics.defineCharacteristic({
   group: AttackRatingsGroup,
   template: Characteristics.defineTemplate('intelligence-attack-rating', {
-    name: 'Intelligence Attack Rating',
+    name: 'Intelligence',
     description: `Intelligence attack rating applies to tech attack rolls. It is calculated by Proficiency + [Intelligence Rating](characteristic:intelligence).`,
     path: ObjectPaths.from('intelligenceAttackRating'),
   }),

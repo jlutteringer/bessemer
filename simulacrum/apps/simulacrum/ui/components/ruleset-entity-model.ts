@@ -1,17 +1,19 @@
 import { CharacterSheet } from '@simulacrum/common/engine/character/character'
-import { Tags, Effects, ResourcePools, Rulesets } from '@simulacrum/common/engine/engine'
+import { Characteristics, Tags, Effects, ResourcePools, Rulesets } from '@simulacrum/common/engine/engine'
 import { Trait } from '@simulacrum/common/engine/trait'
 import { Ruleset } from '@simulacrum/common/engine/ruleset'
-import { Ability } from '@simulacrum/common/engine/ability'
-import { TargetSelection } from '@simulacrum/ruleset/targeting'
+import { Ability, AbilityAction } from '@simulacrum/common/engine/ability'
+import { Area, AreaShape, TargetSelection } from '@simulacrum/ruleset/targeting'
 import { Duration } from '@simulacrum/ruleset/duration'
+import { ActionTest, ActionTestType } from '@simulacrum/ruleset/action-test'
+import { Characteristic } from '@simulacrum/ruleset/characteristic'
 import { ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { DescriptiveEffect } from '@simulacrum/common/engine/effect'
 import { CooldownRate } from '@simulacrum/common/engine/resource-pool'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
-import { EvaluateExpression } from '@bessemer/cornerstone/expression'
+import { EvaluateExpression, Expression } from '@bessemer/cornerstone/expression'
 import { Arrays, Assertions, Objects } from '@bessemer/cornerstone'
 
 export const getPassiveEffects = (trait: Trait): Array<DescriptiveEffect> => {
@@ -66,22 +68,60 @@ export const getAbilityResourceLabels = (ability: Ability, sheet: CharacterSheet
   })
 }
 
-export const getRangeLabel = ({ range }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string | null => {
+export const getRangeLabel = ({ range, area }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string | null => {
   const distance = typeof range === 'number' ? range : evaluate?.(range) ?? null
-  if (Objects.isNil(distance)) {
+  if (Objects.isNil(distance) || (Objects.isPresent(area) && distance === 0)) {
     return null
   }
 
   return distance === 0 ? 'Touch' : `${distance} ${distance === 1 ? ruleset.distanceUnit.singular : ruleset.distanceUnit.plural}`
 }
 
-export const getTargetLabel = ({ count, filter }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string => {
+export const getAreaLabel = (area: Area, ruleset: Ruleset, evaluate: EvaluateExpression | null): string | null => {
+  const measure = (value: Expression<number>) => {
+    const amount = typeof value === 'number' ? value : evaluate?.(value) ?? null
+    return Objects.isNil(amount) ? null : `${amount}-${ruleset.distanceUnit.singular}`
+  }
+
+  switch (area.type) {
+    case AreaShape.Sphere:
+      return Objects.isNil(measure(area.radius)) ? null : `${measure(area.radius)} radius`
+    case AreaShape.Cylinder:
+      return Objects.isNil(measure(area.radius)) ? null : `${measure(area.radius)} radius cylinder`
+    case AreaShape.Cone:
+      return Objects.isNil(measure(area.length)) ? null : `${measure(area.length)} cone`
+    case AreaShape.Cube:
+      return Objects.isNil(measure(area.size)) ? null : `${measure(area.size)} cube`
+    case AreaShape.Line:
+      return Objects.isNil(measure(area.length)) ? null : `${measure(area.length)} line`
+  }
+}
+
+export const getTargetLabel = ({ count, filter, area }: TargetSelection, ruleset: Ruleset, evaluate: EvaluateExpression | null): string => {
+  if (Objects.isPresent(area)) {
+    return getAreaLabel(area, ruleset, evaluate) ?? 'area'
+  }
+
   const amount = typeof count === 'number' ? count : evaluate?.(count) ?? null
   const kinds = Arrays.isEmpty(filter.tags)
     ? 'target'
     : filter.tags.map((group) => group.map((it) => Tags.getTagById(it, ruleset).name).join(' or ')).join(' ')
 
   return Objects.isNil(amount) ? kinds : `${amount} ${kinds}`
+}
+
+export const getTestLabel = (test: ActionTest, ruleset: Ruleset, character: CharacterSheet | null): string => {
+  const offense = Rulesets.getEntityById(test.offense, ruleset) as Characteristic
+  const defense = Rulesets.getEntityById(test.defense, ruleset) as Characteristic
+  const offenseValue = Objects.isNil(character) ? null : Characteristics.getCharacteristicValue(character, offense).value
+
+  if (test.type === ActionTestType.Save) {
+    const dc = Objects.isNil(offenseValue) ? '' : ` (${offenseValue})`
+    return `${defense.name} save vs. ${offense.name}${dc}`
+  }
+
+  const modifier = Objects.isNil(offenseValue) ? '' : ` (${offenseValue >= 0 ? '+' : ''}${offenseValue})`
+  return `${offense.name}${modifier} vs. ${defense.name}`
 }
 
 export const getDurationLabel = (duration: Duration | null, evaluate: EvaluateExpression | null): string | null => {
@@ -93,8 +133,15 @@ export const getDurationLabel = (duration: Duration | null, evaluate: EvaluateEx
   return Objects.isNil(rounds) ? null : `${rounds} ${rounds === 1 ? 'round' : 'rounds'}`
 }
 
+const getActionTexts = (action: AbilityAction): Array<RichTextJson> => {
+  return [
+    ...(Objects.isPresent(action.description) ? [action.description] : []),
+    ...[...action.effects, ...(action.test?.success ?? []), ...(action.test?.failure ?? [])].map((it) => it.description),
+  ]
+}
+
 export const hasDescribedActions = (ability: Ability): boolean => {
-  return ability.actions.length > 1 && ability.actions.some((it) => Objects.isPresent(it.description))
+  return ability.actions.length > 1 && ability.actions.some((it) => !Arrays.isEmpty(getActionTexts(it)))
 }
 
 export const getEntityTexts = (entity: RulesetEntity): Array<RichTextJson> => {
@@ -108,7 +155,7 @@ export const getEntityTexts = (entity: RulesetEntity): Array<RichTextJson> => {
     return [
       ...description,
       ...Effects.filter(entity.effects, Effects.Descriptive).map((it) => it.description),
-      ...entity.actions.flatMap((it) => (Objects.isPresent(it.description) ? [it.description] : [])),
+      ...entity.actions.flatMap(getActionTexts),
     ]
   }
 

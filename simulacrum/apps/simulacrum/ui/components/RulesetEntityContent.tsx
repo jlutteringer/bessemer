@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useContext } from 'react'
 import { Box, Divider, Stack, Typography } from '@mui/material'
-import { Bolt, HourglassBottom, TrackChanges } from '@mui/icons-material'
+import { Bolt, Casino, HourglassBottom, TrackChanges } from '@mui/icons-material'
 import { Arrays, Objects } from '@bessemer/cornerstone'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { Ability } from '@simulacrum/common/engine/ability'
@@ -28,6 +28,7 @@ import {
   getRangeLabel,
   getTargetLabel,
   hasDescribedActions,
+  getTestLabel,
 } from '@simulacrum/ui/components/ruleset-entity-model'
 
 export const RulesetEntityContent = ({ entity }: { entity: RulesetEntity }) => {
@@ -194,6 +195,10 @@ const AbilityContent = ({ ability: rulesetAbility }: { ability: Ability }) => {
               evaluate={evaluate}
             />
             {Objects.isPresent(it.description) && <SimulacrumRichText text={it.description} />}
+            <ActionEffects
+              action={it}
+              evaluate={evaluate}
+            />
           </React.Fragment>
         ))
       )}
@@ -209,21 +214,53 @@ const AbilityActions = ({ ability, evaluate }: { ability: Ability; evaluate: Eva
     >
       {ability.actions.map((action, index) => (
         <Box key={index}>
-          <Typography variant="subtitle2">{action.name ?? ability.name}</Typography>
+          {Objects.isPresent(action.name) && <Typography variant="subtitle2">{action.name}</Typography>}
           <ActionDetails
             action={action}
             evaluate={evaluate}
           />
           {Objects.isPresent(action.description) && <SimulacrumRichText text={action.description} />}
+          <ActionEffects
+            action={action}
+            evaluate={evaluate}
+          />
         </Box>
       ))}
     </Stack>
   )
 }
 
+const ActionEffects = ({ action, evaluate }: { action: AbilityAction; evaluate: EvaluateExpression | null }) => {
+  const outcomes = [
+    { label: 'Effect', effects: action.effects },
+    { label: 'Success', effects: action.test?.success ?? [] },
+    { label: 'Failure', effects: action.test?.failure ?? [] },
+  ].filter((it) => !Arrays.isEmpty(it.effects))
+
+  return (
+    <>
+      {outcomes.map((outcome) => (
+        <React.Fragment key={outcome.label}>
+          <Typography variant="caption">{outcome.label}</Typography>
+          {outcome.effects.map((effect, index) => {
+            const durationLabel = Objects.isNil(effect.duration) ? null : getDurationLabel(effect.duration, evaluate)
+
+            return (
+              <React.Fragment key={index}>
+                <SimulacrumRichText text={effect.description} />
+                {Objects.isPresent(durationLabel) && <ActionDetail icon={HourglassBottom}>{durationLabel}</ActionDetail>}
+              </React.Fragment>
+            )
+          })}
+        </React.Fragment>
+      ))}
+    </>
+  )
+}
+
 const ActionDetails = ({ action, evaluate }: { action: AbilityAction; evaluate: EvaluateExpression | null }) => {
   const ruleset = useRuleset()
-  const durationLabel = getDurationLabel(action.duration, evaluate)
+  const characterContext = useContext(CharacterSheetContext)
 
   return (
     <Stack
@@ -247,7 +284,9 @@ const ActionDetails = ({ action, evaluate }: { action: AbilityAction; evaluate: 
           </ActionDetail>
         )
       })}
-      {Objects.isPresent(durationLabel) && <ActionDetail icon={HourglassBottom}>{durationLabel}</ActionDetail>}
+      {Objects.isPresent(action.test) && (
+        <ActionDetail icon={Casino}>{getTestLabel(action.test, ruleset, characterContext?.character ?? null)}</ActionDetail>
+      )}
     </Stack>
   )
 }

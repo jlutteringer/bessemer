@@ -647,6 +647,18 @@ export const Blinded = Content.defineSection('combat/blinded', {
   },
 })
 
+export const Burning = Content.defineSection('combat/burning', {
+  parent: Conditions,
+  content: {
+    name: 'Burning',
+    description: `A burning creature is on fire, from an incendiary round, a plasma torch, or a detonation, and keeps taking damage until the flames burn out. Burning always comes with a damage amount and a [damage type](content:combat/damage-types), written as Burning (1d6 + A Fire), and lasts for the duration of the effect that applied it.
+
+- The creature takes the listed damage during the [Sustain Phase](content:combat/sustain-phase) of the creature that applied the condition.
+- The condition ends when its duration runs out.
+- Burning stacks. A creature can be burning from several effects at once, and takes the damage from each one, with each lasting for its own duration.`,
+  },
+})
+
 export const Charmed = Content.defineSection('combat/charmed', {
   parent: Conditions,
   content: {
@@ -774,7 +786,10 @@ export const Primed = Content.defineSection('combat/primed', {
   parent: Conditions,
   content: {
     name: 'Primed',
-    description: `A primed creature is set to be detonated by effects such as *[Living Bomb](ability:technology/living-bomb)*.`,
+    description: `Various effects prime creatures, and various effects detonate them. Primed always comes with a number of stacks, written as Primed 2, which is how many times the creature can be detonated.
+
+- **Detonate:** When an effect causes a primed creature to detonate, the creature loses one stack. The effect says how much damage the detonation deals and which creatures it affects.
+- The condition ends when the creature has no stacks left.`,
   },
 })
 
@@ -825,6 +840,17 @@ export const Unconscious = Content.defineSection('combat/unconscious', {
 - Attacks against the creature’s Fortitude and Reflex defense automatically hit.
 - Attack rolls against the creature have advantage.
 - Any attack that hits the creature is a critical hit if the attacker is within 1 square of it.`,
+  },
+})
+
+export const Vulnerable = Content.defineSection('combat/vulnerable', {
+  parent: Conditions,
+  content: {
+    name: 'Vulnerable',
+    description: `A vulnerable creature has an opening in its defenses, from a cracked armor plate, a disrupted shield, or a moment of exposure. Vulnerable always comes with a number of stacks, written as Vulnerable 2.
+
+- The next attack that hits the creature deals double damage, and the creature loses one stack.
+- The condition ends when the creature has no stacks left.`,
   },
 })
 
@@ -889,6 +915,7 @@ export const CombatContent = [
   NpcsAndDeath,
   Conditions,
   Blinded,
+  Burning,
   Charmed,
   Deafened,
   Exhaustion,
@@ -904,4 +931,5 @@ export const CombatContent = [
   Restrained,
   Stunned,
   Unconscious,
+  Vulnerable,
 ]
