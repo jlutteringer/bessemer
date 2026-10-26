@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from 'react'
 import { Assertions } from '@bessemer/cornerstone'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 
 export const RulesetContext = createContext<Ruleset | null>(null)
 

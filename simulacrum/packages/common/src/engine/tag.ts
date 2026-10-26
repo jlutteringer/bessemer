@@ -1,10 +1,10 @@
 export * from '@simulacrum/ruleset/tag'
 import { TagEntityType, TagReference } from '@simulacrum/ruleset/tag'
 import { RulesetEntityTypes } from '@simulacrum/ruleset/ruleset'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { TagFilter } from '@simulacrum/ruleset/tag'
 import { Arrays } from '@bessemer/cornerstone'
-import * as Rulesets from '@simulacrum/engine/ruleset'
+import * as Rulesets from '@simulacrum/common/engine/ruleset'
 
 export const getTagById = <T extends TagEntityType>(tag: TagReference<T>, ruleset: Ruleset): RulesetEntityTypes[T] => {
   return Rulesets.getEntityById(tag, ruleset)

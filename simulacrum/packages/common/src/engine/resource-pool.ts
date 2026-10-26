@@ -3,10 +3,10 @@ import { ResourcePool, ResourcePoolDefinition, ResourcePoolReference } from '@si
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 import { Patch } from '@bessemer/cornerstone/patch'
-import * as Attributes from '@simulacrum/engine/attribute'
-import { Modifier } from '@simulacrum/engine/attribute'
-import * as Rulesets from '@simulacrum/engine/ruleset'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import * as Attributes from '@simulacrum/common/engine/attribute'
+import { Modifier } from '@simulacrum/common/engine/attribute'
+import * as Rulesets from '@simulacrum/common/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 
 export type ResourcePoolState = {
   resource: ResourcePoolDefinition

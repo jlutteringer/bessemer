@@ -8,14 +8,14 @@ import {
   CharacterOptionValueReference,
   CharacterSelection,
 } from '@simulacrum/ruleset/character-option'
-import { Trait, TraitReference } from '@simulacrum/engine/trait'
-import { Abilities, ProgressionTables, Traits } from '@simulacrum/engine'
-import { AbilityReference } from '@simulacrum/engine/ability'
+import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
+import { Abilities, ProgressionTables, Traits } from '@simulacrum/common/engine/engine'
+import { AbilityReference } from '@simulacrum/common/engine/ability'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Arrays, Assertions, Eithers, Objects } from '@bessemer/cornerstone'
 import { EvaluateExpression } from '@bessemer/cornerstone/expression'
-import { Ruleset } from '@simulacrum/engine/ruleset'
-import * as Rulesets from '@simulacrum/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
+import * as Rulesets from '@simulacrum/common/engine/ruleset'
 
 export const evaluateChoice = (
   option: CharacterOption,

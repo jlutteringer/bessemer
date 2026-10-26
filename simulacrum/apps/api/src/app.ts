@@ -1,6 +1,9 @@
 import express, { type ErrorRequestHandler } from 'express'
+import compression from 'compression'
+import cors from 'cors'
 import { prisma } from '@simulacrum/api/db'
 import { UserRouter } from '@simulacrum/api/user/user-router'
+import { RulesetRouter } from '@simulacrum/api/ruleset/ruleset-router'
 
 const errorHandler: ErrorRequestHandler = (error, _request, response, _next) => {
   console.error(error)
@@ -10,6 +13,8 @@ const errorHandler: ErrorRequestHandler = (error, _request, response, _next) => 
 export const createApp = () => {
   const app = express()
   app.disable('x-powered-by')
+  app.use(cors())
+  app.use(compression())
   app.use(express.json())
 
   app.get('/health', async (_request, response) => {
@@ -18,6 +23,7 @@ export const createApp = () => {
   })
 
   app.use(UserRouter)
+  app.use(RulesetRouter)
   app.use(errorHandler)
   return app
 }

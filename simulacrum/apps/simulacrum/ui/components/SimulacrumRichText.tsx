@@ -11,7 +11,7 @@ import { MuiRichTextRenderer, RichTextMarkElement, TextTextElement } from '@bess
 import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
 import { RulesetEntities } from '@simulacrum/ruleset'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
-import { Rulesets } from '@simulacrum/engine'
+import { Rulesets } from '@simulacrum/common/engine/engine'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 
 export const SimulacrumRichText = ({ text }: { text: RichTextJson }) => {

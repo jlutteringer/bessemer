@@ -13,7 +13,7 @@ applications:
         build:
           commands:
             # Amplify only exposes app environment variables to the build, so write the ones SSR needs for runtime
-            - env | grep -e '^AMPLIFY_APP_ORIGIN=' -e '^COGNITO_' -e '^SIMULACRUM_API_URL=' >> .env.production || true
+            - env | grep -e '^AMPLIFY_APP_ORIGIN=' -e '^COGNITO_' -e '^NEXT_PUBLIC_SIMULACRUM_API_URL=' >> .env.production || true
             - (cd ../../.. && yarn turbo run build --filter=simulacrum)
       artifacts:
         baseDirectory: .next

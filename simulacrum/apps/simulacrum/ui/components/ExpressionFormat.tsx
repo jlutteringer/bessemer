@@ -23,8 +23,8 @@ import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
 import { RoundingMode } from '@bessemer/cornerstone/math'
 import { Maths, Objects } from '@bessemer/cornerstone'
 import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
-import { Ruleset } from '@simulacrum/engine/ruleset'
-import { Rulesets } from '@simulacrum/engine'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
+import { Rulesets } from '@simulacrum/common/engine/engine'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
@@ -185,11 +185,26 @@ ExpressionRenderer.register(NumericExpressions.RoundExpression, ({ value, roundi
 
 ExpressionRenderer.register(NotExpression, ({ value }, map) => <>not {renderOperand(value, map)}</>)
 
-ExpressionRenderer.register(AndExpression, ({ operands }, map) => renderList(operands.map((it) => renderOperand(it, map)), ' and '))
+ExpressionRenderer.register(AndExpression, ({ operands }, map) =>
+  renderList(
+    operands.map((it) => renderOperand(it, map)),
+    ' and '
+  )
+)
 
-ExpressionRenderer.register(OrExpression, ({ operands }, map) => renderList(operands.map((it) => renderOperand(it, map)), ' or '))
+ExpressionRenderer.register(OrExpression, ({ operands }, map) =>
+  renderList(
+    operands.map((it) => renderOperand(it, map)),
+    ' or '
+  )
+)
 
-ExpressionRenderer.register(EqualsExpression, ({ operands }, map) => renderList(operands.map((it) => renderOperand(it, map)), ' = '))
+ExpressionRenderer.register(EqualsExpression, ({ operands }, map) =>
+  renderList(
+    operands.map((it) => renderOperand(it, map)),
+    ' = '
+  )
+)
 
 ExpressionRenderer.register(ContainsExpression, ({ collection, operands }, map) => (
   <>

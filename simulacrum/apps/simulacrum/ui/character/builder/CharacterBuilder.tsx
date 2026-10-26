@@ -29,24 +29,24 @@ import SaveIcon from '@mui/icons-material/Save'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import { Arrays, Maps, Objects } from '@bessemer/cornerstone'
-import { CharacterRecord, CharacterSheet } from '@simulacrum/engine/character/character'
-import { Trait, TraitReference } from '@simulacrum/engine/trait'
+import { CharacterRecord, CharacterSheet } from '@simulacrum/common/engine/character/character'
+import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Abilities, Characteristics, Characters, Effects, Loadout, ProgressionTables, Rulesets } from '@simulacrum/engine'
-import { Ability } from '@simulacrum/engine/ability'
-import { CharacterOptionValue } from '@simulacrum/engine/character/character-option'
-import { LoadoutTypeReference } from '@simulacrum/engine/loadout'
-import { ApplicationContext } from '@simulacrum/application'
-import { Ruleset, RulesetConfiguration, RulesetExtension } from '@simulacrum/engine/ruleset'
+import { Abilities, Characteristics, Characters, Effects, Loadout, ProgressionTables } from '@simulacrum/common/engine/engine'
+import { Ability } from '@simulacrum/common/engine/ability'
+import { CharacterOptionValue } from '@simulacrum/common/engine/character/character-option'
+import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
+import { Ruleset, RulesetConfiguration } from '@simulacrum/common/engine/ruleset'
+import { RulesetExtensionSummary, RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
-import { useClientContext } from '@simulacrum/ui/application/use-client-context'
 import { saveCharacter, useStoredCharacter } from '@simulacrum/ui/character/character-storage'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 import { RulesetEntityContent, TraitPassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
+import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
 import {
   CharacterOptionChoice,
@@ -65,27 +65,18 @@ import {
   setLevel,
 } from '@simulacrum/ui/character/builder/character-builder-model'
 
-const useRulesets = (): { rulesets: Array<Ruleset>; rulesetExtensions: Array<RulesetExtension> } => {
-  const { rulesets, rulesetExtensions } = (useClientContext() as unknown as ApplicationContext).client
-  return { rulesets, rulesetExtensions }
-}
-
 /**
  * Creates a new character when `characterId` is null, otherwise edits the stored character with that id.
  */
-export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) => {
-  const { rulesets, rulesetExtensions } = useRulesets()
+export const CharacterBuilder = ({ characterId, rulesets }: { characterId: Ulid | null; rulesets: Array<RulesetSummary> }) => {
   const stored = useStoredCharacter(characterId)
   const [newCharacterConfiguration, setNewCharacterConfiguration] = useState<RulesetConfiguration | null>(null)
   const configuration = stored?.character.ruleset ?? newCharacterConfiguration
 
-  const ruleset = useMemo(
-    () => (Objects.isPresent(configuration) ? Rulesets.resolveRuleset(configuration, rulesets, rulesetExtensions) : null),
-    [configuration, rulesets, rulesetExtensions]
-  )
+  const { data: ruleset, isPending: isRulesetPending } = useFetchRuleset(configuration ?? null)
 
   // Local storage is only readable once the client has hydrated
-  if (stored === null) {
+  if (stored === null || (Objects.isPresent(configuration) && isRulesetPending)) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
         <CircularProgress />
@@ -113,14 +104,17 @@ export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) 
     )
   }
 
-  if (Objects.isNil(configuration) || Objects.isNil(ruleset)) {
+  if (Objects.isNil(configuration)) {
     return (
       <RulesetSelection
         rulesets={rulesets}
-        rulesetExtensions={rulesetExtensions}
         onSelect={setNewCharacterConfiguration}
       />
     )
+  }
+
+  if (Objects.isNil(ruleset)) {
+    return <Alert severity="error">This character's ruleset could not be loaded.</Alert>
   }
 
   return (
@@ -134,24 +128,16 @@ export const CharacterBuilder = ({ characterId }: { characterId: Ulid | null }) 
   )
 }
 
-const RulesetSelection = ({
-  rulesets,
-  rulesetExtensions,
-  onSelect,
-}: {
-  rulesets: Array<Ruleset>
-  rulesetExtensions: Array<RulesetExtension>
-  onSelect: (configuration: RulesetConfiguration) => void
-}) => {
+const RulesetSelection = ({ rulesets, onSelect }: { rulesets: Array<RulesetSummary>; onSelect: (configuration: RulesetConfiguration) => void }) => {
   const [configuration, setConfiguration] = useState<RulesetConfiguration | null>(null)
 
-  const selectRuleset = (ruleset: Ruleset) => {
+  const selectRuleset = (ruleset: RulesetSummary) => {
     if (configuration?.id !== ruleset.id) {
-      setConfiguration({ id: ruleset.id, extensions: Rulesets.getAvailableExtensions(ruleset, rulesetExtensions).map((it) => it.id) })
+      setConfiguration({ id: ruleset.id, extensions: ruleset.extensions.map((it) => it.id) })
     }
   }
 
-  const toggleExtension = (extension: RulesetExtension) => {
+  const toggleExtension = (extension: RulesetExtensionSummary) => {
     if (Objects.isPresent(configuration)) {
       const { extensions } = configuration
       setConfiguration({
@@ -176,7 +162,7 @@ const RulesetSelection = ({
           >
             {rulesets.map((ruleset) => {
               const selected = configuration?.id === ruleset.id
-              const extensions = Rulesets.getAvailableExtensions(ruleset, rulesetExtensions)
+              const { extensions } = ruleset
 
               return (
                 <Grid
@@ -207,7 +193,7 @@ const RulesetSelection = ({
                     <CardContent>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <Typography variant="h6">{ruleset.name}</Typography>
-                        {!Arrays.isEmpty(ruleset.content) && (
+                        {ruleset.hasRulebook && (
                           <IconButton
                             component="a"
                             href={`/rulebook/${ruleset.id}`}

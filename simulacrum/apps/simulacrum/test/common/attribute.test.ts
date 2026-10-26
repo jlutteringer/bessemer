@@ -1,4 +1,4 @@
-import { Attributes, ResourcePools } from '@simulacrum/engine'
+import { Attributes, ResourcePools } from '@simulacrum/common/engine/engine'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'

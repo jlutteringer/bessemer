@@ -9,7 +9,7 @@ import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { ContentSection } from '@simulacrum/ruleset/content'
 import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
-import { Rulesets } from '@simulacrum/engine'
+import { Rulesets } from '@simulacrum/common/engine/engine'
 import { getEntityTexts } from '@simulacrum/ui/components/ruleset-entity-model'
 
 type SearchDocument = {

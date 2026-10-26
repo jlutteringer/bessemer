@@ -26,9 +26,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Arrays, Objects } from '@bessemer/cornerstone'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { ContentLabel } from '@bessemer/core/codex/component/ContentLabel'
-import { ProgressionTables, Rulesets, CharacterOptions, Characters } from '@simulacrum/engine'
-import { ApplicationContext } from '@simulacrum/application'
-import { useClientContext } from '@simulacrum/ui/application/use-client-context'
+import { ProgressionTables, CharacterOptions, Characters } from '@simulacrum/common/engine/engine'
+import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
 import { copyCharacter, deleteCharacter, StoredCharacter, useStoredCharacters } from '@simulacrum/ui/character/character-storage'
 
 enum SortOrder {
@@ -177,13 +176,13 @@ const getDisplayName = (character: StoredCharacter): string => {
 }
 
 const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; onDelete: () => void }) => {
-  const { rulesets, rulesetExtensions } = (useClientContext() as unknown as ApplicationContext).client
-  const ruleset = useMemo(
-    () => Rulesets.resolveRuleset(character.character.ruleset, rulesets, rulesetExtensions),
-    [character, rulesets, rulesetExtensions]
-  )
+  const { data: ruleset } = useFetchRuleset(character.character.ruleset)
   // The names of the traits and abilities selected for the character's choices
   const traitNames = useMemo(() => {
+    if (Objects.isNil(ruleset)) {
+      return []
+    }
+
     const sheet = Characters.buildCharacterDefinition(character.character, ruleset)
     return ProgressionTables.getValues(sheet.choices).flatMap((it) => CharacterOptions.getSelectedValue(it)?.name ?? [])
   }, [character, ruleset])
@@ -201,7 +200,7 @@ const CharacterCard = ({ character, onDelete }: { character: StoredCharacter; on
           variant="body2"
           noWrap
         >
-          {ruleset.name} · Level {character.character.level}
+          {Objects.isPresent(ruleset) && `${ruleset.name} · `}Level {character.character.level}
           {!Arrays.isEmpty(traitNames) && ` | ${traitNames.join(', ')}`}
         </Typography>
       </CardContent>

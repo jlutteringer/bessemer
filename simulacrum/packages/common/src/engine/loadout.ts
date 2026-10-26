@@ -1,8 +1,8 @@
 export * from '@simulacrum/ruleset/loadout'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
-import { AbilityReference } from '@simulacrum/engine/ability'
-import { Ruleset } from '@simulacrum/engine/ruleset'
-import * as Rulesets from '@simulacrum/engine/ruleset'
+import { AbilityReference } from '@simulacrum/common/engine/ability'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
+import * as Rulesets from '@simulacrum/common/engine/ruleset'
 
 export type LoadoutSlot = {
   type: LoadoutTypeReference

@@ -3,8 +3,8 @@
 import { useSyncExternalStore } from 'react'
 import { Ulids } from '@bessemer/cornerstone'
 import { Ulid } from '@bessemer/cornerstone/uuid/ulid'
-import { CharacterRecord } from '@simulacrum/engine/character/character'
-import { RulesetConfiguration, RulesetReference } from '@simulacrum/engine/ruleset'
+import { CharacterRecord } from '@simulacrum/common/engine/character/character'
+import { RulesetConfiguration, RulesetReference } from '@simulacrum/common/engine/ruleset'
 
 // FUTURE characters are persisted to local storage until there is a real backend
 

@@ -7,7 +7,7 @@ import { Objects } from '@bessemer/cornerstone'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
 import { StackedPopover } from '@simulacrum/ui/components/StackedPopover'
 import { RulesetEntityContent } from '@simulacrum/ui/components/RulesetEntityContent'
-import { Rulesets } from '@simulacrum/engine'
+import { Rulesets } from '@simulacrum/common/engine/engine'
 import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 
 export const RulesetEntityPopover = ({ entity, trigger }: { entity: RulesetEntity; trigger: ReactNode }) => {

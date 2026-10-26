@@ -23,6 +23,8 @@
   "dependencies": {
     "@bessemer/cornerstone": "workspace:*",
     "@bessemer/zotch": "workspace:*",
+    "@simulacrum/ruleset": "workspace:*",
+    "type-fest": "4.32.0",
     "zod": "4.4.3"
   }
 }

@@ -1,11 +1,11 @@
 import { Objects } from '@bessemer/cornerstone'
-import { Effect, EffectSourceType } from '@simulacrum/engine/effect'
+import { Effect, EffectSourceType } from '@simulacrum/common/engine/effect'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { TraitReference } from '@simulacrum/engine/trait'
-import { CharacterChoice, CharacterOptionType } from '@simulacrum/engine/character/character-option'
-import { AbilityReference } from '@simulacrum/engine/ability'
-import { Abilities, Effects, Loadout, ProgressionTables, Traits } from '@simulacrum/engine'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import { TraitReference } from '@simulacrum/common/engine/trait'
+import { CharacterChoice, CharacterOptionType } from '@simulacrum/common/engine/character/character-option'
+import { AbilityReference } from '@simulacrum/common/engine/ability'
+import { Abilities, Effects, Loadout, ProgressionTables, Traits } from '@simulacrum/common/engine/engine'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 
 export type CharacterProgress = {
   traits: ProgressionTable<TraitReference>

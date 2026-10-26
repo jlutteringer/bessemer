@@ -9,12 +9,12 @@ resource "aws_amplify_app" "simulacrum" {
   enable_auto_branch_creation = false
 
   environment_variables = {
-    AMPLIFY_MONOREPO_APP_ROOT = local.app_root
-    AMPLIFY_APP_ORIGIN        = "https://${local.domain}"
-    COGNITO_USER_POOL_ID      = aws_cognito_user_pool.simulacrum.id
-    COGNITO_CLIENT_ID         = aws_cognito_user_pool_client.web.id
-    COGNITO_DOMAIN            = local.cognito_domain_url
-    SIMULACRUM_API_URL        = trimsuffix(aws_lambda_function_url.api.function_url, "/")
+    AMPLIFY_MONOREPO_APP_ROOT      = local.app_root
+    AMPLIFY_APP_ORIGIN             = "https://${local.domain}"
+    COGNITO_USER_POOL_ID           = aws_cognito_user_pool.simulacrum.id
+    COGNITO_CLIENT_ID              = aws_cognito_user_pool_client.web.id
+    COGNITO_DOMAIN                 = local.cognito_domain_url
+    NEXT_PUBLIC_SIMULACRUM_API_URL = trimsuffix(aws_lambda_function_url.api.function_url, "/")
   }
 
   custom_rule {

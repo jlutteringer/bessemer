@@ -7,7 +7,7 @@ import {
   RulesetExtensionReference,
   RulesetReference,
 } from '@simulacrum/ruleset/ruleset'
-import * as ProgressionTables from '@simulacrum/engine/progression-table'
+import * as ProgressionTables from '@simulacrum/common/engine/progression-table'
 import { Assertions, Objects, Results, Uris } from '@bessemer/cornerstone'
 import { RulesetEntity, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { Content, RulesetEntities } from '@simulacrum/ruleset'

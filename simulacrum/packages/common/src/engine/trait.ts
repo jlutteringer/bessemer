@@ -1,10 +1,10 @@
 export * from '@simulacrum/ruleset/trait'
 import { Trait, TraitReference } from '@simulacrum/ruleset/trait'
-import { Ruleset } from '@simulacrum/engine/ruleset'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { TraitFilter } from '@simulacrum/ruleset/trait'
-import * as Tags from '@simulacrum/engine/tag'
+import * as Tags from '@simulacrum/common/engine/tag'
 import { Arrays } from '@bessemer/cornerstone'
-import * as Rulesets from '@simulacrum/engine/ruleset'
+import * as Rulesets from '@simulacrum/common/engine/ruleset'
 import { RulesetEntities } from '@simulacrum/ruleset'
 
 export const getTraits = (ruleset: Ruleset): Array<Trait> => {

@@ -1,6 +1,6 @@
 import { Dnd5e } from '@simulacrum/ruleset-dnd5e'
-import { CharacterRecord } from '@simulacrum/engine/character/character'
-import { ProgressionTables } from '@simulacrum/engine'
+import { CharacterRecord } from '@simulacrum/common/engine/character/character'
+import { ProgressionTables } from '@simulacrum/common/engine/engine'
 import { ApplicationContext } from '@simulacrum/application'
 import { Ulids } from '@bessemer/cornerstone'
 
@@ -21,8 +21,6 @@ export const buildTestContext = (): ApplicationContext => {
     serverOnlyTest: () => 'asdasd',
     client: {
       correlationId: '123',
-      rulesets: [Dnd5e],
-      rulesetExtensions: [],
       tags: [],
       environment: 'test',
       runtime: { test: () => 'hello', codex: { renderers: [] } },

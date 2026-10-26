@@ -1,4 +1,4 @@
-import { AttributeValue } from '@simulacrum/engine/attribute'
+import { AttributeValue } from '@simulacrum/common/engine/attribute'
 
 export type CreatureSchema = {}
 

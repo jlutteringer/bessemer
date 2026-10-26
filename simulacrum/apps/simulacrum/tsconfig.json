@@ -26,8 +26,6 @@
       "@bessemer/client/*": ["../../../bessemer/client/src/*"],
       "@simulacrum/app/*": ["./app/*"],
       "@simulacrum/ui/*": ["./ui/*"],
-      "@simulacrum/engine": ["./engine"],
-      "@simulacrum/engine/*": ["./engine/*"],
       "@simulacrum/application": ["./application"],
       "@simulacrum/application/*": ["./application/*"],
       "@simulacrum/test/*": ["./test/*"],

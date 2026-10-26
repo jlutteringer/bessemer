@@ -4,22 +4,16 @@ import * as React from 'react'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Box, Card, CardActionArea, CardContent, Drawer, Fab, Grid, Link, List, ListItem, Theme, Typography, useMediaQuery } from '@mui/material'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
-import { Arrays, ErrorEvents, Objects } from '@bessemer/cornerstone'
+import { Arrays, Objects } from '@bessemer/cornerstone'
 import { ContentSection } from '@simulacrum/ruleset/content'
 import { RulesetEntityReference } from '@simulacrum/ruleset/ruleset-entity'
-import { Ruleset, RulesetReference } from '@simulacrum/engine/ruleset'
-import { ApplicationContext } from '@simulacrum/application'
-import { useClientContext } from '@simulacrum/ui/application/use-client-context'
+import { Ruleset } from '@simulacrum/common/engine/ruleset'
+import { RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { RulesetEntityContent } from '@simulacrum/ui/components/RulesetEntityContent'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { RulebookSearch } from '@simulacrum/ui/rulebook/RulebookSearch'
-import { Rulesets } from '@simulacrum/engine'
-
-const useRulesets = (): { rulesets: Array<Ruleset> } => {
-  const { rulesets } = (useClientContext() as unknown as ApplicationContext).client
-  return { rulesets }
-}
+import { Rulesets } from '@simulacrum/common/engine/engine'
 
 type ContentNode = {
   section: ContentSection
@@ -133,9 +127,7 @@ const useActiveSection = (sectionIds: Array<RulesetEntityReference>): ActiveSect
   return { activeId, select }
 }
 
-export const RulebookIndex = () => {
-  const { rulesets } = useRulesets()
-
+export const RulebookIndex = ({ rulesets }: { rulesets: Array<RulesetSummary> }) => {
   return (
     <>
       <StandardPageHeader title="Rulebook" />
@@ -151,12 +143,12 @@ export const RulebookIndex = () => {
             <Card sx={{ height: '100%' }}>
               <CardActionArea
                 href={`/rulebook/${ruleset.id}`}
-                disabled={Arrays.isEmpty(ruleset.content)}
+                disabled={!ruleset.hasRulebook}
                 sx={{ height: '100%' }}
               >
                 <CardContent>
                   <Typography variant="h6">{ruleset.name}</Typography>
-                  {Arrays.isEmpty(ruleset.content) && <Typography variant="caption">No rules content yet</Typography>}
+                  {!ruleset.hasRulebook && <Typography variant="caption">No rules content yet</Typography>}
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -167,13 +159,8 @@ export const RulebookIndex = () => {
   )
 }
 
-export const RulebookReader = ({ rulesetId }: { rulesetId: RulesetReference }) => {
-  const { rulesets } = useRulesets()
-
-  const ruleset = rulesets.find((it) => it.id === rulesetId)
-  ErrorEvents.assertPresent(ruleset)
-
-  const tree = useMemo(() => buildContentTree(ruleset?.content ?? []), [ruleset])
+export const RulebookReader = ({ ruleset }: { ruleset: Ruleset }) => {
+  const tree = useMemo(() => buildContentTree(ruleset.content), [ruleset])
 
   return (
     <RulesetContext.Provider value={ruleset}>

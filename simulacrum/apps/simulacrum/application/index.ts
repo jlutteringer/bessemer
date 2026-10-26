@@ -1,9 +1,3 @@
-import { Ruleset, RulesetExtension } from '@simulacrum/engine/ruleset'
-import { Dnd4e } from '@simulacrum/ruleset-dnd4e'
-import { Dnd5e } from '@simulacrum/ruleset-dnd5e'
-import { ForgeOfTheArtificer } from '@simulacrum/ruleset-dnd5e/eberron-forge-of-the-artificer'
-import { KhydrianDrift } from '@simulacrum/ruleset-khydrian-drift'
-import { Pf2e } from '@simulacrum/ruleset-pf2e'
 import { Objects, Tags, Urls } from '@bessemer/cornerstone'
 import { serverOnlyTest } from '@simulacrum/application/server-only-test'
 import { BessemerModule, ClientContextType } from '@bessemer/framework'
@@ -26,8 +20,6 @@ export type ApplicationContext = FoundryApplicationContext &
       runtime: {
         test: () => string
       }
-      rulesets: Array<Ruleset>
-      rulesetExtensions: Array<RulesetExtension>
     }
   }
 
@@ -54,10 +46,7 @@ export const ApplicationModule: BessemerModule<ApplicationContext, ApplicationOp
     // FUTURE concerning cast here...
     const application: DEPRECATEDDeepPartial<ApplicationContext> = {
       serverOnlyTest,
-      client: {
-        rulesets: [Dnd5e, Dnd4e, Pf2e, KhydrianDrift] as Array<DEPRECATEDDeepPartial<Ruleset>>,
-        rulesetExtensions: [ForgeOfTheArtificer] as Array<DEPRECATEDDeepPartial<RulesetExtension>>,
-      },
+      client: {},
     }
     return application
   },
