@@ -1,10 +1,11 @@
-import { Abilities, Effects, RulesetEntities, Tags, Traits } from '@simulacrum/ruleset'
+import { Abilities, ActionEffects, CharacterEffects, RulesetEntities, Tags, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Stamina } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { StaminaCost } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { AgilityAttackRating, FortitudeDefense, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { Primed, Vulnerable } from '@simulacrum/ruleset-khydrian-drift/condition'
 
 export const BasicCombatTraining = Traits.defineTrait('combat/basic-training', {
   name: 'Basic Combat Training',
@@ -22,7 +23,7 @@ export const BackInTheFight = Abilities.defineAbility('combat/back-in-the-fight'
   actions: [
     {
       name: 'Back in the Fight',
-      description: 'Choose a creature adjacent to you. The target can end any conditions affecting it.',
+      description: 'Choose a creature adjacent to you. The target can end any [conditions](content:combat/conditions) affecting it.',
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
       targeting: { target: { range: 1, count: 1 } },
@@ -74,13 +75,31 @@ export const ActionSurge = Abilities.defineAbility('combat/action-surge', {
   ],
 })
 
+export const ExploitWeakness = Abilities.defineAbility('combat/exploit-weakness', {
+  name: 'Exploit Weakness',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
+  actions: [
+    {
+      action: ActionTypes.MajorAction,
+      costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
+      targeting: { target: { range: 1, count: 1 } },
+      test: {
+        offense: AgilityAttackRating,
+        defense: FortitudeDefense,
+        success: [ActionEffects.condition(Primed, { duration: { rounds: 1 } }), ActionEffects.condition(Vulnerable, { duration: { rounds: 1 } })],
+      },
+    },
+  ],
+})
+
 export const AdvancedCombatTraining = Traits.defineTrait('combat/advanced-training', {
   name: 'Advanced Combat Training',
   description:
     '*"Iron sharpeneth iron."*\n\nBeyond the fundamentals lies training reserved for corporate strike teams, special forces, and veteran mercenaries: coordinated assaults, breaching, and fighting through chaos without hesitation. It is where a fighter begins to specialize, toward the blade or toward the gun.',
   tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(BasicCombatTraining)],
-  effects: [Effects.gainLoadoutSlot(GeneralLoadoutSlot)],
+  effects: [CharacterEffects.gainLoadoutSlot(GeneralLoadoutSlot)],
 })
 
 // Melee and Ranged Combat Mastery are mutually exclusive, so each refers to the other by reference before both are defined

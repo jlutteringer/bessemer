@@ -1,4 +1,4 @@
-import { Tags, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { AbilityPatchProps } from '@simulacrum/ruleset/ability'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
@@ -56,7 +56,7 @@ export const ExperimentalSpellshaping = Traits.defineTrait('wizard/arcane-thesis
   description:
     'Your thesis posits that the magical practice of spellshaping can be realized more efficiently by altering variables and parameters as you cast, imitating the wizards of long ago who had to work out their own spells themselves. This allows you efficient access to various spellshape effects. You gain one 1st-level [spellshape](content:traits/spellshape) wizard feat of your choice. Starting at 4th level, during your daily preparations, you can gain a spellshape wizard feat of your choice that has a level requirement of no more than half your level, which you can use until your next daily preparations.',
   tags: [ArcaneThesis],
-  effects: [Effects.gainCharacterOption(SelectExperimentalSpellshapingFeat)],
+  effects: [CharacterEffects.gainCharacterOption(SelectExperimentalSpellshapingFeat)],
 })
 
 export const ImprovedFamiliarAttunement = Traits.defineTrait('wizard/arcane-thesis/improved-familiar-attunement', {
@@ -65,9 +65,9 @@ export const ImprovedFamiliarAttunement = Traits.defineTrait('wizard/arcane-thes
     "You've long held that fine-tuning the magic that bonds a wizard and their familiar can improve the mystic connection and yield greater results, compared to the safe yet generic bond most wizards currently use. You've formed such a pact with your familiar, gaining more advantages from it than most wizards. You gain the [Familiar](trait:feat/familiar) wizard feat. Your familiar gains an extra ability, and it gains an additional extra ability when you reach 6th, 12th, and 18th levels. Your connection with your familiar alters your arcane bond class feature so that you store your magical energy in your familiar, rather than an item you own; you also gain the Drain Familiar free action instead of Drain Bonded Item. Drain Familiar can be used any time an ability would allow you to use Drain Bonded Item and functions identically, except that you draw magic from your familiar instead of an item.",
   tags: [ArcaneThesis],
   effects: [
-    Effects.gainTrait(Familiar),
-    Effects.gainCharacterOption(SelectFamiliarAbility),
-    Effects.modifyAbility(
+    CharacterEffects.gainTrait(Familiar),
+    CharacterEffects.gainCharacterOption(SelectFamiliarAbility),
+    CharacterEffects.modifyAbility(
       DrainBondedItem,
       Attributes.modifier(
         Patches.patch<AbilityPatchProps>({
@@ -76,9 +76,15 @@ export const ImprovedFamiliarAttunement = Traits.defineTrait('wizard/arcane-thes
         })
       )
     ),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectFamiliarAbility)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 12), [Effects.gainCharacterOption(SelectFamiliarAbility)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 18), [Effects.gainCharacterOption(SelectFamiliarAbility)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      CharacterEffects.gainCharacterOption(SelectFamiliarAbility),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 12), [
+      CharacterEffects.gainCharacterOption(SelectFamiliarAbility),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 18), [
+      CharacterEffects.gainCharacterOption(SelectFamiliarAbility),
+    ]),
   ],
 })
 
@@ -116,7 +122,7 @@ export const ArcaneThesisFeature = Traits.defineTrait('wizard/arcane-thesis', {
   description:
     'During your studies to become a full-fledged wizard, you produced a thesis of unique magical research. You gain a special benefit depending on the topic of your thesis research. The arcane thesis topics presented in this book are below; your specific thesis probably has a much longer and more technical title like “_On the Methods of Spell Interpolation and the Genesis of a New Understanding of the Building Blocks of Magic_.”',
   tags: [ClassFeature],
-  effects: [Effects.gainCharacterOption(SelectArcaneThesis)],
+  effects: [CharacterEffects.gainCharacterOption(SelectArcaneThesis)],
 })
 
 export const Wizard = Traits.defineTrait('wizard', {
@@ -125,41 +131,43 @@ export const Wizard = Traits.defineTrait('wizard', {
     "_You are an eternal student of the secrets of the universe, using your mastery of magic to cast powerful spells. You treat magic like a science, cross-referencing the latest texts on practical spellcraft with ancient tomes to discover and understand arcane magic. Yet magical theory is vast, and there's no way you can study it all. Most wizards learn through formal schooling, with their curriculum informing a specific rubric, although particularly driven researchers sometimes piece together their own theories._\n\n**Key Attribute: Intelligence**\n\nAt 1st level, your class gives you an attribute boost to Intelligence.\n\n**Hit Points: 6 plus your Constitution modifier**\n\nYou increase your maximum number of HP by this number at 1st level and every level thereafter.\n\n**Key Terms**\n\nYou'll see the following key term in many wizard abilities.\n\n**[Spellshape](content:traits/spellshape):** Actions with the spellshape trait tweak the properties of your spells. These actions usually come from spellshape feats. You must use a spellshape action directly before Casting the Spell you want to alter. If you use any action (including free actions and reactions) other than Cast a Spell directly after, you waste the benefits of the spellshape action. Any additional effects added by a spellshape action are part of the spell's effect, not of the spellshape action itself.\n\n**Initial Proficiencies**\n\nAt 1st level, you gain the listed proficiency ranks in the following statistics. You are untrained in anything not listed unless you gain a better proficiency rank in some other way.\n\n**Perception**\n\nTrained in [Perception](characteristic:perception)\n\n**Saving Throws**\n\nTrained in [Fortitude](characteristic:fortitude)\n\nTrained in [Reflex](characteristic:reflex)\n\nExpert in Will\n\n**Skills**\n\nTrained in [Arcana](characteristic:skill/arcana)\n\nTrained in a number of additional skills equal to 2 plus your [Intelligence modifier](characteristic:intelligence)\n\n**Attacks**\n\nTrained in simple weapons\n\nTrained in unarmed attacks\n\n**Defenses**\n\nUntrained in all armor\n\nTrained in unarmored defense\n\n**Class DC**\n\nTrained in wizard [class DC](characteristic:class-dc)\n\n**Spells**\n\nTrained in [spell attack modifier](characteristic:spell-attack)\n\nTrained in [spell DC](characteristic:spell-dc)\n\n**Class Features**\n\nYou gain these features as Wizard. Features gained at higher levels list the levels at which you gain them next to the features' names.\n\n| Your Level | Class Features |\n|---|---|\n| 1 | Ancestry and background, attribute boosts, initial proficiencies, wizard spellcasting, arcane thesis, arcane school, arcane bond |\n| 2 | Skill feat, wizard feat |\n| 3 | 2nd-rank spells, general feat, skill increase |\n| 4 | Skill feat, wizard feat |\n| 5 | 3rd-rank spells, attribute boosts, ancestry feat, reflex expertise, skill increase |\n| 6 | Skill feat, wizard feat |\n| 7 | 4th-rank spells, expert spellcaster, general feat, skill increase |\n| 8 | Skill feat, wizard feat |\n| 9 | 5th-rank spells, ancestry feat, magical fortitude, skill increase |\n| 10 | Attribute boosts, skill feat, wizard feat |\n\n| Your Level | Cantrips | 1st | 2nd | 3rd | 4th | 5th |\n|---|---|---|---|---|---|---|\n| 1 | 5 | 2 | — | — | — | — |\n| 2 | 5 | 3 | — | — | — | — |\n| 3 | 5 | 3 | 2 | — | — | — |\n| 4 | 5 | 3 | 3 | — | — | — |\n| 5 | 5 | 3 | 3 | 2 | — | — |\n| 6 | 5 | 3 | 3 | 3 | — | — |\n| 7 | 5 | 3 | 3 | 3 | 2 | — |\n| 8 | 5 | 3 | 3 | 3 | 3 | — |\n| 9 | 5 | 3 | 3 | 3 | 3 | 2 |\n| 10 | 5 | 3 | 3 | 3 | 3 | 3 |",
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       HitPoints,
       Attributes.modifier(Patches.sum(NumericExpressions.multiply([NumericExpressions.sum([6, Constitution.variable]), CharacterValues.Level])))
     ),
-    Effects.gainTrait(IntelligenceKeyAttribute),
-    Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(UnarmoredDefense, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Intelligence.variable))),
-    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Intelligence.variable))),
-    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.gainTrait(TrainedArcana),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainTrait(WizardSpellcasting),
-    Effects.gainTrait(ArcaneThesisFeature),
-    Effects.gainTrait(ArcaneSchoolFeature),
-    Effects.gainTrait(ArcaneBond),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
-      Effects.gainTrait(WizardFeats),
-      Effects.gainCharacterOption(SelectWizardFeat2),
+    CharacterEffects.gainTrait(IntelligenceKeyAttribute),
+    CharacterEffects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(UnarmoredDefense, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Intelligence.variable))),
+    CharacterEffects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Intelligence.variable))),
+    CharacterEffects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.gainTrait(TrainedArcana),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainTrait(WizardSpellcasting),
+    CharacterEffects.gainTrait(ArcaneThesisFeature),
+    CharacterEffects.gainTrait(ArcaneSchoolFeature),
+    CharacterEffects.gainTrait(ArcaneBond),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
+      CharacterEffects.gainTrait(WizardFeats),
+      CharacterEffects.gainCharacterOption(SelectWizardFeat2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [Effects.gainCharacterOption(SelectWizardFeat4)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainTrait(ReflexExpertise)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(SelectWizardFeat6)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainTrait(ExpertSpellcaster)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [Effects.gainCharacterOption(SelectWizardFeat8)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainTrait(MagicalFortitude)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(SelectWizardFeat10)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [CharacterEffects.gainCharacterOption(SelectWizardFeat4)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainTrait(ReflexExpertise)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [CharacterEffects.gainCharacterOption(SelectWizardFeat6)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [CharacterEffects.gainTrait(ExpertSpellcaster)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [CharacterEffects.gainCharacterOption(SelectWizardFeat8)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainTrait(MagicalFortitude)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      CharacterEffects.gainCharacterOption(SelectWizardFeat10),
+    ]),
   ],
 })
 

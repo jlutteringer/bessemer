@@ -1,4 +1,4 @@
-import { Tags, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
@@ -69,27 +69,27 @@ export const ArsGrammatica = Traits.defineTrait('wizard/arcane-school/ars-gramma
     "Runes and wards, numbers and letters—they underpin all magic, making them the logical subject for a wizard who studies fundamental forces. Perhaps you studied at the Pathfinder Society's School of Spells or a similar institution, but whether you're lacing your words with magic to compel others, casting wards around your workshop, or destabilizing the very structure of an opponent's spells, you know this unassuming school carries elegant power.\n\n**Curriculum**\n- Cantrips: Message, Sigil\n- 1st: Command, Disguise Magic, Runic Body, Runic Weapon\n- 2nd: Dispel Magic, Translate\n- 3rd: Enthrall, Veil of Privacy\n- 4th: Dispelling Globe, Suggestion\n- 5th: Sending, Truespeech\n- 6th: Repulsion, Spellwrack\n- 7th: Contingency, Planar Seal\n- 8th: Quandary, Unrelenting Observation\n- 9th: Detonate Magic\n\n**School Spells**\n- Initial: Protective Wards\n- Advanced: Rune of Observation",
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.ProtectiveWards),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainLoadoutSlot(CantripLoadout),
-    Effects.gainLoadoutSlot(SpellRank1Loadout),
-    Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank1),
-    Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainLoadoutSlot(SpellRank2Loadout),
-      Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank2),
+    CharacterEffects.gainAbility(WizardFocusSpells.ProtectiveWards),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.gainLoadoutSlot(SpellRank1Loadout),
+    CharacterEffects.gainCharacterOption(SelectArsGrammaticaCurriculumRank1),
+    CharacterEffects.gainCharacterOption(SelectArsGrammaticaCurriculumRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainLoadoutSlot(SpellRank2Loadout),
+      CharacterEffects.gainCharacterOption(SelectArsGrammaticaCurriculumRank2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainLoadoutSlot(SpellRank3Loadout),
-      Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainLoadoutSlot(SpellRank3Loadout),
+      CharacterEffects.gainCharacterOption(SelectArsGrammaticaCurriculumRank3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainLoadoutSlot(SpellRank4Loadout),
-      Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank4),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainLoadoutSlot(SpellRank4Loadout),
+      CharacterEffects.gainCharacterOption(SelectArsGrammaticaCurriculumRank4),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainLoadoutSlot(SpellRank5Loadout),
-      Effects.gainCharacterOption(SelectArsGrammaticaCurriculumRank5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainLoadoutSlot(SpellRank5Loadout),
+      CharacterEffects.gainCharacterOption(SelectArsGrammaticaCurriculumRank5),
     ]),
   ],
 })
@@ -130,27 +130,27 @@ export const BattleMagic = Traits.defineTrait('wizard/arcane-school/battle-magic
     'Magic is power, and there are always those who will use power for the art of battle. You may have studied in the military of a nation of the brink of war—Cheliax and Andoran perhaps, or Geb and Nex. You summon whirling energies that can lay waste to both soldiers and armies, while being sure not to neglect arcane countermeasures for common tactical complications or the shields and defenses that keep combatants alive on the battlefield.\n\n**Curriculum**\n- Cantrips: Shield, Telekinetic Projectile\n- 1st: Breathe Fire, Force Barrage, Mystic Armor\n- 2nd: Mist, Resist Energy\n- 3rd: Earthbind, Fireball\n- 4th: Wall of Fire, Weapon Storm\n- 5th: Howling Blizzard, Impaling Spike\n- 6th: Chain Lightning, Disintegrate\n- 7th: Energy Aegis, True Target\n- 8th: Arctic Rift, Desiccate\n- 9th: Falling Stars\n\n**School Spells**\n- Initial: Force Bolt\n- Advanced: Energy Absorption',
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.ForceBolt),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainLoadoutSlot(CantripLoadout),
-    Effects.gainLoadoutSlot(SpellRank1Loadout),
-    Effects.gainCharacterOption(SelectBattleMagicCurriculumRank1),
-    Effects.gainCharacterOption(SelectBattleMagicCurriculumRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainLoadoutSlot(SpellRank2Loadout),
-      Effects.gainCharacterOption(SelectBattleMagicCurriculumRank2),
+    CharacterEffects.gainAbility(WizardFocusSpells.ForceBolt),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.gainLoadoutSlot(SpellRank1Loadout),
+    CharacterEffects.gainCharacterOption(SelectBattleMagicCurriculumRank1),
+    CharacterEffects.gainCharacterOption(SelectBattleMagicCurriculumRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainLoadoutSlot(SpellRank2Loadout),
+      CharacterEffects.gainCharacterOption(SelectBattleMagicCurriculumRank2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainLoadoutSlot(SpellRank3Loadout),
-      Effects.gainCharacterOption(SelectBattleMagicCurriculumRank3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainLoadoutSlot(SpellRank3Loadout),
+      CharacterEffects.gainCharacterOption(SelectBattleMagicCurriculumRank3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainLoadoutSlot(SpellRank4Loadout),
-      Effects.gainCharacterOption(SelectBattleMagicCurriculumRank4),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainLoadoutSlot(SpellRank4Loadout),
+      CharacterEffects.gainCharacterOption(SelectBattleMagicCurriculumRank4),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainLoadoutSlot(SpellRank5Loadout),
-      Effects.gainCharacterOption(SelectBattleMagicCurriculumRank5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainLoadoutSlot(SpellRank5Loadout),
+      CharacterEffects.gainCharacterOption(SelectBattleMagicCurriculumRank5),
     ]),
   ],
 })
@@ -206,27 +206,27 @@ export const CivicWizardry = Traits.defineTrait('wizard/arcane-school/civic-wiza
     "Whether you studied in Manaket's Occularium or the Academy of Applied Magic, you learned that the fruits of arcane studies—like any other field—should ultimately help the common citizen. You've learned the humble art of construction, of finding lost people and things, of moving speedily among buildings and moats—yet these same arts can be turned to demolition, and the constructs you animate to build bridges can just as easily tear them down.\n\n**Curriculum**\n- Cantrips: Prestidigitation, Read Aura\n- 1st: Hydraulic Push, Pummeling Rubble, Summon Construct\n- 2nd: Revealing Light, Water Walk\n- 3rd: Cozy Cabin, Safe Passage\n- 4th: Creation, Unfettered Movement\n- 5th: Control Water, Wall of Stone\n- 6th: Disintegrate, Wall of Force\n- 7th: Planar Palace, Retrocognition\n- 8th: Earthquake, Pinpoint\n- 9th: Foresight\n\n**School Spells**\n- Initial: Earthworks\n- Advanced: Community Restoration",
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.Earthworks),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainLoadoutSlot(CantripLoadout),
-    Effects.gainLoadoutSlot(SpellRank1Loadout),
-    Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank1),
-    Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainLoadoutSlot(SpellRank2Loadout),
-      Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank2),
+    CharacterEffects.gainAbility(WizardFocusSpells.Earthworks),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.gainLoadoutSlot(SpellRank1Loadout),
+    CharacterEffects.gainCharacterOption(SelectCivicWizardryCurriculumRank1),
+    CharacterEffects.gainCharacterOption(SelectCivicWizardryCurriculumRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainLoadoutSlot(SpellRank2Loadout),
+      CharacterEffects.gainCharacterOption(SelectCivicWizardryCurriculumRank2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainLoadoutSlot(SpellRank3Loadout),
-      Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainLoadoutSlot(SpellRank3Loadout),
+      CharacterEffects.gainCharacterOption(SelectCivicWizardryCurriculumRank3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainLoadoutSlot(SpellRank4Loadout),
-      Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank4),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainLoadoutSlot(SpellRank4Loadout),
+      CharacterEffects.gainCharacterOption(SelectCivicWizardryCurriculumRank4),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainLoadoutSlot(SpellRank5Loadout),
-      Effects.gainCharacterOption(SelectCivicWizardryCurriculumRank5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainLoadoutSlot(SpellRank5Loadout),
+      CharacterEffects.gainCharacterOption(SelectCivicWizardryCurriculumRank5),
     ]),
   ],
 })
@@ -267,27 +267,27 @@ export const Mentalism = Traits.defineTrait('wizard/arcane-school/mentalism', {
     'As a scholar, you know all too well the importance of a sound mind. Thus, you attended a school—like the Farseer Tower or the Stone of the Seers—that taught the arts of befuddling lesser minds with figments and illusions or implanted sensations and memories.\n\n**Curriculum**\n- Cantrips: Daze, Figment\n- 1st: Dizzying Colors, Sleep, Sure Strike\n- 2nd: Illusory Creature, Stupefy\n- 3rd: Dream Message, Mind Reading\n- 4th: Nightmare, Vision of Death\n- 5th: Hallucination, Illusory Scene\n- 6th: Never Mind, Phantasmal Calamity\n- 7th: Project Image, Warp Mind\n- 8th: Disappearance, Uncontrollable Dance\n- 9th: Phantasmagoria\n\n**School Spells**\n- Initial: Charming Push\n- Advanced: Invisibility Cloak',
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.CharmingPush),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainLoadoutSlot(CantripLoadout),
-    Effects.gainLoadoutSlot(SpellRank1Loadout),
-    Effects.gainCharacterOption(SelectMentalismCurriculumRank1),
-    Effects.gainCharacterOption(SelectMentalismCurriculumRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainLoadoutSlot(SpellRank2Loadout),
-      Effects.gainCharacterOption(SelectMentalismCurriculumRank2),
+    CharacterEffects.gainAbility(WizardFocusSpells.CharmingPush),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.gainLoadoutSlot(SpellRank1Loadout),
+    CharacterEffects.gainCharacterOption(SelectMentalismCurriculumRank1),
+    CharacterEffects.gainCharacterOption(SelectMentalismCurriculumRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainLoadoutSlot(SpellRank2Loadout),
+      CharacterEffects.gainCharacterOption(SelectMentalismCurriculumRank2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainLoadoutSlot(SpellRank3Loadout),
-      Effects.gainCharacterOption(SelectMentalismCurriculumRank3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainLoadoutSlot(SpellRank3Loadout),
+      CharacterEffects.gainCharacterOption(SelectMentalismCurriculumRank3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainLoadoutSlot(SpellRank4Loadout),
-      Effects.gainCharacterOption(SelectMentalismCurriculumRank4),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainLoadoutSlot(SpellRank4Loadout),
+      CharacterEffects.gainCharacterOption(SelectMentalismCurriculumRank4),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainLoadoutSlot(SpellRank5Loadout),
-      Effects.gainCharacterOption(SelectMentalismCurriculumRank5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainLoadoutSlot(SpellRank5Loadout),
+      CharacterEffects.gainCharacterOption(SelectMentalismCurriculumRank5),
     ]),
   ],
 })
@@ -328,27 +328,27 @@ export const ProteanForm = Traits.defineTrait('wizard/arcane-school/protean-form
     "The uninitiated often think of wizards as cerebral, focused on their studies more than the body, yet your school of magic taught of the relationship between the two. Your magic, whether learned at a storied institution like Kintargo's Alabaster Academy or someplace more sinister, like the Fleshforges of Nex, focuses on the ways that living matter can be convinced into another shape for a time, allowing you to polymorph a seed into a vine, a human into a beast, or a harmless germ into a deadly toxin.\n\n**Curriculum**\n- Cantrips: Gouging Claw, Tangle Vine\n- 1st: Jump, Pest Form, Spider Sting\n- 2nd: Enlarge, Humanoid Form\n- 3rd: Feet to Fins, Vampiric Feast\n- 4th: Mountain Resilience, Vapor Form\n- 5th: Elemental Form, Toxic Cloud\n- 6th: Cursed Metamorphosis, Petrify\n- 7th: Duplicate Foe, Fiery Body\n- 8th: Desiccate, Monstrosity Form\n- 9th: Metamorphosis\n\n**School Spells**\n- Initial: Scramble Body\n- Advanced: Shifting Form",
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.ScrambleBody),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainLoadoutSlot(CantripLoadout),
-    Effects.gainLoadoutSlot(SpellRank1Loadout),
-    Effects.gainCharacterOption(SelectProteanFormCurriculumRank1),
-    Effects.gainCharacterOption(SelectProteanFormCurriculumRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainLoadoutSlot(SpellRank2Loadout),
-      Effects.gainCharacterOption(SelectProteanFormCurriculumRank2),
+    CharacterEffects.gainAbility(WizardFocusSpells.ScrambleBody),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.gainLoadoutSlot(SpellRank1Loadout),
+    CharacterEffects.gainCharacterOption(SelectProteanFormCurriculumRank1),
+    CharacterEffects.gainCharacterOption(SelectProteanFormCurriculumRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainLoadoutSlot(SpellRank2Loadout),
+      CharacterEffects.gainCharacterOption(SelectProteanFormCurriculumRank2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainLoadoutSlot(SpellRank3Loadout),
-      Effects.gainCharacterOption(SelectProteanFormCurriculumRank3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainLoadoutSlot(SpellRank3Loadout),
+      CharacterEffects.gainCharacterOption(SelectProteanFormCurriculumRank3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainLoadoutSlot(SpellRank4Loadout),
-      Effects.gainCharacterOption(SelectProteanFormCurriculumRank4),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainLoadoutSlot(SpellRank4Loadout),
+      CharacterEffects.gainCharacterOption(SelectProteanFormCurriculumRank4),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainLoadoutSlot(SpellRank5Loadout),
-      Effects.gainCharacterOption(SelectProteanFormCurriculumRank5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainLoadoutSlot(SpellRank5Loadout),
+      CharacterEffects.gainCharacterOption(SelectProteanFormCurriculumRank5),
     ]),
   ],
 })
@@ -359,21 +359,21 @@ export const UnifiedMagicalTheory = Traits.defineTrait('wizard/arcane-school/uni
     "You eschew the idea that magic can be neatly expressed by the teachings of any single school or college, instead directing your self-study to pick up the best of every school of magic. In doing so, you'll find the truths that lie at the intersection of each school, coming closer to the ideal nature of arcane magic. One day, you'll uncover that single elegant theory detailing all magic (perhaps a theory bearing your name?), but until then, your studies continue.\n\n**No Curriculum** You don't have a set curriculum, and so you don't have curriculum spells and can't benefit from abilities that specifically affect them. Instead, you gain an additional 1st-level wizard class feat, and you add one 1st- rank spell of your choice to your spellbook to represent your diverse studies. Your studies into the very nature of magic itself have let you use it more efficiently—instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.\n\n**School Spells**\n- Initial: Hand of the Apprentice\n- Advanced: Interdisciplinary Incantation",
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.HandOfTheApprentice),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainCharacterOption(SelectWizardFeat1),
-    Effects.gainCharacterOption(SelectSpellbookRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(WizardFocusSpells.HandOfTheApprentice),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainCharacterOption(SelectWizardFeat1),
+    CharacterEffects.gainCharacterOption(SelectSpellbookRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.modifyResourcePool(DrainBondedItem.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
     ]),
   ],
 })
@@ -414,27 +414,27 @@ export const Boundary = Traits.defineTrait('wizard/arcane-school/boundary', {
     "Why use your magic to affect something as pedestrian as the physical world? Whether you studied at the College of Dimensional Studies in Katapesh or an underground school in haunted Ustalav, you've turned your magic past the Universe to the forces beyond, summoning spirits and shades, manipulating dimensions and planes, and treading in a place not meant for mortals.\n\n**Curriculum**\n- Cantrips: Telekinetic Hand, Void Warp\n- 1st: Grim Tendrils, Phantasmal Minion, Summon Undead\n- 2nd: Darkness, See the Unseen\n- 3rd: Bind Undead, Ghostly Weapon\n- 4th: Flicker, Translocate\n- 5th: Banishment, Invoke Spirits\n- 6th: Teleport, Vampiric Exsanguination\n- 7th: Eclipse Burst, Interplanar Teleport\n- 8th: Quandary, Unrelenting Observation\n- 9th: Massacre\n\n**School Spells**\n- Initial: Fortify Summoning\n- Advanced: Spiral of Horrors",
   tags: [ArcaneSchool],
   effects: [
-    Effects.gainAbility(WizardFocusSpells.FortifySummoning),
-    Effects.gainResourcePool(FocusPoints),
-    Effects.gainLoadoutSlot(CantripLoadout),
-    Effects.gainLoadoutSlot(SpellRank1Loadout),
-    Effects.gainCharacterOption(SelectBoundaryCurriculumRank1),
-    Effects.gainCharacterOption(SelectBoundaryCurriculumRank1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainLoadoutSlot(SpellRank2Loadout),
-      Effects.gainCharacterOption(SelectBoundaryCurriculumRank2),
+    CharacterEffects.gainAbility(WizardFocusSpells.FortifySummoning),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.gainLoadoutSlot(SpellRank1Loadout),
+    CharacterEffects.gainCharacterOption(SelectBoundaryCurriculumRank1),
+    CharacterEffects.gainCharacterOption(SelectBoundaryCurriculumRank1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainLoadoutSlot(SpellRank2Loadout),
+      CharacterEffects.gainCharacterOption(SelectBoundaryCurriculumRank2),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainLoadoutSlot(SpellRank3Loadout),
-      Effects.gainCharacterOption(SelectBoundaryCurriculumRank3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainLoadoutSlot(SpellRank3Loadout),
+      CharacterEffects.gainCharacterOption(SelectBoundaryCurriculumRank3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainLoadoutSlot(SpellRank4Loadout),
-      Effects.gainCharacterOption(SelectBoundaryCurriculumRank4),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainLoadoutSlot(SpellRank4Loadout),
+      CharacterEffects.gainCharacterOption(SelectBoundaryCurriculumRank4),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainLoadoutSlot(SpellRank5Loadout),
-      Effects.gainCharacterOption(SelectBoundaryCurriculumRank5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainLoadoutSlot(SpellRank5Loadout),
+      CharacterEffects.gainCharacterOption(SelectBoundaryCurriculumRank5),
     ]),
   ],
 })
@@ -449,7 +449,7 @@ export const ArcaneSchoolFeature = Traits.defineTrait('wizard/arcane-school', {
   description:
     'Most wizards acquire their knowledge of spells from a formal educational institution, such as the Arcanamirium or the Magaambya. At 1st level, you choose your arcane school, which grants you magical abilities.\n\nYou gain additional spells and spell slots from the curriculum taught at the school you attended. Some wizards follow the school of unified magical theory, which attempts to forge a new school by studying independently and drawing information from a multitude of texts and tutors. Though a wizard with this approach lacks the focus of formal training, they have greater flexibility.',
   tags: [ClassFeature],
-  effects: [Effects.gainCharacterOption(SelectArcaneSchool)],
+  effects: [CharacterEffects.gainCharacterOption(SelectArcaneSchool)],
 })
 
 export const AllWizardSchoolEntities = [

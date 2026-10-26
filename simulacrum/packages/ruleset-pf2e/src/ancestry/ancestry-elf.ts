@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -51,7 +51,7 @@ export const CavernElf = Traits.defineTrait('heritage/cavern-elf', {
   description:
     'You were born or spent many years in underground tunnels or caverns where light is scarce. You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision).',
   tags: [Heritage, ElfHeritage],
-  effects: [Effects.gainTrait(Darkvision)],
+  effects: [CharacterEffects.gainTrait(Darkvision)],
 })
 
 export const SeerElf = Traits.defineTrait('heritage/seer-elf', {
@@ -109,17 +109,17 @@ export const Elf = Traits.defineTrait('ancestry/elf', {
     "*Elf, Humanoid*\n\n_Elves are a tall, long-lived people with a strong tradition of art and magic._\n\nIf you want a character who is magical, mystical, and mysterious, you should play an elf.\n\nRead the full entry in [Elves](content:ancestries-and-backgrounds/elves).\n\n**Hit Points** 6\n\n**Size** Medium\n\n**Speed** 30 feet\n\n**Attribute Boosts** Dexterity, Intelligence, Free\n\n**Attribute Flaws** Constitution\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Elven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Draconic](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Empyrean](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Fey](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Kholo](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Orcish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Low-Light Vision** You can see in dim light as though it were bright light, so you ignore the [concealed](content:conditions/concealed) condition due to dim light.",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(30))),
-    Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(-1))),
-    Effects.gainCharacterOption(SelectElfAncestryBoost),
-    Effects.gainTrait(LowLightVision),
-    Effects.gainCharacterOption(SelectElfHeritage),
-    Effects.gainCharacterOption(SelectElfFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectElfFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectElfFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(30))),
+    CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.gainCharacterOption(SelectElfAncestryBoost),
+    CharacterEffects.gainTrait(LowLightVision),
+    CharacterEffects.gainCharacterOption(SelectElfHeritage),
+    CharacterEffects.gainCharacterOption(SelectElfFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectElfFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectElfFeat9)]),
   ],
 })
 
@@ -138,7 +138,7 @@ export const ElvenLore = Traits.defineTrait('ancestry/elf/elven-lore', {
     "*Elf*\n\nYou've studied traditional elven arts, learning about arcane magic and the world around you. You gain the trained proficiency rank in [Arcana](characteristic:skill/arcana) and [Nature](characteristic:skill/nature). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Elf [Lore](content:skills/lore)",
   tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
-  effects: [Effects.gainTrait(TrainedArcana), Effects.gainTrait(TrainedNature), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedArcana), CharacterEffects.gainTrait(TrainedNature), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const ElvenWeaponFamiliarity = Traits.defineTrait('ancestry/elf/elven-weapon-familiarity', {
@@ -164,7 +164,7 @@ export const NimbleElf = Traits.defineTrait('ancestry/elf/nimble-elf', {
   description: '*Elf*\n\nYour muscles are tightly honed. Your [Speed](characteristic:speed) increases by 5 feet.',
   tags: [Feat, AncestryFeat, ElfFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Elf), Traits.traitPrerequisite(AiuvarinHeritage)])],
-  effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const OtherworldlyMagic = Traits.defineTrait('ancestry/elf/otherworldly-magic', {

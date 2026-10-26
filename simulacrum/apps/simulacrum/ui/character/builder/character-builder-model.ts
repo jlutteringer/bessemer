@@ -1,6 +1,15 @@
 import { CharacterRecord, CharacterSheet } from '@simulacrum/common/engine/character/character'
 import { CharacterOption, CharacterOptionValue, CharacterSelection } from '@simulacrum/common/engine/character/character-option'
-import { Abilities, Tags, Characteristics, Effects, ProgressionTables, Traits, CharacterOptions, Characters } from '@simulacrum/common/engine/engine'
+import {
+  Abilities,
+  Tags,
+  Characteristics,
+  CharacterEffects,
+  ProgressionTables,
+  Traits,
+  CharacterOptions,
+  Characters,
+} from '@simulacrum/common/engine/engine'
 import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { Characteristic, CharacteristicGroup } from '@simulacrum/common/engine/characteristic'
@@ -191,7 +200,7 @@ export const getGrantedTraits = (
   heldTraits: ProgressionTable<TraitReference>,
   ruleset: Ruleset
 ): Array<{ trait: Trait; level: number }> => {
-  return Effects.filter(trait.effects, Effects.GainTrait).flatMap((it) => {
+  return CharacterEffects.filter(trait.effects, CharacterEffects.GainTrait).flatMap((it) => {
     const entry = ProgressionTables.getEntries(heldTraits).find(([_, heldTrait]) => heldTrait === it.trait)
     if (Objects.isNil(entry)) {
       return []

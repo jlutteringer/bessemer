@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
@@ -44,7 +44,7 @@ export const RoguesRacketFeature = Traits.defineTrait('rogue/rogues-racket', {
   description:
     "You've begun to develop your techniques and approach to a job, while building your reputation in rogues' circles. Choose a rogue's racket.",
   tags: [ClassFeature],
-  effects: [Effects.gainCharacterOption(SelectRoguesRacket)],
+  effects: [CharacterEffects.gainCharacterOption(SelectRoguesRacket)],
 })
 
 export const SneakAttack = Traits.defineTrait('rogue/sneak-attack', {
@@ -53,8 +53,12 @@ export const SneakAttack = Traits.defineTrait('rogue/sneak-attack', {
     "When your enemy can't properly defend itself, you take advantage to deal extra damage. If you [Strike](content:playing-the-game/strike) a creature that has the [off-guard](content:conditions/off-guard) condition with an [agile](content:traits/agile) or [finesse](content:traits/finesse) melee weapon, an agile or finesse unarmed attack, a ranged weapon attack, or a ranged [unarmed](content:traits/unarmed) attack, you deal an extra 1d6 precision damage. For a ranged attack with a [thrown](content:traits/thrown) melee weapon, that weapon must also be agile or finesse.\n\nAs your rogue level increases, so does the number of damage dice for your sneak attack. Increase the number of dice by one at 5th, 11th, and 17th levels.",
   tags: [ClassFeature],
   effects: [
-    Effects.conditional(Expressions.lessThan(CharacterValues.Level, 5), [Effects.descriptive('**Sneak attack** 1d6 precision damage')]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.descriptive('**Sneak attack** 2d6 precision damage')]),
+    CharacterEffects.conditional(Expressions.lessThan(CharacterValues.Level, 5), [
+      CharacterEffects.descriptive('**Sneak attack** 1d6 precision damage'),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.descriptive('**Sneak attack** 2d6 precision damage'),
+    ]),
   ],
 })
 
@@ -87,7 +91,7 @@ export const EvasiveReflexes = Traits.defineTrait('rogue/evasive-reflexes', {
   description:
     "You've learned to move quickly to avoid explosions, dragons' breath, and worse. Your proficiency rank for [Reflex](characteristic:reflex) saves increases to master. When you roll a success on a Reflex save, you get a critical success instead.",
   tags: [ClassFeature],
-  effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const RoguePerceptionMastery = Traits.defineTrait('rogue/perception-mastery', {
@@ -95,7 +99,7 @@ export const RoguePerceptionMastery = Traits.defineTrait('rogue/perception-maste
   description:
     "You've developed keen awareness and attention to detail. Your proficiency rank for [Perception](characteristic:perception) increases to master.",
   tags: [ClassFeature],
-  effects: [Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Master), { combinability: Proficiency }))],
 })
 
 export const RogueWeaponSpecialization = Traits.defineTrait('rogue/weapon-specialization', {
@@ -111,7 +115,7 @@ export const RogueResilience = Traits.defineTrait('rogue/rogue-resilience', {
   description:
     'Your physique is incredibly hardy. Your proficiency rank for [Fortitude](characteristic:fortitude) saves increases to expert. When you roll a success on a Fortitude save, you get a critical success instead.',
   tags: [ClassFeature],
-  effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const DebilitatingStrike = Traits.defineTrait('rogue/debilitating-strike', {
@@ -184,74 +188,74 @@ export const Rogue = Traits.defineTrait('rogue', {
     "_You are skilled and opportunistic. Using your sharp wits and quick reactions, you take advantage of your opponents’ missteps and strike where it hurts most. You play a dangerous game, seeking thrills and testing your skills, and likely don’t care much for any laws that happen to get in your way. While the path of every rogue is unique and riddled with danger, the one thing you all share in common is the breadth and depth of your skills._\n\n**Key Attribute: Dexterity or other**\n\nAt 1st level, your class gives you an attribute boost to Dexterity or an option from rogue's racket.\n\n**Hit Points: 8 plus your Constitution modifier**\n\nYou increase your maximum number of HP by this number at 1st level and every level thereafter.\n\n**Initial Proficiencies**\n\nAt 1st level, you gain the listed proficiency ranks in the following statistics. You are untrained in anything not listed unless you gain a better proficiency rank in some other way.\n\n**Perception**\n\nExpert in [Perception](characteristic:perception)\n\n**Saving Throws**\n\nTrained in [Fortitude](characteristic:fortitude)\n\nExpert in [Reflex](characteristic:reflex)\n\nExpert in Will\n\n**Skills**\n\nTrained in [Stealth](characteristic:skill/stealth)\n\nTrained in one or more skills determined by your rogue's racket\n\nTrained in a number of additional skills equal to 7 plus your [Intelligence modifier](characteristic:intelligence)\n\n**Attacks**\n\nTrained in simple weapons\n\nTrained in martial weapons\n\nTrained in unarmed attacks\n\n**Defenses**\n\nTrained in light armor\n\nTrained in unarmored defense\n\n**Class DC**\n\nTrained in rogue [class DC](characteristic:class-dc)\n\n**Class Features**\n\nYou gain these features as Rogue. Features gained at higher levels list the levels at which you gain them next to the features' names.\n\n| Your Level | Class Features |\n|---|---|\n| 1 | Ancestry and background, attribute boosts, initial proficiencies, rogue’s racket, sneak attack 1d6, surprise attack, rogue feat, skill feat |\n| 2 | Rogue feat, skill feat, skill increase |\n| 3 | Deny advantage, general feat, skill feat, skill increase |\n| 4 | Rogue feat, skill feat, skill increase |\n| 5 | Attribute boosts, ancestry feat, skill feat, skill increase, sneak attack 2d6, weapon tricks |\n| 6 | Rogue feat, skill feat, skill increase |\n| 7 | Evasive reflexes, general feat, skill feat, skill increase, perception mastery, weapon specialization |\n| 8 | Rogue feat, skill feat, skill increase |\n| 9 | Ancestry feat, debilitating strike, rogue resilience, skill feat, skill increase |\n| 10 | Attribute boosts, rogue feat, skill feat, skill increase |",
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       HitPoints,
       Attributes.modifier(Patches.sum(NumericExpressions.multiply([NumericExpressions.sum([8, Constitution.variable]), CharacterValues.Level])))
     ),
-    Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(LightArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(UnarmoredDefense, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.gainTrait(TrainedStealth),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.gainTrait(RoguesRacketFeature),
-    Effects.gainTrait(SneakAttack),
-    Effects.gainTrait(SurpriseAttack),
-    Effects.gainCharacterOption(SelectRogueFeat1),
-    Effects.gainCharacterOption(SelectSkillFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
-      Effects.gainCharacterOption(SelectRogueFeat2),
-      Effects.gainCharacterOption(SelectSkillIncrease),
+    CharacterEffects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(LightArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(UnarmoredDefense, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.gainTrait(TrainedStealth),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.gainTrait(RoguesRacketFeature),
+    CharacterEffects.gainTrait(SneakAttack),
+    CharacterEffects.gainTrait(SurpriseAttack),
+    CharacterEffects.gainCharacterOption(SelectRogueFeat1),
+    CharacterEffects.gainCharacterOption(SelectSkillFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
+      CharacterEffects.gainCharacterOption(SelectRogueFeat2),
+      CharacterEffects.gainCharacterOption(SelectSkillIncrease),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
-      Effects.gainTrait(DenyAdvantage),
-      Effects.gainCharacterOption(SelectSkillFeat3),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainTrait(DenyAdvantage),
+      CharacterEffects.gainCharacterOption(SelectSkillFeat3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [
-      Effects.gainCharacterOption(SelectRogueFeat4),
-      Effects.gainCharacterOption(SelectSkillIncrease),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 4), [
+      CharacterEffects.gainCharacterOption(SelectRogueFeat4),
+      CharacterEffects.gainCharacterOption(SelectSkillIncrease),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainTrait(WeaponTricks),
-      Effects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-      Effects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-      Effects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
-      Effects.gainCharacterOption(SelectSkillFeat5),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainTrait(WeaponTricks),
+      CharacterEffects.modifyCharacteristic(SimpleWeapons, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      CharacterEffects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      CharacterEffects.modifyCharacteristic(UnarmedAttacks, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency })),
+      CharacterEffects.gainCharacterOption(SelectSkillFeat5),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
-      Effects.gainCharacterOption(SelectRogueFeat6),
-      Effects.gainCharacterOption(SelectSkillIncrease),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      CharacterEffects.gainCharacterOption(SelectRogueFeat6),
+      CharacterEffects.gainCharacterOption(SelectSkillIncrease),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
-      Effects.gainTrait(EvasiveReflexes),
-      Effects.gainTrait(RoguePerceptionMastery),
-      Effects.gainTrait(RogueWeaponSpecialization),
-      Effects.gainCharacterOption(SelectRogueSkillFeat7),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainTrait(EvasiveReflexes),
+      CharacterEffects.gainTrait(RoguePerceptionMastery),
+      CharacterEffects.gainTrait(RogueWeaponSpecialization),
+      CharacterEffects.gainCharacterOption(SelectRogueSkillFeat7),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
-      Effects.gainCharacterOption(SelectRogueFeat8),
-      Effects.gainCharacterOption(SelectSkillIncrease7),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 8), [
+      CharacterEffects.gainCharacterOption(SelectRogueFeat8),
+      CharacterEffects.gainCharacterOption(SelectSkillIncrease7),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainTrait(DebilitatingStrike),
-      Effects.gainTrait(RogueResilience),
-      Effects.gainCharacterOption(SelectRogueSkillFeat9),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainTrait(DebilitatingStrike),
+      CharacterEffects.gainTrait(RogueResilience),
+      CharacterEffects.gainCharacterOption(SelectRogueSkillFeat9),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
-      Effects.gainCharacterOption(SelectRogueFeat10),
-      Effects.gainCharacterOption(SelectSkillIncrease7),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      CharacterEffects.gainCharacterOption(SelectRogueFeat10),
+      CharacterEffects.gainCharacterOption(SelectSkillIncrease7),
     ]),
   ],
 })

@@ -1,17 +1,19 @@
 import { Characteristic, CharacteristicReference } from '@simulacrum/ruleset/characteristic'
 import { ActionEffect } from '@simulacrum/ruleset/action-effect'
+import { Valued } from '@simulacrum/ruleset/attribute'
+import * as Attributes from '@simulacrum/ruleset/attribute'
 
 export enum ActionTestType {
   Attack = 'Attack',
   Save = 'Save',
 }
 
-export type ActionTest = {
+export interface ActionTest {
   offense: CharacteristicReference
   defense: CharacteristicReference
   type: ActionTestType
-  success: Array<ActionEffect>
-  failure: Array<ActionEffect>
+  success: Array<Valued<ActionEffect>>
+  failure: Array<Valued<ActionEffect>>
 }
 
 export type ActionTestProps = {
@@ -27,7 +29,7 @@ export const resolve = (props: ActionTestProps): ActionTest => {
     offense: props.offense.id,
     defense: props.defense.id,
     type: props.type ?? ActionTestType.Attack,
-    success: props.success ?? [],
-    failure: props.failure ?? [],
+    success: (props.success ?? []).map(Attributes.valued),
+    failure: (props.failure ?? []).map(Attributes.valued),
   }
 }

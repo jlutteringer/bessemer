@@ -1,14 +1,14 @@
 export * from '@simulacrum/ruleset/characteristic'
-import { Characteristic, CharacteristicGroup, CharacteristicReference } from '@simulacrum/ruleset/characteristic'
+import { Characteristic, CharacteristicGroup } from '@simulacrum/ruleset/characteristic'
 import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import * as Rulesets from '@simulacrum/common/engine/ruleset'
 import { RulesetEntities } from '@simulacrum/ruleset'
 import { Attribute, AttributeValue, Modifier } from '@simulacrum/common/engine/attribute'
-import { Attributes, Effects } from '@simulacrum/common/engine/engine'
-import { Effect } from '@simulacrum/common/engine/effect'
+import { Attributes, CharacterEffects } from '@simulacrum/common/engine/engine'
+import { CharacterEffect } from '@simulacrum/common/engine/character-effect'
 import { CharacterInitialValues, CharacterSheet } from '@simulacrum/common/engine/character/character'
-import { EvaluateExpression } from '@bessemer/cornerstone/expression'
-import { Assertions, ObjectPaths, Objects } from '@bessemer/cornerstone'
+import { ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
+import { Assertions, Maths, ObjectPaths, Objects } from '@bessemer/cornerstone'
 
 export const getCharacteristics = (ruleset: Ruleset): Array<Characteristic> => {
   return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.Characteristic)
@@ -18,55 +18,46 @@ export const getCharacteristicGroups = (ruleset: Ruleset): Array<CharacteristicG
   return Rulesets.getEntities(ruleset, RulesetEntities.RulesetEntityType.CharacteristicGroup)
 }
 
-export type CharacteristicValue = AttributeValue<number> & {
-  name: string
-  characteristic: CharacteristicReference
-}
+export interface CharacteristicValue extends Characteristic, AttributeValue<number> {}
 
 export const buildAttribute = (characteristic: Characteristic, initialValues: CharacterInitialValues): Attribute<number> => {
-  let baseValue
   if (Objects.isPresent(characteristic.baseValue)) {
-    baseValue = characteristic.baseValue
-  } else {
-    // FUTURE cast...
-    const initialValue = ObjectPaths.getValue(characteristic.path as any, initialValues) as any as number | undefined
-    Assertions.assertPresent(initialValue)
-    baseValue = initialValue
+    return Attributes.attribute(characteristic.baseValue, characteristic.optimizer)
   }
 
-  return Attributes.attribute(baseValue, characteristic.optimizer)
+  const initialValue = ObjectPaths.getAnyValue(characteristic.path, initialValues)
+  if (!Maths.isNumber(initialValue)) {
+    throw new Error(`Characteristic [${characteristic.id}] has no numeric initial value`)
+  }
+
+  return Attributes.attribute(initialValue, characteristic.optimizer)
 }
 
 export const simpleValue = (value: number, characteristic: Characteristic, initialValues: CharacterInitialValues): CharacteristicValue => {
-  return {
-    name: characteristic.name,
-    characteristic: characteristic.id,
-    ...Attributes.simpleAttributeValue(value, buildAttribute(characteristic, initialValues)),
-  }
+  return { ...characteristic, ...Attributes.simpleAttributeValue(value, buildAttribute(characteristic, initialValues)) }
 }
 
 export const evaluateCharacteristic = (
   characteristic: Characteristic,
   initialValues: CharacterInitialValues,
-  effects: Array<Effect>,
-  evaluate: EvaluateExpression
+  effects: Array<CharacterEffect>,
+  evaluator: ExpressionEvaluator
 ): CharacteristicValue => {
   const attribute = buildAttribute(characteristic, initialValues)
 
-  const modifiers = Effects.filter(effects, Effects.ModifyCharacteristic)
-    .filter((it) => it.characteristic === characteristic.id)
-    .map((it) => (Objects.isPresent(it.source) ? { ...it.modifier, source: it.source } : it.modifier)) as Array<Modifier<number>>
+  const modifiers = CharacterEffects.getModifiers(
+    effects,
+    CharacterEffects.ModifyCharacteristic,
+    (it) => it.characteristic === characteristic.id
+  ) as Array<Modifier<number>>
 
-  const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, evaluate)
+  const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, evaluator)
 
-  return {
-    name: characteristic.name,
-    characteristic: characteristic.id,
-    ...attributeValue,
-  }
+  return { ...characteristic, ...attributeValue }
 }
 
 export const getCharacteristicValue = (character: CharacterSheet, characteristic: Characteristic): CharacteristicValue => {
-  // FUTURE excessive casting - see Characters.buildExpressionContext
-  return ObjectPaths.getValue(characteristic.path as any, character.characteristics) as any as CharacteristicValue
+  const value = character.characteristics[characteristic.id]
+  Assertions.assertPresent(value, () => `Character has no value for characteristic [${characteristic.id}]`)
+  return value
 }

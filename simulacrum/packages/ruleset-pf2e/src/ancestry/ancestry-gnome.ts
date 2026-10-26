@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -58,7 +58,7 @@ export const UmbralGnome = Traits.defineTrait('heritage/umbral-gnome', {
   description:
     'Whether from a connection to dark or shadowy fey, from the underground gnomes known as drathnelar, or from another source, you can see in complete darkness. You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision).',
   tags: [Heritage, GnomeHeritage],
-  effects: [Effects.gainTrait(Darkvision)],
+  effects: [CharacterEffects.gainTrait(Darkvision)],
 })
 
 export const WellspringGnome = Traits.defineTrait('heritage/wellspring-gnome', {
@@ -108,17 +108,17 @@ export const Gnome = Traits.defineTrait('ancestry/gnome', {
     "*Gnome, Humanoid*\n\n_Gnomes are short and hardy folk, with an unquenchable curiosity and eccentric habits._\n\nIf you want a character with boundless enthusiasm and an alien, fey outlook on morality and life, you should play a gnome.\n\nRead the full entry in [Gnomes](content:ancestries-and-backgrounds/gnomes).\n\n**Hit Points** 8\n\n**Size** Small\n\n**Speed** 25 feet\n\n**Attribute Boosts** Constitution, Charisma, Free\n\n**Attribute Flaws** Strength\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Fey](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Draconic](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Dwarven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Elven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Jotun](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Orcish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Low-Light Vision** You can see in dim light as though it were bright light, so you ignore the [concealed](content:conditions/concealed) condition due to dim light.",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(8))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
-    Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(-1))),
-    Effects.gainCharacterOption(SelectGnomeAncestryBoost),
-    Effects.gainTrait(LowLightVision),
-    Effects.gainCharacterOption(SelectGnomeHeritage),
-    Effects.gainCharacterOption(SelectGnomeFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectGnomeFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectGnomeFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(8))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
+    CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.gainCharacterOption(SelectGnomeAncestryBoost),
+    CharacterEffects.gainTrait(LowLightVision),
+    CharacterEffects.gainCharacterOption(SelectGnomeHeritage),
+    CharacterEffects.gainCharacterOption(SelectGnomeFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectGnomeFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectGnomeFeat9)]),
   ],
 })
 
@@ -159,7 +159,7 @@ export const GnomeObsession = Traits.defineTrait('ancestry/gnome/gnome-obsession
   description:
     '*Gnome*\n\nYou might have a flighty nature, but when a topic captures your attention, you dive into it headfirst. You gain the [Additional Lore](trait:feat/additional-lore) feat and the [Assurance](trait:feat/assurance) feat for the chosen [Lore](content:skills/lore). As gnome obsessions can come and go quickly, you can retrain Gnome Obsession to a different Lore subcategory in 1 day of downtime.',
   tags: [Feat, AncestryFeat, GnomeFeat, FeatLevel1],
-  effects: [Effects.gainTrait(AdditionalLore), Effects.gainTrait(Assurance)],
+  effects: [CharacterEffects.gainTrait(AdditionalLore), CharacterEffects.gainTrait(Assurance)],
 })
 
 export const GnomeWeaponFamiliarity = Traits.defineTrait('ancestry/gnome/gnome-weapon-familiarity', {

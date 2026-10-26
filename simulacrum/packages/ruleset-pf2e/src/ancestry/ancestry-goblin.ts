@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -68,7 +68,7 @@ export const UnbreakableGoblin = Traits.defineTrait('heritage/unbreakable-goblin
   description:
     "You're able to bounce back from injuries easily due to an exceptionally thick skull, cartilaginous bones, or some other mixed blessing. You gain 10 [Hit Points](characteristic:hit-points) from your ancestry instead of 6. When you fall, reduce the [falling damage](content:playing-the-game/falling) you take as though you had fallen half the distance.",
   tags: [Heritage, GoblinHeritage],
-  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(4)))],
+  effects: [CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(4)))],
 })
 
 export const SelectGoblinHeritage = CharacterOptions.selectTraitOption('ancestry/goblin/select-heritage', {
@@ -110,17 +110,17 @@ export const Goblin = Traits.defineTrait('ancestry/goblin', {
     "*Goblin, Humanoid*\n\n_Goblins are a short, scrappy, energetic people who have spent millennia maligned and feared._\n\nIf you want a character who is eccentric, enthusiastic, and fun-loving, you should play a goblin.\n\nRead the full entry in [Goblins](content:ancestries-and-backgrounds/goblins).\n\n**Hit Points** 6\n\n**Size** Small\n\n**Speed** 25 feet\n\n**Attribute Boosts** Dexterity, Charisma, Free\n\n**Attribute Flaws** Wisdom\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Draconic](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Dwarven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Halfling](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Kholo](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Orcish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Darkvision** You can see in darkness and dim light just as well as you can see in bright light, though your vision in darkness is in black and white.",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
-    Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(-1))),
-    Effects.gainCharacterOption(SelectGoblinAncestryBoost),
-    Effects.gainTrait(Darkvision),
-    Effects.gainCharacterOption(SelectGoblinHeritage),
-    Effects.gainCharacterOption(SelectGoblinFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectGoblinFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectGoblinFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
+    CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.gainCharacterOption(SelectGoblinAncestryBoost),
+    CharacterEffects.gainTrait(Darkvision),
+    CharacterEffects.gainCharacterOption(SelectGoblinHeritage),
+    CharacterEffects.gainCharacterOption(SelectGoblinFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectGoblinFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectGoblinFeat9)]),
   ],
 })
 
@@ -145,7 +145,7 @@ export const GoblinLore = Traits.defineTrait('ancestry/goblin/goblin-lore', {
   description:
     "*Goblin*\n\nYou've picked up skills and tales from your goblin community. You gain the trained proficiency rank in [Nature](characteristic:skill/nature) and [Stealth](characteristic:skill/stealth). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Goblin [Lore](content:skills/lore).",
   tags: [Feat, AncestryFeat, GoblinFeat, FeatLevel1],
-  effects: [Effects.gainTrait(TrainedNature), Effects.gainTrait(TrainedStealth), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedNature), CharacterEffects.gainTrait(TrainedStealth), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const GoblinScuttle = Traits.defineTrait('ancestry/goblin/goblin-scuttle', {
@@ -185,7 +185,7 @@ export const RoughRider = Traits.defineTrait('ancestry/goblin/rough-rider', {
   description:
     "*Goblin*\n\nYou are especially good at riding traditional goblin mounts. You gain the [Ride](trait:feat/ride) feat, even if you don't meet the prerequisites. You gain a +1 circumstance bonus to [Nature](characteristic:skill/nature) checks to use [Command an Animal](content:skills/command-an-animal) on a goblin dog or wolf mount.\n\nIf you gain a [wolf](trait:companion/animal-companion/wolf) as an animal companion, it gains the mount special ability (and if you gain an ability that grants you an animal companion with the mount special ability, you can choose a wolf).",
   tags: [Feat, AncestryFeat, GoblinFeat, FeatLevel1],
-  effects: [Effects.gainTrait(Ride)],
+  effects: [CharacterEffects.gainTrait(Ride)],
 })
 
 export const VerySneaky = Traits.defineTrait('ancestry/goblin/very-sneaky', {
@@ -218,7 +218,7 @@ export const Vandal = Traits.defineTrait('ancestry/goblin/vandal', {
   description:
     "*Goblin*\n\nYou have a knack for breaking and dismantling things. Putting them back together is the boring part, so you largely don't bother with that. You become trained in [Thievery](characteristic:skill/thievery). If you would automatically become trained in Thievery (from your background or class, for example), you instead become trained in a skill of your choice.\n\nIn addition, whenever you hit with a [Strike](content:playing-the-game/strike) against a trap or an unattended object, you ignore the first 5 points of the object's [Hardness](content:equipment/item-damage).",
   tags: [Feat, AncestryFeat, GoblinFeat, FeatLevel5],
-  effects: [Effects.gainTrait(TrainedThievery)],
+  effects: [CharacterEffects.gainTrait(TrainedThievery)],
 })
 
 export const GoblinScuttleAction = Abilities.defineAbility('ancestry/goblin/goblin-scuttle/action', {

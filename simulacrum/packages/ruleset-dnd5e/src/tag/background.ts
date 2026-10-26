@@ -1,4 +1,4 @@
-import { Tags, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
 import * as ArtisansTools from '@simulacrum/ruleset-dnd5e/tag/artisans-tools'
@@ -25,11 +25,11 @@ export const Acolyte = Traits.defineTrait('background/acolyte', {
     "You devoted yourself to service in a temple, learning sacred rites and channeling a sliver of divine power.\n\n**Ability Scores:** Intelligence, Wisdom, Charisma\n\n**Feat:** Magic Initiate (Cleric)\n\n**Skill Proficiencies:** Insight, Religion\n\n**Tool Proficiency:** Calligrapher's Supplies",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(AcolyteAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Insight),
-    Effects.gainTrait(SkillProficiencies.Religion),
-    Effects.gainTrait(Feats.MagicInitiateCleric),
-    Effects.gainTrait(ArtisansTools.CalligraphersSupplies),
+    CharacterEffects.gainCharacterOption(AcolyteAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Insight),
+    CharacterEffects.gainTrait(SkillProficiencies.Religion),
+    CharacterEffects.gainTrait(Feats.MagicInitiateCleric),
+    CharacterEffects.gainTrait(ArtisansTools.CalligraphersSupplies),
   ],
 })
 
@@ -45,11 +45,11 @@ export const Artisan = Traits.defineTrait('background/artisan', {
     "You began as an apprentice to a crafter, learning to make fine goods and to deal with demanding customers.\n\n**Ability Scores:** Strength, Dexterity, Intelligence\n\n**Feat:** Crafter\n\n**Skill Proficiencies:** Investigation, Persuasion\n\n**Tool Proficiency:** one kind of Artisan's Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(ArtisanAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Investigation),
-    Effects.gainTrait(SkillProficiencies.Persuasion),
-    Effects.gainTrait(Feats.Crafter),
-    Effects.gainCharacterOption(ArtisansTools.SelectArtisansTools),
+    CharacterEffects.gainCharacterOption(ArtisanAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Investigation),
+    CharacterEffects.gainTrait(SkillProficiencies.Persuasion),
+    CharacterEffects.gainTrait(Feats.Crafter),
+    CharacterEffects.gainCharacterOption(ArtisansTools.SelectArtisansTools),
   ],
 })
 
@@ -65,11 +65,11 @@ export const Charlatan = Traits.defineTrait('background/charlatan', {
     'You made your way in taverns and back alleys, selling forgeries, false remedies, and tall tales to the gullible.\n\n**Ability Scores:** Dexterity, Constitution, Charisma\n\n**Feat:** Skilled\n\n**Skill Proficiencies:** Deception, Sleight of Hand\n\n**Tool Proficiency:** Forgery Kit',
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(CharlatanAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Deception),
-    Effects.gainTrait(SkillProficiencies.SleightOfHand),
-    Effects.gainTrait(Feats.Skilled),
-    Effects.gainTrait(Tools.ForgeryKit),
+    CharacterEffects.gainCharacterOption(CharlatanAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Deception),
+    CharacterEffects.gainTrait(SkillProficiencies.SleightOfHand),
+    CharacterEffects.gainTrait(Feats.Skilled),
+    CharacterEffects.gainTrait(Tools.ForgeryKit),
   ],
 })
 
@@ -85,11 +85,11 @@ export const Criminal = Traits.defineTrait('background/criminal', {
     "You earned your coin in dark alleys, cutting purses and burgling shops, perhaps as part of a thieves' guild.\n\n**Ability Scores:** Dexterity, Constitution, Intelligence\n\n**Feat:** Alert\n\n**Skill Proficiencies:** Sleight of Hand, Stealth\n\n**Tool Proficiency:** Thieves' Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(CriminalAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.SleightOfHand),
-    Effects.gainTrait(SkillProficiencies.Stealth),
-    Effects.gainTrait(Feats.Alert),
-    Effects.gainTrait(Tools.ThievesTools),
+    CharacterEffects.gainCharacterOption(CriminalAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.SleightOfHand),
+    CharacterEffects.gainTrait(SkillProficiencies.Stealth),
+    CharacterEffects.gainTrait(Feats.Alert),
+    CharacterEffects.gainTrait(Tools.ThievesTools),
   ],
 })
 
@@ -105,11 +105,11 @@ export const Entertainer = Traits.defineTrait('background/entertainer', {
     'You spent your youth with traveling fairs and carnivals, learning to perform and to hold a crowd.\n\n**Ability Scores:** Strength, Dexterity, Charisma\n\n**Feat:** Musician\n\n**Skill Proficiencies:** Acrobatics, Performance\n\n**Tool Proficiency:** one kind of Musical Instrument',
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(EntertainerAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Acrobatics),
-    Effects.gainTrait(SkillProficiencies.Performance),
-    Effects.gainTrait(Feats.Musician),
-    Effects.gainCharacterOption(Tools.SelectMusicalInstrument),
+    CharacterEffects.gainCharacterOption(EntertainerAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Acrobatics),
+    CharacterEffects.gainTrait(SkillProficiencies.Performance),
+    CharacterEffects.gainTrait(Feats.Musician),
+    CharacterEffects.gainCharacterOption(Tools.SelectMusicalInstrument),
   ],
 })
 
@@ -125,11 +125,11 @@ export const Farmer = Traits.defineTrait('background/farmer', {
     "You grew up close to the land, tending crops and animals and learning patience and hardiness.\n\n**Ability Scores:** Strength, Constitution, Wisdom\n\n**Feat:** Tough\n\n**Skill Proficiencies:** Animal Handling, Nature\n\n**Tool Proficiency:** Carpenter's Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(FarmerAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.AnimalHandling),
-    Effects.gainTrait(SkillProficiencies.Nature),
-    Effects.gainTrait(Feats.Tough),
-    Effects.gainTrait(ArtisansTools.CarpentersTools),
+    CharacterEffects.gainCharacterOption(FarmerAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.AnimalHandling),
+    CharacterEffects.gainTrait(SkillProficiencies.Nature),
+    CharacterEffects.gainTrait(Feats.Tough),
+    CharacterEffects.gainTrait(ArtisansTools.CarpentersTools),
   ],
 })
 
@@ -145,11 +145,11 @@ export const Guard = Traits.defineTrait('background/guard', {
     'You stood watch on walls and gates, trained to spot trouble and to keep an eye on the crowd.\n\n**Ability Scores:** Strength, Intelligence, Wisdom\n\n**Feat:** Alert\n\n**Skill Proficiencies:** Athletics, Perception\n\n**Tool Proficiency:** one kind of Gaming Set',
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(GuardAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Athletics),
-    Effects.gainTrait(SkillProficiencies.Perception),
-    Effects.gainTrait(Feats.Alert),
-    Effects.gainCharacterOption(Tools.SelectGamingSet),
+    CharacterEffects.gainCharacterOption(GuardAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Athletics),
+    CharacterEffects.gainTrait(SkillProficiencies.Perception),
+    CharacterEffects.gainTrait(Feats.Alert),
+    CharacterEffects.gainCharacterOption(Tools.SelectGamingSet),
   ],
 })
 
@@ -165,11 +165,11 @@ export const Guide = Traits.defineTrait('background/guide', {
     "You came of age outdoors, far from settled lands, leading others through the wilds and learning nature's magic.\n\n**Ability Scores:** Dexterity, Constitution, Wisdom\n\n**Feat:** Magic Initiate (Druid)\n\n**Skill Proficiencies:** Stealth, Survival\n\n**Tool Proficiency:** Cartographer's Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(GuideAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Stealth),
-    Effects.gainTrait(SkillProficiencies.Survival),
-    Effects.gainTrait(Feats.MagicInitiateDruid),
-    Effects.gainTrait(ArtisansTools.CartographersTools),
+    CharacterEffects.gainCharacterOption(GuideAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Stealth),
+    CharacterEffects.gainTrait(SkillProficiencies.Survival),
+    CharacterEffects.gainTrait(Feats.MagicInitiateDruid),
+    CharacterEffects.gainTrait(ArtisansTools.CartographersTools),
   ],
 })
 
@@ -185,11 +185,11 @@ export const Hermit = Traits.defineTrait('background/hermit', {
     'You spent your early years in seclusion, tending to others with herbal remedies and pondering the mysteries of creation.\n\n**Ability Scores:** Constitution, Wisdom, Charisma\n\n**Feat:** Healer\n\n**Skill Proficiencies:** Medicine, Religion\n\n**Tool Proficiency:** Herbalism Kit',
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(HermitAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Medicine),
-    Effects.gainTrait(SkillProficiencies.Religion),
-    Effects.gainTrait(Feats.Healer),
-    Effects.gainTrait(Tools.HerbalismKit),
+    CharacterEffects.gainCharacterOption(HermitAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Medicine),
+    CharacterEffects.gainTrait(SkillProficiencies.Religion),
+    CharacterEffects.gainTrait(Feats.Healer),
+    CharacterEffects.gainTrait(Tools.HerbalismKit),
   ],
 })
 
@@ -205,11 +205,11 @@ export const Merchant = Traits.defineTrait('background/merchant', {
     "You were apprenticed to a trader or caravan master, learning to haggle, move goods, and find the next opportunity.\n\n**Ability Scores:** Constitution, Intelligence, Charisma\n\n**Feat:** Lucky\n\n**Skill Proficiencies:** Animal Handling, Persuasion\n\n**Tool Proficiency:** Navigator's Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(MerchantAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.AnimalHandling),
-    Effects.gainTrait(SkillProficiencies.Persuasion),
-    Effects.gainTrait(Feats.Lucky),
-    Effects.gainTrait(Tools.NavigatorsTools),
+    CharacterEffects.gainCharacterOption(MerchantAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.AnimalHandling),
+    CharacterEffects.gainTrait(SkillProficiencies.Persuasion),
+    CharacterEffects.gainTrait(Feats.Lucky),
+    CharacterEffects.gainTrait(Tools.NavigatorsTools),
   ],
 })
 
@@ -225,11 +225,11 @@ export const Noble = Traits.defineTrait('background/noble', {
     'You were raised in a castle among wealth, power, and privilege, taught to lead and to carry your family name.\n\n**Ability Scores:** Strength, Intelligence, Charisma\n\n**Feat:** Skilled\n\n**Skill Proficiencies:** History, Persuasion\n\n**Tool Proficiency:** one kind of Gaming Set',
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(NobleAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.History),
-    Effects.gainTrait(SkillProficiencies.Persuasion),
-    Effects.gainTrait(Feats.Skilled),
-    Effects.gainCharacterOption(Tools.SelectGamingSet),
+    CharacterEffects.gainCharacterOption(NobleAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.History),
+    CharacterEffects.gainTrait(SkillProficiencies.Persuasion),
+    CharacterEffects.gainTrait(Feats.Skilled),
+    CharacterEffects.gainCharacterOption(Tools.SelectGamingSet),
   ],
 })
 
@@ -245,11 +245,11 @@ export const Sage = Traits.defineTrait('background/sage', {
     "You spent your formative years among manuscripts and libraries, studying lore and the rudiments of magic.\n\n**Ability Scores:** Constitution, Intelligence, Wisdom\n\n**Feat:** Magic Initiate (Wizard)\n\n**Skill Proficiencies:** Arcana, History\n\n**Tool Proficiency:** Calligrapher's Supplies",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(SageAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Arcana),
-    Effects.gainTrait(SkillProficiencies.History),
-    Effects.gainTrait(Feats.MagicInitiateWizard),
-    Effects.gainTrait(ArtisansTools.CalligraphersSupplies),
+    CharacterEffects.gainCharacterOption(SageAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Arcana),
+    CharacterEffects.gainTrait(SkillProficiencies.History),
+    CharacterEffects.gainTrait(Feats.MagicInitiateWizard),
+    CharacterEffects.gainTrait(ArtisansTools.CalligraphersSupplies),
   ],
 })
 
@@ -265,11 +265,11 @@ export const Sailor = Traits.defineTrait('background/sailor', {
     "You lived as a seafarer, weathering storms and brawling in port taverns.\n\n**Ability Scores:** Strength, Dexterity, Wisdom\n\n**Feat:** Tavern Brawler\n\n**Skill Proficiencies:** Acrobatics, Perception\n\n**Tool Proficiency:** Navigator's Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(SailorAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Acrobatics),
-    Effects.gainTrait(SkillProficiencies.Perception),
-    Effects.gainTrait(Feats.TavernBrawler),
-    Effects.gainTrait(Tools.NavigatorsTools),
+    CharacterEffects.gainCharacterOption(SailorAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Acrobatics),
+    CharacterEffects.gainTrait(SkillProficiencies.Perception),
+    CharacterEffects.gainTrait(Feats.TavernBrawler),
+    CharacterEffects.gainTrait(Tools.NavigatorsTools),
   ],
 })
 
@@ -285,11 +285,11 @@ export const Scribe = Traits.defineTrait('background/scribe', {
     "You spent years copying texts in a scriptorium or government office, with an eye for detail and error.\n\n**Ability Scores:** Dexterity, Intelligence, Wisdom\n\n**Feat:** Skilled\n\n**Skill Proficiencies:** Investigation, Perception\n\n**Tool Proficiency:** Calligrapher's Supplies",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(ScribeAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Investigation),
-    Effects.gainTrait(SkillProficiencies.Perception),
-    Effects.gainTrait(Feats.Skilled),
-    Effects.gainTrait(ArtisansTools.CalligraphersSupplies),
+    CharacterEffects.gainCharacterOption(ScribeAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Investigation),
+    CharacterEffects.gainTrait(SkillProficiencies.Perception),
+    CharacterEffects.gainTrait(Feats.Skilled),
+    CharacterEffects.gainTrait(ArtisansTools.CalligraphersSupplies),
   ],
 })
 
@@ -305,11 +305,11 @@ export const Soldier = Traits.defineTrait('background/soldier', {
     'You trained for war from a young age, learning to survive on the battlefield and to strike hard.\n\n**Ability Scores:** Strength, Dexterity, Constitution\n\n**Feat:** Savage Attacker\n\n**Skill Proficiencies:** Athletics, Intimidation\n\n**Tool Proficiency:** one kind of Gaming Set',
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(SoldierAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Athletics),
-    Effects.gainTrait(SkillProficiencies.Intimidation),
-    Effects.gainTrait(Feats.SavageAttacker),
-    Effects.gainCharacterOption(Tools.SelectGamingSet),
+    CharacterEffects.gainCharacterOption(SoldierAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Athletics),
+    CharacterEffects.gainTrait(SkillProficiencies.Intimidation),
+    CharacterEffects.gainTrait(Feats.SavageAttacker),
+    CharacterEffects.gainCharacterOption(Tools.SelectGamingSet),
   ],
 })
 
@@ -325,11 +325,11 @@ export const Wayfarer = Traits.defineTrait('background/wayfarer', {
     "You grew up on the streets among other castoffs, surviving on your wits and a little luck.\n\n**Ability Scores:** Dexterity, Wisdom, Charisma\n\n**Feat:** Lucky\n\n**Skill Proficiencies:** Insight, Stealth\n\n**Tool Proficiency:** Thieves' Tools",
   tags: [Background],
   effects: [
-    Effects.gainCharacterOption(WayfarerAbilityScores.option),
-    Effects.gainTrait(SkillProficiencies.Insight),
-    Effects.gainTrait(SkillProficiencies.Stealth),
-    Effects.gainTrait(Feats.Lucky),
-    Effects.gainTrait(Tools.ThievesTools),
+    CharacterEffects.gainCharacterOption(WayfarerAbilityScores.option),
+    CharacterEffects.gainTrait(SkillProficiencies.Insight),
+    CharacterEffects.gainTrait(SkillProficiencies.Stealth),
+    CharacterEffects.gainTrait(Feats.Lucky),
+    CharacterEffects.gainTrait(Tools.ThievesTools),
   ],
 })
 

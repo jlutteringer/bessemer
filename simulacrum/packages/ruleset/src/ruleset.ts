@@ -3,11 +3,12 @@ import { AbilityTag, CreatureTag, TraitTag } from '@simulacrum/ruleset/tag'
 import { ResourcePoolDefinition } from '@simulacrum/ruleset/resource-pool'
 import { LoadoutType } from '@simulacrum/ruleset/loadout'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Effect } from '@simulacrum/ruleset/effect'
+import { CharacterEffect } from '@simulacrum/ruleset/character-effect'
 import { Ability } from '@simulacrum/ruleset/ability'
 import { Characteristic, CharacteristicGroup } from '@simulacrum/ruleset/characteristic'
 import { ContentEntity, ContentSection } from '@simulacrum/ruleset/content'
 import { ActionType } from '@simulacrum/ruleset/action-type'
+import { DamageType } from '@simulacrum/ruleset/damage'
 import { Reference } from '@bessemer/cornerstone/reference'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
@@ -18,6 +19,7 @@ export type RulesetEntityTypes = {
   [RulesetEntityType.TraitTag]: TraitTag
   [RulesetEntityType.AbilityTag]: AbilityTag
   [RulesetEntityType.CreatureTag]: CreatureTag
+  [RulesetEntityType.DamageType]: DamageType
   [RulesetEntityType.Trait]: Trait
   [RulesetEntityType.Ability]: Ability
   [RulesetEntityType.Characteristic]: Characteristic
@@ -34,7 +36,7 @@ export type RulesetExtensionReference = Reference<'RulesetExtension'>
 export type AbstractRuleset = {
   name: string
   entities: Array<RulesetEntity>
-  progressionTable: ProgressionTable<Effect>
+  progressionTable: ProgressionTable<CharacterEffect>
   content: Array<ContentSection>
 }
 

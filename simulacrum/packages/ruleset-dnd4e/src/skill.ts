@@ -1,4 +1,4 @@
-import { Tags, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import * as Characteristics from '@simulacrum/ruleset-dnd4e/characteristic'
 import { FeatBonus } from '@simulacrum/ruleset-dnd4e/bonus-type'
@@ -10,7 +10,7 @@ export const TrainedAcrobatics = Traits.defineTrait('skill/acrobatics/trained', 
   name: 'Trained: Acrobatics',
   description: 'You gain a +5 bonus to Acrobatics checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Acrobatics, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Acrobatics, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const AcrobaticsFocus = Traits.defineTrait('skill/acrobatics/focus', {
@@ -18,14 +18,14 @@ export const AcrobaticsFocus = Traits.defineTrait('skill/acrobatics/focus', {
   description: 'You have a +3 feat bonus to Acrobatics checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedAcrobatics)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Acrobatics, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Acrobatics, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedArcana = Traits.defineTrait('skill/arcana/trained', {
   name: 'Trained: Arcana',
   description: 'You gain a +5 bonus to Arcana checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Arcana, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Arcana, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const ArcanaFocus = Traits.defineTrait('skill/arcana/focus', {
@@ -33,14 +33,14 @@ export const ArcanaFocus = Traits.defineTrait('skill/arcana/focus', {
   description: 'You have a +3 feat bonus to Arcana checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedArcana)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Arcana, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Arcana, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedAthletics = Traits.defineTrait('skill/athletics/trained', {
   name: 'Trained: Athletics',
   description: 'You gain a +5 bonus to Athletics checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Athletics, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Athletics, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const AthleticsFocus = Traits.defineTrait('skill/athletics/focus', {
@@ -48,14 +48,14 @@ export const AthleticsFocus = Traits.defineTrait('skill/athletics/focus', {
   description: 'You have a +3 feat bonus to Athletics checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedAthletics)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Athletics, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Athletics, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedBluff = Traits.defineTrait('skill/bluff/trained', {
   name: 'Trained: Bluff',
   description: 'You gain a +5 bonus to Bluff checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Bluff, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Bluff, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const BluffFocus = Traits.defineTrait('skill/bluff/focus', {
@@ -63,14 +63,14 @@ export const BluffFocus = Traits.defineTrait('skill/bluff/focus', {
   description: 'You have a +3 feat bonus to Bluff checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedBluff)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Bluff, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Bluff, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedDiplomacy = Traits.defineTrait('skill/diplomacy/trained', {
   name: 'Trained: Diplomacy',
   description: 'You gain a +5 bonus to Diplomacy checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Diplomacy, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Diplomacy, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const DiplomacyFocus = Traits.defineTrait('skill/diplomacy/focus', {
@@ -78,14 +78,14 @@ export const DiplomacyFocus = Traits.defineTrait('skill/diplomacy/focus', {
   description: 'You have a +3 feat bonus to Diplomacy checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedDiplomacy)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Diplomacy, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Diplomacy, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedDungeoneering = Traits.defineTrait('skill/dungeoneering/trained', {
   name: 'Trained: Dungeoneering',
   description: 'You gain a +5 bonus to Dungeoneering checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Dungeoneering, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Dungeoneering, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const DungeoneeringFocus = Traits.defineTrait('skill/dungeoneering/focus', {
@@ -93,14 +93,14 @@ export const DungeoneeringFocus = Traits.defineTrait('skill/dungeoneering/focus'
   description: 'You have a +3 feat bonus to Dungeoneering checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedDungeoneering)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Dungeoneering, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Dungeoneering, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedEndurance = Traits.defineTrait('skill/endurance/trained', {
   name: 'Trained: Endurance',
   description: 'You gain a +5 bonus to Endurance checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Endurance, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Endurance, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const EnduranceFocus = Traits.defineTrait('skill/endurance/focus', {
@@ -108,14 +108,14 @@ export const EnduranceFocus = Traits.defineTrait('skill/endurance/focus', {
   description: 'You have a +3 feat bonus to Endurance checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedEndurance)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Endurance, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Endurance, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedHeal = Traits.defineTrait('skill/heal/trained', {
   name: 'Trained: Heal',
   description: 'You gain a +5 bonus to Heal checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Heal, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Heal, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const HealFocus = Traits.defineTrait('skill/heal/focus', {
@@ -123,14 +123,14 @@ export const HealFocus = Traits.defineTrait('skill/heal/focus', {
   description: 'You have a +3 feat bonus to Heal checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedHeal)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Heal, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Heal, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedHistory = Traits.defineTrait('skill/history/trained', {
   name: 'Trained: History',
   description: 'You gain a +5 bonus to History checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.History, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.History, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const HistoryFocus = Traits.defineTrait('skill/history/focus', {
@@ -138,14 +138,14 @@ export const HistoryFocus = Traits.defineTrait('skill/history/focus', {
   description: 'You have a +3 feat bonus to History checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedHistory)],
-  effects: [Effects.modifyCharacteristic(Characteristics.History, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.History, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedInsight = Traits.defineTrait('skill/insight/trained', {
   name: 'Trained: Insight',
   description: 'You gain a +5 bonus to Insight checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Insight, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Insight, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const InsightFocus = Traits.defineTrait('skill/insight/focus', {
@@ -153,14 +153,14 @@ export const InsightFocus = Traits.defineTrait('skill/insight/focus', {
   description: 'You have a +3 feat bonus to Insight checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedInsight)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Insight, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Insight, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedIntimidate = Traits.defineTrait('skill/intimidate/trained', {
   name: 'Trained: Intimidate',
   description: 'You gain a +5 bonus to Intimidate checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Intimidate, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Intimidate, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const IntimidateFocus = Traits.defineTrait('skill/intimidate/focus', {
@@ -168,14 +168,14 @@ export const IntimidateFocus = Traits.defineTrait('skill/intimidate/focus', {
   description: 'You have a +3 feat bonus to Intimidate checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedIntimidate)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Intimidate, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Intimidate, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedNature = Traits.defineTrait('skill/nature/trained', {
   name: 'Trained: Nature',
   description: 'You gain a +5 bonus to Nature checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Nature, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Nature, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const NatureFocus = Traits.defineTrait('skill/nature/focus', {
@@ -183,14 +183,14 @@ export const NatureFocus = Traits.defineTrait('skill/nature/focus', {
   description: 'You have a +3 feat bonus to Nature checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedNature)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Nature, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Nature, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedPerception = Traits.defineTrait('skill/perception/trained', {
   name: 'Trained: Perception',
   description: 'You gain a +5 bonus to Perception checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Perception, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Perception, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const PerceptionFocus = Traits.defineTrait('skill/perception/focus', {
@@ -198,14 +198,14 @@ export const PerceptionFocus = Traits.defineTrait('skill/perception/focus', {
   description: 'You have a +3 feat bonus to Perception checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedPerception)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Perception, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Perception, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedReligion = Traits.defineTrait('skill/religion/trained', {
   name: 'Trained: Religion',
   description: 'You gain a +5 bonus to Religion checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Religion, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Religion, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const ReligionFocus = Traits.defineTrait('skill/religion/focus', {
@@ -213,14 +213,14 @@ export const ReligionFocus = Traits.defineTrait('skill/religion/focus', {
   description: 'You have a +3 feat bonus to Religion checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedReligion)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Religion, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Religion, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedStealth = Traits.defineTrait('skill/stealth/trained', {
   name: 'Trained: Stealth',
   description: 'You gain a +5 bonus to Stealth checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Stealth, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Stealth, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const StealthFocus = Traits.defineTrait('skill/stealth/focus', {
@@ -228,14 +228,14 @@ export const StealthFocus = Traits.defineTrait('skill/stealth/focus', {
   description: 'You have a +3 feat bonus to Stealth checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedStealth)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Stealth, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Stealth, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedStreetwise = Traits.defineTrait('skill/streetwise/trained', {
   name: 'Trained: Streetwise',
   description: 'You gain a +5 bonus to Streetwise checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Streetwise, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Streetwise, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const StreetwiseFocus = Traits.defineTrait('skill/streetwise/focus', {
@@ -243,14 +243,14 @@ export const StreetwiseFocus = Traits.defineTrait('skill/streetwise/focus', {
   description: 'You have a +3 feat bonus to Streetwise checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedStreetwise)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Streetwise, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Streetwise, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const TrainedThievery = Traits.defineTrait('skill/thievery/trained', {
   name: 'Trained: Thievery',
   description: 'You gain a +5 bonus to Thievery checks.',
   tags: [TrainedSkill],
-  effects: [Effects.modifyCharacteristic(Characteristics.Thievery, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Thievery, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const ThieveryFocus = Traits.defineTrait('skill/thievery/focus', {
@@ -258,7 +258,7 @@ export const ThieveryFocus = Traits.defineTrait('skill/thievery/focus', {
   description: 'You have a +3 feat bonus to Thievery checks.',
   tags: [SkillFocus],
   prerequisites: [Traits.traitPrerequisite(TrainedThievery)],
-  effects: [Effects.modifyCharacteristic(Characteristics.Thievery, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Characteristics.Thievery, Attributes.modifier(Patches.sum(3), { combinability: FeatBonus }))],
 })
 
 export const AllSkillTraits = [

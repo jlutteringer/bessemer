@@ -1,4 +1,4 @@
-import { CharacterOptions, Effects } from '@simulacrum/ruleset'
+import { CharacterOptions, CharacterEffects } from '@simulacrum/ruleset'
 import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { AllActionTypes } from '@simulacrum/ruleset-dnd4e/action-type'
 import { AllTags, Class } from '@simulacrum/ruleset-dnd4e/tag'
@@ -109,28 +109,28 @@ export const Dnd4e: Ruleset = {
   ],
   progressionTable: {
     1: [
-      Effects.gainCharacterOption(SelectClass),
-      Effects.gainCharacterOption(SelectRace),
-      Effects.gainCharacterOption(SelectFeat),
-      Effects.gainLoadoutSlot(ArmorLoadout),
-      Effects.gainLoadoutSlot(ShieldLoadout),
+      CharacterEffects.gainCharacterOption(SelectClass),
+      CharacterEffects.gainCharacterOption(SelectRace),
+      CharacterEffects.gainCharacterOption(SelectFeat),
+      CharacterEffects.gainLoadoutSlot(ArmorLoadout),
+      CharacterEffects.gainLoadoutSlot(ShieldLoadout),
     ],
-    2: [Effects.gainCharacterOption(SelectFeat)],
+    2: [CharacterEffects.gainCharacterOption(SelectFeat)],
     4: [
-      Effects.gainCharacterOption(SelectFeat),
-      Effects.gainCharacterOption(SelectFirstAbilityIncrease),
-      Effects.gainCharacterOption(SelectSecondAbilityIncrease),
+      CharacterEffects.gainCharacterOption(SelectFeat),
+      CharacterEffects.gainCharacterOption(SelectFirstAbilityIncrease),
+      CharacterEffects.gainCharacterOption(SelectSecondAbilityIncrease),
     ],
     5: [],
-    6: [Effects.gainCharacterOption(SelectFeat)],
+    6: [CharacterEffects.gainCharacterOption(SelectFeat)],
     7: [],
     8: [
-      Effects.gainCharacterOption(SelectFeat),
-      Effects.gainCharacterOption(SelectThirdAbilityIncrease),
-      Effects.gainCharacterOption(SelectFourthAbilityIncrease),
+      CharacterEffects.gainCharacterOption(SelectFeat),
+      CharacterEffects.gainCharacterOption(SelectThirdAbilityIncrease),
+      CharacterEffects.gainCharacterOption(SelectFourthAbilityIncrease),
     ],
     9: [],
-    10: [Effects.gainCharacterOption(SelectFeat)],
+    10: [CharacterEffects.gainCharacterOption(SelectFeat)],
   },
   content: [
     ...HowToPlayContent,

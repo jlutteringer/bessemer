@@ -1,4 +1,4 @@
-import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
 import { Class } from '@simulacrum/ruleset-dnd5e/tag'
 import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
@@ -39,7 +39,7 @@ export const WeaponMastery = Traits.defineTrait('barbarian/weapon-mastery', {
   name: 'Weapon Mastery',
   description:
     'Your training with weapons lets you use the mastery properties of **two kinds** of Simple or Martial **Melee** weapons of your choice, such as Greataxes and Handaxes. Whenever you finish a Long Rest, you can practice weapon drills and change one of those choices.\n\nYou can use the mastery properties of more kinds of weapons as you gain Barbarian levels: three at level 4 and four at level 10.',
-  effects: [Effects.gainLoadoutSlot(WeaponMasteryLoadout), Effects.gainLoadoutSlot(WeaponMasteryLoadout)],
+  effects: [CharacterEffects.gainLoadoutSlot(WeaponMasteryLoadout), CharacterEffects.gainLoadoutSlot(WeaponMasteryLoadout)],
 })
 
 export const Level1 = Traits.defineTrait('barbarian/level-1', {
@@ -48,13 +48,13 @@ export const Level1 = Traits.defineTrait('barbarian/level-1', {
     'A fierce warrior fueled by a primal **Rage**, shrugging off blows and fighting with savage strength.\n\n**Saving Throws:** Strength and Constitution. **Armor:** Light and Medium armor, and Shields. **Weapons:** Simple and Martial weapons.',
   tags: [Class],
   effects: [
-    Effects.gainTrait(SavingThrowProficiencies.Strength),
-    Effects.gainTrait(SavingThrowProficiencies.Constitution),
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(12))),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainTrait(UnarmoredDefense),
-    Effects.gainTrait(WeaponMastery),
+    CharacterEffects.gainTrait(SavingThrowProficiencies.Strength),
+    CharacterEffects.gainTrait(SavingThrowProficiencies.Constitution),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(12))),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainTrait(UnarmoredDefense),
+    CharacterEffects.gainTrait(WeaponMastery),
   ],
 })
 
@@ -62,17 +62,17 @@ export const Rage = Abilities.defineAbility('barbarian/rage', {
   name: 'Rage',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   effects: [
-    Effects.descriptive("As a **Bonus Action**, if you aren't wearing Heavy armor, you enter a primal Rage."),
-    Effects.descriptive('**Damage Resistance:** while raging, you have Resistance to Bludgeoning, Piercing, and Slashing damage.'),
-    Effects.descriptive(
+    CharacterEffects.descriptive("As a **Bonus Action**, if you aren't wearing Heavy armor, you enter a primal Rage."),
+    CharacterEffects.descriptive('**Damage Resistance:** while raging, you have Resistance to Bludgeoning, Piercing, and Slashing damage.'),
+    CharacterEffects.descriptive(
       '**Rage Damage:** while raging, your Strength-based attacks with weapons or Unarmed Strikes deal **+2** damage (rising as you gain Barbarian levels).'
     ),
-    Effects.descriptive('**Strength Advantage:** while raging, you have Advantage on Strength checks and saves.'),
-    Effects.descriptive("**No Concentration or Spells:** while raging, you can't concentrate or cast spells."),
-    Effects.descriptive(
+    CharacterEffects.descriptive('**Strength Advantage:** while raging, you have Advantage on Strength checks and saves.'),
+    CharacterEffects.descriptive("**No Concentration or Spells:** while raging, you can't concentrate or cast spells."),
+    CharacterEffects.descriptive(
       'The Rage lasts until the end of your next turn, and you can keep extending it a round at a time (up to 10 minutes) by attacking an enemy, forcing an enemy to make a save, or using a Bonus Action. It ends early if you put on Heavy armor or are Incapacitated.'
     ),
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You have **two** uses, regaining one when you finish a Short Rest and all of them when you finish a Long Rest. You gain more uses as you gain Barbarian levels (three at level 3).'
     ),
   ],
@@ -98,14 +98,17 @@ export const Level2 = Traits.defineTrait('barbarian/level-2', {
   name: 'Barbarian (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   tags: [Class],
-  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))), Effects.gainTrait(DangerSense)],
+  effects: [
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
+    CharacterEffects.gainTrait(DangerSense),
+  ],
 })
 
 export const RecklessAttack = Abilities.defineAbility('barbarian/reckless-attack', {
   name: 'Reckless Attack',
   prerequisites: [Traits.traitPrerequisite(Level2)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'When you make your first attack roll on your turn, you can choose to attack recklessly. Until the start of your next turn, you have **Advantage on attack rolls using Strength**, but attack rolls against you also have Advantage.'
     ),
   ],
@@ -124,7 +127,7 @@ export const PrimalKnowledge = Traits.defineTrait('barbarian/primal-knowledge', 
   name: 'Primal Knowledge',
   description:
     'You gain proficiency in **another skill** from the Barbarian skill list.\n\nWhile your Rage is active, you can make Acrobatics, Intimidation, Perception, Stealth, and Survival checks as **Strength** checks, channeling primal power through your body.',
-  effects: [Effects.gainCharacterOption(SelectSkillProficiency)],
+  effects: [CharacterEffects.gainCharacterOption(SelectSkillProficiency)],
 })
 
 export const Level3 = Traits.defineTrait('barbarian/level-3', {
@@ -132,10 +135,10 @@ export const Level3 = Traits.defineTrait('barbarian/level-3', {
   prerequisites: [Traits.traitPrerequisite(Level2)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
-    Effects.gainCharacterOption(SelectBarbarianSubclass),
-    Effects.gainTrait(PrimalKnowledge),
-    Effects.modifyResourcePool(Rage.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
+    CharacterEffects.gainCharacterOption(SelectBarbarianSubclass),
+    CharacterEffects.gainTrait(PrimalKnowledge),
+    CharacterEffects.modifyResourcePool(Rage.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -150,13 +153,13 @@ export const PathOfTheBerserker = Traits.defineTrait('barbarian/path-of-the-bers
   name: 'Path of the Berserker',
   description: 'Barbarians who channel their Rage into **untrammeled violence**, thrilling in the chaos of battle.',
   tags: [BarbarianSubclass],
-  effects: [Effects.gainTrait(Frenzy)],
+  effects: [CharacterEffects.gainTrait(Frenzy)],
 })
 
 export const AnimalSpeaker = Traits.defineTrait('barbarian/animal-speaker', {
   name: 'Animal Speaker',
   description: 'You can cast **Beast Sense** and **Speak with Animals**, but only as Rituals. Wisdom is your spellcasting ability for them.',
-  effects: [Effects.gainAbility(Spells.BeastSense), Effects.gainAbility(Spells.SpeakWithAnimals)],
+  effects: [CharacterEffects.gainAbility(Spells.BeastSense), CharacterEffects.gainAbility(Spells.SpeakWithAnimals)],
 })
 
 export const RageOfTheWilds = Traits.defineTrait('barbarian/rage-of-the-wilds', {
@@ -170,7 +173,7 @@ export const PathOfTheWildHeart = Traits.defineTrait('barbarian/path-of-the-wild
   name: 'Path of the Wild Heart',
   description: 'Barbarians who see themselves as **kin to animals**, speaking with them and drawing on their might when they Rage.',
   tags: [BarbarianSubclass],
-  effects: [Effects.gainTrait(AnimalSpeaker), Effects.gainTrait(RageOfTheWilds)],
+  effects: [CharacterEffects.gainTrait(AnimalSpeaker), CharacterEffects.gainTrait(RageOfTheWilds)],
 })
 
 export const VitalityOfTheTree = Traits.defineTrait('barbarian/vitality-of-the-tree', {
@@ -185,7 +188,7 @@ export const PathOfTheWorldTree = Traits.defineTrait('barbarian/path-of-the-worl
   description:
     'Barbarians whose Rage connects them to **Yggdrasil**, the cosmic tree linking the planes, drawing on its magic for vitality and travel.',
   tags: [BarbarianSubclass],
-  effects: [Effects.gainTrait(VitalityOfTheTree)],
+  effects: [CharacterEffects.gainTrait(VitalityOfTheTree)],
 })
 
 export const DivineFury = Traits.defineTrait('barbarian/divine-fury', {
@@ -199,14 +202,14 @@ export const PathOfTheZealot = Traits.defineTrait('barbarian/path-of-the-zealot'
   name: 'Path of the Zealot',
   description: 'Barbarians who rage in **ecstatic union with a god**, infused with divine power and often allied with its priests.',
   tags: [BarbarianSubclass],
-  effects: [Effects.gainTrait(DivineFury)],
+  effects: [CharacterEffects.gainTrait(DivineFury)],
 })
 
 export const WarriorOfTheGods = Abilities.defineAbility('barbarian/warrior-of-the-gods', {
   name: 'Warrior of the Gods',
   prerequisites: [Traits.traitPrerequisite(PathOfTheZealot)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You have a pool of **four d12s** to heal yourself. As a **Bonus Action**, spend any number of them, roll them, and regain that many Hit Points. The pool refills when you finish a Long Rest.\n\nThe pool grows by one die at Barbarian levels 6, 12, and 17.'
     ),
   ],
@@ -228,10 +231,10 @@ export const Level4 = Traits.defineTrait('barbarian/level-4', {
   prerequisites: [Traits.traitPrerequisite(Level3)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
     // Ability Score Improvement
-    Effects.gainCharacterOption(SelectFeat),
-    Effects.gainLoadoutSlot(WeaponMasteryLoadout),
+    CharacterEffects.gainCharacterOption(SelectFeat),
+    CharacterEffects.gainLoadoutSlot(WeaponMasteryLoadout),
   ],
 })
 
@@ -246,12 +249,15 @@ export const Level5 = Traits.defineTrait('barbarian/level-5', {
   name: 'Barbarian (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   tags: [Class],
-  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))), Effects.gainTrait(FastMovement)],
+  effects: [
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(7))),
+    CharacterEffects.gainTrait(FastMovement),
+  ],
 })
 
 // FUTURE stub: Extra Attack isn't modelled yet
 export const ExtraAttack = Abilities.defineAbility('barbarian/extra-attack', {
   name: 'Extra Attack',
   prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
+  effects: [CharacterEffects.descriptive('You can attack **twice**, instead of once, whenever you take the Attack action on your turn.')],
 })

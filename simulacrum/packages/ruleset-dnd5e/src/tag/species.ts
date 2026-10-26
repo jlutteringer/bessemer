@@ -1,4 +1,4 @@
-import { Abilities, Tags, Effects, Traits, CharacterValues } from '@simulacrum/ruleset'
+import { Abilities, Tags, CharacterEffects, Traits, CharacterValues } from '@simulacrum/ruleset'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-dnd5e/action-type'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
@@ -36,14 +36,14 @@ export const Aasimar = Traits.defineTrait('species/aasimar', {
   description:
     'Mortals who carry a spark of the Upper Planes within their souls, able to fan that spark to bring light, ease wounds, and unleash the fury of the heavens.\n\n**Size:** Medium or Small. **Speed:** 30 feet.',
   tags: [Species],
-  effects: [Effects.gainCharacterOption(SelectSmallOrMedium), Effects.gainAbility(Spells.Light)],
+  effects: [CharacterEffects.gainCharacterOption(SelectSmallOrMedium), CharacterEffects.gainAbility(Spells.Light)],
 })
 
 export const Darkvision = Abilities.defineAbility('species/darkvision', {
   name: 'Darkvision',
   prerequisites: [Traits.traitPrerequisite(Aasimar)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You can see in Dim Light within **60 feet** of you as if it were Bright Light, and in Darkness as if it were Dim Light. You discern colors in that Darkness only as shades of gray.'
     ),
   ],
@@ -52,14 +52,14 @@ export const Darkvision = Abilities.defineAbility('species/darkvision', {
 export const CelestialResistance = Abilities.defineAbility('species/aasimar/celestial-resistance', {
   name: 'Celestial Resistance',
   prerequisites: [Traits.traitPrerequisite(Aasimar)],
-  effects: [Effects.descriptive('You have Resistance to **Necrotic** and **Radiant** damage.')],
+  effects: [CharacterEffects.descriptive('You have Resistance to **Necrotic** and **Radiant** damage.')],
 })
 
 export const HealingHands = Abilities.defineAbility('species/aasimar/healing-hands', {
   name: 'Healing Hands',
   prerequisites: [Traits.traitPrerequisite(Aasimar)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "As a **Magic action**, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled.\n\nOnce you use this trait, you can't use it again until you finish a Long Rest."
     ),
   ],
@@ -76,7 +76,7 @@ export const HealingHands = Abilities.defineAbility('species/aasimar/healing-han
 export const CelestialRevelation = Abilities.defineAbility('species/aasimar/celestial-revelation', {
   name: 'Celestial Revelation',
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "You transform for 1 minute or until you end it (no action required). Until the transformation ends, once on each of your turns you can deal extra damage to one target when you deal damage to it with an attack or a spell. The extra damage equals your Proficiency Bonus, and is Necrotic for Necrotic Shroud or Radiant otherwise.\n\nOnce you transform, you can't do so again until you finish a Long Rest."
     ),
   ], // Available from character level 3
@@ -165,7 +165,7 @@ export const Human = Traits.defineTrait('species/human', {
   description:
     'The most widespread and adaptable of the common peoples. **Size:** Medium or Small. **Speed:** 30 feet.\n\n**Resourceful:** you gain Heroic Inspiration whenever you finish a Long Rest.\n\n**Skillful:** proficiency in one skill of your choice.\n\n**Versatile:** you gain an Origin feat of your choice.',
   tags: [Species],
-  effects: [Effects.gainCharacterOption(SelectSkillfulProficiency), Effects.gainCharacterOption(SelectOriginFeat)],
+  effects: [CharacterEffects.gainCharacterOption(SelectSkillfulProficiency), CharacterEffects.gainCharacterOption(SelectOriginFeat)],
 })
 
 export const Orc = Traits.defineTrait('species/orc', {

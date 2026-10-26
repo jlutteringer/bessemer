@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Feat, Race, RacialTrait } from '@simulacrum/ruleset-dnd4e/tag'
 import { SelectFeat } from '@simulacrum/ruleset-dnd4e/feat'
@@ -20,13 +20,13 @@ export const Human = Traits.defineTrait('race/human', {
     '**Average Height:** 5´ 6˝–6´ 2˝\n\n**Average Weight:** 135–220 lb.\n\n**Ability Scores:** +2 to one ability score of your choice\n\n**Size:** Medium\n\n**Speed:** 6 squares\n\n**Vision:** Normal\n\n**Languages:** Common, choice of one other\n\n**Bonus At-Will Power:** You know one extra at-will power from your class.\n\n**Bonus Feat:** You gain a bonus feat at 1st level. You must meet the feat’s prerequisites.\n\n**Bonus Skill:** You gain training in one additional skill from your class skill list.\n\n**Human Defense Bonuses:** +1 to [Fortitude](characteristic:fortitude), [Reflex](characteristic:reflex), and [Will](characteristic:will) defenses.',
   tags: [Race],
   effects: [
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(6))),
-    Effects.gainCharacterOption(SelectHumanAbilityBonus),
-    Effects.gainCharacterOption(SelectAtWillAttack),
-    Effects.gainCharacterOption(SelectFeat),
-    Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.gainCharacterOption(SelectHumanAbilityBonus),
+    CharacterEffects.gainCharacterOption(SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(SelectFeat),
+    CharacterEffects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(1))),
   ],
 })
 
@@ -74,16 +74,16 @@ export const Dwarf = Traits.defineTrait('race/dwarf', {
     '**Average Height:** 4´ 3˝–4´ 9˝\n\n**Average Weight:** 160–220 lb.\n\n**Ability Scores:** +2 [Constitution](characteristic:constitution), +2 [Wisdom](characteristic:wisdom)\n\n**Size:** Medium\n\n**Speed:** 5 squares\n\n**Vision:** Low-light\n\n**Languages:** Common, Dwarven\n\n**Skill Bonuses:** +2 [Dungeoneering](characteristic:skill/dungeoneering), +2 [Endurance](characteristic:skill/endurance)',
   tags: [Race],
   effects: [
-    Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(2))),
-    Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(2))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5))),
-    Effects.modifyCharacteristic(Dungeoneering, Attributes.modifier(Patches.sum(2), { combinability: RacialBonus })),
-    Effects.modifyCharacteristic(Endurance, Attributes.modifier(Patches.sum(2), { combinability: RacialBonus })),
-    Effects.gainTrait(CastIronStomach),
-    Effects.gainTrait(DwarvenResilience),
-    Effects.gainTrait(DwarvenWeaponProficiency),
-    Effects.gainTrait(EncumberedSpeed),
-    Effects.gainTrait(StandYourGround),
+    CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(2))),
+    CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(2))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.modifyCharacteristic(Dungeoneering, Attributes.modifier(Patches.sum(2), { combinability: RacialBonus })),
+    CharacterEffects.modifyCharacteristic(Endurance, Attributes.modifier(Patches.sum(2), { combinability: RacialBonus })),
+    CharacterEffects.gainTrait(CastIronStomach),
+    CharacterEffects.gainTrait(DwarvenResilience),
+    CharacterEffects.gainTrait(DwarvenWeaponProficiency),
+    CharacterEffects.gainTrait(EncumberedSpeed),
+    CharacterEffects.gainTrait(StandYourGround),
   ],
 })
 

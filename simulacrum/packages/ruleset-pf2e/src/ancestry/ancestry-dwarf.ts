@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -117,17 +117,17 @@ export const Dwarf = Traits.defineTrait('ancestry/dwarf', {
     "*Dwarf, Humanoid*\n\n_Dwarves are a short, stocky people who are often stubborn, fierce, and devoted._\n\nIf you want to play a character who is as hard as nails, a stubborn and unrelenting adventurer, with a mix of rugged toughness and deep wisdom, you should play a dwarf.\n\nRead the full entry in [Dwarves](content:ancestries-and-backgrounds/dwarves).\n\n**Hit Points** 10\n\n**Size** Medium\n\n**Speed** 20 feet\n\n**Attribute Boosts** Constitution, Wisdom, Free\n\n**Attribute Flaws** Charisma\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Dwarven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Jotun](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Orcish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Petran](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Sakvroth](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Darkvision** You can see in darkness and dim light just as well as you can see in bright light, though your vision in darkness is in black and white.\n\n**Clan Dagger** You get one clan dagger for free, as it was given to you at birth. Selling this clan dagger is a terrible taboo and earns you the disdain of other dwarves.",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(10))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(20))),
-    Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(-1))),
-    Effects.gainCharacterOption(SelectDwarfAncestryBoost),
-    Effects.gainTrait(Darkvision),
-    Effects.gainCharacterOption(SelectDwarfHeritage),
-    Effects.gainCharacterOption(SelectDwarfFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectDwarfFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectDwarfFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(10))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(20))),
+    CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.gainCharacterOption(SelectDwarfAncestryBoost),
+    CharacterEffects.gainTrait(Darkvision),
+    CharacterEffects.gainCharacterOption(SelectDwarfHeritage),
+    CharacterEffects.gainCharacterOption(SelectDwarfFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectDwarfFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectDwarfFeat9)]),
   ],
 })
 
@@ -144,7 +144,7 @@ export const DwarvenLore = Traits.defineTrait('ancestry/dwarf/dwarven-lore', {
   description:
     '*Dwarf*\n\nYou eagerly absorbed the old stories and traditions of your ancestors, your gods, and your people, studying subjects and techniques passed down for generation upon generation. You gain the trained proficiency rank in [Crafting](characteristic:skill/crafting) and [Religion](characteristic:skill/religion). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice. You also gain the [Additional Lore](trait:feat/additional-lore) general feat for [Dwarf Lore](content:skills/lore).',
   tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel1],
-  effects: [Effects.gainTrait(TrainedCrafting), Effects.gainTrait(TrainedReligion), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedCrafting), CharacterEffects.gainTrait(TrainedReligion), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const DwarvenWeaponFamiliarity = Traits.defineTrait('ancestry/dwarf/dwarven-weapon-familiarity', {
@@ -176,7 +176,7 @@ export const StonemasonsEye = Traits.defineTrait('ancestry/dwarf/stonemasons-eye
   description:
     "*Dwarf*\n\nYou understand the intricacies of stonework. You become trained in [Crafting](characteristic:skill/crafting). If you're already trained in Crafting, you instead gain the [Specialty Crafting](trait:feat/specialty-crafting) skill feat for stonemasonry.\n\nYou also gain a +2 circumstance bonus to [Perception](characteristic:perception) checks to notice unusual stonework. This bonus applies to checks to discover mechanical traps made of stone or hidden within stone.\n\nIf you aren't using the [Seek](content:playing-the-game/seek) action or searching, the GM automatically rolls a secret check for you to notice unusual stonework anyway. This check doesn't gain your normal circumstance bonus.",
   tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel1],
-  effects: [Effects.gainTrait(TrainedCrafting)],
+  effects: [CharacterEffects.gainTrait(TrainedCrafting)],
 })
 
 export const UnburdenedIron = Traits.defineTrait('ancestry/dwarf/unburdened-iron', {
@@ -241,7 +241,7 @@ export const MountainsStoutness = Traits.defineTrait('ancestry/dwarf/mountains-s
   description:
     '*Dwarf*\n\nYour hardiness lets you withstand more punishment than most. Increase your maximum [Hit Points](characteristic:hit-points) by your level. When you have the [dying](content:conditions/dying) condition, the DC of your recovery checks is equal to 9 + your dying value (instead of 10 + your dying value).\n\nIf you also have the [Toughness](trait:feat/toughness) feat, the Hit Points gained from it and this feat are cumulative, and the DC of your recovery checks is equal to 6 + your dying value.',
   tags: [Feat, AncestryFeat, DwarfFeat, FeatLevel9],
-  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(CharacterValues.Level)))],
+  effects: [CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(CharacterValues.Level)))],
 })
 
 export const StoneBones = Traits.defineTrait('ancestry/dwarf/stone-bones', {

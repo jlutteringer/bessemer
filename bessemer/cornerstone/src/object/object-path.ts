@@ -48,6 +48,10 @@ export const getValue = <T extends ObjectPathType, N>(path: ObjectPath<T>, objec
   return TypePaths.getValue(path, object)
 }
 
+export const getAnyValue = (path: ObjectPath, object: unknown): unknown => {
+  return TypePaths.getValue(path, object)
+}
+
 export const applyValue = <T extends ObjectPathType, N>(path: ObjectPath<T>, object: N, valueToApply: TypePathGet<T, N>): N => {
   return applyAnyValue(path, object, valueToApply) as N
 }

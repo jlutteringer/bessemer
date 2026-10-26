@@ -1,4 +1,4 @@
-import { Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { CharacterOptions } from '@simulacrum/ruleset'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
@@ -23,7 +23,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
     name: `${name} +2`,
     description: `Increase your ${name} score by 2.`,
     tags: [AbilityScoreIncrease],
-    effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(2)))],
+    effects: [CharacterEffects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(2)))],
   })
 
   // The +2 is chosen before the +1, so this keeps both from going to the same ability score
@@ -32,7 +32,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
     description: `Increase your ${name} score by 1.`,
     tags: [AbilityScoreIncrease],
     prerequisites: [Expressions.not(Traits.traitPrerequisite(plusTwo))],
-    effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
+    effects: [CharacterEffects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
   })
 
   const featPlusOne = Traits.defineTrait(`ability-score-increase/feat/${key}-plus-one`, {
@@ -40,7 +40,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
     description: `Increase your ${name} score by 1.`,
     tags: [AbilityScoreIncrease],
     repeatable: true,
-    effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
+    effects: [CharacterEffects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
   })
 
   return { name, plusTwo, plusOne, featPlusOne }
@@ -89,7 +89,7 @@ export const forBackground = (reference: string, abilityScores: [AbilityScore, A
     name: '+2 and +1',
     description: `Increase one of ${first}, ${second}, or ${third} by 2 and another by 1.`,
     tags: [AbilityScoreIncrease],
-    effects: [Effects.gainCharacterOption(selectPlusTwo), Effects.gainCharacterOption(selectPlusOne)],
+    effects: [CharacterEffects.gainCharacterOption(selectPlusTwo), CharacterEffects.gainCharacterOption(selectPlusOne)],
   })
 
   const plusOneToAll = Traits.defineTrait(`${prefix}/plus-one-to-all`, {

@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -29,7 +29,7 @@ export const LanceOfFaith = Abilities.defineAbility('cleric/power/lance-of-faith
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**At-Will** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 1d8 + Wisdom modifier radiant damage, and one ally you can see gains a +2 power bonus to his or her next attack roll against the target.\n\nIncrease damage to 2d8 + Wisdom modifier at 21st level.'
     ),
   ],
@@ -43,7 +43,7 @@ export const PriestsShield = Abilities.defineAbility('cleric/power/priests-shiel
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**At-Will** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and you and one adjacent ally gain a +1 power bonus to AC until the end of your next turn.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -58,7 +58,7 @@ export const RighteousBrand = Abilities.defineAbility('cleric/power/righteous-br
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**At-Will** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and one ally within 5 squares of you gains a power bonus to melee attack rolls against the target equal to your Strength modifier until the end of your next turn.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -73,7 +73,7 @@ export const SacredFlame = Abilities.defineAbility('cleric/power/sacred-flame', 
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**At-Will** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 1d6 + Wisdom modifier radiant damage, and one ally you can see chooses either to gain temporary hit points equal to your Charisma modifier + one-half your level or to make a saving throw.\n\nIncrease damage to 2d6 + Wisdom modifier at 21st level.'
     ),
   ],
@@ -87,7 +87,7 @@ export const CauseFear = Abilities.defineAbility('cleric/power/cause-fear', {
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Encounter** ✦ Divine, Fear, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** The target moves its speed + your Charisma modifier away from you. The fleeing target avoids unsafe squares and difficult terrain if it can. This movement provokes opportunity attacks.'
     ),
   ],
@@ -104,7 +104,7 @@ export const DivineGlow = Abilities.defineAbility('cleric/power/divine-glow', {
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Encounter** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Close blast 3\n\n**Target:** Each enemy in blast\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 1d8 + Wisdom modifier radiant damage.\n\n**Effect:** Allies in the blast gain a +2 power bonus to attack rolls until the end of your next turn.'
     ),
   ],
@@ -121,7 +121,7 @@ export const HealingStrike = Abilities.defineAbility('cleric/power/healing-strik
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Encounter** ✦ Divine, Healing, Radiant, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier radiant damage, and the target is marked until the end of your next turn. In addition, you or one ally within 5 squares of you can spend a healing surge.'
     ),
   ],
@@ -137,7 +137,7 @@ export const WrathfulThunder = Abilities.defineAbility('cleric/power/wrathful-th
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Encounter** ✦ Divine, Thunder, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier thunder damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -153,7 +153,7 @@ export const AvengingFlame = Abilities.defineAbility('cleric/power/avenging-flam
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Cleric Attack 1**\n\n**Daily** ✦ Divine, Fire, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and ongoing 5 fire damage (save ends).\n\n**Miss:** Half damage, and no ongoing fire damage.\n\n**Special:** If the target attacks on its turn, it can't attempt a saving throw against the ongoing damage."
     ),
   ],
@@ -170,7 +170,7 @@ export const BeaconOfHope = Abilities.defineAbility('cleric/power/beacon-of-hope
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Daily** ✦ Divine, Healing, Implement\n\n**Standard Action** · Close burst 3\n\n**Target:** Each enemy in burst\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** The target is weakened until the end of its next turn.\n\n**Effect:** You and all your allies in the burst regain 5 hit points, and your healing powers restore +5 hit points until the end of the encounter.'
     ),
   ],
@@ -186,7 +186,7 @@ export const CascadeOfLight = Abilities.defineAbility('cleric/power/cascade-of-l
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Daily** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** 3d8 + Wisdom modifier radiant damage, and the target gains vulnerability 5 to all your attacks (save ends).\n\n**Miss:** Half damage, and the target gains no vulnerability.'
     ),
   ],
@@ -203,7 +203,7 @@ export const GuardianOfFaith = Abilities.defineAbility('cleric/power/guardian-of
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 1**\n\n**Daily** ✦ Conjuration, Divine, Implement, Radiant\n\n**Standard Action** · Ranged 5\n\n**Effect:** You conjure a guardian that occupies 1 square within range. Every round, you can move the guardian 3 squares as a move action. The guardian lasts until the end of the encounter. Any creature that ends its turn next to the conjured guardian is subject to a Wisdom vs. Fortitude attack. On a hit, the attack deals 1d8 + Wisdom modifier radiant damage.'
     ),
   ],
@@ -219,7 +219,7 @@ export const Bless = Abilities.defineAbility('cleric/power/bless', {
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 2**\n\n**Daily** ✦ Divine\n\n**Standard Action** · Close burst 20\n\n**Targets:** You and each ally in burst\n\n**Effect:** Until the end of the encounter, all targets gain a +1 power bonus to attack rolls.'
     ),
   ],
@@ -236,7 +236,7 @@ export const CureLightWounds = Abilities.defineAbility('cleric/power/cure-light-
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 2**\n\n**Daily** ✦ Divine, Healing\n\n**Standard Action** · Melee touch\n\n**Target:** You or one creature\n\n**Effect:** The target regains hit points as if it had spent a healing surge.'
     ),
   ],
@@ -252,7 +252,7 @@ export const DivineAid = Abilities.defineAbility('cleric/power/divine-aid', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 2**\n\n**Encounter** ✦ Divine\n\n**Standard Action** · Ranged 5\n\n**Target:** You or one ally\n\n**Effect:** The target makes a saving throw with a bonus equal to your Charisma modifier.'
     ),
   ],
@@ -268,7 +268,7 @@ export const Sanctuary = Abilities.defineAbility('cleric/power/sanctuary', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 2**\n\n**Encounter** ✦ Divine\n\n**Standard Action** · Ranged 10\n\n**Target:** You or one creature\n\n**Effect:** The target receives a +5 bonus to all defenses. The effect lasts until the target attacks or until the end of your next turn.'
     ),
   ],
@@ -284,7 +284,7 @@ export const ShieldOfFaith = Abilities.defineAbility('cleric/power/shield-of-fai
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 2**\n\n**Daily** ✦ Divine\n\n**Standard Action** · Close burst 5\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets gain a +2 power bonus to AC until the end of the encounter.'
     ),
   ],
@@ -301,7 +301,7 @@ export const BlazingBeacon = Abilities.defineAbility('cleric/power/blazing-beaco
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 3**\n\n**Encounter** ✦ Divine, Radiant, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier radiant damage, and all ranged attack rolls against the target gain a +4 power bonus until the end of your next turn.'
     ),
   ],
@@ -318,7 +318,7 @@ export const Command = Abilities.defineAbility('cleric/power/command', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 3**\n\n**Encounter** ✦ Charm, Divine, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** The target is dazed until the end of your next turn. In addition, you can choose to knock the target prone or slide the target a number of squares equal to 3 + your Charisma modifier.'
     ),
   ],
@@ -334,7 +334,7 @@ export const DauntingLight = Abilities.defineAbility('cleric/power/daunting-ligh
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 3**\n\n**Encounter** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 2d10 + Wisdom modifier radiant damage.\n\n**Effect:** One ally you can see gains combat advantage against the target until the end of your next turn.'
     ),
   ],
@@ -351,7 +351,7 @@ export const SplitTheSky = Abilities.defineAbility('cleric/power/split-the-sky',
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 3**\n\n**Encounter** ✦ Divine, Thunder, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. Fortitude\n\n**Hit:** 1[W] + Strength modifier thunder damage, and you push the target 2 squares and knock it prone.'
     ),
   ],
@@ -368,7 +368,7 @@ export const ConsecratedGround = Abilities.defineAbility('cleric/power/consecrat
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 5**\n\n**Daily** ✦ Divine, Healing, Radiant, Zone\n\n**Standard Action** · Close burst 1\n\n**Effect:** The burst creates a zone of sanctified ground that lasts until the end of your next turn. You can move the origin square of the zone 3 squares as a move action. Enemies that start their turns within the zone take 1d6 + your Charisma modifier radiant damage. You and any allies who are bloodied and start their turns within the zone regain hit points equal to 1 + your Charisma modifier.\n\n**Sustain Minor:** The zone persists.'
     ),
   ],
@@ -384,7 +384,7 @@ export const RuneOfPeace = Abilities.defineAbility('cleric/power/rune-of-peace',
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 5**\n\n**Daily** ✦ Charm, Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. Will\n\n**Hit:** 1[W] + Strength modifier damage, and the target cannot attack (save ends).\n\n**Miss:** The target cannot attack you until the end of your next turn.'
     ),
   ],
@@ -401,7 +401,7 @@ export const SpiritualWeapon = Abilities.defineAbility('cleric/power/spiritual-w
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Cleric Attack 5**\n\n**Daily** ✦ Conjuration, Divine, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. AC\n\n**Hit:** 1d10 + Wisdom modifier damage.\n\n**Effect:** You conjure a weapon that appears in the target's square and attacks. Your allies gain combat advantage against the target. You can move the weapon up to 10 squares to another enemy's square as a move action. The weapon lasts until the end of your next turn.\n\n**Sustain Minor:** When you sustain the power, repeat the attack. Your allies continue to gain combat advantage against the weapon's target."
     ),
   ],
@@ -417,7 +417,7 @@ export const WeaponOfTheGods = Abilities.defineAbility('cleric/power/weapon-of-t
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Cleric Attack 5**\n\n**Daily** ✦ Divine, Radiant, Weapon\n\n**Minor Action** · Melee touch\n\n**Target:** One held weapon\n\n**Effect:** Until the end of the encounter, all attacks made with the weapon deal an extra 1d6 radiant damage. When the weapon hits an enemy, the enemy takes a –2 penalty to AC until the end of the weapon wielder's next turn."
     ),
   ],
@@ -433,7 +433,7 @@ export const BastionOfHealth = Abilities.defineAbility('cleric/power/bastion-of-
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 6**\n\n**Encounter** ✦ Divine, Healing\n\n**Minor Action** · Ranged 10\n\n**Target:** You or one ally\n\n**Effect:** The target can spend a healing surge. Add your Charisma modifier to the hit points regained.'
     ),
   ],
@@ -450,7 +450,7 @@ export const CureSeriousWounds = Abilities.defineAbility('cleric/power/cure-seri
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 6**\n\n**Daily** ✦ Divine, Healing\n\n**Standard Action** · Melee touch\n\n**Target:** You or one creature\n\n**Effect:** The target regains hit points as if it had spent two healing surges.'
     ),
   ],
@@ -466,7 +466,7 @@ export const DivineVigor = Abilities.defineAbility('cleric/power/divine-vigor', 
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 6**\n\n**Daily** ✦ Divine, Healing\n\n**Minor Action** · Close burst 5\n\n**Targets:** You and each ally in burst\n\n**Effect:** Each target regains the use of his or her second wind.'
     ),
   ],
@@ -482,7 +482,7 @@ export const HolyLantern = Abilities.defineAbility('cleric/power/holy-lantern', 
   tags: [AtWillPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 6**\n\n**At-Will** ✦ Conjuration, Divine\n\n**Standard Action** · Ranged 3\n\n**Effect:** You conjure a lantern that appears in 1 square within range and sheds light 5 squares in all directions. You and allies in the light gain a +2 power bonus to Perception and Insight checks. You can move the lantern up to your speed as a minor action. The lantern lasts for 10 hours, but you can have only a single holy lantern active at a time.'
     ),
   ],
@@ -496,7 +496,7 @@ export const AweStrike = Abilities.defineAbility('cleric/power/awe-strike', {
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 7**\n\n**Encounter** ✦ Divine, Fear, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. Will\n\n**Hit:** 1[W] + Strength modifier damage, and the target is immobilized until the end of your next turn.'
     ),
   ],
@@ -512,7 +512,7 @@ export const BreakTheSpirit = Abilities.defineAbility('cleric/power/break-the-sp
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 7**\n\n**Encounter** ✦ Charm, Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** 2d8 + Wisdom modifier radiant damage, and the target takes a penalty to attack rolls equal to your Charisma modifier until the end of your next turn.'
     ),
   ],
@@ -529,7 +529,7 @@ export const SearingLight = Abilities.defineAbility('cleric/power/searing-light'
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 7**\n\n**Encounter** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 2d6 + Wisdom modifier radiant damage, and the target is blinded until the end of your next turn.'
     ),
   ],
@@ -546,7 +546,7 @@ export const StrengthenTheFaithful = Abilities.defineAbility('cleric/power/stren
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 7**\n\n**Encounter** ✦ Divine, Healing, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you and each ally adjacent to the target can spend a healing surge. Add your Charisma modifier to the hit points regained.'
     ),
   ],
@@ -563,7 +563,7 @@ export const AstralDefenders = Abilities.defineAbility('cleric/power/astral-defe
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Cleric Attack 9**\n\n**Daily** ✦ Conjuration, Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Effect:** You conjure two soldiers, each occupying 1 square within range. The conjured soldiers don't attack normally, but whenever an opportunity attack would be provoked from a conjured soldier, the soldier makes a Wisdom vs. Reflex attack. On a hit, the attack deals 1d10 + Wisdom modifier radiant damage.\n\nYou can move one soldier or both a total of 3 squares as a move action. Creatures can move through the spaces occupied by the soldiers. The soldiers last until the end of the encounter."
     ),
   ],
@@ -579,7 +579,7 @@ export const BladeBarrier = Abilities.defineAbility('cleric/power/blade-barrier'
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Cleric Attack 9**\n\n**Daily** ✦ Conjuration, Divine, Implement\n\n**Standard Action** · Area wall 5 within 10 squares\n\n**Effect:** You conjure a wall of contiguous squares filled with spinning blades of astral energy that lasts until the end of your next turn. The wall can be up to 5 squares long and up to 2 squares high. The spaces occupied by the blade barrier are difficult terrain.\n\nIf a creature enters the barrier's space or starts its turn there, it takes 3d6 + Wisdom modifier damage plus ongoing 5 damage (save ends).\n\n**Sustain Minor:** The barrier persists."
     ),
   ],
@@ -596,7 +596,7 @@ export const DivinePower = Abilities.defineAbility('cleric/power/divine-power', 
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 9**\n\n**Daily** ✦ Divine, Healing, Radiant, Weapon\n\n**Standard Action** · Close burst 2\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. Fortitude\n\n**Hit:** 2[W] + Strength modifier radiant damage, and you push the target 1 square.\n\n**Effect:** Until the end of the encounter, you gain regeneration 5, and you and each ally within the burst gain a +2 power bonus to AC.'
     ),
   ],
@@ -612,7 +612,7 @@ export const FlameStrike = Abilities.defineAbility('cleric/power/flame-strike', 
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Attack 9**\n\n**Daily** ✦ Divine, Fire, Implement\n\n**Standard Action** · Area burst 2 within 10 squares\n\n**Target:** Each enemy in burst\n\n**Attack:** Wisdom vs. Reflex\n\n**Hit:** 2d10 + Wisdom modifier fire damage, and ongoing 5 + Wisdom modifier fire damage (save ends).\n\n**Miss:** Half damage, and no ongoing fire damage.'
     ),
   ],
@@ -629,7 +629,7 @@ export const AstralRefuge = Abilities.defineAbility('cleric/power/astral-refuge'
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 10**\n\n**Daily** ✦ Divine, Healing, Teleportation\n\n**Standard Action** · Melee touch\n\n**Target:** One willing ally\n\n**Effect:** The target is whisked away to a place of safety in the Astral Sea for 3 rounds. While there, the target can spend a healing surge each round but cannot take any other actions. At the end of the effect, the target reappears in the space he or she left or, if the space is not vacant, in the nearest unoccupied space.'
     ),
   ],
@@ -645,7 +645,7 @@ export const KnightsOfUnyieldingValor = Abilities.defineAbility('cleric/power/kn
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Cleric Utility 10**\n\n**Daily** ✦ Conjuration, Divine\n\n**Standard Action** · Ranged 10\n\n**Effect:** You conjure four ghostly warriors, each occupying 1 square within range. As a move action, you can move any of the knights 2 squares. They can't attack or be attacked or damaged, and they last until the end of the encounter.\n\nEnemies can't enter a square occupied by a conjured knight, but allies can move through the knights' spaces as if the knights were allies. The conjured knights grant cover to allies but not enemies."
     ),
   ],
@@ -661,7 +661,7 @@ export const MassCureLightWounds = Abilities.defineAbility('cleric/power/mass-cu
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 10**\n\n**Daily** ✦ Divine, Healing\n\n**Standard Action** · Close burst 5\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets regain hit points as if they had spent a healing surge. Add your Charisma modifier to the hit points regained.'
     ),
   ],
@@ -677,7 +677,7 @@ export const ShieldingWord = Abilities.defineAbility('cleric/power/shielding-wor
   tags: [EncounterPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Cleric)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Cleric Utility 10**\n\n**Encounter** ✦ Divine\n\n**Immediate Interrupt** · Ranged 5\n\n**Trigger:** An ally in range is hit by an attack\n\n**Effect:** The ally gains a +4 power bonus to AC until the end of your next turn.'
     ),
   ],

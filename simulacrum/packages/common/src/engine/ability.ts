@@ -1,20 +1,41 @@
 export * from '@simulacrum/ruleset/ability'
-import { Ability, AbilityReference } from '@simulacrum/ruleset/ability'
+import { Ability, AbilityAction, AbilityReference } from '@simulacrum/ruleset/ability'
+import { ActionEffect } from '@simulacrum/ruleset/action-effect'
+import { ActionTest } from '@simulacrum/ruleset/action-test'
 import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
-import { EvaluateExpression } from '@bessemer/cornerstone/expression'
+import { ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
 import { Patch } from '@bessemer/cornerstone/patch'
 import * as Attributes from '@simulacrum/common/engine/attribute'
-import { Modifier } from '@simulacrum/common/engine/attribute'
+import { Attribute, AttributeValue, Modifier, ModifierValue } from '@simulacrum/common/engine/attribute'
 import { Patches } from '@bessemer/cornerstone'
 import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { AbilityFilter } from '@simulacrum/ruleset/ability'
 import * as Tags from '@simulacrum/common/engine/tag'
-import { Arrays } from '@bessemer/cornerstone'
+import { Arrays, Objects } from '@bessemer/cornerstone'
 import * as Rulesets from '@simulacrum/common/engine/ruleset'
 import { RulesetEntities } from '@simulacrum/ruleset'
+import { ActionEffectValue } from '@simulacrum/common/engine/action-effect'
+import { ActionEffects } from '@simulacrum/common/engine/engine'
+
+export interface ActionTestValue extends ActionTest {
+  success: Array<ActionEffectValue>
+  failure: Array<ActionEffectValue>
+}
+
+export interface ActionValue extends AbilityAction {
+  effects: Array<ActionEffectValue>
+  test: ActionTestValue | null
+  potency: number | null
+}
+
+export interface AbilityValue extends Ability {
+  actions: Array<ActionValue>
+  activeModifiers: Array<ModifierValue<Ability>>
+  inactiveModifiers: Array<Modifier<Ability>>
+}
 
 export type AbilityState = {
-  ability: Ability
+  ability: AbilityValue
   loadout: LoadoutTypeReference | null
 }
 
@@ -30,23 +51,41 @@ export const getAbilitiesByIds = (abilities: Array<AbilityReference>, ruleset: R
   return abilities.map((it) => getAbilityById(it, ruleset))
 }
 
-export const applyModifiers = (ability: Ability, modifiers: Array<Modifier<unknown>>, evaluate: EvaluateExpression): Ability => {
-  const { activeModifiers } = Attributes.evaluateModifiers(modifiers, evaluate)
-  return Patches.resolve(
-    ability,
-    activeModifiers.map((it) => it.value as Patch<Ability>),
-    evaluate
-  )
+const buildAttribute = (ability: Ability): Attribute<Ability> => {
+  return Attributes.attribute(ability)
 }
 
-export const buildInitialState = (
-  ability: AbilityReference,
-  loadout: LoadoutTypeReference | null,
-  modifiers: Array<Modifier<unknown>>,
-  evaluate: EvaluateExpression,
-  ruleset: Ruleset
-): AbilityState => {
-  return { ability: applyModifiers(getAbilityById(ability, ruleset), modifiers, evaluate), loadout }
+export const evaluateModifiers = (ability: Ability, modifiers: Array<Modifier<Ability>>, evaluator: ExpressionEvaluator): AttributeValue<Ability> => {
+  return Attributes.evaluateAttribute(buildAttribute(ability), modifiers, evaluator)
+}
+
+export const mapActionEffects = (
+  ability: AttributeValue<Ability>,
+  map: (effect: ActionEffect, action: AbilityAction) => ActionEffectValue,
+  getPotency: (action: AbilityAction) => number | null = () => null
+): AbilityValue => {
+  const actions = ability.value.actions.map((action) => ({
+    ...action,
+    potency: getPotency(action),
+    effects: action.effects.map((it) => map(it.value, action)),
+    test: Objects.isNil(action.test)
+      ? null
+      : {
+          ...action.test,
+          success: action.test.success.map((it) => map(it.value, action)),
+          failure: action.test.failure.map((it) => map(it.value, action)),
+        },
+  }))
+
+  return { ...ability.value, actions, activeModifiers: ability.activeModifiers, inactiveModifiers: ability.inactiveModifiers }
+}
+
+export const isValue = (ability: Ability): ability is AbilityValue => {
+  return 'activeModifiers' in ability
+}
+
+export const buildDefaultValue = (ability: Ability): AbilityValue => {
+  return mapActionEffects(Attributes.simpleAttributeValue(ability, buildAttribute(ability)), ActionEffects.buildSimpleValue)
 }
 
 export const applyFilter = (abilities: Array<Ability>, filter: AbilityFilter): Array<Ability> => {

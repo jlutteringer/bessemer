@@ -1,4 +1,4 @@
-import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
 import { Bard, Class } from '@simulacrum/ruleset-dnd5e/tag'
 import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
@@ -63,18 +63,18 @@ export const Level1 = Traits.defineTrait('bard/level-1', {
     'A performer whose words, music, and dance carry **magic**, inspiring allies and casting spells with **Charisma**.\n\n**Saving Throws:** Dexterity and Charisma. **Armor:** Light armor. **Weapons:** Simple weapons. **Tools:** three Musical Instruments of your choice.',
   tags: [Class],
   effects: [
-    Effects.gainTrait(SavingThrowProficiencies.Dexterity),
-    Effects.gainTrait(SavingThrowProficiencies.Charisma),
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectCantrip),
-    Effects.gainCharacterOption(SelectCantrip),
-    Effects.gainCharacterOption(SelectSpellUpToRank1),
-    Effects.gainCharacterOption(SelectSpellUpToRank1),
-    Effects.gainCharacterOption(SelectSpellUpToRank1),
-    Effects.gainCharacterOption(SelectSpellUpToRank1),
+    CharacterEffects.gainTrait(SavingThrowProficiencies.Dexterity),
+    CharacterEffects.gainTrait(SavingThrowProficiencies.Charisma),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectCantrip),
+    CharacterEffects.gainCharacterOption(SelectCantrip),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank1),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank1),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank1),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank1),
   ],
 })
 
@@ -82,13 +82,13 @@ export const BardicInspiration = Abilities.defineAbility('bard/bardic-inspiratio
   name: 'Bardic Inspiration',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'As a **Bonus Action**, you inspire another creature within 60 feet that can see or hear you, giving it one of your Bardic Inspiration dice (a **d6**). A creature can only have one at a time.'
     ),
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'Once within the next hour, when the creature fails a D20 Test, it can roll the die and add the result, possibly turning the failure into a success.'
     ),
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You can do this a number of times equal to your Charisma modifier (minimum once), regaining all uses on a Long Rest. The die becomes a d8 at Bard level 5, a d10 at level 10, and a d12 at level 15.'
     ),
   ],
@@ -101,10 +101,10 @@ export const Spellcasting = Abilities.defineAbility('bard/spellcasting', {
   name: 'Spellcasting',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You cast Bard spells using **Charisma**, with a Musical Instrument as your focus. You know two cantrips, gaining a third at level 4, and can swap one for another Bard cantrip when you gain a level.'
     ),
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You prepare a list of Bard spells you can cast with your spell slots: 4 at level 1, rising to 9 by level 5. When you gain a level, you can swap one of them for another Bard spell you have slots for. You regain all spell slots on a Long Rest.'
     ),
   ],
@@ -122,11 +122,11 @@ export const Level2 = Traits.defineTrait('bard/level-2', {
   prerequisites: [Traits.traitPrerequisite(Level1)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
-    Effects.gainCharacterOption(SelectExpertise),
-    Effects.gainCharacterOption(SelectExpertise),
-    Effects.gainTrait(JackOfAllTrades),
-    Effects.gainCharacterOption(SelectSpellUpToRank1),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.gainCharacterOption(SelectExpertise),
+    CharacterEffects.gainCharacterOption(SelectExpertise),
+    CharacterEffects.gainTrait(JackOfAllTrades),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank1),
   ],
 })
 
@@ -141,9 +141,9 @@ export const Level3 = Traits.defineTrait('bard/level-3', {
   prerequisites: [Traits.traitPrerequisite(Level2)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
-    Effects.gainCharacterOption(SelectBardSubclass),
-    Effects.gainCharacterOption(SelectSpellUpToRank2),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.gainCharacterOption(SelectBardSubclass),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank2),
   ],
 })
 
@@ -158,28 +158,28 @@ export const CollegeOfDance = Traits.defineTrait('bard/college-of-dance', {
   name: 'College of Dance',
   description: 'Bards who express the Words of Creation through **movement**, in harmony with a whirling cosmos of agility and grace.',
   tags: [BardSubclass],
-  effects: [Effects.gainTrait(DazzlingFootwork)],
+  effects: [CharacterEffects.gainTrait(DazzlingFootwork)],
 })
 
 export const BeguilingMagic = Traits.defineTrait('bard/beguiling-magic', {
   name: 'Beguiling Magic',
   description:
     "You always have **Charm Person** and **Mirror Image** prepared.\n\nRight after you cast an Enchantment or Illusion spell with a spell slot, you can force a creature you can see within 60 feet to make a Wisdom save against your spell save DC. On a failure it's Charmed or Frightened (your choice) for 1 minute, repeating the save at the end of each of its turns. You can do this once per Long Rest, or regain the use by spending a use of Bardic Inspiration.",
-  effects: [Effects.gainAbility(Spells.CharmPerson), Effects.gainAbility(Spells.MirrorImage)],
+  effects: [CharacterEffects.gainAbility(Spells.CharmPerson), CharacterEffects.gainAbility(Spells.MirrorImage)],
 })
 
 export const CollegeOfGlamour = Traits.defineTrait('bard/college-of-glamour', {
   name: 'College of Glamour',
   description: 'Bards who weave the **beguiling magic of the Feywild** into their performances, stirring wonder and dread alike.',
   tags: [BardSubclass],
-  effects: [Effects.gainTrait(BeguilingMagic)],
+  effects: [CharacterEffects.gainTrait(BeguilingMagic)],
 })
 
 export const MantleOfInspiration = Abilities.defineAbility('bard/mantle-of-inspiration', {
   name: 'Mantle of Inspiration',
   prerequisites: [Traits.traitPrerequisite(CollegeOfGlamour)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'As a **Bonus Action**, spend a use of Bardic Inspiration and roll the die. Up to a number of other creatures within 60 feet equal to your Charisma modifier (minimum one) each gain Temporary Hit Points equal to **twice the roll**, and can use their Reaction to move up to their Speed without provoking Opportunity Attacks.'
     ),
   ],
@@ -190,9 +190,9 @@ export const BonusProficiencies = Traits.defineTrait('bard/bonus-proficiencies',
   name: 'Bonus Proficiencies',
   description: 'You gain proficiency in **three skills** of your choice.',
   effects: [
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
   ],
 })
 
@@ -200,14 +200,14 @@ export const CollegeOfLore = Traits.defineTrait('bard/college-of-lore', {
   name: 'College of Lore',
   description: 'Bards who **collect spells and secrets** from every source, and use their wit to expose lies and deflate the self-important.',
   tags: [BardSubclass],
-  effects: [Effects.gainTrait(BonusProficiencies)],
+  effects: [CharacterEffects.gainTrait(BonusProficiencies)],
 })
 
 export const CuttingWords = Abilities.defineAbility('bard/cutting-words', {
   name: 'Cutting Words',
   prerequisites: [Traits.traitPrerequisite(CollegeOfLore)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "When a creature you can see within 60 feet makes a damage roll or succeeds on an ability check or attack roll, you can use your **Reaction** to spend a use of Bardic Inspiration. Roll the die and subtract it from the creature's roll, possibly reducing the damage or turning the success into a failure."
     ),
   ],
@@ -232,7 +232,7 @@ export const CollegeOfValor = Traits.defineTrait('bard/college-of-valor', {
   name: 'College of Valor',
   description: 'Bards who **sing the deeds of ancient heroes**, keeping their memory alive and inspiring new heroes on the battlefield.',
   tags: [BardSubclass],
-  effects: [Effects.gainTrait(CombatInspiration), Effects.gainTrait(MartialTraining)],
+  effects: [CharacterEffects.gainTrait(CombatInspiration), CharacterEffects.gainTrait(MartialTraining)],
 })
 
 export const Level4 = Traits.defineTrait('bard/level-4', {
@@ -240,11 +240,11 @@ export const Level4 = Traits.defineTrait('bard/level-4', {
   prerequisites: [Traits.traitPrerequisite(Level3)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     // Ability Score Improvement
-    Effects.gainCharacterOption(SelectFeat),
-    Effects.gainCharacterOption(SelectCantrip),
-    Effects.gainCharacterOption(SelectSpellUpToRank2),
+    CharacterEffects.gainCharacterOption(SelectFeat),
+    CharacterEffects.gainCharacterOption(SelectCantrip),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank2),
   ],
 })
 
@@ -253,7 +253,7 @@ export const FontOfInspiration = Traits.defineTrait('bard/font-of-inspiration', 
   description:
     'You regain all uses of **Bardic Inspiration** when you finish a Short or Long Rest. You can also spend a spell slot (no action required) to regain one use.',
   effects: [
-    Effects.modifyResourcePool(
+    CharacterEffects.modifyResourcePool(
       BardicInspiration.resource,
       Attributes.modifier(
         Patches.patch<ResourcePool>({ refresh: Patches.concatenate([{ period: GameTimeUnit.ShortRest, amount: RelativeAmount.All }]) })
@@ -267,9 +267,9 @@ export const Level5 = Traits.defineTrait('bard/level-5', {
   prerequisites: [Traits.traitPrerequisite(Level4)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
-    Effects.gainTrait(FontOfInspiration),
-    Effects.gainCharacterOption(SelectSpellUpToRank3),
-    Effects.gainCharacterOption(SelectSpellUpToRank3),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.gainTrait(FontOfInspiration),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank3),
+    CharacterEffects.gainCharacterOption(SelectSpellUpToRank3),
   ],
 })

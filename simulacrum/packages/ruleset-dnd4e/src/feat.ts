@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Feat } from '@simulacrum/ruleset-dnd4e/tag'
@@ -26,7 +26,7 @@ export const ArmorProficiencyLeather = Traits.defineTrait('feat/armor-proficienc
   name: 'Armor Proficiency (Leather)',
   description: 'You gain training with leather armor.',
   tags: [Feat],
-  effects: [Effects.gainTrait(Armor.LeatherProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.LeatherProficiency)],
 })
 
 export const ArmorProficiencyHide = Traits.defineTrait('feat/armor-proficiency-hide', {
@@ -39,7 +39,7 @@ export const ArmorProficiencyHide = Traits.defineTrait('feat/armor-proficiency-h
     Expressions.greaterThanOrEqual(Constitution.variable, 13),
     Traits.traitPrerequisite(Armor.LeatherProficiency),
   ],
-  effects: [Effects.gainTrait(Armor.HideProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.HideProficiency)],
 })
 
 export const ArmorProficiencyChainmail = Traits.defineTrait('feat/armor-proficiency-chainmail', {
@@ -52,7 +52,7 @@ export const ArmorProficiencyChainmail = Traits.defineTrait('feat/armor-proficie
     Expressions.greaterThanOrEqual(Constitution.variable, 13),
     Expressions.or([Traits.traitPrerequisite(Armor.LeatherProficiency), Traits.traitPrerequisite(Armor.HideProficiency)]),
   ],
-  effects: [Effects.gainTrait(Armor.ChainmailProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.ChainmailProficiency)],
 })
 
 export const ArmorProficiencyScale = Traits.defineTrait('feat/armor-proficiency-scale', {
@@ -65,7 +65,7 @@ export const ArmorProficiencyScale = Traits.defineTrait('feat/armor-proficiency-
     Expressions.greaterThanOrEqual(Constitution.variable, 13),
     Traits.traitPrerequisite(Armor.ChainmailProficiency),
   ],
-  effects: [Effects.gainTrait(Armor.ScaleProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.ScaleProficiency)],
 })
 
 export const ArmorProficiencyPlate = Traits.defineTrait('feat/armor-proficiency-plate', {
@@ -78,7 +78,7 @@ export const ArmorProficiencyPlate = Traits.defineTrait('feat/armor-proficiency-
     Expressions.greaterThanOrEqual(Constitution.variable, 15),
     Traits.traitPrerequisite(Armor.ScaleProficiency),
   ],
-  effects: [Effects.gainTrait(Armor.PlateProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.PlateProficiency)],
 })
 
 export const ShieldProficiencyLight = Traits.defineTrait('feat/shield-proficiency-light', {
@@ -86,7 +86,7 @@ export const ShieldProficiencyLight = Traits.defineTrait('feat/shield-proficienc
   description: '**Prerequisite:** [Str](characteristic:strength) 13\n\nYou gain proficiency with light shields.',
   tags: [Feat],
   prerequisites: [Expressions.greaterThanOrEqual(Strength.variable, 13)],
-  effects: [Effects.gainTrait(Armor.LightShieldProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.LightShieldProficiency)],
 })
 
 export const ShieldProficiencyHeavy = Traits.defineTrait('feat/shield-proficiency-heavy', {
@@ -95,7 +95,7 @@ export const ShieldProficiencyHeavy = Traits.defineTrait('feat/shield-proficienc
     '**Prerequisites:** [Str](characteristic:strength) 15, [Shield Proficiency (Light)](trait:feat/shield-proficiency-light)\n\nYou gain proficiency with heavy shields.',
   tags: [Feat],
   prerequisites: [Expressions.greaterThanOrEqual(Strength.variable, 15), Traits.traitPrerequisite(Armor.LightShieldProficiency)],
-  effects: [Effects.gainTrait(Armor.HeavyShieldProficiency)],
+  effects: [CharacterEffects.gainTrait(Armor.HeavyShieldProficiency)],
 })
 
 export const Toughness = Traits.defineTrait('feat/toughness', {
@@ -103,21 +103,21 @@ export const Toughness = Traits.defineTrait('feat/toughness', {
   description:
     'When you take this feat, you gain additional hit points. You gain an additional 5 hit points at each tier of play (at 1st, 11th, and 21st level).',
   tags: [Feat],
-  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const ImprovedInitiative = Traits.defineTrait('feat/improved-initiative', {
   name: 'Improved Initiative',
   description: 'You gain a +4 feat bonus to [initiative](characteristic:initiative) checks.',
   tags: [Feat],
-  effects: [Effects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(4), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(4), { combinability: FeatBonus }))],
 })
 
 export const Durable = Traits.defineTrait('feat/durable', {
   name: 'Durable',
   description: 'Increase your number of [healing surges](characteristic:healing-surges) by two.',
   tags: [Feat],
-  effects: [Effects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(2)))],
+  effects: [CharacterEffects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const Alertness = Traits.defineTrait('feat/alertness', {
@@ -125,7 +125,7 @@ export const Alertness = Traits.defineTrait('feat/alertness', {
   description:
     "You don't grant enemies combat advantage during surprise rounds.\n\nYou also gain a +2 feat bonus to [Perception](characteristic:skill/perception) checks.",
   tags: [Feat],
-  effects: [Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(2), { combinability: FeatBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(2), { combinability: FeatBonus }))],
 })
 
 export const SkillTraining = Traits.defineTrait('feat/skill-training', {
@@ -134,7 +134,7 @@ export const SkillTraining = Traits.defineTrait('feat/skill-training', {
     'You gain training in one skill. The skill need not be on your class skill list.\n\n**Special:** You can take this feat more than once. Each time you select this feat, choose a skill in which you are not trained.',
   tags: [Feat],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(Skills.SelectAnySkill)],
+  effects: [CharacterEffects.gainCharacterOption(Skills.SelectAnySkill)],
 })
 
 export const SkillFocus = Traits.defineTrait('feat/skill-focus', {
@@ -143,7 +143,7 @@ export const SkillFocus = Traits.defineTrait('feat/skill-focus', {
     '**Prerequisite:** Training in chosen skill\n\nChoose a skill in which you have training. You have a +3 feat bonus to checks with that skill.\n\n**Special:** You can take this feat more than once. Each time you select this feat, choose a different skill.',
   tags: [Feat],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(Skills.SelectSkillFocus)],
+  effects: [CharacterEffects.gainCharacterOption(Skills.SelectSkillFocus)],
 })
 
 export const WeaponFocus = Traits.defineTrait('feat/weapon-focus', {

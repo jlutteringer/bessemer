@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -29,7 +29,7 @@ export const DeftStrike = Abilities.defineAbility('rogue/power/deft-strike', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Special:** You can move 2 squares before the attack.\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.'
     ),
   ],
@@ -43,7 +43,7 @@ export const PiercingStrike = Abilities.defineAbility('rogue/power/piercing-stri
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Reflex\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.'
     ),
   ],
@@ -57,7 +57,7 @@ export const RiposteStrike = Abilities.defineAbility('rogue/power/riposte-strike
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage. If the target attacks you before the start of your next turn, you make your riposte against the target as an immediate interrupt: a Strength vs. AC attack that deals 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier and riposte to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -71,7 +71,7 @@ export const SlyFlourish = Abilities.defineAbility('rogue/power/sly-flourish', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier + Charisma modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier + Charisma modifier at 21st level.'
     ),
   ],
@@ -85,7 +85,7 @@ export const DazingStrike = Abilities.defineAbility('rogue/power/dazing-strike',
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -101,7 +101,7 @@ export const KingsCastle = Abilities.defineAbility('rogue/power/kings-castle', {
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Reflex\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Effect:** Switch places with a willing adjacent ally.'
     ),
   ],
@@ -117,7 +117,7 @@ export const PositioningStrike = Abilities.defineAbility('rogue/power/positionin
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Will\n\n**Hit:** 1[W] + Dexterity modifier damage, and you slide the target 1 square.\n\n**Artful Dodger:** You slide the target a number of squares equal to your Charisma modifier.'
     ),
   ],
@@ -133,7 +133,7 @@ export const TorturousStrike = Abilities.defineAbility('rogue/power/torturous-st
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Brutal Scoundrel:** You gain a bonus to the damage roll equal to your Strength modifier.'
     ),
   ],
@@ -149,7 +149,7 @@ export const BlindingBarrage = Abilities.defineAbility('rogue/power/blinding-bar
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close blast 3\n\n**Requirement:** You must be wielding a crossbow, a light thrown weapon, or a sling.\n\n**Target:** Each enemy in blast you can see\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target is blinded until the end of your next turn.\n\n**Miss:** Half damage, and the target is not blinded.'
     ),
   ],
@@ -165,7 +165,7 @@ export const EasyTarget = Abilities.defineAbility('rogue/power/easy-target', {
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target is slowed and grants combat advantage to you (save ends both).\n\n**Miss:** Half damage, and the target grants combat advantage to you until the end of your next turn.'
     ),
   ],
@@ -181,7 +181,7 @@ export const TrickStrike = Abilities.defineAbility('rogue/power/trick-strike', {
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 3[W] + Dexterity modifier damage, and you slide the target 1 square.\n\n**Effect:** Until the end of the encounter, each time you hit the target you slide it 1 square.'
     ),
   ],
@@ -197,7 +197,7 @@ export const FleetingGhost = Abilities.defineAbility('rogue/power/fleeting-ghost
   tags: [AtWillPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedStealth)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 2**\n\n**At-Will** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Stealth.\n\n**Effect:** You can move your speed and make a Stealth check. You do not take the normal penalty from movement on this check.'
     ),
   ],
@@ -211,7 +211,7 @@ export const GreatLeap = Abilities.defineAbility('rogue/power/great-leap', {
   tags: [AtWillPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAthletics)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 2**\n\n**At-Will** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Athletics.\n\n**Effect:** Make a high jump or a long jump. Determine the DC of the Athletics check as though you had a running start. The distance you jump can exceed your speed.'
     ),
   ],
@@ -225,7 +225,7 @@ export const MasterOfDeceit = Abilities.defineAbility('rogue/power/master-of-dec
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedBluff)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 2**\n\n**Encounter** ✦ Martial\n\n**Free Action** · Personal\n\n**Trigger:** You roll a Bluff check and dislike the result\n\n**Prerequisite:** You must be trained in Bluff.\n\n**Effect:** Reroll the Bluff check. You decide whether to make the reroll before the DM announces the result.'
     ),
   ],
@@ -241,7 +241,7 @@ export const QuickFingers = Abilities.defineAbility('rogue/power/quick-fingers',
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedThievery)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 2**\n\n**Encounter** ✦ Martial\n\n**Minor Action** · Personal\n\n**Prerequisite:** You must be trained in Thievery.\n\n**Effect:** Make a Thievery check as part of this action, even if the check is normally a standard action.'
     ),
   ],
@@ -257,7 +257,7 @@ export const Tumble = Abilities.defineAbility('rogue/power/tumble', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 2**\n\n**Encounter** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** You can shift a number of squares equal to one-half your speed.'
     ),
   ],
@@ -273,7 +273,7 @@ export const BaitAndSwitch = Abilities.defineAbility('rogue/power/bait-and-switc
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Will\n\n**Hit:** 2[W] + Dexterity modifier damage. In addition, you switch places with the target and can then shift 1 square.\n\n**Artful Dodger:** You can shift a number of squares equal to your Charisma modifier.'
     ),
   ],
@@ -289,7 +289,7 @@ export const SetupStrike = Abilities.defineAbility('rogue/power/setup-strike', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target grants combat advantage to you until the end of your next turn.'
     ),
   ],
@@ -305,7 +305,7 @@ export const ToppleOver = Abilities.defineAbility('rogue/power/topple-over', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Brutal Scoundrel:** You gain a bonus to the attack roll equal to your Strength modifier.\n\n**Hit:** 1[W] + Dexterity modifier damage, and the target is knocked prone.'
     ),
   ],
@@ -321,7 +321,7 @@ export const TrickstersBlade = Abilities.defineAbility('rogue/power/tricksters-b
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage. Add your Charisma modifier to your AC until the start of your next turn.'
     ),
   ],
@@ -337,7 +337,7 @@ export const CleverRiposte = Abilities.defineAbility('rogue/power/clever-riposte
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Effect:** Until the end of the encounter, the target takes damage equal to your Dexterity modifier each time it attacks you, and you can shift as an immediate reaction after such an attack.'
     ),
   ],
@@ -353,7 +353,7 @@ export const DeepCut = Abilities.defineAbility('rogue/power/deep-cut', {
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 2[W] + Dexterity modifier damage, and ongoing damage equal to 5 + your Strength modifier (save ends).\n\n**Miss:** Half damage, and no ongoing damage.'
     ),
   ],
@@ -369,7 +369,7 @@ export const WalkingWounded = Abilities.defineAbility('rogue/power/walking-wound
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target is knocked prone. Until the end of the encounter, if the target moves more than half its speed in a single action, it falls prone at the end of its movement.\n\n**Miss:** Half damage, and the target is not knocked prone.'
     ),
   ],
@@ -385,7 +385,7 @@ export const Chameleon = Abilities.defineAbility('rogue/power/chameleon', {
   tags: [AtWillPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedStealth)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 6**\n\n**At-Will** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hidden and lose cover or concealment against an opponent\n\n**Prerequisite:** You must be trained in Stealth.\n\n**Effect:** Make a Stealth check. Until the end of your next turn, you remain hidden if a creature that has a clear line of sight to you does not beat your check result with its Perception check. If at the end of your turn you do not have cover or concealment against a creature, that creature automatically notices you.'
     ),
   ],
@@ -399,7 +399,7 @@ export const IgnobleEscape = Abilities.defineAbility('rogue/power/ignoble-escape
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 6**\n\n**Encounter** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** If you are marked, end that condition. You can shift a number of squares equal to your speed.'
     ),
   ],
@@ -415,7 +415,7 @@ export const MobMentality = Abilities.defineAbility('rogue/power/mob-mentality',
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedIntimidate)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 6**\n\n**Encounter** ✦ Martial\n\n**Standard Action** · Close burst 10\n\n**Prerequisite:** You must be trained in Intimidate.\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets gain a +2 power bonus to Charisma-based skill and ability checks until the end of your next turn.'
     ),
   ],
@@ -431,7 +431,7 @@ export const NimbleClimb = Abilities.defineAbility('rogue/power/nimble-climb', {
   tags: [AtWillPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAthletics)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 6**\n\n**At-Will** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Athletics.\n\n**Effect:** Make an Athletics check to climb a surface. You can move at your full speed during this climb.'
     ),
   ],
@@ -445,7 +445,7 @@ export const SlipperyMind = Abilities.defineAbility('rogue/power/slippery-mind',
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedBluff)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hit by an attack against your Will defense\n\n**Prerequisite:** You must be trained in Bluff.\n\n**Effect:** Gain a +2 power bonus to your Will defense against the triggering attack.'
     ),
   ],
@@ -461,7 +461,7 @@ export const CloudOfSteel = Abilities.defineAbility('rogue/power/cloud-of-steel'
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close blast 5\n\n**Requirement:** You must be wielding a crossbow, a light thrown weapon, or a sling.\n\n**Target:** Each enemy in blast you can see\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.'
     ),
   ],
@@ -477,7 +477,7 @@ export const ImperilingStrike = Abilities.defineAbility('rogue/power/imperiling-
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 1[W] + Dexterity modifier damage, and the target takes a –1 penalty to AC and Reflex defense until the end of your next turn.\n\n**Brutal Scoundrel:** The penalty to AC and Reflex defense is equal to your Strength modifier.'
     ),
   ],
@@ -493,7 +493,7 @@ export const RoguesLuck = Abilities.defineAbility('rogue/power/rogues-luck', {
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding a crossbow, a light blade, or a sling.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Miss:** Make a secondary attack against the target.\n\n**Secondary Attack:** Dexterity vs. AC\n\n**Artful Dodger:** You gain a bonus to the attack roll for the secondary attack equal to your Charisma modifier.\n\n**Hit:** 1[W] + Dexterity modifier damage.'
     ),
   ],
@@ -509,7 +509,7 @@ export const SandInTheEyes = Abilities.defineAbility('rogue/power/sand-in-the-ey
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Reflex\n\n**Hit:** 1[W] + Dexterity modifier damage, and the target is blinded until the end of your next turn.'
     ),
   ],
@@ -525,7 +525,7 @@ export const CrimsonEdge = Abilities.defineAbility('rogue/power/crimson-edge', {
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target takes ongoing damage equal to 5 + your Strength modifier and grants combat advantage to you (save ends both).\n\n**Miss:** Half damage, and no ongoing damage.'
     ),
   ],
@@ -541,7 +541,7 @@ export const DeadlyPositioning = Abilities.defineAbility('rogue/power/deadly-pos
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee 1\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** You slide the target to any other square adjacent to you, and then make a Dexterity vs. AC attack.\n\n**Hit:** 3[W] + Dexterity modifier damage.\n\n**Effect:** Until the end of the encounter, as long as you are adjacent to the target, you slide the target 1 square before making a melee attack against it.'
     ),
   ],
@@ -557,7 +557,7 @@ export const Knockout = Abilities.defineAbility('rogue/power/knockout', {
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Rogue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding a light blade.\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. Fortitude\n\n**Hit:** 2[W] + Dexterity modifier damage, and the target is knocked unconscious (save ends). If the unconscious target takes any damage, it is no longer unconscious.\n\n**Miss:** Half damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -573,7 +573,7 @@ export const CertainFreedom = Abilities.defineAbility('rogue/power/certain-freed
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 10**\n\n**Daily** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** You automatically succeed on an Acrobatics check to escape from a grab or to escape from restraints.'
     ),
   ],
@@ -589,7 +589,7 @@ export const CloseQuarters = Abilities.defineAbility('rogue/power/close-quarters
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedAcrobatics)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Rogue Utility 10**\n\n**Daily** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Acrobatics.\n\n**Effect:** Move into the space of an adjacent creature larger than you and at least Large in size. (It gets its usual opportunity attack against you as you leave an adjacent square.) You gain combat advantage against the creature, and it takes a –4 penalty to attack rolls against you. When the creature moves, you move along with it, staying in the same portion of the creature's space. The creature can make a Strength or Dexterity vs. Reflex attack (as a standard action with no penalty) to slide you into an adjacent square and end this effect.\n\n**Special:** Allies of the target creature can attack you without penalty."
     ),
   ],
@@ -605,7 +605,7 @@ export const DangerousTheft = Abilities.defineAbility('rogue/power/dangerous-the
   tags: [EncounterPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedThievery)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 10**\n\n**Encounter** ✦ Martial\n\n**Free Action** · Personal\n\n**Prerequisite:** You must be trained in Thievery.\n\n**Effect:** On your next action, ignore the –10 penalty when you make a Thievery check to pick a pocket during combat.'
     ),
   ],
@@ -621,7 +621,7 @@ export const ShadowStride = Abilities.defineAbility('rogue/power/shadow-stride',
   tags: [AtWillPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Rogue), Traits.traitPrerequisite(Skills.TrainedStealth)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Rogue Utility 10**\n\n**At-Will** ✦ Martial\n\n**Move Action** · Personal\n\n**Prerequisite:** You must be trained in Stealth.\n\n**Effect:** You must be hiding to use this power. You can move your speed. At the end of that movement, if you have cover, you can make a Stealth check with no penalty for moving. If you make the Stealth check, you stay hidden during your movement.'
     ),
   ],

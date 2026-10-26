@@ -1,7 +1,8 @@
 export * from '@simulacrum/ruleset/attribute'
-import { Attribute, Modifier } from '@simulacrum/ruleset/attribute'
+import { Attribute, Modifier, Valued } from '@simulacrum/ruleset/attribute'
 import { EvaluateExpression, Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
-import { Arrays, Combinables, Equalitors, Objects, Patches } from '@bessemer/cornerstone'
+import { ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
+import { Arrays, Combinables, Objects, Patches } from '@bessemer/cornerstone'
 import { Patch, PatchType } from '@bessemer/cornerstone/patch'
 
 export type Attributable<T> =
@@ -11,16 +12,14 @@ export type Attributable<T> =
   | Attribute<number>
   | Attribute<string>
 
-export type AttributeValue<T> = {
-  value: T
+export interface AttributeValue<T> extends Valued<T> {
   initialValue: T
   activeModifiers: Array<ModifierValue<T>>
   inactiveModifiers: Array<Modifier<T>>
   attribute: Attribute<T>
 }
 
-export type ModifierValue<T> = {
-  value: T
+export interface ModifierValue<T> extends Valued<T> {
   modifier: Modifier<T>
 }
 
@@ -63,7 +62,7 @@ export const simpleAttributeValue = <T>(value: T, attribute: Attribute<T>): Attr
   }
 }
 
-const getPatchPhase = (patch: Patch<unknown>): number => {
+export const getPatchPhase = (patch: Patch<unknown>): number => {
   if (patch.type === PatchType.Set) {
     return 0
   }
@@ -75,44 +74,58 @@ const getPatchPhase = (patch: Patch<unknown>): number => {
   return 1
 }
 
-export const evaluateAttribute = <T>(attribute: Attribute<T>, modifiers: Array<Modifier<T>>, evaluate: EvaluateExpression): AttributeValue<T> => {
-  const initialValue = evaluate(attribute.baseValue)
-  const { activeModifiers, inactiveModifiers } = evaluateModifiers(modifiers, evaluate)
-  const modifierCombinations = Combinables.combinations(activeModifiers)
+export type AttributeEvaluators = {
+  resolver?: ExpressionEvaluator
+  optimizer?: ExpressionEvaluator
+}
 
-  const combinationValues: Array<[T, Array<ModifierValue<T>>]> = modifierCombinations.map((combination) => {
-    const orderedModifiers = Arrays.sortBy(combination, (it) => getPatchPhase(it.value))
+export const evaluateAttribute = <T>(
+  attribute: Attribute<T>,
+  modifiers: Array<Modifier<T>>,
+  evaluator: ExpressionEvaluator,
+  evaluators: AttributeEvaluators = {}
+): AttributeValue<T> => {
+  const initialValue = evaluator.evaluate(attribute.baseValue)
+  const { activeModifiers, inactiveModifiers } = evaluateModifiers(modifiers, evaluator.evaluate)
+  const applicableModifiers = activeModifiers.filter((it) => Patches.isApplicable(initialValue, it.patch))
+
+  const candidates = Combinables.combinations(applicableModifiers).map((combination) => {
+    const orderedModifiers = Arrays.sortBy(combination, (it) => getPatchPhase(it.patch))
     const { value, patchValues } = Patches.resolveWithDetails(
       initialValue,
-      orderedModifiers.map((it) => it.value),
-      evaluate
+      orderedModifiers.map((it) => it.patch),
+      evaluators.resolver ?? evaluator
     )
 
-    return [value, orderedModifiers.map((it, index) => buildModifierValue(patchValues[index]!.value, it))]
+    return { value, modifiers: orderedModifiers.map((it, index) => buildModifierValue(patchValues[index]!.value, it)) }
   })
 
-  let value: T
-  let winningModifiers: Array<ModifierValue<T>> = []
-  let additionalInactiveModifiers: Array<Modifier<T>> = []
-  if (Arrays.isEmpty(combinationValues)) {
-    value = initialValue
-  } else {
-    // FUTURE we added a cast here as a temporary fix - it should be fixed for real
-    value = evaluate(Expressions.dereference(attribute.optimizer, combinationValues.map(Arrays.first) as any))
-    const [_, modifierValues] = combinationValues.find((it) => value === Arrays.first(it)) ?? []
-    winningModifiers = modifierValues!
-    additionalInactiveModifiers = Arrays.differenceWith(
-      activeModifiers,
-      winningModifiers.map((it) => it.modifier),
-      Equalitors.natural()
-    )
+  if (Arrays.isEmpty(candidates)) {
+    return { value: initialValue, initialValue, attribute, activeModifiers: [], inactiveModifiers: [...inactiveModifiers, ...activeModifiers] }
   }
 
+  const winner = candidates.length === 1 ? candidates[0]! : candidates[selectOptimal(attribute, candidates, evaluators.optimizer ?? evaluator)]!
+  const winningModifiers = winner.modifiers.map((it) => it.modifier)
   return {
-    value,
+    value: winner.value,
     initialValue,
     attribute,
-    activeModifiers: winningModifiers,
-    inactiveModifiers: [...inactiveModifiers, ...additionalInactiveModifiers],
+    activeModifiers: winner.modifiers,
+    inactiveModifiers: [...inactiveModifiers, ...activeModifiers.filter((it) => !winningModifiers.includes(it))],
   }
+}
+
+type ModifierCandidate<T> = {
+  value: T
+  modifiers: Array<ModifierValue<T>>
+}
+
+const selectOptimal = <T>(attribute: Attribute<T>, candidates: Array<ModifierCandidate<T>>, optimizer: ExpressionEvaluator): number => {
+  if (Objects.isNil(attribute.optimizer)) {
+    return candidates.reduce((best, it, index) => (it.modifiers.length > candidates[best]!.modifiers.length ? index : best), 0)
+  }
+
+  const values = candidates.map((it) => it.value)
+  const best = optimizer.evaluate(optimizer.dereference(attribute.optimizer, values))
+  return values.findIndex((it) => Objects.deepEqual(it, best))
 }

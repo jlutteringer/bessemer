@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -28,7 +28,7 @@ export const CarefulAttack = Abilities.defineAbility('ranger/power/careful-attac
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding two melee weapons or a ranged weapon.\n\n**Target:** One creature\n\n**Attack:** Strength + 2 vs. AC (melee) or Dexterity + 2 vs. AC (ranged).\n\n**Hit:** 1[W] damage (melee) or 1[W] damage (ranged).\n\nIncrease damage to 2[W] (melee) or 2[W] (ranged) at 21st level.'
     ),
   ],
@@ -42,7 +42,7 @@ export const HitAndRun = Abilities.defineAbility('ranger/power/hit-and-run', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage\n\nIncrease damage to 2[W] + Strength modifier at 21st level.\n\n**Effect:** If you move in the same turn after this attack, leaving the first square adjacent to the target does not provoke an opportunity attack from the target.'
     ),
   ],
@@ -56,7 +56,7 @@ export const NimbleStrike = Abilities.defineAbility('ranger/power/nimble-strike'
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Special:** Shift 1 square before or after you attack\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.'
     ),
   ],
@@ -70,7 +70,7 @@ export const TwinStrike = Abilities.defineAbility('ranger/power/twin-strike', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding two melee weapons or a ranged weapon.\n\n**Targets:** One or two creatures\n\n**Attack:** Strength vs. AC (melee; main weapon and off-hand weapon) or Dexterity vs. AC (ranged), two attacks\n\n**Hit:** 1[W] damage per attack.\n\nIncrease damage to 2[W] at 21st level.'
     ),
   ],
@@ -84,7 +84,7 @@ export const DireWolverineStrike = Abilities.defineAbility('ranger/power/dire-wo
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.'
     ),
   ],
@@ -100,7 +100,7 @@ export const EvasiveStrike = Abilities.defineAbility('ranger/power/evasive-strik
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One creature\n\n**Special:** You can shift a number of squares equal to 1 + your Wisdom modifier either before or after the attack.\n\n**Attack:** Strength vs. AC (melee) or Dexterity vs. AC (ranged)\n\n**Hit:** 2[W] + Strength modifier damage (melee) or 2[W] + Dexterity modifier damage (ranged).'
     ),
   ],
@@ -117,7 +117,7 @@ export const FoxsCunning = Abilities.defineAbility('ranger/power/foxs-cunning', 
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Immediate Reaction** · Melee or Ranged weapon\n\n**Trigger:** An enemy makes a melee attack against you\n\n**Attack:** You can shift 1 square, then make a basic attack against the enemy.\n\n**Special:** Gain a power bonus to your basic attack roll equal to your Wisdom modifier.'
     ),
   ],
@@ -133,7 +133,7 @@ export const TwoFangedStrike = Abilities.defineAbility('ranger/power/two-fanged-
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding two melee weapons or a ranged weapon.\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (melee; main weapon and off-hand weapon) or Dexterity vs. AC (ranged), two attacks\n\n**Hit:** 1[W] + Strength modifier damage (melee) or 1[W] + Dexterity modifier damage (ranged) per attack. If both attacks hit, you deal extra damage equal to your Wisdom modifier.'
     ),
   ],
@@ -149,7 +149,7 @@ export const HuntersBearTrap = Abilities.defineAbility('ranger/power/hunters-bea
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (melee) or Dexterity vs. AC (ranged)\n\n**Hit:** 2[W] + Strength modifier damage (melee) or 2[W] + Dexterity modifier damage (ranged), and the target is slowed and takes ongoing 5 damage (save ends both).\n\n**Miss:** Half damage, no ongoing damage, and the target is slowed until the end of your next turn.'
     ),
   ],
@@ -165,7 +165,7 @@ export const JawsOfTheWolf = Abilities.defineAbility('ranger/power/jaws-of-the-w
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (main weapon and off-hand weapon), two attacks\n\n**Hit:** 2[W] + Strength modifier damage per attack.\n\n**Miss:** Half damage per attack.'
     ),
   ],
@@ -181,7 +181,7 @@ export const SplitTheTree = Abilities.defineAbility('ranger/power/split-the-tree
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Ranged weapon\n\n**Targets:** Two creatures within 3 squares of each other\n\n**Attack:** Dexterity vs. AC. Make two attack rolls, take the higher result, and apply it to both targets.\n\n**Hit:** 2[W] + Dexterity modifier damage.'
     ),
   ],
@@ -198,7 +198,7 @@ export const SuddenStrike = Abilities.defineAbility('ranger/power/sudden-strike'
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (off-hand weapon)\n\n**Hit:** 1[W] damage (off-hand weapon).\n\n**Effect:** You shift 1 square and make a secondary attack against the target.\n\n**Secondary Attack:** Strength vs. AC (main weapon)\n\n**Hit:** 2[W] + Strength modifier damage (main weapon), and the target is weakened until the end of your next turn.'
     ),
   ],
@@ -214,7 +214,7 @@ export const CrucialAdvice = Abilities.defineAbility('ranger/power/crucial-advic
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Ranger Utility 2**\n\n**Encounter** ✦ Martial\n\n**Immediate Reaction** · Ranged 5\n\n**Trigger:** An ally within range that you can see or hear makes a skill check using a skill in which you're trained\n\n**Effect:** Grant the ally the ability to reroll the skill check, with a power bonus equal to your Wisdom modifier."
     ),
   ],
@@ -230,7 +230,7 @@ export const UnbalancingParry = Abilities.defineAbility('ranger/power/unbalancin
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 2**\n\n**Encounter** ✦ Martial, Weapon\n\n**Immediate Reaction** · Melee 1\n\n**Trigger:** An enemy misses you with a melee attack\n\n**Effect:** Slide the enemy into a square adjacent to you and gain combat advantage against it until the end of your next turn.'
     ),
   ],
@@ -246,7 +246,7 @@ export const YieldGround = Abilities.defineAbility('ranger/power/yield-ground', 
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 2**\n\n**Encounter** ✦ Martial\n\n**Immediate Reaction** · Personal\n\n**Trigger:** An enemy damages you with a melee attack\n\n**Effect:** You can shift a number of squares equal to your Wisdom modifier. Gain a +2 power bonus to all defenses until the end of your next turn.'
     ),
   ],
@@ -262,7 +262,7 @@ export const CutAndRun = Abilities.defineAbility('ranger/power/cut-and-run', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding two melee weapons or a ranged weapon.\n\n**Target:** One or two creatures\n\n**Attack:** Strength vs. AC (melee; main weapon and off-hand weapon) or Dexterity vs. AC (ranged), two attacks\n\n**Special:** After the first or the second attack, you can shift a number of squares equal to 1 + your Wisdom modifier.\n\n**Hit:** 1[W] + Strength modifier damage (melee) or 1[W] + Dexterity modifier damage (ranged) per attack.'
     ),
   ],
@@ -278,7 +278,7 @@ export const DisruptiveStrike = Abilities.defineAbility('ranger/power/disruptive
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Immediate Interrupt** · Melee or Ranged weapon\n\n**Trigger:** You or an ally is attacked by a creature\n\n**Target:** The attacking creature\n\n**Attack:** Strength vs. AC (melee) or Dexterity vs. AC (ranged)\n\n**Hit:** 1[W] + Strength modifier damage (melee) or 1[W] + Dexterity modifier damage (ranged). The target takes a penalty to its attack roll for the triggering attack equal to 3 + your Wisdom modifier.'
     ),
   ],
@@ -294,7 +294,7 @@ export const ShadowWaspStrike = Abilities.defineAbility('ranger/power/shadow-was
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One creature that is your quarry\n\n**Attack:** Strength vs. AC (melee) or Dexterity vs. AC (ranged)\n\n**Hit:** 2[W] + Strength modifier damage (melee) or 2[W] + Dexterity modifier damage (ranged).'
     ),
   ],
@@ -310,7 +310,7 @@ export const ThundertuskBoarStrike = Abilities.defineAbility('ranger/power/thund
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Requirement:** You must be wielding two melee weapons or a ranged weapon.\n\n**Targets:** One or two creatures\n\n**Attack:** Strength vs. AC (melee; main weapon and off-hand weapon) or Dexterity vs. AC (ranged), two attacks\n\n**Hit:** 1[W] + Strength modifier damage (melee) or 1[W] + Dexterity modifier damage (ranged) per attack. With each hit, you push the target 1 square. If both attacks hit the same target, you push the target a number of squares equal to 1 + your Wisdom modifier.'
     ),
   ],
@@ -326,7 +326,7 @@ export const ExcruciatingShot = Abilities.defineAbility('ranger/power/excruciati
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 3[W] + Dexterity modifier damage, and the target is weakened (save ends).\n\n**Miss:** Half damage, and the target is not weakened.'
     ),
   ],
@@ -343,7 +343,7 @@ export const FrenziedSkirmish = Abilities.defineAbility('ranger/power/frenzied-s
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Targets:** One or two creatures\n\n**Attack:** Strength vs. AC (main weapon and off-hand weapon), two attacks\n\n**Special:** Before or after these attacks, you can move your speed without provoking opportunity attacks.\n\n**Hit:** 1[W] + Strength modifier damage per attack. If an attack hits, the target is dazed until the end of your next turn. If both attacks hit the same target, it is dazed and slowed until the end of your next turn.'
     ),
   ],
@@ -359,7 +359,7 @@ export const SplinteringShot = Abilities.defineAbility('ranger/power/splintering
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 3[W] + Dexterity modifier damage, and the target takes a –2 penalty to attack rolls until the end of the encounter.\n\n**Miss:** Half damage, and the target takes a –1 penalty to attack rolls until the end of the encounter.'
     ),
   ],
@@ -375,7 +375,7 @@ export const TwoWolfPounce = Abilities.defineAbility('ranger/power/two-wolf-poun
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 5**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Special:** You can shift 2 squares before making this attack.\n\n**Primary Target:** One creature\n\n**Attack:** Strength vs. AC, two attacks (main weapon and off-hand weapon)\n\n**Hit:** 2[W] + Strength modifier damage (main weapon) and 1[W] + Strength modifier damage (off-hand weapon).\n\n**Effect:** After attacking the primary target, you can shift 2 squares and make a secondary attack.\n\n**Secondary Target:** One creature other than the primary target\n\n**Secondary Attack:** Strength vs. AC (off-hand weapon)\n\n**Hit:** 2[W] damage (off-hand weapon).'
     ),
   ],
@@ -391,7 +391,7 @@ export const EvadeAmbush = Abilities.defineAbility('ranger/power/evade-ambush', 
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 6**\n\n**Daily** ✦ Martial\n\n**No Action** · Ranged sight\n\n**Effect:** At the start of a surprise round in which any allies are surprised, use this power to allow a number of allies equal to your Wisdom modifier to avoid being surprised.'
     ),
   ],
@@ -407,7 +407,7 @@ export const SkilledCompanion = Abilities.defineAbility('ranger/power/skilled-co
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 6**\n\n**Daily** ✦ Martial\n\n**Minor Action** · Ranged 10\n\n**Target:** One ally\n\n**Effect:** Any ally within 10 squares of you who attempts an untrained check with a skill in which you are trained gains a power bonus to checks with a single skill of your choice equal to your Wisdom modifier. The ally must be able to see or hear you to gain this bonus. The benefit lasts until the end of the encounter or for 5 minutes.'
     ),
   ],
@@ -423,7 +423,7 @@ export const WeaveThroughTheFray = Abilities.defineAbility('ranger/power/weave-t
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** An enemy moves adjacent to you\n\n**Effect:** You can shift a number of squares equal to your Wisdom modifier.'
     ),
   ],
@@ -439,7 +439,7 @@ export const ClawsOfTheGriffon = Abilities.defineAbility('ranger/power/claws-of-
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** One or two creatures\n\n**Attack:** Strength vs. AC (main weapon and off-hand weapon), two attacks\n\n**Hit:** 2[W] + Strength modifier damage (main weapon) and 1[W] + Strength modifier damage (off-hand weapon).'
     ),
   ],
@@ -455,7 +455,7 @@ export const HawksTalon = Abilities.defineAbility('ranger/power/hawks-talon', {
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (melee) or Dexterity vs. AC (ranged). Gain a power bonus to this attack equal to your Wisdom modifier. Ignore any penalties from cover or concealment (but not superior cover or total concealment).\n\n**Hit:** 2[W] + Strength modifier damage (melee) or 2[W] + Dexterity modifier damage (ranged).'
     ),
   ],
@@ -471,7 +471,7 @@ export const SpikesOfTheManticore = Abilities.defineAbility('ranger/power/spikes
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One or two creatures\n\n**Attack:** Dexterity vs. AC, one attack per target\n\n**Hit:** 2[W] + Dexterity modifier damage (first shot) and 1[W] + Dexterity modifier damage (second shot).'
     ),
   ],
@@ -487,7 +487,7 @@ export const SweepingWhirlwind = Abilities.defineAbility('ranger/power/sweeping-
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** Each enemy in burst\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and you push the target a number of squares equal to your Wisdom modifier and it is knocked prone.'
     ),
   ],
@@ -503,7 +503,7 @@ export const AttacksOnTheRun = Abilities.defineAbility('ranger/power/attacks-on-
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee or Ranged weapon\n\n**Target:** One or two creatures\n\n**Attack:** You can move your speed. At any point during your move, you can make two Strength vs. AC attacks with a melee weapon or two Dexterity vs. AC attacks with a ranged weapon.\n\n**Hit:** 3[W] + Strength modifier damage (melee) or 3[W] + Dexterity modifier damage (ranged) per attack.\n\n**Miss:** Half damage per attack.'
     ),
   ],
@@ -520,7 +520,7 @@ export const CloseQuartersShot = Abilities.defineAbility('ranger/power/close-qua
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Ranged 1\n\n**Target:** One adjacent enemy\n\n**Attack:** Dexterity vs. AC. This attack does not provoke opportunity attacks.\n\n**Hit:** 4[W] + Dexterity modifier damage.\n\n**Miss:** Half damage.'
     ),
   ],
@@ -536,7 +536,7 @@ export const SprayOfArrows = Abilities.defineAbility('ranger/power/spray-of-arro
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close blast 3\n\n**Requirement:** You must be wielding a ranged weapon.\n\n**Target:** Each enemy in blast you can see\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 2[W] + Dexterity modifier damage.\n\n**Miss:** Half damage.'
     ),
   ],
@@ -552,7 +552,7 @@ export const SwirlingLeavesOfSteel = Abilities.defineAbility('ranger/power/swirl
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Requirement:** You must be wielding two melee weapons.\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC, one attack per target\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Miss:** Half damage.'
     ),
   ],
@@ -568,7 +568,7 @@ export const ExpeditiousStride = Abilities.defineAbility('ranger/power/expeditio
   tags: [EncounterPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 10**\n\n**Encounter** ✦ Martial\n\n**Minor Action** · Personal\n\n**Effect:** Until the end of your next turn, your speed increases by 4, and when you shift, you can shift 1 additional square.'
     ),
   ],
@@ -584,7 +584,7 @@ export const OpenTheRange = Abilities.defineAbility('ranger/power/open-the-range
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Ranger Utility 10**\n\n**Daily** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** An enemy moves adjacent to you\n\n**Effect:** You can shift 1 square and then move a number of squares equal to 1 + your Wisdom modifier. You can't end your move adjacent to the triggering enemy."
     ),
   ],
@@ -600,7 +600,7 @@ export const UndauntedStride = Abilities.defineAbility('ranger/power/undaunted-s
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Ranger)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Ranger Utility 10**\n\n**Daily** ✦ Martial, Stance\n\n**Minor Action** · Personal\n\n**Effect:** Your movement is not hindered by difficult terrain.'
     ),
   ],

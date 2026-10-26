@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -28,7 +28,7 @@ export const BolsteringStrike = Abilities.defineAbility('paladin/power/bolsterin
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**At-Will** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Charisma vs. AC\n\n**Hit:** 1[W] + Charisma modifier damage, and you gain temporary hit points equal to your Wisdom modifier.\n\nIncrease damage to 2[W] + Charisma modifier at 21st level.'
     ),
   ],
@@ -42,7 +42,7 @@ export const EnfeeblingStrike = Abilities.defineAbility('paladin/power/enfeeblin
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**At-Will** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Charisma vs. AC\n\n**Hit:** 1[W] + Charisma modifier damage. If you marked the target, it takes a –2 penalty to attack rolls until the end of your next turn.\n\nIncrease damage to 2[W] + Charisma modifier at 21st level.'
     ),
   ],
@@ -56,7 +56,7 @@ export const HolyStrike = Abilities.defineAbility('paladin/power/holy-strike', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**At-Will** ✦ Divine, Radiant, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier radiant damage. If you marked the target, you gain a bonus to the damage roll equal to your Wisdom modifier.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -70,7 +70,7 @@ export const ValiantStrike = Abilities.defineAbility('paladin/power/valiant-stri
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**At-Will** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength + 1 per enemy adjacent to you vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -84,7 +84,7 @@ export const FearsomeSmite = Abilities.defineAbility('paladin/power/fearsome-smi
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Encounter** ✦ Divine, Fear, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Charisma vs. AC\n\n**Hit:** 2[W] + Charisma modifier damage. Until the end of your next turn, the target takes a penalty to attack rolls equal to your Wisdom modifier.'
     ),
   ],
@@ -100,7 +100,7 @@ export const PiercingSmite = Abilities.defineAbility('paladin/power/piercing-smi
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Encounter** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. Reflex\n\n**Hit:** 2[W] + Strength modifier damage, and the target and a number of enemies adjacent to you equal to your Wisdom modifier are marked until the end of your next turn.'
     ),
   ],
@@ -117,7 +117,7 @@ export const RadiantSmite = Abilities.defineAbility('paladin/power/radiant-smite
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Encounter** ✦ Divine, Radiant, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier + Wisdom modifier radiant damage.'
     ),
   ],
@@ -133,7 +133,7 @@ export const ShieldingSmite = Abilities.defineAbility('paladin/power/shielding-s
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Encounter** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Charisma vs. AC\n\n**Hit:** 2[W] + Charisma modifier damage.\n\n**Effect:** Until the end of your next turn, one ally within 5 squares of you gains a power bonus to AC equal to your Wisdom modifier.'
     ),
   ],
@@ -149,7 +149,7 @@ export const OnPainOfDeath = Abilities.defineAbility('paladin/power/on-pain-of-d
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Daily** ✦ Divine, Implement\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 3d8 + Charisma modifier damage. Once per round, the target takes 1d8 damage after making any attacks on its turn (save ends).\n\n**Miss:** Half damage. Once per round, the target takes 1d4 damage after making any attacks on its turn (save ends).'
     ),
   ],
@@ -165,7 +165,7 @@ export const PaladinsJudgment = Abilities.defineAbility('paladin/power/paladins-
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Daily** ✦ Divine, Healing, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and one ally within 5 squares of you can spend a healing surge.\n\n**Miss:** One ally within 5 squares of you can spend a healing surge.'
     ),
   ],
@@ -181,7 +181,7 @@ export const RadiantDelirium = Abilities.defineAbility('paladin/power/radiant-de
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 1**\n\n**Daily** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Reflex\n\n**Hit:** 3d8 + Charisma modifier radiant damage, and the target is dazed until the end of your next turn. In addition, the target takes a –2 penalty to AC (save ends).\n\n**Miss:** Half damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -197,7 +197,7 @@ export const AstralSpeech = Abilities.defineAbility('paladin/power/astral-speech
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 2**\n\n**Daily** ✦ Divine\n\n**Minor Action** · Personal\n\n**Effect:** You gain a +4 power bonus to Diplomacy checks until the end of the encounter.'
     ),
   ],
@@ -213,7 +213,7 @@ export const MartyrsBlessing = Abilities.defineAbility('paladin/power/martyrs-bl
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 2**\n\n**Daily** ✦ Divine\n\n**Immediate Interrupt** · Close burst 1\n\n**Trigger:** An adjacent ally is hit by a melee or a ranged attack\n\n**Effect:** You are hit by the attack instead.'
     ),
   ],
@@ -230,7 +230,7 @@ export const SacredCircle = Abilities.defineAbility('paladin/power/sacred-circle
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 2**\n\n**Daily** ✦ Divine, Implement, Zone\n\n**Standard Action** · Close burst 3\n\n**Effect:** The burst creates a zone that, until the end of the encounter, gives you and allies within it a +1 power bonus to AC.'
     ),
   ],
@@ -246,7 +246,7 @@ export const ArcingSmite = Abilities.defineAbility('paladin/power/arcing-smite',
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 3**\n\n**Encounter** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Targets:** One or two creatures\n\n**Attack:** Strength vs. AC, one attack per target\n\n**Hit:** 1[W] + Strength modifier damage, and the target is marked until the end of your next turn.'
     ),
   ],
@@ -262,7 +262,7 @@ export const InvigoratingSmite = Abilities.defineAbility('paladin/power/invigora
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 3**\n\n**Encounter** ✦ Divine, Healing, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2[W] + Charisma modifier damage. If you are bloodied, you regain hit points equal to 5 + your Wisdom modifier. Bloodied allies within 5 squares of you also regain hit points equal to 5 + your Wisdom modifier.'
     ),
   ],
@@ -278,7 +278,7 @@ export const RighteousSmite = Abilities.defineAbility('paladin/power/righteous-s
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 3**\n\n**Encounter** ✦ Divine, Healing, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Charisma vs. AC\n\n**Hit:** 2[W] + Charisma modifier damage, and you and each ally within 5 squares of you gain temporary hit points equal to 5 + your Wisdom modifier.'
     ),
   ],
@@ -294,7 +294,7 @@ export const StaggeringSmite = Abilities.defineAbility('paladin/power/staggering
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 3**\n\n**Encounter** ✦ Divine, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you push the target a number of squares equal to your Wisdom modifier.'
     ),
   ],
@@ -311,7 +311,7 @@ export const HallowedCircle = Abilities.defineAbility('paladin/power/hallowed-ci
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 5**\n\n**Daily** ✦ Divine, Implement, Zone\n\n**Standard Action** · Close burst 3\n\n**Target:** Each enemy in burst\n\n**Attack:** Charisma vs. Reflex\n\n**Hit:** 2d6 + Charisma modifier damage.\n\n**Effect:** The burst creates a zone of bright light. You and each ally within the zone gain a +1 power bonus to all defenses until the end of the encounter.'
     ),
   ],
@@ -327,7 +327,7 @@ export const MartyrsRetribution = Abilities.defineAbility('paladin/power/martyrs
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 5**\n\n**Daily** ✦ Divine, Radiant, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC, and you must spend a healing surge without regaining any hit points\n\n**Hit:** 4[W] + Strength modifier radiant damage.\n\n**Miss:** Half damage.'
     ),
   ],
@@ -343,7 +343,7 @@ export const SignOfVulnerability = Abilities.defineAbility('paladin/power/sign-o
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 5**\n\n**Daily** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Fortitude\n\n**Hit:** 3d8 + Charisma modifier radiant damage, and the target gains vulnerability 5 to radiant damage until the end of the encounter.\n\n**Miss:** Half damage, and the target gains no vulnerability.'
     ),
   ],
@@ -359,7 +359,7 @@ export const DivineBodyguard = Abilities.defineAbility('paladin/power/divine-bod
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Paladin Utility 6**\n\n**Daily** ✦ Divine\n\n**Minor Action** · Ranged 5\n\n**Effect:** Choose an ally within 5 squares of you. You take half that ally's damage until the end of the encounter or until you end the effect as a free action. No power or effect can reduce the damage you take from this power."
     ),
   ],
@@ -375,7 +375,7 @@ export const OneHeartOneMind = Abilities.defineAbility('paladin/power/one-heart-
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 6**\n\n**Daily** ✦ Divine\n\n**Minor Action** · Close burst 6\n\n**Targets:** You and each ally in burst\n\n**Effect:** Until the end of the encounter, targets can communicate telepathically with each other out to a range of 20 squares, and your aid another actions give a +4 bonus instead of +2.'
     ),
   ],
@@ -391,7 +391,7 @@ export const WrathOfTheGods = Abilities.defineAbility('paladin/power/wrath-of-th
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 6**\n\n**Daily** ✦ Divine\n\n**Minor Action** · Close burst 1\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets add your Charisma modifier to damage rolls until the end of the encounter.'
     ),
   ],
@@ -407,7 +407,7 @@ export const BeckonFoe = Abilities.defineAbility('paladin/power/beckon-foe', {
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 7**\n\n**Encounter** ✦ Divine, Implement\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d10 + Charisma modifier damage, and you pull the target a number of squares equal to your Wisdom modifier.'
     ),
   ],
@@ -423,7 +423,7 @@ export const BenignTransposition = Abilities.defineAbility('paladin/power/benign
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 7**\n\n**Encounter** ✦ Divine, Teleportation, Weapon\n\n**Standard Action** · Melee weapon\n\n**Primary Target:** One ally within a number of squares equal to your Wisdom modifier\n\n**Effect:** You and the target swap places. If an enemy is now within your melee reach, you can make a secondary attack against it.\n\n**Secondary Target:** One enemy\n\n**Secondary Attack:** Charisma vs. AC\n\n**Hit:** 2[W] + Charisma modifier damage.'
     ),
   ],
@@ -439,7 +439,7 @@ export const DivineReverence = Abilities.defineAbility('paladin/power/divine-rev
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 7**\n\n**Encounter** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 1d8 + Charisma modifier radiant damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -455,7 +455,7 @@ export const ThunderSmite = Abilities.defineAbility('paladin/power/thunder-smite
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 7**\n\n**Encounter** ✦ Divine, Thunder, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC (can score a critical hit against a marked enemy on a roll of 19–20)\n\n**Hit:** 2[W] + Strength modifier thunder damage, and the target is knocked prone.'
     ),
   ],
@@ -471,7 +471,7 @@ export const CrownOfGlory = Abilities.defineAbility('paladin/power/crown-of-glor
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Paladin Attack 9**\n\n**Daily** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d8 + Charisma modifier radiant damage.\n\n**Effect:** Any enemy that starts its turn adjacent to you is slowed until the end of your next turn.\n\n**Sustain Minor:** You can sustain the power's effect."
     ),
   ],
@@ -487,7 +487,7 @@ export const OneStandsAlone = Abilities.defineAbility('paladin/power/one-stands-
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 9**\n\n**Daily** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d8 + Charisma modifier radiant damage.\n\n**Effect:** The targets are weakened (save ends).\n\n**Special:** You cannot use this power if any allies are within 5 squares of you.'
     ),
   ],
@@ -503,7 +503,7 @@ export const RadiantPulse = Abilities.defineAbility('paladin/power/radiant-pulse
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Attack 9**\n\n**Daily** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Primary Target:** One creature\n\n**Attack:** Charisma vs. Fortitude\n\n**Hit:** 1d10 + Charisma modifier radiant damage. Make a secondary attack.\n\n**Secondary Target:** Each enemy adjacent to the primary target\n\n**Secondary Attack:** Charisma vs. Fortitude\n\n**Hit:** 1d10 + Charisma modifier radiant damage, and you push the target 3 squares.\n\n**Sustain Minor:** When you sustain this power, you can repeat the secondary attack (the primary target is the same each time).\n\n**Miss:** Half damage, and no secondary attack.'
     ),
   ],
@@ -520,7 +520,7 @@ export const CleansingSpirit = Abilities.defineAbility('paladin/power/cleansing-
   tags: [EncounterPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 10**\n\n**Encounter** ✦ Divine\n\n**Minor Action** · Ranged 5\n\n**Target:** You or one ally\n\n**Effect:** The target makes a saving throw with a +2 bonus.'
     ),
   ],
@@ -537,7 +537,7 @@ export const NobleShield = Abilities.defineAbility('paladin/power/noble-shield',
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 10**\n\n**Daily** ✦ Divine\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are targeted by a close attack or an area attack\n\n**Effect:** A close attack or an area attack targeting you automatically hits you, and any of your allies who are also hit take only half damage. This power does not change other effects the attack might cause.'
     ),
   ],
@@ -554,7 +554,7 @@ export const TurnTheTide = Abilities.defineAbility('paladin/power/turn-the-tide'
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Paladin)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Paladin Utility 10**\n\n**Daily** ✦ Divine\n\n**Standard Action** · Close burst 3\n\n**Targets:** You and each ally in burst\n\n**Effect:** The targets make saving throws against every effect that a save can end.'
     ),
   ],

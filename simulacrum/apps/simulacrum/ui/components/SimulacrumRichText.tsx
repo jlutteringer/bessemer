@@ -1,8 +1,7 @@
 'use client'
 
-import * as React from 'react'
 import { ReactNode } from 'react'
-import { Link } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { Dictionary } from '@bessemer/cornerstone/types'
 import { Arrays, Objects, Results, Strings, Uris } from '@bessemer/cornerstone'
@@ -14,7 +13,7 @@ import { useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { Rulesets } from '@simulacrum/common/engine/engine'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
 
-export const SimulacrumRichText = ({ text }: { text: RichTextJson }) => {
+export const SimulacrumRichText = ({ text, variant = 'body1' }: { text: RichTextJson; variant?: 'body1' | 'body2' }) => {
   if (Arrays.isEmpty(text.content ?? [])) {
     return null
   }
@@ -22,7 +21,7 @@ export const SimulacrumRichText = ({ text }: { text: RichTextJson }) => {
   return (
     <MuiRichTextRenderer
       content={text}
-      handlers={RuleLinkHandlers}
+      handlers={variant === 'body2' ? Body2Handlers : RuleLinkHandlers}
     />
   )
 }
@@ -66,8 +65,8 @@ const RuleLinkMark: RichTextMarkElement = ({ mark, children }) => {
 export const RuleLinkTrigger = ({ children }: { children?: ReactNode }) => {
   return (
     <Link
-      component="button"
-      sx={{ verticalAlign: 'baseline', font: 'inherit' }}
+      component="span"
+      sx={{ cursor: 'pointer', font: 'inherit' }}
     >
       {children}
     </Link>
@@ -84,3 +83,14 @@ const RuleLinkTextElement: RichTextElement = (props) => (
 )
 
 const RuleLinkHandlers: Dictionary<RichTextElement> = { text: RuleLinkTextElement }
+
+const Body2Paragraph: RichTextElement = (props) => (
+  <Typography
+    variant="body2"
+    sx={{ '&:not(:last-child)': { mb: 1 } }}
+  >
+    {props.children}
+  </Typography>
+)
+
+const Body2Handlers: Dictionary<RichTextElement> = { ...RuleLinkHandlers, paragraph: Body2Paragraph }

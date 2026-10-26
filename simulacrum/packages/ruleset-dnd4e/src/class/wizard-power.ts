@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -29,7 +29,7 @@ export const GhostSound = Abilities.defineAbility('wizard/power/ghost-sound', {
   tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Cantrip**\n\n**At-Will** ✦ Arcane, Illusion\n\n**Standard Action** · Ranged 10\n\n**Target:** One object or unoccupied square\n\n**Effect:** You cause a sound as quiet as a whisper or as loud as a yelling or fighting creature to emanate from the target. You can produce nonvocal sounds such as the ringing of a sword blow, jingling armor, or scraping stone. If you whisper, you can whisper quietly enough that only creatures adjacent to the target can hear your words.'
     ),
   ],
@@ -43,7 +43,7 @@ export const Light = Abilities.defineAbility('wizard/power/light', {
   tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Cantrip**\n\n**At-Will** ✦ Arcane\n\n**Minor Action** · Ranged 5\n\n**Target:** One object or unoccupied square\n\n**Effect:** You cause the target to shed bright light. The light fills the target's square and all squares within 4 squares of it. The light lasts for 5 minutes. Putting out the light is a free action.\n\n**Special:** You can have only one light cantrip active at a time. If you create a new light, your previously cast light winks out."
     ),
   ],
@@ -56,7 +56,7 @@ export const MageHand = Abilities.defineAbility('wizard/power/mage-hand', {
   tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Cantrip**\n\n**At-Will** ✦ Arcane, Conjuration\n\n**Minor Action** · Ranged 5\n\n**Effect:** You conjure a spectral, floating hand in an unoccupied square within range. The hand picks up, moves, or manipulates an adjacent object weighing 20 pounds or less and carries it up to 5 squares. If you are holding the object when you use this power, the hand can move the object into a pack, a pouch, a sheath, or a similar container and simultaneously move any one object carried or worn anywhere on your body into your hand.\n\nAs a move action, you can move the hand up to 5 squares. As a free action, you can cause the hand to drop an object it is holding, and as a minor action, you can cause the hand to pick up or manipulate a different object.\n\n**Sustain Minor:** You can sustain the hand indefinitely.\n\n**Special:** You can create only one hand at a time.'
     ),
   ],
@@ -70,7 +70,7 @@ export const Prestidigitation = Abilities.defineAbility('wizard/power/prestidigi
   tags: [AtWillPower, Cantrip, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(WizardCantrips)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Cantrip**\n\n**At-Will** ✦ Arcane\n\n**Standard Action** · Ranged 2\n\n**Effect:** Use this cantrip to accomplish one of the effects given below.\n\n✦ Move up to 1 pound of material.\n\n✦ Create a harmless sensory effect, such as a shower of sparks, a puff of wind, faint music, or a strong odor.\n\n✦ Color, clean, or soil items in 1 cubic foot for up to 1 hour.\n\n✦ Instantly light (or snuff out) a candle, a torch, or a small campfire.\n\n✦ Chill, warm, or flavor up to 1 pound of nonliving material for up to 1 hour.\n\n✦ Make a small mark or symbol appear on a surface for up to 1 hour.\n\n✦ Produce out of nothingness a small item or image that exists until the end of your next turn.\n\n✦ Make a small, handheld item invisible until the end of your next turn.\n\nNothing you create with this cantrip can deal damage, serve as a weapon or a tool, or hinder another creature's actions. This cantrip cannot duplicate the effect of any other power.\n\n**Special:** You can have as many as three prestidigitation effects active at one time."
     ),
   ],
@@ -84,7 +84,7 @@ export const CloudOfDaggers = Abilities.defineAbility('wizard/power/cloud-of-dag
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Attack 1**\n\n**At-Will** ✦ Arcane, Force, Implement\n\n**Standard Action** · Area 1 square within 10 squares\n\n**Target:** Each creature in square\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d6 + Intelligence modifier force damage.\n\nIncrease damage to 2d6 + Intelligence modifier at 21st level.\n\n**Effect:** The power's area is filled with sharp daggers of force. Any creature that enters the area or starts its turn there takes force damage equal to your Wisdom modifier (minimum 1). The cloud remains in place until the end of your next turn. You can dispel it earlier as a minor action."
     ),
   ],
@@ -98,7 +98,7 @@ export const MagicMissile = Abilities.defineAbility('wizard/power/magic-missile'
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**At-Will** ✦ Arcane, Force, Implement\n\n**Standard Action** · Ranged 20\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d4 + Intelligence modifier force damage.\n\nIncrease damage to 4d4 + Intelligence modifier at 21st level.\n\n**Special:** This power counts as a ranged basic attack. When a power allows you to make a ranged basic attack, you can use this power.'
     ),
   ],
@@ -112,7 +112,7 @@ export const RayOfFrost = Abilities.defineAbility('wizard/power/ray-of-frost', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**At-Will** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 1d6 + Intelligence modifier cold damage, and the target is slowed until the end of your next turn.\n\nIncrease damage to 2d6 + Intelligence modifier at 21st level.'
     ),
   ],
@@ -126,7 +126,7 @@ export const ScorchingBurst = Abilities.defineAbility('wizard/power/scorching-bu
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**At-Will** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Area burst 1 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d6 + Intelligence modifier fire damage.\n\nIncrease damage to 2d6 + Intelligence modifier at 21st level.'
     ),
   ],
@@ -140,7 +140,7 @@ export const Thunderwave = Abilities.defineAbility('wizard/power/thunderwave', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**At-Will** ✦ Arcane, Implement, Thunder\n\n**Standard Action** · Close blast 3\n\n**Target:** Each creature in blast\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 1d6 + Intelligence modifier thunder damage, and you push the target a number of squares equal to your Wisdom modifier.\n\nIncrease damage to 2d6 + Intelligence modifier at 21st level.'
     ),
   ],
@@ -154,7 +154,7 @@ export const BurningHands = Abilities.defineAbility('wizard/power/burning-hands'
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Encounter** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Close blast 5\n\n**Target:** Each creature in blast\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d6 + Intelligence modifier fire damage.'
     ),
   ],
@@ -170,7 +170,7 @@ export const ChillStrike = Abilities.defineAbility('wizard/power/chill-strike', 
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Encounter** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d8 + Intelligence modifier cold damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -187,7 +187,7 @@ export const ForceOrb = Abilities.defineAbility('wizard/power/force-orb', {
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Encounter** ✦ Arcane, Force, Implement\n\n**Standard Action** · Ranged 20\n\n**Primary Target:** One creature or object\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d8 + Intelligence modifier force damage. Make a secondary attack.\n\n**Secondary Target:** Each enemy adjacent to the primary target\n\n**Secondary Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d10 + Intelligence modifier force damage.'
     ),
   ],
@@ -203,7 +203,7 @@ export const IcyTerrain = Abilities.defineAbility('wizard/power/icy-terrain', {
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Attack 1**\n\n**Encounter** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Area burst 1 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d6 + Intelligence modifier cold damage, and the target is knocked prone.\n\n**Effect:** The power's area is difficult terrain until the end of your next turn. You can end this effect as a minor action."
     ),
   ],
@@ -220,7 +220,7 @@ export const RayOfEnfeeblement = Abilities.defineAbility('wizard/power/ray-of-en
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Encounter** ✦ Arcane, Implement, Necrotic\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 1d10 + Intelligence modifier necrotic damage, and the target is weakened until the end of your next turn.'
     ),
   ],
@@ -236,7 +236,7 @@ export const AcidArrow = Abilities.defineAbility('wizard/power/acid-arrow', {
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Daily** ✦ Acid, Arcane, Implement\n\n**Standard Action** · Ranged 20\n\n**Primary Target:** One creature\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d8 + Intelligence modifier acid damage, and ongoing 5 acid damage (save ends). Make a secondary attack.\n\n**Secondary Target:** Each creature adjacent to the primary target\n\n**Secondary Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d8 + Intelligence modifier acid damage, and ongoing 5 acid damage (save ends).\n\n**Miss:** Half damage, and ongoing 2 acid damage to primary target (save ends), and no secondary attack.'
     ),
   ],
@@ -252,7 +252,7 @@ export const FlamingSphere = Abilities.defineAbility('wizard/power/flaming-spher
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Daily** ✦ Arcane, Conjuration, Fire, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature adjacent to the flaming sphere\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d6 + Intelligence modifier fire damage.\n\n**Effect:** You conjure a Medium flaming sphere in an unoccupied square within range, and the sphere attacks an adjacent creature. Any creature that starts its turn next to the flaming sphere takes 1d4 + Intelligence modifier fire damage. As a move action, you can move the sphere up to 6 squares.\n\n**Sustain Minor:** You can sustain this power until the end of the encounter. As a standard action, you can make another attack with the sphere.'
     ),
   ],
@@ -268,7 +268,7 @@ export const FreezingCloud = Abilities.defineAbility('wizard/power/freezing-clou
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Daily** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Area burst 2 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 1d8 + Intelligence modifier cold damage.\n\n**Miss:** Half damage.\n\n**Effect:** The cloud lasts until the end of your next turn. Any creature that enters the cloud or starts its turn there is subject to another attack. You can dismiss the cloud as a minor action.'
     ),
   ],
@@ -284,7 +284,7 @@ export const Sleep = Abilities.defineAbility('wizard/power/sleep', {
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 1**\n\n**Daily** ✦ Arcane, Implement, Sleep\n\n**Standard Action** · Area burst 2 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Will\n\n**Hit:** The target is slowed (save ends). If the target fails its first saving throw against this power, the target becomes unconscious (save ends).\n\n**Miss:** The target is slowed (save ends).'
     ),
   ],
@@ -300,7 +300,9 @@ export const ExpeditiousRetreat = Abilities.defineAbility('wizard/power/expediti
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive('**Wizard Utility 2**\n\n**Daily** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** Shift up to twice your speed.'),
+    CharacterEffects.descriptive(
+      '**Wizard Utility 2**\n\n**Daily** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** Shift up to twice your speed.'
+    ),
   ],
   actions: [{ name: 'Expeditious Retreat', action: ActionTypes.MoveAction }],
   resource: { size: 1, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] },
@@ -314,7 +316,7 @@ export const FeatherFall = Abilities.defineAbility('wizard/power/feather-fall', 
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 2**\n\n**Daily** ✦ Arcane\n\n**Free Action** · Ranged 10\n\n**Trigger:** You or one creature in range falls\n\n**Effect:** You or the creature takes no damage from the fall, regardless of its distance, and does not fall prone at the end of the fall.'
     ),
   ],
@@ -330,7 +332,7 @@ export const Jump = Abilities.defineAbility('wizard/power/jump', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 2**\n\n**Encounter** ✦ Arcane\n\n**Move Action** · Ranged 10\n\n**Target:** You or one creature\n\n**Effect:** The target makes an Athletics check to jump with a +10 power bonus, and the target does not have to move to make a running jump.'
     ),
   ],
@@ -346,7 +348,7 @@ export const Shield = Abilities.defineAbility('wizard/power/shield', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 2**\n\n**Encounter** ✦ Arcane, Force\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** You gain a +4 power bonus to AC and Reflex defense until the end of your next turn.'
     ),
   ],
@@ -362,7 +364,7 @@ export const ColorSpray = Abilities.defineAbility('wizard/power/color-spray', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 3**\n\n**Encounter** ✦ Arcane, Implement, Radiant\n\n**Standard Action** · Close blast 5\n\n**Target:** Each creature in blast\n\n**Attack:** Intelligence vs. Will\n\n**Hit:** 1d6 + Intelligence modifier radiant damage, and the target is dazed until the end of your next turn.'
     ),
   ],
@@ -378,7 +380,7 @@ export const FireShroud = Abilities.defineAbility('wizard/power/fire-shroud', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 3**\n\n**Encounter** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Close burst 3\n\n**Target:** Each enemy in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 1d8 + Intelligence modifier fire damage, and ongoing 5 fire damage (save ends).'
     ),
   ],
@@ -394,7 +396,7 @@ export const IcyRays = Abilities.defineAbility('wizard/power/icy-rays', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 3**\n\n**Encounter** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Ranged 10\n\n**Targets:** One or two creatures\n\n**Attack:** Intelligence vs. Reflex, one attack per target\n\n**Hit:** 1d10 + Intelligence modifier cold damage, and the target is immobilized until the end of your next turn.'
     ),
   ],
@@ -411,7 +413,7 @@ export const ShockSphere = Abilities.defineAbility('wizard/power/shock-sphere', 
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 3**\n\n**Encounter** ✦ Arcane, Implement, Lightning\n\n**Standard Action** · Area burst 2 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d6 + Intelligence modifier lightning damage.'
     ),
   ],
@@ -427,7 +429,7 @@ export const BigbysIcyGrasp = Abilities.defineAbility('wizard/power/bigbys-icy-g
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 5**\n\n**Daily** ✦ Arcane, Cold, Conjuration, Implement\n\n**Standard Action** · Ranged 20\n\n**Effect:** You conjure a 5-foot-tall hand of ice in an unoccupied square within range, and the hand attacks. As a move action, you can move the hand up to 6 squares.\n\n**Target:** One creature adjacent to the hand\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d8 + Intelligence modifier cold damage, and the hand grabs the target. If the target attempts to escape, the hand uses your Fortitude or Reflex defense.\n\n**Sustain Minor:** A target grabbed by the hand takes 1d8 + Intelligence modifier cold damage when you sustain this power. As a standard action, you can attack another target with the hand, but it must release a target it has grabbed.'
     ),
   ],
@@ -443,7 +445,7 @@ export const Fireball = Abilities.defineAbility('wizard/power/fireball', {
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 5**\n\n**Daily** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Area burst 3 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 3d6 + Intelligence modifier fire damage.\n\n**Miss:** Half damage.'
     ),
   ],
@@ -459,7 +461,7 @@ export const StinkingCloud = Abilities.defineAbility('wizard/power/stinking-clou
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 5**\n\n**Daily** ✦ Arcane, Implement, Poison, Zone\n\n**Standard Action** · Area burst 2 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 1d10 + Intelligence modifier poison damage.\n\n**Effect:** The burst creates a zone of poisonous vapor that blocks line of sight until the end of your next turn. Creatures that enter the zone or start their turns there take 1d10 + Intelligence modifier poison damage. As a move action, you can move the zone up to 6 squares.\n\n**Sustain Minor:** The zone persists.'
     ),
   ],
@@ -475,7 +477,7 @@ export const Web = Abilities.defineAbility('wizard/power/web', {
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 5**\n\n**Daily** ✦ Arcane, Implement, Zone\n\n**Standard Action** · Area burst 2 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** The target is immobilized (save ends).\n\n**Effect:** The burst creates a zone of webs that fills the area until the end of the encounter or for 5 minutes. The zone is considered difficult terrain. Any creature that ends its move in the web is immobilized (save ends).'
     ),
   ],
@@ -491,7 +493,7 @@ export const DimensionDoor = Abilities.defineAbility('wizard/power/dimension-doo
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Teleportation\n\n**Move Action** · Personal\n\n**Effect:** Teleport 10 squares. You can't take other creatures with you."
     ),
   ],
@@ -507,7 +509,7 @@ export const DisguiseSelf = Abilities.defineAbility('wizard/power/disguise-self'
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** You make yourself, your clothing, and your equipment look different. You can take on the appearance of any creature of similar build and size, including a specific individual whom you've seen. You gain neither the abilities or mannerisms of the chosen form, nor the tactile or audible properties of your form or gear. For example, if you took on the illusion of a dwarf fighter in plate armor, anyone touching you would realize you weren't wearing plate armor, and you would not clank, creak, or jingle as you walked. The illusion lasts for 1 hour, although you can end it as a minor action. You must keep the same appearance for the entire duration.\n\nAnyone who attempts to see through your ruse makes an Insight check opposed by your Bluff check, and you gain a +5 power bonus to your check."
     ),
   ],
@@ -523,7 +525,7 @@ export const DispelMagic = Abilities.defineAbility('wizard/power/dispel-magic', 
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 6**\n\n**Daily** ✦ Arcane\n\n**Standard Action** · Ranged 10\n\n**Target:** One conjuration or zone\n\n**Attack:** Intelligence vs. the Will defense of the creator of the conjuration or the zone\n\n**Hit:** The conjuration or the zone is destroyed. All its effects end, including those that normally last until a target saves.'
     ),
   ],
@@ -539,7 +541,7 @@ export const Invisibility = Abilities.defineAbility('wizard/power/invisibility',
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Illusion\n\n**Standard Action** · Ranged 5\n\n**Target:** You or one creature\n\n**Effect:** The target is invisible until the end of your next turn. If the target attacks, the target becomes visible.\n\n**Sustain Standard:** If the target is within range, you can sustain the effect.'
     ),
   ],
@@ -555,7 +557,7 @@ export const Levitate = Abilities.defineAbility('wizard/power/levitate', {
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Utility 6**\n\n**Daily** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** You can move 4 squares vertically and remain there, hovering above the ground. While aloft, you are unsteady, taking a –2 penalty to AC and Reflex defense. If some effect, such as a pit opening below you, causes you to be more than 4 squares above the ground, you drop down to 4 squares above the ground. You do not take damage from such a fall.\n\n**Sustain Move:** You can sustain this power until the end of the encounter or for 5 minutes. When you sustain this power, you can move 3 squares up or down or 1 square horizontally. You cannot go higher than 4 squares above the ground. If you don't sustain the power, you descend to the ground without taking falling damage."
     ),
   ],
@@ -571,7 +573,7 @@ export const WallOfFog = Abilities.defineAbility('wizard/power/wall-of-fog', {
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 6**\n\n**Daily** ✦ Arcane, Conjuration\n\n**Standard Action** · Area wall 8 within 10\n\n**Effect:** You conjure a wall that consists of contiguous squares filled with arcane fog. The wall lasts until the end of your next turn. It can be up to 8 squares long and up to 4 squares high. The fog grants concealment to creatures in its space and blocks line of sight.\n\n**Sustain Minor:** The wall persists.'
     ),
   ],
@@ -587,7 +589,7 @@ export const FireBurst = Abilities.defineAbility('wizard/power/fire-burst', {
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Area burst 2 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 3d6 + Intelligence modifier fire damage.'
     ),
   ],
@@ -603,7 +605,7 @@ export const LightningBolt = Abilities.defineAbility('wizard/power/lightning-bol
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Implement, Lightning\n\n**Standard Action** · Ranged 10\n\n**Primary Target:** One creature\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d6 + Intelligence modifier lightning damage.\n\n**Secondary Targets:** Two creatures within 10 squares of the primary target\n\n**Secondary Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d6 + Intelligence modifier lightning damage.'
     ),
   ],
@@ -620,7 +622,7 @@ export const SpectralRam = Abilities.defineAbility('wizard/power/spectral-ram', 
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Force, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d10 + Intelligence modifier force damage, and you push the target 3 squares and it is knocked prone.'
     ),
   ],
@@ -636,7 +638,7 @@ export const WintersWrath = Abilities.defineAbility('wizard/power/winters-wrath'
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 7**\n\n**Encounter** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Area burst 2 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d8 + Intelligence modifier cold damage.\n\n**Effect:** A blizzard erupts in the designated area and continues until the end of your next turn. It grants concealment, and any creature that starts its turn in the storm takes cold damage equal to your Intelligence modifier. You can end this effect as a minor action.'
     ),
   ],
@@ -652,7 +654,7 @@ export const IceStorm = Abilities.defineAbility('wizard/power/ice-storm', {
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Cold, Implement, Zone\n\n**Standard Action** · Area burst 3 within 20 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Intelligence vs. Fortitude\n\n**Hit:** 2d8 + Intelligence modifier cold damage, and the target is immobilized (save ends).\n\n**Miss:** Half damage, and the target is slowed (save ends).\n\n**Effect:** The burst creates a zone of ice. The zone is difficult terrain until the end of the encounter or for 5 minutes.'
     ),
   ],
@@ -668,7 +670,7 @@ export const LightningSerpent = Abilities.defineAbility('wizard/power/lightning-
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Implement, Lightning, Poison\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 2d12 + Intelligence modifier lightning damage, and the target takes ongoing 5 poison damage and is slowed (save ends both).\n\n**Miss:** Half damage, and the target is slowed (save ends).'
     ),
   ],
@@ -684,7 +686,7 @@ export const MordenkainensSword = Abilities.defineAbility('wizard/power/mordenka
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Conjuration, Force, Implement\n\n**Standard Action** · Ranged 10\n\n**Effect:** You conjure a sword of force in an unoccupied square within range, and it attacks. As a move action, you can move the sword to a new target within range. The sword lasts until the end of your next turn.\n\n**Target:** One creature adjacent to the sword\n\n**Attack:** Intelligence vs. Reflex\n\n**Hit:** 1d10 + Intelligence modifier force damage.\n\n**Sustain Minor:** When you sustain the sword, it attacks again.'
     ),
   ],
@@ -700,7 +702,7 @@ export const WallOfFire = Abilities.defineAbility('wizard/power/wall-of-fire', {
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Wizard Attack 9**\n\n**Daily** ✦ Arcane, Conjuration, Fire, Implement\n\n**Standard Action** · Area wall 8 within 10 squares\n\n**Effect:** You conjure a wall that consists of contiguous squares filled with arcane fire. It can be up to 8 squares long and up to 4 squares high. The wall lasts until the end of your next turn. Any creature that starts its turn adjacent to the wall takes 1d6 + Intelligence modifier fire damage. If a creature moves into the wall's space or starts its turn there, the creature takes 3d6 + Intelligence modifier fire damage. Entering a square occupied by the wall costs 3 extra squares of movement. The wall blocks line of sight.\n\n**Sustain Minor:** The wall persists."
     ),
   ],
@@ -716,7 +718,7 @@ export const ArcaneGate = Abilities.defineAbility('wizard/power/arcane-gate', {
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 10**\n\n**Daily** ✦ Arcane, Teleportation\n\n**Minor Action** · Ranged 20\n\n**Target:** Two unoccupied squares\n\n**Effect:** You create a dimensional rift between the two target squares that lasts until the end of your next turn. Any creature that enters one of the target squares can move to the other target square as if it were adjacent to that square.\n\nA creature cannot pass through the rift if either square is occupied by another creature.\n\n**Sustain Minor:** The rift persists.'
     ),
   ],
@@ -732,7 +734,7 @@ export const Blur = Abilities.defineAbility('wizard/power/blur', {
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 10**\n\n**Daily** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** Until the end of the encounter, you gain a +2 power bonus to all defenses, and enemies 5 or more squares away from you cannot see you.'
     ),
   ],
@@ -748,7 +750,7 @@ export const MirrorImage = Abilities.defineAbility('wizard/power/mirror-image', 
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 10**\n\n**Daily** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** Three duplicate images of yourself appear in your space, and you gain a +6 power bonus to AC. Each time an attack misses you, one of your duplicate images disappears and the bonus granted by this power decreases by 2. When the bonus reaches 0, all your images are gone and the power ends. Otherwise, the effect lasts for 1 hour.'
     ),
   ],
@@ -764,7 +766,7 @@ export const Resistance = Abilities.defineAbility('wizard/power/resistance', {
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Wizard Utility 10**\n\n**Daily** ✦ Arcane\n\n**Minor Action** · Ranged 10\n\n**Target:** You or one creature\n\n**Effect:** Against a particular damage type chosen by you, the target gains resistance equal to your level + your Intelligence modifier until the end of the encounter or for 5 minutes. Choose the damage type from the following list: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder.'
     ),
   ],

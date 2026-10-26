@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
@@ -14,7 +14,7 @@ export const ArcherFightingStyle = Traits.defineTrait('ranger/fighting-style/arc
   name: 'Archer Fighting Style',
   description: 'Because of your focus on ranged attacks, you gain [Defensive Mobility](trait:feat/defensive-mobility) as a bonus feat.',
   tags: [ClassFeature],
-  effects: [Effects.gainTrait(DefensiveMobility)],
+  effects: [CharacterEffects.gainTrait(DefensiveMobility)],
 })
 
 export const TwoBladeFightingStyle = Traits.defineTrait('ranger/fighting-style/two-blade', {
@@ -22,7 +22,7 @@ export const TwoBladeFightingStyle = Traits.defineTrait('ranger/fighting-style/t
   description:
     'Because of your focus on two-weapon melee attacks, you can wield a one-handed weapon in your off hand as if it were an off-hand weapon. (Make sure to designate on your character sheet which weapon is main and which is off-hand.) In addition, you gain [Toughness](trait:feat/toughness) as a bonus feat.',
   tags: [ClassFeature],
-  effects: [Effects.gainTrait(Toughness)],
+  effects: [CharacterEffects.gainTrait(Toughness)],
 })
 
 export const SelectFightingStyle = CharacterOptions.selectTraitOption('ranger/select-fighting-style', {
@@ -44,7 +44,7 @@ export const HuntersQuarryPower = Abilities.defineAbility('ranger/power/hunters-
   tags: [AtWillPower],
   prerequisites: [Traits.traitPrerequisite(HuntersQuarry)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Ranger Class Feature**\n\n**At-Will**\n\n**Minor Action**\n\nOnce per turn as a minor action, you can designate the enemy nearest to you as your quarry.\n\nOnce per round, you deal extra damage to your quarry. The extra damage is based on your level. If you can make multiple attacks in a round, you decide which attack to apply the extra damage to after all the attacks are rolled.\n\nThe hunter's quarry effect remains active until the end of the encounter, until the quarry is defeated, or until you designate a different target as your quarry.\n\nYou can designate one enemy as your quarry at a time.\n\n| Level | Hunter's Quarry Extra Damage |\n|---|---|\n| 1st–10th | +1d6 |\n| 11th–20th | +2d6 |\n| 21st–30th | +3d6 |"
     ),
   ],
@@ -87,35 +87,49 @@ export const Ranger = Traits.defineTrait('ranger', {
     "**Role:** Striker. You concentrate on either ranged attacks or two-weapon melee fighting to deal a lot of damage to one enemy at a time. Your attacks rely on speed and mobility, since you prefer to use hit-and-run tactics whenever possible.\n\n**Power Source:** Martial. Your talents depend on extensive training and practice, inner confidence, and natural proficiency.\n\n**Key Abilities:** [Strength](characteristic:strength), [Dexterity](characteristic:dexterity), [Wisdom](characteristic:wisdom)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth), [leather](ability:armor/leather), [hide](ability:armor/hide)\n\n**Weapon Proficiencies:** Simple melee, military melee, simple ranged, military ranged\n\n**Bonus to Defense:** +1 [Fortitude](characteristic:fortitude), +1 [Reflex](characteristic:reflex)\n\n**Hit Points at 1st Level:** 12 + [Constitution](characteristic:constitution) score\n\n**Hit Points per Level Gained:** 5\n\n**Healing Surges per Day:** 6 + Constitution modifier\n\n**Trained Skills:** [Dungeoneering](characteristic:skill/dungeoneering) or [Nature](characteristic:skill/nature) (your choice). From the class skills list below, choose four more trained skills at 1st level.\n\n**Class Skills:** [Acrobatics](characteristic:skill/acrobatics) (Dex), [Athletics](characteristic:skill/athletics) (Str), Dungeoneering (Wis), [Endurance](characteristic:skill/endurance) (Con), [Heal](characteristic:skill/heal) (Wis), Nature (Wis), [Perception](characteristic:skill/perception) (Wis), [Stealth](characteristic:skill/stealth) (Dex)\n\n**Build Options:** [Archer ranger](content:classes/archer-ranger), [two-blade ranger](content:classes/two-blade-ranger)\n\n**Class Features:** [Fighting Style](content:classes/ranger-fighting-style), [Hunter's Quarry](trait:ranger/hunters-quarry), [Prime Shot](trait:ranger/prime-shot)",
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       HitPoints,
       Attributes.modifier(Patches.sum(NumericExpressions.sum([7, NumericExpressions.multiply([CharacterValues.Level, 5])])))
     ),
-    Effects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1))),
-    Effects.gainCharacterOption(SelectFightingStyle),
-    Effects.gainTrait(HuntersQuarry),
-    Effects.gainTrait(PrimeShot),
-    Effects.gainTrait(Armor.LeatherProficiency),
-    Effects.gainTrait(Armor.HideProficiency),
-    Effects.gainCharacterOption(SelectDungeoneeringOrNature),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(Powers.SelectAtWillAttack),
-    Effects.gainCharacterOption(Powers.SelectAtWillAttack),
-    Effects.gainCharacterOption(Powers.SelectEncounterAttack1),
-    Effects.gainCharacterOption(Powers.SelectDailyAttack1),
-    Effects.conditional(Traits.traitPrerequisite(Human), [Effects.gainCharacterOption(SelectSkill)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [Effects.gainCharacterOption(Powers.SelectUtility2)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainCharacterOption(Powers.SelectEncounterAttack3)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(Powers.SelectDailyAttack5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(Powers.SelectUtility6)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainCharacterOption(Powers.SelectEncounterAttack7)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(Powers.SelectDailyAttack9)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(Powers.SelectUtility10)]),
+    CharacterEffects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.gainCharacterOption(SelectFightingStyle),
+    CharacterEffects.gainTrait(HuntersQuarry),
+    CharacterEffects.gainTrait(PrimeShot),
+    CharacterEffects.gainTrait(Armor.LeatherProficiency),
+    CharacterEffects.gainTrait(Armor.HideProficiency),
+    CharacterEffects.gainCharacterOption(SelectDungeoneeringOrNature),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(Powers.SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(Powers.SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack1),
+    CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack1),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Human), [CharacterEffects.gainCharacterOption(SelectSkill)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility2),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack3),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack5),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility6),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack7),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack9),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility10),
+    ]),
   ],
 })
 

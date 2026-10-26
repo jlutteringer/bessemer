@@ -1,4 +1,4 @@
-import { Abilities, Effects, ResourcePools } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, ResourcePools } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import { AtWillPower, AttackPower, EncounterPower, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
@@ -10,7 +10,7 @@ export const MeleeBasicAttack = Abilities.defineAbility('common/melee-basic-atta
   description: '*You resort to the simple attack you learned when you first picked up a melee weapon.*',
   tags: [AtWillPower, AttackPower],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.\n\n**Special:** You can use an unarmed attack as a weapon to make a melee basic attack.'
     ),
   ],
@@ -22,7 +22,7 @@ export const RangedBasicAttack = Abilities.defineAbility('common/ranged-basic-at
   description: '*You resort to the simple attack you learned when you first picked up a ranged weapon.*',
   tags: [AtWillPower, AttackPower],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Basic Attack**\n\n**At-Will** ✦ Weapon\n\n**Standard Action** · Ranged weapon\n\n**Target:** One creature\n\n**Attack:** Dexterity vs. AC\n\n**Hit:** 1[W] + Dexterity modifier damage.\n\nIncrease damage to 2[W] + Dexterity modifier at 21st level.\n\n**Special:** Weapons with the heavy thrown property (see [page 216](content:equipment/weapon-properties)) use Strength instead of Dexterity for attack rolls and damage rolls.\n\n**Special:** Warlocks can use *[eldritch blast](ability:warlock/power/eldritch-blast)* as a ranged basic attack, and wizards can use *[magic missile](ability:wizard/power/magic-missile)* as a ranged basic attack.'
     ),
   ],
@@ -34,7 +34,7 @@ export const SecondWind = Abilities.defineAbility('common/second-wind', {
   description: '*You dig deep for the strength to keep fighting.*',
   tags: [EncounterPower, UtilityPower],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Second Wind**\n\n**Encounter** ✦ Healing\n\n**Standard Action** · Personal\n\n**Effect:** You spend a healing surge and regain hit points equal to your surge value. You gain a +2 bonus to all defenses until the start of your next turn.'
     ),
   ],

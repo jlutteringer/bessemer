@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { CyberwareLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
@@ -9,7 +9,7 @@ export const ModularCybernetics = Traits.defineTrait('cybernetics/modular-cybern
     '*"If thy right hand offend thee, cut it off."*\n\nMass-produced implants fill the clinics and chop shops of every city on Earth, sold on payment plans to anyone desperate to keep up. Next year\'s model is always better.',
   tags: [Primary],
   prerequisites: [],
-  effects: [Effects.gainLoadoutSlot(CyberwareLoadout)],
+  effects: [CharacterEffects.gainLoadoutSlot(CyberwareLoadout)],
 })
 
 export const AnatomicalIntegration = Traits.defineTrait('cybernetics/anatomical-integration', {
@@ -18,14 +18,14 @@ export const AnatomicalIntegration = Traits.defineTrait('cybernetics/anatomical-
     '*"This is now bone of my bones, and flesh of my flesh."*\n\nThere is a point past which augmentation stops being an accessory. It begins on an operating table, with a corporate surgeon and a skeleton that will never be fully organic again.',
   tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(ModularCybernetics)],
-  effects: [Effects.gainLoadoutSlot(CyberwareLoadout)],
+  effects: [CharacterEffects.gainLoadoutSlot(CyberwareLoadout)],
 })
 
 export const HardLanding = Abilities.defineAbility('cybernetics/hard-landing', {
   name: 'Hard Landing',
   prerequisites: [Traits.traitPrerequisite(AnatomicalIntegration)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'When you fall, you can take a Reaction to land without taking damage from a fall of 6 squares or less. If you fell at least 2 squares, make a Brawn attack against the Fortitude of each creature adjacent to where you land. On a hit, the creature is knocked prone.'
     ),
   ],
@@ -39,8 +39,8 @@ export const ClosedLoopCirculation = Traits.defineTrait('cybernetics/closed-loop
   tags: [Primary],
   prerequisites: [Traits.traitPrerequisite(AnatomicalIntegration)],
   effects: [
-    Effects.gainLoadoutSlot(CyberwareLoadout),
-    Effects.descriptive(
+    CharacterEffects.gainLoadoutSlot(CyberwareLoadout),
+    CharacterEffects.descriptive(
       "You don't need to breathe. You can't drown or suffocate, and you can survive underwater and in a vacuum. You are immune to effects that must be inhaled, such as gases, smoke, and airborne toxins."
     ),
   ],

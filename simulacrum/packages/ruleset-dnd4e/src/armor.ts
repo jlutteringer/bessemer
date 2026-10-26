@@ -1,4 +1,4 @@
-import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { ArmorLoadout, ShieldLoadout } from '@simulacrum/ruleset-dnd4e/loadout'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
@@ -67,7 +67,7 @@ export const ClothArmor = Abilities.defineAbility('armor/cloth', {
     'Jackets, mantles, woven robes, and padded vests don’t, by themselves, provide any significant protection. However, you can imbue them with protective magic. Cloth armor doesn’t slow you down or hinder your movement at all. All characters are proficient with cloth armor. Feyweave armor is woven with techniques perfected by the eladrin. Starweave armor is fashioned after patterns created in the divine dominions of the Astral Sea.',
   tags: [Armor],
   loadout: ArmorLoadout,
-  effects: [Effects.descriptive('**Light armor** · Armor bonus +0 · Check — · Speed —')],
+  effects: [CharacterEffects.descriptive('**Light armor** · Armor bonus +0 · Check — · Speed —')],
 })
 
 export const LeatherArmor = Abilities.defineAbility('armor/leather', {
@@ -78,8 +78,8 @@ export const LeatherArmor = Abilities.defineAbility('armor/leather', {
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LeatherProficiency)],
   effects: [
-    Effects.descriptive('**Light armor** · Armor bonus +2 · Check — · Speed —'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(2), { combinability: ArmorBonus })),
+    CharacterEffects.descriptive('**Light armor** · Armor bonus +2 · Check — · Speed —'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(2), { combinability: ArmorBonus })),
   ],
 })
 
@@ -91,8 +91,8 @@ export const HideArmor = Abilities.defineAbility('armor/hide', {
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(HideProficiency)],
   effects: [
-    Effects.descriptive('**Light armor** · Armor bonus +3 · Check –1 · Speed —'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3), { combinability: ArmorBonus })),
+    CharacterEffects.descriptive('**Light armor** · Armor bonus +3 · Check –1 · Speed —'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3), { combinability: ArmorBonus })),
   ],
 })
 
@@ -106,8 +106,8 @@ export const Chainmail = Abilities.defineAbility('armor/chainmail', {
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(ChainmailProficiency)],
   effects: [
-    Effects.descriptive('**Heavy armor** · Armor bonus +6 · Check –1 · Speed –1'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([10, HalfLevel, 6])))),
+    CharacterEffects.descriptive('**Heavy armor** · Armor bonus +6 · Check –1 · Speed –1'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([10, HalfLevel, 6])))),
   ],
 })
 
@@ -119,8 +119,8 @@ export const ScaleArmor = Abilities.defineAbility('armor/scale', {
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(ScaleProficiency)],
   effects: [
-    Effects.descriptive('**Heavy armor** · Armor bonus +7 · Check — · Speed –1'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([10, HalfLevel, 7])))),
+    CharacterEffects.descriptive('**Heavy armor** · Armor bonus +7 · Check — · Speed –1'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([10, HalfLevel, 7])))),
   ],
 })
 
@@ -132,8 +132,8 @@ export const PlateArmor = Abilities.defineAbility('armor/plate', {
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(PlateProficiency)],
   effects: [
-    Effects.descriptive('**Heavy armor** · Armor bonus +8 · Check –2 · Speed –1'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([10, HalfLevel, 8])))),
+    CharacterEffects.descriptive('**Heavy armor** · Armor bonus +8 · Check –2 · Speed –1'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.set(NumericExpressions.sum([10, HalfLevel, 8])))),
   ],
 })
 
@@ -147,9 +147,9 @@ export const LightShield = Abilities.defineAbility('shield/light', {
   loadout: ShieldLoadout,
   prerequisites: [Traits.traitPrerequisite(LightShieldProficiency)],
   effects: [
-    Effects.descriptive('Shield bonus +1 to AC and Reflex · Check —'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(1), { combinability: ShieldBonus })),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1), { combinability: ShieldBonus })),
+    CharacterEffects.descriptive('Shield bonus +1 to AC and Reflex · Check —'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(1), { combinability: ShieldBonus })),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1), { combinability: ShieldBonus })),
   ],
 })
 
@@ -161,9 +161,9 @@ export const HeavyShield = Abilities.defineAbility('shield/heavy', {
   loadout: ShieldLoadout,
   prerequisites: [Traits.traitPrerequisite(HeavyShieldProficiency)],
   effects: [
-    Effects.descriptive('Shield bonus +2 to AC and Reflex · Check –2'),
-    Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(2), { combinability: ShieldBonus })),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(2), { combinability: ShieldBonus })),
+    CharacterEffects.descriptive('Shield bonus +2 to AC and Reflex · Check –2'),
+    CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(2), { combinability: ShieldBonus })),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(2), { combinability: ShieldBonus })),
   ],
 })
 

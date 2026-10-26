@@ -1,4 +1,4 @@
-import { Abilities, Attributes, Effects } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterEffects } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { Armor, Shield } from '@simulacrum/ruleset-pf2e/tag'
@@ -28,7 +28,7 @@ export const ExplorersClothing = Abilities.defineAbility('armor/explorers-clothi
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 5]), UnarmoredDefense.variable, 0])))
     ),
@@ -42,7 +42,7 @@ export const PaddedArmor = Abilities.defineAbility('armor/padded-armor', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 3]), LightArmor.variable, 1])))
     ),
@@ -56,14 +56,17 @@ export const LeatherArmor = Abilities.defineAbility('armor/leather-armor', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 4]), LightArmor.variable, 1])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 0) })),
   ],
 })
 
@@ -74,14 +77,17 @@ export const StuddedLeatherArmor = Abilities.defineAbility('armor/studded-leathe
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 3]), LightArmor.variable, 2])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
   ],
 })
 
@@ -92,12 +98,12 @@ export const ChainShirt = Abilities.defineAbility('armor/chain-shirt', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 3]), LightArmor.variable, 2])))
     ),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-1))),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-1), { condition: Expressions.lessThan(Strength.variable, 1) })),
   ],
 })
 
@@ -108,16 +114,22 @@ export const HideArmor = Abilities.defineAbility('armor/hide-armor', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 2]), MediumArmor.variable, 3])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 2) })
+    ),
   ],
 })
 
@@ -128,16 +140,22 @@ export const ScaleMail = Abilities.defineAbility('armor/scale-mail', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 2]), MediumArmor.variable, 3])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 2) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 2) })
+    ),
   ],
 })
 
@@ -148,14 +166,17 @@ export const ChainMail = Abilities.defineAbility('armor/chain-mail', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 1]), MediumArmor.variable, 4])))
     ),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2))),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2))),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })
+    ),
   ],
 })
 
@@ -166,16 +187,22 @@ export const Breastplate = Abilities.defineAbility('armor/breastplate', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 1]), MediumArmor.variable, 4])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-2), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })
+    ),
   ],
 })
 
@@ -186,16 +213,22 @@ export const SplintMail = Abilities.defineAbility('armor/splint-mail', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 1]), HeavyArmor.variable, 5])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-10))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-10))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })
+    ),
   ],
 })
 
@@ -206,16 +239,22 @@ export const HalfPlate = Abilities.defineAbility('armor/half-plate', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 1]), HeavyArmor.variable, 5])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-10))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 3) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-10))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 3) })
+    ),
   ],
 })
 
@@ -226,16 +265,22 @@ export const FullPlate = Abilities.defineAbility('armor/full-plate', {
   tags: [Armor],
   loadout: ArmorLoadout,
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([10, NumericExpressions.min([Dexterity.variable, 0]), HeavyArmor.variable, 6])))
     ),
-    Effects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
-    Effects.modifyCharacteristic(Acrobatics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
-    Effects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
-    Effects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-10))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 4) })),
+    CharacterEffects.modifyCharacteristic(Athletics, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
+    CharacterEffects.modifyCharacteristic(
+      Acrobatics,
+      Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })
+    ),
+    CharacterEffects.modifyCharacteristic(Stealth, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
+    CharacterEffects.modifyCharacteristic(Thievery, Attributes.modifier(Patches.sum(-3), { condition: Expressions.lessThan(Strength.variable, 4) })),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-10))),
+    CharacterEffects.modifyCharacteristic(
+      Speed,
+      Attributes.modifier(Patches.sum(5), { condition: Expressions.greaterThanOrEqual(Strength.variable, 4) })
+    ),
   ],
 })
 
@@ -272,7 +317,7 @@ export const TowerShield = Abilities.defineAbility('shield/tower-shield', {
     '**Price** 10 gp\n\n**AC Bonus** 2 (+4 2 )\n\n**Speed Penalty** -5 ft.\n\n**Bulk** 4\n\n**Hardness** 5\n\n**HP (BT)** 20 (10)\n\nThese massive shields can be used to provide cover to nearly the entire body. Due to their size, they are typically made of wood reinforced with metal.\n\n2 Getting the higher bonus for a tower shield requires using the [Take Cover](content:playing-the-game/take-cover) action while the shield is raised.\n\n**Specific Magic Shields**\n\nArctic Worm Chitin Shield, Resolute Shield, Sapling Shield, Siege Shield, Testudo Shield, Warding Escutcheon',
   tags: [Shield],
   loadout: ShieldLoadout,
-  effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5)))],
 })
 
 export const AllArmor = [

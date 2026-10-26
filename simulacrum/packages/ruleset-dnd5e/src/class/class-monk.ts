@@ -1,11 +1,11 @@
-import { Effects, Traits } from '@simulacrum/ruleset'
+import { CharacterEffects, Traits } from '@simulacrum/ruleset'
 import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
 import { Class } from '@simulacrum/ruleset-dnd5e/tag'
 
 export const Level1 = Traits.defineTrait('monk/level-1', {
   name: 'Monk',
   tags: [Class],
-  effects: [Effects.gainTrait(SavingThrowProficiencies.Strength), Effects.gainTrait(SavingThrowProficiencies.Dexterity)],
+  effects: [CharacterEffects.gainTrait(SavingThrowProficiencies.Strength), CharacterEffects.gainTrait(SavingThrowProficiencies.Dexterity)],
 })
 
 export const Level2 = Traits.defineTrait('monk/level-2', {

@@ -5,7 +5,7 @@ import * as Tiptap from '@bessemer/core/tiptap'
 import { RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntitySchema, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import Zod from 'zod'
 
-export type ResourcePool = {
+export interface ResourcePool {
   size: Expression<number>
   refresh: Array<CooldownRate>
 }
@@ -30,10 +30,9 @@ export const ResourcePoolDefinitionSchema = RulesetEntitySchema.extend({
   ),
 })
 
-export type ResourcePoolDefinition = RulesetEntity &
-  ResourcePool & {
-    id: ResourcePoolReference
-  }
+export interface ResourcePoolDefinition extends RulesetEntity, ResourcePool {
+  id: ResourcePoolReference
+}
 
 export type ResourceCost = {
   cost: Expression<number>

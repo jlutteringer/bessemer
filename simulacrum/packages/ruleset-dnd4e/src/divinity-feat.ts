@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import { AttackPower, EncounterPower, Feat, UtilityPower } from '@simulacrum/ruleset-dnd4e/tag'
@@ -27,7 +27,7 @@ export const ArmorOfBahamutPower = Abilities.defineAbility('feat/power/armor-of-
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(ArmorOfBahamut)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**Immediate Interrupt** · Ranged 5\n\n**Trigger:** An enemy scores a critical hit on you or an ally\n\n**Effect:** Turn a critical hit against you or an ally within range into a normal hit.\n\n**Special:** You must take the Armor of Bahamut feat to use this power.'
     ),
   ],
@@ -52,7 +52,7 @@ export const AvandrasRescuePower = Abilities.defineAbility('feat/power/avandras-
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(AvandrasRescue)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**Move Action** · Melee 1\n\n**Target:** One ally\n\n**Effect:** Shift into the space of an adjacent ally; that ally simultaneously shifts into your space. Your space and your ally's space must be the same size.\n\n**Special:** You must take the Avandra's Rescue feat to use this power."
     ),
   ],
@@ -77,7 +77,7 @@ export const CorellonsGracePower = Abilities.defineAbility('feat/power/corellons
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(CorellonsGrace)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**Immediate Interrupt** · Ranged 10\n\n**Trigger:** Another creature within range spends an action point to take an extra action\n\n**Effect:** You take a move action.\n\n**Special:** You must take the Corellon's Grace feat to use this power."
     ),
   ],
@@ -102,7 +102,7 @@ export const HarmonyOfErathisPower = Abilities.defineAbility('feat/power/harmony
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(HarmonyOfErathis)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**Minor Action** · Ranged 10\n\n**Target:** One ally\n\n**Effect:** If you have at least three allies within range, grant one of those allies a +2 power bonus to the first attack roll he or she makes before the start of your next turn.\n\n**Special:** You must take the Harmony of Erathis feat to use this power.'
     ),
   ],
@@ -127,7 +127,7 @@ export const IounsPoisePower = Abilities.defineAbility('feat/power/iouns-poise',
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(IounsPoise)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**Minor Action** · Ranged 5\n\n**Target:** You or one ally\n\n**Effect:** The target gains a +5 power bonus to Will defense until the start of your next turn.\n\n**Special:** You must take the Ioun's Poise feat to use this power."
     ),
   ],
@@ -152,7 +152,7 @@ export const KordsFavorPower = Abilities.defineAbility('feat/power/kords-favor',
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(KordsFavor)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine, Healing\n\n**Free Action** · Ranged 5\n\n**Trigger:** You or an ally within range scores a critical hit with a melee attack\n\n**Effect:** You or the ally can spend a healing surge.\n\n**Special:** You must take the Kord's Favor feat to use this power."
     ),
   ],
@@ -177,7 +177,7 @@ export const MelorasTidePower = Abilities.defineAbility('feat/power/meloras-tide
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(MelorasTide)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine, Healing\n\n**Minor Action** · Ranged 5\n\n**Target:** You or one ally; bloodied target only\n\n**Effect:** The target gains regeneration 2 until the end of the encounter or until he or she is no longer bloodied.\n\nIf you are 11th level or higher, this power grants regeneration 4 instead. If you are 21st level or higher, this power grants regeneration 6 instead.\n\n**Special:** You must take the Melora's Tide feat to use this power."
     ),
   ],
@@ -202,7 +202,7 @@ export const MoradinsResolvePower = Abilities.defineAbility('feat/power/moradins
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(MoradinsResolve)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**Minor Action** · Personal\n\n**Effect:** Until the end of your next turn, you gain a +2 bonus to attack rolls against Large or larger creatures.\n\n**Special:** You must take the Moradin's Resolve feat to use this power."
     ),
   ],
@@ -227,7 +227,7 @@ export const PelorsRadiancePower = Abilities.defineAbility('feat/power/pelors-ra
   tags: [EncounterPower, AttackPower],
   prerequisites: [Traits.traitPrerequisite(PelorsRadiance)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine, Implement, Radiant\n\n**Standard Action** · Close burst 1 (3 at 11th level, 5 at 21st level)\n\n**Target:** Each undead creature in burst\n\n**Attack:** Wisdom vs. Will\n\n**Hit:** 1d12 + Wisdom modifier radiant damage, and the target is stunned until the end of your next turn.\n\nIncrease damage to 2d12 at 5th level, 3d12 at 11th, 4d12 at 15th, 5d12 at 21st, and 6d12 at 25th.\n\n**Special:** You must take the Pelor's Radiance feat to use this power."
     ),
   ],
@@ -252,7 +252,7 @@ export const RavenQueensBlessingPower = Abilities.defineAbility('feat/power/rave
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(RavenQueensBlessing)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine, Healing\n\n**Free Action** · Ranged 10\n\n**Trigger:** Your attack drops an enemy within range to 0 hit points or fewer\n\n**Effect:** You or an ally within 5 squares of the enemy can spend a healing surge.\n\n**Special:** You must take the Raven Queen's Blessing feat to use this power."
     ),
   ],
@@ -277,7 +277,7 @@ export const SehaninesReversalPower = Abilities.defineAbility('feat/power/sehani
   tags: [EncounterPower, UtilityPower],
   prerequisites: [Traits.traitPrerequisite(SehaninesReversal)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Channel Divinity Feat Power**\n\n**Encounter** ✦ Divine\n\n**No Action** · Ranged 5\n\n**Trigger:** You roll a natural 20 on a saving throw\n\n**Effect:** Choose an enemy within range; that creature gains the condition you just saved against.\n\n**Special:** You must take the Sehanine's Reversal feat to use this power."
     ),
   ],

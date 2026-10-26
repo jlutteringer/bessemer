@@ -7,7 +7,7 @@ test('Test Numeric Attibutes and Combinations', () => {
   {
     const attribute = Attributes.attribute(10, Expressions.reference(NumericExpressions.MaxExpression))
     const modifiers = [Attributes.modifier(Patches.sum(5)), Attributes.modifier(Patches.sum(5)), Attributes.modifier(Patches.sum(5))]
-    const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.defaultEvaluator())
+    const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.createEvaluator(Expressions.defaultContext()))
 
     expect(attributeValue.value).toEqual(25)
     expect(attributeValue.initialValue).toEqual(10)
@@ -19,7 +19,7 @@ test('Test Numeric Attibutes and Combinations', () => {
   {
     const attribute = Attributes.attribute(10, Expressions.reference(NumericExpressions.MaxExpression))
     const modifiers = [Attributes.modifier(Patches.multiply(5)), Attributes.modifier(Patches.sum(5)), Attributes.modifier(Patches.sum(5))]
-    const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.defaultEvaluator())
+    const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.createEvaluator(Expressions.defaultContext()))
 
     expect(attributeValue.value).toEqual(100)
     expect(attributeValue.initialValue).toEqual(10)
@@ -36,7 +36,7 @@ test('Test Numeric Attibutes and Combinations', () => {
       Attributes.modifier(Patches.sum(5), { condition: Expressions.or([true]) }),
       Attributes.modifier(Patches.sum(5), { condition: Expressions.and([false]) }),
     ]
-    const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.defaultEvaluator())
+    const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.createEvaluator(Expressions.defaultContext()))
 
     expect(attributeValue.value).toEqual(15)
     expect(attributeValue.initialValue).toEqual(10)
@@ -74,6 +74,6 @@ test('Test Objects', () => {
     //     })
     //   ),
     // ]
-    // const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.defaultEvaluator())
+    // const attributeValue = Attributes.evaluateAttribute(attribute, modifiers, Expressions.createEvaluator(Expressions.defaultContext()))
   }
 })

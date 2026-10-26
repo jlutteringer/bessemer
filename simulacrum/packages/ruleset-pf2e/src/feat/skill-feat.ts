@@ -1,4 +1,4 @@
-import { Abilities, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
 import { ExpertSkill, Feat, FeatLevel1, FeatLevel2, FeatLevel7, GeneralFeat, Lore, SkillFeat, TrainedSkill } from '@simulacrum/ruleset-pf2e/tag'
@@ -124,8 +124,10 @@ export const AdditionalLore = Traits.defineTrait('feat/additional-lore', {
   tags: [Feat, GeneralFeat, SkillFeat, FeatLevel1],
   repeatable: true,
   effects: [
-    Effects.gainCharacterOption(SelectAdditionalLore),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainCharacterOption(SelectAdditionalLoreExpertise)]),
+    CharacterEffects.gainCharacterOption(SelectAdditionalLore),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainCharacterOption(SelectAdditionalLoreExpertise),
+    ]),
   ],
 })
 
@@ -628,7 +630,7 @@ export const SkillTraining = Traits.defineTrait('feat/skill-training', {
   tags: [Feat, GeneralFeat, SkillFeat, FeatLevel1],
   prerequisites: [Expressions.greaterThanOrEqual(Intelligence.variable, 1)],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(SelectTrainedSkill)],
+  effects: [CharacterEffects.gainCharacterOption(SelectTrainedSkill)],
 })
 
 export const SpecialtyCrafting = Traits.defineTrait('feat/specialty-crafting', {

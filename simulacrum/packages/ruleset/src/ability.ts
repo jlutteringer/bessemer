@@ -1,4 +1,4 @@
-import { AbilityEffect } from '@simulacrum/ruleset/effect'
+import { AbilityEffect } from '@simulacrum/ruleset/character-effect'
 import * as ResourcePools from '@simulacrum/ruleset/resource-pool'
 import { ResourceCost, ResourceCostProps, ResourcePool, ResourcePoolDefinition } from '@simulacrum/ruleset/resource-pool'
 import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
@@ -13,13 +13,15 @@ import * as Targetings from '@simulacrum/ruleset/targeting'
 import { Targeting, TargetingProps } from '@simulacrum/ruleset/targeting'
 import * as ActionTests from '@simulacrum/ruleset/action-test'
 import { ActionEffect } from '@simulacrum/ruleset/action-effect'
+import { Valued } from '@simulacrum/ruleset/attribute'
+import * as Attributes from '@simulacrum/ruleset/attribute'
 import { ActionTest, ActionTestProps } from '@simulacrum/ruleset/action-test'
 import { ActionType, ActionTypeReference } from '@simulacrum/ruleset/action-type'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 
 export type AbilityReference = RulesetEntityReference<typeof RulesetEntityType.Ability>
 
-export type Ability = RulesetEntity & {
+export interface Ability extends RulesetEntity {
   id: AbilityReference
 
   tags: Array<AbilityTagReference>
@@ -31,7 +33,7 @@ export type Ability = RulesetEntity & {
   loadout: LoadoutTypeReference | null
 }
 
-export type AbilityAction = {
+export interface AbilityAction {
   name: string | null
   description: RichTextJson | null
 
@@ -40,7 +42,7 @@ export type AbilityAction = {
   costs: Array<ResourceCost>
   targeting: Targeting
   test: ActionTest | null
-  effects: Array<ActionEffect>
+  effects: Array<Valued<ActionEffect>>
 }
 
 export type AbilityProps = RulesetEntityProps & {
@@ -81,7 +83,7 @@ const resolveAction = (props: AbilityActionProps, defaultCosts: Array<ResourceCo
     costs: Objects.isNil(props.costs) ? defaultCosts : props.costs.map(resolveCost),
     targeting: Targetings.resolve(props.targeting ?? {}),
     test: Objects.isNil(props.test) ? null : ActionTests.resolve(props.test),
-    effects: props.effects ?? [],
+    effects: (props.effects ?? []).map(Attributes.valued),
   }
 }
 

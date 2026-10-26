@@ -10,18 +10,18 @@ import { SuperiorityDice } from '@simulacrum/ruleset-dnd5e/tag/maneuver'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Patches } from '@bessemer/cornerstone'
 
-const Pool: ResourcePool = { size: 2, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] }
+const Pool = ResourcePools.defineResourcePool('test-pool', { name: 'Test Pool', size: 2, refresh: [{ period: GameTimeUnit.LongRest, amount: RelativeAmount.All }] })
 
 test('modifiers patch a resource pool in order', () => {
-  const evaluate = Expressions.defaultEvaluator()
-  const pool = ResourcePools.applyModifiers(
+  const evaluator = Expressions.createEvaluator(Expressions.defaultContext())
+  const pool = ResourcePools.evaluateResourcePool(
     Pool,
     [
       Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) })),
       Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.multiply(2) })),
       Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(100) }), { condition: Expressions.value(false) }),
     ],
-    evaluate
+    evaluator
   )
 
   expect(pool.size).toBe(6)

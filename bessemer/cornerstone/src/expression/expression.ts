@@ -1,4 +1,4 @@
-import { ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
+import { DeferredExpressionEvaluator, ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
 import { NilableBasicType } from '@bessemer/cornerstone/types'
 import {
   ArrayExpressions,
@@ -6,6 +6,7 @@ import {
   Expression,
   ExpressionContext,
   ExpressionDefinition,
+  ExpressionDefinitions,
   ExpressionReference,
   ExpressionVariable,
   NumericExpressions,
@@ -29,8 +30,50 @@ import {
 } from '@bessemer/cornerstone/expression/core-expression'
 import { ExpressionMapper } from '@bessemer/cornerstone/expression/expression-mapper'
 
-export const evaluate = <T>(expression: Expression<T>, context: ExpressionContext): T => {
-  return new ExpressionEvaluator(DEFAULT_EXPRESSION_DEFINITIONS).evaluate(expression, context)
+export const evaluate = <T>(expression: Expression<T>, context: ExpressionContext, definitions: ExpressionDefinitions = []): T => {
+  return createEvaluator(context, definitions).evaluate(expression)
+}
+
+/**
+ * Creates an ExpressionEvaluator bound to the given context. The evaluator knows the default
+ * expression definitions plus any additional definitions provided, and can both evaluate
+ * expressions and dereference expression references (such as the reducer of an apply patch).
+ *
+ * **Example**
+ *
+ * ```ts
+ * import { Expressions, NumericExpressions } from "@bessemer/cornerstone/expression"
+ *
+ * const evaluator = Expressions.createEvaluator({ variables: { level: 3 } })
+ * console.log(evaluator.evaluate(NumericExpressions.sum([1, Expressions.variable('level')]))) // 4
+ * ```
+ *
+ * @category evaluation
+ */
+export const createEvaluator = (context: ExpressionContext, definitions: ExpressionDefinitions = []): ExpressionEvaluator => {
+  return new ExpressionEvaluator([...DEFAULT_EXPRESSION_DEFINITIONS, ...definitions], context)
+}
+
+/**
+ * Creates an ExpressionEvaluator that builds expressions without evaluating them. Dereferencing
+ * works exactly as it does for `createEvaluator`, but `evaluate` returns its input unchanged,
+ * which makes it useful for resolving patches symbolically and evaluating the result later.
+ *
+ * **Example**
+ *
+ * ```ts
+ * import { Expressions } from "@bessemer/cornerstone/expression"
+ * import { Patches } from "@bessemer/cornerstone"
+ *
+ * const level = Expressions.variable<number>('level')
+ * const result = Patches.resolve<Expression<number>>(level, [Patches.sum(2)], Expressions.createDeferredEvaluator())
+ * console.log(result) // { expressionKey: 'Numeric.Sum', operands: [{ expressionKey: 'Variable', name: 'level' }, 2] }
+ * ```
+ *
+ * @category evaluation
+ */
+export const createDeferredEvaluator = (definitions: ExpressionDefinitions = []): ExpressionEvaluator => {
+  return new DeferredExpressionEvaluator([...DEFAULT_EXPRESSION_DEFINITIONS, ...definitions], defaultContext())
 }
 
 export const evaluateDefault = <T>(expression: Expression<T>): T => {
@@ -45,8 +88,8 @@ export const map = <MappingType, ContextType>(
   return mapper.map(expression, context)
 }
 
-export const evaluator = (context: ExpressionContext): EvaluateExpression => {
-  return (it) => evaluate(it, context)
+export const evaluator = (context: ExpressionContext, definitions: ExpressionDefinitions = []): EvaluateExpression => {
+  return (it) => evaluate(it, context, definitions)
 }
 
 export const defaultEvaluator = (): EvaluateExpression => {
@@ -61,7 +104,7 @@ export const dereference = <ReturnType, ArgumentType extends Array<unknown>>(
   reference: ExpressionReference<ReturnType, ArgumentType>,
   ...args: ArgumentType
 ): Expression<ReturnType> => {
-  return new ExpressionEvaluator(DEFAULT_EXPRESSION_DEFINITIONS).dereference(reference, ...args)
+  return createEvaluator(defaultContext()).dereference(reference, ...args)
 }
 
 export const parameterizedVariable = <ValueType, ParameterType extends Array<NilableBasicType>>(
@@ -111,7 +154,7 @@ export const greaterThan = GreaterThanExpression.builder
 
 export const greaterThanOrEqual = GreaterThanOrEqualExpression.builder
 
-const DEFAULT_EXPRESSION_DEFINITIONS: Array<ExpressionDefinition<unknown, Array<any>, Expression<any>>> = [
+const DEFAULT_EXPRESSION_DEFINITIONS: ExpressionDefinitions = [
   ValueExpression,
   VariableExpression,
   NotExpression,

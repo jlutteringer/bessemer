@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
@@ -50,8 +50,8 @@ export const HymnOfHealing = Traits.defineTrait('feat/hymn-of-healing', {
     '*Bard*\n\nYou learn the [_hymn of healing_](ability:spell/hymn-of-healing) composition spell, which imbues your music with rich melodies that help your allies recover from harm.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel1],
   effects: [
-    Effects.gainAbility(BardFocusSpells.HymnOfHealing),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(BardFocusSpells.HymnOfHealing),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -62,8 +62,8 @@ export const LingeringComposition = Traits.defineTrait('feat/lingering-compositi
   tags: [Feat, ClassFeat, BardFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(MaestroMuseType)],
   effects: [
-    Effects.gainAbility(BardFocusSpells.LingeringComposition),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(BardFocusSpells.LingeringComposition),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -121,13 +121,13 @@ export const CantripExpansion = Traits.defineTrait('feat/cantrip-expansion', {
     '*Bard, Cleric, Magus, Oracle, Psychic, Sorcerer, Witch, Wizard*\n\nStudy broadens your range of simple spells.\n\n**Prepared Caster (Cleric, Wizard, etc.)**: You can prepare two additional cantrips each day.\n\n**Spontaneous Caster (Bard, Sorcerer, etc.)**: Add two additional cantrips from your spell list to your repertoire.',
   tags: [Feat, ClassFeat, BardFeat, ClericFeat, WitchFeat, WizardFeat, FeatLevel2],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(SpellRepertoire), [
-      Effects.gainCharacterOption(SelectBardCantrip),
-      Effects.gainCharacterOption(SelectBardCantrip),
+    CharacterEffects.conditional(Traits.traitPrerequisite(SpellRepertoire), [
+      CharacterEffects.gainCharacterOption(SelectBardCantrip),
+      CharacterEffects.gainCharacterOption(SelectBardCantrip),
     ]),
-    Effects.conditional(Expressions.not(Traits.traitPrerequisite(SpellRepertoire)), [
-      Effects.gainLoadoutSlot(CantripLoadout),
-      Effects.gainLoadoutSlot(CantripLoadout),
+    CharacterEffects.conditional(Expressions.not(Traits.traitPrerequisite(SpellRepertoire)), [
+      CharacterEffects.gainLoadoutSlot(CantripLoadout),
+      CharacterEffects.gainLoadoutSlot(CantripLoadout),
     ]),
   ],
 })
@@ -178,8 +178,8 @@ export const LoremastersEtude = Traits.defineTrait('feat/loremasters-etude', {
   tags: [Feat, ClassFeat, BardFeat, FeatLevel2],
   prerequisites: [Traits.traitPrerequisite(EnigmaMuseType)],
   effects: [
-    Effects.gainAbility(BardFocusSpells.LoremastersEtude),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(BardFocusSpells.LoremastersEtude),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -187,28 +187,28 @@ export const MultifariousMuseEnigma = Traits.defineTrait('feat/multifarious-muse
   name: 'Multifarious Muse (Enigma)',
   description: 'Your muse is also an enigma muse. You gain the Bardic Lore feat.',
   prerequisites: [Expressions.not(Traits.traitPrerequisite(Enigma))],
-  effects: [Effects.gainTrait(EnigmaMuseType), Effects.gainTrait(BardicLore)],
+  effects: [CharacterEffects.gainTrait(EnigmaMuseType), CharacterEffects.gainTrait(BardicLore)],
 })
 
 export const MultifariousMuseMaestro = Traits.defineTrait('feat/multifarious-muse/maestro', {
   name: 'Multifarious Muse (Maestro)',
   description: 'Your muse is also a maestro muse. You gain the Lingering Composition feat.',
   prerequisites: [Expressions.not(Traits.traitPrerequisite(Maestro))],
-  effects: [Effects.gainTrait(MaestroMuseType), Effects.gainTrait(LingeringComposition)],
+  effects: [CharacterEffects.gainTrait(MaestroMuseType), CharacterEffects.gainTrait(LingeringComposition)],
 })
 
 export const MultifariousMusePolymath = Traits.defineTrait('feat/multifarious-muse/polymath', {
   name: 'Multifarious Muse (Polymath)',
   description: 'Your muse is also a polymath muse. You gain the Versatile Performance feat.',
   prerequisites: [Expressions.not(Traits.traitPrerequisite(Polymath))],
-  effects: [Effects.gainTrait(PolymathMuseType), Effects.gainTrait(VersatilePerformance)],
+  effects: [CharacterEffects.gainTrait(PolymathMuseType), CharacterEffects.gainTrait(VersatilePerformance)],
 })
 
 export const MultifariousMuseWarrior = Traits.defineTrait('feat/multifarious-muse/warrior', {
   name: 'Multifarious Muse (Warrior)',
   description: 'Your muse is also a warrior muse. You gain the Martial Performance feat.',
   prerequisites: [Expressions.not(Traits.traitPrerequisite(Warrior))],
-  effects: [Effects.gainTrait(WarriorMuseType), Effects.gainTrait(MartialPerformance)],
+  effects: [CharacterEffects.gainTrait(WarriorMuseType), CharacterEffects.gainTrait(MartialPerformance)],
 })
 
 export const SelectMultifariousMuse = CharacterOptions.selectTraitOption('feat/multifarious-muse/select', {
@@ -222,7 +222,7 @@ export const MultifariousMuse = Traits.defineTrait('feat/multifarious-muse', {
     '*Bard*\n\nYour muse doesn’t fall into a single label. Choose a type of muse other than that of your own. You gain a 1st-level feat that requires that muse, and your muse is now also a muse of that type, allowing you to take feats with the other muse as a prerequisite. You don’t gain any of the other effects of the muse you chose.\n\n**Special** You can take this feat multiple times. Each time you do, you must choose a different type of muse other than that of your own.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel2],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(SelectMultifariousMuse)],
+  effects: [CharacterEffects.gainCharacterOption(SelectMultifariousMuse)],
 })
 
 export const SongOfStrength = Traits.defineTrait('feat/song-of-strength', {
@@ -231,7 +231,7 @@ export const SongOfStrength = Traits.defineTrait('feat/song-of-strength', {
     '*Bard*\n\n**Prerequisites** warrior muse\n\nYour performances inspire strength in your allies to aid them at physical tasks. You learn the [_song of strength_](ability:spell/song-of-strength) composition cantrip.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel2],
   prerequisites: [Traits.traitPrerequisite(WarriorMuseType)],
-  effects: [Effects.gainAbility(Spells.SongOfStrength)],
+  effects: [CharacterEffects.gainAbility(Spells.SongOfStrength)],
 })
 
 export const UpliftingOverture = Traits.defineTrait('feat/uplifting-overture', {
@@ -240,7 +240,7 @@ export const UpliftingOverture = Traits.defineTrait('feat/uplifting-overture', {
     '*Bard*\n\n**Prerequisites** maestro muse\n\nYou learn the [_uplifting overture_](ability:spell/uplifting-overture) composition cantrip, which aids your allies’ skills with the inspiring nature of your performance.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel2],
   prerequisites: [Traits.traitPrerequisite(MaestroMuseType)],
-  effects: [Effects.gainAbility(Spells.UpliftingOverture)],
+  effects: [CharacterEffects.gainAbility(Spells.UpliftingOverture)],
 })
 
 export const CombatReading = Traits.defineTrait('feat/combat-reading', {
@@ -337,7 +337,7 @@ export const RallyingAnthem = Traits.defineTrait('feat/rallying-anthem', {
   name: 'Rallying Anthem',
   description: '*Bard*\n\nYou learn the [_rallying anthem_](ability:spell/rallying-anthem) composition cantrip, which protects you and allies.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel4],
-  effects: [Effects.gainAbility(Spells.RallyingAnthem)],
+  effects: [CharacterEffects.gainAbility(Spells.RallyingAnthem)],
 })
 
 export const RitualResearcher = Traits.defineTrait('feat/ritual-researcher', {
@@ -354,7 +354,7 @@ export const TripleTime = Traits.defineTrait('feat/triple-time', {
   description:
     '*Bard*\n\nYou learn the [_triple time_](ability:spell/triple-time) composition cantrip, which speeds up you and your allies for a round.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel4],
-  effects: [Effects.gainAbility(Spells.TripleTime)],
+  effects: [CharacterEffects.gainAbility(Spells.TripleTime)],
 })
 
 export const VersatileSignature = Traits.defineTrait('feat/versatile-signature', {
@@ -403,7 +403,7 @@ export const DirgeOfDoom = Traits.defineTrait('feat/dirge-of-doom', {
   description:
     '*Bard*\n\nYou learn the [_dirge of doom_](ability:spell/dirge-of-doom) composition cantrip, which frightens your enemies and keeps them from fully recovering from their fear.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel6],
-  effects: [Effects.gainAbility(Spells.DirgeOfDoom)],
+  effects: [CharacterEffects.gainAbility(Spells.DirgeOfDoom)],
 })
 
 export const EducateAllies = Traits.defineTrait('feat/educate-allies', {
@@ -457,7 +457,7 @@ export const SongOfMarching = Traits.defineTrait('feat/song-of-marching', {
   description:
     '*Bard*\n\nYou learn the [_song of marching_](ability:spell/song-of-marching) composition cantrip, which enables you and your allies to cross vast distances without strain.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel6],
-  effects: [Effects.gainAbility(Spells.SongOfMarching)],
+  effects: [CharacterEffects.gainAbility(Spells.SongOfMarching)],
 })
 
 export const SteadySpellcasting = Traits.defineTrait('feat/steady-spellcasting', {
@@ -528,8 +528,8 @@ export const FortissimoComposition = Traits.defineTrait('feat/fortissimo-composi
   tags: [Feat, ClassFeat, BardFeat, FeatLevel8],
   prerequisites: [Traits.traitPrerequisite(MaestroMuseType)],
   effects: [
-    Effects.gainAbility(BardFocusSpells.FortissimoComposition),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(BardFocusSpells.FortissimoComposition),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -609,7 +609,7 @@ export const HouseOfImaginaryWalls = Traits.defineTrait('feat/house-of-imaginary
   description:
     '*Bard*\n\nYou erect an imaginary barrier others believe to be real. You learn the [_house of imaginary walls_](ability:spell/house-of-imaginary-walls) [composition](content:traits/composition) cantrip.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel10],
-  effects: [Effects.gainAbility(Spells.HouseOfImaginaryWalls)],
+  effects: [CharacterEffects.gainAbility(Spells.HouseOfImaginaryWalls)],
 })
 
 export const OdeToOuroboros = Traits.defineTrait('feat/ode-to-ouroboros', {
@@ -618,8 +618,8 @@ export const OdeToOuroboros = Traits.defineTrait('feat/ode-to-ouroboros', {
     '*Bard*\n\nYou learn the _ode to ouroboros_ [composition](content:traits/composition) spell, which enables you to temporarily spare your allies from death.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel10],
   effects: [
-    Effects.gainAbility(BardFocusSpells.OdeToOuroboros),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(BardFocusSpells.OdeToOuroboros),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -651,8 +651,8 @@ export const SymphonyOfTheUnfetteredHeart = Traits.defineTrait('feat/symphony-of
     '*Bard*\n\nYou learn the _symphony of the unfettered heart_ [composition](content:traits/composition) spell, which enables you to protect an ally against incapacitating conditions.',
   tags: [Feat, ClassFeat, BardFeat, FeatLevel10],
   effects: [
-    Effects.gainAbility(BardFocusSpells.SymphonyOfTheUnfetteredHeart),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(BardFocusSpells.SymphonyOfTheUnfetteredHeart),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 

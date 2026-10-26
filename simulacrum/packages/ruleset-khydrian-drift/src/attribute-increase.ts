@@ -1,4 +1,4 @@
-import { Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
 import { Agility, Brawn, Intelligence, Presence, ProficiencyBonus, Willpower } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Expressions } from '@bessemer/cornerstone/expression'
@@ -13,7 +13,7 @@ const defineAttributeIncrease = (key: string, name: string, characteristic: Char
     tags: [AttributeIncrease],
     repeatable: true,
     prerequisites: [Expressions.lessThan(characteristic.variable, ProficiencyBonus.variable)],
-    effects: [Effects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
+    effects: [CharacterEffects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
   })
 }
 

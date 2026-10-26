@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -37,8 +37,10 @@ export const SkilledHuman = Traits.defineTrait('heritage/skilled-human', {
     'Your ingenuity allows you to train in a wide variety of skills. You become trained in one skill of your choice. At 5th level, you become an expert in the chosen skill.',
   tags: [Heritage, HumanHeritage],
   effects: [
-    Effects.gainCharacterOption(SelectTrainedSkill),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectSkilledHumanExpertSkill)]),
+    CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(SelectSkilledHumanExpertSkill),
+    ]),
   ],
 })
 
@@ -47,7 +49,7 @@ export const VersatileHuman = Traits.defineTrait('heritage/versatile-human', {
   description:
     "Humanity's versatility and ambition have fueled its ascendance to be the most common ancestry in most nations throughout the world. Select a general feat of your choice for which you meet the prerequisites (as with your ancestry feat, you can select this general feat at any point during character creation).",
   tags: [Heritage, HumanHeritage],
-  effects: [Effects.gainCharacterOption(SelectAncestryGeneralFeat1)],
+  effects: [CharacterEffects.gainCharacterOption(SelectAncestryGeneralFeat1)],
 })
 
 export const SelectHumanHeritage = CharacterOptions.selectTraitOption('ancestry/human/select-heritage', {
@@ -84,14 +86,14 @@ export const Human = Traits.defineTrait('ancestry/human', {
     "*Human, Humanoid*\n\n_Humans are diverse and adaptable people with wide potential and deep ambitions._\n\nIf you want a character who can be just about anything, you should play a human.\n\nRead the full entry in [Humans](content:ancestries-and-backgrounds/humans).\n\n**Hit Points** 8\n\n**Size** Medium\n\n**Speed** 25 feet\n\n**Attribute Boosts** Two free ability boosts\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to 1 + your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from the list of common languages and any other languages to which you have access (such as the languages prevalent in your region).",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(8))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
-    Effects.gainCharacterOption(SelectAncestryBoost),
-    Effects.gainCharacterOption(SelectAncestryBoost),
-    Effects.gainCharacterOption(SelectHumanHeritage),
-    Effects.gainCharacterOption(SelectHumanFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectHumanFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectHumanFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(8))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
+    CharacterEffects.gainCharacterOption(SelectAncestryBoost),
+    CharacterEffects.gainCharacterOption(SelectAncestryBoost),
+    CharacterEffects.gainCharacterOption(SelectHumanHeritage),
+    CharacterEffects.gainCharacterOption(SelectHumanFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectHumanFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectHumanFeat9)]),
   ],
 })
 
@@ -117,7 +119,7 @@ export const GeneralTraining = Traits.defineTrait('ancestry/human/general-traini
     '*Human*\n\nYour adaptability manifests in your mastery of a range of useful abilities. You gain a 1st-level general feat. You must meet the feat’s prerequisites, but if you select this feat during character creation, you can select the feat later in the process in order to determine which prerequisites you meet.\n\n**Special** You can select this feat multiple times, choosing a different feat each time.',
   tags: [Feat, AncestryFeat, HumanFeat, FeatLevel1],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(SelectAncestryGeneralFeat1)],
+  effects: [CharacterEffects.gainCharacterOption(SelectAncestryGeneralFeat1)],
 })
 
 export const HaughtyObstinacy = Traits.defineTrait('ancestry/human/haughty-obstinacy', {
@@ -133,7 +135,7 @@ export const NaturalAmbition = Traits.defineTrait('ancestry/human/natural-ambiti
   description:
     '*Human*\n\nYou were raised to be ambitious and always reach for the stars, leading you to progress quickly in your chosen field. You gain a 1st-level class feat for your class. You must meet the prerequisites, but you can select the feat later in the character creation process in order to determine which prerequisites you meet.',
   tags: [Feat, AncestryFeat, HumanFeat, FeatLevel1],
-  effects: [Effects.gainCharacterOption(SelectAncestryClassFeat1)],
+  effects: [CharacterEffects.gainCharacterOption(SelectAncestryClassFeat1)],
 })
 
 export const NaturalSkill = Traits.defineTrait('ancestry/human/natural-skill', {
@@ -141,7 +143,7 @@ export const NaturalSkill = Traits.defineTrait('ancestry/human/natural-skill', {
   description:
     '*Human*\n\nYour ingenuity allows you to learn a wide variety of skills. You gain the trained proficiency rank in two skills of your choice.',
   tags: [Feat, AncestryFeat, HumanFeat, FeatLevel1],
-  effects: [Effects.gainCharacterOption(SelectTrainedSkill), Effects.gainCharacterOption(SelectTrainedSkill)],
+  effects: [CharacterEffects.gainCharacterOption(SelectTrainedSkill), CharacterEffects.gainCharacterOption(SelectTrainedSkill)],
 })
 
 export const UnconventionalWeaponry = Traits.defineTrait('ancestry/human/unconventional-weaponry', {
@@ -166,7 +168,7 @@ export const CleverImproviser = Traits.defineTrait('ancestry/human/clever-improv
   description:
     '*Human*\n\nYou’ve learned how to handle situations when you’re out of your depth. You gain the [Untrained Improvisation](trait:feat/untrained-improvisation) general feat. In addition, you can attempt skill actions that normally require you to be trained, even if you are untrained.',
   tags: [Feat, AncestryFeat, HumanFeat, FeatLevel5],
-  effects: [Effects.gainTrait(UntrainedImprovisation)],
+  effects: [CharacterEffects.gainTrait(UntrainedImprovisation)],
 })
 
 export const SenseAllies = Traits.defineTrait('ancestry/human/sense-allies', {

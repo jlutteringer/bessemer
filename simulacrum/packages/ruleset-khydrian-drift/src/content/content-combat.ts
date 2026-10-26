@@ -1,4 +1,6 @@
 import { Content } from '@simulacrum/ruleset'
+import * as ConditionTags from '@simulacrum/ruleset-khydrian-drift/condition'
+import * as DamageTypeEntities from '@simulacrum/ruleset-khydrian-drift/damage-type'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 
 export const Combat = Content.defineSection('combat', {
@@ -52,7 +54,7 @@ It decides whether to move first or take its action first. Its speed, sometimes 
 
 A creature can forgo moving, taking an action, or doing anything at all on its turn. If you can’t decide what to do on your turn, consider taking the [Dodge](content:combat/dodge) or [Ready](content:combat/ready) major action.
 
-At the end of its turn, as long as it is able to take actions, a creature always takes the [sustain action](content:combat/sustain-phase). This typically involves replenishing its [soak pool](content:creatures/soak-points) and maintaining any ongoing effects.`,
+At the start of its turn, as long as it is able to take actions, a creature always takes the [sustain action](content:combat/sustain-phase). This typically involves replenishing its [soak pool](content:creatures/soak-points) and maintaining any ongoing effects.`,
   },
 })
 
@@ -68,7 +70,7 @@ export const SustainPhase = Content.defineSection('combat/sustain-phase', {
   parent: Turn,
   content: {
     name: 'Sustain Phase',
-    description: `You automatically take the sustain steps at the end of your turn.`,
+    description: `You automatically take the sustain steps at the start of your turn.`,
   },
 })
 
@@ -392,7 +394,7 @@ export const RangedAttacksInCloseCombat = Content.defineSection('combat/ranged-a
   parent: RangedAttacks,
   content: {
     name: 'Ranged Attacks in Close Combat',
-    description: `Aiming a ranged Attack is more difficult when a foe is next to you. When you make a ranged Attack with a weapon, a spell, or some other means, you have disadvantage on the Attack roll if you are within 5 feet of a Hostile creature who can see you and who isn’t Incapacitated.`,
+    description: `Aiming a ranged Attack is more difficult when a foe is next to you. When you make a ranged Attack with a weapon, a spell, or some other means, you have disadvantage on the Attack roll if you are within 5 feet of a [Hostile](creature-tag:hostile) creature who can see you and who isn’t Incapacitated.`,
   },
 })
 
@@ -414,7 +416,7 @@ export const OpportunityAttacks = Content.defineSection('combat/opportunity-atta
     name: 'Opportunity Attacks',
     description: `In a fight, everyone is constantly watching for a chance to strike an enemy who is fleeing or passing by. Such a strike is called an opportunity Attack.
 
-You can make an opportunity Attack when a Hostile creature that you can see moves out of your reach. To make the opportunity Attack, you use your Reaction to make one melee Attack against the provoking creature. The Attack occurs right before the creature leaves your reach.
+You can make an opportunity Attack when a [Hostile](creature-tag:hostile) creature that you can see moves out of your reach. To make the opportunity Attack, you use your Reaction to make one melee Attack against the provoking creature. The Attack occurs right before the creature leaves your reach.
 
 You can avoid provoking an opportunity Attack by taking the Disengage action. You also don’t provoke an opportunity Attack when you Teleport or when someone or something moves you without using your Movement, action, or Reaction. For example, you don’t provoke an opportunity Attack if an explosion hurls you out of a foe’s reach or if gravity causes you to fall past an enemy.`,
   },
@@ -492,13 +494,15 @@ export const DamageTypes = Content.defineSection('combat/damage-types', {
   parent: DamageAndHealing,
   content: {
     name: 'Damage Types',
-    description: `Every source of damage has a type, which describes how it harms its target.
-
-- **Ballistic:** Bullets, flechettes, and other projectiles fired from guns.
-- **Fire:** Flames, incendiaries, and superheated plasma.
-- **Physical:** Blades, blunt weapons, fists, falls, and other kinetic force.`,
+    description: `Every source of damage has a type, which describes how it harms its target.`,
   },
 })
+
+export const AcidDamageSection = Content.linkEntity(DamageTypes, DamageTypeEntities.Acid)
+export const BallisticDamageSection = Content.linkEntity(DamageTypes, DamageTypeEntities.Ballistic)
+export const ElectricDamageSection = Content.linkEntity(DamageTypes, DamageTypeEntities.Electric)
+export const FireDamageSection = Content.linkEntity(DamageTypes, DamageTypeEntities.Fire)
+export const PhysicalDamageSection = Content.linkEntity(DamageTypes, DamageTypeEntities.Physical)
 
 export const TemporaryVitalityPoints = Content.defineSection('combat/temporary-vitality-points', {
   parent: DamageAndHealing,
@@ -632,227 +636,47 @@ export const Conditions = Content.defineSection('combat/conditions', {
   parent: Combat,
   content: {
     name: 'Conditions',
+    description: `Conditions change what a creature can do, usually for the worse. A creature gains a condition from an ability or other effect, and the condition lasts until that effect's duration runs out or something ends it. A creature can be affected by several conditions at once, but gaining a condition it already has doesn't stack unless the condition's description says otherwise.
+
+The conditions are ${ConditionTags.AllConditions.map((it) => `[${it.name}](${it.id})`).join(', ')}.`,
   },
 })
 
-export const Blinded = Content.defineSection('combat/blinded', {
-  parent: Conditions,
-  content: {
-    name: 'Blinded',
-    description: `A blinded creature can’t see, whether from a flashbang, a damaged optical implant, or total darkness.
+export const Blinded = Content.linkEntity(Conditions, ConditionTags.Blinded)
 
-- The creature automatically fails any check that requires sight.
-- Attack rolls against the creature have advantage.
-- The creature’s attack rolls have disadvantage.`,
-  },
-})
+export const Burning = Content.linkEntity(Conditions, ConditionTags.Burning)
 
-export const Burning = Content.defineSection('combat/burning', {
-  parent: Conditions,
-  content: {
-    name: 'Burning',
-    description: `A burning creature is on fire, from an incendiary round, a plasma torch, or a detonation, and keeps taking damage until the flames burn out. Burning always comes with a damage amount and a [damage type](content:combat/damage-types), written as Burning (1d6 + A Fire), and lasts for the duration of the effect that applied it.
+export const Charmed = Content.linkEntity(Conditions, ConditionTags.Charmed)
 
-- The creature takes the listed damage during the [Sustain Phase](content:combat/sustain-phase) of the creature that applied the condition.
-- The condition ends when its duration runs out.
-- Burning stacks. A creature can be burning from several effects at once, and takes the damage from each one, with each lasting for its own duration.`,
-  },
-})
+export const Deafened = Content.linkEntity(Conditions, ConditionTags.Deafened)
 
-export const Charmed = Content.defineSection('combat/charmed', {
-  parent: Conditions,
-  content: {
-    name: 'Charmed',
-    description: `A charmed creature has been swayed by another creature, through manipulation, neural hacking, or chemical influence.
+export const Exhaustion = Content.linkEntity(Conditions, ConditionTags.Exhaustion)
 
-- The creature can’t attack the charmer or target the charmer with harmful abilities or effects.
-- The charmer has advantage on any check to interact socially with the creature.`,
-  },
-})
+export const Frightened = Content.linkEntity(Conditions, ConditionTags.Frightened)
 
-export const Deafened = Content.defineSection('combat/deafened', {
-  parent: Conditions,
-  content: {
-    name: 'Deafened',
-    description: `A deafened creature can’t hear, whether from a concussive blast, a damaged auditory implant, or overwhelming noise.
+export const Grappled = Content.linkEntity(Conditions, ConditionTags.Grappled)
 
-- The creature automatically fails any check that requires hearing.`,
-  },
-})
+export const Incapacitated = Content.linkEntity(Conditions, ConditionTags.Incapacitated)
 
-export const Exhaustion = Content.defineSection('combat/exhaustion', {
-  parent: Conditions,
-  content: {
-    name: 'Exhaustion',
-    description: `Exhaustion builds up in levels, from 1 to 6, as a creature is pushed beyond its limits. Each time a creature gains this condition, its exhaustion level increases by 1.
+export const Invisible = Content.linkEntity(Conditions, ConditionTags.Invisible)
 
-- The creature’s attack rolls and checks are reduced by 2 times its exhaustion level.
-- The creature’s speed is reduced by 1 square for each exhaustion level.
-- The creature dies if its exhaustion level reaches 6.
-- Finishing a long rest reduces the creature’s exhaustion level by 1. The condition ends when its exhaustion level reaches 0.`,
-  },
-})
+export const Paralyzed = Content.linkEntity(Conditions, ConditionTags.Paralyzed)
 
-export const Frightened = Content.defineSection('combat/frightened', {
-  parent: Conditions,
-  content: {
-    name: 'Frightened',
-    description: `A frightened creature is overcome by fear of a particular source, such as an enemy or a threat it can’t overcome.
+export const Petrified = Content.linkEntity(Conditions, ConditionTags.Petrified)
 
-- The creature has disadvantage on attack rolls and checks while the source of its fear is within line of sight.
-- The creature can’t willingly move closer to the source of its fear.`,
-  },
-})
+export const Poisoned = Content.linkEntity(Conditions, ConditionTags.Poisoned)
 
-export const Grappled = Content.defineSection('combat/grappled', {
-  parent: Conditions,
-  content: {
-    name: 'Grappled',
-    description: `A grappled creature is held in place by another creature, its grappler. See [Grappling](content:combat/grappling) for how a creature grapples another and how to escape.
+export const Primed = Content.linkEntity(Conditions, ConditionTags.Primed)
 
-- The creature’s speed is 0 and can’t increase.
-- The creature has disadvantage on attack rolls against any target other than the grappler.
-- The grappler can drag or carry the creature when it moves.
-- The condition ends if the grappler is [incapacitated](content:combat/incapacitated), or if an effect moves the creature out of the grappler’s reach.`,
-  },
-})
+export const Prone = Content.linkEntity(Conditions, ConditionTags.Prone)
 
-export const Incapacitated = Content.defineSection('combat/incapacitated', {
-  parent: Conditions,
-  content: {
-    name: 'Incapacitated',
-    description: `An incapacitated creature is unable to act or defend itself.
+export const Restrained = Content.linkEntity(Conditions, ConditionTags.Restrained)
 
-- The creature can’t take actions.
-- The creature cannot move.
-- The creature drops whatever it’s holding and falls prone.
-- Attack rolls against the creature have advantage.`,
-  },
-})
+export const Stunned = Content.linkEntity(Conditions, ConditionTags.Stunned)
 
-export const Invisible = Content.defineSection('combat/invisible', {
-  parent: Conditions,
-  content: {
-    name: 'Invisible',
-    description: `An invisible creature can’t be seen, whether through optical camouflage, a cloaking field, or similar technology.
+export const Unconscious = Content.linkEntity(Conditions, ConditionTags.Unconscious)
 
-- The creature has advantage on its initiative check.
-- The creature isn’t affected by any effect that requires its target to be seen, unless the effect’s creator can somehow see it.
-- Attack rolls against the creature have disadvantage.
-- The creature’s attack rolls have advantage.`,
-  },
-})
-
-export const Paralyzed = Content.defineSection('combat/paralyzed', {
-  parent: Conditions,
-  content: {
-    name: 'Paralyzed',
-    description: `A paralyzed creature’s body has locked up, from a neurotoxin, a nerve disruptor, or a hijacked cybernetic system.
-
-- The creature is [incapacitated](content:combat/incapacitated).
-- The creature’s speed is 0 and can’t increase.
-- Attacks against the creature’s Fortitude and Reflex defense automatically hit.
-- Attack rolls against the creature have advantage.
-- Any attack that hits the creature is a critical hit if the attacker is within 1 square of it.`,
-  },
-})
-
-export const Petrified = Content.defineSection('combat/petrified', {
-  parent: Conditions,
-  content: {
-    name: 'Petrified',
-    description: `A petrified creature has been turned into, or encased in, an inanimate substance such as stone or a stasis field. Its weight increases by a factor of ten, and it stops aging.
-
-- The creature is [incapacitated](content:combat/incapacitated) and unaware of its surroundings.
-- The creature’s speed is 0 and can’t increase.
-- Attacks against the creature’s Fortitude and Reflex defense automatically hit.
-- Attack rolls against the creature have advantage.
-- The creature takes half damage from all sources.
-- The creature can’t be [poisoned](content:combat/poisoned), and any poison already in its system is suspended.`,
-  },
-})
-
-export const Poisoned = Content.defineSection('combat/poisoned', {
-  parent: Conditions,
-  content: {
-    name: 'Poisoned',
-    description: `A poisoned creature is weakened by a toxin, a disease, or a corrupted chemical implant.
-
-- The creature has disadvantage on attack rolls and checks.`,
-  },
-})
-
-export const Primed = Content.defineSection('combat/primed', {
-  parent: Conditions,
-  content: {
-    name: 'Primed',
-    description: `Various effects prime creatures, and various effects detonate them. Primed always comes with a number of stacks, written as Primed 2, which is how many times the creature can be detonated.
-
-- **Detonate:** When an effect causes a primed creature to detonate, the creature loses one stack. The effect says how much damage the detonation deals and which creatures it affects.
-- The condition ends when the creature has no stacks left.`,
-  },
-})
-
-export const Prone = Content.defineSection('combat/prone', {
-  parent: Conditions,
-  content: {
-    name: 'Prone',
-    description: `A prone creature is lying on the ground, either because it was knocked down or because it threw itself down. See [Being Prone](content:combat/being-prone) for how a prone creature moves and stands up.
-
-- The creature’s only movement options are to crawl, or to spend half its speed to stand up and end the condition.
-- The creature has disadvantage on attack rolls.
-- Attack rolls against the creature have advantage if the attacker is within 1 square of it. Otherwise, they have disadvantage.`,
-  },
-})
-
-export const Restrained = Content.defineSection('combat/restrained', {
-  parent: Conditions,
-  content: {
-    name: 'Restrained',
-    description: `A restrained creature is bound or entangled, whether by restraints, a net, or a gravity snare.
-
-- The creature cannot move.
-- Attack rolls against the creature’s Armor Class, Fortitude and Reflex defense have advantage.
-- The creature’s attack rolls have disadvantage.`,
-  },
-})
-
-export const Stunned = Content.defineSection('combat/stunned', {
-  parent: Conditions,
-  content: {
-    name: 'Stunned',
-    description: `A stunned creature is overwhelmed and can barely react, from a shock baton, an EMP to its implants, or a powerful blow.
-
-- The creature can’t take actions.
-- The creature cannot move.`,
-  },
-})
-
-export const Unconscious = Content.defineSection('combat/unconscious', {
-  parent: Conditions,
-  content: {
-    name: 'Unconscious',
-    description: `An unconscious creature has been knocked out or has fallen unconscious from its injuries.
-
-- The creature is [incapacitated](content:combat/incapacitated) and [prone](content:combat/prone).
-- The creature’s speed is 0 and can’t increase.
-- The creature is unaware of its surroundings.
-- Attacks against the creature’s Fortitude and Reflex defense automatically hit.
-- Attack rolls against the creature have advantage.
-- Any attack that hits the creature is a critical hit if the attacker is within 1 square of it.`,
-  },
-})
-
-export const Vulnerable = Content.defineSection('combat/vulnerable', {
-  parent: Conditions,
-  content: {
-    name: 'Vulnerable',
-    description: `A vulnerable creature has an opening in its defenses, from a cracked armor plate, a disrupted shield, or a moment of exposure. Vulnerable always comes with a number of stacks, written as Vulnerable 2.
-
-- The next attack that hits the creature deals double damage, and the creature loses one stack.
-- The condition ends when the creature has no stacks left.`,
-  },
-})
+export const Vulnerable = Content.linkEntity(Conditions, ConditionTags.Vulnerable)
 
 export const CombatContent = [
   Combat,
@@ -903,6 +727,11 @@ export const CombatContent = [
   Cover,
   DamageAndHealing,
   DamageTypes,
+  AcidDamageSection,
+  BallisticDamageSection,
+  ElectricDamageSection,
+  FireDamageSection,
+  PhysicalDamageSection,
   TemporaryVitalityPoints,
   TakingDamage,
   Healing,

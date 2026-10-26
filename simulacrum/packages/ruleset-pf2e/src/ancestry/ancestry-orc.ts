@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -46,7 +46,7 @@ export const BattleReadyOrc = Traits.defineTrait('heritage/battle-ready-orc', {
   description:
     'You descend from a line of terrifying battlefield commanders. You become trained in [Intimidation](characteristic:skill/intimidation), and you gain the [Intimidating Glare](trait:feat/intimidating-glare) skill feat.',
   tags: [Heritage, OrcHeritage],
-  effects: [Effects.gainTrait(TrainedIntimidation), Effects.gainTrait(IntimidatingGlare)],
+  effects: [CharacterEffects.gainTrait(TrainedIntimidation), CharacterEffects.gainTrait(IntimidatingGlare)],
 })
 
 export const DeepOrc = Traits.defineTrait('heritage/deep-orc', {
@@ -54,7 +54,7 @@ export const DeepOrc = Traits.defineTrait('heritage/deep-orc', {
   description:
     'Your calloused hands and red eyes speak to a life spent in the deep darkness of mountain caverns, where you learned to battle on rocky cliffs and survive with minimal resources. You gain the [Terrain Expertise](trait:feat/terrain-expertise) skill feat for underground terrain and the [Combat Climber](trait:feat/combat-climber) skill feat.',
   tags: [Heritage, OrcHeritage],
-  effects: [Effects.gainTrait(TerrainExpertise), Effects.gainTrait(CombatClimber)],
+  effects: [CharacterEffects.gainTrait(TerrainExpertise), CharacterEffects.gainTrait(CombatClimber)],
 })
 
 export const GraveOrc = Traits.defineTrait('heritage/grave-orc', {
@@ -70,7 +70,7 @@ export const HoldScarredOrc = Traits.defineTrait('heritage/hold-scarred-orc', {
   description:
     'You are part of an orc community that participates in ritual scarification or tattooing. The marks on your skin show your exceptional hardiness and vitality. You gain 12 [Hit Points](characteristic:hit-points) from your ancestry instead of 10. You also gain the [Diehard](trait:feat/diehard) feat.',
   tags: [Heritage, OrcHeritage],
-  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(2))), Effects.gainTrait(Diehard)],
+  effects: [CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(2))), CharacterEffects.gainTrait(Diehard)],
 })
 
 export const RainfallOrc = Traits.defineTrait('heritage/rainfall-orc', {
@@ -86,7 +86,7 @@ export const WinterOrc = Traits.defineTrait('heritage/winter-orc', {
   description:
     'Your ancestors survived in cold climates. You become trained in [Survival](characteristic:skill/survival), and you treat environmental cold effects as if they were one step less extreme (incredible cold becomes extreme, extreme cold becomes severe, and so on).',
   tags: [Heritage, OrcHeritage],
-  effects: [Effects.gainTrait(TrainedSurvival)],
+  effects: [CharacterEffects.gainTrait(TrainedSurvival)],
 })
 
 export const SelectOrcHeritage = CharacterOptions.selectTraitOption('ancestry/orc/select-heritage', {
@@ -115,40 +115,40 @@ export const Orc = Traits.defineTrait('ancestry/orc', {
     "*Humanoid, Orc*\n\n_Orcs are proud, strong people with hardened physiques who value physical might and glory in combat._\n\nIf you want a character who is hardy, fearsome, and excels at feats of physical prowess, you should play an orc.\n\nRead the full entry in [Orcs](content:ancestries-and-backgrounds/orcs).\n\n**Hit Points** 10\n\n**Size** Medium\n\n**Speed** 25 feet\n\n**Attribute Boosts** Two free ability boosts\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Orcish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Jotun](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Petran](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Sakvroth](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Darkvision** You can see in darkness and dim light just as well as you can see in bright light, though your vision in darkness is in black and white.",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(10))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
-    Effects.gainCharacterOption(SelectAncestryBoost),
-    Effects.gainCharacterOption(SelectAncestryBoost),
-    Effects.gainTrait(Darkvision),
-    Effects.gainCharacterOption(SelectOrcHeritage),
-    Effects.gainCharacterOption(SelectOrcFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectOrcFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectOrcFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(10))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
+    CharacterEffects.gainCharacterOption(SelectAncestryBoost),
+    CharacterEffects.gainCharacterOption(SelectAncestryBoost),
+    CharacterEffects.gainTrait(Darkvision),
+    CharacterEffects.gainCharacterOption(SelectOrcHeritage),
+    CharacterEffects.gainCharacterOption(SelectOrcFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectOrcFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectOrcFeat9)]),
   ],
 })
 
 export const HoldMarkBurningSun = Traits.defineTrait('ancestry/orc/hold-mark/burning-sun', {
   name: 'Hold Mark: Burning Sun',
   description: 'You are trained in Diplomacy and gain a +1 status bonus to saves against arcane spells.',
-  effects: [Effects.gainTrait(TrainedDiplomacy)],
+  effects: [CharacterEffects.gainTrait(TrainedDiplomacy)],
 })
 
 export const HoldMarkDeathsHead = Traits.defineTrait('ancestry/orc/hold-mark/deaths-head', {
   name: "Hold Mark: Death's Head",
   description: 'You are trained in Survival and gain a +1 status bonus to saves against primal spells.',
-  effects: [Effects.gainTrait(TrainedSurvival)],
+  effects: [CharacterEffects.gainTrait(TrainedSurvival)],
 })
 
 export const HoldMarkDefiledCorpse = Traits.defineTrait('ancestry/orc/hold-mark/defiled-corpse', {
   name: 'Hold Mark: Defiled Corpse',
   description: 'You are trained in Religion and gain a +1 status bonus to saves against divine spells.',
-  effects: [Effects.gainTrait(TrainedReligion)],
+  effects: [CharacterEffects.gainTrait(TrainedReligion)],
 })
 
 export const HoldMarkEmptyHand = Traits.defineTrait('ancestry/orc/hold-mark/empty-hand', {
   name: 'Hold Mark: Empty Hand',
   description: 'You are trained in Intimidation and gain a +1 status bonus to saves against occult spells.',
-  effects: [Effects.gainTrait(TrainedIntimidation)],
+  effects: [CharacterEffects.gainTrait(TrainedIntimidation)],
 })
 
 export const SelectHoldMarkEmblem = CharacterOptions.selectTraitOption('ancestry/orc/hold-mark/select-emblem', {
@@ -167,7 +167,7 @@ export const BeastTrainer = Traits.defineTrait('ancestry/orc/beast-trainer', {
     '*Orc*\n\nYou have an impressive innate ability to tame and command ferocious beasts. You become trained in the [Nature](characteristic:skill/nature) skill and gain your choice of the [Pet](trait:feat/pet) general feat or the [Train Animal](trait:feat/train-animal) skill feat.',
   tags: [Feat, AncestryFeat, OrcFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Orc), Traits.traitPrerequisite(DromaarHeritage)])],
-  effects: [Effects.gainTrait(TrainedNature), Effects.gainCharacterOption(SelectBeastTrainerFeat)],
+  effects: [CharacterEffects.gainTrait(TrainedNature), CharacterEffects.gainCharacterOption(SelectBeastTrainerFeat)],
 })
 
 export const IronFists = Traits.defineTrait('ancestry/orc/iron-fists', {
@@ -194,7 +194,7 @@ export const OrcLore = Traits.defineTrait('ancestry/orc/orc-lore', {
     '*Orc*\n\nThe hold elders taught you your people’s histories, told tales of great athletic feats, and shared with you the hardships your ancestors endured so that you can pass this wisdom down to future generations. You become trained in [Athletics](characteristic:skill/athletics) and [Survival](characteristic:skill/survival). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Orc [Lore](content:skills/lore).',
   tags: [Feat, AncestryFeat, OrcFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Orc), Traits.traitPrerequisite(DromaarHeritage)])],
-  effects: [Effects.gainTrait(TrainedAthletics), Effects.gainTrait(TrainedSurvival), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedAthletics), CharacterEffects.gainTrait(TrainedSurvival), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const OrcSuperstition = Traits.defineTrait('ancestry/orc/orc-superstition', {
@@ -212,7 +212,7 @@ export const HoldMark = Traits.defineTrait('ancestry/orc/hold-mark', {
     '*Orc*\n\nYou bear scars or tattoos enhanced by the mark of your community’s prowess. When you select this feat, choose one of the options from the below table. You are trained in the listed skill and gain a +1 status bonus to saves against spells from the listed tradition. You gain a large brand or tattoo in the shape of the chosen emblem or a similar concept (for example, the Burning Sun could be a torch, sun, volcano, or other fiery symbol, while the Empty Hand could be a fist or claw).\n\n## Hold Mark\n\n| Hold Mark Emblem | Skill | Tradition |\n|---|---|---|\n| Burning Sun | Diplomacy | Arcane |\n| Death’s Head | Survival | Primal |\n| Defiled Corpse | Religion | Divine |\n| Empty Hand | Intimidation | Occult |\n| |',
   tags: [Feat, AncestryFeat, OrcFeat, FeatLevel1],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(Orc), Traits.traitPrerequisite(DromaarHeritage)])],
-  effects: [Effects.gainCharacterOption(SelectHoldMarkEmblem)],
+  effects: [CharacterEffects.gainCharacterOption(SelectHoldMarkEmblem)],
 })
 
 export const OrcWeaponFamiliarity = Traits.defineTrait('ancestry/orc/orc-weapon-familiarity', {

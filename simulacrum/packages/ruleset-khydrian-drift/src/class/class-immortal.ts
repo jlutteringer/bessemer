@@ -1,4 +1,4 @@
-import { Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { Class } from '@simulacrum/ruleset-khydrian-drift/tag'
@@ -8,10 +8,10 @@ export const Immortal = Traits.defineTrait('immortal', {
   name: 'Immortal',
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(FortitudeDefense, Attributes.modifier(Patches.sum(DefenseBonus.Heavy))),
-    Effects.modifyCharacteristic(WillDefense, Attributes.modifier(Patches.sum(DefenseBonus.Medium))),
-    Effects.gainTrait(LightArmorProficiency),
-    Effects.gainTrait(MediumArmorProficiency),
-    Effects.gainTrait(HeavyArmorProficiency),
+    CharacterEffects.modifyCharacteristic(FortitudeDefense, Attributes.modifier(Patches.sum(DefenseBonus.Heavy))),
+    CharacterEffects.modifyCharacteristic(WillDefense, Attributes.modifier(Patches.sum(DefenseBonus.Medium))),
+    CharacterEffects.gainTrait(LightArmorProficiency),
+    CharacterEffects.gainTrait(MediumArmorProficiency),
+    CharacterEffects.gainTrait(HeavyArmorProficiency),
   ],
 })

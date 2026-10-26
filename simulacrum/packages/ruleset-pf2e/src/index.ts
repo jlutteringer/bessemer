@@ -1,4 +1,4 @@
-import { Effects } from '@simulacrum/ruleset'
+import { CharacterEffects } from '@simulacrum/ruleset'
 import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { AllActionTypes } from '@simulacrum/ruleset-pf2e/action-type'
@@ -77,41 +77,49 @@ export const Pf2e: Ruleset = {
   ],
   progressionTable: {
     1: [
-      Effects.gainCharacterOption(SelectAncestry),
-      Effects.gainCharacterOption(SelectBackground),
-      Effects.gainCharacterOption(SelectClass),
-      Effects.gainCharacterOption(SelectLevel1Boost),
-      Effects.gainCharacterOption(SelectLevel1Boost),
-      Effects.gainCharacterOption(SelectLevel1Boost),
-      Effects.gainCharacterOption(SelectLevel1Boost),
-      Effects.gainLoadoutSlot(ArmorLoadout),
-      Effects.gainLoadoutSlot(ShieldLoadout),
+      CharacterEffects.gainCharacterOption(SelectAncestry),
+      CharacterEffects.gainCharacterOption(SelectBackground),
+      CharacterEffects.gainCharacterOption(SelectClass),
+      CharacterEffects.gainCharacterOption(SelectLevel1Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel1Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel1Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel1Boost),
+      CharacterEffects.gainLoadoutSlot(ArmorLoadout),
+      CharacterEffects.gainLoadoutSlot(ShieldLoadout),
       // An Intelligence modifier of +1 or more trains you in that many additional skills
-      Effects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 1), [Effects.gainCharacterOption(SelectTrainedSkill)]),
-      Effects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 2), [Effects.gainCharacterOption(SelectTrainedSkill)]),
-      Effects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 3), [Effects.gainCharacterOption(SelectTrainedSkill)]),
-      Effects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 4), [Effects.gainCharacterOption(SelectTrainedSkill)]),
+      CharacterEffects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 1), [
+        CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+      ]),
+      CharacterEffects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 2), [
+        CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+      ]),
+      CharacterEffects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 3), [
+        CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+      ]),
+      CharacterEffects.conditional(Expressions.greaterThanOrEqual(Intelligence.variable, 4), [
+        CharacterEffects.gainCharacterOption(SelectTrainedSkill),
+      ]),
     ],
-    2: [Effects.gainCharacterOption(SelectSkillFeat2)],
-    3: [Effects.gainCharacterOption(SelectGeneralFeat3), Effects.gainCharacterOption(SelectSkillIncrease)],
-    4: [Effects.gainCharacterOption(SelectSkillFeat4)],
+    2: [CharacterEffects.gainCharacterOption(SelectSkillFeat2)],
+    3: [CharacterEffects.gainCharacterOption(SelectGeneralFeat3), CharacterEffects.gainCharacterOption(SelectSkillIncrease)],
+    4: [CharacterEffects.gainCharacterOption(SelectSkillFeat4)],
     5: [
-      Effects.gainCharacterOption(SelectLevel5Boost),
-      Effects.gainCharacterOption(SelectLevel5Boost),
-      Effects.gainCharacterOption(SelectLevel5Boost),
-      Effects.gainCharacterOption(SelectLevel5Boost),
-      Effects.gainCharacterOption(SelectSkillIncrease),
+      CharacterEffects.gainCharacterOption(SelectLevel5Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel5Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel5Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel5Boost),
+      CharacterEffects.gainCharacterOption(SelectSkillIncrease),
     ],
-    6: [Effects.gainCharacterOption(SelectSkillFeat6)],
-    7: [Effects.gainCharacterOption(SelectGeneralFeat7), Effects.gainCharacterOption(SelectSkillIncrease7)],
-    8: [Effects.gainCharacterOption(SelectSkillFeat8)],
-    9: [Effects.gainCharacterOption(SelectSkillIncrease7)],
+    6: [CharacterEffects.gainCharacterOption(SelectSkillFeat6)],
+    7: [CharacterEffects.gainCharacterOption(SelectGeneralFeat7), CharacterEffects.gainCharacterOption(SelectSkillIncrease7)],
+    8: [CharacterEffects.gainCharacterOption(SelectSkillFeat8)],
+    9: [CharacterEffects.gainCharacterOption(SelectSkillIncrease7)],
     10: [
-      Effects.gainCharacterOption(SelectLevel10Boost),
-      Effects.gainCharacterOption(SelectLevel10Boost),
-      Effects.gainCharacterOption(SelectLevel10Boost),
-      Effects.gainCharacterOption(SelectLevel10Boost),
-      Effects.gainCharacterOption(SelectSkillFeat10),
+      CharacterEffects.gainCharacterOption(SelectLevel10Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel10Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel10Boost),
+      CharacterEffects.gainCharacterOption(SelectLevel10Boost),
+      CharacterEffects.gainCharacterOption(SelectSkillFeat10),
     ],
   },
   content: [

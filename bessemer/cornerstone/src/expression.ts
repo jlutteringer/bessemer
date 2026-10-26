@@ -50,6 +50,8 @@ export type ExpressionDefinition<
   resolver: (expression: ExpressionType, evaluate: EvaluateExpression, context: ExpressionContext) => ReturnType
 }
 
+export type ExpressionDefinitions = Array<ExpressionDefinition<unknown, Array<any>, Expression<any>>>
+
 export interface ExpressionVariable<T> extends IExpression<T> {
   expressionKey: 'Variable'
   name: string

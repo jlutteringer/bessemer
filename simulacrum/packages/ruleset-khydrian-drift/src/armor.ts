@@ -1,4 +1,4 @@
-import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { ArmorLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Patches } from '@bessemer/cornerstone'
 import { Combinability, CombinabilityType } from '@bessemer/cornerstone/combinable'
@@ -21,7 +21,7 @@ export const LightArmor = Abilities.defineAbility('armor/light', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LightArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3), { combinability: ArmorBase }))],
+  effects: [CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3), { combinability: ArmorBase }))],
 })
 
 export const MediumArmor = Abilities.defineAbility('armor/medium', {
@@ -29,7 +29,7 @@ export const MediumArmor = Abilities.defineAbility('armor/medium', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(MediumArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(6), { combinability: ArmorBase }))],
+  effects: [CharacterEffects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(6), { combinability: ArmorBase }))],
 })
 
 export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
@@ -38,7 +38,7 @@ export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(HeavyArmorProficiency)],
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       ArmorClass,
       Attributes.modifier(Patches.set(NumericExpressions.sum([12, NumericExpressions.multiply([2, ProficiencyBonus.variable])])), {
         combinability: ArmorBase,

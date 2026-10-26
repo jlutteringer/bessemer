@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -29,7 +29,7 @@ export const Cleave = Abilities.defineAbility('fighter/power/cleave', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and an enemy adjacent to you takes damage equal to your Strength modifier.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -43,7 +43,7 @@ export const ReapingStrike = Abilities.defineAbility('fighter/power/reaping-stri
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.\n\n**Miss:** Half Strength modifier damage. If you're wielding a two-handed weapon, you deal damage equal to your Strength modifier."
     ),
   ],
@@ -57,7 +57,7 @@ export const SureStrike = Abilities.defineAbility('fighter/power/sure-strike', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength + 2 vs. AC\n\n**Hit:** 1[W] damage.\n\nIncrease damage to 2[W] at 21st level.'
     ),
   ],
@@ -71,7 +71,7 @@ export const TideOfIron = Abilities.defineAbility('fighter/power/tide-of-iron', 
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**At-Will** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Requirement:** You must be using a shield.\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and you push the target 1 square if it is your size, smaller than you, or one size category larger. You can shift into the space that the target occupied.\n\nIncrease damage to 2[W] + Strength modifier at 21st level.'
     ),
   ],
@@ -86,7 +86,7 @@ export const CoveringAttack = Abilities.defineAbility('fighter/power/covering-at
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and an ally adjacent to the target can shift 2 squares.'
     ),
   ],
@@ -102,7 +102,7 @@ export const PassingAttack = Abilities.defineAbility('fighter/power/passing-atta
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Primary Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and you can shift 1 square. Make a secondary attack.\n\n**Secondary Target:** One creature other than the primary target\n\n**Secondary Attack:** Strength + 2 vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.'
     ),
   ],
@@ -119,7 +119,7 @@ export const SpinningSweep = Abilities.defineAbility('fighter/power/spinning-swe
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage, and you knock the target prone.'
     ),
   ],
@@ -136,7 +136,7 @@ export const SteelSerpentStrike = Abilities.defineAbility('fighter/power/steel-s
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and the target is slowed and cannot shift until end of your next turn.'
     ),
   ],
@@ -152,7 +152,7 @@ export const BruteStrike = Abilities.defineAbility('fighter/power/brute-strike',
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Daily** ✦ Martial, Reliable, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage.'
     ),
   ],
@@ -168,7 +168,7 @@ export const ComebackStrike = Abilities.defineAbility('fighter/power/comeback-st
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Daily** ✦ Healing, Martial, Reliable, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you can spend a healing surge.'
     ),
   ],
@@ -184,7 +184,7 @@ export const VillainsMenace = Abilities.defineAbility('fighter/power/villains-me
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 1**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you gain a +2 power bonus to attack rolls and a +4 power bonus to damage rolls against the target until the end of the encounter.\n\n**Miss:** Gain a +1 power bonus to attack rolls and a +2 power bonus to damage rolls against the target until the end of the encounter.'
     ),
   ],
@@ -200,7 +200,7 @@ export const BoundlessEndurance = Abilities.defineAbility('fighter/power/boundle
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 2**\n\n**Daily** ✦ Healing, Martial, Stance\n\n**Minor Action** · Personal\n\n**Effect:** You gain regeneration 2 + your Constitution modifier when you are bloodied.'
     ),
   ],
@@ -216,7 +216,7 @@ export const GetOverHere = Abilities.defineAbility('fighter/power/get-over-here'
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 2**\n\n**Encounter** ✦ Martial\n\n**Move Action** · Melee 1\n\n**Target:** One willing adjacent ally\n\n**Effect:** You slide the target 2 squares to a square that is adjacent to you.'
     ),
   ],
@@ -232,7 +232,7 @@ export const NoOpening = Abilities.defineAbility('fighter/power/no-opening', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 2**\n\n**Encounter** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** An enemy attacks you and has combat advantage against you\n\n**Effect:** Cancel the combat advantage you were about to grant to the attack.'
     ),
   ],
@@ -248,7 +248,7 @@ export const Unstoppable = Abilities.defineAbility('fighter/power/unstoppable', 
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 2**\n\n**Daily** ✦ Healing, Martial\n\n**Minor Action** · Personal\n\n**Effect:** You gain temporary hit points equal to 2d6 + your Constitution modifier.'
     ),
   ],
@@ -264,7 +264,7 @@ export const ArmorPiercingThrust = Abilities.defineAbility('fighter/power/armor-
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. Reflex\n\n**Weapon:** If you're wielding a light blade or a spear, you gain a bonus to the attack roll equal to your Dexterity modifier.\n\n**Hit:** 1[W] + Strength modifier damage.\n\n**Weapon:** If you're wielding a light blade or a spear, you gain a bonus to the damage roll equal to your Dexterity modifier."
     ),
   ],
@@ -280,7 +280,7 @@ export const CrushingBlow = Abilities.defineAbility('fighter/power/crushing-blow
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Weapon:** If you're wielding an axe, a hammer, or a mace, you gain a bonus to the damage roll equal to your Constitution modifier."
     ),
   ],
@@ -296,7 +296,7 @@ export const DanceOfSteel = Abilities.defineAbility('fighter/power/dance-of-stee
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Weapon:** If you're wielding a polearm or a heavy blade, the target is slowed until the end of your next turn."
     ),
   ],
@@ -312,7 +312,7 @@ export const PreciseStrike = Abilities.defineAbility('fighter/power/precise-stri
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength + 4 vs. AC\n\n**Hit:** 1[W] + Strength modifier damage.'
     ),
   ],
@@ -328,7 +328,7 @@ export const RainOfBlows = Abilities.defineAbility('fighter/power/rain-of-blows'
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Primary Target:** One creature\n\n**Attack:** Strength vs. AC, two attacks\n\n**Hit:** 1[W] + Strength modifier damage.\n\n**Weapon:** If you're wielding a light blade, a spear, or a flail and have Dexterity 15 or higher, make a secondary attack.\n\n**Secondary Target:** The same or a different target\n\n**Secondary Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage."
     ),
   ],
@@ -344,7 +344,7 @@ export const SweepingBlow = Abilities.defineAbility('fighter/power/sweeping-blow
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 3**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC\n\n**Weapon:** If you're wielding an axe, a flail, a heavy blade, or a pick, you gain a bonus to the attack roll equal to one-half your Strength modifier.\n\n**Hit:** 1[W] + Strength modifier damage."
     ),
   ],
@@ -360,7 +360,7 @@ export const CrackTheShell = Abilities.defineAbility('fighter/power/crack-the-sh
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 5**\n\n**Daily** ✦ Martial, Reliable, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and the target takes ongoing 5 damage and a –2 penalty to AC (save ends both).'
     ),
   ],
@@ -376,7 +376,7 @@ export const DizzyingBlow = Abilities.defineAbility('fighter/power/dizzying-blow
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 5**\n\n**Daily** ✦ Martial, Reliable, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and the target is immobilized (save ends).'
     ),
   ],
@@ -392,7 +392,7 @@ export const RainOfSteel = Abilities.defineAbility('fighter/power/rain-of-steel'
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 5**\n\n**Daily** ✦ Martial, Stance, Weapon\n\n**Minor Action** · Personal\n\n**Effect:** Any enemy that starts its turn adjacent to you takes 1[W] damage, as long as you are able to make opportunity attacks.'
     ),
   ],
@@ -408,7 +408,7 @@ export const BattleAwareness = Abilities.defineAbility('fighter/power/battle-awa
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 6**\n\n**Daily** ✦ Martial\n\n**No Action** · Personal\n\n**Effect:** You gain a +10 bonus to your initiative check. Use this power after rolling your initiative.'
     ),
   ],
@@ -424,7 +424,7 @@ export const DefensiveTraining = Abilities.defineAbility('fighter/power/defensiv
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 6**\n\n**Daily** ✦ Martial, Stance\n\n**Minor Action** · Personal\n\n**Effect:** Gain a +2 power bonus to your Fortitude, Reflex, or Will defense.'
     ),
   ],
@@ -440,7 +440,7 @@ export const Unbreakable = Abilities.defineAbility('fighter/power/unbreakable', 
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 6**\n\n**Encounter** ✦ Martial\n\n**Immediate Reaction** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** Reduce the damage from the attack by 5 + your Constitution modifier.'
     ),
   ],
@@ -456,7 +456,7 @@ export const ComeAndGetIt = Abilities.defineAbility('fighter/power/come-and-get-
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 3\n\n**Target:** Each enemy in burst you can see\n\n**Effect:** Each target must shift 2 and end adjacent to you, if possible. A target that can't end adjacent to you doesn't move. You can then attack any targets that are adjacent to you (close burst 1).\n\n**Attack:** Strength vs. AC\n\n**Hit:** 1[W] + Strength modifier damage."
     ),
   ],
@@ -473,7 +473,7 @@ export const GriffonsWrath = Abilities.defineAbility('fighter/power/griffons-wra
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and the target takes a –2 penalty to AC until the end of your next turn.'
     ),
   ],
@@ -490,7 +490,7 @@ export const IronBulwark = Abilities.defineAbility('fighter/power/iron-bulwark',
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Effect:** You gain a +1 power bonus to AC (or a +2 bonus if you're using a shield) until the end of your next turn."
     ),
   ],
@@ -506,7 +506,7 @@ export const RecklessStrike = Abilities.defineAbility('fighter/power/reckless-st
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength –2 vs. AC\n\n**Hit:** 3[W] + Strength modifier damage.'
     ),
   ],
@@ -522,7 +522,7 @@ export const SuddenSurge = Abilities.defineAbility('fighter/power/sudden-surge',
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 7**\n\n**Encounter** ✦ Martial, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage.\n\n**Effect:** Move a number of squares equal to your Dexterity modifier (minimum 1).'
     ),
   ],
@@ -538,7 +538,7 @@ export const ShiftTheBattlefield = Abilities.defineAbility('fighter/power/shift-
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 9**\n\n**Daily** ✦ Martial, Weapon\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC\n\n**Hit:** 2[W] + Strength modifier damage, and you slide the target 1 square.\n\n**Miss:** Half damage.'
     ),
   ],
@@ -554,7 +554,7 @@ export const ThicketOfBlades = Abilities.defineAbility('fighter/power/thicket-of
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 9**\n\n**Daily** ✦ Martial, Reliable, Weapon\n\n**Standard Action** · Close burst 1\n\n**Target:** Each enemy in burst you can see\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and the target is slowed (save ends).'
     ),
   ],
@@ -570,7 +570,7 @@ export const VictoriousSurge = Abilities.defineAbility('fighter/power/victorious
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Attack 9**\n\n**Daily** ✦ Healing, Martial, Reliable, Weapon\n\n**Standard Action** · Melee weapon\n\n**Target:** One creature\n\n**Attack:** Strength vs. AC\n\n**Hit:** 3[W] + Strength modifier damage, and you regain hit points as if you had spent a healing surge.'
     ),
   ],
@@ -586,7 +586,7 @@ export const IntoTheFray = Abilities.defineAbility('fighter/power/into-the-fray'
   tags: [EncounterPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 10**\n\n**Encounter** ✦ Martial\n\n**Minor Action** · Personal\n\n**Effect:** You can move 3 squares, as long as you can end your move adjacent to an enemy.'
     ),
   ],
@@ -602,7 +602,7 @@ export const LastDitchEvasion = Abilities.defineAbility('fighter/power/last-ditc
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Fighter Utility 10**\n\n**Daily** ✦ Martial\n\n**Immediate Interrupt** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** You take no damage from the attack that just hit you. However, you are stunned and take a –2 penalty to all defenses until the end of your next turn.'
     ),
   ],
@@ -618,7 +618,7 @@ export const StalwartGuard = Abilities.defineAbility('fighter/power/stalwart-gua
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Fighter)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Fighter Utility 10**\n\n**Daily** ✦ Martial\n\n**Minor Action** · Close burst 1\n\n**Target:** Each ally in burst\n\n**Effect:** The targets gain a +1 shield bonus to AC until the end of the encounter. If you are using a shield, increase the bonus to +2 and apply it to your allies' Reflex defense as well."
     ),
   ],

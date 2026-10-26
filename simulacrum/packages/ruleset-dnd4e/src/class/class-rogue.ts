@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { Class, ClassFeature, Feat } from '@simulacrum/ruleset-dnd4e/tag'
@@ -78,36 +78,50 @@ export const Rogue = Traits.defineTrait('rogue', {
     '**Role:** Striker. You dart in to attack, do massive damage, and then retreat to safety. You do best when teamed with a defender to flank enemies.\n\n**Power Source:** Martial. Your talents depend on extensive training and constant practice, innate skill, and natural coordination.\n\n**Key Abilities:** [Dexterity](characteristic:dexterity), [Strength](characteristic:strength), [Charisma](characteristic:charisma)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth), [leather](ability:armor/leather)\n\n**Weapon Proficiencies:** Dagger, hand crossbow, shuriken, sling, short sword\n\n**Bonus to Defense:** +2 [Reflex](characteristic:reflex)\n\n**Hit Points at 1st Level:** 12 + [Constitution](characteristic:constitution) score\n\n**Hit Points per Level Gained:** 5\n\n**Healing Surges per Day:** 6 + Constitution modifier\n\n**Trained Skills:** [Stealth](characteristic:skill/stealth) and [Thievery](characteristic:skill/thievery). From the class skills list below, choose four more trained skills at 1st level.\n\n**Class Skills:** [Acrobatics](characteristic:skill/acrobatics) (Dex), [Athletics](characteristic:skill/athletics) (Str), [Bluff](characteristic:skill/bluff) (Cha), [Dungeoneering](characteristic:skill/dungeoneering) (Wis), [Insight](characteristic:skill/insight) (Wis), [Intimidate](characteristic:skill/intimidate) (Cha), [Perception](characteristic:skill/perception) (Wis), Stealth (Dex), [Streetwise](characteristic:skill/streetwise) (Cha), Thievery (Dex)\n\n**Build Options:** [Brawny rogue](content:classes/brawny-rogue), [trickster rogue](content:classes/trickster-rogue)\n\n**Class Features:** [First Strike](trait:rogue/first-strike), [Rogue Tactics](character-option:rogue/select-tactics), [Rogue Weapon Talent](trait:rogue/weapon-talent), [Sneak Attack](trait:rogue/sneak-attack)',
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       HitPoints,
       Attributes.modifier(Patches.sum(NumericExpressions.sum([7, NumericExpressions.multiply([CharacterValues.Level, 5])])))
     ),
-    Effects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(2))),
-    Effects.gainTrait(FirstStrike),
-    Effects.gainCharacterOption(SelectRogueTactics),
-    Effects.gainTrait(RogueWeaponTalent),
-    Effects.gainTrait(SneakAttack),
-    Effects.gainTrait(Armor.LeatherProficiency),
-    Effects.gainTrait(Skills.TrainedStealth),
-    Effects.gainTrait(Skills.TrainedThievery),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(Powers.SelectAtWillAttack),
-    Effects.gainCharacterOption(Powers.SelectAtWillAttack),
-    Effects.gainCharacterOption(Powers.SelectEncounterAttack1),
-    Effects.gainCharacterOption(Powers.SelectDailyAttack1),
+    CharacterEffects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(2))),
+    CharacterEffects.gainTrait(FirstStrike),
+    CharacterEffects.gainCharacterOption(SelectRogueTactics),
+    CharacterEffects.gainTrait(RogueWeaponTalent),
+    CharacterEffects.gainTrait(SneakAttack),
+    CharacterEffects.gainTrait(Armor.LeatherProficiency),
+    CharacterEffects.gainTrait(Skills.TrainedStealth),
+    CharacterEffects.gainTrait(Skills.TrainedThievery),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(Powers.SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(Powers.SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack1),
+    CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack1),
     // A human gains training in one additional skill from its class skill list
-    Effects.conditional(Traits.traitPrerequisite(Human), [Effects.gainCharacterOption(SelectSkill)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [Effects.gainCharacterOption(Powers.SelectUtility2)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainCharacterOption(Powers.SelectEncounterAttack3)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(Powers.SelectDailyAttack5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(Powers.SelectUtility6)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainCharacterOption(Powers.SelectEncounterAttack7)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(Powers.SelectDailyAttack9)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(Powers.SelectUtility10)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Human), [CharacterEffects.gainCharacterOption(SelectSkill)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility2),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack3),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack5),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility6),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack7),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack9),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility10),
+    ]),
   ],
 })
 

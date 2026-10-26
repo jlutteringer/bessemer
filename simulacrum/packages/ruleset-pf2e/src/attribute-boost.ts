@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, Effects, Tags, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterOptions, CharacterEffects, Tags, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { AncestryBoost, BackgroundBoost, KeyAttribute, Level1Boost, Level5Boost } from '@simulacrum/ruleset-pf2e/tag'
@@ -12,126 +12,126 @@ export const StrengthAncestryBoost = Traits.defineTrait('ancestry-boost/strength
   name: 'Strength (Ancestry Boost)',
   description: 'Your ancestry increases your Strength modifier by 1.',
   tags: [AncestryBoost],
-  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const DexterityAncestryBoost = Traits.defineTrait('ancestry-boost/dexterity', {
   name: 'Dexterity (Ancestry Boost)',
   description: 'Your ancestry increases your Dexterity modifier by 1.',
   tags: [AncestryBoost],
-  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ConstitutionAncestryBoost = Traits.defineTrait('ancestry-boost/constitution', {
   name: 'Constitution (Ancestry Boost)',
   description: 'Your ancestry increases your Constitution modifier by 1.',
   tags: [AncestryBoost],
-  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const IntelligenceAncestryBoost = Traits.defineTrait('ancestry-boost/intelligence', {
   name: 'Intelligence (Ancestry Boost)',
   description: 'Your ancestry increases your Intelligence modifier by 1.',
   tags: [AncestryBoost],
-  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const WisdomAncestryBoost = Traits.defineTrait('ancestry-boost/wisdom', {
   name: 'Wisdom (Ancestry Boost)',
   description: 'Your ancestry increases your Wisdom modifier by 1.',
   tags: [AncestryBoost],
-  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const CharismaAncestryBoost = Traits.defineTrait('ancestry-boost/charisma', {
   name: 'Charisma (Ancestry Boost)',
   description: 'Your ancestry increases your Charisma modifier by 1.',
   tags: [AncestryBoost],
-  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const StrengthBackgroundBoost = Traits.defineTrait('background-boost/strength', {
   name: 'Strength (Background Boost)',
   description: 'Your background increases your Strength modifier by 1.',
   tags: [BackgroundBoost],
-  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const DexterityBackgroundBoost = Traits.defineTrait('background-boost/dexterity', {
   name: 'Dexterity (Background Boost)',
   description: 'Your background increases your Dexterity modifier by 1.',
   tags: [BackgroundBoost],
-  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ConstitutionBackgroundBoost = Traits.defineTrait('background-boost/constitution', {
   name: 'Constitution (Background Boost)',
   description: 'Your background increases your Constitution modifier by 1.',
   tags: [BackgroundBoost],
-  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const IntelligenceBackgroundBoost = Traits.defineTrait('background-boost/intelligence', {
   name: 'Intelligence (Background Boost)',
   description: 'Your background increases your Intelligence modifier by 1.',
   tags: [BackgroundBoost],
-  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const WisdomBackgroundBoost = Traits.defineTrait('background-boost/wisdom', {
   name: 'Wisdom (Background Boost)',
   description: 'Your background increases your Wisdom modifier by 1.',
   tags: [BackgroundBoost],
-  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const CharismaBackgroundBoost = Traits.defineTrait('background-boost/charisma', {
   name: 'Charisma (Background Boost)',
   description: 'Your background increases your Charisma modifier by 1.',
   tags: [BackgroundBoost],
-  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const StrengthLevel1Boost = Traits.defineTrait('level-1-boost/strength', {
   name: 'Strength (Level 1 Boost)',
   description: 'Increase your Strength modifier by 1.',
   tags: [Level1Boost],
-  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const DexterityLevel1Boost = Traits.defineTrait('level-1-boost/dexterity', {
   name: 'Dexterity (Level 1 Boost)',
   description: 'Increase your Dexterity modifier by 1.',
   tags: [Level1Boost],
-  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ConstitutionLevel1Boost = Traits.defineTrait('level-1-boost/constitution', {
   name: 'Constitution (Level 1 Boost)',
   description: 'Increase your Constitution modifier by 1.',
   tags: [Level1Boost],
-  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const IntelligenceLevel1Boost = Traits.defineTrait('level-1-boost/intelligence', {
   name: 'Intelligence (Level 1 Boost)',
   description: 'Increase your Intelligence modifier by 1.',
   tags: [Level1Boost],
-  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const WisdomLevel1Boost = Traits.defineTrait('level-1-boost/wisdom', {
   name: 'Wisdom (Level 1 Boost)',
   description: 'Increase your Wisdom modifier by 1.',
   tags: [Level1Boost],
-  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const CharismaLevel1Boost = Traits.defineTrait('level-1-boost/charisma', {
   name: 'Charisma (Level 1 Boost)',
   description: 'Increase your Charisma modifier by 1.',
   tags: [Level1Boost],
-  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const StrengthLevel5Boost = Traits.defineTrait('level-5-boost/strength', {
@@ -140,7 +140,7 @@ export const StrengthLevel5Boost = Traits.defineTrait('level-5-boost/strength', 
     'Increase your Strength modifier by 1. This boost is only available while your Strength modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Strength.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const DexterityLevel5Boost = Traits.defineTrait('level-5-boost/dexterity', {
@@ -149,7 +149,7 @@ export const DexterityLevel5Boost = Traits.defineTrait('level-5-boost/dexterity'
     'Increase your Dexterity modifier by 1. This boost is only available while your Dexterity modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Dexterity.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ConstitutionLevel5Boost = Traits.defineTrait('level-5-boost/constitution', {
@@ -158,7 +158,7 @@ export const ConstitutionLevel5Boost = Traits.defineTrait('level-5-boost/constit
     'Increase your Constitution modifier by 1. This boost is only available while your Constitution modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Constitution.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const IntelligenceLevel5Boost = Traits.defineTrait('level-5-boost/intelligence', {
@@ -167,7 +167,7 @@ export const IntelligenceLevel5Boost = Traits.defineTrait('level-5-boost/intelli
     'Increase your Intelligence modifier by 1. This boost is only available while your Intelligence modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Intelligence.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const WisdomLevel5Boost = Traits.defineTrait('level-5-boost/wisdom', {
@@ -176,7 +176,7 @@ export const WisdomLevel5Boost = Traits.defineTrait('level-5-boost/wisdom', {
     'Increase your Wisdom modifier by 1. This boost is only available while your Wisdom modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Wisdom.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const CharismaLevel5Boost = Traits.defineTrait('level-5-boost/charisma', {
@@ -185,7 +185,7 @@ export const CharismaLevel5Boost = Traits.defineTrait('level-5-boost/charisma', 
     'Increase your Charisma modifier by 1. This boost is only available while your Charisma modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level5Boost],
   prerequisites: [Expressions.lessThan(Charisma.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const StrengthLevel5PartialBoost = Traits.defineTrait('level-5-boost/strength-partial', {
@@ -248,7 +248,7 @@ export const StrengthLevel10Boost = Traits.defineTrait('level-10-boost/strength'
     'Increase your Strength modifier by 1. This boost is only available while your Strength modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level10Boost],
   prerequisites: [Expressions.lessThan(Strength.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const StrengthLevel10PartialBoost = Traits.defineTrait('level-10-boost/strength-partial', {
@@ -258,8 +258,8 @@ export const StrengthLevel10PartialBoost = Traits.defineTrait('level-10-boost/st
   tags: [Level10Boost],
   prerequisites: [Expressions.greaterThanOrEqual(Strength.variable, 4), Expressions.not(Traits.traitPrerequisite(StrengthLevel10Boost))],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(StrengthLevel5PartialBoost), [
-      Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(StrengthLevel5PartialBoost), [
+      CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1))),
     ]),
   ],
 })
@@ -270,7 +270,7 @@ export const DexterityLevel10Boost = Traits.defineTrait('level-10-boost/dexterit
     'Increase your Dexterity modifier by 1. This boost is only available while your Dexterity modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level10Boost],
   prerequisites: [Expressions.lessThan(Dexterity.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const DexterityLevel10PartialBoost = Traits.defineTrait('level-10-boost/dexterity-partial', {
@@ -280,8 +280,8 @@ export const DexterityLevel10PartialBoost = Traits.defineTrait('level-10-boost/d
   tags: [Level10Boost],
   prerequisites: [Expressions.greaterThanOrEqual(Dexterity.variable, 4), Expressions.not(Traits.traitPrerequisite(DexterityLevel10Boost))],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(DexterityLevel5PartialBoost), [
-      Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(DexterityLevel5PartialBoost), [
+      CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
     ]),
   ],
 })
@@ -292,7 +292,7 @@ export const ConstitutionLevel10Boost = Traits.defineTrait('level-10-boost/const
     'Increase your Constitution modifier by 1. This boost is only available while your Constitution modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level10Boost],
   prerequisites: [Expressions.lessThan(Constitution.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const ConstitutionLevel10PartialBoost = Traits.defineTrait('level-10-boost/constitution-partial', {
@@ -302,8 +302,8 @@ export const ConstitutionLevel10PartialBoost = Traits.defineTrait('level-10-boos
   tags: [Level10Boost],
   prerequisites: [Expressions.greaterThanOrEqual(Constitution.variable, 4), Expressions.not(Traits.traitPrerequisite(ConstitutionLevel10Boost))],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(ConstitutionLevel5PartialBoost), [
-      Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(ConstitutionLevel5PartialBoost), [
+      CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
     ]),
   ],
 })
@@ -314,7 +314,7 @@ export const IntelligenceLevel10Boost = Traits.defineTrait('level-10-boost/intel
     'Increase your Intelligence modifier by 1. This boost is only available while your Intelligence modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level10Boost],
   prerequisites: [Expressions.lessThan(Intelligence.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const IntelligenceLevel10PartialBoost = Traits.defineTrait('level-10-boost/intelligence-partial', {
@@ -324,8 +324,8 @@ export const IntelligenceLevel10PartialBoost = Traits.defineTrait('level-10-boos
   tags: [Level10Boost],
   prerequisites: [Expressions.greaterThanOrEqual(Intelligence.variable, 4), Expressions.not(Traits.traitPrerequisite(IntelligenceLevel10Boost))],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(IntelligenceLevel5PartialBoost), [
-      Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(IntelligenceLevel5PartialBoost), [
+      CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
     ]),
   ],
 })
@@ -336,7 +336,7 @@ export const WisdomLevel10Boost = Traits.defineTrait('level-10-boost/wisdom', {
     'Increase your Wisdom modifier by 1. This boost is only available while your Wisdom modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level10Boost],
   prerequisites: [Expressions.lessThan(Wisdom.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const WisdomLevel10PartialBoost = Traits.defineTrait('level-10-boost/wisdom-partial', {
@@ -346,8 +346,8 @@ export const WisdomLevel10PartialBoost = Traits.defineTrait('level-10-boost/wisd
   tags: [Level10Boost],
   prerequisites: [Expressions.greaterThanOrEqual(Wisdom.variable, 4), Expressions.not(Traits.traitPrerequisite(WisdomLevel10Boost))],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(WisdomLevel5PartialBoost), [
-      Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(WisdomLevel5PartialBoost), [
+      CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
     ]),
   ],
 })
@@ -358,7 +358,7 @@ export const CharismaLevel10Boost = Traits.defineTrait('level-10-boost/charisma'
     'Increase your Charisma modifier by 1. This boost is only available while your Charisma modifier is below +4; otherwise, take the partial boost instead.',
   tags: [Level10Boost],
   prerequisites: [Expressions.lessThan(Charisma.variable, 4)],
-  effects: [Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
+  effects: [CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1)))],
 })
 
 export const CharismaLevel10PartialBoost = Traits.defineTrait('level-10-boost/charisma-partial', {
@@ -368,8 +368,8 @@ export const CharismaLevel10PartialBoost = Traits.defineTrait('level-10-boost/ch
   tags: [Level10Boost],
   prerequisites: [Expressions.greaterThanOrEqual(Charisma.variable, 4), Expressions.not(Traits.traitPrerequisite(CharismaLevel10Boost))],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(CharismaLevel5PartialBoost), [
-      Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(CharismaLevel5PartialBoost), [
+      CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
     ]),
   ],
 })
@@ -380,8 +380,8 @@ export const StrengthKeyAttribute = Traits.defineTrait('key-attribute/strength',
     'Strength is your key attribute. Your class increases your Strength modifier by 1, and you add your Strength modifier to your class DC.',
   tags: [KeyAttribute],
   effects: [
-    Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Strength.variable))),
+    CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Strength.variable))),
   ],
 })
 
@@ -391,8 +391,8 @@ export const DexterityKeyAttribute = Traits.defineTrait('key-attribute/dexterity
     'Dexterity is your key attribute. Your class increases your Dexterity modifier by 1, and you add your Dexterity modifier to your class DC.',
   tags: [KeyAttribute],
   effects: [
-    Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Dexterity.variable))),
+    CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Dexterity.variable))),
   ],
 })
 
@@ -402,8 +402,8 @@ export const ConstitutionKeyAttribute = Traits.defineTrait('key-attribute/consti
     'Constitution is your key attribute. Your class increases your Constitution modifier by 1, and you add your Constitution modifier to your class DC.',
   tags: [KeyAttribute],
   effects: [
-    Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Constitution.variable))),
+    CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Constitution.variable))),
   ],
 })
 
@@ -413,8 +413,8 @@ export const IntelligenceKeyAttribute = Traits.defineTrait('key-attribute/intell
     'Intelligence is your key attribute. Your class increases your Intelligence modifier by 1, and you add your Intelligence modifier to your class DC.',
   tags: [KeyAttribute],
   effects: [
-    Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Intelligence.variable))),
+    CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Intelligence.variable))),
   ],
 })
 
@@ -423,8 +423,8 @@ export const WisdomKeyAttribute = Traits.defineTrait('key-attribute/wisdom', {
   description: 'Wisdom is your key attribute. Your class increases your Wisdom modifier by 1, and you add your Wisdom modifier to your class DC.',
   tags: [KeyAttribute],
   effects: [
-    Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Wisdom.variable))),
+    CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Wisdom.variable))),
   ],
 })
 
@@ -434,8 +434,8 @@ export const CharismaKeyAttribute = Traits.defineTrait('key-attribute/charisma',
     'Charisma is your key attribute. Your class increases your Charisma modifier by 1, and you add your Charisma modifier to your class DC.',
   tags: [KeyAttribute],
   effects: [
-    Effects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Charisma.variable))),
+    CharacterEffects.modifyCharacteristic(Charisma, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(ClassDC, Attributes.modifier(Patches.sum(Charisma.variable))),
   ],
 })
 

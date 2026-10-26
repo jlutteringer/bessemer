@@ -1,4 +1,5 @@
-import { Characteristics, CharacterValues } from '@simulacrum/ruleset'
+import { Characteristics, CharacterValues, Rolls } from '@simulacrum/ruleset'
+import { Potency } from '@simulacrum/ruleset/damage'
 import { Characteristic, CharacteristicTemplate } from '@simulacrum/ruleset/characteristic'
 import { Expression, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { ObjectPaths } from '@bessemer/cornerstone'
@@ -6,7 +7,7 @@ import { RoundingMode } from '@bessemer/cornerstone/math'
 
 export const VitalityPoolTemplate: CharacteristicTemplate = Characteristics.defineTemplate('vitality-pool', {
   name: 'Vitality Pool',
-  description: `The vitality pool represents the total amount of damage a creature can take before it is [incapacitated](content:combat/incapacitated). A creature’s [vitality points](content:creatures/vitality-points) cannot go above the vitality pool cap and this cap typically remains static.`,
+  description: `The vitality pool represents the total amount of damage a creature can take before it is [incapacitated](creature-tag:condition/incapacitated). A creature’s [vitality points](content:creatures/vitality-points) cannot go above the vitality pool cap and this cap typically remains static.`,
   path: ObjectPaths.from('vitalityPool'),
 })
 export const StaminaPoolTemplate: CharacteristicTemplate = Characteristics.defineTemplate('stamina-pool', {
@@ -16,7 +17,7 @@ export const StaminaPoolTemplate: CharacteristicTemplate = Characteristics.defin
 })
 export const SoakRatingTemplate: CharacteristicTemplate = Characteristics.defineTemplate('soak-rating', {
   name: 'Soak Rating',
-  description: `Soak rating represents how much damage a creature can resist before it hits their [vitality pool](characteristic:vitality-pool). At the end of each turn, during the [sustain phase](content:combat/sustain-phase), a creature gains [soak points](content:creatures/soak-points) equal to its soak rating. These soak points prevent some damage by reducing it before it reduces [vitality points](content:creatures/vitality-points).`,
+  description: `Soak rating represents how much damage a creature can resist before it hits their [vitality pool](characteristic:vitality-pool). At the start of its turn, during the [sustain phase](content:combat/sustain-phase), a creature gains [soak points](content:creatures/soak-points) equal to its soak rating. These soak points prevent some damage by reducing it before it reduces [vitality points](content:creatures/vitality-points).`,
   path: ObjectPaths.from('soakRating'),
 })
 export const MovementSpeedTemplate: CharacteristicTemplate = Characteristics.defineTemplate('movement-speed', {
@@ -145,12 +146,12 @@ export const StaminaCost = {
 }
 
 export const DamageBand = {
-  Minimal: '1d6',
-  Low: '1d6 + A',
-  Medium: '2d6 + 2A',
-  High: '3d6 + 3A',
-  VeryHigh: '4d6 + 4A',
-  Extreme: '6d6 + 6A',
+  Minimal: Rolls.dice(1, 6),
+  Low: Rolls.sum([Rolls.dice(1, 6), Potency]),
+  Medium: Rolls.sum([Rolls.dice(2, 6), NumericExpressions.multiply([2, Potency])]),
+  High: Rolls.sum([Rolls.dice(3, 6), NumericExpressions.multiply([3, Potency])]),
+  VeryHigh: Rolls.sum([Rolls.dice(4, 6), NumericExpressions.multiply([4, Potency])]),
+  Extreme: Rolls.sum([Rolls.dice(6, 6), NumericExpressions.multiply([6, Potency])]),
 }
 
 export const StaminaBase = 24

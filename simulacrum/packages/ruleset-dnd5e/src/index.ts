@@ -1,5 +1,5 @@
 import { Ruleset, RulesetReference } from '@simulacrum/ruleset/ruleset'
-import { Effects } from '@simulacrum/ruleset'
+import { CharacterEffects } from '@simulacrum/ruleset'
 import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
 import * as FightingStyles from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
 import { FightingStyle } from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
@@ -467,15 +467,15 @@ export const Dnd5e: Ruleset = {
   ],
   progressionTable: {
     1: [
-      Effects.gainResourcePool(HitPointResourcePool),
-      Effects.gainCharacterOption(SelectClassLevel),
-      Effects.gainCharacterOption(Backgrounds.SelectBackground),
-      Effects.gainCharacterOption(Species.SelectSpecies),
+      CharacterEffects.gainResourcePool(HitPointResourcePool),
+      CharacterEffects.gainCharacterOption(SelectClassLevel),
+      CharacterEffects.gainCharacterOption(Backgrounds.SelectBackground),
+      CharacterEffects.gainCharacterOption(Species.SelectSpecies),
     ],
-    2: [Effects.gainCharacterOption(SelectClassLevel)],
-    3: [Effects.gainCharacterOption(SelectClassLevel)],
-    4: [Effects.gainCharacterOption(SelectClassLevel)],
-    5: [Effects.gainCharacterOption(SelectClassLevel)],
+    2: [CharacterEffects.gainCharacterOption(SelectClassLevel)],
+    3: [CharacterEffects.gainCharacterOption(SelectClassLevel)],
+    4: [CharacterEffects.gainCharacterOption(SelectClassLevel)],
+    5: [CharacterEffects.gainCharacterOption(SelectClassLevel)],
   },
   content: [],
 }

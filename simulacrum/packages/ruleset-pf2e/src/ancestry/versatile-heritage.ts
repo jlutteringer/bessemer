@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, RulesetEntities, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, RulesetEntities, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -51,15 +51,15 @@ export const ChangelingHeritage = Traits.defineTrait('heritage/changeling', {
     "*Uncommon, Changeling*\n\n_Changelings are the children of malevolent hags, born with occult magic and the potential to hear a psychic Call._\n\nRead the full entry in [Changelings](content:ancestries-and-backgrounds/changelings).\n\nYour mother was a hag. Your eyes' heterochromia is the most obvious signifier of this parentage, but you likely also have a slighter build, paler skin, and darker hair than most members of your other parent's ancestry. You gain the changeling trait. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can select from changeling feats and feats from your other parent's ancestry whenever you gain an ancestry feat.",
   tags: [Heritage, VersatileHeritage],
   effects: [
-    Effects.conditional(
+    CharacterEffects.conditional(
       Expressions.or([
         Traits.traitPrerequisite(ElfAncestryReference),
         Traits.traitPrerequisite(GnomeAncestryReference),
         Traits.traitPrerequisite(LeshyAncestryReference),
       ]),
-      [Effects.gainTrait(Darkvision)]
+      [CharacterEffects.gainTrait(Darkvision)]
     ),
-    Effects.conditional(
+    CharacterEffects.conditional(
       Expressions.not(
         Expressions.or([
           Traits.traitPrerequisite(ElfAncestryReference),
@@ -67,7 +67,7 @@ export const ChangelingHeritage = Traits.defineTrait('heritage/changeling', {
           Traits.traitPrerequisite(LeshyAncestryReference),
         ])
       ),
-      [Effects.gainTrait(LowLightVision)]
+      [CharacterEffects.gainTrait(LowLightVision)]
     ),
   ],
 })
@@ -78,15 +78,15 @@ export const NephilimHeritage = Traits.defineTrait('heritage/nephilim', {
     '*Uncommon, Nephilim*\n\n_Nephilim are influenced by the divine magic of the Outer Sphere, often with fiendish or celestial features._\n\nIf you want a character who is supernaturally infused with the power of the Outer Planes, whose appearance is striking and notable, and whose personal connections might extend beyond the bounds of the Universe, you should play a nephilim.\n\nRead the full entry in [Nephilim](content:ancestries-and-backgrounds/nephilim).\n\nYour nature is influenced by celestials, fiends, or monitors. This manifests as a combination of features that belie your heritage, such as golden eyes, a halo, horns, or a tail. You gain the nephilim trait, in addition to the traits from your ancestry. You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from nephilim feats and feats from your ancestry whenever you gain an ancestry feat.',
   tags: [Heritage, VersatileHeritage],
   effects: [
-    Effects.conditional(
+    CharacterEffects.conditional(
       Expressions.or([
         Traits.traitPrerequisite(ElfAncestryReference),
         Traits.traitPrerequisite(GnomeAncestryReference),
         Traits.traitPrerequisite(LeshyAncestryReference),
       ]),
-      [Effects.gainTrait(Darkvision)]
+      [CharacterEffects.gainTrait(Darkvision)]
     ),
-    Effects.conditional(
+    CharacterEffects.conditional(
       Expressions.not(
         Expressions.or([
           Traits.traitPrerequisite(ElfAncestryReference),
@@ -94,7 +94,7 @@ export const NephilimHeritage = Traits.defineTrait('heritage/nephilim', {
           Traits.traitPrerequisite(LeshyAncestryReference),
         ])
       ),
-      [Effects.gainTrait(LowLightVision)]
+      [CharacterEffects.gainTrait(LowLightVision)]
     ),
   ],
 })
@@ -104,7 +104,7 @@ export const AiuvarinHeritage = Traits.defineTrait('heritage/aiuvarin', {
   description:
     "*Aiuvarin, Elf*\n\n_Elves' children with people of other ancestries, and the children of their children, are called “aiuvarin”, an elven word that refers to a poem about leaves that fall too quickly to the ground._\n\nRead the full entry in [Aiuvarins](content:ancestries-and-backgrounds/aiuvarins).\n\nYou have elves, or possibly other aiuvarins, in your family tree. You have pointed ears and other telltale signs of elf heritage. You gain the [elf](content:traits/elf) trait, the [aiuvarin](content:traits/aiuvarin) trait, and [low-light vision](content:playing-the-game/low-light-vision). In addition, when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry.",
   tags: [Heritage, VersatileHeritage],
-  effects: [Effects.gainTrait(LowLightVision)],
+  effects: [CharacterEffects.gainTrait(LowLightVision)],
 })
 
 export const DromaarHeritage = Traits.defineTrait('heritage/dromaar', {
@@ -112,7 +112,7 @@ export const DromaarHeritage = Traits.defineTrait('heritage/dromaar', {
   description:
     '*Dromaar, Orc*\n\n_As the orcs of Belkzen have become a critical vanguard in the war against the Whispering Tyrant, sometimes fighting alongside allies of other ancestries, children with a mix of orc heritage and that of another ancestry (typically human) have grown in number._\n\nRead the full entry in [Dromaars](content:ancestries-and-backgrounds/dromaars).\n\nOrcish strength emboldens your bloodline. You have a green tinge to your skin and other indicators of orc heritage. You gain the [orc](content:traits/orc) trait, the [dromaar](content:traits/dromaar) trait, and [low-light vision](content:playing-the-game/low-light-vision). When you gain an ancestry feat, you can choose from dromaar and orc feats in addition to those from your ancestry.',
   tags: [Heritage, VersatileHeritage],
-  effects: [Effects.gainTrait(LowLightVision)],
+  effects: [CharacterEffects.gainTrait(LowLightVision)],
 })
 
 export const SelectNephilimLoreSkill = CharacterOptions.selectTraitOption('ancestry/nephilim/nephilim-lore/select-skill', {
@@ -158,7 +158,7 @@ export const CallowMay = Traits.defineTrait('ancestry/changeling/callow-may', {
       ])
     ),
   ],
-  effects: [Effects.gainTrait(CharmingLiar)],
+  effects: [CharacterEffects.gainTrait(CharmingLiar)],
 })
 
 export const DreamMay = Traits.defineTrait('ancestry/changeling/dream-may', {
@@ -203,7 +203,7 @@ export const ChangelingLore = Traits.defineTrait('ancestry/changeling/changeling
     '*Changeling*\n\nAll too aware of your true nature, you’ve studied hags and their powers. You gain the trained proficiency rank in [Deception](characteristic:skill/deception) and [Occultism](characteristic:skill/occultism). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Hag [Lore](content:skills/lore).',
   tags: [Feat, AncestryFeat, ChangelingFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(ChangelingHeritage)],
-  effects: [Effects.gainTrait(TrainedDeception), Effects.gainTrait(TrainedOccultism), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedDeception), CharacterEffects.gainTrait(TrainedOccultism), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const HagClaws = Traits.defineTrait('ancestry/changeling/hag-claws', {
@@ -221,7 +221,7 @@ export const HagsSight = Traits.defineTrait('ancestry/changeling/hags-sight', {
     '*Changeling*\n\nYou’ve nurtured the supernatural abilities gifted by your hag mother, particularly your sight. You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision).',
   tags: [Feat, AncestryFeat, ChangelingFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(ChangelingHeritage)],
-  effects: [Effects.gainTrait(Darkvision)],
+  effects: [CharacterEffects.gainTrait(Darkvision)],
 })
 
 export const Angelkin = Traits.defineTrait('ancestry/nephilim/angelkin', {
@@ -241,7 +241,7 @@ export const Angelkin = Traits.defineTrait('ancestry/nephilim/angelkin', {
       ])
     ),
   ],
-  effects: [Effects.gainTrait(TrainedSociety), Effects.gainTrait(Multilingual)],
+  effects: [CharacterEffects.gainTrait(TrainedSociety), CharacterEffects.gainTrait(Multilingual)],
 })
 
 export const Grimspawn = Traits.defineTrait('ancestry/nephilim/grimspawn', {
@@ -261,7 +261,7 @@ export const Grimspawn = Traits.defineTrait('ancestry/nephilim/grimspawn', {
       ])
     ),
   ],
-  effects: [Effects.gainTrait(Diehard)],
+  effects: [CharacterEffects.gainTrait(Diehard)],
 })
 
 export const Hellspawn = Traits.defineTrait('ancestry/nephilim/hellspawn', {
@@ -281,7 +281,7 @@ export const Hellspawn = Traits.defineTrait('ancestry/nephilim/hellspawn', {
       ])
     ),
   ],
-  effects: [Effects.gainTrait(TrainedDeception), Effects.gainTrait(LieToMe)],
+  effects: [CharacterEffects.gainTrait(TrainedDeception), CharacterEffects.gainTrait(LieToMe)],
 })
 
 export const Lawbringer = Traits.defineTrait('ancestry/nephilim/lawbringer', {
@@ -341,7 +341,7 @@ export const Pitborn = Traits.defineTrait('ancestry/nephilim/pitborn', {
       ])
     ),
   ],
-  effects: [Effects.gainTrait(TrainedAthletics)],
+  effects: [CharacterEffects.gainTrait(TrainedAthletics)],
 })
 
 export const BestialManifestation = Traits.defineTrait('ancestry/nephilim/bestial-manifestation', {
@@ -368,7 +368,7 @@ export const NephilimEyes = Traits.defineTrait('ancestry/nephilim/nephilim-eyes'
     '*Nephilim*\n\n**Prerequisites** [low-light vision](content:playing-the-game/low-light-vision)\n\nYour eyes can see through darkness with visual acuity akin to that possessed by most extraplanar beings. You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision).',
   tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(NephilimHeritage), Traits.traitPrerequisite(LowLightVision)],
-  effects: [Effects.gainTrait(Darkvision)],
+  effects: [CharacterEffects.gainTrait(Darkvision)],
 })
 
 export const NephilimLore = Traits.defineTrait('ancestry/nephilim/nephilim-lore', {
@@ -377,7 +377,11 @@ export const NephilimLore = Traits.defineTrait('ancestry/nephilim/nephilim-lore'
     '*Nephilim*\n\nYou know the secrets of the Multiverse. You gain the trained proficiency rank in either [Diplomacy](characteristic:skill/diplomacy) or [Intimidation](characteristic:skill/intimidation), and [Religion](characteristic:skill/religion). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for a [Lore](content:skills/lore) subcategory of a plane to which you trace your lineage.',
   tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(NephilimHeritage)],
-  effects: [Effects.gainCharacterOption(SelectNephilimLoreSkill), Effects.gainTrait(TrainedReligion), Effects.gainTrait(AdditionalLore)],
+  effects: [
+    CharacterEffects.gainCharacterOption(SelectNephilimLoreSkill),
+    CharacterEffects.gainTrait(TrainedReligion),
+    CharacterEffects.gainTrait(AdditionalLore),
+  ],
 })
 
 export const NimbleHooves = Traits.defineTrait('ancestry/nephilim/nimble-hooves', {
@@ -386,7 +390,7 @@ export const NimbleHooves = Traits.defineTrait('ancestry/nephilim/nimble-hooves'
     '*Nephilim*\n\nYou possess hooves, ankle wings, or some other feature that hastens your movement. Your [Speed](characteristic:speed) increases by 5 feet.\n\n**Special** The Speed increase from this feat isn’t cumulative with any Speed increase from other ancestry feats.',
   tags: [Feat, AncestryFeat, NephilimFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(NephilimHeritage)],
-  effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const EarnedGlory = Traits.defineTrait('ancestry/aiuvarin/earned-glory', {
@@ -395,7 +399,7 @@ export const EarnedGlory = Traits.defineTrait('ancestry/aiuvarin/earned-glory', 
     '*Aiuvarin*\n\nElves often struggle with underestimating aiuvarins, and you are experienced at telling stories of your accomplishments to gain their respect. You are trained in [Performance](characteristic:skill/performance). If you would automatically become trained in Performance (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou gain the [Impressive Performance](trait:feat/impressive-performance) feat. When you attempt a Performance check to [Make an Impression](content:skills/make-an-impression) on an elf, if you roll a critical failure, you get a failure instead.',
   tags: [Feat, AncestryFeat, AiuvarinFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(AiuvarinHeritage)],
-  effects: [Effects.gainTrait(TrainedPerformance), Effects.gainTrait(ImpressivePerformance)],
+  effects: [CharacterEffects.gainTrait(TrainedPerformance), CharacterEffects.gainTrait(ImpressivePerformance)],
 })
 
 export const ElfAtavism = Traits.defineTrait('ancestry/aiuvarin/elf-atavism', {
@@ -404,7 +408,7 @@ export const ElfAtavism = Traits.defineTrait('ancestry/aiuvarin/elf-atavism', {
     '*Aiuvarin*\n\nYour elven blood runs particularly strong, granting you features far more elven than those of a typical aiuvarin. You may also have been raised among elves, steeped in your elven ancestors’ heritage. You gain the benefits of the elf heritage of your elven parent or ancestors. You typically can’t select a heritage that depends on or improves an elven feature you don’t have. For example, you couldn’t take the [Ancient Elf](trait:heritage/ancient-elf) heritage unless your non-elf ancestry also has a lifespan measured in multiple centuries. In these cases, at the GM’s discretion, you might gain a different benefit.\n\n**Special** You can take this feat only at 1st level, and you can’t retrain out of this feat or into this feat.',
   tags: [Feat, AncestryFeat, AiuvarinFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(AiuvarinHeritage), Expressions.lessThanOrEqual(CharacterValues.Level, 1)],
-  effects: [Effects.gainCharacterOption(SelectElfAtavismHeritage)],
+  effects: [CharacterEffects.gainCharacterOption(SelectElfAtavismHeritage)],
 })
 
 export const MonstrousPeacemaker = Traits.defineTrait('ancestry/dromaar/monstrous-peacemaker', {
@@ -426,7 +430,7 @@ export const OrcSight = Traits.defineTrait('ancestry/dromaar/orc-sight', {
     Traits.traitPrerequisite(LowLightVision),
     Expressions.lessThanOrEqual(CharacterValues.Level, 1),
   ],
-  effects: [Effects.gainTrait(Darkvision)],
+  effects: [CharacterEffects.gainTrait(Darkvision)],
 })
 
 export const Called = Traits.defineTrait('ancestry/changeling/called', {

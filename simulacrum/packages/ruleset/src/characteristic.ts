@@ -31,7 +31,7 @@ export type CharacteristicGroup = RulesetEntity & {
   id: CharacteristicGroupReference
 }
 
-export type CharacteristicTemplate = RulesetEntity & {
+export interface CharacteristicTemplate extends RulesetEntity {
   id: CharacteristicReference
   path: ObjectPath
   optimizer: ReducingExpression<number, number>
@@ -42,7 +42,7 @@ export type CharacteristicProps = {
   group?: CharacteristicGroup
 } & ({ baseValue: Expression<number> } | { initialValue: true })
 
-export type Characteristic = CharacteristicTemplate & {
+export interface Characteristic extends CharacteristicTemplate {
   baseValue: Expression<number> | null
   variable: ExpressionVariable<number>
   group: CharacteristicGroupReference | null

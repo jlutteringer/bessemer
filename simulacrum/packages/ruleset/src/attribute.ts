@@ -7,23 +7,31 @@ import {
   ReducingExpression,
 } from '@bessemer/cornerstone/expression'
 import { Patch } from '@bessemer/cornerstone/patch'
-import { EffectSource } from '@simulacrum/ruleset/effect'
+import { CharacterEffectSource } from '@simulacrum/ruleset/character-effect'
 import { Combinability } from '@bessemer/cornerstone/combinable'
 import { Arrays, Combinables, Equalitors, Objects, Patches, Sets } from '@bessemer/cornerstone'
 
-export type Attribute<T> = {
-  baseValue: Expression<T>
-  optimizer: ReducingExpression<T, T>
+export interface Valued<T> {
+  value: T
 }
 
-export type Modifier<T> = {
-  value: Patch<T>
+export const valued = <T>(value: T): Valued<T> => {
+  return { value }
+}
+
+export interface Attribute<T> {
+  baseValue: Expression<T>
+  optimizer: ReducingExpression<T, T> | null
+}
+
+export interface Modifier<T> {
+  patch: Patch<T>
   combinability: Combinability
   condition?: Expression<boolean>
-  source?: EffectSource
+  source?: CharacterEffectSource
 }
 
-export const attribute = <T>(baseValue: Expression<T>, optimizer: ReducingExpression<T, T>): Attribute<T> => {
+export const attribute = <T>(baseValue: Expression<T>, optimizer: ReducingExpression<T, T> | null = null): Attribute<T> => {
   return {
     baseValue,
     optimizer,
@@ -31,14 +39,14 @@ export const attribute = <T>(baseValue: Expression<T>, optimizer: ReducingExpres
 }
 
 export const modifier = <T>(
-  value: Patch<T>,
+  patch: Patch<T>,
   options?: {
     combinability?: Combinability
     condition?: Expression<boolean>
   }
 ): Modifier<T> => {
   return {
-    value,
+    patch,
     combinability: options?.combinability ?? Combinables.DefaultCombinability,
     ...(Objects.isPresent(options?.condition) ? { condition: options?.condition } : {}),
   }

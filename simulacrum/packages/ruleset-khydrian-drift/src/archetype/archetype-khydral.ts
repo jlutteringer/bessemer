@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
@@ -24,7 +24,7 @@ export const CloakOfTheMagi = Abilities.defineAbility('khydral/cloak-of-the-magi
   name: 'Cloak of the Magi',
   loadout: GeneralLoadoutSlot,
   prerequisites: [Traits.traitPrerequisite(KhydralInitiate)],
-  effects: [...LightArmor.effects, Effects.descriptive('You gain the benefits of [Light Armor](ability:armor/light).')],
+  effects: [...LightArmor.effects, CharacterEffects.descriptive('You gain the benefits of [Light Armor](ability:armor/light).')],
 })
 
 export const KhydralAdept = Traits.defineTrait('khydral/adept', {

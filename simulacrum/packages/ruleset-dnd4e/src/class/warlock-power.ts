@@ -1,4 +1,4 @@
-import { Abilities, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
 import {
@@ -28,7 +28,7 @@ export const DiabolicGrasp = Abilities.defineAbility('warlock/power/diabolic-gra
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 1**\n\n**Encounter** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature of size Large or smaller\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 2d8 + Constitution modifier damage, and you slide the target 2 squares.\n\n**Infernal Pact:** You slide the target a number of squares equal to 1 + your Intelligence modifier.'
     ),
   ],
@@ -44,7 +44,7 @@ export const DreadfulWord = Abilities.defineAbility('warlock/power/dreadful-word
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 1**\n\n**Encounter** ✦ Arcane, Fear, Implement, Psychic\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d8 + Charisma modifier psychic damage, and the target takes a –1 penalty to Will defense until the end of your next turn.\n\n**Star Pact:** The penalty to Will defense is equal to 1 + your Intelligence modifier.'
     ),
   ],
@@ -60,7 +60,7 @@ export const VampiricEmbrace = Abilities.defineAbility('warlock/power/vampiric-e
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 1**\n\n**Encounter** ✦ Arcane, Implement, Necrotic\n\n**Standard Action** · Ranged 5\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Will\n\n**Hit:** 2d8 + Constitution modifier necrotic damage, and you gain 5 temporary hit points.\n\n**Infernal Pact:** You gain temporary hit points equal to 5 + your Intelligence modifier.'
     ),
   ],
@@ -77,7 +77,7 @@ export const Witchfire = Abilities.defineAbility('warlock/power/witchfire', {
   tags: [EncounterPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 1**\n\n**Encounter** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Reflex\n\n**Hit:** 2d6 + Charisma modifier fire damage, and the target takes a –2 penalty to attack rolls until the end of your next turn.\n\n**Fey Pact:** The penalty to attack rolls is equal to 2 + your Intelligence modifier.'
     ),
   ],
@@ -94,7 +94,7 @@ export const ArmorOfAgathys = Abilities.defineAbility('warlock/power/armor-of-ag
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 1**\n\n**Daily** ✦ Arcane, Cold\n\n**Standard Action** · Personal\n\n**Effect:** You gain temporary hit points equal to 10 + your Intelligence modifier. Until the end of the encounter, an enemy that starts its turn adjacent to you takes 1d6 + Constitution modifier cold damage.'
     ),
   ],
@@ -111,7 +111,7 @@ export const CurseOfTheDarkDream = Abilities.defineAbility('warlock/power/curse-
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 1**\n\n**Daily** ✦ Arcane, Charm, Implement, Psychic\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 3d8 + Charisma modifier psychic damage, and you slide the target 3 squares.\n\n**Sustain Minor:** You slide the target 1 square, whether you hit or miss (save ends).'
     ),
   ],
@@ -128,7 +128,7 @@ export const DreadStar = Abilities.defineAbility('warlock/power/dread-star', {
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 1**\n\n**Daily** ✦ Arcane, Fear, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 3d6 + Charisma modifier radiant damage, and the target is immobilized until the end of your next turn.\n\n**Effect:** The target takes a –2 penalty to Will defense (save ends).'
     ),
   ],
@@ -145,7 +145,7 @@ export const FlamesOfPhlegethos = Abilities.defineAbility('warlock/power/flames-
   tags: [DailyPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 1**\n\n**Daily** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Reflex\n\n**Hit:** 3d10 + Constitution modifier fire damage.\n\n**Effect:** The target takes ongoing 5 fire damage (save ends).'
     ),
   ],
@@ -161,7 +161,7 @@ export const BeguilingTongue = Abilities.defineAbility('warlock/power/beguiling-
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Utility 2**\n\n**Encounter** ✦ Arcane\n\n**Minor Action** · Personal\n\n**Effect:** You gain a +5 power bonus to your next Bluff, Diplomacy, or Intimidate check during this encounter.'
     ),
   ],
@@ -178,7 +178,7 @@ export const EtherealStride = Abilities.defineAbility('warlock/power/ethereal-st
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Utility 2**\n\n**Encounter** ✦ Arcane, Teleportation\n\n**Move Action** · Personal\n\n**Effect:** You can teleport 3 squares, and you gain a +2 power bonus to all defenses until the end of your next turn.'
     ),
   ],
@@ -195,7 +195,7 @@ export const FiendishResilience = Abilities.defineAbility('warlock/power/fiendis
   tags: [DailyPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Utility 2**\n\n**Daily** ✦ Arcane\n\n**Minor Action** · Personal\n\n**Effect:** You gain temporary hit points equal to 5 + your Constitution modifier.'
     ),
   ],
@@ -211,7 +211,7 @@ export const ShadowVeil = Abilities.defineAbility('warlock/power/shadow-veil', {
   tags: [EncounterPower, UtilityPower, PowerLevel2],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Utility 2**\n\n**Encounter** ✦ Arcane, Illusion\n\n**Minor Action** · Personal\n\n**Effect:** You gain a +5 power bonus to Stealth checks until the end of your next turn.'
     ),
   ],
@@ -227,7 +227,7 @@ export const EldritchRain = Abilities.defineAbility('warlock/power/eldritch-rain
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Warlock (Fey) Attack 3**\n\n**Encounter** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Targets:** One creature, or two creatures no more than 5 squares apart from each other\n\n**Attack:** Charisma vs. Reflex, one attack per target\n\n**Hit:** 1d10 + Charisma modifier damage.\n\n**Fey Pact:** Gain a bonus to each attack's damage roll equal to your Intelligence modifier."
     ),
   ],
@@ -243,7 +243,7 @@ export const FieryBolt = Abilities.defineAbility('warlock/power/fiery-bolt', {
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 3**\n\n**Encounter** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Reflex\n\n**Hit:** 3d6 + Constitution modifier fire damage, and creatures adjacent to the target take 1d6 + Constitution modifier fire damage.\n\n**Infernal Pact:** Creatures adjacent to the target take extra fire damage equal to your Intelligence modifier.'
     ),
   ],
@@ -260,7 +260,7 @@ export const FrigidDarkness = Abilities.defineAbility('warlock/power/frigid-dark
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 3**\n\n**Encounter** ✦ Arcane, Cold, Fear, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 2d8 + Constitution modifier cold damage, and the target grants combat advantage to all of your enemies until the end of your next turn.\n\n**Star Pact:** The target takes a penalty to AC equal to your Intelligence modifier.'
     ),
   ],
@@ -277,7 +277,7 @@ export const OtherwindStride = Abilities.defineAbility('warlock/power/otherwind-
   tags: [EncounterPower, AttackPower, PowerLevel3],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 3**\n\n**Encounter** ✦ Arcane, Implement, Teleportation\n\n**Standard Action** · Close burst 1\n\n**Target:** Each creature in burst\n\n**Attack:** Charisma vs. Fortitude\n\n**Hit:** 1d8 + Charisma modifier damage, and the target is immobilized until the end of your next turn.\n\n**Effect:** You teleport 5 squares.\n\n**Fey Pact:** You teleport a number of squares equal to 5 + your Intelligence modifier.'
     ),
   ],
@@ -294,7 +294,7 @@ export const AvernianEruption = Abilities.defineAbility('warlock/power/avernian-
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 5**\n\n**Daily** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Area burst 1 within 10 squares\n\n**Target:** Each creature in burst\n\n**Attack:** Constitution vs. Reflex\n\n**Hit:** 2d10 + Constitution modifier fire damage.\n\n**Effect:** The targets take ongoing 5 fire damage (save ends).'
     ),
   ],
@@ -311,7 +311,7 @@ export const CrownOfMadness = Abilities.defineAbility('warlock/power/crown-of-ma
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 5**\n\n**Daily** ✦ Arcane, Charm, Implement, Psychic\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d6 + Charisma modifier psychic damage.\n\n**Miss:** Half damage.\n\n**Sustain Minor:** The target makes a melee basic attack against one of its adjacent allies of your choice (save ends).'
     ),
   ],
@@ -328,7 +328,7 @@ export const CurseOfTheBloodyFangs = Abilities.defineAbility('warlock/power/curs
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 5**\n\n**Daily** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. AC\n\n**Hit:** 2d10 + Charisma modifier damage.\n\n**Miss:** Half damage.\n\n**Sustain Minor:** The target and any of your enemies adjacent to it take 1d10 damage (save ends).'
     ),
   ],
@@ -345,7 +345,7 @@ export const HungerOfHadar = Abilities.defineAbility('warlock/power/hunger-of-ha
   tags: [DailyPower, AttackPower, PowerLevel5],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 5**\n\n**Daily** ✦ Arcane, Implement, Necrotic, Zone\n\n**Standard Action** · Area burst 1 within 10 squares\n\n**Effect:** The burst creates a zone of darkness until the end of your next turn, blocking line of sight. Creatures that enter the zone or start their turns there take 2d10 necrotic damage.\n\n**Sustain Minor:** When you sustain the power, you make a secondary attack.\n\n**Secondary Target:** Each creature within the zone\n\n**Secondary Attack:** Constitution vs. Fortitude\n\n**Hit:** 1d6 + Constitution modifier necrotic damage.'
     ),
   ],
@@ -361,7 +361,7 @@ export const DarkOnesOwnLuck = Abilities.defineAbility('warlock/power/dark-ones-
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Utility 6**\n\n**Daily** ✦ Arcane\n\n**Free Action** · Personal\n\n**Trigger:** You make a roll you dislike\n\n**Effect:** Reroll the attack roll, skill check, ability check, or saving throw, using the higher of the two results.'
     ),
   ],
@@ -378,7 +378,7 @@ export const FeySwitch = Abilities.defineAbility('warlock/power/fey-switch', {
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Utility 6**\n\n**Encounter** ✦ Arcane, Teleportation\n\n**Move Action** · Ranged 10\n\n**Targets:** You and one willing ally\n\n**Effect:** You and your ally trade spaces.'
     ),
   ],
@@ -395,7 +395,7 @@ export const ShroudOfBlackSteel = Abilities.defineAbility('warlock/power/shroud-
   tags: [DailyPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Utility 6**\n\n**Daily** ✦ Arcane, Polymorph\n\n**Minor Action** · Personal\n\n**Effect:** You change your skin into living steel. You gain a +2 power bonus to AC and Fortitude defense but take a –2 penalty to speed until the end of the encounter. You can end this effect as a minor action.'
     ),
   ],
@@ -411,7 +411,7 @@ export const SpiderClimb = Abilities.defineAbility('warlock/power/spider-climb',
   tags: [EncounterPower, UtilityPower, PowerLevel6],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Utility 6**\n\n**Encounter** ✦ Arcane\n\n**Move Action** · Personal\n\n**Effect:** On this move action, you move with a climb speed equal to your speed.'
     ),
   ],
@@ -428,7 +428,7 @@ export const HowlOfDoom = Abilities.defineAbility('warlock/power/howl-of-doom', 
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 7**\n\n**Encounter** ✦ Arcane, Fear, Implement, Thunder\n\n**Standard Action** · Close blast 3\n\n**Target:** Each creature in blast\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 2d6 + Constitution modifier thunder damage, and you push the target 2 squares.\n\n**Infernal Pact:** You push the target a number of squares equal to 1 + your Intelligence modifier.'
     ),
   ],
@@ -445,7 +445,7 @@ export const InfernalMoonCurse = Abilities.defineAbility('warlock/power/infernal
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 7**\n\n**Encounter** ✦ Arcane, Implement, Poison\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 2d8 + Constitution modifier poison damage, and the target is held immobilized 5 feet off the ground until the end of your next turn.\n\n**Infernal Pact:** You gain a bonus to the damage roll equal to your Intelligence modifier.'
     ),
   ],
@@ -461,7 +461,7 @@ export const MireTheMind = Abilities.defineAbility('warlock/power/mire-the-mind'
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 7**\n\n**Encounter** ✦ Arcane, Illusion, Implement, Psychic\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 1d10 + Charisma modifier psychic damage, and you and all of your allies in range are invisible to the target until the end of your next turn.\n\n**Fey Pact:** You gain a power bonus to Stealth checks equal to your Intelligence modifier until the end of the encounter.'
     ),
   ],
@@ -478,7 +478,7 @@ export const SignOfIllOmen = Abilities.defineAbility('warlock/power/sign-of-ill-
   tags: [EncounterPower, AttackPower, PowerLevel7],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 7**\n\n**Encounter** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 2d6 + Charisma modifier damage, and the target must roll twice for its next attack and use the lower of the two rolls.\n\n**Star Pact:** When the target rolls twice, it takes a penalty to both rolls equal to your Intelligence modifier.'
     ),
   ],
@@ -495,7 +495,7 @@ export const CurseOfTheBlackFrost = Abilities.defineAbility('warlock/power/curse
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 9**\n\n**Daily** ✦ Arcane, Cold, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Reflex\n\n**Hit:** 2d8 + Charisma modifier cold damage.\n\n**Effect:** If the target moves for any reason, it takes 1d8 cold damage (save ends). If the target saves, you cannot sustain this power.\n\n**Sustain Minor:** The target takes 2d8 cold damage.'
     ),
   ],
@@ -512,7 +512,7 @@ export const IronSpikeOfDis = Abilities.defineAbility('warlock/power/iron-spike-
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 9**\n\n**Daily** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Reflex\n\n**Hit:** 3d10 + Constitution modifier damage, and the target is immobilized (save ends).\n\n**Miss:** Half damage, and the target is not immobilized.'
     ),
   ],
@@ -529,7 +529,7 @@ export const SummonsOfKhirad = Abilities.defineAbility('warlock/power/summons-of
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 9**\n\n**Daily** ✦ Arcane, Implement, Psychic, Teleportation\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Will\n\n**Hit:** 2d10 + Constitution modifier psychic damage, and you teleport the target to an unoccupied square within 3 squares of you.\n\n**Sustain Minor:** Make a Constitution vs. Will attack against the target. On a hit, you teleport the target to an unoccupied square within 3 squares of you. On a miss, the effect ends.'
     ),
   ],
@@ -546,7 +546,7 @@ export const ThiefOfFiveFates = Abilities.defineAbility('warlock/power/thief-of-
   tags: [DailyPower, AttackPower, PowerLevel9],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Warlock (Star) Attack 9**\n\n**Daily** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** Until the end of your next turn, whenever the target makes a saving throw or an attack roll, you roll a d20 without modifiers. If your result is higher than the target's unmodified die roll, the target's attack misses or the target's saving throw fails.\n\n**Sustain Minor:** Make a Charisma vs. Will attack against the target. On a hit, the effect continues. On a miss, the effect ends."
     ),
   ],
@@ -562,7 +562,7 @@ export const AmbassadorImp = Abilities.defineAbility('warlock/power/ambassador-i
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Utility 10**\n\n**Daily** ✦ Arcane, Conjuration\n\n**Standard Action** · Ranged 100 miles\n\n**Effect:** You whisper a message into the air, and an implike presence appears next to the creature you wish to speak to and delivers your message. If the creature has a reply, the imp appears adjacent to you at the end of your next turn to utter it. If the creature has no reply or is not within range, the imp appears adjacent to you at the end of your next turn to tell you so. The imp then disappears.'
     ),
   ],
@@ -578,7 +578,7 @@ export const ShadowForm = Abilities.defineAbility('warlock/power/shadow-form', {
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Warlock (Star) Utility 10**\n\n**Daily** ✦ Arcane, Polymorph\n\n**Minor Action** · Personal\n\n**Effect:** You assume a shadowy form until the end of the encounter or for 5 minutes. In this form you are insubstantial, gain fly 6, and can't take standard actions. Reverting to your normal form is a minor action."
     ),
   ],
@@ -594,7 +594,7 @@ export const ShieldingShades = Abilities.defineAbility('warlock/power/shielding-
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Warlock (Star) Utility 10**\n\n**Daily** ✦ Arcane\n\n**Immediate Reaction** · Personal\n\n**Trigger:** You are hit by an attack\n\n**Effect:** Reduce the attack's damage to 0. If the attack targets other creatures, they take damage as normal."
     ),
   ],
@@ -611,7 +611,7 @@ export const WarlocksLeap = Abilities.defineAbility('warlock/power/warlocks-leap
   tags: [DailyPower, UtilityPower, PowerLevel10],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Warlock (Fey) Utility 10**\n\n**Daily** ✦ Arcane, Teleportation\n\n**Move Action** · Personal\n\n**Effect:** You teleport 6 squares. You do not need line of sight to the destination, but if you attempt to teleport to a space you can't occupy, you don't move."
     ),
   ],

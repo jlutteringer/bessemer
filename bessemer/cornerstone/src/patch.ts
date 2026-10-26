@@ -1,11 +1,6 @@
-import {
-  ArrayExpressions,
-  EvaluateExpression,
-  Expression,
-  Expressions,
-  NumericExpressions,
-  ReducingExpression,
-} from '@bessemer/cornerstone/expression'
+import { ArrayExpressions, Expression, Expressions, NumericExpressions, ReducingExpression } from '@bessemer/cornerstone/expression'
+import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
+import { ExpressionEvaluator } from '@bessemer/cornerstone/expression/expression-evaluator'
 import { UnknownRecord } from 'type-fest'
 import * as Objects from '@bessemer/cornerstone/object'
 
@@ -39,10 +34,10 @@ export type PatchValue<T> = {
 }
 
 export type Patchable<T> = {
-  [P in keyof T]?: T[P] extends Array<infer U>
+  [P in keyof T]?: NonNullable<T[P]> extends Array<infer U>
     ? Patch<U[]> | Patchable<U[]>
-    : T[P] extends object | undefined
-    ? Patch<T[P]> | Patchable<T[P]>
+    : NonNullable<T[P]> extends object
+    ? Patch<T[P]> | Patchable<NonNullable<T[P]>>
     : Patch<T[P]> | T[P]
 }
 
@@ -67,7 +62,7 @@ export const apply = <T>(value: Expression<T>, reducer: ReducingExpression<T, T>
   }
 }
 
-export const patch = <T extends UnknownRecord, N extends Patchable<T> = Patchable<T>>(patch: N): Patch<T> => {
+export const patch = <T extends object, N extends Patchable<T> = Patchable<T>>(patch: N): Patch<T> => {
   return {
     type: PatchType.Patch,
     patch,
@@ -91,19 +86,19 @@ export type ResolvePatchesResult<T> = {
   patchValues: Array<PatchValue<T>>
 }
 
-export const resolveWithDetails = <T>(value: T, patches: Array<Patch<T>>, evaluate: EvaluateExpression): ResolvePatchesResult<T> => {
+export const resolveWithDetails = <T>(value: T, patches: Array<Patch<T>>, evaluator: ExpressionEvaluator): ResolvePatchesResult<T> => {
   let currentValue: T = value
 
   const patchValues = patches.map((patch) => {
     switch (patch.type) {
       case PatchType.Set:
-        currentValue = evaluate(patch.value)
+        currentValue = evaluator.evaluate(patch.value)
         break
       case PatchType.Apply:
-        currentValue = evaluate(Expressions.dereference(patch.reducer, [currentValue, patch.value]))
+        currentValue = evaluator.evaluate(evaluator.dereference(patch.reducer, [currentValue, patch.value]))
         break
       case PatchType.Patch:
-        currentValue = applyPatch(currentValue, patch.patch, evaluate)
+        currentValue = applyPatch(currentValue, patch.patch, evaluator)
         break
       default:
         throw new Error(`Unrecognized PatchType for value: ${JSON.stringify(patch)}`)
@@ -115,20 +110,46 @@ export const resolveWithDetails = <T>(value: T, patches: Array<Patch<T>>, evalua
   return { value: currentValue, patchValues }
 }
 
-export const resolve = <T>(value: T, patches: Array<Patch<T>>, evaluate: EvaluateExpression): T => {
-  return resolveWithDetails(value, patches, evaluate).value
+export const resolve = <T>(value: T, patches: Array<Patch<T>>, evaluator: ExpressionEvaluator): T => {
+  return resolveWithDetails(value, patches, evaluator).value
 }
 
-const applyPatch = <T>(value: T, patch: Patchable<T>, evaluate: EvaluateExpression): T => {
+export const isApplicable = <T>(value: T, patch: Patch<T>): boolean => {
+  switch (patch.type) {
+    case PatchType.Set:
+      return true
+    case PatchType.Apply:
+      return !Objects.isNil(value)
+    case PatchType.Patch:
+      return !Objects.isNil(value) && isPatchableApplicable(value, patch.patch)
+  }
+}
+
+const isPatchableApplicable = (value: unknown, patchable: unknown): boolean => {
+  return Object.entries(patchable as UnknownRecord).every(([key, it]) => {
+    const current = (value as UnknownRecord)[key]
+    if (isPatch(it)) {
+      return isApplicable(current, it)
+    }
+
+    if (Objects.isObject(it) && !ExpressionInternal.isExpression(it)) {
+      return !Objects.isNil(current) && isPatchableApplicable(current, it)
+    }
+
+    return true
+  })
+}
+
+const applyPatch = <T>(value: T, patch: Patchable<T>, evaluator: ExpressionEvaluator): T => {
   return Objects.deepMergeWith(value, patch, (value, patch) => {
     if (Objects.isNil(patch)) {
       return value
     }
 
     if (!isPatch(patch)) {
-      return undefined
+      return ExpressionInternal.isExpression(patch) ? patch : undefined
     }
 
-    return evaluate(resolve(value, [patch as Patch<T>], evaluate))
+    return evaluator.evaluate(resolve(value, [patch as Patch<T>], evaluator))
   })
 }

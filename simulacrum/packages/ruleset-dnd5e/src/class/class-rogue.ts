@@ -1,4 +1,4 @@
-import { Abilities, Tags, Attributes, Effects, RulesetEntities, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterEffects, RulesetEntities, Traits } from '@simulacrum/ruleset'
 import * as SavingThrowProficiencies from '@simulacrum/ruleset-dnd5e/tag/saving-throw-proficiency'
 import { Class, Wizard } from '@simulacrum/ruleset-dnd5e/tag'
 import * as SkillProficiencies from '@simulacrum/ruleset-dnd5e/tag/skill-proficiency'
@@ -57,7 +57,7 @@ export const WeaponMastery = Traits.defineTrait('rogue/weapon-mastery', {
   name: 'Weapon Mastery',
   description:
     'You can use the mastery properties of **two kinds** of weapons you are proficient with, such as Daggers and Shortbows. Whenever you finish a Long Rest, you can change those choices.',
-  effects: [Effects.gainLoadoutSlot(WeaponMasteryLoadout), Effects.gainLoadoutSlot(WeaponMasteryLoadout)],
+  effects: [CharacterEffects.gainLoadoutSlot(WeaponMasteryLoadout), CharacterEffects.gainLoadoutSlot(WeaponMasteryLoadout)],
 })
 
 export const Level1 = Traits.defineTrait('rogue/level-1', {
@@ -66,18 +66,18 @@ export const Level1 = Traits.defineTrait('rogue/level-1', {
     "A cunning expert in **stealth, skill, and precision**, striking where foes are weakest.\n\n**Saving Throws:** Dexterity and Intelligence. **Armor:** Light armor. **Weapons:** Simple weapons, and Martial weapons with the Finesse or Light property. **Tools:** Thieves' Tools.",
   tags: [Class],
   effects: [
-    Effects.gainTrait(SavingThrowProficiencies.Dexterity),
-    Effects.gainTrait(SavingThrowProficiencies.Intelligence),
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectSkillProficiency),
-    Effects.gainCharacterOption(SelectExpertise),
-    Effects.gainCharacterOption(SelectExpertise),
-    Effects.gainTrait(SneakAttack),
-    Effects.gainTrait(ThievesCant),
-    Effects.gainTrait(WeaponMastery),
+    CharacterEffects.gainTrait(SavingThrowProficiencies.Dexterity),
+    CharacterEffects.gainTrait(SavingThrowProficiencies.Intelligence),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(8))),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkillProficiency),
+    CharacterEffects.gainCharacterOption(SelectExpertise),
+    CharacterEffects.gainCharacterOption(SelectExpertise),
+    CharacterEffects.gainTrait(SneakAttack),
+    CharacterEffects.gainTrait(ThievesCant),
+    CharacterEffects.gainTrait(WeaponMastery),
   ],
 })
 
@@ -85,13 +85,13 @@ export const Level2 = Traits.defineTrait('rogue/level-2', {
   name: 'Rogue (2)',
   prerequisites: [Traits.traitPrerequisite(Level1)],
   tags: [Class],
-  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const CunningAction = Abilities.defineAbility('rogue/cunning-action', {
   name: 'Cunning Action',
   prerequisites: [Traits.traitPrerequisite(Level2)],
-  effects: [Effects.descriptive('On your turn, you can take the **Dash**, **Disengage**, or **Hide** action as a Bonus Action.')],
+  effects: [CharacterEffects.descriptive('On your turn, you can take the **Dash**, **Disengage**, or **Hide** action as a Bonus Action.')],
   actions: [{ name: 'Use Cunning Action', action: ActionTypes.BonusAction }],
 })
 
@@ -106,8 +106,8 @@ export const Level3 = Traits.defineTrait('rogue/level-3', {
   prerequisites: [Traits.traitPrerequisite(Level2)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
-    Effects.gainCharacterOption(SelectRogueSubclass),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.gainCharacterOption(SelectRogueSubclass),
   ],
 })
 
@@ -115,7 +115,7 @@ export const SteadyAim = Abilities.defineAbility('rogue/steady-aim', {
   name: 'Steady Aim',
   prerequisites: [Traits.traitPrerequisite(Level3)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "As a **Bonus Action**, if you haven't moved this turn, you give yourself Advantage on your next attack roll this turn. Your Speed is then 0 until the end of the turn."
     ),
   ],
@@ -127,9 +127,9 @@ export const Level4 = Traits.defineTrait('rogue/level-4', {
   prerequisites: [Traits.traitPrerequisite(Level3)],
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
     // Ability Score Improvement
-    Effects.gainCharacterOption(SelectFeat),
+    CharacterEffects.gainCharacterOption(SelectFeat),
   ],
 })
 
@@ -144,13 +144,16 @@ export const Level5 = Traits.defineTrait('rogue/level-5', {
   name: 'Rogue (5)',
   prerequisites: [Traits.traitPrerequisite(Level4)],
   tags: [Class],
-  effects: [Effects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))), Effects.gainTrait(CunningStrike)],
+  effects: [
+    CharacterEffects.modifyCharacteristic(PlayerCharacteristics.HitPoints, Attributes.modifier(Patches.sum(5))),
+    CharacterEffects.gainTrait(CunningStrike),
+  ],
 })
 
 export const UncannyDodge = Abilities.defineAbility('rogue/uncanny-dodge', {
   name: 'Uncanny Dodge',
   prerequisites: [Traits.traitPrerequisite(Level5)],
-  effects: [Effects.descriptive('When an attacker you can see hits you, you can use your **Reaction** to halve the damage (rounded down).')],
+  effects: [CharacterEffects.descriptive('When an attacker you can see hits you, you can use your **Reaction** to halve the damage (rounded down).')],
   actions: [{ name: 'Use Uncanny Dodge', action: ActionTypes.Reaction }],
 })
 
@@ -173,12 +176,12 @@ export const MageHandLegerdemain = Traits.defineTrait('rogue/mage-hand-legerdema
   description:
     'You can cast **Mage Hand** as a Bonus Action and make the hand Invisible. You can control it as a Bonus Action, and make Dexterity (Sleight of Hand) checks through it.',
   effects: [
-    Effects.modifyAbility(
+    CharacterEffects.modifyAbility(
       Spells.MageHand,
       Attributes.modifier(
         Patches.patch<AbilityPatchProps>({
           effects: Patches.concatenate([
-            Effects.descriptive(
+            CharacterEffects.descriptive(
               '**Mage Hand Legerdemain:** you can cast it as a Bonus Action and make the hand Invisible, control it as a Bonus Action, and make Dexterity (Sleight of Hand) checks through it.'
             ),
           ]),
@@ -194,14 +197,14 @@ export const ArcaneTrickster = Traits.defineTrait('rogue/arcane-trickster', {
   description: 'Rogues who sharpen their stealth and agility with **arcane spells**, whether as burglars, pickpockets, or pranksters.',
   tags: [RogueSubclass],
   effects: [
-    Effects.gainAbility(Spells.MageHand),
-    Effects.gainCharacterOption(SelectArcaneTricksterCantrip),
-    Effects.gainCharacterOption(SelectArcaneTricksterCantrip),
-    Effects.gainCharacterOption(SelectArcaneTricksterSpell),
-    Effects.gainCharacterOption(SelectArcaneTricksterSpell),
-    Effects.gainCharacterOption(SelectArcaneTricksterSpell),
-    Effects.conditional(Traits.traitPrerequisite(Level4), [Effects.gainCharacterOption(SelectArcaneTricksterSpell)]),
-    Effects.gainTrait(MageHandLegerdemain),
+    CharacterEffects.gainAbility(Spells.MageHand),
+    CharacterEffects.gainCharacterOption(SelectArcaneTricksterCantrip),
+    CharacterEffects.gainCharacterOption(SelectArcaneTricksterCantrip),
+    CharacterEffects.gainCharacterOption(SelectArcaneTricksterSpell),
+    CharacterEffects.gainCharacterOption(SelectArcaneTricksterSpell),
+    CharacterEffects.gainCharacterOption(SelectArcaneTricksterSpell),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Level4), [CharacterEffects.gainCharacterOption(SelectArcaneTricksterSpell)]),
+    CharacterEffects.gainTrait(MageHandLegerdemain),
   ],
 })
 
@@ -209,10 +212,10 @@ export const ArcaneTricksterSpellcasting = Abilities.defineAbility('rogue/arcane
   name: 'Spellcasting',
   prerequisites: [Traits.traitPrerequisite(ArcaneTrickster)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You cast Wizard spells using **Intelligence**, with an Arcane Focus as your focus. You know **Mage Hand** and two other Wizard cantrips, and can swap one of the others when you gain a Rogue level.'
     ),
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You prepare a list of level 1 Wizard spells you can cast with your spell slots: 3 at Rogue level 3 and 4 at level 4. When you gain a Rogue level, you can swap one of them for another Wizard spell you have slots for. You regain all spell slots on a Long Rest.'
     ),
   ],
@@ -235,7 +238,7 @@ export const Assassin = Traits.defineTrait('rogue/assassin', {
   name: 'Assassin',
   description: 'Rogues trained to eliminate foes with **stealth, poison, and disguise**, from hired killers to spies and bounty hunters.',
   tags: [RogueSubclass],
-  effects: [Effects.gainTrait(Assassinate), Effects.gainTrait(AssassinsTools)],
+  effects: [CharacterEffects.gainTrait(Assassinate), CharacterEffects.gainTrait(AssassinsTools)],
 })
 
 export const PsionicPower = Abilities.defineAbility('rogue/psionic-power', {
@@ -243,7 +246,7 @@ export const PsionicPower = Abilities.defineAbility('rogue/psionic-power', {
   // Soulknife is referenced by id, since it grants Psionic Power (Level 5), which needs this ability first
   prerequisites: [Traits.traitPrerequisite(RulesetEntities.buildReference(RulesetEntities.RulesetEntityType.Trait, 'rogue/soulknife'))],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'You have **Psionic Energy Dice** that fuel your Soulknife powers: four d6s, becoming six d8s at Rogue level 5. You regain one on a Short Rest and all of them on a Long Rest.'
     ),
   ],
@@ -276,8 +279,8 @@ export const Soulknife = Traits.defineTrait('rogue/soulknife', {
   description: 'Rogues who strike with the **mind**, channelling psionic power into blades that cut through physical and psychic barriers alike.',
   tags: [RogueSubclass],
   effects: [
-    Effects.conditional(Traits.traitPrerequisite(Level5), [
-      Effects.modifyResourcePool(PsionicPower.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(2) }))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Level5), [
+      CharacterEffects.modifyResourcePool(PsionicPower.resource, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(2) }))),
     ]),
   ],
 })
@@ -286,10 +289,10 @@ export const PsychicBlades = Abilities.defineAbility('rogue/psychic-blades', {
   name: 'Psychic Blades',
   prerequisites: [Traits.traitPrerequisite(Soulknife)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'When you take the Attack action or make an Opportunity Attack, you can attack with a **Psychic Blade** made in your free hand: a Simple Melee weapon with Finesse and Thrown (60/120 feet), dealing **1d6 Psychic** damage plus your ability modifier. You can use its Vex mastery property without it counting against your Weapon Mastery. The blade vanishes after the attack.'
     ),
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'After attacking with a blade on your turn, you can attack with a second blade as a **Bonus Action** if your other hand is free, dealing 1d4 instead of 1d6.'
     ),
   ],
@@ -310,14 +313,14 @@ export const Thief = Traits.defineTrait('rogue/thief', {
   name: 'Thief',
   description: 'The classic adventurer: part **burglar, treasure hunter, and explorer**, at home delving into ruins.',
   tags: [RogueSubclass],
-  effects: [Effects.gainTrait(SecondStoryWork)],
+  effects: [CharacterEffects.gainTrait(SecondStoryWork)],
 })
 
 export const FastHands = Abilities.defineAbility('rogue/fast-hands', {
   name: 'Fast Hands',
   prerequisites: [Traits.traitPrerequisite(Thief)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       'As a **Bonus Action**, you can make a Dexterity (Sleight of Hand) check to pick a lock, disarm a trap, or pick a pocket, or take the Utilize action or the Magic action to use a magic item.'
     ),
   ],

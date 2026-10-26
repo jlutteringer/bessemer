@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
@@ -34,21 +34,21 @@ export const ArmorProficiencyLightArmor = Traits.defineTrait('feat/armor-profici
   name: 'Armor Proficiency (Light Armor)',
   description: 'You become trained in light armor.',
   prerequisites: [Expressions.lessThan(LightArmor.variable, 1)],
-  effects: [Effects.modifyCharacteristic(LightArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(LightArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
 })
 
 export const ArmorProficiencyMediumArmor = Traits.defineTrait('feat/armor-proficiency/medium-armor', {
   name: 'Armor Proficiency (Medium Armor)',
   description: 'You are already trained in light armor, so you become trained in medium armor.',
   prerequisites: [Expressions.greaterThanOrEqual(LightArmor.variable, 1), Expressions.lessThan(MediumArmor.variable, 1)],
-  effects: [Effects.modifyCharacteristic(MediumArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(MediumArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
 })
 
 export const ArmorProficiencyHeavyArmor = Traits.defineTrait('feat/armor-proficiency/heavy-armor', {
   name: 'Armor Proficiency (Heavy Armor)',
   description: 'You are already trained in light and medium armor, so you become trained in heavy armor.',
   prerequisites: [Expressions.greaterThanOrEqual(MediumArmor.variable, 1), Expressions.lessThan(HeavyArmor.variable, 1)],
-  effects: [Effects.modifyCharacteristic(HeavyArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(HeavyArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
 })
 
 export const SelectArmorProficiency = CharacterOptions.selectTraitOption('feat/armor-proficiency/select', {
@@ -62,7 +62,7 @@ export const ArmorProficiency = Traits.defineTrait('feat/armor-proficiency', {
     '*General*\n\nYou become trained in light armor. If you already were trained in light armor, you gain training in medium armor. If you were trained in both, you become trained in heavy armor. If you are at least 13th level, you become an expert in this armor type.\n\n**Special** You can select this feat more than once. Each time, you become trained in the next type of armor, as detailed above.',
   tags: [Feat, GeneralFeat, FeatLevel1],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(SelectArmorProficiency)],
+  effects: [CharacterEffects.gainCharacterOption(SelectArmorProficiency)],
 })
 
 export const BreathControl = Traits.defineTrait('feat/breath-control', {
@@ -76,25 +76,25 @@ export const BreathControl = Traits.defineTrait('feat/breath-control', {
 export const CannyAcumenFortitude = Traits.defineTrait('feat/canny-acumen/fortitude', {
   name: 'Canny Acumen (Fortitude)',
   description: 'You become an expert in Fortitude saves.',
-  effects: [Effects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Fortitude, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const CannyAcumenReflex = Traits.defineTrait('feat/canny-acumen/reflex', {
   name: 'Canny Acumen (Reflex)',
   description: 'You become an expert in Reflex saves.',
-  effects: [Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const CannyAcumenWill = Traits.defineTrait('feat/canny-acumen/will', {
   name: 'Canny Acumen (Will)',
   description: 'You become an expert in Will saves.',
-  effects: [Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const CannyAcumenPerception = Traits.defineTrait('feat/canny-acumen/perception', {
   name: 'Canny Acumen (Perception)',
   description: 'You become an expert in Perception.',
-  effects: [Effects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(Perception, Attributes.modifier(Patches.sum(Expert), { combinability: Proficiency }))],
 })
 
 export const SelectCannyAcumen = CharacterOptions.selectTraitOption('feat/canny-acumen/select', {
@@ -107,7 +107,7 @@ export const CannyAcumen = Traits.defineTrait('feat/canny-acumen', {
   description:
     '*General*\n\nYour avoidance or observation is beyond the ken of most in your profession. Choose [Fortitude](characteristic:fortitude) saves, [Reflex](characteristic:reflex) saves, [Will saves](characteristic:will), or [Perception](characteristic:perception). You become an expert in your choice. At 17th level, you become a master in your choice.',
   tags: [Feat, GeneralFeat, FeatLevel1],
-  effects: [Effects.gainCharacterOption(SelectCannyAcumen)],
+  effects: [CharacterEffects.gainCharacterOption(SelectCannyAcumen)],
 })
 
 export const Diehard = Traits.defineTrait('feat/diehard', {
@@ -140,14 +140,14 @@ export const Fleet = Traits.defineTrait('feat/fleet', {
   name: 'Fleet',
   description: '*General*\n\nYou move more quickly on foot. Your [Speed](characteristic:speed) increases by 5 feet.',
   tags: [Feat, GeneralFeat, FeatLevel1],
-  effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(5)))],
 })
 
 export const IncredibleInitiative = Traits.defineTrait('feat/incredible-initiative', {
   name: 'Incredible Initiative',
   description: '*General*\n\nYou react more quickly than others can. You gain a +2 circumstance bonus to initiative rolls.',
   tags: [Feat, GeneralFeat, FeatLevel1],
-  effects: [Effects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(2), { combinability: CircumstanceBonus }))],
+  effects: [CharacterEffects.modifyCharacteristic(Initiative, Attributes.modifier(Patches.sum(2), { combinability: CircumstanceBonus }))],
 })
 
 export const Pet = Traits.defineTrait('feat/pet', {
@@ -193,7 +193,7 @@ export const Toughness = Traits.defineTrait('feat/toughness', {
   description:
     '*General*\n\nYour body can withstand more punishment than most before succumbing. Increase your maximum [Hit Points](characteristic:hit-points) by your level. You reduce the DC of [recovery checks](content:playing-the-game/recovery-checks) by 1.',
   tags: [Feat, GeneralFeat, FeatLevel1],
-  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(CharacterValues.Level)))],
+  effects: [CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(CharacterValues.Level)))],
 })
 
 export const WeaponProficiency = Traits.defineTrait('feat/weapon-proficiency', {
@@ -202,7 +202,7 @@ export const WeaponProficiency = Traits.defineTrait('feat/weapon-proficiency', {
     '*General*\n\nYou become trained in all martial weapons. If you were already trained in all martial weapons, you become trained in one advanced weapon of your choice. If you are at least 11th level, you also become an expert in these weapons.\n\n**Special** You can select this feat more than once. Each time you do, you become trained in an advanced weapon.',
   tags: [Feat, GeneralFeat, FeatLevel1],
   repeatable: true,
-  effects: [Effects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(MartialWeapons, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
 })
 
 export const AncestralParagon = Traits.defineTrait('feat/ancestral-paragon', {

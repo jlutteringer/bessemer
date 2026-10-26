@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import { Patches } from '@bessemer/cornerstone'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
@@ -106,12 +106,12 @@ export const InitiateWarden = Traits.defineTrait('feat/initiate-warden', {
     '*Ranger*\n\nYou’ve trained with one of the ranger sects known as wardens, who practice a specialized type of primal magic. You gain your choice of one warden spell from the initial warden spells (or another you have access to).\n\n**Special** You can take this feat multiple times, choosing a different initial warden spell each time.',
   tags: [Feat, ClassFeat, RangerFeat, FeatLevel1],
   effects: [
-    Effects.gainResourcePool(FocusPoints),
-    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
-    Effects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Wisdom.variable))),
-    Effects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Wisdom.variable))),
-    Effects.gainCharacterOption(SelectInitiateWardenSpell),
+    CharacterEffects.gainResourcePool(FocusPoints),
+    CharacterEffects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency })),
+    CharacterEffects.modifyCharacteristic(SpellAttack, Attributes.modifier(Patches.sum(Wisdom.variable))),
+    CharacterEffects.modifyCharacteristic(SpellDC, Attributes.modifier(Patches.sum(Wisdom.variable))),
+    CharacterEffects.gainCharacterOption(SelectInitiateWardenSpell),
   ],
 })
 
@@ -123,8 +123,8 @@ export const InitiateWardenAdditional = Traits.defineTrait('feat/initiate-warden
   prerequisites: [Traits.traitPrerequisite(InitiateWarden)],
   repeatable: true,
   effects: [
-    Effects.gainCharacterOption(SelectInitiateWardenSpell),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainCharacterOption(SelectInitiateWardenSpell),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -235,8 +235,8 @@ export const AdvancedWarden = Traits.defineTrait('feat/advanced-warden', {
   prerequisites: [Traits.traitPrerequisite(InitiateWarden)],
   repeatable: true,
   effects: [
-    Effects.gainCharacterOption(SelectAdvancedWardenSpell),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainCharacterOption(SelectAdvancedWardenSpell),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -360,8 +360,8 @@ export const MasterfulWarden = Traits.defineTrait('feat/masterful-warden', {
   prerequisites: [Traits.traitPrerequisite(InitiateWarden)],
   repeatable: true,
   effects: [
-    Effects.gainCharacterOption(SelectMasterfulWardenSpell),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainCharacterOption(SelectMasterfulWardenSpell),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -489,7 +489,7 @@ export const IncredibleCompanionRanger = Traits.defineTrait('feat/incredible-com
     '*Ranger*\n\n**Prerequisites** Mature Animal Companion (Ranger)\n\nYour animal companion continues to grow and develop. It becomes a nimble or savage animal companion (your choice), gaining additional capabilities determined by the type of companion.',
   tags: [Feat, ClassFeat, RangerFeat, FeatLevel10],
   prerequisites: [Traits.traitPrerequisite(MatureAnimalCompanionRanger)],
-  effects: [Effects.gainCharacterOption(SelectIncredibleAnimalCompanion)],
+  effects: [CharacterEffects.gainCharacterOption(SelectIncredibleAnimalCompanion)],
 })
 
 export const MasterMonsterHunter = Traits.defineTrait('feat/master-monster-hunter', {
@@ -509,8 +509,8 @@ export const PeerlessWarden = Traits.defineTrait('feat/peerless-warden', {
   prerequisites: [Traits.traitPrerequisite(InitiateWarden)],
   repeatable: true,
   effects: [
-    Effects.gainCharacterOption(SelectPeerlessWardenSpell),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainCharacterOption(SelectPeerlessWardenSpell),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 

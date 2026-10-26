@@ -9,6 +9,7 @@ export const RulesetEntityType = {
   TraitTag: 'trait-tag',
   AbilityTag: 'ability-tag',
   CreatureTag: 'creature-tag',
+  DamageType: 'damage-type',
   Trait: 'trait',
   Ability: 'ability',
   Characteristic: 'characteristic',

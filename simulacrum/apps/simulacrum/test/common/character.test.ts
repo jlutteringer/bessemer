@@ -4,6 +4,13 @@ import * as Fighter from '@simulacrum/ruleset-dnd5e/class/class-fighter'
 import { Archery, SelectFightingStyle } from '@simulacrum/ruleset-dnd5e/tag/fighting-style'
 import { HitPointResourcePool } from '@simulacrum/ruleset-dnd5e/resource-pool'
 import { CharacterOptions, Characters } from '@simulacrum/common/engine/engine'
+import { CharacterSheet } from '@simulacrum/common/engine/character/character'
+import { RulesetEntities } from '@simulacrum/ruleset'
+import { RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
+
+const characteristicValue = (character: CharacterSheet, reference: string): number | undefined => {
+  return character.characteristics[RulesetEntities.buildReference(RulesetEntityType.Characteristic, reference)]?.value
+}
 
 // Abilities that take a loadout slot (e.g. weapon masteries) are left out of the counts, since a Fighter has access to all of them
 test('Test Character Choices and Selections', () => {
@@ -14,26 +21,26 @@ test('Test Character Choices and Selections', () => {
   expect(character.choices[1]!.length).toBe(3)
   expect(character.choices[1]![0]!.values.length).toBe(12)
 
-  expect(character.characteristics.strength!.value).toBe(16)
-  expect(character.characteristics.strengthModifier!.value).toBe(3)
+  expect(characteristicValue(character, 'strength')).toBe(16)
+  expect(characteristicValue(character, 'strength-modifier')).toBe(3)
 
-  expect(character.characteristics.dexterity!.value).toBe(14)
-  expect(character.characteristics.dexterityModifier!.value).toBe(2)
+  expect(characteristicValue(character, 'dexterity')).toBe(14)
+  expect(characteristicValue(character, 'dexterity-modifier')).toBe(2)
 
-  expect(character.characteristics.constitution!.value).toBe(15)
-  expect(character.characteristics.constitutionModifier!.value).toBe(2)
+  expect(characteristicValue(character, 'constitution')).toBe(15)
+  expect(characteristicValue(character, 'constitution-modifier')).toBe(2)
 
-  expect(character.characteristics.wisdom!.value).toBe(11)
-  expect(character.characteristics.wisdomModifier!.value).toBe(0)
+  expect(characteristicValue(character, 'wisdom')).toBe(11)
+  expect(characteristicValue(character, 'wisdom-modifier')).toBe(0)
 
-  expect(character.characteristics.intelligence!.value).toBe(12)
-  expect(character.characteristics.intelligenceModifier!.value).toBe(1)
+  expect(characteristicValue(character, 'intelligence')).toBe(12)
+  expect(characteristicValue(character, 'intelligence-modifier')).toBe(1)
 
-  expect(character.characteristics.charisma!.value).toBe(8)
-  expect(character.characteristics.charismaModifier!.value).toBe(-1)
+  expect(characteristicValue(character, 'charisma')).toBe(8)
+  expect(characteristicValue(character, 'charisma-modifier')).toBe(-1)
 
-  expect(character.characteristics.movementSpeed!.value).toBe(30)
-  expect(character.characteristics.initiative!.value).toBe(2)
+  expect(characteristicValue(character, 'movement-speed')).toBe(30)
+  expect(characteristicValue(character, 'initiative')).toBe(2)
 
   expect(character.abilities.filter((it) => it.loadout === null).length).toBe(4)
 
@@ -54,6 +61,6 @@ test('Test Character Choices and Selections', () => {
   character = Characters.selectOption(character, CharacterOptions.buildSelection(SelectClassLevel, Fighter.Level3), ruleset)
   expect(CharacterOptions.isSelected(character.selections, SelectClassLevel, Fighter.Level3)).toBe(true)
 
-  expect(character.characteristics.hitPoints!.value).toBe(28)
+  expect(characteristicValue(character, 'hit-points')).toBe(28)
   expect(character.resources[HitPointResourcePool.id]!.value).toBe(28)
 })

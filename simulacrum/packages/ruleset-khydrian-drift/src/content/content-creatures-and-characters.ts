@@ -1,4 +1,5 @@
 import { Content } from '@simulacrum/ruleset'
+import * as CreatureTypeTags from '@simulacrum/ruleset-khydrian-drift/creature-type'
 import { SelectClassOption } from '@simulacrum/ruleset-khydrian-drift/character-option'
 import {
   FortitudeDefense,
@@ -47,7 +48,7 @@ export const CreatureVitalityPoints = Content.defineSection('creatures/vitality-
     name: 'Vitality Points',
     description: `A creature's current vitality points can be any number from the creature's [vitality pool cap](characteristic:vitality-pool) down to 0. This number changes frequently as a creature [takes damage](content:combat/taking-damage) or [receives healing](content:combat/healing).
 
-Whenever a character’s vitality points reaches zero, it is [incapacitated](content:combat/incapacitated) and dying. See [dropping to 0 vitality points](content:combat/dropping-to-0-vitality-points) for details on how this works. Typically, whenever a creature’s vitality points reaches zero, it does not go through the dying phase and is simply considered dead.`,
+Whenever a character’s vitality points reaches zero, it is [incapacitated](creature-tag:condition/incapacitated) and dying. See [dropping to 0 vitality points](content:combat/dropping-to-0-vitality-points) for details on how this works. Typically, whenever a creature’s vitality points reaches zero, it does not go through the dying phase and is simply considered dead.`,
   },
 })
 
@@ -165,7 +166,7 @@ export const NormalVision = Content.defineSection('creatures/normal-vision', {
   parent: CreatureSenses,
   content: {
     name: 'Normal Vision',
-    description: `This is the default sense for most [humanoids](content:creatures/humanoid). A creature with normal vision can see clearly in bright light, but dim light imposes disadvantage on [Vigilance](characteristic:skill/vigilance) checks that rely on sight. They cannot see in total darkness.`,
+    description: `This is the default sense for most [humanoids](creature-tag:creature-type/humanoid). A creature with normal vision can see clearly in bright light, but dim light imposes disadvantage on [Vigilance](characteristic:skill/vigilance) checks that rely on sight. They cannot see in total darkness.`,
   },
 })
 
@@ -181,7 +182,7 @@ export const Blindsight = Content.defineSection('creatures/blindsight', {
   parent: CreatureSenses,
   content: {
     name: 'Blindsight',
-    description: `A creature with blindsight perceives its surroundings without relying on sight, typically by using heightened senses like sound, echo location, or acute scent. Within a specified range, the creature can perceive everything, including [invisible](content:combat/invisible) creatures, regardless of lighting conditions.`,
+    description: `A creature with blindsight perceives its surroundings without relying on sight, typically by using heightened senses like sound, echo location, or acute scent. Within a specified range, the creature can perceive everything, including [invisible](creature-tag:condition/invisible) creatures, regardless of lighting conditions.`,
   },
 })
 
@@ -189,7 +190,7 @@ export const Omnisight = Content.defineSection('creatures/omnisight', {
   parent: CreatureSenses,
   content: {
     name: 'Omnisight',
-    description: `Omnisight is a superior sense that allows a creature to see things as they truly are within a specified range. A creature with omnisight can see in any darkness, see [invisible](content:combat/invisible) creatures and objects, automatically detect holograms and other visual illusions, and perceive a creature's true form if it is disguised.`,
+    description: `Omnisight is a superior sense that allows a creature to see things as they truly are within a specified range. A creature with omnisight can see in any darkness, see [invisible](creature-tag:condition/invisible) creatures and objects, automatically detect holograms and other visual illusions, and perceive a creature's true form if it is disguised.`,
   },
 })
 
@@ -197,7 +198,7 @@ export const Tremorsight = Content.defineSection('creatures/tremorsight', {
   parent: CreatureSenses,
   content: {
     name: 'Tremorsight',
-    description: `A creature with tremorsight can detect and pinpoint the origin of vibrations in the ground or other solid surfaces. Within a specified range, the creature can perceive the location of anything in contact with the ground or that is creating vibrations, even if it is [invisible](content:combat/invisible) or behind [total cover](content:combat/cover).`,
+    description: `A creature with tremorsight can detect and pinpoint the origin of vibrations in the ground or other solid surfaces. Within a specified range, the creature can perceive the location of anything in contact with the ground or that is creating vibrations, even if it is [invisible](creature-tag:condition/invisible) or behind [total cover](content:combat/cover).`,
   },
 })
 
@@ -207,41 +208,17 @@ export const CreatureType = Content.defineSection('creatures/creature-type', {
     name: 'Creature Type',
     description: `Every creature is categorized into certain creature archetypes called creature type. Some actions and effects only apply to creatures of a certain type or have additional effects based on that creature’s type.
 
-The creature types are [Humanoid](content:creatures/humanoid), [Mechanical](content:creatures/mechanical), [Aberration](content:creatures/aberration) and [Beast](content:creatures/beast).`,
+The creature types are [Humanoid](creature-tag:creature-type/humanoid), [Mechanical](creature-tag:creature-type/mechanical), [Aberration](creature-tag:creature-type/aberration) and [Beast](creature-tag:creature-type/beast).`,
   },
 })
 
-export const HumanoidType = Content.defineSection('creatures/humanoid', {
-  parent: CreatureType,
-  content: {
-    name: 'Humanoid',
-    description: `Humanoid is the most common creature type, including all standard player races. Humanoids are generally susceptible to normal forms of combat and social interaction.`,
-  },
-})
+export const HumanoidType = Content.linkEntity(CreatureType, CreatureTypeTags.Humanoid)
 
-export const MechanicalType = Content.defineSection('creatures/mechanical', {
-  parent: CreatureType,
-  content: {
-    name: 'Mechanical',
-    description: `Mechanical creatures are constructs, robots, and creatures heavily augmented by technology. They are often immune to effects that target organic biology, but may be vulnerable to tech-based attacks.`,
-  },
-})
+export const MechanicalType = Content.linkEntity(CreatureType, CreatureTypeTags.Mechanical)
 
-export const AberrationType = Content.defineSection('creatures/aberration', {
-  parent: CreatureType,
-  content: {
-    name: 'Aberration',
-    description: `Aberrations are strange, often alien creatures whose biology and psychology defy natural laws. They are typically associated with Khydrian (psionic/magic) abilities and mental effects.`,
-  },
-})
+export const AberrationType = Content.linkEntity(CreatureType, CreatureTypeTags.Aberration)
 
-export const BeastType = Content.defineSection('creatures/beast', {
-  parent: CreatureType,
-  content: {
-    name: 'Beast',
-    description: `Beasts are natural or engineered animals, from guard dogs and feral wildlife to bioengineered predators. They act on instinct rather than reason, and are generally unaffected by social interaction.`,
-  },
-})
+export const BeastType = Content.linkEntity(CreatureType, CreatureTypeTags.Beast)
 
 export const CreatureActions = Content.defineSection('creatures/actions', {
   parent: AnatomyOfACreature,
@@ -360,7 +337,11 @@ export const CharacterPotency = Content.defineSection('characters/potency', {
   parent: AnatomyOfACharacter,
   content: {
     name: 'Potency',
-    description: `Potency represents how much damage a character can do with certain kinds of attacks.`,
+    description: `Potency represents how hard a character's attacks hit. Damage is written as dice plus some amount of Potency, shown as **P**. For example, **2d6 + 2P** means you roll 2d6 and add your potency twice.
+
+Each attribute has its own potency, which starts at that attribute's rating: [brawn](characteristic:brawn) potency, [agility](characteristic:agility) potency, [willpower](characteristic:willpower) potency, and [intelligence](characteristic:intelligence) potency. An attack uses the potency of the attribute it attacks with, so an Intelligence vs. Fortitude attack adds your intelligence potency.
+
+Some effects increase your potency for certain damage. The increase changes the value of **P** itself, so it applies to every **P** in the damage: with a potency of 3, **2d6 + 2P** deals 2d6 + 6, and if an effect increases your potency by 1 for that damage it deals 2d6 + 8 instead.`,
   },
 })
 
@@ -376,7 +357,7 @@ export const CharacterCreatureType = Content.defineSection('characters/creature-
   parent: AnatomyOfACharacter,
   content: {
     name: 'Creature Type',
-    description: `A player character’s [creature type](content:creatures/creature-type) will depend on their chosen [race](content:characters/race), but it is typically [humanoid](content:creatures/humanoid).`,
+    description: `A player character’s [creature type](content:creatures/creature-type) will depend on their chosen [race](content:characters/race), but it is typically [humanoid](creature-tag:creature-type/humanoid).`,
   },
 })
 

@@ -32,7 +32,7 @@ import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
 import { RulesetEntity } from '@simulacrum/ruleset/ruleset-entity'
 import { CharacterOption } from '@simulacrum/ruleset/character-option'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
-import { Abilities, Characteristics, Characters, Effects, Loadout, ProgressionTables } from '@simulacrum/common/engine/engine'
+import { Abilities, Characteristics, Characters, CharacterEffects, Loadout, ProgressionTables } from '@simulacrum/common/engine/engine'
 import { Ability } from '@simulacrum/common/engine/ability'
 import { CharacterOptionValue } from '@simulacrum/common/engine/character/character-option'
 import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
@@ -663,7 +663,7 @@ const SelectedTraits = ({ traits, level, heldTraits }: { traits: Array<Trait>; l
 
 const getTraitAbilities = (traits: Array<Trait>, ruleset: Ruleset): Array<Ability> => {
   return traits.flatMap((trait) =>
-    Effects.filter(trait.effects, Effects.GainAbility)
+    CharacterEffects.filter(trait.effects, CharacterEffects.GainAbility)
       .filter((it) => Objects.isNil(it.loadout))
       .map((it) => Abilities.getAbilityById(it.ability, ruleset))
   )

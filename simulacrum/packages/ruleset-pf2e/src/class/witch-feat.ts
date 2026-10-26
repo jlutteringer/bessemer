@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
@@ -33,8 +33,8 @@ export const Cackle = Traits.defineTrait('feat/cackle', {
     '*Witch*\n\nYour patron’s power fills you with confidence, letting you sustain a magical working even as a quick burst of laughter leaves your lips. You learn the [_cackle_](ability:spell/cackle) hex.',
   tags: [Feat, ClassFeat, WitchFeat, FeatLevel1],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.Cackle),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(WitchFocusSpells.Cackle),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -100,7 +100,7 @@ export const WitchsArmaments = Traits.defineTrait('feat/witchs-armaments', {
     '*Witch*\n\nYour patron’s power changes your body to ensure you are never defenseless. You gain one of the following unarmed attacks.\n\n- **Eldritch Nails** Your nails are supernaturally long and sharp. You gain a nails unarmed attack that deals 1d6 slashing damage, is in the brawling group, and has the agile and unarmed traits.\n\n- **Iron Teeth** With a click of your jaw, your teeth transform into long metallic points. You gain a jaws unarmed attack that deals 1d8 piercing damage and is in the brawling group.\n\n- **Living Hair** You can instantly grow or shrink your hair, eyebrows, beard, or mustache by up to several feet and manipulate your hair for use as a weapon, though your control isn’t fine enough for more dexterous tasks. You gain a hair unarmed attack that deals 1d4 bludgeoning damage; is in the brawling group; and has the agile, disarm, finesse, trip, and unarmed traits.\n\n**Special** You can take this feat more than once, gaining a different unarmed attack each time.',
   tags: [Feat, ClassFeat, WitchFeat, FeatLevel1],
   repeatable: true,
-  effects: [Effects.gainCharacterOption(SelectWitchsArmaments)],
+  effects: [CharacterEffects.gainCharacterOption(SelectWitchsArmaments)],
 })
 
 export const BasicLesson = Traits.defineTrait('feat/basic-lesson', {
@@ -108,7 +108,7 @@ export const BasicLesson = Traits.defineTrait('feat/basic-lesson', {
   description:
     '*Witch*\n\nYour patron grants you a special lesson, revealing a hidden facet of its nature. Choose a basic lesson from the list here. You gain its associated hex, and your familiar learns the associated spell.',
   tags: [Feat, ClassFeat, WitchFeat, FeatLevel2],
-  effects: [Effects.gainCharacterOption(SelectWitchBasicLesson)],
+  effects: [CharacterEffects.gainCharacterOption(SelectWitchBasicLesson)],
 })
 
 export const ConcealSpell = Traits.defineTrait('feat/conceal-spell', {
@@ -185,7 +185,7 @@ export const GreaterLesson = Traits.defineTrait('feat/greater-lesson', {
   description:
     '*Witch*\n\nYour patron grants you greater knowledge. Choose a greater or basic lesson from the list here. You gain its associated hex, and your familiar learns the associated spell.',
   tags: [Feat, ClassFeat, WitchFeat, FeatLevel6],
-  effects: [Effects.gainCharacterOption(SelectWitchGreaterLesson)],
+  effects: [CharacterEffects.gainCharacterOption(SelectWitchGreaterLesson)],
 })
 
 export const WitchsCharge = Traits.defineTrait('feat/witchs-charge', {
@@ -202,7 +202,7 @@ export const IncredibleFamiliar = Traits.defineTrait('feat/incredible-familiar',
     '*Thaumaturge, Witch*\n\n**Prerequisites** [Enhanced Familiar](trait:feat/enhanced-familiar)\n\nYour familiar is imbued with even more magic than other familiars. You can select a base of six familiar or master abilities each day, instead of four.\n\n**Special** Add the bonus familiar abilities you gain for being a witch to this amount.',
   tags: [Feat, ClassFeat, WitchFeat, FeatLevel8],
   prerequisites: [Traits.traitPrerequisite(EnhancedFamiliar)],
-  effects: [Effects.gainCharacterOption(SelectFamiliarAbility), Effects.gainCharacterOption(SelectFamiliarAbility)],
+  effects: [CharacterEffects.gainCharacterOption(SelectFamiliarAbility), CharacterEffects.gainCharacterOption(SelectFamiliarAbility)],
 })
 
 export const Murksight = Traits.defineTrait('feat/murksight', {
@@ -254,7 +254,7 @@ export const MajorLesson = Traits.defineTrait('feat/major-lesson', {
   description:
     '*Witch*\n\nYour patron grants you even greater secrets. Choose a major, greater, or basic lesson from the list here. You gain its associated hex, and your familiar learns the associated spell.\n\n**Special** You can select this feat a second time if you’re 14th level or higher, and a third time if you’re 18th level or higher. Choose a different lesson each time.',
   tags: [Feat, ClassFeat, WitchFeat, FeatLevel10],
-  effects: [Effects.gainCharacterOption(SelectWitchMajorLesson)],
+  effects: [CharacterEffects.gainCharacterOption(SelectWitchMajorLesson)],
 })
 
 export const WitchsCommunion = Traits.defineTrait('feat/witchs-communion', {

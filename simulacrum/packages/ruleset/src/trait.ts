@@ -1,5 +1,5 @@
 import { Assertions, Objects } from '@bessemer/cornerstone'
-import { Effect } from '@simulacrum/ruleset/effect'
+import { CharacterEffect } from '@simulacrum/ruleset/character-effect'
 import * as Tags from '@simulacrum/ruleset/tag'
 import { TagFilter, TagFilterProps, TraitTag, TraitTagReference } from '@simulacrum/ruleset/tag'
 import * as CharacterValues from '@simulacrum/ruleset/character-value'
@@ -10,7 +10,7 @@ import { Expression, Expressions } from '@bessemer/cornerstone/expression'
 export type TraitReference = RulesetEntityReference<typeof RulesetEntityType.Trait>
 
 export type TraitProps = RulesetEntityProps & {
-  effects: Array<Effect>
+  effects: Array<CharacterEffect>
 
   tags?: Array<TraitTag>
   prerequisites?: Array<Expression<boolean>>
@@ -19,7 +19,7 @@ export type TraitProps = RulesetEntityProps & {
 
 export type Trait = RulesetEntity & {
   id: TraitReference
-  effects: Array<Effect>
+  effects: Array<CharacterEffect>
 
   tags: Array<TraitTagReference>
   prerequisites: Array<Expression<boolean>>

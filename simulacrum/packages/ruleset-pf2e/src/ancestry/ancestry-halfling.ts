@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -60,7 +60,7 @@ export const TwilightHalfling = Traits.defineTrait('heritage/twilight-halfling',
   description:
     'Your ancestors performed many secret acts under the concealing cover of dusk, whether for good or ill, and over time they developed the ability to see in twilight beyond even the usual keen sight of halflings. You gain [low-light vision](content:playing-the-game/low-light-vision).',
   tags: [Heritage, HalflingHeritage],
-  effects: [Effects.gainTrait(LowLightVision)],
+  effects: [CharacterEffects.gainTrait(LowLightVision)],
 })
 
 export const WildwoodHalfling = Traits.defineTrait('heritage/wildwood-halfling', {
@@ -126,16 +126,20 @@ export const Halfling = Traits.defineTrait('ancestry/halfling', {
     "*Halfling, Humanoid*\n\n_Halflings are a short, resilient people who exhibit remarkable curiosity and humor._\n\nIf you want to play a character who must contend with these opposing drives toward adventure and comfort, you should play a halfling.\n\nRead the full entry in [Halflings](content:ancestries-and-backgrounds/halflings).\n\n**Hit Points** 6\n\n**Size** Small\n\n**Speed** 25 feet\n\n**Attribute Boosts** Dexterity, Wisdom, Free\n\n**Attribute Flaws** Strength\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Halfling](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Dwarven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Elven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Keen Eyes** Your eyes are sharp, allowing you to make out small details about [concealed](content:conditions/concealed) or even [invisible](content:conditions/invisible) creatures that others might miss. You gain a +2 circumstance bonus when using the [Seek](content:playing-the-game/seek) action to find [hidden](content:conditions/hidden) or [undetected](content:conditions/undetected) creatures within 30 feet of you. When you target an opponent that is concealed from you or hidden from you, reduce the DC of the flat check to 3 for a concealed target or 9 for a hidden one.",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
-    Effects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(-1))),
-    Effects.gainCharacterOption(SelectHalflingAncestryBoost),
-    Effects.gainCharacterOption(SelectHalflingHeritage),
-    Effects.gainCharacterOption(SelectHalflingFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectHalflingFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectHalflingFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
+    CharacterEffects.modifyCharacteristic(Dexterity, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Strength, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.gainCharacterOption(SelectHalflingAncestryBoost),
+    CharacterEffects.gainCharacterOption(SelectHalflingHeritage),
+    CharacterEffects.gainCharacterOption(SelectHalflingFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(SelectHalflingFeat5),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainCharacterOption(SelectHalflingFeat9),
+    ]),
   ],
 })
 
@@ -160,7 +164,7 @@ export const HalflingLore = Traits.defineTrait('ancestry/halfling/halfling-lore'
   description:
     "*Halfling*\n\nYou've dutifully learned how to keep your balance and how to stick to the shadows where it's safe, important skills passed down through generations of halfling tradition. You gain the trained proficiency rank in [Acrobatics](characteristic:skill/acrobatics) and [Stealth](characteristic:skill/stealth). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Halfling [Lore](content:skills/lore).",
   tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel1],
-  effects: [Effects.gainTrait(TrainedAcrobatics), Effects.gainTrait(TrainedStealth), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedAcrobatics), CharacterEffects.gainTrait(TrainedStealth), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const HalflingLuck = Traits.defineTrait('ancestry/halfling/halfling-luck', {
@@ -185,7 +189,7 @@ export const PrairieRider = Traits.defineTrait('ancestry/halfling/prairie-rider'
   description:
     "*Halfling*\n\nYou grew up riding your clan's shaggy ponies and riding dogs. You become trained in [Nature](characteristic:skill/nature). If you would automatically become trained in Nature (from your background or class, for example), you instead become trained in a skill of your choice. You also get a +1 circumstance bonus to [Command an Animal](content:skills/command-an-animal) if the target is a traditional halfling mount, such as a pony or riding dog.",
   tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel1],
-  effects: [Effects.gainTrait(TrainedNature)],
+  effects: [CharacterEffects.gainTrait(TrainedNature)],
 })
 
 export const SureFeet = Traits.defineTrait('ancestry/halfling/sure-feet', {
@@ -225,7 +229,7 @@ export const CulturalAdaptability = Traits.defineTrait('ancestry/halfling/cultur
   description:
     "*Halfling*\n\nDuring your adventures, you've honed your ability to adapt to the culture of the predominant ancestry around you. You gain the [Adopted Ancestry](trait:feat/adopted-ancestry) general feat, and you also gain one 1st-level ancestry feat from the ancestry you chose for the Adopted Ancestry feat.",
   tags: [Feat, AncestryFeat, HalflingFeat, FeatLevel5],
-  effects: [Effects.gainTrait(AdoptedAncestry)],
+  effects: [CharacterEffects.gainTrait(AdoptedAncestry)],
 })
 
 export const StepLively = Traits.defineTrait('ancestry/halfling/step-lively', {

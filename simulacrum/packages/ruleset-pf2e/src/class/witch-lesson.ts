@@ -1,4 +1,4 @@
-import { Tags, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Tags, Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as Spells from '@simulacrum/ruleset-pf2e/spell/spell'
@@ -20,9 +20,9 @@ export const LessonOfDreams = Traits.defineTrait('witch/lesson/lesson-of-dreams'
     '**Lesson Type** Basic\n\nDreams can be a window to greater insights. You gain the [Veil of Dreams](ability:spell/veil-of-dreams) hex, and your familiar learns [Sleep](ability:spell/sleep).',
   tags: [WitchBasicLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.VeilOfDreams),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.Sleep),
+    CharacterEffects.gainAbility(WitchFocusSpells.VeilOfDreams),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.Sleep),
   ],
 })
 
@@ -32,9 +32,9 @@ export const LessonOfLife = Traits.defineTrait('witch/lesson/lesson-of-life', {
     '**Lesson Type** Basic\n\nLife can be shared. You gain the [Life Boost](ability:spell/life-boost) hex, and your familiar learns [Spirit Link](ability:spell/spirit-link).',
   tags: [WitchBasicLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.LifeBoost),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.SpiritLink),
+    CharacterEffects.gainAbility(WitchFocusSpells.LifeBoost),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.SpiritLink),
   ],
 })
 
@@ -44,9 +44,9 @@ export const LessonOfProtection = Traits.defineTrait('witch/lesson/lesson-of-pro
     '**Lesson Type** Basic\n\nAn ounce of protection is worth a pound of cure. You gain the [Blood Ward](ability:spell/blood-ward) hex, and your familiar learns [Mystic Armor](ability:spell/mystic-armor).',
   tags: [WitchBasicLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.BloodWard),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.MysticArmor),
+    CharacterEffects.gainAbility(WitchFocusSpells.BloodWard),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.MysticArmor),
   ],
 })
 
@@ -56,9 +56,9 @@ export const LessonOfVengeance = Traits.defineTrait('witch/lesson/lesson-of-veng
     '**Lesson Type** Basic\n\nSuffer not even the smallest slights. You gain the [Needle of Vengeance](ability:spell/needle-of-vengeance) hex, and your familiar learns [Phantom Pain](ability:spell/phantom-pain).',
   tags: [WitchBasicLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.NeedleOfVengeance),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.PhantomPain),
+    CharacterEffects.gainAbility(WitchFocusSpells.NeedleOfVengeance),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.PhantomPain),
   ],
 })
 
@@ -68,9 +68,9 @@ export const LessonOfTheElements = Traits.defineTrait('witch/lesson/lesson-of-th
     '**Lesson Type** Basic\n\nNatural disasters and inclement weather hold more power than the mightiest creature. You gain the [Elemental Betrayal](ability:spell/elemental-betrayal) hex. Your familiar learns your choice of [_breathe fire_](ability:spell/breathe-fire), [_gust of wind_](ability:spell/gust-of-wind), [_hydraulic push_](ability:spell/hydraulic-push), or [_pummeling rubble_](ability:spell/pummeling-rubble).',
   tags: [WitchBasicLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.ElementalBetrayal),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainCharacterOption(SelectLessonOfTheElementsSpell),
+    CharacterEffects.gainAbility(WitchFocusSpells.ElementalBetrayal),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainCharacterOption(SelectLessonOfTheElementsSpell),
   ],
 })
 
@@ -80,9 +80,9 @@ export const LessonOfMischief = Traits.defineTrait('witch/lesson/lesson-of-misch
     "**Lesson Type** Greater\n\nNothing's wrong with some mischief, now and then. You gain the [Deceiver's Cloak](ability:spell/deceivers-cloak) hex, and your familiar learns [Mad Monkeys](ability:spell/mad-monkeys).",
   tags: [WitchGreaterLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.DeceiversCloak),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.MadMonkeys),
+    CharacterEffects.gainAbility(WitchFocusSpells.DeceiversCloak),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.MadMonkeys),
   ],
 })
 
@@ -92,9 +92,9 @@ export const LessonOfShadow = Traits.defineTrait('witch/lesson/lesson-of-shadow'
     '**Lesson Type** Greater\n\nA shadow is far from empty—it contains something of the person who casts it. You gain the [Malicious Shadow](ability:spell/malicious-shadow) hex, and your familiar learns [Chilling Darkness](ability:spell/chilling-darkness).',
   tags: [WitchGreaterLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.MaliciousShadow),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.ChillingDarkness),
+    CharacterEffects.gainAbility(WitchFocusSpells.MaliciousShadow),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.ChillingDarkness),
   ],
 })
 
@@ -104,9 +104,9 @@ export const LessonOfSnow = Traits.defineTrait('witch/lesson/lesson-of-snow', {
     '**Lesson Type** Greater\n\nEmulate snow, for it can snuff out life despite its gentleness. You gain the [Personal Blizzard](ability:spell/personal-blizzard) hex, and your familiar learns [Wall of Wind](ability:spell/wall-of-wind).',
   tags: [WitchGreaterLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.PersonalBlizzard),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.gainAbility(Spells.WallOfWind),
+    CharacterEffects.gainAbility(WitchFocusSpells.PersonalBlizzard),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(Spells.WallOfWind),
   ],
 })
 
@@ -116,8 +116,8 @@ export const LessonOfDeath = Traits.defineTrait('witch/lesson/lesson-of-death', 
     '**Lesson Type** Major\n\nDeath is final, yet not as inescapable as it may seem. You gain the [Curse of Death](ability:spell/curse-of-death) hex, and your familiar learns _raise dead_.',
   tags: [WitchMajorLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.CurseOfDeath),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(WitchFocusSpells.CurseOfDeath),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -127,8 +127,8 @@ export const LessonOfRenewal = Traits.defineTrait('witch/lesson/lesson-of-renewa
     '**Lesson Type** Major\n\nEntropy comes for all, but it can be wound back through effort. You gain the [Restorative Moment](ability:spell/restorative-moment) hex, and your familiar learns _field of life_.',
   tags: [WitchMajorLesson],
   effects: [
-    Effects.gainAbility(WitchFocusSpells.RestorativeMoment),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(WitchFocusSpells.RestorativeMoment),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 

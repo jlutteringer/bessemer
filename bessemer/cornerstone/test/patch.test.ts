@@ -3,17 +3,21 @@ import { Expressions } from '@bessemer/cornerstone/expression'
 
 test('Patch Numbers', () => {
   {
-    const value = Patches.resolve(5, [Patches.sum(1), Patches.sum(2), Patches.sum(3)], Expressions.defaultEvaluator())
+    const value = Patches.resolve(5, [Patches.sum(1), Patches.sum(2), Patches.sum(3)], Expressions.createEvaluator(Expressions.defaultContext()))
     expect(value).toEqual(11)
   }
 
   {
-    const value = Patches.resolve(5, [Patches.multiply(2), Patches.sum(2), Patches.multiply(2)], Expressions.defaultEvaluator())
+    const value = Patches.resolve(
+      5,
+      [Patches.multiply(2), Patches.sum(2), Patches.multiply(2)],
+      Expressions.createEvaluator(Expressions.defaultContext())
+    )
     expect(value).toEqual(24)
   }
 
   {
-    const value = Patches.resolve(5, [Patches.set(2), Patches.sum(2), Patches.set(5)], Expressions.defaultEvaluator())
+    const value = Patches.resolve(5, [Patches.set(2), Patches.sum(2), Patches.set(5)], Expressions.createEvaluator(Expressions.defaultContext()))
     expect(value).toEqual(5)
   }
 })
@@ -81,7 +85,7 @@ test('Patch Objects', () => {
           },
         }),
       ],
-      Expressions.defaultEvaluator()
+      Expressions.createEvaluator(Expressions.defaultContext())
     )
 
     expect(originalPerson.name).toEqual('Bob Bobson')
@@ -106,7 +110,7 @@ test('Patch Objects', () => {
           }),
         }),
       ],
-      Expressions.defaultEvaluator()
+      Expressions.createEvaluator(Expressions.defaultContext())
     )
 
     expect(updatedPerson.pets).toEqual([...originalPerson.pets, 'Burly Bear'])
@@ -133,7 +137,7 @@ test('Patch Objects', () => {
           ],
         }),
       ],
-      Expressions.defaultEvaluator()
+      Expressions.createEvaluator(Expressions.defaultContext())
     )
 
     expect(updatedPerson.residences.length).toEqual(2)
@@ -159,7 +163,7 @@ test('Patch Objects', () => {
           ],
         }),
       ],
-      Expressions.defaultEvaluator()
+      Expressions.createEvaluator(Expressions.defaultContext())
     )
 
     expect(updatedPerson.residences[1]!.address).toEqual({

@@ -1,4 +1,4 @@
-import { Abilities, Effects } from '@simulacrum/ruleset'
+import { Abilities, CharacterEffects } from '@simulacrum/ruleset'
 import { WeaponMasteryLoadout } from '@simulacrum/ruleset-dnd5e/loadout'
 
 // Descriptions of each weapon mastery property, shared by every weapon that has it
@@ -21,229 +21,229 @@ const MasteryDescriptions = {
 export const Club = Abilities.defineAbility('weapon-mastery/club', {
   name: 'Club (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const Dagger = Abilities.defineAbility('weapon-mastery/dagger', {
   name: 'Dagger (Nick)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Nick)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Nick)],
 })
 
 export const Greatclub = Abilities.defineAbility('weapon-mastery/greatclub', {
   name: 'Greatclub (Push)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Push)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Push)],
 })
 
 export const Handaxe = Abilities.defineAbility('weapon-mastery/handaxe', {
   name: 'Handaxe (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const Javelin = Abilities.defineAbility('weapon-mastery/javelin', {
   name: 'Javelin (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const LightHammer = Abilities.defineAbility('weapon-mastery/light-hammer', {
   name: 'Light Hammer (Nick)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Nick)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Nick)],
 })
 
 export const Mace = Abilities.defineAbility('weapon-mastery/mace', {
   name: 'Mace (Sap)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Sap)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Sap)],
 })
 
 export const Quarterstaff = Abilities.defineAbility('weapon-mastery/quarterstaff', {
   name: 'Quarterstaff (Topple)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Topple)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Topple)],
 })
 
 export const Sickle = Abilities.defineAbility('weapon-mastery/sickle', {
   name: 'Sickle (Nick)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Nick)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Nick)],
 })
 
 export const Spear = Abilities.defineAbility('weapon-mastery/spear', {
   name: 'Spear (Sap)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Sap)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Sap)],
 })
 
 export const Dart = Abilities.defineAbility('weapon-mastery/dart', {
   name: 'Dart (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const LightCrossbow = Abilities.defineAbility('weapon-mastery/light-crossbow', {
   name: 'Light Crossbow (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const Shortbow = Abilities.defineAbility('weapon-mastery/shortbow', {
   name: 'Shortbow (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const Sling = Abilities.defineAbility('weapon-mastery/sling', {
   name: 'Sling (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const Battleaxe = Abilities.defineAbility('weapon-mastery/battleaxe', {
   name: 'Battleaxe (Topple)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Topple)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Topple)],
 })
 
 export const Flail = Abilities.defineAbility('weapon-mastery/flail', {
   name: 'Flail (Sap)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Sap)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Sap)],
 })
 
 export const Glaive = Abilities.defineAbility('weapon-mastery/glaive', {
   name: 'Glaive (Graze)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Graze)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Graze)],
 })
 
 export const Greataxe = Abilities.defineAbility('weapon-mastery/greataxe', {
   name: 'Greataxe (Cleave)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Cleave)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Cleave)],
 })
 
 export const Greatsword = Abilities.defineAbility('weapon-mastery/greatsword', {
   name: 'Greatsword (Graze)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Graze)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Graze)],
 })
 
 export const Halberd = Abilities.defineAbility('weapon-mastery/halberd', {
   name: 'Halberd (Cleave)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Cleave)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Cleave)],
 })
 
 export const Lance = Abilities.defineAbility('weapon-mastery/lance', {
   name: 'Lance (Topple)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Topple)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Topple)],
 })
 
 export const Longsword = Abilities.defineAbility('weapon-mastery/longsword', {
   name: 'Longsword (Sap)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Sap)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Sap)],
 })
 
 export const Maul = Abilities.defineAbility('weapon-mastery/maul', {
   name: 'Maul (Topple)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Topple)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Topple)],
 })
 
 export const Morningstar = Abilities.defineAbility('weapon-mastery/morningstar', {
   name: 'Morningstar (Sap)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Sap)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Sap)],
 })
 
 export const Pike = Abilities.defineAbility('weapon-mastery/pike', {
   name: 'Pike (Push)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Push)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Push)],
 })
 
 export const Rapier = Abilities.defineAbility('weapon-mastery/rapier', {
   name: 'Rapier (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const Scimitar = Abilities.defineAbility('weapon-mastery/scimitar', {
   name: 'Scimitar (Nick)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Nick)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Nick)],
 })
 
 export const Shortsword = Abilities.defineAbility('weapon-mastery/shortsword', {
   name: 'Shortsword (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const Trident = Abilities.defineAbility('weapon-mastery/trident', {
   name: 'Trident (Topple)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Topple)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Topple)],
 })
 
 export const Warhammer = Abilities.defineAbility('weapon-mastery/warhammer', {
   name: 'Warhammer (Push)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Push)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Push)],
 })
 
 export const WarPick = Abilities.defineAbility('weapon-mastery/war-pick', {
   name: 'War Pick (Sap)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Sap)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Sap)],
 })
 
 export const Whip = Abilities.defineAbility('weapon-mastery/whip', {
   name: 'Whip (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const Blowgun = Abilities.defineAbility('weapon-mastery/blowgun', {
   name: 'Blowgun (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const HandCrossbow = Abilities.defineAbility('weapon-mastery/hand-crossbow', {
   name: 'Hand Crossbow (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const HeavyCrossbow = Abilities.defineAbility('weapon-mastery/heavy-crossbow', {
   name: 'Heavy Crossbow (Push)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Push)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Push)],
 })
 
 export const Longbow = Abilities.defineAbility('weapon-mastery/longbow', {
   name: 'Longbow (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const Musket = Abilities.defineAbility('weapon-mastery/musket', {
   name: 'Musket (Slow)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Slow)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Slow)],
 })
 
 export const Pistol = Abilities.defineAbility('weapon-mastery/pistol', {
   name: 'Pistol (Vex)',
   loadout: WeaponMasteryLoadout,
-  effects: [Effects.descriptive(MasteryDescriptions.Vex)],
+  effects: [CharacterEffects.descriptive(MasteryDescriptions.Vex)],
 })
 
 export const WeaponMasteries = [

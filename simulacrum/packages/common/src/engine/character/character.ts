@@ -1,20 +1,24 @@
 import { Trait, TraitReference } from '@simulacrum/common/engine/trait'
-import { ConditionalEffect, Effect, EffectSourceType } from '@simulacrum/common/engine/effect'
+import { ConditionalEffect, CharacterEffect } from '@simulacrum/common/engine/character-effect'
 import { CharacterChoice, CharacterOptionType, CharacterSelection } from '@simulacrum/common/engine/character/character-option'
 import { CharacterOptions, CharacterProgression } from '@simulacrum/common/engine/engine'
 import { CharacterProgress } from '@simulacrum/common/engine/character/character-progression'
 import { ProgressionTable } from '@simulacrum/ruleset/progression-table'
 import { AbilityReference, AbilityState } from '@simulacrum/common/engine/ability'
 import { LoadoutSlot } from '@simulacrum/common/engine/loadout'
-import { CharacteristicValue } from '@simulacrum/common/engine/characteristic'
-import { ResourcePoolReference, ResourcePoolState } from '@simulacrum/common/engine/resource-pool'
+import { CharacteristicReference, CharacteristicValue } from '@simulacrum/common/engine/characteristic'
+import { ResourcePoolReference, ResourcePoolValue } from '@simulacrum/common/engine/resource-pool'
 import { EvaluateExpression, ExpressionContext, Expressions } from '@bessemer/cornerstone/expression'
-import { Abilities, Characteristics, Effects, ProgressionTables, ResourcePools, Traits } from '@simulacrum/common/engine/engine'
-import { Arrays, Assertions, Misc, ObjectPaths, Objects } from '@bessemer/cornerstone'
+import { Abilities, Characteristics, CharacterEffects, ProgressionTables, Traits } from '@simulacrum/common/engine/engine'
+import { Arrays, Misc, Objects } from '@bessemer/cornerstone'
 import * as Rulesets from '@simulacrum/common/engine/ruleset'
 import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { UnknownRecord } from 'type-fest'
 import { CharacterValues, RulesetEntities } from '@simulacrum/ruleset'
+
+import { buildCharacterState, buildExpressionContext } from '@simulacrum/common/engine/character/character-sheet'
+
+export { buildExpressionContext }
 
 export type CharacterInitialValues = UnknownRecord
 
@@ -27,13 +31,13 @@ export type CharacterRecord = {
 }
 
 export type CharacterSheet = CharacterRecord & {
-  characteristics: Record<string, CharacteristicValue>
+  characteristics: Record<CharacteristicReference, CharacteristicValue>
   traits: ProgressionTable<TraitReference>
   choices: ProgressionTable<CharacterChoice>
-  conditionalEffects: ProgressionTable<Effect>
+  conditionalEffects: ProgressionTable<CharacterEffect>
   abilities: Array<AbilityState>
   loadout: Array<LoadoutSlot>
-  resources: Record<ResourcePoolReference, ResourcePoolState>
+  resources: Record<ResourcePoolReference, ResourcePoolValue>
 }
 
 export const selectOption = (character: CharacterRecord, selection: CharacterSelection, ruleset: Ruleset): CharacterSheet => {
@@ -82,8 +86,11 @@ const isSameTraits = (first: ProgressionTable<TraitReference>, second: Progressi
 }
 
 const guessGrantedTraits = (character: CharacterRecord, ruleset: Ruleset): ProgressionTable<TraitReference> => {
-  const getGranted = (effects: Array<Effect>): Array<TraitReference> => {
-    return Effects.filter(effects, Effects.GainTrait).flatMap((it) => [it.trait, ...getGranted(Traits.getTraitById(it.trait, ruleset).effects)])
+  const getGranted = (effects: Array<CharacterEffect>): Array<TraitReference> => {
+    return CharacterEffects.filter(effects, CharacterEffects.GainTrait).flatMap((it) => [
+      it.trait,
+      ...getGranted(Traits.getTraitById(it.trait, ruleset).effects),
+    ])
   }
 
   const rulesetEffects = ProgressionTables.getEntries(ProgressionTables.capAtLevel(ruleset.progressionTable, character.level))
@@ -105,7 +112,7 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Progre
   const choices = ProgressionTables.empty<CharacterChoice>(character.level)
   const traits = ProgressionTables.empty<TraitReference>(character.level)
   const grantedTraits = ProgressionTables.empty<TraitReference>(character.level)
-  const conditionalEffects = ProgressionTables.empty<Effect>(character.level)
+  const conditionalEffects = ProgressionTables.empty<CharacterEffect>(character.level)
 
   const waitingTraits: Array<Trait> = []
   const waitingConditionals: Array<ConditionalEffect> = []
@@ -124,8 +131,8 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Progre
     )
   }
 
-  const visit = (effects: Array<Effect>, level: number, unmatchedSelections: Array<CharacterSelection>) => {
-    Effects.filter(effects, Effects.GainCharacterOption).forEach(({ option }) => {
+  const visit = (effects: Array<CharacterEffect>, level: number, unmatchedSelections: Array<CharacterSelection>) => {
+    CharacterEffects.filter(effects, CharacterEffects.GainCharacterOption).forEach(({ option }) => {
       const evaluate = getEvaluatorSoFar(level)
       const universalAbilities = Abilities.getAbilities(ruleset).filter((it) => it.universal && it.prerequisites.every(evaluate))
       const held = {
@@ -149,12 +156,12 @@ const walkCharacterOptions = (character: CharacterRecord, reservedTraits: Progre
       }
     })
 
-    Effects.filter(effects, Effects.GainTrait).forEach(({ trait }) => {
+    CharacterEffects.filter(effects, CharacterEffects.GainTrait).forEach(({ trait }) => {
       waitingTraits.push(Traits.getTraitById(trait, ruleset))
       applyWaiting(level, unmatchedSelections)
     })
 
-    Effects.filter(effects, Effects.Conditional).forEach((conditional) => {
+    CharacterEffects.filter(effects, CharacterEffects.Conditional).forEach((conditional) => {
       waitingConditionals.push(conditional)
       applyWaiting(level, unmatchedSelections)
     })
@@ -221,163 +228,12 @@ const buildLazyExpressionContext = (
   return { variables }
 }
 
-const getGrantedAbilities = (effects: ProgressionTable<Effect>): Array<AbilityReference> => {
-  return Effects.filter(ProgressionTables.getValues(effects), Effects.GainAbility).map((it) => it.ability)
+const getGrantedAbilities = (effects: ProgressionTable<CharacterEffect>): Array<AbilityReference> => {
+  return CharacterEffects.filter(ProgressionTables.getValues(effects), CharacterEffects.GainAbility).map((it) => it.ability)
 }
 
 const getSelections = (choices: ProgressionTable<CharacterChoice>): ProgressionTable<CharacterSelection> => {
   return ProgressionTables.flatMap(choices, (it) => Arrays.fromNilable([it.selection]))
-}
-
-const getProgressionEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
-  return ProgressionTables.getValues(CharacterProgression.buildEffectsTable(character.level, character, ruleset))
-}
-
-const getLoadoutEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
-  return Arrays.fromNilable(character.loadout.map((it) => it.ability)).flatMap((reference) =>
-    Effects.sourceEffects(Abilities.getAbilityById(reference, ruleset).effects, { type: EffectSourceType.Ability, ability: reference })
-  )
-}
-
-const getAllEffects = (character: CharacterSheet, ruleset: Ruleset): Array<Effect> => {
-  return [...getProgressionEffects(character, ruleset), ...getLoadoutEffects(character, ruleset)]
-}
-
-const evaluateLoadout = (character: CharacterSheet, ruleset: Ruleset): Array<LoadoutSlot> => {
-  const slots: Array<LoadoutSlot> = Effects.filter(getProgressionEffects(character, ruleset), Effects.GainLoadoutSlot).map((it) => ({
-    type: it.loadoutType,
-    ability: null,
-  }))
-
-  character.selectedAbilities.forEach((reference) => {
-    const ability = character.abilities.find((it) => it.ability.id === reference)
-    const isSlotted = slots.some((it) => it.ability === reference)
-    const slot = slots.find((it) => Objects.isNil(it.ability) && it.type === ability?.loadout)
-    if (Objects.isPresent(ability) && !isSlotted && Objects.isPresent(slot)) {
-      slot.ability = reference
-    }
-  })
-
-  return slots
-}
-
-const buildCharacterState = (character: CharacterRecord, progress: CharacterProgress, ruleset: Ruleset): CharacterSheet => {
-  return Misc.doUntilConsistent<CharacterSheet>(
-    (previous) => {
-      const characterState = Objects.isNil(previous) ? buildInitialCharacterState(character, progress, ruleset) : { ...previous }
-
-      const evaluator = Expressions.evaluator(buildExpressionContext(characterState, ruleset))
-      characterState.characteristics = evaluateCharacteristics(characterState, evaluator, ruleset)
-      characterState.abilities = evaluateCharacterAbilities(characterState, evaluator, ruleset)
-      characterState.loadout = evaluateLoadout(characterState, ruleset)
-      characterState.resources = evaluateResourcePools(characterState, evaluator, ruleset)
-      return characterState
-    },
-    (first, second) => {
-      return Arrays.equalWith(Object.values(first.characteristics), Object.values(second.characteristics), (first, second) => {
-        if (first.characteristic !== second.characteristic) {
-          return false
-        }
-
-        return first.value === second.value
-      })
-    }
-  )
-}
-
-const buildInitialCharacterState = (character: CharacterRecord, progress: CharacterProgress, ruleset: Ruleset): CharacterSheet => {
-  return {
-    ...character,
-    ...progress,
-    characteristics: buildInitialCharacteristics(character, ruleset),
-    abilities: [],
-    loadout: [],
-    resources: {},
-  }
-}
-
-const buildInitialCharacteristics = (character: CharacterRecord, ruleset: Ruleset): Record<string, CharacteristicValue> => {
-  const characteristicValues = Characteristics.getCharacteristics(ruleset).map((characteristic) => {
-    const attributeValue = Characteristics.simpleValue(0, characteristic, character.initialValues)
-    return ObjectPaths.applyAnyValue(characteristic.path, {}, attributeValue)
-  })
-
-  return Objects.deepMergeAll(characteristicValues) as Record<string, CharacteristicValue>
-}
-
-const evaluateCharacteristics = (character: CharacterSheet, evaluate: EvaluateExpression, ruleset: Ruleset): Record<string, CharacteristicValue> => {
-  const effects = getAllEffects(character, ruleset)
-  const characteristicValues = Characteristics.getCharacteristics(ruleset).map((characteristic) => {
-    const characteristicValue = Characteristics.evaluateCharacteristic(characteristic, character.initialValues, effects, evaluate)
-    return ObjectPaths.applyAnyValue(characteristic.path, {}, characteristicValue)
-  })
-
-  return Objects.deepMergeAll(characteristicValues) as Record<string, CharacteristicValue>
-}
-
-const evaluateCharacterAbilities = (character: CharacterSheet, evaluate: EvaluateExpression, ruleset: Ruleset): Array<AbilityState> => {
-  const effects = getProgressionEffects(character, ruleset)
-  const gainAbilityEffects = Effects.filter(effects, Effects.GainAbility)
-  const modifyAbilityEffects = Effects.filter(effects, Effects.ModifyAbility)
-  const universalAbilities = Abilities.getAbilities(ruleset)
-    .filter((it) => it.universal)
-    .map((it) => it.id)
-  const abilities = Abilities.getAbilitiesByIds(
-    Arrays.dedupe([...gainAbilityEffects.map((it) => it.ability), ...universalAbilities]),
-    ruleset
-  ).filter((it) => it.prerequisites.every(evaluate))
-
-  return abilities.map((ability) => {
-    const loadouts = gainAbilityEffects.filter((it) => it.ability === ability.id).map((it) => it.loadout)
-    const loadout = Arrays.isEmpty(loadouts) ? ability.loadout : loadouts.includes(null) ? null : loadouts[0]!
-    const modifiers = modifyAbilityEffects.filter((it) => it.ability === ability.id).map((it) => it.modifier)
-    return Abilities.buildInitialState(ability.id, loadout, modifiers, evaluate, ruleset)
-  })
-}
-
-const isUsable = (ability: AbilityState, character: CharacterSheet): boolean => {
-  return Objects.isNil(ability.loadout) || character.loadout.some((it) => it.ability === ability.ability.id)
-}
-
-const evaluateResourcePools = (
-  character: CharacterSheet,
-  evaluate: EvaluateExpression,
-  ruleset: Ruleset
-): Record<ResourcePoolReference, ResourcePoolState> => {
-  const effects = getProgressionEffects(character, ruleset)
-  const modifyResourcePoolEffects = Effects.filter(effects, Effects.ModifyResourcePool)
-
-  const resourcePools = Arrays.dedupe([
-    ...Effects.filter(effects, Effects.GainResourcePool).map((it) => it.resourcePool),
-    ...Arrays.filterMap(
-      character.abilities.filter((it) => isUsable(it, character)),
-      (it) => it.ability.resource?.id
-    ),
-  ])
-
-  const states = resourcePools.map((resourcePool) => {
-    const modifiers = modifyResourcePoolEffects.filter((it) => it.resourcePool === resourcePool).map((it) => it.modifier)
-    return ResourcePools.buildInitialState(resourcePool, modifiers, evaluate, ruleset)
-  })
-
-  return Object.fromEntries(states.map((it) => [it.resource.id, it]))
-}
-
-export const buildExpressionContext = (character: CharacterSheet, ruleset: Ruleset): ExpressionContext => {
-  const characterAttributes = Characteristics.getCharacteristics(ruleset)
-  const attributeVariables = characterAttributes.map((it) => {
-    const characteristic = ObjectPaths.getValue(it.path as any, character.characteristics) as any as CharacteristicValue
-    Assertions.assertPresent(characteristic)
-    return Expressions.buildVariable(it.variable, characteristic.value)
-  })
-
-  const variables: UnknownRecord = {
-    ...Expressions.buildVariable(CharacterValues.Level, character.level),
-    ...Expressions.buildVariable(CharacterValues.Traits, ProgressionTables.getValues(character.traits)),
-    ...Objects.deepMergeAll(attributeVariables),
-  }
-
-  return { variables }
 }
 
 export const normalizeCharacter = <T extends CharacterRecord>(character: T, ruleset: Ruleset): T => {

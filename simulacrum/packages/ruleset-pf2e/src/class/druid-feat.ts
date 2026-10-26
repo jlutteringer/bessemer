@@ -1,4 +1,4 @@
-import { Abilities, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
@@ -65,7 +65,7 @@ export const AnimalCompanion = Traits.defineTrait('feat/animal-companion', {
       ),
     ]),
   ],
-  effects: [Effects.gainCharacterOption(SelectAnimalCompanion)],
+  effects: [CharacterEffects.gainCharacterOption(SelectAnimalCompanion)],
 })
 
 export const AnimalEmpathyDruid = Traits.defineTrait('feat/animal-empathy-druid', {
@@ -109,8 +109,8 @@ export const UntamedForm = Traits.defineTrait('feat/untamed-form', {
   tags: [Feat, ClassFeat, DruidFeat, FeatLevel1],
   prerequisites: [Traits.traitPrerequisite(UntamedOrderMembership)],
   effects: [
-    Effects.gainAbility(DruidFocusSpells.UntamedForm),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(DruidFocusSpells.UntamedForm),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -157,7 +157,7 @@ export const EnhancedFamiliar = Traits.defineTrait('feat/enhanced-familiar', {
   description:
     '*Animist, Druid, Magus, Sorcerer, Thaumaturge, Witch, Wizard*\n\n**Prerequisites** a familiar\n\nYou infuse your familiar with additional primal energy, increasing its abilities. You can select four familiar or master abilities each day, instead of two.\n\n**Special** [Witch] Add the bonus familiar abilities you gain for being a witch to this amount. [Wizard] If your arcane thesis is improved familiar attunement, your familiar’s base number of familiar abilities, before adding any extra abilities from the arcane thesis, is four.',
   tags: [Feat, ClassFeat, DruidFeat, WitchFeat, WizardFeat, FeatLevel2],
-  effects: [Effects.gainCharacterOption(SelectFamiliarAbility), Effects.gainCharacterOption(SelectFamiliarAbility)],
+  effects: [CharacterEffects.gainCharacterOption(SelectFamiliarAbility), CharacterEffects.gainCharacterOption(SelectFamiliarAbility)],
 })
 
 export const PoisonResistance = Traits.defineTrait('feat/poison-resistance', {
@@ -286,7 +286,7 @@ export const GrownOfOak = Traits.defineTrait('feat/grown-of-oak', {
     '*Druid*\n\n**Prerequisites** leaf order\n\nYou can make your skin take on the woody endurance of an ancient tree and have your familiar follow suit. You can cast [_oaken resilience_](ability:spell/oaken-resilience) at will as an innate primal spell with a spell rank one lower than the highest rank of spells you can cast. This spell targets you, as well as your leshy familiar if it’s within 30 feet of you.',
   tags: [Feat, ClassFeat, DruidFeat, FeatLevel6],
   prerequisites: [Traits.traitPrerequisite(LeafOrderMembership)],
-  effects: [Effects.gainAbility(Spells.OakenResilience, null)],
+  effects: [CharacterEffects.gainAbility(Spells.OakenResilience, null)],
 })
 
 export const InsectShape = Traits.defineTrait('feat/insect-shape', {
@@ -413,7 +413,7 @@ export const IncredibleCompanionDruid = Traits.defineTrait('feat/incredible-comp
     '*Druid*\n\n**Prerequisites** [Mature Animal Companion (Druid)](trait:feat/mature-animal-companion-druid)\n\nYour animal companion continues to grow and develop. It becomes either a nimble or savage animal companion, gaining additional capabilities determined by the type.',
   tags: [Feat, ClassFeat, DruidFeat, FeatLevel8],
   prerequisites: [Traits.traitPrerequisite(MatureAnimalCompanionDruid)],
-  effects: [Effects.gainCharacterOption(SelectIncredibleAnimalCompanion)],
+  effects: [CharacterEffects.gainCharacterOption(SelectIncredibleAnimalCompanion)],
 })
 
 export const RaiseMenhir = Traits.defineTrait('feat/raise-menhir', {
@@ -454,8 +454,8 @@ export const WindCaller = Traits.defineTrait('feat/wind-caller', {
   tags: [Feat, ClassFeat, DruidFeat, FeatLevel8],
   prerequisites: [Traits.traitPrerequisite(StormOrderMembership)],
   effects: [
-    Effects.gainAbility(DruidFocusSpells.StormwindFlight),
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.gainAbility(DruidFocusSpells.StormwindFlight),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
   ],
 })
 
@@ -518,7 +518,9 @@ export const PlantShape = Traits.defineTrait('feat/plant-shape', {
     "*Druid*\n\n**Prerequisites** leaf order or [Untamed Form](trait:feat/untamed-form)\n\nYou can take the shape of a plant creature. If you don't have untamed form, you can cast _plant form_ once per day, heightened to the same rank as your highest-rank druid spell slot.\n\nIf you do have untamed form, add the shapes listed in plant form to your untamed form list, and whenever you're polymorphed into another shape using untamed form, you gain resistance 5 to poison.",
   tags: [Feat, ClassFeat, DruidFeat, FeatLevel10],
   prerequisites: [Expressions.or([Traits.traitPrerequisite(LeafOrderMembership), Traits.traitPrerequisite(UntamedForm)])],
-  effects: [Effects.conditional(Expressions.not(Traits.traitPrerequisite(UntamedForm)), [Effects.gainAbility(Spells.PlantForm, null)])],
+  effects: [
+    CharacterEffects.conditional(Expressions.not(Traits.traitPrerequisite(UntamedForm)), [CharacterEffects.gainAbility(Spells.PlantForm, null)]),
+  ],
 })
 
 export const PrimalHowl = Traits.defineTrait('feat/primal-howl', {

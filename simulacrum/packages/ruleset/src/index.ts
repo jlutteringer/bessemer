@@ -3,7 +3,7 @@ import * as Characteristics from '@simulacrum/ruleset/characteristic'
 import * as Tags from '@simulacrum/ruleset/tag'
 import * as Traits from '@simulacrum/ruleset/trait'
 import * as Loadout from '@simulacrum/ruleset/loadout'
-import * as Effects from '@simulacrum/ruleset/effect'
+import * as CharacterEffects from '@simulacrum/ruleset/character-effect'
 import * as Abilities from '@simulacrum/ruleset/ability'
 import * as ResourcePools from '@simulacrum/ruleset/resource-pool'
 import * as CharacterOptions from '@simulacrum/ruleset/character-option'
@@ -14,6 +14,8 @@ import * as RulesetEntities from '@simulacrum/ruleset/ruleset-entity'
 import * as CharacterValues from '@simulacrum/ruleset/character-value'
 import * as ActionTests from '@simulacrum/ruleset/action-test'
 import * as ActionEffects from '@simulacrum/ruleset/action-effect'
+import * as Damage from '@simulacrum/ruleset/damage'
+import * as Rolls from '@simulacrum/ruleset/roll'
 
 export {
   Attributes,
@@ -21,7 +23,7 @@ export {
   Tags,
   Traits,
   Loadout,
-  Effects,
+  CharacterEffects,
   Abilities,
   ResourcePools,
   CharacterOptions,
@@ -32,4 +34,6 @@ export {
   CharacterValues,
   ActionTests,
   ActionEffects,
+  Damage,
+  Rolls,
 }

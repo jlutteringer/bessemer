@@ -1,4 +1,4 @@
-import { Abilities, Tags, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Tags, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-dnd4e/action-type'
@@ -72,7 +72,7 @@ export const EldritchBlast = Abilities.defineAbility('warlock/power/eldritch-bla
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(EldritchBlastFeature)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       "**Warlock (All) Attack 1**\n\n**At-Will** ✦ Arcane, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma or Constitution vs. Reflex\n\n**Hit:** 1d10 + Charisma or Constitution modifier damage.\n\nIncrease damage to 2d10 + Charisma or Constitution modifier at 21st level.\n\n**Special:** At 1st level, you determine whether you use Charisma or Constitution to attack with this power. Once you make that choice, you can't change it later.\n\nThis power counts as a ranged basic attack. When a power allows you to make a ranged basic attack, you can use this power."
     ),
   ],
@@ -85,35 +85,49 @@ export const Warlock = Traits.defineTrait('warlock', {
     "**Role:** Striker. Your attack powers are highly damaging and often weaken or hamper the target in some way. You can elude attacks by flying, teleporting, or turning invisible.\n\n**Power Source:** Arcane. You gain your magical power from a pact you forge with a powerful, supernatural force or an unnamed entity.\n\n**Key Abilities:** [Charisma](characteristic:charisma), [Constitution](characteristic:constitution), [Intelligence](characteristic:intelligence)\n\n**Armor Proficiencies:** [Cloth](ability:armor/cloth), [leather](ability:armor/leather)\n\n**Weapon Proficiencies:** Simple melee, simple ranged\n\n**Implements:** Rods, wands\n\n**Bonus to Defense:** +1 [Reflex](characteristic:reflex), +1 [Will](characteristic:will)\n\n**Hit Points at 1st Level:** 12 + Constitution score\n\n**Hit Points per Level Gained:** 5\n\n**Healing Surges per Day:** 6 + Constitution modifier\n\n**Trained Skills:** From the class skills list below, choose four trained skills at 1st level.\n\n**Class Skills:** [Arcana](characteristic:skill/arcana) (Int), [Bluff](characteristic:skill/bluff) (Cha), [History](characteristic:skill/history) (Int), [Insight](characteristic:skill/insight) (Wis), [Intimidate](characteristic:skill/intimidate) (Cha), [Religion](characteristic:skill/religion) (Int), [Streetwise](characteristic:skill/streetwise) (Cha), [Thievery](characteristic:skill/thievery) (Dex)\n\n**Build Options:** [Deceptive warlock](content:classes/deceptive-warlock), [scourge warlock](content:classes/scourge-warlock)\n\n**Class Features:** [Eldritch blast](trait:warlock/eldritch-blast), [Eldritch Pact](character-option:warlock/select-eldritch-pact), [Prime Shot](trait:warlock/prime-shot), [Shadow Walk](trait:warlock/shadow-walk), [Warlock's Curse](trait:warlock/warlocks-curse)",
   tags: [Class],
   effects: [
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       HitPoints,
       Attributes.modifier(Patches.sum(NumericExpressions.sum([7, NumericExpressions.multiply([CharacterValues.Level, 5])])))
     ),
-    Effects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(1))),
-    Effects.gainTrait(Armor.LeatherProficiency),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainTrait(EldritchBlastFeature),
-    Effects.gainAbility(EldritchBlast),
-    Effects.gainCharacterOption(SelectEldritchPact),
-    Effects.gainTrait(PrimeShot),
-    Effects.gainTrait(ShadowWalk),
-    Effects.gainTrait(WarlocksCurse),
-    Effects.gainCharacterOption(Powers.SelectEncounterAttack1),
-    Effects.gainCharacterOption(Powers.SelectDailyAttack1),
+    CharacterEffects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Reflex, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.gainTrait(Armor.LeatherProficiency),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainTrait(EldritchBlastFeature),
+    CharacterEffects.gainAbility(EldritchBlast),
+    CharacterEffects.gainCharacterOption(SelectEldritchPact),
+    CharacterEffects.gainTrait(PrimeShot),
+    CharacterEffects.gainTrait(ShadowWalk),
+    CharacterEffects.gainTrait(WarlocksCurse),
+    CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack1),
+    CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack1),
     // A human gains training in one additional skill from its class skill list
-    Effects.conditional(Traits.traitPrerequisite(Human), [Effects.gainCharacterOption(SelectSkill)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [Effects.gainCharacterOption(Powers.SelectUtility2)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainCharacterOption(Powers.SelectEncounterAttack3)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(Powers.SelectDailyAttack5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [Effects.gainCharacterOption(Powers.SelectUtility6)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainCharacterOption(Powers.SelectEncounterAttack7)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(Powers.SelectDailyAttack9)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [Effects.gainCharacterOption(Powers.SelectUtility10)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Human), [CharacterEffects.gainCharacterOption(SelectSkill)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility2),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack3),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack5),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility6),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack7),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainCharacterOption(Powers.SelectDailyAttack9),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      CharacterEffects.gainCharacterOption(Powers.SelectUtility10),
+    ]),
   ],
 })
 
@@ -125,7 +139,7 @@ export const DireRadiance = Abilities.defineAbility('warlock/power/dire-radiance
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Star) Attack 1**\n\n**At-Will** ✦ Arcane, Fear, Implement, Radiant\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Fortitude\n\n**Hit:** 1d6 + Constitution modifier radiant damage. If the target moves nearer to you on its next turn, it takes an extra 1d6 + Constitution modifier damage.\n\nIncrease damage and extra damage to 2d6 + Constitution modifier at 21st level.'
     ),
   ],
@@ -140,7 +154,7 @@ export const Eyebite = Abilities.defineAbility('warlock/power/eyebite', {
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Fey) Attack 1**\n\n**At-Will** ✦ Arcane, Charm, Implement, Psychic\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Charisma vs. Will\n\n**Hit:** 1d6 + Charisma modifier psychic damage, and you are invisible to the target until the start of your next turn.\n\nIncrease damage to 2d6 + Charisma modifier at 21st level.'
     ),
   ],
@@ -155,7 +169,7 @@ export const HellishRebuke = Abilities.defineAbility('warlock/power/hellish-rebu
   tags: [AtWillPower, AttackPower, PowerLevel1],
   prerequisites: [Traits.traitPrerequisite(Warlock)],
   effects: [
-    Effects.descriptive(
+    CharacterEffects.descriptive(
       '**Warlock (Infernal) Attack 1**\n\n**At-Will** ✦ Arcane, Fire, Implement\n\n**Standard Action** · Ranged 10\n\n**Target:** One creature\n\n**Attack:** Constitution vs. Reflex\n\n**Hit:** 1d6 + Constitution modifier fire damage. If you take damage before the end of your next turn, the target takes an extra 1d6 + Constitution modifier fire damage.\n\nIncrease damage and extra damage to 2d6 + Constitution modifier at 21st level.'
     ),
   ],
@@ -191,7 +205,7 @@ export const FeyPact = Traits.defineTrait('warlock/pact/fey', {
   description:
     'You have forged a bargain with ancient, amoral powers of the Feywild. Some are primitive earth spirits, grim and menacing; some are capricious wood, sky, or water spirits; and others are incarnations of seasons or natural forces who roam the faerie realm like wild gods. They bestow magic that ranges from feral and savage to wondrous and enchanting.\n\n**Eyebite:** You know the *eyebite* at-will spell.\n\n**Misty Step:** You have the Misty Step pact boon.',
   tags: [ClassFeature, EldritchPact],
-  effects: [Effects.gainAbility(Eyebite), Effects.gainTrait(MistyStep)],
+  effects: [CharacterEffects.gainAbility(Eyebite), CharacterEffects.gainTrait(MistyStep)],
 })
 
 export const InfernalPact = Traits.defineTrait('warlock/pact/infernal', {
@@ -199,7 +213,7 @@ export const InfernalPact = Traits.defineTrait('warlock/pact/infernal', {
   description:
     "Long ago a forgotten race of devils created a secret path to power and taught it to the tieflings of old to weaken their fealty to Asmodeus. In his wrath, Asmodeus destroyed the scheming devils and struck their very names from the memory of all beings—but you dare to study their perilous secrets anyway.\n\n**Hellish Rebuke:** You know the *hellish rebuke* at-will spell.\n\n**Dark One's Blessing:** You have the Dark One's Blessing pact boon.",
   tags: [ClassFeature, EldritchPact],
-  effects: [Effects.gainAbility(HellishRebuke), Effects.gainTrait(DarkOnesBlessing)],
+  effects: [CharacterEffects.gainAbility(HellishRebuke), CharacterEffects.gainTrait(DarkOnesBlessing)],
 })
 
 export const StarPact = Traits.defineTrait('warlock/pact/star', {
@@ -207,7 +221,7 @@ export const StarPact = Traits.defineTrait('warlock/pact/star', {
   description:
     "You have mastered the astrologer's art, learning the secret names of the stars and gazing into the Far Realm beyond, gaining great power thereby. You can call upon powers that madden or terrify your enemies, manipulate chance and fate, or scour your foes with icy banes and curses drawn from beyond the night sky.\n\n**Dire Radiance:** You know the *dire radiance* at-will spell.\n\n**Fate of the Void:** You have the Fate of the Void pact boon.",
   tags: [ClassFeature, EldritchPact],
-  effects: [Effects.gainAbility(DireRadiance), Effects.gainTrait(FateOfTheVoid)],
+  effects: [CharacterEffects.gainAbility(DireRadiance), CharacterEffects.gainTrait(FateOfTheVoid)],
 })
 
 export const ImprovedDarkOnesBlessing = Traits.defineTrait('feat/improved-dark-ones-blessing', {

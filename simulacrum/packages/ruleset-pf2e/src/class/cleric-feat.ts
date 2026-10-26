@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
@@ -149,7 +149,7 @@ export const WarpriestsArmor = Traits.defineTrait('feat/warpriests-armor', {
     '*Cleric*\n\n**Prerequisites** warpriest doctrine\n\nYour training has helped you adapt to ever-heavier armor. You are trained in heavy armor. Whenever you gain a class feature that grants you expert or greater proficiency in medium armor, you also gain that proficiency in heavy armor. You treat armor you wear of 2 Bulk or higher as though it were 1 Bulk lighter (to a minimum of 1 Bulk).',
   tags: [Feat, ClassFeat, ClericFeat, FeatLevel2],
   prerequisites: [Traits.traitPrerequisite(Warpriest)],
-  effects: [Effects.modifyCharacteristic(HeavyArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
+  effects: [CharacterEffects.modifyCharacteristic(HeavyArmor, Attributes.modifier(Patches.sum(Trained), { combinability: Proficiency }))],
 })
 
 export const ChannelSmite = Traits.defineTrait('feat/channel-smite', {

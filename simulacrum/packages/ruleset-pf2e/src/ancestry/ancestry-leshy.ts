@@ -1,4 +1,4 @@
-import { Abilities, Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import {
@@ -51,7 +51,7 @@ export const FungusLeshy = Traits.defineTrait('heritage/fungus-leshy', {
   description:
     'Your body was made from fungi that grows in the shade of caves and trees, and you are at home in dark caverns and warrens. You gain [darkvision](content:playing-the-game/darkvision-and-greater-darkvision). You lose the [plant](content:traits/plant) trait and gain the [fungus](content:traits/fungus) trait.',
   tags: [Heritage, LeshyHeritage],
-  effects: [Effects.gainTrait(Darkvision)],
+  effects: [CharacterEffects.gainTrait(Darkvision)],
 })
 
 export const GourdLeshy = Traits.defineTrait('heritage/gourd-leshy', {
@@ -83,7 +83,7 @@ export const RootLeshy = Traits.defineTrait('heritage/root-leshy', {
   description:
     'Your body is made from hardy roots that attach you firmly to the ground. You gain 10 [Hit Points](characteristic:hit-points) from your ancestry instead of 8. You can go without sunlight for 2 weeks before you begin to starve. You gain a +2 circumstance bonus to your [Fortitude](characteristic:fortitude) or [Reflex](characteristic:reflex) DC against attempts to [Reposition](content:skills/reposition), [Shove](content:skills/shove), or [Trip](content:skills/trip) you. This bonus also applies to saving throws against spells or effects that attempt to [move](content:playing-the-game/forced-movement) you or knock you [prone](content:conditions/prone).',
   tags: [Heritage, LeshyHeritage],
-  effects: [Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(2)))],
+  effects: [CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(2)))],
 })
 
 export const SeaweedLeshy = Traits.defineTrait('heritage/seaweed-leshy', {
@@ -91,7 +91,7 @@ export const SeaweedLeshy = Traits.defineTrait('heritage/seaweed-leshy', {
   description:
     "Your body is made from woven seaweed, and you're just as comfortable underwater as on land. You gain a swim [Speed](characteristic:speed) of 20 feet, and you can always breathe underwater. However, your land Speed is reduced by 5 feet (to 20 feet for most seaweed leshies).",
   tags: [Heritage, LeshyHeritage],
-  effects: [Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5)))],
+  effects: [CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(-5)))],
 })
 
 export const VineLeshy = Traits.defineTrait('heritage/vine-leshy', {
@@ -141,17 +141,17 @@ export const Leshy = Traits.defineTrait('ancestry/leshy', {
     "*Leshy, Plant*\n\n_Leshies are immortal nature spirits placed in small plant bodies, seeking to experience the world._\n\nIf you want to play a character who is curious and connected to nature, you should play a leshy.\n\nRead the full entry in [Leshies](content:ancestries-and-backgrounds/leshies).\n\n**Hit Points** 8\n\n**Size** Small\n\n**Speed** 25 feet\n\n**Attribute Boosts** Constitution, Wisdom, Free\n\n**Attribute Flaws** Intelligence\n\n**Languages** [Common](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) [Fey](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages) Additional languages equal to your [Intelligence modifier](characteristic:intelligence) (if it's positive). Choose from [Draconic](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Elven](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Gnomish](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Goblin](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Halfling](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), [Sakvroth](content:ancestries-and-backgrounds/ancestries-and-backgrounds/languages), and any other languages to which you have access (such as the languages prevalent in your region).\n\n**Low-Light Vision** You can see in dim light as though it were bright light, so you ignore the [concealed](content:conditions/concealed) condition due to dim light.\n\n**Plant Nourishment** You gain nourishment in the same way that the plants or fungi that match your body type normally do, through some combination of photosynthesis, absorbing minerals with your roots, or scavenging decaying matter. You typically do not need to pay for food. If you normally rely on photosynthesis and go without sunlight for 1 week, you begin to starve. You can derive nourishment from specially formulated bottles of sunlight instead of natural sunlight, but these bottles cost 10 times as much as standard rations (or 40 sp).",
   tags: [Ancestry],
   effects: [
-    Effects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(8))),
-    Effects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
-    Effects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
-    Effects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(-1))),
-    Effects.gainCharacterOption(SelectLeshyAncestryBoost),
-    Effects.gainTrait(LowLightVision),
-    Effects.gainCharacterOption(SelectLeshyHeritage),
-    Effects.gainCharacterOption(SelectLeshyFeat1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(SelectLeshyFeat5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(SelectLeshyFeat9)]),
+    CharacterEffects.modifyCharacteristic(HitPoints, Attributes.modifier(Patches.sum(8))),
+    CharacterEffects.modifyCharacteristic(Speed, Attributes.modifier(Patches.sum(25))),
+    CharacterEffects.modifyCharacteristic(Constitution, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Wisdom, Attributes.modifier(Patches.sum(1))),
+    CharacterEffects.modifyCharacteristic(Intelligence, Attributes.modifier(Patches.sum(-1))),
+    CharacterEffects.gainCharacterOption(SelectLeshyAncestryBoost),
+    CharacterEffects.gainTrait(LowLightVision),
+    CharacterEffects.gainCharacterOption(SelectLeshyHeritage),
+    CharacterEffects.gainCharacterOption(SelectLeshyFeat1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [CharacterEffects.gainCharacterOption(SelectLeshyFeat5)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [CharacterEffects.gainCharacterOption(SelectLeshyFeat9)]),
   ],
 })
 
@@ -176,7 +176,7 @@ export const LeshyLore = Traits.defineTrait('ancestry/leshy/leshy-lore', {
   description:
     '*Leshy*\n\nYou deeply understand your people’s cultural traditions and innate strengths. You gain the trained proficiency rank in [Nature](characteristic:skill/nature) and [Stealth](characteristic:skill/stealth). If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.\n\nYou also gain the [Additional Lore](trait:feat/additional-lore) general feat for Leshy [Lore](content:skills/lore).',
   tags: [Feat, AncestryFeat, LeshyFeat, FeatLevel1],
-  effects: [Effects.gainTrait(TrainedNature), Effects.gainTrait(TrainedStealth), Effects.gainTrait(AdditionalLore)],
+  effects: [CharacterEffects.gainTrait(TrainedNature), CharacterEffects.gainTrait(TrainedStealth), CharacterEffects.gainTrait(AdditionalLore)],
 })
 
 export const LeshySuperstition = Traits.defineTrait('ancestry/leshy/leshy-superstition', {
@@ -216,7 +216,7 @@ export const AnchoringRoots = Traits.defineTrait('ancestry/leshy/anchoring-roots
   description:
     '*Leshy*\n\nSmall roots sprout from your feet, steadying you as you move. You gain the [Steady Balance](trait:feat/steady-balance) skill feat, even if you aren’t trained in [Acrobatics](characteristic:skill/acrobatics), and you can use the Anchor action.\n\n**Anchor** ◆ **Requirements** You’re on a solid surface; **Effect** You send your roots into or across the ground, making it harder for you to stumble. Until you move, you gain a +2 circumstance bonus to your [Fortitude](characteristic:fortitude) or [Reflex](characteristic:reflex) DC against attempts to [Reposition](content:skills/reposition), [Shove](content:skills/shove), or [Trip](content:skills/trip) you (or a +4 circumstance bonus if you’re a [root leshy](trait:heritage/root-leshy)). This bonus also applies to saving throws against spells or effects that attempt to move you or knock you [prone](content:conditions/prone). If an effect forces you to move, you move only half the normal distance, as some of the effort goes to tearing loose the roots.',
   tags: [Feat, AncestryFeat, LeshyFeat, FeatLevel5],
-  effects: [Effects.gainTrait(SteadyBalance)],
+  effects: [CharacterEffects.gainTrait(SteadyBalance)],
 })
 
 export const LeshyGlide = Traits.defineTrait('ancestry/leshy/leshy-glide', {

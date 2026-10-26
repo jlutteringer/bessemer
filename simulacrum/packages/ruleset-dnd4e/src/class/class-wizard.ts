@@ -1,4 +1,4 @@
-import { Attributes, CharacterOptions, CharacterValues, Effects, Traits } from '@simulacrum/ruleset'
+import { Attributes, CharacterOptions, CharacterValues, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { Class, ClassFeature, Feat } from '@simulacrum/ruleset-dnd4e/tag'
@@ -61,7 +61,7 @@ export const RitualCasting = Traits.defineTrait('wizard/ritual-casting', {
   description:
     'You gain the [Ritual Caster](trait:feat/ritual-caster) feat (page 200) as a bonus feat, allowing you to use magical rituals (see [Chapter 10](content:rituals)).',
   tags: [ClassFeature],
-  effects: [Effects.gainTrait(RitualCaster)],
+  effects: [CharacterEffects.gainTrait(RitualCaster)],
 })
 
 export const Spellbook = Traits.defineTrait('wizard/spellbook', {
@@ -94,54 +94,58 @@ export const Wizard = Traits.defineTrait('wizard', {
   tags: [Class],
   effects: [
     // 10 at 1st level and 4 per level after: 6 + 4 per level
-    Effects.modifyCharacteristic(
+    CharacterEffects.modifyCharacteristic(
       HitPoints,
       Attributes.modifier(Patches.sum(NumericExpressions.sum([6, NumericExpressions.multiply([CharacterValues.Level, 4])])))
     ),
-    Effects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
-    Effects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(2))),
-    Effects.gainTrait(Skills.TrainedArcana),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectSkill),
-    Effects.gainCharacterOption(SelectImplementMastery),
-    Effects.gainTrait(WizardCantrips),
-    Effects.gainTrait(RitualCasting),
-    Effects.gainTrait(Spellbook),
-    Effects.gainCharacterOption(Powers.SelectAtWillAttack),
-    Effects.gainCharacterOption(Powers.SelectAtWillAttack),
-    Effects.gainCharacterOption(Powers.SelectEncounterAttack1),
-    Effects.gainCharacterOption(Powers.SelectSpellbookDaily1),
-    Effects.gainCharacterOption(Powers.SelectSpellbookDaily1),
-    Effects.gainLoadoutSlot(PreparedDailySpell1Loadout),
+    CharacterEffects.modifyCharacteristic(HealingSurges, Attributes.modifier(Patches.sum(6))),
+    CharacterEffects.modifyCharacteristic(Will, Attributes.modifier(Patches.sum(2))),
+    CharacterEffects.gainTrait(Skills.TrainedArcana),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectSkill),
+    CharacterEffects.gainCharacterOption(SelectImplementMastery),
+    CharacterEffects.gainTrait(WizardCantrips),
+    CharacterEffects.gainTrait(RitualCasting),
+    CharacterEffects.gainTrait(Spellbook),
+    CharacterEffects.gainCharacterOption(Powers.SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(Powers.SelectAtWillAttack),
+    CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack1),
+    CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily1),
+    CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily1),
+    CharacterEffects.gainLoadoutSlot(PreparedDailySpell1Loadout),
     // A human gains training in one additional skill from its class skill list
-    Effects.conditional(Traits.traitPrerequisite(Human), [Effects.gainCharacterOption(SelectSkill)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
-      Effects.gainCharacterOption(Powers.SelectSpellbookUtility2),
-      Effects.gainCharacterOption(Powers.SelectSpellbookUtility2),
-      Effects.gainLoadoutSlot(PreparedUtilitySpell2Loadout),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Human), [CharacterEffects.gainCharacterOption(SelectSkill)]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 2), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookUtility2),
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookUtility2),
+      CharacterEffects.gainLoadoutSlot(PreparedUtilitySpell2Loadout),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [Effects.gainCharacterOption(Powers.SelectEncounterAttack3)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
-      Effects.gainCharacterOption(Powers.SelectSpellbookDaily5),
-      Effects.gainCharacterOption(Powers.SelectSpellbookDaily5),
-      Effects.gainLoadoutSlot(PreparedDailySpell5Loadout),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 3), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack3),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
-      Effects.gainCharacterOption(Powers.SelectSpellbookUtility6),
-      Effects.gainCharacterOption(Powers.SelectSpellbookUtility6),
-      Effects.gainLoadoutSlot(PreparedUtilitySpell6Loadout),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily5),
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily5),
+      CharacterEffects.gainLoadoutSlot(PreparedDailySpell5Loadout),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [Effects.gainCharacterOption(Powers.SelectEncounterAttack7)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
-      Effects.gainCharacterOption(Powers.SelectSpellbookDaily9),
-      Effects.gainCharacterOption(Powers.SelectSpellbookDaily9),
-      Effects.gainLoadoutSlot(PreparedDailySpell9Loadout),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 6), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookUtility6),
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookUtility6),
+      CharacterEffects.gainLoadoutSlot(PreparedUtilitySpell6Loadout),
     ]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
-      Effects.gainCharacterOption(Powers.SelectSpellbookUtility10),
-      Effects.gainCharacterOption(Powers.SelectSpellbookUtility10),
-      Effects.gainLoadoutSlot(PreparedUtilitySpell10Loadout),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 7), [
+      CharacterEffects.gainCharacterOption(Powers.SelectEncounterAttack7),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily9),
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily9),
+      CharacterEffects.gainLoadoutSlot(PreparedDailySpell9Loadout),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 10), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookUtility10),
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookUtility10),
+      CharacterEffects.gainLoadoutSlot(PreparedUtilitySpell10Loadout),
     ]),
   ],
 })
@@ -153,9 +157,13 @@ export const ExpandedSpellbook = Traits.defineTrait('feat/expanded-spellbook', {
   tags: [Feat],
   prerequisites: [Expressions.greaterThanOrEqual(Wisdom.variable, 13), Traits.traitPrerequisite(Wizard)],
   effects: [
-    Effects.gainCharacterOption(Powers.SelectSpellbookDaily1),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [Effects.gainCharacterOption(Powers.SelectSpellbookDaily5)]),
-    Effects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [Effects.gainCharacterOption(Powers.SelectSpellbookDaily9)]),
+    CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily1),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 5), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily5),
+    ]),
+    CharacterEffects.conditional(Expressions.greaterThanOrEqual(CharacterValues.Level, 9), [
+      CharacterEffects.gainCharacterOption(Powers.SelectSpellbookDaily9),
+    ]),
   ],
 })
 

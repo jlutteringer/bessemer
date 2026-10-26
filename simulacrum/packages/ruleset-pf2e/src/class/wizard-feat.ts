@@ -1,4 +1,4 @@
-import { Abilities, Attributes, Effects, Traits } from '@simulacrum/ruleset'
+import { Abilities, Attributes, CharacterEffects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { ResourcePool } from '@simulacrum/ruleset/resource-pool'
 import * as ActionTypes from '@simulacrum/ruleset-pf2e/action-type'
@@ -24,7 +24,7 @@ export const Familiar = Traits.defineTrait('feat/familiar', {
   description:
     '*Magus, Sorcerer, Thaumaturge, Wizard*\n\nYou make a pact with a creature that serves you and assists your spellcasting. You gain a familiar.',
   tags: [Feat, ClassFeat, WizardFeat, FeatLevel1],
-  effects: [Effects.gainCharacterOption(SelectFamiliarAbility), Effects.gainCharacterOption(SelectFamiliarAbility)],
+  effects: [CharacterEffects.gainCharacterOption(SelectFamiliarAbility), CharacterEffects.gainCharacterOption(SelectFamiliarAbility)],
 })
 
 export const SpellbookProdigy = Traits.defineTrait('feat/spellbook-prodigy', {
@@ -231,14 +231,16 @@ export const AdvancedSchoolSpell = Traits.defineTrait('feat/advanced-school-spel
   tags: [Feat, ClassFeat, WizardFeat, FeatLevel8],
   prerequisites: [Traits.traitPrerequisite(ArcaneSchoolFeature)],
   effects: [
-    Effects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
-    Effects.conditional(Traits.traitPrerequisite(ArsGrammatica), [Effects.gainAbility(WizardFocusSpells.RuneOfObservation)]),
-    Effects.conditional(Traits.traitPrerequisite(BattleMagic), [Effects.gainAbility(WizardFocusSpells.EnergyAbsorption)]),
-    Effects.conditional(Traits.traitPrerequisite(CivicWizardry), [Effects.gainAbility(WizardFocusSpells.CommunityRestoration)]),
-    Effects.conditional(Traits.traitPrerequisite(Mentalism), [Effects.gainAbility(WizardFocusSpells.InvisibilityCloak)]),
-    Effects.conditional(Traits.traitPrerequisite(ProteanForm), [Effects.gainAbility(WizardFocusSpells.ShiftingForm)]),
-    Effects.conditional(Traits.traitPrerequisite(UnifiedMagicalTheory), [Effects.gainAbility(WizardFocusSpells.InterdisciplinaryIncantation)]),
-    Effects.conditional(Traits.traitPrerequisite(Boundary), [Effects.gainAbility(WizardFocusSpells.SpiralOfHorrors)]),
+    CharacterEffects.modifyResourcePool(FocusPoints, Attributes.modifier(Patches.patch<ResourcePool>({ size: Patches.sum(1) }))),
+    CharacterEffects.conditional(Traits.traitPrerequisite(ArsGrammatica), [CharacterEffects.gainAbility(WizardFocusSpells.RuneOfObservation)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(BattleMagic), [CharacterEffects.gainAbility(WizardFocusSpells.EnergyAbsorption)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(CivicWizardry), [CharacterEffects.gainAbility(WizardFocusSpells.CommunityRestoration)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Mentalism), [CharacterEffects.gainAbility(WizardFocusSpells.InvisibilityCloak)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(ProteanForm), [CharacterEffects.gainAbility(WizardFocusSpells.ShiftingForm)]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(UnifiedMagicalTheory), [
+      CharacterEffects.gainAbility(WizardFocusSpells.InterdisciplinaryIncantation),
+    ]),
+    CharacterEffects.conditional(Traits.traitPrerequisite(Boundary), [CharacterEffects.gainAbility(WizardFocusSpells.SpiralOfHorrors)]),
   ],
 })
 
