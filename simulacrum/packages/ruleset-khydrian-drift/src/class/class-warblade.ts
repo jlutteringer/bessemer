@@ -2,6 +2,7 @@ import { Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
 import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
+import { KhydralSensitivity } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-khydral'
 import { DefenseBonus, FortitudeDefense, SoakRating, WillDefense, Willpower } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
 export const Stagger = Traits.defineTrait('warblade/stagger', {
@@ -21,6 +22,8 @@ export const Warblade = Traits.defineTrait('warblade', {
     Effects.modifyCharacteristic(FortitudeDefense, Attributes.modifier(Patches.sum(DefenseBonus.Heavy))),
     Effects.modifyCharacteristic(WillDefense, Attributes.modifier(Patches.sum(DefenseBonus.Medium))),
     Effects.gainTrait(Stagger),
+    Effects.gainTrait(KhydralSensitivity),
+    Effects.gainTrait(BasicCombatTraining),
   ],
 })
 
