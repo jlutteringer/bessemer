@@ -13,6 +13,7 @@ export type CharacterSummaryDto = {
   level: number
   owner: UserSummaryDto
   ruleset: RulesetConfigurationSummary
+  campaignId: UuidV7 | null
 }
 
 export const CharacterSummarySchema = Zod.object({
@@ -21,20 +22,16 @@ export const CharacterSummarySchema = Zod.object({
   level: Zod.number(),
   owner: UserSummarySchema,
   ruleset: RulesetConfigurationSummarySchema,
+  campaignId: Uuid7.Schema.nullable(),
 }) satisfies Zod.ZodType<CharacterSummaryDto>
 
-export type CharacterDto = BaseEntityDto &
-  CharacterSummaryDto &
-  CharacterRecord & {
-    campaignId: UuidV7 | null
-  }
+export type CharacterDto = BaseEntityDto & CharacterSummaryDto & CharacterRecord
 
 export const CharacterSchema: Zod.ZodType<CharacterDto> = CharacterSummarySchema.extend({
   ...BaseEntityShape,
   initialValues: Zod.custom<CharacterRecord['initialValues']>(),
   selections: Zod.custom<CharacterRecord['selections']>(),
   selectedAbilities: Zod.custom<CharacterRecord['selectedAbilities']>(),
-  campaignId: Uuid7.Schema.nullable(),
 })
 
 export type CreateCharacterRequest = CharacterRecord & {

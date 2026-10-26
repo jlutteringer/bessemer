@@ -4,7 +4,7 @@ import { UuidV7 } from '@bessemer/cornerstone/uuid/uuid-v7'
 import { revalidatePath } from 'next/cache'
 import { CharacterDto, CreateCharacterRequest, UpdateCharacterRequest } from '@simulacrum/common/character/character'
 import { getApiContext } from '@simulacrum/application/api'
-import { CharacterApi } from '@simulacrum/common'
+import { CharacterApi, Rulesets } from '@simulacrum/common'
 
 export const createCharacter = async (request: CreateCharacterRequest): Promise<CharacterDto> => {
   const created = await CharacterApi.createCharacter(request, await getApiContext())
@@ -16,6 +16,20 @@ export const updateCharacter = async (characterId: UuidV7, request: UpdateCharac
   const updated = await CharacterApi.updateCharacter(characterId, request, await getApiContext())
   revalidatePath('/characters')
   return updated
+}
+
+export const copyCharacter = async (characterId: UuidV7): Promise<void> => {
+  const context = await getApiContext()
+  const character = await CharacterApi.fetchCharacter(characterId, context)
+  if (character === null) {
+    return
+  }
+
+  await CharacterApi.createCharacter(
+    { ...character, name: `${character.name} (Copy)`, ruleset: Rulesets.toConfiguration(character.ruleset) },
+    context
+  )
+  revalidatePath('/characters')
 }
 
 export const deleteCharacter = async (characterId: UuidV7): Promise<void> => {

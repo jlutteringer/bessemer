@@ -76,7 +76,7 @@ export const newCharacter = (ruleset: Ruleset): CharacterRecord => {
 }
 
 export const setLevel = (character: CharacterRecord, level: number, ruleset: Ruleset): CharacterRecord => {
-  return normalizeSelections({ ...character, level, selections: resizeSelections(character.selections, level) }, ruleset)
+  return Characters.normalizeCharacter({ ...character, level, selections: resizeSelections(character.selections, level) }, ruleset)
 }
 
 // Resizes a selections table to `level`, dropping any selections above it
@@ -106,7 +106,7 @@ export const selectValue = (
     row.splice(existingIndex, 1, ...newSelection)
   }
 
-  return normalizeSelections({ ...character, selections: { ...character.selections, [choice.level]: row } }, ruleset)
+  return Characters.normalizeCharacter({ ...character, selections: { ...character.selections, [choice.level]: row } }, ruleset)
 }
 
 /**
@@ -130,14 +130,7 @@ export const selectValuesForChoices = (
   })
 
   row.push(...values.slice(0, choices.length).map((value) => ({ option: option.id, selection: value.id })))
-  return normalizeSelections({ ...character, selections: { ...character.selections, [level]: row } }, ruleset)
-}
-
-// Drops any selections that are no longer valid, e.g. a fighting style after the Fighter class selection is changed, along with any
-// loadout abilities that no longer fit, e.g. cantrips after the Wizard class selection is removed
-const normalizeSelections = (character: CharacterRecord, ruleset: Ruleset): CharacterRecord => {
-  const sheet = Characters.buildCharacterDefinition(character, ruleset)
-  return { ...character, selections: sheet.selections, selectedAbilities: sheet.selectedAbilities }
+  return Characters.normalizeCharacter({ ...character, selections: { ...character.selections, [level]: row } }, ruleset)
 }
 
 /**
@@ -158,7 +151,7 @@ export const selectLoadoutAbilities = (
 ): CharacterRecord => {
   const loadoutAbilities = getLoadoutAbilities(Characters.buildCharacterDefinition(character, ruleset), loadoutType).map((it) => it.id)
   const otherAbilities = Arrays.difference(character.selectedAbilities, loadoutAbilities)
-  return normalizeSelections({ ...character, selectedAbilities: [...otherAbilities, ...abilities.map((it) => it.id)] }, ruleset)
+  return Characters.normalizeCharacter({ ...character, selectedAbilities: [...otherAbilities, ...abilities.map((it) => it.id)] }, ruleset)
 }
 
 // Whether an option's value is a trait, as opposed to an ability (which has actions)

@@ -379,3 +379,8 @@ export const buildExpressionContext = (character: CharacterSheet, ruleset: Rules
 
   return { variables }
 }
+
+export const normalizeCharacter = <T extends CharacterRecord>(character: T, ruleset: Ruleset): T => {
+  const sheet = buildCharacterDefinition(character, ruleset)
+  return { ...character, selections: sheet.selections, selectedAbilities: sheet.selectedAbilities }
+}

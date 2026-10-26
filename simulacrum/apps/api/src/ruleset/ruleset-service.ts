@@ -1,4 +1,5 @@
-import { Ruleset, RulesetExtension, RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
+import { Objects } from '@bessemer/cornerstone'
+import { Ruleset, RulesetConfiguration, RulesetExtension, RulesetExtensionReference, RulesetReference } from '@simulacrum/ruleset/ruleset'
 import { RulesetSummary } from '@simulacrum/common/ruleset/ruleset'
 import { RulesetProjections } from '@simulacrum/api/ruleset/ruleset-projections'
 import { RulesetRegistry } from '@simulacrum/api/ruleset/ruleset-registry'
@@ -21,5 +22,15 @@ export namespace RulesetService {
 
   export const resolveRuleset = (ruleset: Ruleset, extensionIds: Array<RulesetExtensionReference>): Ruleset => {
     return Rulesets.resolveRuleset({ id: ruleset.id, extensions: extensionIds }, rulesets, extensions)
+  }
+
+  export const resolveConfiguration = (configuration: RulesetConfiguration): Ruleset | null => {
+    const ruleset = findRuleset(configuration.id)
+    const available = Objects.isNil(ruleset) ? [] : getAvailableExtensions(ruleset).map((it) => it.id)
+    if (Objects.isNil(ruleset) || configuration.extensions.some((it) => !available.includes(it))) {
+      return null
+    }
+
+    return resolveRuleset(ruleset, configuration.extensions)
   }
 }

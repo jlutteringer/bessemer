@@ -31,7 +31,7 @@ import {
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { Arrays } from '@bessemer/cornerstone'
 import { CampaignDto } from '@simulacrum/common/campaign/campaign'
-import { CharacterDto } from '@simulacrum/common/character/character'
+import { CharacterSummaryDto } from '@simulacrum/common/character/character'
 import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { getRulesetLabel } from '@simulacrum/ui/ruleset/ruleset-label'
 import { getUserName } from '@simulacrum/ui/user/user-name'
@@ -53,7 +53,7 @@ export const CampaignDetail = ({
 }: {
   campaign: CampaignDto
   currentUserId: UuidV7
-  characters: Array<CharacterDto>
+  characters: Array<CharacterSummaryDto>
   inviteUrl: string
 }) => {
   const router = useRouter()

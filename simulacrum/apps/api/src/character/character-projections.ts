@@ -20,6 +20,7 @@ export namespace CharacterProjections {
         level: character.level,
         owner: owners.get(character.owner)!,
         ruleset: RulesetProjections.projectRulesetConfigurationSummary(character),
+        campaignId: character.campaignId === null ? null : Uuid7.from(character.campaignId),
       }))
     }
   )
@@ -31,7 +32,6 @@ export namespace CharacterProjections {
       ...summaries.get(character)!,
       createdAt: Instants.toLiteral(character.createdAt),
       updatedAt: Instants.toLiteral(character.updatedAt),
-      campaignId: character.campaignId === null ? null : Uuid7.from(character.campaignId),
       ...(character.record as unknown as StoredCharacterRecord),
     }))
   })

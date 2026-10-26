@@ -5,6 +5,8 @@ import { Zotch } from '@bessemer/zotch'
 import {
   CharacterDto,
   CharacterSchema,
+  CharacterSummaryDto,
+  CharacterSummarySchema,
   CreateCharacterRequest,
   CreateCharacterRequestSchema,
   UpdateCharacterRequest,
@@ -16,7 +18,7 @@ export const CharacterApi = Zotch.api({
   listCharacters: {
     method: 'get',
     path: '/characters',
-    response: Zod.array(CharacterSchema),
+    response: Zod.array(CharacterSummarySchema),
     headers: AuthorizationHeadersSchema,
   },
   fetchCharacter: {
@@ -52,7 +54,7 @@ export const CharacterApi = Zotch.api({
 
 const client = Zotch.client(CharacterApi)
 
-export const listCharacters = async (context: ApiContext): Promise<Array<CharacterDto>> => {
+export const listCharacters = async (context: ApiContext): Promise<Array<CharacterSummaryDto>> => {
   const response = await client.listCharacters({
     headers: getAuthorizationHeaders(context),
     baseUrl: context.baseUrl,
