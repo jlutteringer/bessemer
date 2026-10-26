@@ -1,11 +1,14 @@
 import { Abilities, Tags, Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { ArmorLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Patches } from '@bessemer/cornerstone'
+import { Combinability, CombinabilityType } from '@bessemer/cornerstone/combinable'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { ArmorClass, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { HeavyArmorProficiency, LightArmorProficiency, MediumArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 
 export const Armor = Tags.defineAbilityTag('armor', { name: 'Armor' })
+
+export const ArmorBase: Combinability = { type: CombinabilityType.Singleton, class: 'armor' }
 
 export const NoArmor = Abilities.defineAbility('armor/none', {
   name: 'No Armor',
@@ -18,7 +21,7 @@ export const LightArmor = Abilities.defineAbility('armor/light', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(LightArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3)))],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(3), { combinability: ArmorBase }))],
 })
 
 export const MediumArmor = Abilities.defineAbility('armor/medium', {
@@ -26,7 +29,7 @@ export const MediumArmor = Abilities.defineAbility('armor/medium', {
   tags: [Armor],
   loadout: ArmorLoadout,
   prerequisites: [Traits.traitPrerequisite(MediumArmorProficiency)],
-  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(6)))],
+  effects: [Effects.modifyCharacteristic(ArmorClass, Attributes.modifier(Patches.sum(6), { combinability: ArmorBase }))],
 })
 
 export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
@@ -37,7 +40,9 @@ export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
   effects: [
     Effects.modifyCharacteristic(
       ArmorClass,
-      Attributes.modifier(Patches.set(NumericExpressions.sum([12, NumericExpressions.multiply([2, ProficiencyBonus.variable])])))
+      Attributes.modifier(Patches.set(NumericExpressions.sum([12, NumericExpressions.multiply([2, ProficiencyBonus.variable])])), {
+        combinability: ArmorBase,
+      })
     ),
   ],
 })

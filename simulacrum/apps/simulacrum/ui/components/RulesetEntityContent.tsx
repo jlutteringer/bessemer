@@ -166,6 +166,7 @@ const AbilityContent = ({ ability: rulesetAbility }: { ability: Ability }) => {
   return (
     <>
       {Objects.isPresent(ability.description) && <SimulacrumRichText text={ability.description} />}
+      {!Arrays.isEmpty(Effects.filter(ability.effects, Effects.Descriptive)) && <Typography variant="caption">Passive</Typography>}
       {Effects.filter(ability.effects, Effects.Descriptive).map((it, index) => (
         <SimulacrumRichText
           key={index}

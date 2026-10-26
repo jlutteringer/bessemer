@@ -109,6 +109,7 @@ export const KhydrianDrift: Ruleset = {
     Cybernetics.HardLanding,
     Khydral.Rewind,
     Khydral.TimeDilation,
+    Khydral.CloakOfTheMagi,
     BackInTheFight,
     Blackjack,
     Tumble,
