@@ -488,6 +488,18 @@ There are three amounts that come into play when taking damage: vitality points,
   },
 })
 
+export const DamageTypes = Content.defineSection('combat/damage-types', {
+  parent: DamageAndHealing,
+  content: {
+    name: 'Damage Types',
+    description: `Every source of damage has a type, which describes how it harms its target.
+
+- **Ballistic:** Bullets, flechettes, and other projectiles fired from guns.
+- **Fire:** Flames, incendiaries, and superheated plasma.
+- **Physical:** Blades, blunt weapons, fists, falls, and other kinetic force.`,
+  },
+})
+
 export const TemporaryVitalityPoints = Content.defineSection('combat/temporary-vitality-points', {
   parent: DamageAndHealing,
   content: {
@@ -758,6 +770,14 @@ export const Poisoned = Content.defineSection('combat/poisoned', {
   },
 })
 
+export const Primed = Content.defineSection('combat/primed', {
+  parent: Conditions,
+  content: {
+    name: 'Primed',
+    description: `A primed creature is set to be detonated by effects such as *[Living Bomb](ability:technology/living-bomb)*.`,
+  },
+})
+
 export const Prone = Content.defineSection('combat/prone', {
   parent: Conditions,
   content: {
@@ -856,6 +876,7 @@ export const CombatContent = [
   ShovingACreature,
   Cover,
   DamageAndHealing,
+  DamageTypes,
   TemporaryVitalityPoints,
   TakingDamage,
   Healing,
@@ -878,6 +899,7 @@ export const CombatContent = [
   Paralyzed,
   Petrified,
   Poisoned,
+  Primed,
   Prone,
   Restrained,
   Stunned,

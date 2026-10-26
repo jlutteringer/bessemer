@@ -34,7 +34,7 @@ export const TimeDilation = Abilities.defineAbility('khydral/time-dilation', {
     {
       name: 'Time Dilation',
       description:
-        "Choose a friendly creature you can see within 12 squares. For 10 rounds, the target has a pool of Deferred Damage, which starts empty. Whenever the target takes damage, that damage is added to the pool instead.\n\nDuring the target's Sustain Phase, it takes damage equal to half the damage in the pool (rounded up), and that amount is removed from the pool. When the effect ends, the target immediately takes all damage remaining in the pool. Damage taken from the pool can't be deferred.",
+        "Choose a friendly creature you can see within 12 squares. For 10 rounds, the target has a pool of Deferred Damage, which starts empty. Whenever the target takes damage, that damage is added to the pool instead.\n\nDuring your Sustain Phase, the target takes damage equal to half the damage in the pool (rounded up), and that amount is removed from the pool. When the effect ends, the target immediately takes all damage remaining in the pool. Damage taken from the pool can't be deferred.",
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.High, resource: Stamina }],
       targeting: { target: { range: 12, count: 1 } },

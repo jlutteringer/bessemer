@@ -1,4 +1,4 @@
-import { Abilities, Effects, RulesetEntities, Traits } from '@simulacrum/ruleset'
+import { Abilities, Effects, RulesetEntities, Tags, Traits } from '@simulacrum/ruleset'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Expressions } from '@bessemer/cornerstone/expression'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
@@ -104,3 +104,34 @@ export const RangedCombatMastery = Traits.defineTrait('combat/ranged-mastery', {
   prerequisites: [Traits.traitPrerequisite(AdvancedCombatTraining), Expressions.not(Traits.traitPrerequisite(MeleeCombatMasteryReference))],
   effects: [],
 })
+
+export const ArmorProficiency = Tags.defineTraitTag('armor-proficiency', { name: 'Armor Proficiency' })
+
+export const LightArmorProficiency = Traits.defineTrait('armor-proficiency/light', {
+  name: 'Light Armor Proficiency',
+  description:
+    '*"Put on the whole armour of God, that ye may be able to stand against the wiles of the devil."*\n\nBallistic weaves and armored jackets are the street\'s everyday protection, light enough to wear under a coat and quiet enough not to slow a runner down. Training covers how to move, fall, and fight in them without giving up speed.',
+  tags: [Primary, ArmorProficiency],
+  prerequisites: [],
+  effects: [],
+})
+
+export const MediumArmorProficiency = Traits.defineTrait('armor-proficiency/medium', {
+  name: 'Medium Armor Proficiency',
+  description:
+    '*"For he put on righteousness as a breastplate, and an helmet of salvation upon his head."*\n\nPlated vests and segmented composites stop rifle rounds that would punch straight through a jacket, at the cost of weight and freedom of movement. Wearing them well takes drilling until the extra bulk no longer changes how you fight.',
+  tags: [Primary, ArmorProficiency],
+  prerequisites: [Traits.traitPrerequisite(LightArmorProficiency)],
+  effects: [],
+})
+
+export const HeavyArmorProficiency = Traits.defineTrait('armor-proficiency/heavy', {
+  name: 'Heavy Armor Proficiency',
+  description:
+    '*"And he had an helmet of brass upon his head, and he was armed with a coat of mail."*\n\nPowered exoplate and full-coverage combat armor turn a soldier into a walking barricade, the protection corporate strike teams wear to breach a fortified floor. Only fighters trained to carry and move in that much metal can fight effectively inside it.',
+  tags: [Primary, ArmorProficiency],
+  prerequisites: [Traits.traitPrerequisite(MediumArmorProficiency)],
+  effects: [],
+})
+
+export const AllArmorProficiencies = [LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency]

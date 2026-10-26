@@ -26,10 +26,12 @@ import {
   MeleeCombatMastery,
   RangedCombatMastery,
   Tumble,
+  AllArmorProficiencies,
+  ArmorProficiency,
 } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { Stamina, TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 import { ArmorLoadout, CyberwareLoadout, GeneralLoadoutSlot, WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
-import { AllArmor, AllArmorProficiencies, Armor, ArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/armor'
+import { AllArmor, Armor } from '@simulacrum/ruleset-khydrian-drift/armor'
 import * as Weapons from '@simulacrum/ruleset-khydrian-drift/weapon'
 import * as Cyberware from '@simulacrum/ruleset-khydrian-drift/cyberware'
 import { Effects } from '@simulacrum/ruleset'
@@ -83,6 +85,10 @@ export const KhydrianDrift: Ruleset = {
     Khydral.KhydralInitiate,
     Khydral.KhydralAdept,
     Khydral.KhydralMastery,
+    Technology.TechNovice,
+    Technology.TechAdept,
+    Technology.TechMaster,
+    Technology.LivingBomb,
     Cybernetics.ModularCybernetics,
     Cybernetics.AnatomicalIntegration,
     Cybernetics.ClosedLoopCirculation,

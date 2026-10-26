@@ -7,7 +7,9 @@ export const Weapon = Tags.defineAbilityTag('weapon', { name: 'Weapon' })
 export const Handgun = Abilities.defineAbility('weapon/handgun', {
   name: 'Handgun',
   effects: [
-    Effects.descriptive('Make a ranged weapon attack against a creature in **Medium** range, dealing **1d4 Ballistic** damage.\n\nOne-Handed'),
+    Effects.descriptive(
+      'Make a ranged weapon attack against a creature in **Medium** range, dealing **1d4** [Ballistic](content:combat/damage-types) damage.\n\nOne-Handed'
+    ),
   ],
   tags: [Weapon],
   loadout: WeaponLoadout,
@@ -16,7 +18,11 @@ export const Handgun = Abilities.defineAbility('weapon/handgun', {
 
 export const Dagger = Abilities.defineAbility('weapon/dagger', {
   name: 'Dagger',
-  effects: [Effects.descriptive('Make a melee weapon attack against a creature, dealing **1d6 Physical** damage.\n\nDual Wield')],
+  effects: [
+    Effects.descriptive(
+      'Make a melee weapon attack against a creature, dealing **1d6** [Physical](content:combat/damage-types) damage.\n\nDual Wield'
+    ),
+  ],
   tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Dagger', action: ActionTypes.MajorAction }],
@@ -25,7 +31,9 @@ export const Dagger = Abilities.defineAbility('weapon/dagger', {
 export const SubmachineGun = Abilities.defineAbility('weapon/submachine-gun', {
   name: 'Submachine Gun',
   effects: [
-    Effects.descriptive('Make a ranged weapon attack against a creature in **Medium** range, dealing **1d6 Ballistic** damage.\n\nOne-Handed'),
+    Effects.descriptive(
+      'Make a ranged weapon attack against a creature in **Medium** range, dealing **1d6** [Ballistic](content:combat/damage-types) damage.\n\nOne-Handed'
+    ),
   ],
   tags: [Weapon],
   loadout: WeaponLoadout,
@@ -35,7 +43,9 @@ export const SubmachineGun = Abilities.defineAbility('weapon/submachine-gun', {
 export const HandCannon = Abilities.defineAbility('weapon/hand-cannon', {
   name: 'Hand Cannon',
   effects: [
-    Effects.descriptive('Make a ranged weapon attack against a creature in **Short** range, dealing **1d8 Ballistic** damage.\n\nOne-Handed'),
+    Effects.descriptive(
+      'Make a ranged weapon attack against a creature in **Short** range, dealing **1d8** [Ballistic](content:combat/damage-types) damage.\n\nOne-Handed'
+    ),
   ],
   tags: [Weapon],
   loadout: WeaponLoadout,
@@ -45,7 +55,9 @@ export const HandCannon = Abilities.defineAbility('weapon/hand-cannon', {
 export const Carbine = Abilities.defineAbility('weapon/carbine', {
   name: 'Carbine',
   effects: [
-    Effects.descriptive('Make a ranged weapon attack against a creature in **Long** range, dealing **1d10 Ballistic** damage.\n\nTwo-Handed'),
+    Effects.descriptive(
+      'Make a ranged weapon attack against a creature in **Long** range, dealing **1d10** [Ballistic](content:combat/damage-types) damage.\n\nTwo-Handed'
+    ),
   ],
   tags: [Weapon],
   loadout: WeaponLoadout,
@@ -55,7 +67,9 @@ export const Carbine = Abilities.defineAbility('weapon/carbine', {
 export const Shotgun = Abilities.defineAbility('weapon/shotgun', {
   name: 'Shotgun',
   effects: [
-    Effects.descriptive('Make a ranged weapon attack against a creature in **Short** range, dealing **2d6 Ballistic** damage.\n\nTwo-Handed'),
+    Effects.descriptive(
+      'Make a ranged weapon attack against a creature in **Short** range, dealing **2d6** [Ballistic](content:combat/damage-types) damage.\n\nTwo-Handed'
+    ),
   ],
   tags: [Weapon],
   loadout: WeaponLoadout,
@@ -66,7 +80,7 @@ export const SniperRifle = Abilities.defineAbility('weapon/sniper-rifle', {
   name: 'Sniper Rifle',
   effects: [
     Effects.descriptive(
-      'Make a ranged weapon attack against a creature in **Extreme** range, dealing **1d12 Ballistic** damage. You have Disadvantage when attacking targets in Medium range or closer.\n\nTwo-Handed'
+      'Make a ranged weapon attack against a creature in **Extreme** range, dealing **1d12** [Ballistic](content:combat/damage-types) damage. You have Disadvantage when attacking targets in Medium range or closer.\n\nTwo-Handed'
     ),
   ],
   tags: [Weapon],
@@ -76,7 +90,11 @@ export const SniperRifle = Abilities.defineAbility('weapon/sniper-rifle', {
 
 export const Bow = Abilities.defineAbility('weapon/bow', {
   name: 'Bow',
-  effects: [Effects.descriptive('Make a ranged weapon attack against a creature in **Long** range, dealing **1d8 Physical** damage.\n\nTwo-Handed')],
+  effects: [
+    Effects.descriptive(
+      'Make a ranged weapon attack against a creature in **Long** range, dealing **1d8** [Physical](content:combat/damage-types) damage.\n\nTwo-Handed'
+    ),
+  ],
   tags: [Weapon],
   loadout: WeaponLoadout,
   actions: [{ name: 'Attack with Bow', action: ActionTypes.MajorAction }],

@@ -144,6 +144,15 @@ export const StaminaCost = {
   VeryHigh: 12,
 }
 
+export const DamageBand = {
+  Minimal: '1d6',
+  Low: '1d6 + A',
+  Medium: '2d6 + 2A',
+  High: '3d6 + 3A',
+  VeryHigh: '4d6 + 4A',
+  Extreme: '6d6 + 6A',
+}
+
 export const StaminaBase = 24
 export const StaminaPresenceMultiplier = 4
 

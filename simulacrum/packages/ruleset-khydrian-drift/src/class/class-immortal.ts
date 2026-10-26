@@ -1,6 +1,6 @@
 import { Attributes, Effects, Traits } from '@simulacrum/ruleset'
 import { Patches } from '@bessemer/cornerstone'
-import { LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/armor'
+import { LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { Class } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { DefenseBonus, FortitudeDefense, WillDefense } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 

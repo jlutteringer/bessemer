@@ -1,7 +1,11 @@
 import { Attributes, Effects, RulesetEntities, Traits, CharacterValues } from '@simulacrum/ruleset'
-import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
+import {
+  BasicCombatTraining,
+  HeavyArmorProficiency,
+  LightArmorProficiency,
+  MediumArmorProficiency,
+} from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { HeavyArmorProficiency, LightArmorProficiency, MediumArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/armor'
 import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import {
   Agility,

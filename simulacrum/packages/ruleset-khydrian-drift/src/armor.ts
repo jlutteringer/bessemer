@@ -3,31 +3,9 @@ import { ArmorLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Patches } from '@bessemer/cornerstone'
 import { NumericExpressions } from '@bessemer/cornerstone/expression'
 import { ArmorClass, ProficiencyBonus } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { HeavyArmorProficiency, LightArmorProficiency, MediumArmorProficiency } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 
 export const Armor = Tags.defineAbilityTag('armor', { name: 'Armor' })
-
-export const ArmorProficiency = Tags.defineTraitTag('armor-proficiency', { name: 'Armor Proficiency' })
-
-export const LightArmorProficiency = Traits.defineTrait('armor-proficiency/light', {
-  name: 'Light Armor Proficiency',
-  description: 'You can wear light armor.',
-  tags: [ArmorProficiency],
-  effects: [],
-})
-
-export const MediumArmorProficiency = Traits.defineTrait('armor-proficiency/medium', {
-  name: 'Medium Armor Proficiency',
-  description: 'You can wear medium armor.',
-  tags: [ArmorProficiency],
-  effects: [],
-})
-
-export const HeavyArmorProficiency = Traits.defineTrait('armor-proficiency/heavy', {
-  name: 'Heavy Armor Proficiency',
-  description: 'You can wear heavy armor.',
-  tags: [ArmorProficiency],
-  effects: [],
-})
 
 export const NoArmor = Abilities.defineAbility('armor/none', {
   name: 'No Armor',
@@ -63,7 +41,5 @@ export const HeavyArmor = Abilities.defineAbility('armor/heavy', {
     ),
   ],
 })
-
-export const AllArmorProficiencies = [LightArmorProficiency, MediumArmorProficiency, HeavyArmorProficiency]
 
 export const AllArmor = [NoArmor, LightArmor, MediumArmor, HeavyArmor]

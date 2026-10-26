@@ -4,12 +4,6 @@ import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { BasicCombatTraining } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { DefenseBonus, FortitudeDefense, SoakRating, WillDefense, Willpower } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
-export const Warforged = Traits.defineTrait('warblade/warforged', {
-  name: 'Warforged',
-  tags: [Primary],
-  effects: [],
-})
-
 export const Stagger = Traits.defineTrait('warblade/stagger', {
   name: 'Stagger',
   tags: [Primary],
@@ -26,7 +20,6 @@ export const Warblade = Traits.defineTrait('warblade', {
   effects: [
     Effects.modifyCharacteristic(FortitudeDefense, Attributes.modifier(Patches.sum(DefenseBonus.Heavy))),
     Effects.modifyCharacteristic(WillDefense, Attributes.modifier(Patches.sum(DefenseBonus.Medium))),
-    Effects.gainTrait(Warforged),
     Effects.gainTrait(Stagger),
   ],
 })
@@ -61,4 +54,4 @@ export const IronWill = Traits.defineTrait('warblade/iron-will', {
   ],
 })
 
-export const AllWarbladeEntities = [Warblade, Warforged, Stagger, WillOfTheElements, TitansGrip, IronWill]
+export const AllWarbladeEntities = [Warblade, Stagger, WillOfTheElements, TitansGrip, IronWill]
