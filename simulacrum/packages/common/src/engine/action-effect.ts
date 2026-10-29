@@ -1,6 +1,7 @@
 export * from '@simulacrum/ruleset/action-effect'
-import { ActionEffect, ActionEffectFilter, ActionEffectType, ActionDamage } from '@simulacrum/ruleset/action-effect'
-import { ActionTest } from '@simulacrum/ruleset/action-test'
+import { ActionAmount, ActionEffect, ActionEffectFilter, ActionEffectType, ActionDamage } from '@simulacrum/ruleset/action-effect'
+import { AbilityAction } from '@simulacrum/ruleset/ability'
+import { Duration } from '@simulacrum/ruleset/duration'
 import { ModifyActionEffectCharacterEffect } from '@simulacrum/ruleset/character-effect'
 import { Rolls } from '@simulacrum/ruleset'
 import { Ability, AbilityValue } from '@simulacrum/common/engine/ability'
@@ -18,7 +19,15 @@ import { Arrays, Objects } from '@bessemer/cornerstone'
 export type ActionEffectValue = AttributeValue<ActionEffect>
 
 export const getDamage = (effect: ActionEffect): ActionDamage | null => {
-  return effect.type === ActionEffectType.Descriptive ? null : effect.damage
+  return effect.type === ActionEffectType.Damage || effect.type === ActionEffectType.Condition ? effect.damage : null
+}
+
+export const getDuration = (effect: ActionEffect): Duration | null => {
+  return effect.type === ActionEffectType.Descriptive || effect.type === ActionEffectType.Condition ? effect.duration : null
+}
+
+const getAmount = (effect: ActionEffect): ActionAmount | null => {
+  return effect.type === ActionEffectType.Healing ? effect.healing : getDamage(effect)
 }
 
 export const matchesFilter = (filter: ActionEffectFilter, effect: ActionEffect, ability: Ability): boolean => {
@@ -43,10 +52,10 @@ export const matchesFilter = (filter: ActionEffectFilter, effect: ActionEffect, 
 }
 
 const getScore = (effect: ActionEffect, context: ExpressionContext): [number, number] => {
-  const damage = getDamage(effect)
-  const duration = effect.type === ActionEffectType.Damage ? null : effect.duration
+  const amount = getAmount(effect)
+  const duration = getDuration(effect)
   return [
-    Objects.isNil(damage) ? 0 : Rolls.average(Damage.evaluateDamage(damage, context)),
+    Objects.isNil(amount) ? 0 : Rolls.average(Damage.evaluateDamage(amount, context)),
     Objects.isNil(duration) ? 0 : Expressions.evaluate(duration.rounds, context),
   ]
 }
@@ -67,8 +76,8 @@ export const StrongestActionEffectExpression = ExpressionInternal.defineExpressi
   },
 })
 
-const getPotency = (test: ActionTest | null, character: CharacterSheet, ruleset: Ruleset): number | null => {
-  return Objects.isNil(test) ? null : Characteristics.getCharacteristicValue(character, Rulesets.getEntityById(test.offense, ruleset)).value
+const getPotency = (action: AbilityAction, character: CharacterSheet, ruleset: Ruleset): number => {
+  return Objects.isNil(action.potency) ? 0 : Characteristics.getCharacteristicValue(character, Rulesets.getEntityById(action.potency, ruleset)).value
 }
 
 const buildAttribute = (effect: ActionEffect): Attribute<ActionEffect> => {
@@ -99,11 +108,11 @@ export const evaluateAbility = (
   ruleset: Ruleset
 ): AbilityValue => {
   const context = Characters.buildExpressionContext(character, ruleset)
-  const potencies = new Map(ability.value.actions.map((action) => [action, getPotency(action.test, character, ruleset)]))
+  const potencies = new Map(ability.value.actions.map((action) => [action, getPotency(action, character, ruleset)]))
   const optimizers = new Map(
     ability.value.actions.map((action) => [
       action,
-      Expressions.createEvaluator(Damage.buildPotencyContext(context, potencies.get(action) ?? 0), [
+      Expressions.createEvaluator(Damage.buildPotencyContext(context, potencies.get(action)!), [
         StrongestActionEffectExpression,
         ...Rolls.Definitions,
       ]),
@@ -116,6 +125,6 @@ export const evaluateAbility = (
       const modifiers = effects.filter((it) => matchesFilter(it.filter, effect, ability.value)).map(CharacterEffects.sourceModifier)
       return evaluateActionEffect(effect, modifiers, evaluator, optimizers.get(action)!)
     },
-    (action) => potencies.get(action) ?? null
+    (action) => potencies.get(action)!
   )
 }

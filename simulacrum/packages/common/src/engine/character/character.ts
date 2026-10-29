@@ -215,12 +215,13 @@ const buildLazyExpressionContext = (
     ...Expressions.buildVariable(CharacterValues.Traits, traits),
   }
 
-  Characteristics.getCharacteristics(ruleset).forEach((characteristic) => {
-    Object.defineProperty(variables, characteristic.variable.name, {
+  const lazyVariables = [CharacterValues.Abilities.name, ...Characteristics.getCharacteristics(ruleset).map((it) => it.variable.name)]
+  lazyVariables.forEach((name) => {
+    Object.defineProperty(variables, name, {
       enumerable: true,
       get: () => {
         fullContext ??= buildExpressionContext(buildCharacter(), ruleset)
-        return fullContext.variables[characteristic.variable.name]
+        return fullContext.variables[name]
       },
     })
   })

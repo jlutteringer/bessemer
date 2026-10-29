@@ -9,9 +9,9 @@ import {
   SoldiersStamina,
 } from '@simulacrum/ruleset-khydrian-drift/class/class-commando'
 import { AllWarbladeEntities } from '@simulacrum/ruleset-khydrian-drift/class/class-warblade'
-import { Operator } from '@simulacrum/ruleset-khydrian-drift/class/class-operator'
-import { Scoundrel } from '@simulacrum/ruleset-khydrian-drift/class/class-scoundrel'
-import { Immortal } from '@simulacrum/ruleset-khydrian-drift/class/class-immortal'
+import { AllOperatorEntities } from '@simulacrum/ruleset-khydrian-drift/class/class-operator'
+import { AllScoundrelEntities } from '@simulacrum/ruleset-khydrian-drift/class/class-scoundrel'
+import { AllImmortalEntities } from '@simulacrum/ruleset-khydrian-drift/class/class-immortal'
 import { Jaeger } from '@simulacrum/ruleset-khydrian-drift/class/class-jaeger'
 import { Adept } from '@simulacrum/ruleset-khydrian-drift/class/class-adept'
 import * as Cybernetics from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-cybernetics'
@@ -31,10 +31,19 @@ import {
   ArmorProficiency,
 } from '@simulacrum/ruleset-khydrian-drift/archetype/archetype-combat'
 import { Stamina, TacticPoints } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { ArmorLoadout, CyberwareLoadout, GeneralLoadoutSlot, WeaponLoadout } from '@simulacrum/ruleset-khydrian-drift/loadout'
+import {
+  ArmorLoadout,
+  CyberwareLoadout,
+  GeneralLoadoutSlot,
+  LargeTechHardpoint,
+  MediumTechHardpoint,
+  SmallTechHardpoint,
+  WeaponLoadout,
+} from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { AllArmor, Armor } from '@simulacrum/ruleset-khydrian-drift/armor'
 import * as Weapons from '@simulacrum/ruleset-khydrian-drift/weapon'
 import * as Cyberware from '@simulacrum/ruleset-khydrian-drift/cyberware'
+import * as Hardpoints from '@simulacrum/ruleset-khydrian-drift/tech-hardpoint'
 import { CharacterEffects } from '@simulacrum/ruleset'
 import { Allied, Class, Hostile, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { AllCharacteristicGroups, AllCharacteristics } from '@simulacrum/ruleset-khydrian-drift/characteristic'
@@ -71,16 +80,16 @@ export const KhydrianDrift: Ruleset = {
     Hostile,
     SkillProficiency,
     AttributeIncrease,
-    Weapons.Weapon,
+    ...Weapons.WeaponTags,
     Armor,
     ArmorProficiency,
     ...AllArmorProficiencies,
     Cyberware.Cyberware,
     Commando,
     ...AllWarbladeEntities,
-    Operator,
-    Scoundrel,
-    Immortal,
+    ...AllOperatorEntities,
+    ...AllScoundrelEntities,
+    ...AllImmortalEntities,
     Jaeger,
     Adept,
     BasicCombatTraining,
@@ -91,9 +100,11 @@ export const KhydrianDrift: Ruleset = {
     Khydral.KhydralInitiate,
     Khydral.KhydralAdept,
     Khydral.KhydralMastery,
-    Technology.TechNovice,
-    Technology.TechAdept,
-    Technology.TechMaster,
+    Technology.FutureWarfare,
+    Technology.MountedSystems,
+    Technology.WeaponsPlatform,
+    Technology.TacticalPayloads,
+    Technology.AreaDenial,
     Technology.Arsonist,
     Technology.Stormlord,
     Technology.LivingBomb,
@@ -123,10 +134,12 @@ export const KhydrianDrift: Ruleset = {
     ...Weapons.Weapons,
     ...AllArmor,
     ...Cyberware.AllCyberware,
+    ...Hardpoints.AllHardpoints,
     Cybernetics.HardLanding,
     Khydral.Rewind,
     Khydral.TimeDilation,
     Khydral.CloakOfTheMagi,
+    Khydral.Fly,
     BackInTheFight,
     Blackjack,
     ExploitWeakness,
@@ -142,9 +155,9 @@ export const KhydrianDrift: Ruleset = {
     WeaponLoadout,
     ArmorLoadout,
     CyberwareLoadout,
-    Technology.SmallTechHardpoint,
-    Technology.MediumTechHardpoint,
-    Technology.LargeTechHardpoint,
+    SmallTechHardpoint,
+    MediumTechHardpoint,
+    LargeTechHardpoint,
   ],
   progressionTable: {
     1: [
@@ -161,6 +174,7 @@ export const KhydrianDrift: Ruleset = {
       CharacterEffects.gainLoadoutSlot(WeaponLoadout),
       CharacterEffects.gainLoadoutSlot(WeaponLoadout),
       CharacterEffects.gainLoadoutSlot(ArmorLoadout),
+      CharacterEffects.gainLoadoutSlot(SmallTechHardpoint),
     ],
     2: [CharacterEffects.gainCharacterOption(SelectAttributeIncrease), CharacterEffects.gainCharacterOption(SelectTraitOption)],
     3: [CharacterEffects.gainCharacterOption(SelectAttributeIncrease), CharacterEffects.gainCharacterOption(SelectTraitOption)],

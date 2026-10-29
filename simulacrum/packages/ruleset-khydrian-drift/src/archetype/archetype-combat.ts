@@ -4,7 +4,7 @@ import { Expressions } from '@bessemer/cornerstone/expression'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Stamina } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { AgilityAttackRating, FortitudeDefense, StaminaCost } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { AgilityAttackRating, AgilityPotency, FortitudeDefense, StaminaCost, RangeBand } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Primed, Vulnerable } from '@simulacrum/ruleset-khydrian-drift/condition'
 
 export const BasicCombatTraining = Traits.defineTrait('combat/basic-training', {
@@ -26,7 +26,7 @@ export const BackInTheFight = Abilities.defineAbility('combat/back-in-the-fight'
       description: 'Choose a creature adjacent to you. The target can end any [conditions](content:combat/conditions) affecting it.',
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 1, count: 1 } },
+      targeting: { target: { range: RangeBand.Touch, count: 1 } },
     },
   ],
 })
@@ -41,7 +41,7 @@ export const Blackjack = Abilities.defineAbility('combat/blackjack', {
       description: 'Make a melee weapon attack against the Fortitude of a creature. On a hit, the target is stunned for 2 rounds.',
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 1, count: 1 } },
+      targeting: { target: { range: RangeBand.Touch, count: 1 } },
     },
   ],
 })
@@ -83,7 +83,8 @@ export const ExploitWeakness = Abilities.defineAbility('combat/exploit-weakness'
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 1, count: 1 } },
+      targeting: { target: { range: RangeBand.Touch, count: 1 } },
+      potency: AgilityPotency,
       test: {
         offense: AgilityAttackRating,
         defense: FortitudeDefense,
@@ -129,7 +130,7 @@ export const ArmorProficiency = Tags.defineTraitTag('armor-proficiency', { name:
 export const LightArmorProficiency = Traits.defineTrait('armor-proficiency/light', {
   name: 'Light Armor Proficiency',
   description:
-    '*"Put on the whole armour of God, that ye may be able to stand against the wiles of the devil."*\n\nBallistic weaves and armored jackets are the street\'s everyday protection, light enough to wear under a coat and quiet enough not to slow a runner down. Training covers how to move, fall, and fight in them without giving up speed.',
+    '*"Let us therefore cast off the works of darkness, and let us put on the armour of light."*\n\nBallistic weaves and armored jackets are the street\'s everyday protection, light enough to wear under a coat and quiet enough not to slow a runner down. Training covers how to move, fall, and fight in them without giving up speed.',
   tags: [Primary, ArmorProficiency],
   prerequisites: [],
   effects: [],

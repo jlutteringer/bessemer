@@ -17,11 +17,15 @@ export enum ActionEffectType {
   Descriptive = 'Descriptive',
   Condition = 'Condition',
   Damage = 'Damage',
+  Healing = 'Healing',
 }
 
-export type ActionDamage = {
+export type ActionAmount = {
   amount: Expression<Roll>
   potency: Expression<number>
+}
+
+export type ActionDamage = ActionAmount & {
   type: DamageTypeReference
 }
 
@@ -48,7 +52,12 @@ export type DamageActionEffect = {
   damage: ActionDamage
 }
 
-export type ActionEffect = DescriptiveActionEffect | ConditionActionEffect | DamageActionEffect
+export type HealingActionEffect = {
+  type: ActionEffectType.Healing
+  healing: ActionAmount
+}
+
+export type ActionEffect = DescriptiveActionEffect | ConditionActionEffect | DamageActionEffect | HealingActionEffect
 
 export type ActionEffectOptions = {
   duration?: Duration
@@ -79,6 +88,13 @@ export const damage = (amount: Expression<Roll>, type: DamageType): DamageAction
   return {
     type: ActionEffectType.Damage,
     damage: { amount, type: type.id, potency: 0 },
+  }
+}
+
+export const healing = (amount: Expression<Roll>): HealingActionEffect => {
+  return {
+    type: ActionEffectType.Healing,
+    healing: { amount, potency: 0 },
   }
 }
 

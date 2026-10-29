@@ -17,7 +17,6 @@ import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { Ability } from '@simulacrum/common/engine/ability'
 import { LoadoutTypeReference } from '@simulacrum/common/engine/loadout'
 import { Arrays, ObjectPaths, Objects } from '@bessemer/cornerstone'
-import { getPassiveEffects } from '@simulacrum/ui/components/ruleset-entity-model'
 
 const DefaultInitialValue = 0
 
@@ -170,7 +169,7 @@ export const isTrait = (value: CharacterOptionValue): value is Trait => {
 
 export const getPassiveTraits = (sheet: CharacterSheet, ruleset: Ruleset): Array<Trait> => {
   return Traits.getTraitsByIds(Arrays.dedupe(ProgressionTables.getValues(sheet.traits)), ruleset).filter(
-    (it) => !Arrays.isEmpty(getPassiveEffects(it))
+    (it) => !Arrays.isEmpty(CharacterEffects.filter(it.effects, CharacterEffects.Descriptive))
   )
 }
 

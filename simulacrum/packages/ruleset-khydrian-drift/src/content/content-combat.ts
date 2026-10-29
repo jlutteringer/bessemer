@@ -54,7 +54,7 @@ It decides whether to move first or take its action first. Its speed, sometimes 
 
 A creature can forgo moving, taking an action, or doing anything at all on its turn. If you can’t decide what to do on your turn, consider taking the [Dodge](content:combat/dodge) or [Ready](content:combat/ready) major action.
 
-At the start of its turn, as long as it is able to take actions, a creature always takes the [sustain action](content:combat/sustain-phase). This typically involves replenishing its [soak pool](content:creatures/soak-points) and maintaining any ongoing effects.`,
+At the end of its turn, as long as it is able to take actions, a creature always takes the [sustain action](content:combat/sustain-phase). This typically involves replenishing its [soak pool](content:creatures/soak-points) and maintaining any ongoing effects.`,
   },
 })
 
@@ -70,7 +70,7 @@ export const SustainPhase = Content.defineSection('combat/sustain-phase', {
   parent: Turn,
   content: {
     name: 'Sustain Phase',
-    description: `You automatically take the sustain steps at the start of your turn.`,
+    description: `You automatically take the sustain steps at the end of your turn.`,
   },
 })
 

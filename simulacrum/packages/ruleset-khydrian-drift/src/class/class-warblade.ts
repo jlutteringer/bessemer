@@ -10,13 +10,15 @@ export const Stagger = Traits.defineTrait('warblade/stagger', {
   tags: [Primary],
   effects: [
     CharacterEffects.descriptive(
-      'You gain a delayed damage pool called the stagger pool that allows you to forestall the effects of many injuries. The pool begins at 0 with each encounter. When you take damage, instead of applying as normal it is stored in your stagger pool. At the end of your turn, you take damage equal to the total stored in your stagger pool which then resets to 0. Any healing you receive can either increase your current hit point total as normal or reduce the total damage in your stagger pool.\n\nSpecial effects tied to an attack such as poison, stun and so forth still affect you as normal. Their effects are not delayed by this ability.'
+      'You gain a delayed damage pool called the stagger pool that allows you to forestall the effects of many injuries. The pool begins at 0 with each encounter. When you take damage, instead of applying as normal it is stored in your stagger pool. During your [Sustain Phase](content:combat/sustain-phase), you take damage equal to the total stored in your stagger pool which then resets to 0. Any healing you receive can either increase your current hit point total as normal or reduce the total damage in your stagger pool.\n\nSpecial effects tied to an attack such as poison, stun and so forth still affect you as normal. Their effects are not delayed by this ability.'
     ),
   ],
 })
 
 export const Warblade = Traits.defineTrait('warblade', {
   name: 'Warblade',
+  description:
+    '*"From henceforth let no man trouble me: for I bear in my body the marks of the Lord."*\n\nWarblades are the tattooed warriors of the Sak Yant, an ancient mystic order whose masters ink their disciples with sacred script drawn in khydral-laced ink. Each mark is both a prayer and a binding, a channel through which the power of the Khydrian dimension pours into flesh. When battle is joined that power rises and takes hold: a warblade surges forward in a trance, shrugging off wounds that would drop anyone else and feeling none of them until the fight is over. In a city of chrome and code they are a relic of something older, and the sprawl\'s gangs have learned to give the tattooed ones a wide berth.',
   tags: [Class],
   effects: [
     CharacterEffects.modifyCharacteristic(FortitudeDefense, Attributes.modifier(Patches.sum(DefenseBonus.Heavy))),

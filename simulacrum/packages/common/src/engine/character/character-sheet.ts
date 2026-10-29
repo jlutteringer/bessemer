@@ -1,7 +1,7 @@
 import { CharacterEffect, CharacterEffectSourceType } from '@simulacrum/common/engine/character-effect'
 import { CharacterProgression } from '@simulacrum/common/engine/engine'
 import { CharacterProgress } from '@simulacrum/common/engine/character/character-progression'
-import { Ability, AbilityState } from '@simulacrum/common/engine/ability'
+import { Ability, AbilityReference, AbilityState } from '@simulacrum/common/engine/ability'
 import { Modifier } from '@simulacrum/common/engine/attribute'
 import { LoadoutSlot } from '@simulacrum/common/engine/loadout'
 import { CharacteristicReference, CharacteristicValue } from '@simulacrum/common/engine/characteristic'
@@ -74,6 +74,10 @@ export const buildCharacterState = (character: CharacterRecord, progress: Charac
       return characterState
     },
     (first, second) => {
+      if (!Arrays.equalWith(getUsableAbilities(first), getUsableAbilities(second), (first, second) => first === second)) {
+        return false
+      }
+
       return Arrays.equalWith(Object.values(first.characteristics), Object.values(second.characteristics), (first, second) => {
         if (first.id !== second.id) {
           return false
@@ -146,6 +150,10 @@ const isUsable = (ability: AbilityState, character: CharacterSheet): boolean => 
   return Objects.isNil(ability.loadout) || character.loadout.some((it) => it.ability === ability.ability.id)
 }
 
+const getUsableAbilities = (character: CharacterSheet): Array<AbilityReference> => {
+  return character.abilities.filter((it) => isUsable(it, character)).map((it) => it.ability.id)
+}
+
 const evaluateResourcePools = (
   character: CharacterSheet,
   evaluator: ExpressionEvaluator,
@@ -180,6 +188,7 @@ export const buildExpressionContext = (character: CharacterSheet, ruleset: Rules
   const variables: UnknownRecord = {
     ...Expressions.buildVariable(CharacterValues.Level, character.level),
     ...Expressions.buildVariable(CharacterValues.Traits, ProgressionTables.getValues(character.traits)),
+    ...Expressions.buildVariable(CharacterValues.Abilities, getUsableAbilities(character)),
     ...Objects.deepMergeAll(attributeVariables),
   }
 

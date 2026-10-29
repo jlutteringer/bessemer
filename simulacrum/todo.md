@@ -10,10 +10,10 @@ file explains this). This gets awkward as traits pick up more tags (it's effecti
 
 Find a filter model that can express both, e.g. per-dimension constraints.
 
-## Traits selected more than once
+## 5e ability score cap for fixed feat increases
 
-Traits can now be marked `repeatable` (Ability Score Improvement, Skilled, and the feat ability score increases). What's left:
+Feat ability score choices are capped at 20 via a prerequisite, but feats with a fixed +1 to one score (e.g. Actor's Charisma +1) still apply it past 20.
 
-- Ability score increases don't enforce the maximum of 20.
+Possible fix: an optional `maximum` expression on characteristics (e.g. a `StrengthMaximum` characteristic that Primal Champion can raise), clamped before set patches so items like the Belt of Giant Strength can still exceed it.
 
 ## Fix the context / Bessemer context situation

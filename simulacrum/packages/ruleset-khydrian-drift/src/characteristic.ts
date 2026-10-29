@@ -17,7 +17,7 @@ export const StaminaPoolTemplate: CharacteristicTemplate = Characteristics.defin
 })
 export const SoakRatingTemplate: CharacteristicTemplate = Characteristics.defineTemplate('soak-rating', {
   name: 'Soak Rating',
-  description: `Soak rating represents how much damage a creature can resist before it hits their [vitality pool](characteristic:vitality-pool). At the start of its turn, during the [sustain phase](content:combat/sustain-phase), a creature gains [soak points](content:creatures/soak-points) equal to its soak rating. These soak points prevent some damage by reducing it before it reduces [vitality points](content:creatures/vitality-points).`,
+  description: `Soak rating represents how much damage a creature can resist before it hits their [vitality pool](characteristic:vitality-pool). At the end of its turn, during the [sustain phase](content:combat/sustain-phase), a creature gains [soak points](content:creatures/soak-points) equal to its soak rating. These soak points prevent some damage by reducing it before it reduces [vitality points](content:creatures/vitality-points).`,
   path: ObjectPaths.from('soakRating'),
 })
 export const MovementSpeedTemplate: CharacteristicTemplate = Characteristics.defineTemplate('movement-speed', {
@@ -28,6 +28,11 @@ Some creatures have different types of movement, such as [flying](content:combat
 
 Learn more about movement in the [Movement and Position](content:combat/movement-and-position) section of the rules.`,
   path: ObjectPaths.from('movementSpeed'),
+})
+export const FlightSpeedTemplate: CharacteristicTemplate = Characteristics.defineTemplate('flight-speed', {
+  name: 'Flight Speed',
+  description: `Flight speed represents how far a creature can [fly](content:combat/flying-movement) on its turn. A creature with a flight speed of 0 cannot fly.`,
+  path: ObjectPaths.from('flightSpeed'),
 })
 export const InitiativeRatingTemplate: CharacteristicTemplate = Characteristics.defineTemplate('initiative-rating', {
   name: 'Initiative Rating',
@@ -59,6 +64,7 @@ export const AttributesGroup = Characteristics.defineGroup('attributes', { name:
 export const CombatGroup = Characteristics.defineGroup('combat', { name: 'Combat' })
 export const DefensesGroup = Characteristics.defineGroup('defenses', { name: 'Defenses' })
 export const AttackRatingsGroup = Characteristics.defineGroup('attack-ratings', { name: 'Attack Ratings' })
+export const PotenciesGroup = Characteristics.defineGroup('potencies', { name: 'Potencies' })
 export const SkillsGroup = Characteristics.defineGroup('skills', { name: 'Skills' })
 
 export const Brawn: Characteristic = Characteristics.defineCharacteristic({
@@ -68,7 +74,7 @@ export const Brawn: Characteristic = Characteristics.defineCharacteristic({
     description: `Brawn measures bodily power, athletic training, and the extent to which you can exert raw physical force. It governs the following aspects of your character:
 
 - Brawn rating added to [melee physical attack rolls](characteristic:brawn-attack-rating)
-- Brawn rating added to [brawn potency](content:characters/potency)
+- Brawn rating added to [brawn potency](characteristic:brawn-potency)
 - Brawn rating added to [soak rating](content:characters/soak-rating)
 - Brawn rating added to [healing surge rolls](content:combat/healing-surges)
 - Brawn rating added to [Fortitude](characteristic:fortitude) defense`,
@@ -84,7 +90,7 @@ export const Agility: Characteristic = Characteristics.defineCharacteristic({
     description: `Agility measures dexterity, reflexes, and balance. It governs the following aspects of your character:
 
 - Agility rating added to [ranged physical attack rolls](characteristic:agility-attack-rating)
-- Agility rating added to [agility potency](content:characters/potency)
+- Agility rating added to [agility potency](characteristic:agility-potency)
 - Agility rating added to [initiative rolls](content:combat/initiative)
 - Agility rating added to [Armor Class](characteristic:armor-class) defense, depending on armor type
 - Agility rating added to [Reflex](characteristic:reflex) defense`,
@@ -100,7 +106,7 @@ export const Willpower: Characteristic = Characteristics.defineCharacteristic({
     description: `Willpower measures mental fortitude, resilience, and determination. It governs the following aspects of your character:
 
 - Willpower rating added to [Khydrian attack rolls](characteristic:willpower-attack-rating)
-- Willpower rating added to [willpower potency](content:characters/potency)
+- Willpower rating added to [willpower potency](characteristic:willpower-potency)
 - Willpower rating added to [Will](characteristic:will) defense`,
     path: ObjectPaths.from('willpower'),
   }),
@@ -114,7 +120,7 @@ export const Intelligence: Characteristic = Characteristics.defineCharacteristic
     description: `Intelligence measures cognitive aptitude, problem-solving ability, and knowledge retention. It governs the following aspects of your character:
 
 - Intelligence rating added to [tech attack rolls](characteristic:intelligence-attack-rating)
-- Intelligence rating added to [intelligence potency](content:characters/potency)`,
+- Intelligence rating added to [intelligence potency](characteristic:intelligence-potency)`,
     path: ObjectPaths.from('intelligence'),
   }),
   baseValue: 0,
@@ -143,6 +149,14 @@ export const StaminaCost = {
   Medium: 4,
   High: 8,
   VeryHigh: 12,
+}
+
+export const RangeBand = {
+  Touch: 1,
+  Short: 4,
+  Medium: 8,
+  Long: 12,
+  Extreme: 24,
 }
 
 export const DamageBand = {
@@ -190,6 +204,12 @@ export const MovementSpeed: Characteristic = Characteristics.defineCharacteristi
   group: CombatGroup,
   template: MovementSpeedTemplate,
   baseValue: 4,
+})
+
+export const FlightSpeed: Characteristic = Characteristics.defineCharacteristic({
+  group: CombatGroup,
+  template: FlightSpeedTemplate,
+  baseValue: 0,
 })
 
 export const InitiativeRating: Characteristic = Characteristics.defineCharacteristic({
@@ -274,6 +294,46 @@ export const IntelligenceAttackRating: Characteristic = Characteristics.defineCh
     path: ObjectPaths.from('intelligenceAttackRating'),
   }),
   baseValue: NumericExpressions.sum([ProficiencyBonus.variable, Intelligence.variable]),
+})
+
+export const BrawnPotency: Characteristic = Characteristics.defineCharacteristic({
+  group: PotenciesGroup,
+  template: Characteristics.defineTemplate('brawn-potency', {
+    name: 'Brawn',
+    description: `Brawn [potency](content:characters/potency) increases the damage and healing of brawn actions, such as melee weapon attacks. It is equal to your [Brawn Rating](characteristic:brawn).`,
+    path: ObjectPaths.from('brawnPotency'),
+  }),
+  baseValue: Brawn.variable,
+})
+
+export const AgilityPotency: Characteristic = Characteristics.defineCharacteristic({
+  group: PotenciesGroup,
+  template: Characteristics.defineTemplate('agility-potency', {
+    name: 'Agility',
+    description: `Agility [potency](content:characters/potency) increases the damage and healing of agility actions, such as ranged weapon attacks. It is equal to your [Agility Rating](characteristic:agility).`,
+    path: ObjectPaths.from('agilityPotency'),
+  }),
+  baseValue: Agility.variable,
+})
+
+export const WillpowerPotency: Characteristic = Characteristics.defineCharacteristic({
+  group: PotenciesGroup,
+  template: Characteristics.defineTemplate('willpower-potency', {
+    name: 'Willpower',
+    description: `Willpower [potency](content:characters/potency) increases the damage and healing of Khydrian actions. It is equal to your [Willpower Rating](characteristic:willpower).`,
+    path: ObjectPaths.from('willpowerPotency'),
+  }),
+  baseValue: Willpower.variable,
+})
+
+export const IntelligencePotency: Characteristic = Characteristics.defineCharacteristic({
+  group: PotenciesGroup,
+  template: Characteristics.defineTemplate('intelligence-potency', {
+    name: 'Intelligence',
+    description: `Intelligence [potency](content:characters/potency) increases the damage and healing of tech actions. It is equal to your [Intelligence Rating](characteristic:intelligence).`,
+    path: ObjectPaths.from('intelligencePotency'),
+  }),
+  baseValue: Intelligence.variable,
 })
 
 export const Athletics: Characteristic = Characteristics.defineCharacteristic({
@@ -605,6 +665,7 @@ export const AllCharacteristics: Array<Characteristic> = [
   ProficiencyBonus,
   SoakRating,
   MovementSpeed,
+  FlightSpeed,
   InitiativeRating,
   ArmorClass,
   FortitudeDefense,
@@ -614,6 +675,10 @@ export const AllCharacteristics: Array<Characteristic> = [
   AgilityAttackRating,
   WillpowerAttackRating,
   IntelligenceAttackRating,
+  BrawnPotency,
+  AgilityPotency,
+  WillpowerPotency,
+  IntelligencePotency,
   Athletics,
   Charm,
   Coercion,
@@ -637,4 +702,4 @@ export const AllCharacteristics: Array<Characteristic> = [
   Vigilance,
 ]
 
-export const AllCharacteristicGroups = [AttributesGroup, CombatGroup, DefensesGroup, AttackRatingsGroup, SkillsGroup]
+export const AllCharacteristicGroups = [AttributesGroup, CombatGroup, DefensesGroup, AttackRatingsGroup, PotenciesGroup, SkillsGroup]

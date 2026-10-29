@@ -64,7 +64,7 @@ export const RulebookSearch = ({ sections, onSelect }: { sections: Array<Content
             id,
             title: entity.name,
             path: getPath(it).join(' › '),
-            text: getEntityTexts(entity).map(toPlainText).join(' ').replace(/\s+/g, ' ').trim(),
+            text: getEntityTexts(entity, ruleset).map(toPlainText).join(' ').replace(/\s+/g, ' ').trim(),
           },
         ]
       })

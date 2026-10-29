@@ -4,8 +4,9 @@ import { ResourceCost, ResourceCostProps, ResourcePool, ResourcePoolDefinition }
 import { buildReference, RulesetEntity, RulesetEntityProps, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import * as Tiptap from '@bessemer/core/tiptap'
-import { Expression } from '@bessemer/cornerstone/expression'
-import { Objects, Patches } from '@bessemer/cornerstone'
+import { Expression, Expressions } from '@bessemer/cornerstone/expression'
+import { Assertions, Objects, Patches } from '@bessemer/cornerstone'
+import * as CharacterValues from '@simulacrum/ruleset/character-value'
 import { Patch, Patchable } from '@bessemer/cornerstone/patch'
 import * as Tags from '@simulacrum/ruleset/tag'
 import { AbilityTag, AbilityTagReference, TagFilter, TagFilterProps } from '@simulacrum/ruleset/tag'
@@ -17,6 +18,7 @@ import { Valued } from '@simulacrum/ruleset/attribute'
 import * as Attributes from '@simulacrum/ruleset/attribute'
 import { ActionTest, ActionTestProps } from '@simulacrum/ruleset/action-test'
 import { ActionType, ActionTypeReference } from '@simulacrum/ruleset/action-type'
+import { Characteristic, CharacteristicReference } from '@simulacrum/ruleset/characteristic'
 import { LoadoutType, LoadoutTypeReference } from '@simulacrum/ruleset/loadout'
 
 export type AbilityReference = RulesetEntityReference<typeof RulesetEntityType.Ability>
@@ -40,6 +42,7 @@ export interface AbilityAction {
   action: ActionTypeReference
   annotation: string | null
   costs: Array<ResourceCost>
+  potency: CharacteristicReference | null
   targeting: Targeting
   test: ActionTest | null
   effects: Array<Valued<ActionEffect>>
@@ -65,6 +68,7 @@ export type AbilityActionProps = {
   annotation?: string
 
   costs?: Array<ResourceCostProps>
+  potency?: Characteristic
   targeting?: TargetingProps
   test?: ActionTestProps
   effects?: Array<ActionEffect>
@@ -81,6 +85,7 @@ const resolveAction = (props: AbilityActionProps, defaultCosts: Array<ResourceCo
     action: props.action.id,
     annotation: props.annotation ?? null,
     costs: Objects.isNil(props.costs) ? defaultCosts : props.costs.map(resolveCost),
+    potency: props.potency?.id ?? null,
     targeting: Targetings.resolve(props.targeting ?? {}),
     test: Objects.isNil(props.test) ? null : ActionTests.resolve(props.test),
     effects: (props.effects ?? []).map(Attributes.valued),
@@ -106,6 +111,14 @@ export const defineAbility = <P extends AbilityProps>(reference: string, props: 
     universal: props.universal ?? true,
     loadout: props.loadout?.id ?? null,
   } as DefinedAbility<P>
+}
+
+export const abilityPrerequisite = (ability: Ability): Expression<boolean> => {
+  Assertions.assertPresent(
+    ability,
+    () => 'abilityPrerequisite received an undefined ability, usually a circular import referencing it before it is defined'
+  )
+  return Expressions.contains(CharacterValues.Abilities, [ability.id])
 }
 
 export type AbilityPatchProps = Required<Pick<AbilityProps, 'name' | 'prerequisites' | 'effects' | 'actions'>>

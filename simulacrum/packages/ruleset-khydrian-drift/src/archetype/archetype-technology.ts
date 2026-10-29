@@ -1,43 +1,63 @@
-import { Abilities, ActionEffects, Attributes, CharacterEffects, Loadout, Rolls, Traits } from '@simulacrum/ruleset'
+import { Abilities, ActionEffects, Attributes, CharacterEffects, Rolls, Traits } from '@simulacrum/ruleset'
 import { AreaShape } from '@simulacrum/ruleset/targeting'
 import { Burning, Primed, Stunned } from '@simulacrum/ruleset-khydrian-drift/condition'
 import { Mechanical } from '@simulacrum/ruleset-khydrian-drift/creature-type'
 import { Acid, Electric, Fire } from '@simulacrum/ruleset-khydrian-drift/damage-type'
 import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Allied, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
-import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
+import { GeneralLoadoutSlot, LargeTechHardpoint, MediumTechHardpoint, SmallTechHardpoint } from '@simulacrum/ruleset-khydrian-drift/loadout'
+import { Omnitool } from '@simulacrum/ruleset-khydrian-drift/tech-hardpoint'
 import { Stamina } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
 import {
   ArmorClass,
   DamageBand,
   FortitudeDefense,
   IntelligenceAttackRating,
+  IntelligencePotency,
+  RangeBand,
   ReflexDefense,
   StaminaCost,
 } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 
-export const SmallTechHardpoint = Loadout.defineLoadoutType('small-tech-hardpoint', { name: 'Small Tech Hardpoint' })
-
-export const MediumTechHardpoint = Loadout.defineLoadoutType('medium-tech-hardpoint', { name: 'Medium Tech Hardpoint' })
-
-export const LargeTechHardpoint = Loadout.defineLoadoutType('large-tech-hardpoint', { name: 'Large Tech Hardpoint' })
-
-export const TechNovice = Traits.defineTrait('technology/novice', {
-  name: 'Tech Novice',
+export const FutureWarfare = Traits.defineTrait('technology/future-warfare', {
+  name: 'Future Warfare',
+  description:
+    '*"And now nothing will be restrained from them, which they have imagined to do."*\n\nMegacorp research divisions treat the battlefield as a testing ground, and their prototypes leak onto the street within a product cycle. Future Warfare is the practice of mastering that bleeding-edge hardware before it\'s patched, recalled or replaced by the next model.',
   tags: [Primary],
   prerequisites: [],
-  effects: [],
+  effects: [CharacterEffects.gainLoadoutSlot(SmallTechHardpoint), CharacterEffects.gainLoadoutSlot(MediumTechHardpoint)],
+})
+
+export const MountedSystems = Traits.defineTrait('technology/mounted-systems', {
+  name: 'Mounted Systems',
+  description:
+    '*"Furbish the spears, and put on the brigandines."*\n\nChop shops along every freight corridor will weld a hardpoint mount to anything that walks in with cash, and corporate armorers do the same work with better tolerances and a non-disclosure agreement. Either way the result is the same: a second rig fixed to your frame, ready to take whatever module the next job calls for.',
+  tags: [Primary],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare)],
+  effects: [
+    CharacterEffects.gainLoadoutSlot(SmallTechHardpoint),
+    CharacterEffects.gainLoadoutSlot(SmallTechHardpoint),
+    CharacterEffects.gainLoadoutSlot(MediumTechHardpoint),
+  ],
+})
+
+export const WeaponsPlatform = Traits.defineTrait('technology/weapons-platform', {
+  name: 'Weapons Platform',
+  tags: [Primary],
+  prerequisites: [Traits.traitPrerequisite(MountedSystems)],
+  effects: [CharacterEffects.gainLoadoutSlot(LargeTechHardpoint)],
 })
 
 export const LivingBomb = Abilities.defineAbility('technology/living-bomb', {
   name: 'Living Bomb',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 6, count: 1 } },
+      targeting: { target: { range: RangeBand.Medium, count: 1 } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: FortitudeDefense,
@@ -48,7 +68,8 @@ export const LivingBomb = Abilities.defineAbility('technology/living-bomb', {
       name: 'Detonation',
       action: ActionTypes.FreeAction,
       annotation: 'When Living Bomb ends on a Primed creature',
-      targeting: { area: { range: 0, area: { type: AreaShape.Sphere, radius: 3 }, count: 1 } },
+      targeting: { area: { range: 0, count: 1, area: { type: AreaShape.Sphere, radius: 3 } } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ReflexDefense,
@@ -65,12 +86,13 @@ export const LivingBomb = Abilities.defineAbility('technology/living-bomb', {
 export const AcidSplash = Abilities.defineAbility('technology/acid-splash', {
   name: 'Acid Splash',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 6, count: 1 } },
+      targeting: { target: { range: RangeBand.Medium, count: 1 } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ReflexDefense,
@@ -86,12 +108,12 @@ export const AcidSplash = Abilities.defineAbility('technology/acid-splash', {
 export const Cauterize = Abilities.defineAbility('technology/cauterize', {
   name: 'Cauterize',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MinorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 1, count: 1, filter: { tags: [Allied] } } },
+      targeting: { target: { range: RangeBand.Touch, count: 1, filter: { tags: [Allied] } } },
       effects: [
         ActionEffects.damage(Rolls.dice(2, 6), Fire),
         ActionEffects.descriptive('The target can end any number of [conditions](content:combat/conditions) affecting it.'),
@@ -103,12 +125,12 @@ export const Cauterize = Abilities.defineAbility('technology/cauterize', {
 export const Combustion = Abilities.defineAbility('technology/combustion', {
   name: 'Combustion',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MinorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 6, count: 1, filter: { tags: [Primed, Burning] } } },
+      targeting: { target: { range: RangeBand.Medium, count: 1, filter: { tags: [Primed, Burning] } } },
       effects: [
         ActionEffects.descriptive(
           'The target [Detonates](creature-tag:condition/primed) and immediately takes the damage from each of its [Burning](creature-tag:condition/burning) conditions. Then those conditions end.'
@@ -121,12 +143,13 @@ export const Combustion = Abilities.defineAbility('technology/combustion', {
 export const GoutOfFlame = Abilities.defineAbility('technology/gout-of-flame', {
   name: 'Gout of Flame',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { area: { range: 0, area: { type: AreaShape.Cone, length: 3 }, count: 1 } },
+      targeting: { area: { range: 0, count: 1, area: { type: AreaShape.Cone, length: 3 } } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ReflexDefense,
@@ -140,12 +163,13 @@ export const GoutOfFlame = Abilities.defineAbility('technology/gout-of-flame', {
 export const Overload = Abilities.defineAbility('technology/overload', {
   name: 'Overload',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 6, count: 1 } },
+      targeting: { target: { range: RangeBand.Medium, count: 1 } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: FortitudeDefense,
@@ -156,7 +180,8 @@ export const Overload = Abilities.defineAbility('technology/overload', {
       name: 'Mechanical Overload',
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 6, count: 1, filter: { tags: [Mechanical] } } },
+      targeting: { target: { range: RangeBand.Medium, count: 1, filter: { tags: [Mechanical] } } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: FortitudeDefense,
@@ -169,16 +194,17 @@ export const Overload = Abilities.defineAbility('technology/overload', {
 export const ChainLightning = Abilities.defineAbility('technology/chain-lightning', {
   name: 'Chain Lightning',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       description: 'The lightning strikes the first target, then arcs to up to three other creatures near it.',
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.VeryHigh, resource: Stamina }],
       targeting: {
-        first: { range: 12, count: 1 },
-        arc: { from: 'first', range: 6, count: 3 },
+        first: { range: RangeBand.Long, count: 1 },
+        arc: { from: 'first', range: RangeBand.Medium, count: 3 },
       },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ReflexDefense,
@@ -192,12 +218,13 @@ export const ChainLightning = Abilities.defineAbility('technology/chain-lightnin
 export const Incinerate = Abilities.defineAbility('technology/incinerate', {
   name: 'Incinerate',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
-      targeting: { target: { range: 6, count: 1 } },
+      targeting: { target: { range: RangeBand.Medium, count: 1 } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ReflexDefense,
@@ -210,7 +237,7 @@ export const Incinerate = Abilities.defineAbility('technology/incinerate', {
 export const Arsonist = Traits.defineTrait('technology/arsonist', {
   name: 'Arsonist',
   tags: [Primary],
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare)],
   effects: [
     CharacterEffects.modifyActionEffect(ActionEffects.damageFilter({ damageTypes: [Fire] }), Attributes.modifier(ActionEffects.increasePotency(1))),
     CharacterEffects.modifyActionEffect(
@@ -225,7 +252,7 @@ export const Arsonist = Traits.defineTrait('technology/arsonist', {
 export const Stormlord = Traits.defineTrait('technology/stormlord', {
   name: 'Stormlord',
   tags: [Primary],
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare)],
   effects: [
     CharacterEffects.modifyActionEffect(
       ActionEffects.damageFilter({ damageTypes: [Electric] }),
@@ -238,23 +265,24 @@ export const Stormlord = Traits.defineTrait('technology/stormlord', {
   ],
 })
 
-export const TechAdept = Traits.defineTrait('technology/adept', {
-  name: 'Tech Adept',
+export const TacticalPayloads = Traits.defineTrait('technology/tactical-payloads', {
+  name: 'Tactical Payloads',
   tags: [Primary],
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare)],
   effects: [],
 })
 
 export const ScorchingRay = Abilities.defineAbility('technology/scorching-ray', {
   name: 'Scorching Ray',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechAdept)],
+  prerequisites: [Traits.traitPrerequisite(TacticalPayloads), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       description: 'You fire three rays. They can strike the same target or different ones, and you make a separate attack for each ray.',
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.High, resource: Stamina }],
-      targeting: { target: { range: 12, count: 3 } },
+      targeting: { target: { range: RangeBand.Long, count: 3 } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ArmorClass,
@@ -267,12 +295,13 @@ export const ScorchingRay = Abilities.defineAbility('technology/scorching-ray', 
 export const LightningRail = Abilities.defineAbility('technology/lightning-rail', {
   name: 'Lightning Rail',
   loadout: GeneralLoadoutSlot,
-  prerequisites: [Traits.traitPrerequisite(TechNovice)],
+  prerequisites: [Traits.traitPrerequisite(FutureWarfare), Abilities.abilityPrerequisite(Omnitool)],
   actions: [
     {
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.High, resource: Stamina }],
-      targeting: { area: { range: 0, area: { type: AreaShape.Line, length: 20, width: 1 }, count: 1 } },
+      targeting: { area: { range: 0, count: 1, area: { type: AreaShape.Line, length: 20, width: 1 } } },
+      potency: IntelligencePotency,
       test: {
         offense: IntelligenceAttackRating,
         defense: ReflexDefense,
@@ -283,9 +312,9 @@ export const LightningRail = Abilities.defineAbility('technology/lightning-rail'
   ],
 })
 
-export const TechMaster = Traits.defineTrait('technology/master', {
-  name: 'Tech Master',
+export const AreaDenial = Traits.defineTrait('technology/area-denial', {
+  name: 'Area Denial',
   tags: [Primary],
-  prerequisites: [Traits.traitPrerequisite(TechAdept)],
+  prerequisites: [Traits.traitPrerequisite(TacticalPayloads)],
   effects: [],
 })

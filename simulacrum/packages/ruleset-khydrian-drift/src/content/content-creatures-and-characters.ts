@@ -16,6 +16,10 @@ import {
   AgilityAttackRating,
   WillpowerAttackRating,
   IntelligenceAttackRating,
+  BrawnPotency,
+  AgilityPotency,
+  WillpowerPotency,
+  IntelligencePotency,
   Brawn,
   Agility,
   Willpower,
@@ -337,13 +341,21 @@ export const CharacterPotency = Content.defineSection('characters/potency', {
   parent: AnatomyOfACharacter,
   content: {
     name: 'Potency',
-    description: `Potency represents how hard a character's attacks hit. Damage is written as dice plus some amount of Potency, shown as **P**. For example, **2d6 + 2P** means you roll 2d6 and add your potency twice.
+    description: `Potency represents how hard a character's attacks hit and how much their healing restores. Damage is written as dice plus some amount of Potency, shown as **P**. For example, **2d6 + 2P** means you roll 2d6 and add your potency twice.
 
-Each attribute has its own potency, which starts at that attribute's rating: [brawn](characteristic:brawn) potency, [agility](characteristic:agility) potency, [willpower](characteristic:willpower) potency, and [intelligence](characteristic:intelligence) potency. An attack uses the potency of the attribute it attacks with, so an Intelligence vs. Fortitude attack adds your intelligence potency.
+Each attribute has its own potency, which starts at that attribute's rating: [brawn](characteristic:brawn-potency) potency, [agility](characteristic:agility-potency) potency, [willpower](characteristic:willpower-potency) potency, and [intelligence](characteristic:intelligence-potency) potency. Each action states which potency it uses. An attack usually uses the potency of the attribute it attacks with, so an Intelligence vs. Fortitude attack adds your intelligence potency. An action that doesn't use a potency treats **P** as 0.
 
 Some effects increase your potency for certain damage. The increase changes the value of **P** itself, so it applies to every **P** in the damage: with a potency of 3, **2d6 + 2P** deals 2d6 + 6, and if an effect increases your potency by 1 for that damage it deals 2d6 + 8 instead.`,
   },
 })
+
+export const CharacterBrawnPotency = Content.linkEntity(CharacterPotency, BrawnPotency)
+
+export const CharacterAgilityPotency = Content.linkEntity(CharacterPotency, AgilityPotency)
+
+export const CharacterWillpowerPotency = Content.linkEntity(CharacterPotency, WillpowerPotency)
+
+export const CharacterIntelligencePotency = Content.linkEntity(CharacterPotency, IntelligencePotency)
 
 export const CharacterMovementSpeed = Content.defineSection('characters/movement-speed', {
   parent: AnatomyOfACharacter,
@@ -473,6 +485,10 @@ export const CreaturesAndCharactersContent = [
   CharacterWillpowerAttackRating,
   CharacterIntelligenceAttackRating,
   CharacterPotency,
+  CharacterBrawnPotency,
+  CharacterAgilityPotency,
+  CharacterWillpowerPotency,
+  CharacterIntelligencePotency,
   CharacterCreatureType,
   CharacterTraits,
   CharacterAbilities,

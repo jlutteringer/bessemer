@@ -40,6 +40,7 @@ const defineAbilityScore = (key: string, name: string, characteristic: Character
     description: `Increase your ${name} score by 1.`,
     tags: [AbilityScoreIncrease],
     repeatable: true,
+    prerequisites: [Expressions.lessThan(characteristic.variable, 20)],
     effects: [CharacterEffects.modifyCharacteristic(characteristic, Attributes.modifier(Patches.sum(1)))],
   })
 

@@ -6,8 +6,10 @@ import { Class, Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import {
   Agility,
   AgilityAttackRating,
+  AgilityPotency,
   Brawn,
   BrawnAttackRating,
+  BrawnPotency,
   DefenseBonus,
   FortitudeDefense,
   MovementSpeed,
@@ -16,6 +18,7 @@ import {
   VitalityPool,
 } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Patches } from '@bessemer/cornerstone'
+import { SubclassLevelPrerequisite } from '@simulacrum/ruleset-khydrian-drift/class/class'
 import { Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 
 export const Commando = Traits.defineTrait('commando', {
@@ -34,7 +37,8 @@ export const Commando = Traits.defineTrait('commando', {
   ],
 })
 
-const ArsenalAttackRating = NumericExpressions.sum([ProficiencyBonus.variable, NumericExpressions.max([Brawn.variable, Agility.variable])])
+const ArsenalPotency = NumericExpressions.max([Brawn.variable, Agility.variable])
+const ArsenalAttackRating = NumericExpressions.sum([ProficiencyBonus.variable, ArsenalPotency])
 
 export const Arsenal = Traits.defineTrait('commando/arsenal', {
   name: 'Arsenal',
@@ -44,10 +48,12 @@ export const Arsenal = Traits.defineTrait('commando/arsenal', {
     CharacterEffects.gainLoadoutSlot(WeaponLoadout),
     CharacterEffects.modifyCharacteristic(BrawnAttackRating, Attributes.modifier(Patches.set(ArsenalAttackRating))),
     CharacterEffects.modifyCharacteristic(AgilityAttackRating, Attributes.modifier(Patches.set(ArsenalAttackRating))),
+    CharacterEffects.modifyCharacteristic(BrawnPotency, Attributes.modifier(Patches.set(ArsenalPotency))),
+    CharacterEffects.modifyCharacteristic(AgilityPotency, Attributes.modifier(Patches.set(ArsenalPotency))),
     CharacterEffects.descriptive('Any weapon you have equipped is also considered wielded.'),
     CharacterEffects.descriptive('You gain an additional Weapon slot.'),
     CharacterEffects.descriptive(
-      'Your [Brawn](characteristic:brawn-attack-rating) and [Agility](characteristic:agility-attack-rating) attack ratings both use whichever of your [Brawn](characteristic:brawn) and [Agility](characteristic:agility) is higher.'
+      'Your [Brawn](characteristic:brawn-attack-rating) and [Agility](characteristic:agility-attack-rating) attack ratings and [Brawn](characteristic:brawn-potency) and [Agility](characteristic:agility-potency) potencies all use whichever of your [Brawn](characteristic:brawn) and [Agility](characteristic:agility) is higher.'
     ),
   ],
 })
@@ -72,7 +78,12 @@ export const Sentinel = RulesetEntities.buildReference(RulesetEntities.RulesetEn
 export const OfficerTrait = Traits.defineTrait('commando/officer', {
   name: 'Officer',
   tags: [Primary],
-  prerequisites: [Traits.traitPrerequisite(Commando), Traits.traitPrerequisite(Momentum), Expressions.not(Traits.traitPrerequisite(Sentinel))],
+  prerequisites: [
+    Traits.traitPrerequisite(Commando),
+    SubclassLevelPrerequisite,
+    Traits.traitPrerequisite(Momentum),
+    Expressions.not(Traits.traitPrerequisite(Sentinel)),
+  ],
   effects: [
     CharacterEffects.gainResourcePool(TacticPoints),
     // TODO this solution doesn't work - its supposed to add 2 not set 2 - Patch solves!
@@ -94,6 +105,6 @@ export const AdvancedOperations = Traits.defineTrait('commando/advanced-operatio
 export const SentinelTrait = Traits.defineTrait('commando/sentinel', {
   name: 'Sentinel',
   tags: [Primary],
-  prerequisites: [Traits.traitPrerequisite(Commando), Expressions.not(Traits.traitPrerequisite(Officer))],
+  prerequisites: [Traits.traitPrerequisite(Commando), SubclassLevelPrerequisite, Expressions.not(Traits.traitPrerequisite(Officer))],
   effects: [],
 })

@@ -1,21 +1,22 @@
 import { CharacterSheet } from '@simulacrum/common/engine/character/character'
-import { Characteristics, Damage, CharacterEffects, ResourcePools, Rulesets } from '@simulacrum/common/engine/engine'
+import { ActionEffects, Characteristics, Damage, CharacterEffects, Loadout, ResourcePools, Rulesets } from '@simulacrum/common/engine/engine'
 import { Trait } from '@simulacrum/common/engine/trait'
 import { Ruleset } from '@simulacrum/common/engine/ruleset'
 import { Ability, AbilityAction } from '@simulacrum/common/engine/ability'
 import { Area, AreaShape, TargetSelection } from '@simulacrum/ruleset/targeting'
 import { TagReference } from '@simulacrum/ruleset/tag'
 import { Duration } from '@simulacrum/ruleset/duration'
-import { ActionDamage, ActionEffect, ActionEffectType } from '@simulacrum/ruleset/action-effect'
+import { ActionAmount, ActionEffect, ActionEffectType } from '@simulacrum/ruleset/action-effect'
 import { ActionTest, ActionTestType } from '@simulacrum/ruleset/action-test'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
 import { ActionTypeReference } from '@simulacrum/ruleset/action-type'
-import { CharacterEffectSource, CharacterEffectSourceType, DescriptiveEffect } from '@simulacrum/common/engine/character-effect'
+import { CharacterEffectSource, CharacterEffectSourceType } from '@simulacrum/common/engine/character-effect'
 import { ActionEffectValue } from '@simulacrum/common/engine/action-effect'
 import { CooldownRate } from '@simulacrum/common/engine/resource-pool'
 import { RulesetEntity, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { GameTimeUnit, RelativeAmount } from '@simulacrum/ruleset/types'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
+import * as Tiptap from '@bessemer/core/tiptap'
 import { EvaluateExpression, Expression, ExpressionContext, Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { ExpressionMapper } from '@bessemer/cornerstone/expression/expression-mapper'
 import * as ExpressionInternal from '@bessemer/cornerstone/expression/internal'
@@ -31,8 +32,11 @@ import {
 import { Rolls } from '@simulacrum/ruleset'
 import { Arrays, Assertions, Maths, Objects } from '@bessemer/cornerstone'
 
-export const getPassiveEffects = (trait: Trait): Array<DescriptiveEffect> => {
-  return CharacterEffects.filter(trait.effects, CharacterEffects.Descriptive)
+export const getPassiveEffects = (trait: Trait, ruleset: Ruleset): Array<RichTextJson> => {
+  const loadoutSlots = CharacterEffects.filter(trait.effects, CharacterEffects.GainLoadoutSlot).map((it) =>
+    Tiptap.markdownToJson(`+1 ${Loadout.getLoadoutTypeById(it.loadoutType, ruleset).name} slot.`)
+  )
+  return [...loadoutSlots, ...CharacterEffects.filter(trait.effects, CharacterEffects.Descriptive).map((it) => it.description)]
 }
 
 export const getActionTypeLabel = (actionType: ActionTypeReference, ruleset: Ruleset): string => {
@@ -232,7 +236,7 @@ const getRollLabel = (amount: RollOperand, context: ExpressionContext | null): s
     .join('')
 }
 
-export const getDamageLabel = (damage: ActionDamage, context: ExpressionContext | null): string => {
+export const getDamageLabel = (damage: ActionAmount, context: ExpressionContext | null): string => {
   const hasPotency = Objects.isPresent(context) && Maths.isNumber(context.variables[Potency.name])
   return getRollLabel(damage.amount, hasPotency ? Damage.buildDamageContext(damage, context) : null)
 }
@@ -241,12 +245,12 @@ const getDamageTerms = (amount: RollOperand): Array<RollOperand> => {
   return ExpressionInternal.isType(amount, RollSumExpression) ? amount.operands : [amount]
 }
 
-const getEffectDamage = (effect: ActionEffect): ActionDamage | null => {
-  return effect.type === ActionEffectType.Descriptive ? null : effect.damage
+const getEffectDamage = (effect: ActionEffect): ActionAmount | null => {
+  return effect.type === ActionEffectType.Healing ? effect.healing : ActionEffects.getDamage(effect)
 }
 
 const getEffectDuration = (effect: ActionEffect): Duration | null => {
-  return effect.type === ActionEffectType.Damage ? null : effect.duration
+  return ActionEffects.getDuration(effect)
 }
 
 const getAmountChange = (previous: Expression<Roll>, next: Expression<Roll>): string => {
@@ -266,7 +270,7 @@ const getPotencyChange = (previous: Expression<number>, next: Expression<number>
   return Maths.isNumber(difference) ? `${difference < 0 ? '−' : '+'} ${Math.abs(difference)} Potency` : 'modified Potency'
 }
 
-const getDamageChanges = (previous: ActionDamage | null, next: ActionDamage | null, evaluate: EvaluateExpression | null): Array<string> => {
+const getDamageChanges = (previous: ActionAmount | null, next: ActionAmount | null, evaluate: EvaluateExpression | null): Array<string> => {
   if (Objects.isNil(previous) || Objects.isNil(next)) {
     return []
   }
@@ -317,7 +321,9 @@ export const getActionEffectBreakdown = (
   const isDurationModified = !Objects.deepEqual(initialDuration, getEffectDuration(value.value))
 
   const base = [
-    ...(Objects.isNil(initialDamage) ? [] : [{ label: 'Damage', value: getDamageLabel(initialDamage, null) }]),
+    ...(Objects.isNil(initialDamage)
+      ? []
+      : [{ label: value.initialValue.type === ActionEffectType.Healing ? 'Healing' : 'Damage', value: getDamageLabel(initialDamage, null) }]),
     ...(isDurationModified ? [{ label: 'Duration', value: getDurationLabel(initialDuration, evaluate) ?? '' }] : []),
   ]
 
@@ -338,11 +344,11 @@ export const getActionEffectBreakdown = (
   return { base, modifiers }
 }
 
-export const getEntityTexts = (entity: RulesetEntity): Array<RichTextJson> => {
+export const getEntityTexts = (entity: RulesetEntity, ruleset: Ruleset): Array<RichTextJson> => {
   const description = Objects.isPresent(entity.description) ? [entity.description] : []
 
   if (Rulesets.isEntityType(entity, RulesetEntityType.Trait)) {
-    return [...description, ...getPassiveEffects(entity).map((it) => it.description)]
+    return [...description, ...getPassiveEffects(entity, ruleset)]
   }
 
   if (Rulesets.isEntityType(entity, RulesetEntityType.Ability)) {

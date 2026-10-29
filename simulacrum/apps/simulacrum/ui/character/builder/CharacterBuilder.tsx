@@ -42,7 +42,7 @@ import { StandardPageHeader } from '@simulacrum/ui/layout/StandardPageHeader'
 import { CharacterDto } from '@simulacrum/common/character/character'
 import { createCharacter, updateCharacter } from '@simulacrum/application/character/character-actions'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
-import { RulesetEntityContent, TraitPassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
+import { RulesetEntityContent, PassiveEffects } from '@simulacrum/ui/components/RulesetEntityContent'
 import { CharacterSheetContext } from '@simulacrum/ui/character/character-sheet-context'
 import { RulesetContext, useRuleset } from '@simulacrum/ui/ruleset/use-ruleset'
 import { useFetchRuleset } from '@simulacrum/ui/ruleset/use-fetch-ruleset'
@@ -711,7 +711,7 @@ const PassiveTraitCard = ({ trait }: { trait: Trait }) => {
     <Card sx={{ height: '100%' }}>
       <CardContent>
         <Typography variant="h6">{trait.name}</Typography>
-        <TraitPassiveEffects trait={trait} />
+        <PassiveEffects effects={CharacterEffects.filter(trait.effects, CharacterEffects.Descriptive).map((it) => it.description)} />
       </CardContent>
     </Card>
   )

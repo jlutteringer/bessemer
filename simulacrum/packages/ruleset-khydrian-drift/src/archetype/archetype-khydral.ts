@@ -3,11 +3,13 @@ import * as ActionTypes from '@simulacrum/ruleset-khydrian-drift/action-type'
 import { Primary } from '@simulacrum/ruleset-khydrian-drift/tag'
 import { GeneralLoadoutSlot } from '@simulacrum/ruleset-khydrian-drift/loadout'
 import { Stamina } from '@simulacrum/ruleset-khydrian-drift/resource-pool'
-import { StaminaCost } from '@simulacrum/ruleset-khydrian-drift/characteristic'
+import { StaminaCost, RangeBand } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { LightArmor } from '@simulacrum/ruleset-khydrian-drift/armor'
 
 export const KhydralSensitivity = Traits.defineTrait('khydral/sensitivity', {
   name: 'Khydral Sensitivity',
+  description:
+    '*"For now we see through a glass, darkly; but then face to face."*\n\nThose with khydral sensitivity perceive the force only dimly, like a voice heard through a dream. They might sense danger a heartbeat early or feel the air thicken before something goes wrong, without ever knowing why. The gift lies dormant until it is trained, and only then does that faint impression begin to sharpen into something they can grasp.',
   tags: [Primary],
   prerequisites: [],
   effects: [],
@@ -25,6 +27,21 @@ export const CloakOfTheMagi = Abilities.defineAbility('khydral/cloak-of-the-magi
   loadout: GeneralLoadoutSlot,
   prerequisites: [Traits.traitPrerequisite(KhydralInitiate)],
   effects: [...LightArmor.effects, CharacterEffects.descriptive('You gain the benefits of [Light Armor](ability:armor/light).')],
+})
+
+export const Fly = Abilities.defineAbility('khydral/fly', {
+  name: 'Fly',
+  loadout: GeneralLoadoutSlot,
+  prerequisites: [Traits.traitPrerequisite(KhydralInitiate)],
+  actions: [
+    {
+      description:
+        'For 10 rounds, the target gains a [flight speed](characteristic:flight-speed) equal to its [movement speed](characteristic:movement-speed). If the target is still airborne when the effect ends, it falls.',
+      action: ActionTypes.MajorAction,
+      costs: [{ cost: StaminaCost.Medium, resource: Stamina }],
+      targeting: { target: { range: RangeBand.Touch, count: 1 } },
+    },
+  ],
 })
 
 export const KhydralAdept = Traits.defineTrait('khydral/adept', {
@@ -45,7 +62,7 @@ export const TimeDilation = Abilities.defineAbility('khydral/time-dilation', {
         "Choose a friendly creature you can see within 12 squares. For 10 rounds, the target has a pool of Deferred Damage, which starts empty. Whenever the target takes damage, that damage is added to the pool instead.\n\nDuring your Sustain Phase, the target takes damage equal to half the damage in the pool (rounded up), and that amount is removed from the pool. When the effect ends, the target immediately takes all damage remaining in the pool. Damage taken from the pool can't be deferred.",
       action: ActionTypes.MajorAction,
       costs: [{ cost: StaminaCost.High, resource: Stamina }],
-      targeting: { target: { range: 12, count: 1 } },
+      targeting: { target: { range: RangeBand.Long, count: 1 } },
     },
   ],
 })
@@ -68,7 +85,7 @@ export const Rewind = Abilities.defineAbility('khydral/rewind', {
         'When a target you can see within 12 squares is hit by an effect, you can take a Reaction to rewind that effect on the target, undoing it.',
       action: ActionTypes.Reaction,
       costs: [{ cost: StaminaCost.High, resource: Stamina }],
-      targeting: { target: { range: 12, count: 1 } },
+      targeting: { target: { range: RangeBand.Long, count: 1 } },
     },
   ],
 })

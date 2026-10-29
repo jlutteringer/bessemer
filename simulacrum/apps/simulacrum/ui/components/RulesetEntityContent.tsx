@@ -8,13 +8,14 @@ import { Arrays, Objects } from '@bessemer/cornerstone'
 import { RulesetEntity, RulesetEntityReference, RulesetEntityType } from '@simulacrum/ruleset/ruleset-entity'
 import { Ability, AbilityAction, AbilityValue, ActionValue } from '@simulacrum/common/engine/ability'
 import { Trait } from '@simulacrum/common/engine/trait'
+import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { Characteristic } from '@simulacrum/ruleset/characteristic'
 import { Abilities, Characteristics, Damage, CharacterEffects, Rulesets } from '@simulacrum/common/engine/engine'
 import { PatchType } from '@bessemer/cornerstone/patch'
 import { EvaluateExpression, ExpressionContext, Expressions, NumericExpressions } from '@bessemer/cornerstone/expression'
 import { RuleLinkTrigger, SimulacrumRichText } from '@simulacrum/ui/components/SimulacrumRichText'
 import { RulesetEntityPopover } from '@simulacrum/ui/components/RulesetEntityPopover'
-import { ActionDamage, ActionEffect, ActionEffectType } from '@simulacrum/ruleset/action-effect'
+import { ActionAmount, ActionEffect, ActionEffectType } from '@simulacrum/ruleset/action-effect'
 import { StackedPopover } from '@simulacrum/ui/components/StackedPopover'
 import { AttributeBreakdown } from '@simulacrum/ui/components/AttributeBreakdown'
 import { ExpressionFormat } from '@simulacrum/ui/components/ExpressionFormat'
@@ -101,27 +102,29 @@ const ModifierOperators: Record<string, string> = {
 }
 
 const TraitContent = ({ trait }: { trait: Trait }) => {
+  const ruleset = useRuleset()
+  const passiveEffects = getPassiveEffects(trait, ruleset)
   return (
     <>
       {Objects.isPresent(trait.description) && <SimulacrumRichText text={trait.description} />}
-      {!Arrays.isEmpty(getPassiveEffects(trait)) && (
+      {!Arrays.isEmpty(passiveEffects) && (
         <>
           <Divider sx={{ my: 1 }} />
-          <TraitPassiveEffects trait={trait} />
+          <PassiveEffects effects={passiveEffects} />
         </>
       )}
     </>
   )
 }
 
-export const TraitPassiveEffects = ({ trait }: { trait: Trait }) => {
+export const PassiveEffects = ({ effects }: { effects: Array<RichTextJson> }) => {
   return (
     <>
       <Typography variant="caption">Passive</Typography>
-      {getPassiveEffects(trait).map((it, index) => (
+      {effects.map((it, index) => (
         <SimulacrumRichText
           key={index}
-          text={it.description}
+          text={it}
         />
       ))}
     </>
@@ -226,9 +229,9 @@ const ActionEffects = ({ action, evaluate }: { action: ActionValue; evaluate: Ev
   const characterContext = useContext(CharacterSheetContext)
   const expressionContext = characterContext?.expressionContext ?? null
   const testContext =
-    Objects.isNil(characterContext) || Objects.isNil(action.potency)
+    Objects.isNil(characterContext) || Objects.isNil(action.potencyValue)
       ? expressionContext
-      : Damage.buildPotencyContext(characterContext.expressionContext, action.potency)
+      : Damage.buildPotencyContext(characterContext.expressionContext, action.potencyValue)
 
   const outcomes = [
     { label: 'Effect', values: action.effects, context: expressionContext },
@@ -299,13 +302,30 @@ const ActionEffectText = ({
     )
   }
 
+  if (effect.type === ActionEffectType.Healing) {
+    return (
+      <Typography variant="body2">
+        The target heals{' '}
+        <ActionAmountValue
+          amount={effect.healing}
+          context={context}
+          breakdown={breakdown}
+        />
+        .
+      </Typography>
+    )
+  }
+
   const damage = Objects.isNil(effect.damage) ? null : (
     <>
-      <ActionDamageValue
-        damage={effect.damage}
+      <ActionAmountValue
+        amount={effect.damage}
         context={context}
         breakdown={breakdown}
-      />{' '}
+      >
+        {' '}
+        <RulesetEntityLink reference={effect.damage.type} />
+      </ActionAmountValue>{' '}
       damage.
     </>
   )
@@ -322,14 +342,16 @@ const ActionEffectText = ({
   )
 }
 
-const ActionDamageValue = ({
-  damage,
+const ActionAmountValue = ({
+  amount,
   context,
   breakdown,
+  children,
 }: {
-  damage: ActionDamage
+  amount: ActionAmount
   context: ExpressionContext | null
   breakdown: ActionEffectBreakdown | null
+  children?: React.ReactNode
 }) => {
   return (
     <>
@@ -337,7 +359,8 @@ const ActionDamageValue = ({
         component="span"
         sx={{ bgcolor: 'action.hover', borderRadius: 1, px: 0.75, py: 0.25, whiteSpace: 'nowrap' }}
       >
-        {getDamageLabel(damage, context)} <RulesetEntityLink reference={damage.type} />
+        {getDamageLabel(amount, context)}
+        {children}
       </Box>
       {Objects.isPresent(breakdown) && (
         <Box

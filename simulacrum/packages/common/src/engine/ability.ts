@@ -25,7 +25,7 @@ export interface ActionTestValue extends ActionTest {
 export interface ActionValue extends AbilityAction {
   effects: Array<ActionEffectValue>
   test: ActionTestValue | null
-  potency: number | null
+  potencyValue: number | null
 }
 
 export interface AbilityValue extends Ability {
@@ -66,7 +66,7 @@ export const mapActionEffects = (
 ): AbilityValue => {
   const actions = ability.value.actions.map((action) => ({
     ...action,
-    potency: getPotency(action),
+    potencyValue: getPotency(action),
     effects: action.effects.map((it) => map(it.value, action)),
     test: Objects.isNil(action.test)
       ? null
