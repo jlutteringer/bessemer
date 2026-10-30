@@ -34,8 +34,6 @@ import {
 } from '@simulacrum/ruleset-khydrian-drift/characteristic'
 import { Blinded, Burning, Deafened, Poisoned, Primed, Prone, Stunned, Unconscious } from '@simulacrum/ruleset-khydrian-drift/condition'
 
-// Model
-
 export enum KdOutcome {
   Hit = 'Hit',
   Miss = 'Miss',
@@ -1634,7 +1632,7 @@ export const Examples: Array<Example> = [
                 defense: Dnd4e.ArmorClass,
                 potency: Dnd4e.StrengthModifier,
                 dice: 2,
-                attackBonus: ArrayExpressions.count(
+                attackBonus: ArrayExpressions.length(
                   ArrayExpressions.filter(creaturesWithin(ActionCreature.You, 1), (it) => isRelation(it, ActionRelation.Enemy))
                 ),
               }

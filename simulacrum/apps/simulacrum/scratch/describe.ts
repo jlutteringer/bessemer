@@ -160,7 +160,7 @@ const formatExpression = (expression: Expression<unknown>): string => {
       return titleCase(String(it['condition']).split(/[:/]/).pop() ?? '')
     case 'Condition.Damage':
       return 'the damage'
-    case 'Array.Count':
+    case 'Array.Length':
       return `the number of ${formatExpression(it['list'] as Expression<unknown>)}`
     case 'Creature.Within':
       return `creatures within ${formatExpression(it['range'] as Expression<unknown>)} of ${creatureName(it['creature'] as ActionCreature)}`

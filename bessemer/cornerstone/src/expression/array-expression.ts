@@ -102,8 +102,8 @@ export const map = <T, ReturnType>(
   return MapExpression.builder(list, lambda(mapper)) as Expression<Array<ReturnType>>
 }
 
-export const CountExpression = ExpressionInternal.defineExpression({
-  expressionKey: 'Array.Count',
+export const LengthExpression = ExpressionInternal.defineExpression({
+  expressionKey: 'Array.Length',
   builder: (list: Expression<Array<unknown>>) => {
     return { list }
   },
@@ -112,6 +112,6 @@ export const CountExpression = ExpressionInternal.defineExpression({
   },
 })
 
-export const count = (list: Expression<Array<unknown>>): Expression<number> => {
-  return CountExpression.builder(list) as Expression<number>
+export const length = (list: Expression<Array<unknown>>): Expression<number> => {
+  return LengthExpression.builder(list) as Expression<number>
 }

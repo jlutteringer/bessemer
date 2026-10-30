@@ -179,5 +179,5 @@ const DEFAULT_EXPRESSION_DEFINITIONS: ExpressionDefinitions = [
   ArrayExpressions.FirstExpression,
   ArrayExpressions.FilterExpression,
   ArrayExpressions.MapExpression,
-  ArrayExpressions.CountExpression,
+  ArrayExpressions.LengthExpression,
 ]

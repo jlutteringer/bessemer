@@ -41,9 +41,9 @@ test('a lambda built separately keeps its own item when reused inside another la
   expect(Expressions.evaluate(expression, { variables: { thresholds: [0, 1], values: [1, 2, 3] } })).toEqual([[3], [3]])
 })
 
-test('count returns the number of items, including after a filter', () => {
+test('length returns the number of items, including after a filter', () => {
   const values = Expressions.variable<Array<number>>('values')
   const context = { variables: { values: [1, 2, 3, 4] } }
-  expect(Expressions.evaluate(ArrayExpressions.count(values), context)).toEqual(4)
-  expect(Expressions.evaluate(ArrayExpressions.count(ArrayExpressions.filter(values, (it) => Expressions.greaterThan(it, 2))), context)).toEqual(2)
+  expect(Expressions.evaluate(ArrayExpressions.length(values), context)).toEqual(4)
+  expect(Expressions.evaluate(ArrayExpressions.length(ArrayExpressions.filter(values, (it) => Expressions.greaterThan(it, 2))), context)).toEqual(2)
 })
