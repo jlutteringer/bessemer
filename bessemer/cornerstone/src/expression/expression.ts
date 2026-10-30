@@ -177,4 +177,7 @@ const DEFAULT_EXPRESSION_DEFINITIONS: ExpressionDefinitions = [
   StringExpressions.UppercaseExpression,
   ArrayExpressions.ConcatenateExpression,
   ArrayExpressions.FirstExpression,
+  ArrayExpressions.FilterExpression,
+  ArrayExpressions.MapExpression,
+  ArrayExpressions.CountExpression,
 ]
