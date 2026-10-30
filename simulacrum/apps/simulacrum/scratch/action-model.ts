@@ -53,7 +53,7 @@ export enum Pf2eOutcome {
   CriticalFailure = 'CriticalFailure',
 }
 
-export enum Relation {
+export enum ActionRelation {
   Origin = 'Origin',
   Ally = 'Ally',
   Enemy = 'Enemy',
@@ -61,7 +61,7 @@ export enum Relation {
 
 export const AnyNumber = 'AnyNumber'
 
-export enum Creature {
+export enum ActionCreature {
   You = 'You',
   Target = 'Target',
   Subject = 'Subject',
@@ -69,55 +69,73 @@ export enum Creature {
   Bearer = 'Bearer',
 }
 
-export type TargetingBaseProps = {
-  from?: Creature
+export type ActionTargetingBaseProps = {
+  from?: ActionCreature
   range?: Range
   area?: Area
-  effects?: Array<Effect>
+  effects?: Array<ActionEffect>
 }
 
-export type TargetingBase = {
-  from: Creature | null
+export type ActionTargetingBase = {
+  from: ActionCreature | null
   range: Range | null
   area: Area | null
-  effects: Array<Effect>
+  effects: Array<ActionEffect>
 }
 
-export type SelectionProps = TargetingBaseProps & {
-  count?: Expression<number> | typeof AnyNumber
-  distinct?: boolean
-  repeats?: boolean
-  targets?: Array<Relation>
+export type CreatureCriteriaProps = {
+  range?: Range
+  targets?: Array<ActionRelation>
   filter?: Array<CreatureTag>
 }
 
-export type Selection = TargetingBase & {
-  type: EffectType.Select
-  count: Expression<number> | typeof AnyNumber | null
-  distinct: boolean
-  repeats: boolean
-  targets: Array<Relation>
+export type CreatureCriteria = {
+  range: Range | null
+  targets: Array<ActionRelation>
   filter: Array<CreatureTag>
 }
 
-export type ZoneProps = TargetingBaseProps & {
-  name?: string
-  duration: Lasts
-  conditions?: Array<CreatureTag>
-  triggers?: Array<Triggered>
-  actions?: Array<ActionProps>
+export type ActionSelectionProps = ActionTargetingBaseProps &
+  CreatureCriteriaProps & {
+    count?: Expression<number> | typeof AnyNumber
+    distinct?: boolean
+    repeats?: boolean
+  }
+
+export type ActionSelection = ActionTargetingBase &
+  CreatureCriteria & {
+    type: ActionEffectType.Select
+    count: Expression<number> | typeof AnyNumber | null
+    distinct: boolean
+    repeats: boolean
+  }
+
+export type AbilityBaseProps = {
+  actions?: Array<Action | BasicAction>
+  triggers?: Array<TriggeredAction>
 }
 
-export type Zone = TargetingBase & {
-  type: EffectType.Zone
-  name: string | null
-  duration: Lasts
-  conditions: Array<CreatureTag>
-  triggers: Array<Triggered>
-  actions: Array<Action>
+export type AbilityBase = {
+  actions: Array<Action | BasicAction>
+  triggers: Array<TriggeredAction>
 }
 
-export type Targeting = Selection | Zone
+export type ActionZoneProps = ActionTargetingBaseProps &
+  AbilityBaseProps & {
+    name?: string
+    duration: Lasts
+    conditions?: Array<CreatureTag>
+  }
+
+export type ActionZone = ActionTargetingBase &
+  AbilityBase & {
+    type: ActionEffectType.Zone
+    name: string | null
+    duration: Lasts
+    conditions: Array<CreatureTag>
+  }
+
+export type ActionTargeting = ActionSelection | ActionZone
 
 export enum TriggerEvent {
   End = 'End',
@@ -139,7 +157,7 @@ export enum Duration {
   Sustained = 'Sustained',
 }
 
-export enum EffectType {
+export enum ActionEffectType {
   Test = 'Test',
   UseAction = 'UseAction',
   Select = 'Select',
@@ -173,18 +191,18 @@ export enum MoveKind {
   Teleport = 'Teleport',
 }
 
-export type TriggerPartyProps = Creature | { range?: Range; targets?: Array<Relation>; filter?: Array<CreatureTag> }
+export type TriggerPartyProps = ActionCreature | CreatureCriteriaProps
 
-export type TriggerParty = Creature | { range: Range | null; targets: Array<Relation>; filter: Array<CreatureTag> }
+export type TriggerParty = ActionCreature | CreatureCriteria
 
-export type TriggerProps = {
+export type ActionTriggerProps = {
   event: TriggerEvent
   subject?: TriggerPartyProps
   object?: TriggerPartyProps
   source?: AbilityFilterProps
 }
 
-export type Trigger = {
+export type ActionTrigger = {
   event: TriggerEvent
   subject: TriggerParty | null
   object: TriggerParty | null
@@ -193,12 +211,12 @@ export type Trigger = {
 
 export type ResolutionProps = {
   potency?: Characteristic
-  targeting: Targeting | Array<Targeting>
+  targeting: ActionTargeting | Array<ActionTargeting>
 }
 
 export type Resolution = {
   potency: Characteristic | null
-  targeting: Array<Targeting>
+  targeting: Array<ActionTargeting>
 }
 
 export type ActionBaseProps = {
@@ -213,7 +231,7 @@ export type ActionBase = {
 
 export type ActionProps = ActionBaseProps &
   ResolutionProps & {
-    trigger?: TriggerProps
+    trigger?: ActionTriggerProps
     requirement?: string
   }
 
@@ -225,23 +243,23 @@ export enum ActionKind {
 export type Action = ActionBase &
   Resolution & {
     kind: ActionKind.Full
-    trigger: Trigger | null
+    trigger: ActionTrigger | null
     requirement: string | null
   }
 
 export type BasicActionProps = ActionBaseProps &
-  OutcomesProps & {
+  ActionOutcomesProps & {
     range: Range
     offense: Characteristic
     defense: Characteristic
     dice: Expression<Roll>
     damageType: DamageType
     potency: Characteristic
-    effects?: Array<Effect>
+    effects?: Array<ActionEffect>
   }
 
 export type BasicAction = ActionBase &
-  Outcomes & {
+  ActionOutcomes & {
     kind: ActionKind.Basic
     range: Range
     offense: Characteristic
@@ -249,14 +267,14 @@ export type BasicAction = ActionBase &
     dice: Expression<Roll>
     damageType: DamageType
     potency: Characteristic
-    effects: Array<Effect>
+    effects: Array<ActionEffect>
   }
 
-export type TriggeredProps = ResolutionProps & TriggerProps
+export type TriggeredActionProps = ResolutionProps & ActionTriggerProps
 
-export type Triggered = Resolution & Trigger
+export type TriggeredAction = Resolution & ActionTrigger
 
-export type AmountProps = {
+export type ActionAmountProps = {
   dice?: Expression<Roll>
   potencyMultiplier?: Expression<number>
   bonus?: Expression<number>
@@ -264,15 +282,13 @@ export type AmountProps = {
 
 export type Lasts = { rounds: Expression<number> } | Duration
 
-export type ConditionProps = {
+export type ConditionProps = AbilityBaseProps & {
   duration?: Lasts
   damage?: { amount: Expression<Roll>; type: DamageType }
   effects?: Array<AbilityEffect>
-  actions?: Array<ActionProps>
-  triggers?: Array<Triggered>
 }
 
-export type Overrides = {
+export type ActionOverrides = {
   offense?: Characteristic
   defense?: Characteristic
   potency?: Characteristic
@@ -282,53 +298,63 @@ export type Overrides = {
   attackBonus?: Expression<number>
 }
 
-export type Outcome = string
+export type ActionOutcome = string
 
-export type OutcomesProps = { outcomes?: Partial<Record<Outcome, Array<Effect>>> }
+export type ActionOutcomesProps = { outcomes?: Partial<Record<ActionOutcome, Array<ActionEffect>>> }
 
-export type Outcomes = { outcomes: Partial<Record<Outcome, Array<Effect>>> }
+export type ActionOutcomes = { outcomes: Partial<Record<ActionOutcome, Array<ActionEffect>>> }
 
-export type Test = { type: EffectType.Test; offense: Characteristic; defense: Characteristic; defenderRolls: boolean } & Outcomes
+export type ActionTest = { type: ActionEffectType.Test; offense: Characteristic; defense: Characteristic; defenderRolls: boolean } & ActionOutcomes
 
-export type Effect =
-  | Test
-  | ({ type: EffectType.UseAction; filter: AbilityFilterProps; basic: boolean; by: Creature | null; overrides: Overrides } & Outcomes)
-  | Selection
-  | Zone
-  | { type: EffectType.Damage; amount: Expression<Roll>; damageType: DamageType | null }
-  | { type: EffectType.Healing; amount: Expression<Roll>; temporary: boolean }
-  | { type: EffectType.Move; kind: MoveKind; distance: Expression<number>; towardYou: boolean }
-  | {
-      type: EffectType.Condition
+export type ActionEffect =
+  | ActionTest
+  | ({
+      type: ActionEffectType.UseAction
+      filter: AbilityFilterProps
+      basic: boolean
+      by: ActionCreature | null
+      overrides: ActionOverrides
+    } & ActionOutcomes)
+  | ActionSelection
+  | ActionZone
+  | { type: ActionEffectType.Damage; amount: Expression<Roll>; damageType: DamageType | null }
+  | { type: ActionEffectType.Healing; amount: Expression<Roll>; temporary: boolean }
+  | { type: ActionEffectType.Move; kind: MoveKind; distance: Expression<number>; towardYou: boolean }
+  | (AbilityBase & {
+      type: ActionEffectType.Condition
       condition: CreatureTag | string
       duration: Lasts | null
       damage: { amount: Expression<Roll>; type: DamageType } | null
       effects: Array<AbilityEffect>
-      actions: Array<Action>
-      triggers: Array<Triggered>
-    }
-  | { type: EffectType.Choose; by: Creature | null; options: Array<{ label: string; effects: Array<Effect> }> }
-  | { type: EffectType.Modify; what: ModifyTarget; amount: Expression<number> }
-  | { type: EffectType.Redirect | EffectType.Reroll | EffectType.Cancel | EffectType.Refund }
-  | { type: EffectType.End; condition: CreatureTag | null }
-  | { type: EffectType.Descriptive; description: string }
+    })
+  | { type: ActionEffectType.Choose; by: ActionCreature | null; options: Array<{ label: string; effects: Array<ActionEffect> }> }
+  | { type: ActionEffectType.Modify; what: ModifyTarget; amount: Expression<number> }
+  | { type: ActionEffectType.Redirect | ActionEffectType.Reroll | ActionEffectType.Cancel | ActionEffectType.Refund }
+  | { type: ActionEffectType.End; condition: CreatureTag | null }
+  | { type: ActionEffectType.Descriptive; description: string }
 
-const outcomes = (props: OutcomesProps): Outcomes => ({ outcomes: props.outcomes ?? {} })
+const outcomes = (props: ActionOutcomesProps): ActionOutcomes => ({ outcomes: props.outcomes ?? {} })
 
 const triggerParty = (props: TriggerPartyProps | undefined): TriggerParty | null => {
   if (props === undefined || typeof props === 'string') {
     return props ?? null
   }
 
-  return { range: props.range ?? null, targets: props.targets ?? [Relation.Origin, Relation.Ally, Relation.Enemy], filter: props.filter ?? [] }
+  return creatureCriteria(props)
 }
+
+const creatureCriteria = (props: CreatureCriteriaProps): CreatureCriteria => ({
+  range: props.range ?? null,
+  targets: props.targets ?? [ActionRelation.Origin, ActionRelation.Ally, ActionRelation.Enemy],
+  filter: props.filter ?? [],
+})
 
 const resolution = (props: ResolutionProps): Resolution => ({
   potency: props.potency ?? null,
   targeting: Array.isArray(props.targeting) ? props.targeting : [props.targeting],
 })
 
-const resolveTrigger = (props: TriggerProps): Trigger => ({
+const resolveTrigger = (props: ActionTriggerProps): ActionTrigger => ({
   event: props.event,
   subject: triggerParty(props.subject),
   object: triggerParty(props.object),
@@ -344,20 +370,20 @@ const action = (props: ActionProps): Action => ({
   requirement: props.requirement ?? null,
 })
 
-const trigger = (props: TriggeredProps): Triggered => ({ ...resolution(props), ...resolveTrigger(props) })
+const trigger = (props: TriggeredActionProps): TriggeredAction => ({ ...resolution(props), ...resolveTrigger(props) })
 
 const test = (props: {
   offense: Characteristic
   defense: Characteristic
   defenderRolls?: boolean
-  outcomes: Partial<Record<Outcome, Array<Effect>>>
-}): Test => {
+  outcomes: Partial<Record<ActionOutcome, Array<ActionEffect>>>
+}): ActionTest => {
   Assertions.assert(
     Object.values(props.outcomes).some((it) => (it ?? []).length > 0),
     () => 'A test needs at least one outcome'
   )
   return {
-    type: EffectType.Test,
+    type: ActionEffectType.Test,
     offense: props.offense,
     defense: props.defense,
     defenderRolls: props.defenderRolls ?? false,
@@ -373,8 +399,8 @@ const basic = (props: BasicActionProps): BasicAction => ({
   effects: props.effects ?? [],
 })
 
-const useAction = (filter: AbilityFilterProps, props: { by?: Creature } & OutcomesProps = {}): Effect => ({
-  type: EffectType.UseAction,
+const useAction = (filter: AbilityFilterProps, props: { by?: ActionCreature } & ActionOutcomesProps = {}): ActionEffect => ({
+  type: ActionEffectType.UseAction,
   filter,
   basic: false,
   by: props.by ?? null,
@@ -382,82 +408,88 @@ const useAction = (filter: AbilityFilterProps, props: { by?: Creature } & Outcom
   ...outcomes(props),
 })
 
-const useBasic = (filter: AbilityFilterProps, props: { by?: Creature } & Overrides & OutcomesProps = {}): Effect => {
+const useBasic = (filter: AbilityFilterProps, props: { by?: ActionCreature } & ActionOverrides & ActionOutcomesProps = {}): ActionEffect => {
   const { by, outcomes: outcomeProps, ...overrides } = props
-  return { type: EffectType.UseAction, filter, basic: true, by: by ?? null, overrides, ...outcomes({ outcomes: outcomeProps }) }
+  return { type: ActionEffectType.UseAction, filter, basic: true, by: by ?? null, overrides, ...outcomes({ outcomes: outcomeProps }) }
 }
 
-const targetingBase = (props: TargetingBaseProps): TargetingBase => ({
+const abilityBase = (props: AbilityBaseProps): AbilityBase => ({
+  actions: props.actions ?? [],
+  triggers: props.triggers ?? [],
+})
+
+const targetingBase = (props: ActionTargetingBaseProps): ActionTargetingBase => ({
   from: props.from ?? null,
   range: props.range ?? null,
   area: props.area ?? null,
   effects: props.effects ?? [],
 })
 
-const select = (props: SelectionProps): Selection => ({
-  type: EffectType.Select,
+const select = (props: ActionSelectionProps): ActionSelection => ({
+  type: ActionEffectType.Select,
   ...targetingBase(props),
+  ...creatureCriteria(props),
   count: props.count ?? null,
   distinct: props.distinct ?? false,
   repeats: props.repeats ?? false,
-  targets: props.targets ?? [Relation.Origin, Relation.Ally, Relation.Enemy],
-  filter: props.filter ?? [],
 })
 
-const zone = (props: ZoneProps): Zone => ({
-  type: EffectType.Zone,
+const zone = (props: ActionZoneProps): ActionZone => ({
+  type: ActionEffectType.Zone,
   ...targetingBase(props),
+  ...abilityBase(props),
   name: props.name ?? null,
   duration: props.duration,
   conditions: props.conditions ?? [],
-  triggers: props.triggers ?? [],
-  actions: (props.actions ?? []).map(action),
 })
 
-const damage = (amount: Expression<Roll>, damageType?: DamageType): Effect => ({ type: EffectType.Damage, amount, damageType: damageType ?? null })
+const damage = (amount: Expression<Roll>, damageType?: DamageType): ActionEffect => ({
+  type: ActionEffectType.Damage,
+  amount,
+  damageType: damageType ?? null,
+})
 
-const healing = (amount: Expression<Roll>, props: { temporary?: boolean } = {}): Effect => ({
-  type: EffectType.Healing,
+const healing = (amount: Expression<Roll>, props: { temporary?: boolean } = {}): ActionEffect => ({
+  type: ActionEffectType.Healing,
   amount,
   temporary: props.temporary ?? false,
 })
 
-const move = (kind: MoveKind, distance: Expression<number>, props: { towardYou?: boolean } = {}): Effect => ({
-  type: EffectType.Move,
+const move = (kind: MoveKind, distance: Expression<number>, props: { towardYou?: boolean } = {}): ActionEffect => ({
+  type: ActionEffectType.Move,
   kind,
   distance,
   towardYou: props.towardYou ?? false,
 })
 
-const condition = (condition: CreatureTag | string, props: ConditionProps = {}): Effect => ({
-  type: EffectType.Condition,
+const condition = (condition: CreatureTag | string, props: ConditionProps = {}): ActionEffect => ({
+  type: ActionEffectType.Condition,
   condition,
+  ...abilityBase(props),
   duration: props.duration ?? null,
   damage: props.damage ?? null,
   effects: props.effects ?? [],
-  actions: (props.actions ?? []).map(action),
-  triggers: props.triggers ?? [],
 })
 
-const choose = (options: Array<{ label: string; effects: Array<Effect> }>, props: { by?: Creature } = {}): Effect => ({
-  type: EffectType.Choose,
+const choose = (options: Array<{ label: string; effects: Array<ActionEffect> }>, props: { by?: ActionCreature } = {}): ActionEffect => ({
+  type: ActionEffectType.Choose,
   by: props.by ?? null,
   options,
 })
 
-const modify = (what: ModifyTarget, amount: Expression<number>): Effect => ({ type: EffectType.Modify, what, amount })
+const modify = (what: ModifyTarget, amount: Expression<number>): ActionEffect => ({ type: ActionEffectType.Modify, what, amount })
 
-const redirect = (): Effect => ({ type: EffectType.Redirect })
-const reroll = (): Effect => ({ type: EffectType.Reroll })
-const cancel = (): Effect => ({ type: EffectType.Cancel })
-const end = (condition?: CreatureTag): Effect => ({ type: EffectType.End, condition: condition ?? null })
-const refund = (): Effect => ({ type: EffectType.Refund })
+const redirect = (): ActionEffect => ({ type: ActionEffectType.Redirect })
+const reroll = (): ActionEffect => ({ type: ActionEffectType.Reroll })
+const cancel = (): ActionEffect => ({ type: ActionEffectType.Cancel })
+const end = (condition?: CreatureTag): ActionEffect => ({ type: ActionEffectType.End, condition: condition ?? null })
+const refund = (): ActionEffect => ({ type: ActionEffectType.Refund })
 
 export type ConditionInstance = { condition: CreatureTag | string; damage: Roll | null }
 
 const ConditionsExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Creature.Conditions',
-  builder: (creature: Creature) => ({ creature }),
+  builder: (creature: ActionCreature) => ({ creature }),
   resolver: (): Array<ConditionInstance> => {
     throw new Error("Needs the creature's current conditions")
   },
@@ -469,7 +501,7 @@ export type CreatureInstance = { id: string }
 
 const CreaturesWithinExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Creature.Within',
-  builder: (creature: Creature, range: Range) => ({ creature, range }),
+  builder: (creature: ActionCreature, range: Range) => ({ creature, range }),
   resolver: (): Array<CreatureInstance> => {
     throw new Error('Needs creature positions')
   },
@@ -479,7 +511,7 @@ const creaturesWithin = CreaturesWithinExpression.builder
 
 const IsRelationExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Creature.IsRelation',
-  builder: (creature: Expression<CreatureInstance>, relation: Relation) => ({ creature, relation }),
+  builder: (creature: Expression<CreatureInstance>, relation: ActionRelation) => ({ creature, relation }),
   resolver: (): boolean => {
     throw new Error('Needs creature sides')
   },
@@ -514,18 +546,22 @@ const TotalExpression = ExpressionInternal.defineExpression({
 
 const total = TotalExpression.builder
 
-const descriptive = (description: string): Effect => ({ type: EffectType.Descriptive, description })
+const descriptive = (description: string): ActionEffect => ({ type: ActionEffectType.Descriptive, description })
 
 // Helpers
 
 const AmountExpression = ExpressionInternal.defineExpression({
   expressionKey: 'Roll.Amount',
-  builder: (amount: AmountProps) => ({ dice: amount.dice ?? null, potencyMultiplier: amount.potencyMultiplier ?? 0, bonus: amount.bonus ?? null }),
+  builder: (amount: ActionAmountProps) => ({
+    dice: amount.dice ?? null,
+    potencyMultiplier: amount.potencyMultiplier ?? 0,
+    bonus: amount.bonus ?? null,
+  }),
   resolver: ({ dice, potencyMultiplier, bonus }, evaluate): Roll =>
     Rolls.toRoll(evaluate(Rolls.sum([dice ?? 0, NumericExpressions.multiply([potencyMultiplier ?? 0, Potency]), bonus ?? 0]))),
 })
 
-const amount = (props: AmountProps): Expression<Roll> => AmountExpression.builder(props)
+const amount = (props: ActionAmountProps): Expression<Roll> => AmountExpression.builder(props)
 
 const half = (amount: Expression<Roll>): Expression<Roll> => Rolls.multiply(amount, 0.5)
 const double = (amount: Expression<Roll>): Expression<Roll> => Rolls.multiply(amount, 2)
@@ -567,23 +603,23 @@ export const Decisions = [
   'Builders apply defaults: each takes props with optional fields and returns complete data, with absent values as null, false or []. Meaningful absences stay null (count, from, range, area) and are interpreted where they are used, not filled in. Actions are built with action(...); a condition resolves its own actions.',
   "Actions and triggers share a Resolution (potency plus targeting). An action is something you choose to do: it always has an action type, and can have a trigger (a reaction), a requirement and a name. A trigger is something that happens on its own: it has a trigger event and no action type. Uses per day or encounter come from the ability's resource pool.",
   "Targeting is select(...) or zone(...), or an ordered list of them resolved in order. select picks creatures (from, range, area, count, targets, filter) and applies its effects to each, once. zone places a lasting area (name, from, range, area, required duration) whose effects, conditions and triggers concern the creatures inside it: effects apply once to each of them when it is placed, conditions apply while they are inside, and triggers and actions work while it lasts. A select nested in a zone's effects is measured from the zone instead (Bigby's hand attacking an adjacent creature).",
-  "targets: [Relation.Origin | Ally | Enemy] says who a selection can be, relative to the creature it is measured from (its from, default you), so Origin is that creature and [Ally, Enemy] means everyone but it. A selection measured from a place is relative to the place's owner; trigger parties are relative to you. Default: all three. filter is for tags that are true of a creature on its own (Undead, Primed). There are no ally or enemy tags.",
+  "targets: [ActionRelation.Origin | Ally | Enemy] says who a selection can be, relative to the creature it is measured from (its from, default you), so Origin is that creature and [Ally, Enemy] means everyone but it. A selection measured from a place is relative to the place's owner; trigger parties are relative to you. Default: all three. filter is for tags that are true of a creature on its own (Undead, Primed). There are no ally or enemy tags.",
   'count says how many creatures you choose. With no count, a select with a area takes every qualifying creature in it, and one with only a range takes 1. count: N means you choose up to N of the candidates (with or without a area). count: AnyNumber means you choose any number of them.',
   'A selection picks distinct creatures unless repeats: true. distinct: true also skips creatures this action already selected (Split Shot).',
   "Effects resolve in order. end() fires the ended condition's End triggers, so ending Burning on a Living Bomb target while it is still Primed sets off the detonation (Combustion relies on this).",
-  "Selections nest: select(selection) is an effect, measured from the current creature by default. There are no user-defined names, only built-ins in the Creature enum: You, Target (the current creature), Subject/Object in triggered actions, and Bearer (the creature or place a condition is on) in a condition's actions.",
-  'from: Creature.X on its own selects that creature; with a range or area it is measured from that creature. A selection with neither range nor from takes the range of the action its effects use.',
+  "Selections nest: select(selection) is an effect, measured from the current creature by default. There are no user-defined names, only built-ins in the ActionCreature enum: You, Target (the current creature), Subject/Object in triggered actions, and Bearer (the creature or place a condition is on) in a condition's actions.",
+  'from: ActionCreature.X on its own selects that creature; with a range or area it is measured from that creature. A selection with neither range nor from takes the range of the action its effects use.',
   "Tests have offense, defense and outcomes keyed by the ruleset's own results (KdOutcome.Hit/Miss, Dnd4eOutcome.Hit/Miss, Pf2eOutcome.CriticalSuccess/Success/Failure/CriticalFailure), always from the actor's side. The model has no built-in notion of criticals. defenderRolls: true means the target rolls its defense against your offense (a saving throw); the outcomes are still from your side.",
   "A basic action (basic({...})) is a simple stored attack: name, action type, range, offense, defense, dice, damage type, potency. It targets one creature within range, makes its test, and on the first outcome (a hit) deals dice + potency damage. The test's own outcomes add to the result and effects always apply. Anything that targets differently, makes more than one test, or doesn't deal standard damage is a full action. Weapons are abilities with a basic action.",
-  "useBasic(filter, { by?, ...overrides, outcomes? }) performs a basic action and can override its offense, defense, potency, range, dice (N rolls its dice N times), factor or attackBonus. useAction(filter, { by?, outcomes? }) performs any action, with no overrides. Both act against the current creature; with by: Creature.Target the current creature performs it and picks its own targets. Outcomes add to the used action's own and apply to whoever it targeted.",
+  "useBasic(filter, { by?, ...overrides, outcomes? }) performs a basic action and can override its offense, defense, potency, range, dice (N rolls its dice N times), factor or attackBonus. useAction(filter, { by?, outcomes? }) performs any action, with no overrides. Both act against the current creature; with by: ActionCreature.Target the current creature performs it and picks its own targets. ActionOutcomes add to the used action's own and apply to whoever it targeted.",
   'Amounts are structured: amount({ dice, potencyMultiplier, bonus }) is an Expression<Roll>, so half and double damage are just Rolls.multiply around it. potencyMultiplier is how many times the action\'s potency is added (the N in 2d6 + NP) (KD bands, 4e "+ ability modifier"). dice: N in overrides rolls the dice N times ([W] counting).',
   'Damage, healing (temporary: true for temporary hit points) and move are the only amount effects.',
   'A condition grants a temporary ability: { duration, effects (passive character effects), actions, triggers }. Shared conditions are creature tags (Burning); local ones are named by the ability.',
-  "Abilities and conditions have both actions and triggers. A condition's actions (Sustain, Riposte's interrupt) are available while it lasts; its triggers (Living Bomb's detonation, the gas cloud) fire on their own while it lasts. A passive aura is a trigger on the ability itself.",
+  "Abilities and conditions have both actions and triggers. A condition's actions (Sustain, Riposte's interrupt) are available while it lasts; its triggers (Living Bomb's detonation, the gas cloud) fire on their own while it lasts. A passive aura is a trigger on the ability itself. Abilities, conditions and zones share AbilityBase (actions and triggers); conditions and zones add a duration.",
   "A trigger is { event, subject?, object?, source? }. subject is who the event is about; object is the other party. subject defaults to the condition's creature on a condition, and to you otherwise.",
   'Durations: rounds, save ends, encounter, or sustained.',
   "TriggerEvent.EachRound recurs once per round, and the ruleset decides when: in KD, during the Sustain Phase of whoever created it; in PF2e, at the start of each affected creature's turn. Abilities say what recurs, not when.",
-  'A select measured from a zone (nested in its effects, or Creature.Bearer in its triggers and actions) with no range or area selects every creature inside it. Conditions only ever go on creatures.',
+  'A select measured from a zone (nested in its effects, or ActionCreature.Bearer in its triggers and actions) with no range or area selects every creature inside it. Conditions only ever go on creatures.',
   'Event verbs change the triggering event or the enclosing condition: modify(ModifyTarget.Roll | Damage | Cost, amount), redirect, reroll, cancel, end, refund.',
   'choose(options, { by }) lets someone pick a branch. Anything else stays descriptive text.',
   'Whose sheet: characteristics written in an ability are evaluated on the character who has the ability. Numbers inside a used action come from whoever performs it.',
@@ -596,12 +632,10 @@ export const Gaps = [
   "Placeholders: 4e and PF2e examples borrow KD's Weapon, conditions and damage types, plus scratch-local tags and damage types.",
 ]
 
-export type Example = {
+export type Example = AbilityBaseProps & {
   name: string
   rules: string
   resource?: ResourcePool
-  actions: Array<Action | BasicAction>
-  triggers?: Array<Triggered>
 }
 
 export const Examples: Array<Example> = [
@@ -661,7 +695,7 @@ export const Examples: Array<Example> = [
       action({
         action: ActionTypes.MajorAction,
         potency: IntelligencePotency,
-        targeting: select({ range: RangeBand.Touch, targets: [Relation.Ally], effects: [healing(Band.Low)] }),
+        targeting: select({ range: RangeBand.Touch, targets: [ActionRelation.Ally], effects: [healing(Band.Low)] }),
       }),
     ],
   },
@@ -740,7 +774,7 @@ export const Examples: Array<Example> = [
             trigger({
               event: TriggerEvent.EachRound,
               targeting: select({
-                from: Creature.Bearer,
+                from: ActionCreature.Bearer,
                 effects: [
                   test({
                     offense: AgilityAttackRating,
@@ -784,7 +818,7 @@ export const Examples: Array<Example> = [
             select({
               range: RangeBand.Medium,
               count: 3,
-              targets: [Relation.Ally, Relation.Enemy],
+              targets: [ActionRelation.Ally, ActionRelation.Enemy],
               effects: [
                 test({
                   offense: IntelligenceAttackRating,
@@ -832,10 +866,10 @@ export const Examples: Array<Example> = [
                         event: TriggerEvent.End,
                         subject: { filter: [Primed] },
                         targeting: [
-                          select({ from: Creature.Bearer, effects: [end(Primed)] }),
+                          select({ from: ActionCreature.Bearer, effects: [end(Primed)] }),
                           select({
                             area: { type: AreaShape.Sphere, radius: 3 },
-                            targets: [Relation.Ally, Relation.Enemy],
+                            targets: [ActionRelation.Ally, ActionRelation.Enemy],
                             effects: [
                               test({
                                 offense: IntelligenceAttackRating,
@@ -889,7 +923,7 @@ export const Examples: Array<Example> = [
             damage(
               total(
                 ArrayExpressions.map(
-                  ArrayExpressions.filter(conditions(Creature.Target), (it) => isCondition(it, Burning)),
+                  ArrayExpressions.filter(conditions(ActionCreature.Target), (it) => isCondition(it, Burning)),
                   (it) => conditionDamage(it)
                 )
               ),
@@ -939,11 +973,11 @@ export const Examples: Array<Example> = [
         action: Dnd4eActionTypes.StandardAction,
         targeting: select({
           range: 6,
-          targets: [Relation.Ally],
+          targets: [ActionRelation.Ally],
           effects: [
             useBasic(
               { specificOptions: [MeleeBasicAttack] },
-              { by: Creature.Target, outcomes: { [Dnd4eOutcome.Hit]: [damage(amount({ bonus: Dnd4e.IntelligenceModifier.variable }))] } }
+              { by: ActionCreature.Target, outcomes: { [Dnd4eOutcome.Hit]: [damage(amount({ bonus: Dnd4e.IntelligenceModifier.variable }))] } }
             ),
           ],
         }),
@@ -975,15 +1009,20 @@ export const Examples: Array<Example> = [
                 outcomes: {
                   [Dnd4eOutcome.Hit]: [
                     select({
-                      from: Creature.You,
+                      from: ActionCreature.You,
                       effects: [
                         condition('White Raven Onslaught', {
                           duration: Duration.Encounter,
                           triggers: [
                             trigger({
                               event: TriggerEvent.Hits,
-                              subject: { range: 10, targets: [Relation.Origin, Relation.Ally] },
-                              targeting: select({ from: Creature.Subject, range: 1, targets: [Relation.Ally], effects: [move(MoveKind.Slide, 1)] }),
+                              subject: { range: 10, targets: [ActionRelation.Origin, ActionRelation.Ally] },
+                              targeting: select({
+                                from: ActionCreature.Subject,
+                                range: 1,
+                                targets: [ActionRelation.Ally],
+                                effects: [move(MoveKind.Slide, 1)],
+                              }),
                             }),
                           ],
                         }),
@@ -1032,14 +1071,14 @@ export const Examples: Array<Example> = [
                     condition('Riposte', {
                       duration: { rounds: 1 },
                       actions: [
-                        {
+                        action({
                           action: Dnd4eActionTypes.ImmediateInterrupt,
-                          trigger: { event: TriggerEvent.Attacks, object: Creature.You },
+                          trigger: { event: TriggerEvent.Attacks, object: ActionCreature.You },
                           targeting: select({
-                            from: Creature.Subject,
+                            from: ActionCreature.Subject,
                             effects: [useBasic({ tags: [Weapon, LightBlade] }, { offense: Dnd4e.StrengthModifier, potency: Dnd4e.StrengthModifier })],
                           }),
-                        },
+                        }),
                       ],
                     }),
                   ],
@@ -1080,7 +1119,7 @@ export const Examples: Array<Example> = [
                   condition('Summons of Khirad', {
                     duration: Duration.Sustained,
                     actions: [
-                      {
+                      action({
                         name: 'Sustain',
                         action: Dnd4eActionTypes.MinorAction,
                         targeting: select({
@@ -1092,7 +1131,7 @@ export const Examples: Array<Example> = [
                             }),
                           ],
                         }),
-                      },
+                      }),
                     ],
                   }),
                 ],
@@ -1145,7 +1184,7 @@ export const Examples: Array<Example> = [
             }),
           ],
           actions: [
-            {
+            action({
               name: 'Sustain',
               action: Dnd4eActionTypes.MinorAction,
               targeting: select({
@@ -1162,7 +1201,7 @@ export const Examples: Array<Example> = [
                   ]),
                 ],
               }),
-            },
+            }),
           ],
         }),
       }),
@@ -1187,8 +1226,8 @@ export const Examples: Array<Example> = [
     actions: [
       action({
         action: Dnd4eActionTypes.ImmediateInterrupt,
-        trigger: { event: TriggerEvent.Hit, subject: { range: 1, targets: [Relation.Ally] }, source: { tags: [[MeleeAttack, RangedAttack]] } },
-        targeting: select({ from: Creature.You, effects: [redirect()] }),
+        trigger: { event: TriggerEvent.Hit, subject: { range: 1, targets: [ActionRelation.Ally] }, source: { tags: [[MeleeAttack, RangedAttack]] } },
+        targeting: select({ from: ActionCreature.You, effects: [redirect()] }),
       }),
     ],
   },
@@ -1205,9 +1244,13 @@ export const Examples: Array<Example> = [
     actions: [
       action({
         action: Dnd4eActionTypes.ImmediateInterrupt,
-        trigger: { event: TriggerEvent.Attacks, subject: { targets: [Relation.Enemy] }, object: { targets: [Relation.Origin, Relation.Ally] } },
+        trigger: {
+          event: TriggerEvent.Attacks,
+          subject: { targets: [ActionRelation.Enemy] },
+          object: { targets: [ActionRelation.Origin, ActionRelation.Ally] },
+        },
         targeting: select({
-          from: Creature.Subject,
+          from: ActionCreature.Subject,
           effects: [
             useBasic(
               { tags: [Weapon] },
@@ -1238,7 +1281,7 @@ export const Examples: Array<Example> = [
         action: Dnd4eActionTypes.StandardAction,
         targeting: [
           select({
-            from: Creature.You,
+            from: ActionCreature.You,
             effects: [move(MoveKind.Stride, Dnd4e.Speed.variable), descriptive('You can make the attacks at any point during the move.')],
           }),
           select({
@@ -1267,15 +1310,15 @@ export const Examples: Array<Example> = [
         action: Dnd4eActionTypes.StandardAction,
         targeting: [
           select({
-            from: Creature.You,
+            from: ActionCreature.You,
             area: { type: AreaShape.Sphere, radius: 3 },
-            targets: [Relation.Enemy],
+            targets: [ActionRelation.Enemy],
             effects: [move(MoveKind.Shift, 3, { towardYou: true })],
           }),
           select({
-            from: Creature.You,
+            from: ActionCreature.You,
             area: { type: AreaShape.Sphere, radius: 1 },
-            targets: [Relation.Enemy],
+            targets: [ActionRelation.Enemy],
             effects: [useBasic({ tags: [Weapon] }, { offense: Dnd4e.StrengthModifier, defense: Dnd4e.ArmorClass, potency: Dnd4e.StrengthModifier })],
           }),
         ],
@@ -1401,7 +1444,7 @@ export const Examples: Array<Example> = [
       action({
         action: Dnd4eActionTypes.MinorAction,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [
             condition('Mirror Image', {
               duration: Duration.Encounter,
@@ -1478,9 +1521,9 @@ export const Examples: Array<Example> = [
                 [Dnd4eOutcome.Hit]: [
                   damage(amount({ dice: Rolls.dice(1, 6), potencyMultiplier: 1 }), Radiant),
                   select({
-                    from: Creature.You,
+                    from: ActionCreature.You,
                     range: 10,
-                    targets: [Relation.Ally],
+                    targets: [ActionRelation.Ally],
                     effects: [
                       choose(
                         [
@@ -1490,7 +1533,7 @@ export const Examples: Array<Example> = [
                           },
                           { label: 'Saving throw', effects: [descriptive('The ally makes a saving throw.')] },
                         ],
-                        { by: Creature.Target }
+                        { by: ActionCreature.Target }
                       ),
                     ],
                   }),
@@ -1520,7 +1563,7 @@ export const Examples: Array<Example> = [
         action: Dnd4eActionTypes.StandardAction,
         targeting: select({
           range: 5,
-          targets: [Relation.Ally],
+          targets: [ActionRelation.Ally],
           effects: [
             condition('Sanctuary', {
               duration: { rounds: 1 },
@@ -1554,9 +1597,9 @@ export const Examples: Array<Example> = [
         requirement: 'No ally is within 5 squares of you.',
         potency: Dnd4e.CharismaModifier,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           area: { type: AreaShape.Sphere, radius: 1 },
-          targets: [Relation.Enemy],
+          targets: [ActionRelation.Enemy],
           effects: [
             test({
               offense: Dnd4e.CharismaModifier,
@@ -1592,7 +1635,7 @@ export const Examples: Array<Example> = [
                 potency: Dnd4e.StrengthModifier,
                 dice: 2,
                 attackBonus: ArrayExpressions.count(
-                  ArrayExpressions.filter(creaturesWithin(Creature.You, 1), (it) => isRelation(it, Relation.Enemy))
+                  ArrayExpressions.filter(creaturesWithin(ActionCreature.You, 1), (it) => isRelation(it, ActionRelation.Enemy))
                 ),
               }
             ),
@@ -1614,7 +1657,7 @@ export const Examples: Array<Example> = [
       action({
         action: Dnd4eActionTypes.MinorAction,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [
             condition('Rain of Steel', {
               duration: Duration.Encounter,
@@ -1622,9 +1665,9 @@ export const Examples: Array<Example> = [
               triggers: [
                 trigger({
                   event: TriggerEvent.StartOfTurn,
-                  subject: { range: 1, targets: [Relation.Enemy] },
+                  subject: { range: 1, targets: [ActionRelation.Enemy] },
                   targeting: select({
-                    from: Creature.Subject,
+                    from: ActionCreature.Subject,
                     effects: [descriptive('The target takes 1[W] damage, as long as you are able to make opportunity attacks.')],
                   }),
                 }),
@@ -1745,11 +1788,11 @@ export const Examples: Array<Example> = [
         action: Pf2eActionTypes.TwoActions,
         targeting: [
           select({
-            from: Creature.You,
+            from: ActionCreature.You,
             effects: [
               move(MoveKind.Stride, NumericExpressions.multiply([Pf2e.Speed.variable, 2])),
               select({
-                from: Creature.You,
+                from: ActionCreature.You,
                 effects: [
                   descriptive('Roll one Athletics check and compare it to the Fortitude DC of each creature whose space you move through.'),
                   test({
@@ -1784,7 +1827,7 @@ export const Examples: Array<Example> = [
       action({
         action: Pf2eActionTypes.FreeAction,
         trigger: { event: TriggerEvent.FailsCheck },
-        targeting: select({ from: Creature.You, effects: [reroll()] }),
+        targeting: select({ from: ActionCreature.You, effects: [reroll()] }),
       }),
     ],
   },
@@ -1803,7 +1846,7 @@ export const Examples: Array<Example> = [
         trigger: { event: TriggerEvent.Damaged },
         requirement: 'Your shield is raised.',
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [descriptive("Reduce the damage by your shield's Hardness. You and your shield each take any remaining damage.")],
         }),
       }),
@@ -1823,7 +1866,7 @@ export const Examples: Array<Example> = [
       action({
         action: Pf2eActionTypes.FreeAction,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [
             condition('Quickened Casting', {
               duration: { rounds: 1 },
@@ -1872,7 +1915,7 @@ export const Examples: Array<Example> = [
             ),
           ],
           actions: [
-            {
+            action({
               name: 'Sustain',
               action: Pf2eActionTypes.SingleAction,
               targeting: select({
@@ -1901,7 +1944,7 @@ export const Examples: Array<Example> = [
                   ]),
                 ],
               }),
-            },
+            }),
           ],
         }),
       }),
@@ -1945,7 +1988,7 @@ export const Examples: Array<Example> = [
             }),
           ],
           actions: [
-            {
+            action({
               name: 'Sustain',
               action: Pf2eActionTypes.SingleAction,
               targeting: select({
@@ -1955,7 +1998,7 @@ export const Examples: Array<Example> = [
                   ),
                 ],
               }),
-            },
+            }),
           ],
         }),
       }),
@@ -2003,7 +2046,7 @@ export const Examples: Array<Example> = [
         name: '3 actions',
         action: Pf2eActionTypes.ThreeActions,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           area: { type: AreaShape.Sphere, radius: 30 },
           effects: [
             healing(amount({ dice: Rolls.dice(1, 8) })),
@@ -2080,7 +2123,7 @@ export const Examples: Array<Example> = [
         action: Pf2eActionTypes.TwoActions,
         targeting: select({
           count: 2,
-          targets: [Relation.Enemy],
+          targets: [ActionRelation.Enemy],
           effects: [descriptive("Roll once and compare the result to each target's AC."), useBasic({ tags: [Weapon, MeleeAttack] })],
         }),
       }),
@@ -2129,7 +2172,7 @@ export const Examples: Array<Example> = [
         trigger: { event: TriggerEvent.Casts, subject: { range: 120 }, source: { tags: [Spell] } },
         requirement: 'Expend your prepared copy of the triggering spell.',
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [descriptive('Attempt to counteract the triggering spell. If you succeed, it has no effect.'), cancel()],
         }),
       }),
@@ -2150,7 +2193,7 @@ export const Examples: Array<Example> = [
         action: Pf2eActionTypes.Reaction,
         trigger: { event: TriggerEvent.Casts, subject: { range: 120 }, source: { tags: [Spell] } },
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [
             descriptive('The GM rolls this check in secret.'),
             test({
@@ -2185,7 +2228,7 @@ export const Examples: Array<Example> = [
         action: Pf2eActionTypes.FreeAction,
         requirement: 'Spend 1 Focus Point.',
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [
             test({
               offense: Pf2e.Performance,
@@ -2256,7 +2299,7 @@ export const Examples: Array<Example> = [
             trigger({
               event: TriggerEvent.EachRound,
               targeting: select({
-                from: Creature.Bearer,
+                from: ActionCreature.Bearer,
                 effects: [
                   descriptive('The creature can use Acrobatics instead of its Reflex save.'),
                   test({
@@ -2312,7 +2355,7 @@ export const Examples: Array<Example> = [
               defense: Pf2e.Will,
               defenderRolls: true,
               outcomes: {
-                [Pf2eOutcome.CriticalFailure]: [select({ from: Creature.You, effects: [condition(Stunned, { duration: { rounds: 1 } })] })],
+                [Pf2eOutcome.CriticalFailure]: [select({ from: ActionCreature.You, effects: [condition(Stunned, { duration: { rounds: 1 } })] })],
                 [Pf2eOutcome.Success]: [descriptive('The target is banished to its home plane.')],
                 [Pf2eOutcome.CriticalSuccess]: [descriptive("The target is banished and can't return by any means for 1 week.")],
               },
@@ -2333,7 +2376,7 @@ export const Examples: Array<Example> = [
               defense: Pf2e.Will,
               defenderRolls: true,
               outcomes: {
-                [Pf2eOutcome.CriticalFailure]: [select({ from: Creature.You, effects: [condition(Stunned, { duration: { rounds: 1 } })] })],
+                [Pf2eOutcome.CriticalFailure]: [select({ from: ActionCreature.You, effects: [condition(Stunned, { duration: { rounds: 1 } })] })],
                 [Pf2eOutcome.Success]: [descriptive('The target is banished to its home plane.')],
                 [Pf2eOutcome.CriticalSuccess]: [descriptive("The target is banished and can't return by any means for 1 week.")],
               },
@@ -2368,7 +2411,7 @@ export const Examples: Array<Example> = [
         action: Pf2eActionTypes.SingleAction,
         targeting: select({
           range: 1,
-          targets: [Relation.Origin, Relation.Ally],
+          targets: [ActionRelation.Origin, ActionRelation.Ally],
           effects: [
             test({
               offense: Pf2e.Medicine,
@@ -2403,7 +2446,7 @@ export const Examples: Array<Example> = [
         trigger: { event: TriggerEvent.Damaged },
         requirement: 'Spend 1 Focus Point.',
         targeting: select({
-          from: Creature.Object,
+          from: ActionCreature.Object,
           effects: [
             test({
               offense: Pf2e.SpellDC,
@@ -2447,7 +2490,7 @@ export const Examples: Array<Example> = [
         action: Pf2eActionTypes.TwoActions,
         targeting: select({
           range: 30,
-          targets: [Relation.Ally],
+          targets: [ActionRelation.Ally],
           effects: [
             descriptive('You lose up to 2 Hit Points and the target regains that many. This ignores modifiers and temporary Hit Points.'),
             condition('Spirit Link', {
@@ -2455,7 +2498,7 @@ export const Examples: Array<Example> = [
               triggers: [
                 trigger({
                   event: TriggerEvent.StartOfTurn,
-                  subject: Creature.You,
+                  subject: ActionCreature.You,
                   targeting: select({ effects: [descriptive('You lose up to 2 Hit Points and the target regains that many.')] }),
                 }),
               ],
@@ -2481,7 +2524,7 @@ export const Examples: Array<Example> = [
       action({
         action: Pf2eActionTypes.SingleAction,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [
             descriptive(
               'Choose one transformation granted by your untamed order feats. Heightened (6th): choose two. Heightened (10th): choose three.'
@@ -2493,7 +2536,7 @@ export const Examples: Array<Example> = [
         name: '2 actions',
         action: Pf2eActionTypes.TwoActions,
         targeting: select({
-          from: Creature.You,
+          from: ActionCreature.You,
           effects: [descriptive('As the 1-action version, and you can also choose transformations that require the 2-action cast.')],
         }),
       }),

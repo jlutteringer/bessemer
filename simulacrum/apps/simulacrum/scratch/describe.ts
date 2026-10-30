@@ -5,29 +5,29 @@ import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { AbilityEffect, CharacterEffectTypeEnum } from '@simulacrum/ruleset/character-effect'
 import {
   Action,
-  Creature,
+  ActionCreature,
   Duration,
-  Effect,
-  EffectType,
+  ActionEffect,
+  ActionEffectType,
   Examples,
   Lasts,
   ModifyTarget,
-  Outcome,
+  ActionOutcome,
   ActionKind,
   BasicAction,
   Resolution,
-  Triggered,
-  Outcomes,
+  TriggeredAction,
+  ActionOutcomes,
   KdOutcome,
   Dnd4eOutcome,
   Pf2eOutcome,
-  Overrides,
-  Zone,
+  ActionOverrides,
+  ActionZone,
   AnyNumber,
-  Targeting,
-  Relation,
-  Selection,
-  Trigger,
+  ActionTargeting,
+  ActionRelation,
+  ActionSelection,
+  ActionTrigger,
   TriggerEvent,
   TriggerParty,
 } from './action-model'
@@ -64,7 +64,7 @@ const describePassive = (effect: AbilityEffect): string => {
 type Vocabulary = {
   unit: [string, string]
   rangeNames: Record<number, string>
-  outcomes: Array<{ outcome: Outcome; label: string; opposite: Outcome }>
+  outcomes: Array<{ outcome: ActionOutcome; label: string; opposite: ActionOutcome }>
 }
 
 const KhydrianDrift: Vocabulary = {
@@ -155,7 +155,7 @@ const formatExpression = (expression: Expression<unknown>): string => {
         record(it['predicate'])['body'] as Expression<unknown>
       )}`
     case 'Creature.Conditions':
-      return `the conditions on ${creatureName(it['creature'] as Creature)}`
+      return `the conditions on ${creatureName(it['creature'] as ActionCreature)}`
     case 'Condition.Is':
       return titleCase(String(it['condition']).split(/[:/]/).pop() ?? '')
     case 'Condition.Damage':
@@ -163,7 +163,7 @@ const formatExpression = (expression: Expression<unknown>): string => {
     case 'Array.Count':
       return `the number of ${formatExpression(it['list'] as Expression<unknown>)}`
     case 'Creature.Within':
-      return `creatures within ${formatExpression(it['range'] as Expression<unknown>)} of ${creatureName(it['creature'] as Creature)}`
+      return `creatures within ${formatExpression(it['range'] as Expression<unknown>)} of ${creatureName(it['creature'] as ActionCreature)}`
     case 'Creature.IsRelation':
       return `${String(it['relation']).toLowerCase()}`
     default:
@@ -180,30 +180,30 @@ const formatDistance = (range: Expression<number>, context: Context): string => 
   return `${formatExpression(range)} ${range === 1 ? singular : plural}`
 }
 
-const creatureName = (creature: Creature, context?: Context): string => {
+const creatureName = (creature: ActionCreature, context?: Context): string => {
   switch (creature) {
-    case Creature.You:
+    case ActionCreature.You:
       return 'you'
-    case Creature.Target:
+    case ActionCreature.Target:
       return 'the target'
-    case Creature.Subject:
+    case ActionCreature.Subject:
       return 'the triggering creature'
-    case Creature.Object:
+    case ActionCreature.Object:
       return 'the creature it targeted'
-    case Creature.Bearer:
+    case ActionCreature.Bearer:
       return context?.bearer ?? 'the affected creature'
   }
 }
 
-const relationNoun = (relations: Array<Relation> | undefined, plural: boolean, origin: string): string => {
+const relationNoun = (relations: Array<ActionRelation> | undefined, plural: boolean, origin: string): string => {
   const targets = relations == null || relations.length === 3 ? undefined : relations
-  const has = (relation: Relation) => targets == null || targets.includes(relation)
+  const has = (relation: ActionRelation) => targets == null || targets.includes(relation)
   const others =
-    has(Relation.Ally) && has(Relation.Enemy)
+    has(ActionRelation.Ally) && has(ActionRelation.Enemy)
       ? plural
         ? 'other creatures'
         : 'other creature'
-      : has(Relation.Ally)
+      : has(ActionRelation.Ally)
       ? plural
         ? 'allies'
         : 'ally'
@@ -214,14 +214,14 @@ const relationNoun = (relations: Array<Relation> | undefined, plural: boolean, o
     return plural ? 'creatures' : 'creature'
   }
 
-  if (!has(Relation.Ally) && !has(Relation.Enemy)) {
+  if (!has(ActionRelation.Ally) && !has(ActionRelation.Enemy)) {
     return origin === 'you' ? 'yourself' : origin
   }
 
-  return has(Relation.Origin) ? `${origin === 'you' ? 'you' : origin} or ${plural ? '' : 'an '}${others}` : others
+  return has(ActionRelation.Origin) ? `${origin === 'you' ? 'you' : origin} or ${plural ? '' : 'an '}${others}` : others
 }
 
-const describeArea = (selection: Zone, context: Context): string => {
+const describeArea = (selection: ActionZone, context: Context): string => {
   const origin = selection.from == null ? context.current : creatureName(selection.from, context)
   const measuredFrom = origin === 'you' ? '' : ` of ${origin}`
   const within = selection.range == null ? '' : ` within ${formatDistance(selection.range, context)}${measuredFrom}`
@@ -234,14 +234,16 @@ const describeArea = (selection: Zone, context: Context): string => {
   return `a ${size} centered on a point${within}`
 }
 
-const describeZone = (zone: Zone, context: Context, depth: number): Array<string> => {
+const describeZone = (zone: ActionZone, context: Context, depth: number): Array<string> => {
   const name = zone.name ?? 'the zone'
   const inner: Context = { ...context, current: 'a creature in it', condition: name, bearer: name, bearerIsPlace: true, currentIsPlace: false }
   return [
     `${indent(depth)}Creates ${name} in ${describeArea(zone, context)}${describeDuration(zone.duration)}.`,
-    ...(zone.effects.some((it) => it.type !== EffectType.Select) ? [`${indent(depth + 1)}When it appears, against each creature in ${name}:`] : []),
+    ...(zone.effects.some((it) => it.type !== ActionEffectType.Select)
+      ? [`${indent(depth + 1)}When it appears, against each creature in ${name}:`]
+      : []),
     ...zone.effects.flatMap((it) =>
-      it.type === EffectType.Select
+      it.type === ActionEffectType.Select
         ? describeEffect(it, { ...context, current: name, currentIsPlace: true }, depth + 1)
         : describeEffect(it, { ...context, current: 'each of them', currentIsPlace: false }, depth + 2)
     ),
@@ -251,12 +253,12 @@ const describeZone = (zone: Zone, context: Context, depth: number): Array<string
   ]
 }
 
-const describeSelection = (selection: Selection, context: Context): string => {
+const describeSelection = (selection: ActionSelection, context: Context): string => {
   const origin = selection.from == null ? context.current : creatureName(selection.from, context)
   const tags = selection.filter.length === 0 ? '' : ` that is ${selection.filter.map(named).join(' and ')}`
 
   if (selection.range == null && selection.area == null) {
-    if (selection.from === Creature.Bearer && context.bearerIsPlace) {
+    if (selection.from === ActionCreature.Bearer && context.bearerIsPlace) {
       return `each creature in ${context.bearer}`
     }
 
@@ -268,7 +270,7 @@ const describeSelection = (selection: Selection, context: Context): string => {
       return creatureName(selection.from, context)
     }
 
-    return selection.effects?.some((it) => it.type === EffectType.UseAction) ? `one creature within reach${tags}` : context.current
+    return selection.effects?.some((it) => it.type === ActionEffectType.UseAction) ? `one creature within reach${tags}` : context.current
   }
 
   const measuredFrom = origin === 'you' ? '' : ` of ${origin}`
@@ -299,7 +301,7 @@ const describeSelection = (selection: Selection, context: Context): string => {
     count === AnyNumber
       ? 'any number of'
       : count === 1
-      ? selection.targets?.length === 1 && selection.targets[0] === Relation.Ally
+      ? selection.targets?.length === 1 && selection.targets[0] === ActionRelation.Ally
         ? 'an'
         : 'one'
       : `up to ${formatExpression(count)}`
@@ -337,7 +339,7 @@ const describeDuration = (duration: Lasts | null): string => {
   }
 }
 
-const describeOverrides = ({ offense, defense, potency, range, dice, factor, attackBonus }: Overrides, context: Context): string => {
+const describeOverrides = ({ offense, defense, potency, range, dice, factor, attackBonus }: ActionOverrides, context: Context): string => {
   const parts = [
     offense != null || defense != null
       ? `${offense ? named(offense) : 'its usual attack'} vs. ${defense ? named(defense) : 'its usual defense'}`
@@ -351,7 +353,7 @@ const describeOverrides = ({ offense, defense, potency, range, dice, factor, att
   return parts.length === 0 ? '' : `, using ${parts.join(', ')}`
 }
 
-const describeOutcomes = ({ outcomes }: Outcomes, context: Context, depth: number, save = false): Array<string> => {
+const describeOutcomes = ({ outcomes }: ActionOutcomes, context: Context, depth: number, save = false): Array<string> => {
   return context.vocabulary.outcomes.flatMap(({ outcome, label, opposite }) => {
     const effects = outcomes[save ? opposite : outcome] ?? []
     return effects.length === 0 ? [] : [`${indent(depth)}**${label}:** ${inline(effects, context, depth)}`]
@@ -360,50 +362,50 @@ const describeOutcomes = ({ outcomes }: Outcomes, context: Context, depth: numbe
 
 const indent = (depth: number): string => '  '.repeat(depth)
 
-const inline = (effects: Array<Effect>, context: Context, depth: number): string => {
+const inline = (effects: Array<ActionEffect>, context: Context, depth: number): string => {
   const lines = effects.flatMap((effect) => describeEffect(effect, context, depth + 1))
   const [first = '', ...rest] = lines
   return [first.trim(), ...rest].join('\n')
 }
 
-const describeEffect = (effect: Effect, context: Context, depth: number): Array<string> => {
+const describeEffect = (effect: ActionEffect, context: Context, depth: number): Array<string> => {
   const line = (text: string) => [`${indent(depth)}${text}`]
   switch (effect.type) {
-    case EffectType.Test:
+    case ActionEffectType.Test:
       return effect.defenderRolls
         ? [
             `${indent(depth)}**${named(effect.defense)} save** against your ${named(effect.offense)}`,
             ...describeOutcomes(effect, context, depth, true),
           ]
         : [`${indent(depth)}**Attack:** ${named(effect.offense)} vs. ${named(effect.defense)}`, ...describeOutcomes(effect, context, depth)]
-    case EffectType.UseAction: {
+    case ActionEffectType.UseAction: {
       const actor = effect.by == null ? 'You make' : `${titleCase(creatureName(effect.by, context))} makes`
-      const against = effect.by === Creature.Target ? '' : ` against ${context.current}`
+      const against = effect.by === ActionCreature.Target ? '' : ` against ${context.current}`
       return [
         `${indent(depth)}${actor} ${describeFilter(effect.filter)}${against}${describeOverrides(effect.overrides, context)}.`,
-        ...describeOutcomes(effect, effect.by === Creature.Target ? { ...context, current: 'the creature it attacks' } : context, depth),
+        ...describeOutcomes(effect, effect.by === ActionCreature.Target ? { ...context, current: 'the creature it attacks' } : context, depth),
       ]
     }
-    case EffectType.Select:
+    case ActionEffectType.Select:
       return [
         `${indent(depth)}Then, against ${describeSelection(effect, context)}:`,
         ...(effect.effects ?? []).flatMap((it) => describeEffect(it, { ...context, current: 'each of them', currentIsPlace: false }, depth + 1)),
       ]
-    case EffectType.Zone:
+    case ActionEffectType.Zone:
       return describeZone(effect, context, depth)
-    case EffectType.Damage:
+    case ActionEffectType.Damage:
       return line(
         `${titleCase(context.current)} takes ${formatExpression(effect.amount)}${effect.damageType ? ` ${named(effect.damageType)}` : ''} damage.`
       )
-    case EffectType.Healing:
+    case ActionEffectType.Healing:
       return line(
         effect.temporary
           ? `${titleCase(context.current)} gains ${formatExpression(effect.amount)} temporary hit points.`
           : `${titleCase(context.current)} regains ${formatExpression(effect.amount)} hit points.`
       )
-    case EffectType.Move:
+    case ActionEffectType.Move:
       return line(`${titleCase(effect.kind)} ${context.current} ${formatDistance(effect.distance, context)}${effect.towardYou ? ' toward you' : ''}.`)
-    case EffectType.Condition: {
+    case ActionEffectType.Condition: {
       const name = named(effect.condition)
       const damage = effect.damage == null ? '' : ` (${formatExpression(effect.damage.amount)} ${named(effect.damage.type)})`
       const where = `${titleCase(context.current)} is ${name}`
@@ -420,30 +422,30 @@ const describeEffect = (effect: Effect, context: Context, depth: number): Array<
       const triggers = effect.triggers.flatMap((it) => describeTriggered(it, inner, depth + 1))
       return [`${indent(depth)}${where}${damage}${describeDuration(effect.duration)}.`, ...passive, ...triggers, ...actions]
     }
-    case EffectType.Choose: {
+    case ActionEffectType.Choose: {
       const chooser = effect.by == null ? 'You choose' : `${titleCase(creatureName(effect.by, context))} chooses`
       return [
         `${indent(depth)}${chooser} one:`,
         ...effect.options.map((option) => `${indent(depth + 1)}- **${option.label}:** ${inline(option.effects, context, depth + 1)}`),
       ]
     }
-    case EffectType.Modify: {
+    case ActionEffectType.Modify: {
       const what = effect.what === ModifyTarget.Roll ? 'roll' : effect.what === ModifyTarget.Damage ? 'damage' : 'action cost'
       return line(`The triggering ${what} is modified by ${formatExpression(effect.amount)}.`)
     }
-    case EffectType.Redirect:
+    case ActionEffectType.Redirect:
       return line(`The triggering attack targets ${context.current} instead.`)
-    case EffectType.Reroll:
+    case ActionEffectType.Reroll:
       return line('Reroll the triggering roll and use the new result.')
-    case EffectType.Cancel:
+    case ActionEffectType.Cancel:
       return line('The triggering action has no effect.')
-    case EffectType.End:
+    case ActionEffectType.End:
       return line(
         effect.condition == null ? `${context.condition ?? 'This effect'} ends.` : `${titleCase(context.current)}'s ${named(effect.condition)} ends.`
       )
-    case EffectType.Refund:
+    case ActionEffectType.Refund:
       return line('This use is not expended.')
-    case EffectType.Descriptive:
+    case ActionEffectType.Descriptive:
       return line(effect.description)
   }
 }
@@ -463,7 +465,7 @@ const describeParty = (party: TriggerParty | null, fallback: string, context: Co
   return `${article}${noun}${tags}${party.range == null ? '' : ` within ${formatDistance(party.range, context)}`}`
 }
 
-const describeTrigger = (trigger: Trigger, context: Context, onCondition: boolean): string => {
+const describeTrigger = (trigger: ActionTrigger, context: Context, onCondition: boolean): string => {
   const subject = describeParty(trigger.subject, onCondition ? context.current : 'you', context)
   const object = describeParty(trigger.object, 'a creature', context)
   const source = trigger.source == null ? '' : ` with ${describeFilter(trigger.source)}`
@@ -493,7 +495,7 @@ const describeTrigger = (trigger: Trigger, context: Context, onCondition: boolea
   }
 }
 
-const describeTriggered = (triggered: Triggered, context: Context, depth: number): Array<string> => {
+const describeTriggered = (triggered: TriggeredAction, context: Context, depth: number): Array<string> => {
   return [
     `${indent(depth)}**Trigger:** ${describeTrigger(triggered, context, context.condition != null)}`,
     ...describeResolution(triggered, context, depth),
@@ -535,7 +537,7 @@ const describeResolution = (resolution: Resolution, context: Context, depth: num
   const lines: Array<string> = []
   const selections = resolution.targeting
   selections.forEach((selection) => {
-    if (selection.type === EffectType.Zone) {
+    if (selection.type === ActionEffectType.Zone) {
       lines.push(...describeZone(selection, context, depth))
       return
     }
@@ -559,7 +561,7 @@ export const describeExample = (example: (typeof Examples)[number]): string => {
     `> ${example.rules}`,
     '',
     ...(example.triggers ?? []).flatMap((it) => [...describeTriggered(it, context, 0), '']),
-    ...example.actions.flatMap((action) => [...describeAction(action, context), '']),
+    ...(example.actions ?? []).flatMap((action) => [...describeAction(action, context), '']),
   ].join('\n')
 }
 
