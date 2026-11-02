@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -8,7 +8,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('hex-code')
-export type HexCode = NominalType<string, typeof Namespace>
+export type HexCode = string & Brand<'HexCode'>
 
 export const parseString = (value: string): Result<HexCode, ErrorEvent> => {
   if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)) {

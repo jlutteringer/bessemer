@@ -3,7 +3,7 @@ import { Duration } from '@bessemer/cornerstone/temporal/duration'
 import * as Durations from '@bessemer/cornerstone/temporal/duration'
 import { ResourceKey, ResourceNamespace } from '@bessemer/cornerstone/resource-key'
 import { AbstractApplicationContext } from '@bessemer/cornerstone/context'
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import { RecordEntry } from '@bessemer/cornerstone/entry'
 import { GlobPattern } from '@bessemer/cornerstone/glob'
 import { Arrayable } from 'type-fest'
@@ -55,7 +55,7 @@ export namespace CacheSector {
   }
 }
 
-export type CacheName = TaggedType<string, 'CacheName'>
+export type CacheName = string & WeakBrand<'CacheName'>
 export const CacheNameSchema: ZodType<CacheName> = Zod.string()
 
 export interface AsyncCache<T> {
@@ -228,7 +228,7 @@ export type CacheDefinition = {
   providers: Array<CacheProviderConfiguration>
 }
 
-export type CacheProviderType = TaggedType<string, 'CacheProviderType'>
+export type CacheProviderType = string & WeakBrand<'CacheProviderType'>
 export type CacheProviderConfiguration = CacheOptions & {
   type: CacheProviderType
 }

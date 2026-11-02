@@ -1,4 +1,4 @@
-import { NominalType, TaggedType } from '@bessemer/cornerstone/types'
+import { Brand, WeakBrand } from '@bessemer/cornerstone/brand'
 import * as Strings from '@bessemer/cornerstone/string'
 import { StringSplitResult } from '@bessemer/cornerstone/string'
 import * as Objects from '@bessemer/cornerstone/object'
@@ -17,7 +17,7 @@ import { Equalitor } from '@bessemer/cornerstone/equalitor'
 import * as UriHostNames from '@bessemer/cornerstone/net/uri-host-name'
 import { UriHostName } from '@bessemer/cornerstone/net/uri-host-name'
 
-export type UriString = TaggedType<string, 'UriString'>
+export type UriString = string & WeakBrand<'UriString'>
 export type UriComponent = string
 
 export type UriScheme = string
@@ -42,7 +42,7 @@ export const Namespace = ResourceKeys.createNamespace('uri')
 export const UrlNamespace = ResourceKeys.createNamespace('url')
 export const EqualBy: Equalitor<Uri> = Equalitors.deepNatural()
 
-export type UriLiteral = NominalType<string, typeof Namespace>
+export type UriLiteral = string & Brand<'UriLiteral'>
 
 export interface UriStructure {
   _type: typeof Namespace | typeof UrlNamespace

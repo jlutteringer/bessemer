@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -9,7 +9,7 @@ import { ZodType } from 'zod'
 
 // ISO 639 language codes
 export const Namespace = ResourceKeys.createNamespace('language-code')
-export type LanguageCode = NominalType<string, typeof Namespace>
+export type LanguageCode = string & Brand<'LanguageCode'>
 
 export const parseString = (value: string): Result<LanguageCode, ErrorEvent> => {
   if (!/^[a-z]{2}$/i.test(value)) {

@@ -1,7 +1,7 @@
 import Zod, { ZodType } from 'zod'
 import { Temporal } from '@js-temporal/polyfill'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import { Comparator } from '@bessemer/cornerstone/comparator'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
@@ -15,7 +15,7 @@ import * as Objects from '@bessemer/cornerstone/object'
 
 export type Duration = Temporal.Duration
 export const Namespace = ResourceKeys.createNamespace('duration')
-export type DurationLiteral = NominalType<string, typeof Namespace>
+export type DurationLiteral = string & Brand<'DurationLiteral'>
 export type DurationBuilder = {
   // JOHN consider splitting into 'TimeDuration' and 'CalendarDuration' -----
   years?: number

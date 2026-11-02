@@ -75,6 +75,7 @@ import * as HttpMethods from '@bessemer/cornerstone/net/http-method'
 import * as ContentTypes from '@bessemer/cornerstone/net/content-type'
 import * as Proxies from '@bessemer/cornerstone/proxy'
 import * as Generators from '@bessemer/cornerstone/generators'
+import * as Brands from '@bessemer/cornerstone/brand'
 
 export {
   /**
@@ -381,4 +382,8 @@ export {
    * @since 2.0.0
    */
   Generators,
+  /**
+   * @since 2.0.0
+   */
+  Brands,
 }

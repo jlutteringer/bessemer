@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -8,7 +8,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('domain-name')
-export type DomainName = NominalType<string, typeof Namespace>
+export type DomainName = string & Brand<'DomainName'>
 
 const regex =
   /^[a-zA-Z0-9\u00a1-\uffff](?:[a-zA-Z0-9\u00a1-\uffff-]{0,61}[a-zA-Z0-9\u00a1-\uffff])?(?:\.[a-zA-Z0-9\u00a1-\uffff](?:[a-zA-Z0-9\u00a1-\uffff-]{0,61}[a-zA-Z0-9\u00a1-\uffff])?)*$/

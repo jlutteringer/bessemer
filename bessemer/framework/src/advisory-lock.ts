@@ -1,6 +1,6 @@
 import { Duration } from '@bessemer/cornerstone/temporal/duration'
 import { RetryProps } from '@bessemer/cornerstone/retry'
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import { Arrays, Assertions, Durations, Loggers, Objects, Results, Retry } from '@bessemer/cornerstone'
 import { BessemerApplicationContext, GlobalContextType } from '@bessemer/framework/index'
 import { AbstractApplicationContext } from '@bessemer/cornerstone/context'
@@ -33,7 +33,7 @@ export type AdvisoryLock = {
   providerLock: ProviderAdvisoryLock // The underlying provider's lock object
 }
 
-export type ProviderAdvisoryLock = TaggedType<unknown, 'ProviderAdvisoryLock'>
+export type ProviderAdvisoryLock = WeakBrand<'ProviderAdvisoryLock'>
 
 export interface AdvisoryLockProvider<ContextType extends AbstractApplicationContext = AbstractApplicationContext> {
   acquireLock: (

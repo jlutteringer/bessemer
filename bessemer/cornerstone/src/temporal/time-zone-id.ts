@@ -1,13 +1,13 @@
 import * as Results from '@bessemer/cornerstone/result'
 import Zod, { ZodType } from 'zod'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import * as Errors from '@bessemer/cornerstone/error/error'
 import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 
 export const Namespace = ResourceKeys.createNamespace('time-zone-id')
-export type TimeZoneId = NominalType<string, typeof Namespace>
+export type TimeZoneId = string & Brand<'TimeZoneId'>
 
 export const parseString = (value: string): Results.Result<TimeZoneId, ErrorEvents.ErrorEvent> => {
   try {

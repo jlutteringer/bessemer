@@ -3,7 +3,8 @@ import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
-import { Dictionary, NominalType } from '@bessemer/cornerstone/types'
+import { Dictionary } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as MimeTypes from '@bessemer/cornerstone/mime-type'
 import { MimeLiteral } from '@bessemer/cornerstone/mime-type'
 import * as Strings from '@bessemer/cornerstone/string'
@@ -11,7 +12,7 @@ import * as Objects from '@bessemer/cornerstone/object'
 
 export const Namespace = ResourceKeys.createNamespace('content-type')
 export type ContentType = { mimeType: MimeLiteral; parameters: Dictionary<string> }
-export type ContentTypeLiteral = NominalType<string, typeof Namespace>
+export type ContentTypeLiteral = string & Brand<'ContentTypeLiteral'>
 
 export type ContentTypeLike = ContentType | ContentTypeLiteral | MimeLiteral
 
@@ -43,7 +44,7 @@ export function toLiteral(likeValue: ContentTypeLike | null | undefined): Conten
   const value = from(likeValue)
 
   if (Objects.isEmpty(value.parameters)) {
-    return value.mimeType as ContentTypeLiteral
+    return value.mimeType as string as ContentTypeLiteral
   }
 
   const params = Object.entries(value.parameters).map(([key, val]) => {

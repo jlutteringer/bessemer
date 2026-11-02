@@ -2,6 +2,7 @@ import * as Objects from '@bessemer/cornerstone/object'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import * as Promises from '@bessemer/cornerstone/promise'
 import { Promisable } from 'type-fest'
+import { Brand } from '@bessemer/cornerstone/brand'
 
 const TypeToken = '__Either.type'
 
@@ -10,11 +11,7 @@ export enum EitherType {
   Right = 'Right',
 }
 
-declare const __types: unique symbol
-export type NominalTyping2<NominalType> = { [__types]: NominalType }
-export type NominalType2<ConcreteType, NominalType> = ConcreteType & NominalTyping2<NominalType>
-
-export type Left<LeftType> = NominalType2<LeftType, 'Left'>
+export type Left<LeftType> = LeftType & Brand<'Left'>
 export type Right<RightType> = {
   [TypeToken]: EitherType.Right
   value: RightType

@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
@@ -11,7 +11,7 @@ import * as Instants from '@bessemer/cornerstone/temporal/instant'
 import * as Strings from '@bessemer/cornerstone/string'
 
 export const Namespace = ResourceKeys.createNamespace('uuid-v7')
-export type UuidV7 = NominalType<string, typeof Namespace>
+export type UuidV7 = string & Brand<'UuidV7'>
 
 export const parse = (value: string): Result<UuidV7, ErrorEvent> => {
   if (!/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(value)) {

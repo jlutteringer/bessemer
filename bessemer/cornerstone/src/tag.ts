@@ -1,4 +1,4 @@
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import * as Comparators from '@bessemer/cornerstone/comparator'
 import { Comparator } from '@bessemer/cornerstone/comparator'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
@@ -6,7 +6,7 @@ import { Equalitor } from '@bessemer/cornerstone/equalitor'
 import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Sets from '@bessemer/cornerstone/set'
 
-export type TagType<DataType> = TaggedType<string, ['TagType', DataType]>
+export type TagType<DataType> = string & WeakBrand<'TagType', DataType>
 
 export type Tag<DataType = unknown> = {
   type: TagType<DataType>
@@ -39,7 +39,7 @@ export const CompareBy: Comparator<Tag<any>> = Comparators.aggregate([
 
 export const EqualBy: Equalitor<Tag<any>> = Equalitors.fromComparator(CompareBy)
 
-export type SerializedTags = TaggedType<string, 'SerializedTags'>
+export type SerializedTags = string & WeakBrand<'SerializedTags'>
 
 export const serializeTags = <T>(tags: Array<Tag<T>>): SerializedTags => {
   const serializedTags: SerializedTags = Arrays.sortWith(tags, CompareBy)

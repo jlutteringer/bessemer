@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import Zod from 'zod'
 import * as Objects from '@bessemer/cornerstone/object'
 
@@ -6,12 +6,10 @@ export type ResourceKey = string
 const ResourceNamespaceSeparator = '/'
 
 export type NamespaceKey = string | undefined
-export type ResourceNamespace<NamespaceType extends NamespaceKey = NamespaceKey> = NominalType<NamespaceType, 'ResourceNamespace'> | undefined
+export type ResourceNamespace<NamespaceType extends NamespaceKey = NamespaceKey> = (NamespaceType & Brand<'ResourceNamespace'>) | undefined
 
-export type NamespacedKey<KeyType extends ResourceKey = ResourceKey, NamespaceType extends NamespaceKey = NamespaceKey> = NominalType<
-  string,
-  ['NamespacedKey', KeyType, NamespaceType]
->
+export type NamespacedKey<KeyType extends ResourceKey = ResourceKey, NamespaceType extends NamespaceKey = NamespaceKey> = string &
+  Brand<'NamespacedKey', [KeyType, NamespaceType]>
 
 export const emptyNamespace = (): ResourceNamespace<undefined> => {
   return undefined

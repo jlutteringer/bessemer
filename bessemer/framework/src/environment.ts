@@ -1,8 +1,8 @@
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import { Objects, Tags } from '@bessemer/cornerstone'
 import { Tag, TagType } from '@bessemer/cornerstone/tag'
 
-export type Environment = TaggedType<string, 'Environment'>
+export type Environment = string & WeakBrand<'Environment'>
 
 export const getEnvironment = (): Environment => {
   const appEnv = process.env.APP_ENV

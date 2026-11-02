@@ -1,4 +1,4 @@
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 
-export type Unit = TaggedType<null, 'Unit'>
+export type Unit = null & WeakBrand<'Unit'>
 export const Unit: Unit = null as never

@@ -1,18 +1,18 @@
 import { Reference } from '@bessemer/cornerstone/reference'
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import { AbstractApplicationContext } from '@bessemer/cornerstone/context'
 import { Arrays, Maps, Objects, Tags, Ulids } from '@bessemer/cornerstone'
 import { RichTextJson } from '@bessemer/cornerstone/rich-text'
 import { Tag } from '@bessemer/cornerstone/tag'
 import Zod, { ZodType } from 'zod'
 
-export type ContentSector = TaggedType<string, 'ContentSector'>
+export type ContentSector = string & WeakBrand<'ContentSector'>
 export const ContentSectorSchema: ZodType<ContentSector> = Zod.string()
 
-export type ContentKey = TaggedType<string, 'ContentKey'>
+export type ContentKey = string & WeakBrand<'ContentKey'>
 export const ContentKeySchema: ZodType<ContentKey> = Zod.string()
 
-export type ContentType<Data = unknown> = TaggedType<string, ['ContentType', Data]>
+export type ContentType<Data = unknown> = string & WeakBrand<'ContentType', Data>
 export const ContentTypeSchema: ZodType<ContentType> = Zod.string()
 
 export type ContentReference = Reference<'Content'>
@@ -36,7 +36,7 @@ export type ContentData<Type extends ContentType = ContentType, Data = ContentDa
 
 export type ContentTypeConstructor<Content extends ContentData> = Content['type']
 
-export type ContentDisplayType = TaggedType<string, 'ContentDisplayType'>
+export type ContentDisplayType = string & WeakBrand<'ContentDisplayType'>
 
 export namespace ContentDisplayTypes {
   export const Default: ContentDisplayType = 'Default'

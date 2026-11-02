@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -8,7 +8,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('currency-code')
-export type CurrencyCode = NominalType<string, typeof Namespace>
+export type CurrencyCode = string & Brand<'CurrencyCode'>
 
 export const parseString = (value: string): Result<CurrencyCode, ErrorEvent> => {
   if (!/^[A-Za-z]{3}$/.test(value)) {

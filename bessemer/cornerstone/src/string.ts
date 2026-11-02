@@ -2,10 +2,11 @@ import { UnknownRecord } from 'type-fest'
 import * as Arrays from '@bessemer/cornerstone/collection/array'
 import * as Objects from '@bessemer/cornerstone/object'
 import Zod from 'zod'
-import { Nil, NominalType } from '@bessemer/cornerstone/types'
+import { Nil } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 
 export type EmptyString = ''
-export type BlankString = NominalType<string, 'BlankString'>
+export type BlankString = string & Brand<'BlankString'>
 
 export const isString = (value: any): value is string => {
   return typeof value === 'string'

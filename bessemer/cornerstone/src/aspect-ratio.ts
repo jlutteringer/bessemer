@@ -1,5 +1,5 @@
 import * as Maths from '@bessemer/cornerstone/math'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
@@ -9,7 +9,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('aspect-ratio')
-export type AspectRatio = NominalType<string, typeof Namespace>
+export type AspectRatio = string & Brand<'AspectRatio'>
 
 export const parseString = (value: string): Result<AspectRatio, ErrorEvent> => {
   if (!/^[1-9]\d*:[1-9]\d*$/.test(value)) {

@@ -1,5 +1,5 @@
 import Zod, { ZodArray, ZodOptional } from 'zod'
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 
 // These are to match TipTap types, but without us having to depend on the TipTap library
 export const RichTextJsonSchema = Zod.looseObject({
@@ -19,6 +19,6 @@ export const RichTextJsonSchema = Zod.looseObject({
 
 export type RichTextJson = Zod.infer<typeof RichTextJsonSchema>
 
-export type RichTextString = TaggedType<string, 'RichTextString'>
+export type RichTextString = string & WeakBrand<'RichTextString'>
 
 export type RichText = RichTextString | RichTextJson

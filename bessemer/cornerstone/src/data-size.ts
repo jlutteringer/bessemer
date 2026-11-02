@@ -1,9 +1,9 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import Zod from 'zod'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
 
 export const Namespace = ResourceKeys.createNamespace('data-size')
-export type DataSize = NominalType<number, typeof Namespace>
+export type DataSize = number & Brand<'DataSize'>
 
 export const fromBytes = (value: number): DataSize => {
   return value as DataSize

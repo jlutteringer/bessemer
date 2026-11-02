@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -8,7 +8,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('country-code')
-export type CountryCode = NominalType<string, typeof Namespace>
+export type CountryCode = string & Brand<'CountryCode'>
 
 export const parseString = (value: string): Result<CountryCode, ErrorEvent> => {
   if (!/^[A-Z]{2}$/i.test(value)) {

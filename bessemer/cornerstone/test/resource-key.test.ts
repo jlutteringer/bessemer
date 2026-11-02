@@ -1,7 +1,7 @@
 import { ResourceKeys } from '@bessemer/cornerstone'
 import { expectTypeOf } from 'expect-type'
 import { NamespacedKey, ResourceNamespace } from '@bessemer/cornerstone/resource-key'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 
 describe('ResourceKeys.emptyNamespace', () => {
   expect(ResourceKeys.emptyNamespace()).toEqual(undefined)
@@ -79,7 +79,7 @@ describe('ResourceKeys.namespaceKey', () => {
     }
 
     {
-      type TestType = NominalType<string, 'test-type'>
+      type TestType = string & Brand<'test-type'>
       const key: TestType = '1234' as TestType
       expect(ResourceKeys.namespaceKey(key, ResourceKeys.emptyNamespace())).toEqual(key)
       expectTypeOf(ResourceKeys.namespaceKey(key, ResourceKeys.emptyNamespace())).toEqualTypeOf<NamespacedKey<TestType, undefined>>()
@@ -110,7 +110,7 @@ describe('ResourceKeys.namespaceKey', () => {
     }
 
     {
-      type TestType = NominalType<string, 'test-type'>
+      type TestType = string & Brand<'test-type'>
       const key: TestType = '1234' as TestType
       const namespace = 'foo'
       expect(ResourceKeys.namespaceKey(key, ResourceKeys.createNamespace(namespace))).toEqual(`${namespace}/${key}`)
@@ -164,7 +164,7 @@ describe('ResourceKeys.destructureKey', () => {
     }
 
     {
-      type TestType = NominalType<string, 'test-type'>
+      type TestType = string & Brand<'test-type'>
 
       const key: TestType = '1234' as TestType
       const namespacedKey = ResourceKeys.namespaceKey(key, ResourceKeys.emptyNamespace())

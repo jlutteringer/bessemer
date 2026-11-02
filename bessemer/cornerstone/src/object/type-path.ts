@@ -1,4 +1,4 @@
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import * as Assertions from '@bessemer/cornerstone/assertion'
 import Zod from 'zod'
 import {
@@ -19,7 +19,7 @@ import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 
 // JOHN this probably should be brought into the structured transform regime
-export type TypePath<T extends TypePathType = TypePathType> = TaggedType<TypePathConcreteType, ['TypePath', T]>
+export type TypePath<T extends TypePathType = TypePathType> = TypePathConcreteType & WeakBrand<'TypePath', T>
 
 export const of = <T extends TypePathConcreteType>(value: T): TypePath<InferTypePath<T>> => {
   return value as TypePath<InferTypePath<T>>

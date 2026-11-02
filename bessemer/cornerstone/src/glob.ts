@@ -1,7 +1,7 @@
 import { minimatch } from 'minimatch'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as ErrorEvents from '@bessemer/cornerstone/error/error-event'
 import { ErrorEvent } from '@bessemer/cornerstone/error/error-event'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -9,7 +9,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('glob')
-export type GlobPattern = NominalType<string, typeof Namespace>
+export type GlobPattern = string & Brand<'GlobPattern'>
 
 export const parseString = (value: string): Result<GlobPattern, ErrorEvent> => {
   // Check for valid glob characters and patterns

@@ -1,4 +1,5 @@
-import { BasicType, Dictionary, TaggedType } from '@bessemer/cornerstone/types'
+import { BasicType, Dictionary } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import { Primitive, UnknownRecord } from 'type-fest'
 import { isNumber } from '@bessemer/cornerstone/math'
 import { isString } from '@bessemer/cornerstone/string'
@@ -260,7 +261,7 @@ const walk = (value: any, transform: TransformFunction, path: (string | number)[
   return result
 }
 
-export type RecordAttribute<Type = unknown, Class extends string = 'RecordAttribute'> = TaggedType<string, [Type, Class]>
+export type RecordAttribute<Type = unknown, Class extends string = 'RecordAttribute'> = string & WeakBrand<Class, Type>
 type RecordAttributeType<Attribute> = Attribute extends RecordAttribute<infer Type, string> ? Type : never
 
 export const getAttribute = <T extends RecordAttribute<unknown, string>>(record: UnknownRecord, attribute: T): RecordAttributeType<T> | undefined => {

@@ -1,5 +1,5 @@
 import Zod from 'zod'
-import { TaggedType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import {
   InferObjectPath,
   ObjectPathConcreteType,
@@ -16,7 +16,7 @@ import { produce } from 'immer'
 import * as Objects from '@bessemer/cornerstone/object'
 
 // JOHN this probably should be brought into the structured transform regime
-export type ObjectPath<T extends TypePathType = TypePathType> = TaggedType<ObjectPathConcreteType, ['TypePath', T]>
+export type ObjectPath<T extends TypePathType = TypePathType> = ObjectPathConcreteType & WeakBrand<'TypePath', T> & WeakBrand<'ObjectPath'>
 
 export const of = <T extends ObjectPathConcreteType>(value: T): ObjectPath<InferObjectPath<T>> => {
   return value as ObjectPath<InferObjectPath<T>>
@@ -66,7 +66,10 @@ export const applyAnyValue = (path: ObjectPath, object: unknown, valueToApply: u
     const last = path[path.length - 1]!
     const parent = getValue(of(rest), draft) as any
 
-    Assertions.assert(Objects.isObject(parent) || Array.isArray(parent), () => `Unable to apply value: ${valueToApply} at ObjectPath: ${path} against object: ${object}`)
+    Assertions.assert(
+      Objects.isObject(parent) || Array.isArray(parent),
+      () => `Unable to apply value: ${valueToApply} at ObjectPath: ${path} against object: ${object}`
+    )
     if (Array.isArray(last)) {
       const index = Arrays.only(last)
       parent[index] = valueToApply

@@ -1,6 +1,6 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 
-export type Hash = NominalType<string, 'Hash'>
+export type Hash = string & Brand<'Hash'>
 
 export enum HashAlgorithm {
   SHA1 = 'SHA-1',

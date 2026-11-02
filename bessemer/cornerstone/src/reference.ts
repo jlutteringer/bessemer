@@ -1,3 +1,3 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 
-export type Reference<T extends string> = NominalType<string, ['Reference', T]>
+export type Reference<T extends string> = string & Brand<'Reference', T>

@@ -2,7 +2,8 @@ import * as NumericExpressions from '@bessemer/cornerstone/expression/numeric-ex
 import * as StringExpressions from '@bessemer/cornerstone/expression/string-expression'
 import * as ArrayExpressions from '@bessemer/cornerstone/expression/array-expression'
 import * as Expressions from '@bessemer/cornerstone/expression/expression'
-import { TaggedType, NilableBasicType } from '@bessemer/cornerstone/types'
+import { NilableBasicType } from '@bessemer/cornerstone/types'
+import { WeakBrand } from '@bessemer/cornerstone/brand'
 import { UnknownRecord } from 'type-fest'
 
 export {
@@ -24,7 +25,7 @@ export {
   ArrayExpressions,
 }
 
-export type ExpressionKey<ReturnType, ArgumentType extends Array<unknown>> = TaggedType<string, ['ExpressionKey', ReturnType, ArgumentType]>
+export type ExpressionKey<ReturnType, ArgumentType extends Array<unknown>> = string & WeakBrand<'ExpressionKey', [ReturnType, ArgumentType]>
 
 export type Expression<ReturnType> = ReturnType | IExpression<ReturnType>
 

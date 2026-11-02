@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as LanguageCodes from '@bessemer/cornerstone/intl/language-code'
 import { LanguageCode } from '@bessemer/cornerstone/intl/language-code'
 import * as CountryCodes from '@bessemer/cornerstone/intl/country-code'
@@ -14,7 +14,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('locale')
-export type Locale = NominalType<string, typeof Namespace>
+export type Locale = string & Brand<'Locale'>
 
 export const fromCode = (language: LanguageCode, country?: CountryCode | null): Locale => {
   if (Objects.isPresent(country)) {

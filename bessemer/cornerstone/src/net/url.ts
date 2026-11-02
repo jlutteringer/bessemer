@@ -1,4 +1,5 @@
-import { Dictionary, NominalType } from '@bessemer/cornerstone/types'
+import { Dictionary } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Uris from '@bessemer/cornerstone/net/uri'
 import { Uri, UriBuilder, UriComponent, UriLiteral, UriLocation, UriParseMode } from '@bessemer/cornerstone/net/uri'
 import * as Results from '@bessemer/cornerstone/result'
@@ -18,7 +19,7 @@ export const encode = Uris.encode
 
 export const decode = Uris.decode
 
-export type UrlLiteral = NominalType<UriLiteral, typeof Namespace>
+export type UrlLiteral = UriLiteral & Brand<'UrlLiteral'>
 
 export interface UrlLocation extends UriLocation {
   pathSegments: Array<string>

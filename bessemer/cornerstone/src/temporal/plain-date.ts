@@ -1,6 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import { Comparator } from '@bessemer/cornerstone/comparator'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as Results from '@bessemer/cornerstone/result'
@@ -18,7 +18,7 @@ import { Locale } from '@bessemer/cornerstone/intl/locale'
 
 export type PlainDate = Temporal.PlainDate
 export const Namespace = ResourceKeys.createNamespace('plain-date')
-export type PlainDateLiteral = NominalType<string, typeof Namespace>
+export type PlainDateLiteral = string & Brand<'PlainDateLiteral'>
 export type PlainDateBuilder = {
   year: number
   month: number
@@ -138,11 +138,7 @@ export type DateFormatOptions = {
 export const format = (element: PlainDateLike, locale: Locale, options: DateFormatOptions): string => {
   const plainDate = from(element)
 
-  const date = new Date(
-    plainDate.year,
-    plainDate.month - 1,
-    plainDate.day
-  )
+  const date = new Date(plainDate.year, plainDate.month - 1, plainDate.day)
 
   const formatter = new Intl.DateTimeFormat(locale, options)
   return formatter.format(date)

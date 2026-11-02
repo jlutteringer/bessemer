@@ -1,6 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import { Comparator } from '@bessemer/cornerstone/comparator'
 import * as Equalitors from '@bessemer/cornerstone/equalitor'
 import * as Results from '@bessemer/cornerstone/result'
@@ -19,7 +19,7 @@ import { Locale } from '@bessemer/cornerstone/intl/locale'
 
 export type PlainTime = Temporal.PlainTime
 export const Namespace = ResourceKeys.createNamespace('plain-time')
-export type PlainTimeLiteral = NominalType<string, typeof Namespace>
+export type PlainTimeLiteral = string & Brand<'PlainTimeLiteral'>
 export type PlainTimeBuilder = {
   hour: number
   minute?: number

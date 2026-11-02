@@ -1,5 +1,5 @@
 import { ulid } from 'ulid'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
 import * as ResourceKeys from '@bessemer/cornerstone/resource-key'
@@ -9,7 +9,7 @@ import * as ZodUtil from '@bessemer/cornerstone/zod-util'
 import { ZodType } from 'zod'
 
 export const Namespace = ResourceKeys.createNamespace('ulid')
-export type Ulid = NominalType<string, typeof Namespace>
+export type Ulid = string & Brand<'Ulid'>
 
 export const parse = (value: string): Result<Ulid, ErrorEvent> => {
   if (!/^[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{26}$/.test(value)) {

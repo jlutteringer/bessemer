@@ -2,7 +2,7 @@ import Zod from 'zod'
 import { Uris } from '@bessemer/cornerstone'
 import { ValueOf } from 'type-fest'
 import { RichTextJson, RichTextJsonSchema } from '@bessemer/cornerstone/rich-text'
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 
 export const RulesetEntityType = {
   ActionType: 'action-type',
@@ -28,7 +28,7 @@ export const isRulesetEntityType = (value: string): value is RulesetEntityType =
   return RulesetEntityTypes.has(value)
 }
 
-export type RulesetEntityReference<T extends RulesetEntityType = RulesetEntityType> = NominalType<string, ['RulesetEntityReference', T]>
+export type RulesetEntityReference<T extends RulesetEntityType = RulesetEntityType> = string & Brand<'RulesetEntityReference', T>
 
 export const RulesetEntitySchema = Zod.object({
   id: Zod.string().transform((it) => it as RulesetEntityReference),

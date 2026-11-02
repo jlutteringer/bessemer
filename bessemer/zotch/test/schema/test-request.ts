@@ -1,6 +1,5 @@
 import Zod, { ZodType } from 'zod'
 import { Instants, Strings } from '@bessemer/cornerstone'
-import { Alias } from '@bessemer/cornerstone/types'
 
 const TextSchema = Zod.string()
   .trim()
@@ -105,7 +104,7 @@ export const RequestSchema = Zod.object({
   createdAt: Instants.SchemaLiteral,
   updatedAt: Instants.SchemaLiteral,
 })
-export type RequestDto = Alias<Zod.infer<typeof RequestSchema>>
+export type RequestDto = Zod.infer<typeof RequestSchema>
 
 export const CreateRequestSchema = RequestSchema.omit({ id: true, status: true, items: true, createdAt: true, updatedAt: true }).extend({
   status: Zod.union([Zod.literal(RequestStatus.Cart), Zod.literal(RequestStatus.Open), Zod.literal(RequestStatus.Quote)]).default(

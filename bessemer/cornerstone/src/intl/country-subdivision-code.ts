@@ -1,4 +1,4 @@
-import { NominalType } from '@bessemer/cornerstone/types'
+import { Brand } from '@bessemer/cornerstone/brand'
 import { CountryCode } from '@bessemer/cornerstone/intl/country-code'
 import * as Results from '@bessemer/cornerstone/result'
 import { Result } from '@bessemer/cornerstone/result'
@@ -10,7 +10,7 @@ import { ZodType } from 'zod'
 
 // ISO 3166-2 country subdivision codes
 export const Namespace = ResourceKeys.createNamespace('country-subdivision-code')
-export type CountrySubdivisionCode = NominalType<string, typeof Namespace>
+export type CountrySubdivisionCode = string & Brand<'CountrySubdivisionCode'>
 
 export const parseString = (value: string): Result<CountrySubdivisionCode, ErrorEvent> => {
   if (!/^[A-Z]{2}-[A-Z0-9]{1,3}$/i.test(value)) {
