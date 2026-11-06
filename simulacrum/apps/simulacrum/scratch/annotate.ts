@@ -1,8 +1,8 @@
 import * as fs from 'fs'
-import { Examples } from './action-model'
+import { Examples } from './examples'
 import { describeExample } from './describe'
 
-const file = 'scratch/action-model.ts'
+const file = 'scratch/examples.ts'
 const marker = '  // Rendered:'
 
 const findClose = (text: string, open: number): number => {
@@ -16,6 +16,8 @@ const findClose = (text: string, open: number): number => {
       } else if (char === quote) {
         quote = null
       }
+    } else if (char === '/' && text[index + 1] === '/') {
+      index = text.indexOf('\n', index)
     } else if (char === "'" || char === '"' || char === '`') {
       quote = char
     } else if (char === '{' || char === '[' || char === '(') {
@@ -55,7 +57,7 @@ const stripAnnotations = (text: string): string => {
 const rendered = (name: string): Array<string> => {
   const example = Examples.find((it) => it.name === name)!
   const lines = describeExample(example).split('\n')
-  return lines.slice(lines.indexOf('', 3) + 1).filter((line, index, all) => !(line === '' && index === all.length - 1))
+  return lines.slice(2).filter((line, index, all) => !(line === '' && index === all.length - 1))
 }
 
 let text = stripAnnotations(fs.readFileSync(file, 'utf8'))
